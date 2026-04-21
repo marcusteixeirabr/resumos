@@ -4,132 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Responsive Web Development — Resumos ADS</title>
-  <style>
-    :root {
-      --bg: #0d1117;
-      --surface: #161b22;
-      --surface2: #1c2128;
-      --border: #30363d;
-      --accent: #58a6ff;
-      --accent2: #3fb950;
-      --accent3: #f78166;
-      --accent4: #d2a8ff;
-      --text: #e6edf3;
-      --muted: #8b949e;
-      --radius: 10px;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      display: flex; flex-direction: column; min-height: 100vh;
-    }
-
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 1rem 2rem;
-      display: flex; align-items: center; gap: 1rem;
-      position: sticky; top: 0; z-index: 100;
-    }
-    .back { color: var(--muted); text-decoration: none; font-size: 0.9rem; transition: color .2s; }
-    .back:hover { color: var(--text); }
-    .back::before { content: "← "; }
-    header h1 { font-size: 1.1rem; font-weight: 700; color: var(--text); }
-    .tag { font-size: 0.7rem; background: rgba(63,185,80,.15); color: var(--accent2); border: 1px solid rgba(63,185,80,.3); padding: .2rem .6rem; border-radius: 20px; margin-left: .5rem; }
-
-    .layout { display: flex; flex: 1; }
-
-    aside {
-      width: 260px; min-width: 260px;
-      background: var(--surface);
-      border-right: 1px solid var(--border);
-      padding: 1.5rem 0;
-      position: sticky; top: 57px;
-      height: calc(100vh - 57px);
-      overflow-y: auto;
-    }
-    .sidebar-group { margin-bottom: 1.5rem; }
-    .sidebar-label {
-      font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1px; color: var(--muted);
-      padding: .25rem 1.25rem .5rem; display: block;
-    }
-    aside a {
-      display: flex; align-items: center; gap: .6rem;
-      padding: .45rem 1.25rem;
-      color: var(--muted); text-decoration: none;
-      font-size: 0.82rem; transition: background .15s, color .15s;
-      border-left: 2px solid transparent;
-    }
-    aside a:hover { background: rgba(255,255,255,.04); color: var(--text); }
-    aside a.active { background: rgba(88,166,255,.08); color: var(--accent); border-left-color: var(--accent); }
-    aside a .num { font-size: .7rem; opacity: .5; min-width: 24px; }
-
-    main { flex: 1; padding: 2.5rem 3rem; max-width: 860px; }
-    section { display: none; }
-    section.active { display: block; }
-    section > h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: .4rem; }
-    section > .subtitle { color: var(--muted); font-size: .95rem; margin-bottom: 2rem; line-height: 1.6; }
-    h3 { font-size: 1rem; font-weight: 700; color: var(--accent); margin: 2rem 0 .75rem; display: flex; align-items: center; gap: .5rem; }
-    h3::before { content: ""; display: inline-block; width: 3px; height: 1em; background: var(--accent); border-radius: 2px; }
-    h4 { font-size: .85rem; font-weight: 600; color: var(--accent4); margin: 1.25rem 0 .5rem; }
-    p { font-size: .9rem; color: var(--muted); line-height: 1.75; margin-bottom: .75rem; }
-    ul, ol { padding-left: 1.4rem; margin-bottom: .75rem; }
-    li { font-size: .88rem; color: var(--muted); line-height: 1.7; }
-    li strong { color: var(--text); }
-    strong { color: var(--text); }
-
-    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .75rem; margin: 1rem 0; }
-    .card { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
-    .card h4 { color: var(--text); margin: 0 0 .4rem; font-size: .85rem; }
-    .card p { font-size: .8rem; margin: 0; }
-
-    pre { background: #0d1117; border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.25rem; overflow-x: auto; margin: .75rem 0; }
-    code { font-family: "Fira Code", "Cascadia Code", monospace; font-size: .82rem; color: #e6edf3; }
-    .kw  { color: #ff7b72; }
-    .tag-c { color: #7ee787; }
-    .attr { color: #79c0ff; }
-    .str { color: #a5d6ff; }
-    .cm  { color: #8b949e; font-style: italic; }
-    .fn  { color: #d2a8ff; }
-    .num { color: #79c0ff; }
-    .sel { color: #7ee787; }
-    .prop{ color: #79c0ff; }
-    .val { color: #a5d6ff; }
-    p code, li code { background: rgba(255,255,255,.07); border: 1px solid var(--border); border-radius: 4px; padding: .1rem .4rem; font-size: .8rem; color: var(--text); }
-
-    table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .85rem; }
-    th { background: var(--surface2); color: var(--text); font-weight: 600; padding: .6rem .9rem; text-align: left; border-bottom: 1px solid var(--border); }
-    td { padding: .55rem .9rem; color: var(--muted); border-bottom: 1px solid rgba(48,54,61,.6); }
-    td:first-child { color: var(--text); }
-
-    .callout { background: rgba(88,166,255,.06); border: 1px solid rgba(88,166,255,.2); border-radius: var(--radius); padding: 1rem 1.25rem; margin: 1rem 0; }
-    .callout.green { background: rgba(63,185,80,.06); border-color: rgba(63,185,80,.2); }
-    .callout.orange { background: rgba(247,129,102,.06); border-color: rgba(247,129,102,.2); }
-    .callout strong { display: block; margin-bottom: .3rem; }
-    .callout p { margin: 0; font-size: .85rem; }
-
-    .result-box {
-      background: var(--surface2); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1rem 1.25rem; margin: .5rem 0;
-      font-size: .85rem; color: var(--muted);
-    }
-    .result-box strong { display: block; font-size: .7rem; text-transform: uppercase; letter-spacing: .5px; margin-bottom: .4rem; color: var(--accent); }
-
-    .section-nav { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
-    .section-nav a { color: var(--accent); text-decoration: none; font-size: .85rem; padding: .5rem .9rem; border: 1px solid var(--border); border-radius: var(--radius); transition: border-color .2s; }
-    .section-nav a:hover { border-color: var(--accent); }
-    .section-nav a.next::after { content: " →"; }
-    .section-nav a.prev::before { content: "← "; }
-
-    @media (max-width: 768px) {
-      aside { display: none; }
-      main { padding: 1.5rem 1.25rem; max-width: 100%; }
-      header { padding: .75rem 1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/discipline.css">
 </head>
 <body>
 
@@ -762,22 +638,6 @@ localStorage.<span class="fn">setItem</span>(<span class="str">'usuario'</span>,
   </main>
 </div>
 
-<script>
-  const links = document.querySelectorAll('[data-sec]');
-  const sections = document.querySelectorAll('section[id]');
-
-  function show(id) {
-    sections.forEach(s => s.classList.toggle('active', s.id === id));
-    links.forEach(a => a.classList.toggle('active', a.dataset.sec === id));
-    window.scrollTo(0, 0);
-  }
-
-  links.forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      show(a.dataset.sec);
-    });
-  });
-</script>
+<script src="../assets/js/nav.js"></script>
 </body>
 </html>
