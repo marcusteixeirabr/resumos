@@ -503,6 +503,16 @@
         <p>Nenhuma estimativa é exata. O valor está no processo: ele força a equipe a pensar sobre o problema antes de codificar. A melhor abordagem combina planejamento formal e métodos ágeis, ajustando o equilíbrio conforme o tipo de projeto (Sommerville, 2011).</p>
       </div>
 
+      <div class="callout warning">
+        <strong>Práticas Modernas — Plano de Projeto</strong>
+        <ul>
+          <li><strong>Scrum substituiu o Gantt</strong> na maioria dos times ágeis. Em vez de WBS detalhado, usa-se <em>Product Backlog</em> + <em>Sprint Planning</em>. Ferramentas: Jira, Linear, GitHub Projects.</li>
+          <li><strong>Story Mapping (Jeff Patton)</strong> é a alternativa ágil à WBS: organiza funcionalidades em uma narrativa de jornada do usuário, priorizando por valor de negócio.</li>
+          <li><strong>OKRs (Objectives and Key Results)</strong> substituíram os tradicionais cronogramas de milestones em empresas de tecnologia — o objetivo define o "por quê", e os key results medem o sucesso objetivamente.</li>
+          <li><strong>Estimativas em pontos de função estão em desuso</strong> em times Scrum; story points (Fibonacci) ou T-shirt sizes são mais comuns. Planning Poker permanece válido.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
         <ul>
@@ -633,6 +643,16 @@
         <tr><td>Projeto de Interface</td><td>Visão geral, telas, ações e objetos</td></tr>
         <tr><td>Matriz de Requisitos</td><td>Rastreabilidade entre requisitos e componentes</td></tr>
       </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Projeto de Software</strong>
+        <ul>
+          <li><strong>ADRs (Architecture Decision Records)</strong> documentam o "por quê" de cada decisão arquitetural em arquivos Markdown versionados no Git — substituem grandes documentos de especificação que ficam desatualizados.</li>
+          <li><strong>Arquitetura Evolutiva</strong> (Rebecca Parsons) defende adiar decisões estruturais enquanto possível e construir "fitness functions" que verificam automaticamente se a arquitetura continua saudável.</li>
+          <li><strong>Domain-Driven Design (DDD)</strong> é a abordagem moderna para projeto de software: o modelo do sistema reflete o domínio de negócio usando uma linguagem ubíqua compartilhada por desenvolvedores e especialistas de domínio.</li>
+          <li><strong>Diagramas como código:</strong> Mermaid, PlantUML e Structurizr geram diagramas de arquitetura a partir de texto — versioning, diff e revisão em Pull Requests substituem arquivos .vsd e .drawio.</li>
+        </ul>
+      </div>
 
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
@@ -966,6 +986,17 @@
         <p>Muitos sistemas legados corporativos — bancários, governamentais, industriais — foram projetados com DFD e DD. Entender essa notação é essencial para manutenção e modernização desses sistemas. Além disso, o DFD ainda é uma boa ferramenta para esboçar a visão macro de um sistema antes de detalhar os modelos OO.</p>
       </div>
 
+      <div class="callout warning">
+        <strong>Conteúdo histórico — Práticas Modernas</strong>
+        <p>A análise estruturada (DFD/DD) é uma técnica dos anos 70–80. No desenvolvimento moderno foi amplamente substituída:</p>
+        <ul>
+          <li><strong>BPMN 2.0</strong> é o padrão moderno para modelagem de processos de negócio — equivalente contemporâneo ao DFD para comunicação com stakeholders não técnicos. Engines: Camunda, Activiti.</li>
+          <li><strong>Event Storming</strong> (Alberto Brandolini) é a técnica ágil para descobrir o domínio de negócio em workshops colaborativos — identifica eventos, comandos e agregados de forma visual.</li>
+          <li><strong>UML substitui DFD</strong> em projetos OO modernos: diagramas de atividades (UML) são equivalentes mais expressivos ao DFD e integram-se com os demais diagramas do sistema.</li>
+          <li>DFD e DD ainda são relevantes para <strong>manutenção de sistemas legados</strong> (COBOL, sistemas bancários, ERP antigos) e como ferramenta pedagógica para introduzir análise de sistemas.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
         <ul>
@@ -1066,6 +1097,16 @@
         <tr><td><strong>Limitações</strong></td><td>Exige tempo para criar toda a documentação de diagramas; só deve implementar após especificação completa; a equipe precisa dominar as notações UML e as ferramentas</td></tr>
       </table>
 
+      <div class="callout warning">
+        <strong>Práticas Modernas — Análise Orientada a Objetos</strong>
+        <ul>
+          <li><strong>SOLID</strong> (Uncle Bob) é o conjunto de princípios que tornam o design OO realmente saudável: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.</li>
+          <li><strong>TypeScript</strong> trouxe tipagem estática ao JavaScript com um modelo de tipos estrutural (não nominal como Java/C#). Classes, interfaces e generics permitem OO robusto no front-end e no back-end (Node.js).</li>
+          <li><strong>Design Patterns GoF</strong> (Gang of Four) são as implementações clássicas dos princípios OO — Factory, Strategy, Observer, Decorator, Command. Ferramentas modernas (frameworks) os implementam internamente.</li>
+          <li><strong>Testes de unidade</strong> são o reflexo da qualidade do design OO: classes com alta coesão e baixo acoplamento são naturalmente mais fáceis de testar. Se o teste é difícil, o design provavelmente é ruim.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
         <ul>
@@ -1164,6 +1205,16 @@
         <tr><td><strong>Plano</strong></td><td>O raciocínio mental para converter objetivos em ações concretas</td></tr>
       </table>
       <p>Cenários podem ser positivos ou negativos, pois precisam identificar as consequências de cada ideia de design. São ferramentas flexíveis, provisórias e de baixo custo — permitem obter feedback dos stakeholders sem construir um protótipo funcional completo.</p>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Prototipação</strong>
+        <ul>
+          <li><strong>Figma</strong> tornou-se o padrão da indústria para prototipação, substituindo Balsamiq, Axure e Adobe XD. É colaborativo em tempo real, multiplataforma e gratuito para times pequenos.</li>
+          <li><strong>Design Systems</strong> (ex.: Material Design, Ant Design, Radix UI) fornecem componentes reutilizáveis pré-testados — reduzem o tempo de prototipação e garantem consistência visual.</li>
+          <li><strong>Testes de usabilidade remotos</strong> com ferramentas como Maze, Hotjar e UserTesting permitem coletar feedback de usuários reais sem sala física — mais rápido e barato que testes presenciais.</li>
+          <li><strong>Penpot</strong> é a alternativa open-source ao Figma — auto-hospedada, sem lock-in de fornecedor, suporte a SVG nativo.</li>
+        </ul>
+      </div>
 
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
@@ -1278,6 +1329,16 @@
         <tr><td>Alto (UI final)</td><td>Figma, Adobe XD, InVision, Axure RP, Sketch</td></tr>
       </table>
 
+      <div class="callout warning">
+        <strong>Práticas Modernas — Protótipos no Design</strong>
+        <ul>
+          <li><strong>Figma Auto Layout e Componentes</strong> permitem criar protótipos de alta fidelidade com estados interativos (hover, click, overlay) diretamente no navegador — o protótipo clicável substitui documentos de especificação extensos.</li>
+          <li><strong>Storybook</strong> é a ferramenta moderna para documentar e testar componentes UI em isolamento — especialmente em React, Vue e Angular. O componente é o protótipo.</li>
+          <li><strong>Design Tokens</strong> são variáveis que definem cores, tipografia e espaçamento de forma centralizada — sincronizadas entre Figma e código-fonte via ferramentas como Style Dictionary.</li>
+          <li><strong>Prototipação orientada a dados:</strong> ferramentas como Framer e Webflow permitem conectar protótipos a APIs reais — o usuário testa com dados verdadeiros, não com Lorem ipsum.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
         <ul>
@@ -1383,6 +1444,16 @@
         <p>Um Pedido contém vários Produtos e um Produto aparece em vários Pedidos — relação N:N. Não pode ser mapeada diretamente: gera a classe <code>ItemPedido</code>, que armazena os atributos da relação (quantidade, preço na data da compra).</p>
       </div>
 
+      <div class="callout warning">
+        <strong>Práticas Modernas — Diagrama de Classes</strong>
+        <ul>
+          <li><strong>Diagramas gerados do código:</strong> plugins para IntelliJ IDEA, VS Code e Eclipse geram diagramas de classes automaticamente a partir do código Java/TypeScript. O diagrama fica sempre sincronizado.</li>
+          <li><strong>Mermaid classDiagram</strong> permite escrever diagramas de classes em Markdown — renderizado pelo GitHub, GitLab e Notion. Substitui ferramentas pesadas como Enterprise Architect.</li>
+          <li><strong>TypeScript interfaces e types</strong> são a implementação moderna de "classe abstrata" no ecossistema JS/TS — mais leves e composíveis que herança tradicional. Preferência pelo padrão <em>composition over inheritance</em>.</li>
+          <li><strong>Code reviews como design review:</strong> Pull Requests em equipes maduras funcionam como revisão do design OO — alterações em class diagrams são discutidas via diff de código, não de documentos.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a Prova</strong>
         <ul>
@@ -1442,6 +1513,16 @@
       <div class="callout">
         <strong>Componente ≠ Classe</strong>
         <p>Classes representam estrutura lógica no nível do código. Componentes representam unidades físicas e deployáveis. Um componente geralmente agrupa dezenas ou centenas de classes com responsabilidade comum. Use componentes quando precisar dividir o sistema em partes independentes e mostrar relacionamentos por meio de interfaces.</p>
+      </div>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Diagrama de Componentes</strong>
+        <ul>
+          <li><strong>C4 Model (Simon Brown)</strong> substituiu o diagrama de componentes UML nas documentações modernas. O nível "Container" equivale ao diagrama de componentes, mas é mais intuitivo e adotado por equipes ágeis.</li>
+          <li><strong>Service Mesh (Istio, Linkerd)</strong> é a implementação moderna de "interfaces entre componentes" em microsserviços — gerencia comunicação, observabilidade e segurança entre serviços em Kubernetes.</li>
+          <li><strong>API Contracts (OpenAPI/AsyncAPI)</strong> substituem as "interfaces fornecidas e requeridas" do diagrama de componentes: especificam contratos entre serviços de forma legível por máquina e humanos.</li>
+          <li><strong>IaC (Infrastructure as Code)</strong> com Terraform ou CDK descreve os componentes de infraestrutura como código — o diagrama de deployment é gerado automaticamente a partir da definição de infra.</li>
+        </ul>
       </div>
 
       <div class="callout tip">
@@ -1525,6 +1606,16 @@
       <div class="callout green">
         <strong>Como ler um diagrama de sequência</strong>
         <p>Leia de <strong>cima para baixo</strong> (ordem temporal). Setas sólidas = chamadas. Setas tracejadas = retornos. Retângulos sobre as lifelines = período de execução. A largura do tempo flui para baixo — mensagens mais abaixo ocorrem mais tarde.</p>
+      </div>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Diagrama de Sequência</strong>
+        <ul>
+          <li><strong>Mermaid sequenceDiagram</strong> e <strong>PlantUML</strong> permitem criar diagramas de sequência a partir de texto — versionados em Git e renderizados em GitHub/GitLab. Substituem o uso de ferramentas gráficas.</li>
+          <li><strong>OpenAPI (Swagger)</strong> documenta APIs REST com exemplos de request/response — é o "diagrama de sequência" da comunicação entre microsserviços. Ferramentas geram código e testes a partir do contrato.</li>
+          <li><strong>AsyncAPI</strong> é o equivalente do OpenAPI para sistemas assíncronos (Kafka, RabbitMQ, WebSockets) — descreve os eventos e mensagens trocadas entre produtores e consumidores.</li>
+          <li><strong>Distributed Tracing</strong> (Jaeger, Zipkin, Datadog APM) gera diagramas de sequência ao vivo a partir do tráfego real do sistema em produção — mais fiel que qualquer diagrama manual.</li>
+        </ul>
       </div>
 
       <div class="callout tip">
@@ -1651,6 +1742,16 @@
         <div class="card"><h4>Durabilidade</h4><p>Uma vez confirmada (commit), a transação persiste mesmo em caso de falha de energia ou crash.</p></div>
       </div>
 
+      <div class="callout warning">
+        <strong>Práticas Modernas — Banco de Dados</strong>
+        <ul>
+          <li><strong>MySQL vs. PostgreSQL:</strong> após a aquisição pela Oracle em 2010, PostgreSQL tornou-se a escolha preferida para novos projetos — mais recursos avançados (JSON, window functions, extensões), licença BSD, crescimento acelerado.</li>
+          <li><strong>ORMs modernos:</strong> Prisma (TypeScript-first), TypeORM, Sequelize e Hibernate abstraem SQL e geram migrações automaticamente. Permitem trabalhar com banco de dados usando objetos e tipos.</li>
+          <li><strong>Database migrations como código:</strong> Flyway (Java) e Alembic (Python) versionam as mudanças de schema no banco — executadas automaticamente no deploy, auditáveis e reversíveis.</li>
+          <li><strong>Banco de dados como serviço (DBaaS):</strong> Supabase (PostgreSQL), PlanetScale (MySQL com branching), Neon (PostgreSQL serverless) eliminam a necessidade de administrar servidores de banco.</li>
+        </ul>
+      </div>
+
       <div class="callout tip">
         <strong>Dicas para a prova — UA14</strong>
         <ul>
@@ -1762,6 +1863,16 @@
         <tr><td>Pedido</td><td>contém</td><td>N:N</td><td>Produto</td></tr>
         <tr><td colspan="4" style="font-style:italic;color:#888">Relacionamento N:N → entidade associativa ItemPedido (quantidade, preco_unitario)</td></tr>
       </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — DER e Modelagem de Banco</strong>
+        <ul>
+          <li><strong>Ferramentas modernas para DER:</strong> dbdiagram.io (texto para ER), DrawDB, Lucidchart e DBeaver (DER reverso a partir de banco existente). Figma também é usado para DER conceituais em equipes de produto.</li>
+          <li><strong>ORMs code-first</strong> (Prisma schema, Entity Framework, TypeORM) invertem o fluxo: você define entidades em código e a ferramenta gera o DER e as migrations — o diagrama conceitual emerge do modelo de código.</li>
+          <li><strong>Database branching</strong> (PlanetScale, Neon) permite criar branches de schema para desenvolvimento — igual a branches de código, sem impactar produção. O DER "diverge" e depois "merge" com revisão de alterações.</li>
+          <li><strong>NoSQL e esquemas flexíveis:</strong> MongoDB (documentos), Redis (chave-valor), Neo4j (grafos) e Cassandra (colunar) resolvem problemas onde o modelo relacional é ineficiente — o DER clássico não se aplica.</li>
+        </ul>
+      </div>
 
       <div class="callout tip">
         <strong>Dicas para a prova — UA15</strong>
@@ -1911,6 +2022,16 @@
           ✓ Sem redundância: dados que mudam em um lugar só ficam em um lugar &nbsp;|&nbsp;
           ✓ Nomes consistentes (snake_case, singulares para tabelas)
         </p>
+      </div>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — MER e Implementação de Banco</strong>
+        <ul>
+          <li><strong>Schema-as-Code com Prisma:</strong> o arquivo <code>schema.prisma</code> define tabelas, colunas, relacionamentos e constraints em uma sintaxe legível — é o MER lógico versionado em Git, executável como migração.</li>
+          <li><strong>Migrations automáticas:</strong> <code>prisma migrate dev</code>, <code>flyway migrate</code> e <code>alembic upgrade head</code> aplicam alterações de schema automaticamente no deploy — substituem scripts SQL manuais.</li>
+          <li><strong>Zero-downtime migrations:</strong> em produção com alto tráfego, alterações de schema (adicionar coluna, criar índice) precisam ser feitas em etapas para não bloquear tabelas. Ferramentas como gh-ost (GitHub) e pt-online-schema-change (Percona) gerenciam isso.</li>
+          <li><strong>Normalização vs. desnormalização:</strong> em aplicações modernas com leitura intensiva (read-heavy), desnormalizar algumas tabelas e usar banco read-replica ou Redis cache é padrão — a 3FN é o ponto de partida, não o destino.</li>
+        </ul>
       </div>
 
       <div class="callout tip">
