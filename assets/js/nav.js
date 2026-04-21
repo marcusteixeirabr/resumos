@@ -40,7 +40,9 @@
   function render() {
     const s = allSlides[current];
     lbImg.src = s.src;
-    lbCap.textContent = `${s.caption}  (${current + 1}/${allSlides.length})`;
+    lbCap.textContent = allSlides.length > 1
+      ? `${s.caption}  (${current + 1}/${allSlides.length})`
+      : s.caption;
   }
 
   document.addEventListener('click', e => {
