@@ -103,6 +103,89 @@
         <p>Sempre declare <code>lang</code> no <code>&lt;html&gt;</code>, use <code>charset="UTF-8"</code> e inclua a meta viewport — são os três obrigatórios para qualquer página profissional.</p>
       </div>
 
+      <h3>Evolução do HTML</h3>
+      <table>
+        <tr><th>Versão</th><th>Ano</th><th>Principal contribuição</th></tr>
+        <tr><td>HTML 1.0</td><td>1993</td><td>Estrutura básica: links, imagens, texto (criado por Tim Berners-Lee)</td></tr>
+        <tr><td>HTML 2.0</td><td>1995</td><td>Formulários; padronizado pela IETF</td></tr>
+        <tr><td>HTML 3.2</td><td>1997</td><td>Tabelas, scripts, estilos inline — W3C assume o padrão</td></tr>
+        <tr><td>HTML 4.01</td><td>1999</td><td>Separação conteúdo/apresentação, incentiva CSS. Variantes: Strict, Transitional, Frameset</td></tr>
+        <tr><td>XHTML 1.0</td><td>2000</td><td>HTML 4.01 com sintaxe XML mais rígida (4 variantes)</td></tr>
+        <tr><td><strong>HTML5</strong></td><td>2014</td><td>Tags semânticas, APIs nativas, multimídia sem plugins, DOCTYPE simplificado</td></tr>
+      </table>
+
+      <h3>Tags de formatação de texto</h3>
+      <table>
+        <tr><th>Tag</th><th>Efeito visual</th><th>Semântica</th></tr>
+        <tr><td><code>&lt;strong&gt;</code></td><td>Negrito</td><td>Alta importância (semântico)</td></tr>
+        <tr><td><code>&lt;b&gt;</code></td><td>Negrito</td><td>Apenas visual, sem significado</td></tr>
+        <tr><td><code>&lt;em&gt;</code></td><td>Itálico</td><td>Ênfase (semântico)</td></tr>
+        <tr><td><code>&lt;i&gt;</code></td><td>Itálico</td><td>Apenas visual, sem significado</td></tr>
+        <tr><td><code>&lt;del&gt;</code></td><td>Tachado</td><td>Texto removido/excluído</td></tr>
+        <tr><td><code>&lt;ins&gt;</code></td><td>Sublinhado</td><td>Texto inserido</td></tr>
+        <tr><td><code>&lt;mark&gt;</code></td><td>Destaque amarelo</td><td>Texto relevante/marcado</td></tr>
+        <tr><td><code>&lt;small&gt;</code></td><td>Menor</td><td>Texto secundário, copyright</td></tr>
+        <tr><td><code>&lt;sup&gt;</code> / <code>&lt;sub&gt;</code></td><td>Sobrescrito / subscrito</td><td>Ex.: x² ou H₂O</td></tr>
+        <tr><td><code>&lt;pre&gt;</code></td><td>Pré-formatado (monospace)</td><td>Respeita espaços e quebras exatamente como digitado</td></tr>
+        <tr><td><code>&lt;code&gt;</code></td><td>Monospace inline</td><td>Trecho de código-fonte</td></tr>
+      </table>
+
+      <h3>Atributos do elemento <code>&lt;a&gt;</code></h3>
+      <table>
+        <tr><th>Atributo</th><th>Descrição</th><th>Observação</th></tr>
+        <tr><td><code>href="url"</code></td><td>Destino do link</td><td>URL completa ou caminho relativo</td></tr>
+        <tr><td><code>target="_blank"</code></td><td>Abre em nova aba</td><td>Sempre use <code>rel="noopener noreferrer"</code></td></tr>
+        <tr><td><code>target="_self"</code></td><td>Mesma aba (padrão)</td><td>—</td></tr>
+        <tr><td><code>title="texto"</code></td><td>Dica ao passar o mouse</td><td>—</td></tr>
+        <tr><td><code>download="nome"</code></td><td>Força download do arquivo</td><td>Pode sugerir nome diferente do original</td></tr>
+        <tr><td><code>href="mailto:..."</code></td><td>Abre cliente de e-mail</td><td><code>?subject=Assunto&amp;body=Texto</code></td></tr>
+        <tr><td><code>href="#id"</code></td><td>Âncora interna (mesma página)</td><td>Rola até o elemento com aquele <code>id</code></td></tr>
+      </table>
+
+      <h3>Lista de definição — <code>&lt;dl&gt;</code></h3>
+      <p>Terceiro tipo de lista HTML: funciona como glossário, sem marcadores ou numeração.</p>
+      <pre><code><span class="tag-c">&lt;dl&gt;</span>
+  <span class="tag-c">&lt;dt&gt;</span>HTML<span class="tag-c">&lt;/dt&gt;</span>             <span class="cm">&lt;!-- dt = termo --&gt;</span>
+  <span class="tag-c">&lt;dd&gt;</span>Linguagem de marcação de hipertexto.<span class="tag-c">&lt;/dd&gt;</span>  <span class="cm">&lt;!-- dd = definição --&gt;</span>
+
+  <span class="tag-c">&lt;dt&gt;</span>CSS<span class="tag-c">&lt;/dt&gt;</span>
+  <span class="tag-c">&lt;dd&gt;</span>Folhas de estilo em cascata.<span class="tag-c">&lt;/dd&gt;</span>
+<span class="tag-c">&lt;/dl&gt;</span></code></pre>
+
+      <h3>Tabela — estrutura semântica completa</h3>
+      <table>
+        <tr><th>Tag / Atributo</th><th>Função</th></tr>
+        <tr><td><code>&lt;table&gt;</code></td><td>Contêiner da tabela</td></tr>
+        <tr><td><code>&lt;thead&gt;</code></td><td>Grupo do cabeçalho (pode ser repetido ao imprimir)</td></tr>
+        <tr><td><code>&lt;tbody&gt;</code></td><td>Corpo principal da tabela</td></tr>
+        <tr><td><code>&lt;tfoot&gt;</code></td><td>Rodapé da tabela (totais, notas)</td></tr>
+        <tr><td><code>&lt;tr&gt;</code></td><td>Linha</td></tr>
+        <tr><td><code>&lt;th&gt;</code></td><td>Célula de cabeçalho (negrito + centralizado por padrão)</td></tr>
+        <tr><td><code>&lt;td&gt;</code></td><td>Célula de dados</td></tr>
+        <tr><td><code>colspan="n"</code></td><td>Mescla n colunas horizontalmente</td></tr>
+        <tr><td><code>rowspan="n"</code></td><td>Mescla n linhas verticalmente</td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Evite a "div-ite"</strong>
+        <p>Antes do HTML5 os desenvolvedores usavam <code>&lt;div&gt;</code> para tudo, tornando o código ilegível — prática chamada de <strong>div-itis</strong>. As tags semânticas (<code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;aside&gt;</code>, <code>&lt;footer&gt;</code>) resolvem isso ao dar significado estrutural ao conteúdo, melhorando acessibilidade e SEO. Use <code>&lt;div&gt;</code> apenas quando não existir tag semântica adequada.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA1</strong>
+        <ul>
+          <li>As 4 TAGs básicas: <strong><code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;body&gt;</code> e <code>&lt;title&gt;</code></strong>.</li>
+          <li>Cabeçalhos de título: <code>&lt;h1&gt;</code> até <code>&lt;h6&gt;</code> — não confundir com <code>&lt;title&gt;</code> ou <code>&lt;header&gt;</code>.</li>
+          <li>Formatos de imagem suportados: <strong>GIF, JPG e PNG</strong> (não BMP, DOC, PSD, CDR).</li>
+          <li>Quebra de linha dentro de parágrafo: <code>&lt;br/&gt;</code> — não existe <code>&lt;breake&gt;</code> nem <code>&lt;line&gt;</code>.</li>
+          <li>Tipos de lista: <code>&lt;ol&gt;</code> (ordenada), <code>&lt;ul&gt;</code> (não ordenada) e <code>&lt;dl&gt;</code> (definição).</li>
+          <li><code>&lt;strong&gt;</code> = semântico (importância); <code>&lt;b&gt;</code> = só visual. Idem <code>&lt;em&gt;</code> vs <code>&lt;i&gt;</code>.</li>
+          <li><code>thead</code>, <code>tbody</code>, <code>tfoot</code> organizam a tabela; <code>colspan</code> mescla colunas, <code>rowspan</code> mescla linhas.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Machado, V. A. <em>Ferramentas de Desenvolvimento Web</em>. Porto Alegre: SAGAH, 2024. | Miletto, E. M.; Bertagnolli, S. C. <em>Desenvolvimento de Software II</em>. Porto Alegre: Bookman, 2014.</p>
+
       <div class="section-nav">
         <span></span>
         <a href="#" data-sec="ua2" class="next">HTML5</a>
@@ -166,6 +249,64 @@
         <tr><td>Container só para layout/estilo</td><td><code>div</code></td></tr>
         <tr><td>Texto inline sem papel semântico</td><td><code>span</code></td></tr>
       </table>
+
+      <h3>Âncoras — navegação dentro da página</h3>
+      <p>Âncoras direcionam o usuário para um ponto específico dentro da mesma página usando o atributo <code>id</code>:</p>
+      <pre><code><span class="cm">&lt;!-- 1. Definir o destino com id --&gt;</span>
+<span class="tag-c">&lt;h2</span> <span class="attr">id</span>=<span class="str">"contato"</span><span class="tag-c">&gt;</span>Contato<span class="tag-c">&lt;/h2&gt;</span>
+
+<span class="cm">&lt;!-- 2. Link para o destino --&gt;</span>
+<span class="tag-c">&lt;a</span> <span class="attr">href</span>=<span class="str">"#contato"</span><span class="tag-c">&gt;</span>Ir para Contato<span class="tag-c">&lt;/a&gt;</span>
+
+<span class="cm">&lt;!-- Voltar ao topo --&gt;</span>
+<span class="tag-c">&lt;a</span> <span class="attr">href</span>=<span class="str">"#"</span><span class="tag-c">&gt;</span>Voltar ao topo<span class="tag-c">&lt;/a&gt;</span></code></pre>
+      <p>Útil em páginas longas: menus de índice no topo que pulam direto para a seção desejada.</p>
+
+      <h3>Listas aninhadas</h3>
+      <p>Listas podem ser misturadas e aninhadas — uma <code>ul</code> dentro de um <code>li</code> de outra lista, inclusive de tipo diferente:</p>
+      <pre><code><span class="tag-c">&lt;ul&gt;</span>
+  <span class="tag-c">&lt;li&gt;</span>Cores primárias
+    <span class="tag-c">&lt;ol&gt;</span>
+      <span class="tag-c">&lt;li&gt;</span>Vermelho<span class="tag-c">&lt;/li&gt;</span>
+      <span class="tag-c">&lt;li&gt;</span>Azul<span class="tag-c">&lt;/li&gt;</span>
+      <span class="tag-c">&lt;li&gt;</span>Amarelo<span class="tag-c">&lt;/li&gt;</span>
+    <span class="tag-c">&lt;/ol&gt;</span>
+  <span class="tag-c">&lt;/li&gt;</span>
+  <span class="tag-c">&lt;li&gt;</span>Cores secundárias<span class="tag-c">&lt;/li&gt;</span>
+<span class="tag-c">&lt;/ul&gt;</span></code></pre>
+
+      <h3>Comparação: tags semânticas vs <code>&lt;div&gt;</code></h3>
+      <table>
+        <tr><th>Tag semântica</th><th>Significado</th><th>Equivalente genérico</th></tr>
+        <tr><td><code>&lt;header&gt;</code></td><td>Cabeçalho da página ou seção</td><td><code>&lt;div id="header"&gt;</code></td></tr>
+        <tr><td><code>&lt;nav&gt;</code></td><td>Bloco de navegação principal</td><td><code>&lt;div id="nav"&gt;</code></td></tr>
+        <tr><td><code>&lt;main&gt;</code></td><td>Conteúdo principal (único por página)</td><td><code>&lt;div id="main"&gt;</code></td></tr>
+        <tr><td><code>&lt;section&gt;</code></td><td>Uma ou mais áreas temáticas da página</td><td><code>&lt;div class="section"&gt;</code></td></tr>
+        <tr><td><code>&lt;article&gt;</code></td><td>Conteúdo independente (post, notícia)</td><td><code>&lt;div class="article"&gt;</code></td></tr>
+        <tr><td><code>&lt;aside&gt;</code></td><td>Conteúdo complementar / lateral</td><td><code>&lt;div id="aside"&gt;</code></td></tr>
+        <tr><td><code>&lt;footer&gt;</code></td><td>Rodapé da página ou seção</td><td><code>&lt;div id="footer"&gt;</code></td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — HTML5 além do básico</strong>
+        <p><strong>ARIA (Accessible Rich Internet Applications):</strong> quando uma tag semântica não existe para o papel desejado, use atributos ARIA — <code>role="banner"</code>, <code>aria-label="..."</code>, <code>aria-hidden="true"</code>. Leitores de tela dependem disso.<br>
+        <strong>Web Components:</strong> padrão nativo que permite criar tags HTML customizadas (<code>&lt;meu-componente&gt;</code>) encapsulando estrutura, estilo e comportamento — base de frameworks como React e Vue.<br>
+        <strong>Lazy loading nativo:</strong> <code>&lt;img loading="lazy"&gt;</code> — carrega imagens somente quando elas entram na viewport, sem JavaScript.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA2</strong>
+        <ul>
+          <li><code>&lt;!DOCTYPE html&gt;</code> (sem número de versão) indica que o documento é HTML5.</li>
+          <li><code>&lt;section&gt;</code> define uma ou mais áreas temáticas da página.</li>
+          <li><code>&lt;pre&gt;</code> exibe o texto tal qual está digitado no código-fonte, preservando espaços e quebras de linha.</li>
+          <li>Âncoras (<code>href="#id"</code>) direcionam para um ponto dentro da <strong>mesma página</strong> — não abrem outra URL.</li>
+          <li>Listas podem ser aninhadas com tipos diferentes: <code>ul</code> dentro de <code>ol</code> e vice-versa.</li>
+          <li>A tag <code>&lt;main&gt;</code> deve ser única por página; <code>&lt;header&gt;</code> e <code>&lt;footer&gt;</code> podem aparecer em múltiplas seções.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Saraiva, M. O. <em>Desenvolvimento de Sistemas com PHP</em>. Porto Alegre: SAGAH, 2018. | Freeman, E.; Robson, E. <em>Use a Cabeça! HTML e CSS</em>. O'Reilly, 2014.</p>
 
       <div class="section-nav">
         <a href="#" data-sec="ua1" class="prev">HTML Fundamentos</a>
@@ -235,6 +376,85 @@
         <strong>GET vs POST no formulário</strong>
         <p><code>method="get"</code> — dados na URL (visível, para buscas). <code>method="post"</code> — dados no body da requisição (para dados sensíveis, cadastros).</p>
       </div>
+
+      <h3>Atributos da tag <code>&lt;form&gt;</code></h3>
+      <table>
+        <tr><th>Atributo</th><th>O que faz</th><th>Valores / Observações</th></tr>
+        <tr><td><code>name</code></td><td>Nome do formulário</td><td>Identifica o form no documento (útil quando há mais de um)</td></tr>
+        <tr><td><code>action</code></td><td>URL de destino dos dados</td><td>Se omitido, envia para a própria página</td></tr>
+        <tr><td><code>method</code></td><td>Método HTTP de envio</td><td><code>get</code> (na URL) | <code>post</code> (no corpo)</td></tr>
+        <tr><td><code>autocomplete</code></td><td>Autocompletar navegador</td><td><code>on</code> (padrão) | <code>off</code></td></tr>
+        <tr><td><code>target</code></td><td>Onde exibir a resposta</td><td><code>_self</code> | <code>_blank</code> | <code>_parent</code> | <code>_top</code> | nome do iframe</td></tr>
+        <tr><td><code>enctype</code></td><td>Codificação dos dados</td><td><code>application/x-www-form-urlencoded</code> (padrão) | <code>multipart/form-data</code> (upload) | <code>text/plain</code></td></tr>
+        <tr><td><code>novalidate</code></td><td>Desativa validação HTML5</td><td>Atributo booleano (sem valor)</td></tr>
+      </table>
+
+      <h3>Tipos de <code>&lt;input&gt;</code> — completo</h3>
+      <table>
+        <tr><th>type</th><th>O que é</th><th>Detalhe</th></tr>
+        <tr><td><code>text</code></td><td>Texto livre</td><td>Aceita qualquer caractere</td></tr>
+        <tr><td><code>password</code></td><td>Senha</td><td>Oculta os caracteres digitados</td></tr>
+        <tr><td><code>file</code></td><td>Upload de arquivo</td><td>Exibe botão para selecionar arquivo</td></tr>
+        <tr><td><code>hidden</code></td><td>Campo oculto</td><td>Invisível ao usuário, mas enviado ao servidor</td></tr>
+        <tr><td><code>radio</code></td><td>Múltipla escolha única</td><td>Mesmo <code>name</code> = grupo, escolha exclusiva</td></tr>
+        <tr><td><code>checkbox</code></td><td>Múltipla escolha múltipla</td><td>Permite marcar vários itens</td></tr>
+        <tr><td><code>email</code></td><td>E-mail</td><td>Valida formato name@domain</td></tr>
+        <tr><td><code>number</code></td><td>Número</td><td>Aceita <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+        <tr><td><code>range</code></td><td>Slider</td><td>Seleção visual de intervalo</td></tr>
+        <tr><td><code>date</code></td><td>Data</td><td>Exibe calendário nativo</td></tr>
+        <tr><td><code>month</code></td><td>Mês/ano</td><td>Seleciona mês e ano</td></tr>
+        <tr><td><code>week</code></td><td>Semana/ano</td><td>Seleciona número da semana</td></tr>
+        <tr><td><code>time</code></td><td>Hora</td><td>Máscara HH:MM automática</td></tr>
+        <tr><td><code>color</code></td><td>Cor</td><td>Retorna valor hexadecimal</td></tr>
+        <tr><td><code>tel</code></td><td>Telefone</td><td>Teclado numérico no mobile</td></tr>
+        <tr><td><code>search</code></td><td>Busca</td><td>Botão de limpar nativo</td></tr>
+        <tr><td><code>url</code></td><td>URL</td><td>Valida formato http://...</td></tr>
+      </table>
+
+      <h3>Botões</h3>
+      <table>
+        <tr><th>Elemento</th><th>Função</th></tr>
+        <tr><td><code>&lt;button type="submit"&gt;</code></td><td>Envia os dados do formulário ao servidor</td></tr>
+        <tr><td><code>&lt;button type="reset"&gt;</code></td><td>Limpa todos os campos do formulário</td></tr>
+        <tr><td><code>&lt;button type="button"&gt;</code></td><td>Botão genérico — ação definida via JavaScript</td></tr>
+        <tr><td><code>&lt;input type="submit"&gt;</code></td><td>Equivalente ao button submit (forma legada)</td></tr>
+      </table>
+
+      <h3>Atributos de validação e controle</h3>
+      <table>
+        <tr><th>Atributo</th><th>Efeito</th><th>Exemplo</th></tr>
+        <tr><td><code>required</code></td><td>Campo obrigatório</td><td><code>&lt;input required&gt;</code></td></tr>
+        <tr><td><code>placeholder</code></td><td>Texto de dica dentro do campo</td><td><code>placeholder="00000-000"</code></td></tr>
+        <tr><td><code>autofocus</code></td><td>Foco automático ao carregar a página</td><td><code>&lt;input autofocus&gt;</code></td></tr>
+        <tr><td><code>readonly</code></td><td>Campo visível mas não editável</td><td><code>&lt;input readonly&gt;</code> — valor enviado</td></tr>
+        <tr><td><code>disabled</code></td><td>Campo desabilitado</td><td><code>&lt;input disabled&gt;</code> — valor NÃO enviado</td></tr>
+        <tr><td><code>minlength</code> / <code>maxlength</code></td><td>Limita caracteres</td><td><code>minlength="3" maxlength="50"</code></td></tr>
+        <tr><td><code>min</code> / <code>max</code> / <code>step</code></td><td>Limita intervalo numérico</td><td><code>min="0" max="10" step="0.5"</code></td></tr>
+        <tr><td><code>pattern</code></td><td>Regex de validação</td><td><code>pattern="[0-9]{5}-[0-9]{3}"</code></td></tr>
+        <tr><td><code>title</code></td><td>Mensagem de dica na validação</td><td><code>title="Digite um CEP válido"</code></td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Formulários</strong>
+        <p><strong>Constraint Validation API:</strong> via JavaScript, <code>input.checkValidity()</code> retorna <code>true/false</code> e <code>input.validationMessage</code> traz a mensagem de erro — permite mensagens de validação customizadas sem remover a validação nativa.<br>
+        <strong>ARIA em formulários:</strong> use <code>aria-describedby</code> para associar mensagens de erro ao campo, e <code>aria-required="true"</code> para campos obrigatórios — leitores de tela precisam disso.<br>
+        <strong>Validação client-side ≠ segurança:</strong> validação HTML5 é UX, não segurança. Sempre valide também no servidor — nunca confie apenas no browser.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA3</strong>
+        <ul>
+          <li>Formulários HTML são usados para <strong>agrupar elementos de uma página</strong> com o objetivo de captar ou disponibilizar informações.</li>
+          <li>A interação cliente-servidor em formulários se dá por <strong>solicitação e resposta</strong>.</li>
+          <li><code>method="get"</code> → dados visíveis na URL após o <code>?</code>. <code>method="post"</code> → dados no corpo da requisição (invisíveis).</li>
+          <li><code>type="hidden"</code> → campo invisível ao usuário, mas seu valor é enviado ao servidor normalmente.</li>
+          <li><code>readonly</code> → impede edição mas o valor é enviado. <code>disabled</code> → impede edição e o valor NÃO é enviado.</li>
+          <li><code>radio</code> → só um item pode ser selecionado. <code>checkbox</code> → múltiplos itens podem ser selecionados.</li>
+          <li><code>enctype="multipart/form-data"</code> é obrigatório para upload de arquivos.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Saraiva, M. O. <em>Desenvolvimento de Sistemas com PHP</em>. Porto Alegre: SAGAH, 2018. | Crowther, B. et al. <em>HTML5 e CSS3</em>. 2014.</p>
 
       <div class="section-nav">
         <a href="#" data-sec="ua2" class="prev">HTML5</a>
@@ -307,6 +527,78 @@
         <strong>Dica prática</strong>
         <p>Prefira classes a IDs no CSS — são reutilizáveis e causam menos problemas de especificidade.</p>
       </div>
+
+      <h3>Comparativo: CSS externo vs interno vs inline</h3>
+      <table>
+        <tr><th>Característica</th><th>CSS Externo</th><th>CSS Interno</th><th>CSS Inline</th></tr>
+        <tr><td>Manutenção</td><td>Fácil — uma mudança reflete em todas as páginas</td><td>Moderada — mudanças refletem só na página atual</td><td>Difícil — mudanças em cada elemento</td></tr>
+        <tr><td>Consistência</td><td>Alta — estilos aplicados uniformemente</td><td>Moderada — só na página atual</td><td>Baixa — propenso a inconsistências</td></tr>
+        <tr><td>Tempo de carregamento</td><td>Melhor — pode ser cacheado pelo navegador</td><td>Médio — carrega junto com o documento</td><td>Pior — cada elemento carrega seus próprios estilos</td></tr>
+        <tr><td>Organização do código</td><td>Alta — separação clara conteúdo/estilo</td><td>Média — conteúdo e estilo no mesmo arquivo</td><td>Baixa — conteúdo e estilo misturados</td></tr>
+      </table>
+
+      <h3>Unidades de medida em CSS</h3>
+      <table>
+        <tr><th>Unidade</th><th>Tipo</th><th>O que representa</th></tr>
+        <tr><td><code>px</code></td><td>Absoluta</td><td>Pixel — tamanho fixo na tela</td></tr>
+        <tr><td><code>%</code></td><td>Relativa</td><td>Porcentagem do elemento pai</td></tr>
+        <tr><td><code>em</code></td><td>Relativa</td><td>Relativo ao font-size do elemento pai</td></tr>
+        <tr><td><code>rem</code></td><td>Relativa</td><td>Relativo ao font-size do elemento raiz (<code>:root</code>)</td></tr>
+        <tr><td><code>vw</code></td><td>Relativa</td><td>1% da largura da viewport</td></tr>
+        <tr><td><code>vh</code></td><td>Relativa</td><td>1% da altura da viewport</td></tr>
+        <tr><td><code>ch</code></td><td>Relativa</td><td>Largura do caractere "0" na fonte atual</td></tr>
+        <tr><td><code>fr</code></td><td>Relativa (Grid)</td><td>Fração do espaço disponível no Grid</td></tr>
+      </table>
+
+      <h3>Propriedade <code>float</code></h3>
+      <p>O <code>float</code> era o principal método de layout antes do Flexbox e Grid — ainda aparece em código legado:</p>
+      <pre><code><span class="sel">.imagem</span> {
+  <span class="prop">float</span>: <span class="val">left</span>;   <span class="cm">/* left | right | none */</span>
+  <span class="prop">margin</span>: <span class="val">0 1rem 1rem 0</span>;
+}
+
+<span class="cm">/* Limpa o float para o próximo elemento */</span>
+<span class="sel">.container::after</span> {
+  <span class="prop">content</span>: <span class="str">""</span>;
+  <span class="prop">display</span>: <span class="val">block</span>;
+  <span class="prop">clear</span>: <span class="val">both</span>;
+}</code></pre>
+
+      <h3>Tipos de seletores CSS — resumo</h3>
+      <table>
+        <tr><th>Seletor</th><th>Exemplo</th><th>Seleciona</th></tr>
+        <tr><td>Universal</td><td><code>*</code></td><td>Todos os elementos da página</td></tr>
+        <tr><td>Tag (tipo)</td><td><code>p</code>, <code>h1</code></td><td>Todos os elementos daquele tipo</td></tr>
+        <tr><td>Classe</td><td><code>.destaque</code></td><td>Elementos com <code>class="destaque"</code></td></tr>
+        <tr><td>ID</td><td><code>#cabecalho</code></td><td>Elemento com <code>id="cabecalho"</code> (único)</td></tr>
+        <tr><td>Descendente</td><td><code>nav a</code></td><td><code>a</code> dentro de qualquer <code>nav</code></td></tr>
+        <tr><td>Filho direto</td><td><code>ul > li</code></td><td><code>li</code> filho direto de <code>ul</code></td></tr>
+        <tr><td>Pseudo-classe</td><td><code>a:hover</code></td><td>Elemento em determinado estado</td></tr>
+        <tr><td>Pseudo-elemento</td><td><code>p::first-line</code></td><td>Parte específica do elemento</td></tr>
+        <tr><td>Atributo</td><td><code>[type="email"]</code></td><td>Elementos com aquele atributo/valor</td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — CSS</strong>
+        <p><strong>CSS Variables (Custom Properties):</strong> <code>:root { --cor-primaria: #3b82f6; }</code> — centralize valores repetidos e altere o tema de toda a página mudando uma variável.<br>
+        <strong>Utility-first (Tailwind CSS):</strong> tendência que usa classes utilitárias (<code>flex</code>, <code>p-4</code>, <code>text-lg</code>) direto no HTML em vez de criar classes semânticas no CSS — produtivo mas gera mais HTML verboso.<br>
+        <strong>CSS Modules / Scoped CSS:</strong> em projetos com React/Vue, escopo de estilo por componente evita conflitos de nomes de classe globalmente.<br>
+        <strong>Evite <code>!important</code>:</strong> resolve conflito de especificidade na força bruta — prefira refatorar a hierarquia de seletores.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA4</strong>
+        <ul>
+          <li>As três formas de aplicar CSS: <strong>inline</strong> (atributo <code>style</code>), <strong>interna</strong> (tag <code>&lt;style&gt;</code> no <code>&lt;head&gt;</code>) e <strong>externa</strong> (arquivo <code>.css</code> via <code>&lt;link&gt;</code>).</li>
+          <li>Bloco de declaração CSS: <code>seletor { propriedade: valor; }</code> — seletor define o alvo; propriedade e valor definem o estilo.</li>
+          <li>O seletor universal (<code>*</code>) seleciona <strong>todos</strong> os elementos — especificidade zero.</li>
+          <li><code>float: left</code> e <code>float: right</code> — empurra o elemento para a borda e permite que o texto flua ao redor.</li>
+          <li>Ordem de especificidade: inline &gt; <code>#id</code> &gt; <code>.classe</code> &gt; tag &gt; <code>*</code>.</li>
+          <li>CSS externo é o método recomendado para projetos reais — reutilizável, cacheável e de fácil manutenção.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Serpa, M. S. <em>Ferramentas de Desenvolvimento Web</em>. Porto Alegre: SAGAH, 2024. | Bertagnolli, S. C.; Miletto, E. M. <em>Desenvolvimento de Software II</em>. Porto Alegre: Bookman, 2014.</p>
 
       <div class="section-nav">
         <a href="#" data-sec="ua3" class="prev">Formulários HTML5</a>
