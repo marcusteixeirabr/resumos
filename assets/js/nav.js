@@ -17,6 +17,39 @@
   });
 })();
 
+/* Hamburger menu mobile */
+(function () {
+  const btn     = document.getElementById('menu-btn');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('nav-overlay');
+  if (!btn || !sidebar) return;
+
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    overlay && overlay.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  btn.addEventListener('click', () => {
+    const opening = !sidebar.classList.contains('open');
+    sidebar.classList.toggle('open');
+    overlay && overlay.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(opening));
+  });
+
+  overlay && overlay.addEventListener('click', closeMenu);
+
+  /* Fecha ao navegar para uma seção */
+  sidebar.querySelectorAll('[data-sec]').forEach(a => {
+    a.addEventListener('click', closeMenu);
+  });
+
+  /* Fecha com Escape */
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeMenu();
+  });
+})();
+
 /* Lightbox para galeria de slides */
 (function () {
   const lb      = document.getElementById('lightbox');

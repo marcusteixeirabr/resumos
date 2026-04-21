@@ -237,9 +237,64 @@ td:first-child { color: var(--text); }
   background: rgba(0,0,0,.6); padding: .4rem 1rem; border-radius: 20px;
 }
 
+/* ── Hamburger button (mobile only) ── */
+.menu-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: none; border: none;
+  cursor: pointer; padding: 6px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  transition: background .15s;
+}
+.menu-btn:hover { background: rgba(255,255,255,.08); }
+.menu-btn span {
+  display: block;
+  width: 18px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform .2s, opacity .2s;
+}
+
+/* ── Nav overlay (mobile backdrop) ── */
+#nav-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  z-index: 150;
+  backdrop-filter: blur(2px);
+}
+#nav-overlay.open { display: block; }
+
+/* ── callout.warning and callout.tip ── */
+.callout.warning { background: rgba(247,129,102,.06); border-color: rgba(247,129,102,.2); }
+.callout.tip     { background: rgba(210,168,255,.06); border-color: rgba(210,168,255,.2); }
+.callout.tip strong, .callout.warning strong { color: var(--text); }
+.callout ul { margin: .4rem 0 0; padding-left: 1.2rem; }
+.callout ul li { font-size: .82rem; }
+.ref { font-size: .75rem !important; color: #6e7681 !important; margin-top: 1.5rem !important; }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
-  aside { display: none; }
+  .menu-btn { display: flex; }
+
+  aside {
+    position: fixed;
+    top: 0; left: 0;
+    width: 280px;
+    height: 100vh;
+    z-index: 200;
+    transform: translateX(-100%);
+    transition: transform .25s ease;
+    overflow-y: auto;
+  }
+  aside.open { transform: translateX(0); }
+
   main { padding: 1.5rem 1.25rem; max-width: 100%; }
   header { padding: .75rem 1rem; }
+  header h1 { font-size: .95rem; }
 }
