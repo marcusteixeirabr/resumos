@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resumos ADS</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #30363d;
+      --accent: #58a6ff;
+      --accent2: #3fb950;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    header .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    header .logo span { color: var(--accent2); }
+
+    header nav {
+      margin-left: auto;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    header nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    header nav a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .badge-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .badge {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 20px;
+    }
+
+    /* ── Section titles ── */
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      padding: 0 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title .dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    .dot-blue  { background: var(--accent); }
+    .dot-green { background: var(--accent2); }
+
+    /* ── Grid ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1rem;
+      padding: 0 2rem 3rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: border-color 0.2s, transform 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .card-term {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      width: fit-content;
+    }
+
+    .term-current {
+      background: rgba(63,185,80,0.15);
+      color: var(--accent2);
+      border: 1px solid rgba(63,185,80,0.3);
+    }
+
+    .term-past {
+      background: rgba(88,166,255,0.12);
+      color: var(--accent);
+      border: 1px solid rgba(88,166,255,0.25);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .card p {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+    }
+
+    .card-arrow {
+      color: var(--muted);
+      font-size: 1rem;
+      transition: color 0.2s, transform 0.2s;
+    }
+
+    .card:hover .card-arrow {
+      color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      header { padding: 1rem; }
+      header nav { gap: 1rem; }
+      .hero { padding: 2.5rem 1rem 2rem; }
+      .grid { padding: 0 1rem 2rem; }
+      .section-title { padding: 0 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="logo" href="index.html">Resumos<span>.dev</span></a>
+  <nav>
+    <a href="https://github.com/marcusteixeirabr/resumos" target="_blank" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Resumos de <em>ADS</em></h1>
+    <p>
+      Compilado de anotações e resumos das disciplinas do curso de
+      Análise e Desenvolvimento de Sistemas. Feito para estudar, revisar e compartilhar com quem precisar.
+    </p>
+    <div class="badge-row">
+      <span class="badge">📚 ADS</span>
+      <span class="badge">💻 HTML · CSS · JS</span>
+      <span class="badge">🔓 Open Source</span>
+    </div>
+  </section>
+
+  <p class="section-title">
+    <span class="dot dot-green"></span>Trimestre atual
+  </p>
+  <div class="grid">
+
+    <a class="card" href="software-design/index.html">
+      <span class="card-icon">🏗️</span>
+      <span class="card-term term-current">Em andamento</span>
+      <h2>Software Design</h2>
+      <p>Arquitetura de sistemas, UML, diagramas de classes, sequência, componentes, prototipação e banco de dados.</p>
+      <div class="card-footer">
+        <div class="chip-list">
+          <span class="chip">UML</span>
+          <span class="chip">Arquitetura</span>
+          <span class="chip">DER/MER</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="card" href="responsive-web/index.html">
+      <span class="card-icon">🌐</span>
+      <span class="card-term term-current">Em andamento</span>
+      <h2>Responsive Web Development</h2>
+      <p>HTML5, CSS3, formulários, JavaScript, AJAX e introdução ao PHP com MySQL para desenvolvimento web.</p>
+      <div class="card-footer">
+        <div class="chip-list">
+          <span class="chip">HTML5</span>
+          <span class="chip">CSS3</span>
+          <span class="chip">JS</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="section-title">
+    <span class="dot dot-blue"></span>Trimestres anteriores
+  </p>
+  <div class="grid">
+
+    <a class="card" href="engenharia-requisitos/index.html">
+      <span class="card-icon">📋</span>
+      <span class="card-term term-past">Concluído</span>
+      <h2>Engenharia de Requisitos</h2>
+      <p>Regras de negócio, requisitos funcionais e não funcionais, casos de uso, diagrama de atividades e rastreabilidade.</p>
+      <div class="card-footer">
+        <div class="chip-list">
+          <span class="chip">RF / RNF</span>
+          <span class="chip">Caso de Uso</span>
+          <span class="chip">UML</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+    <a class="card" href="pensamento-computacional/index.html">
+      <span class="card-icon">🧠</span>
+      <span class="card-term term-past">Concluído</span>
+      <h2>Pensamento Computacional</h2>
+      <p>Fundamentos de algoritmos, lógica, linguagem C, estruturas de controle, vetores e matrizes.</p>
+      <div class="card-footer">
+        <div class="chip-list">
+          <span class="chip">Algoritmos</span>
+          <span class="chip">Linguagem C</span>
+          <span class="chip">Lógica</span>
+        </div>
+        <span class="card-arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  Feito com ♥ para facilitar os estudos &mdash;
+  <a href="https://github.com/marcusteixeirabr/resumos" target="_blank" rel="noopener">@marcusteixeirabr</a>
+</footer>
+
+</body>
+</html>
