@@ -14,5 +14,9 @@ Thumbs.db
 # Logs
 *.log
 
-# Dependências (caso venha a usar npm no futuro)
+# Dependências
 node_modules/
+
+# Skills CLI
+.agents/
+skills-lock.json

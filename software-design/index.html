@@ -158,14 +158,72 @@
         </div>
       </div>
 
+      <h3>Arquitetura Cliente-Servidor</h3>
+      <p>Divide o sistema em dois papéis bem definidos: o <strong>cliente</strong>, que solicita recursos ou serviços, e o <strong>servidor</strong>, que os processa e responde. É o modelo fundamental da Web e de boa parte das aplicações corporativas.</p>
+      <ul>
+        <li><strong>Vantagem:</strong> centralização do controle e dos dados no servidor facilita manutenção, backup e aplicação de regras de segurança.</li>
+        <li><strong>Trade-off:</strong> o servidor pode se tornar gargalo (single point of failure). Latência de rede afeta a experiência do usuário.</li>
+        <li><strong>Quando usar:</strong> aplicações Web, sistemas de e-commerce, portais corporativos — qualquer cenário com muitos clientes acessando dados centralizados.</li>
+      </ul>
+
+      <div class="callout">
+        <strong>Saiba mais — MVC (Model-View-Controller)</strong>
+        <p>MVC é um padrão arquitetural que organiza a aplicação em três camadas colaborativas: <strong>Model</strong> (dados e regras de negócio), <strong>View</strong> (apresentação ao usuário) e <strong>Controller</strong> (coordenação entre Model e View). É frequentemente aplicado dentro de uma arquitetura Cliente-Servidor — o servidor implementa Model + Controller enquanto o cliente renderiza a View. Frameworks como Spring MVC, Django e Ruby on Rails popularizaram esse padrão.</p>
+      </div>
+
       <h3>Resumo comparativo</h3>
       <table>
         <tr><th>Estilo</th><th>Custo Inicial</th><th>Manutenção</th><th>Escalabilidade</th><th>Acoplamento</th></tr>
         <tr><td>Monolítica</td><td>Baixo</td><td>Baixa</td><td>Baixa</td><td>Alto</td></tr>
         <tr><td>Em Camadas</td><td>Médio</td><td>Média</td><td>Média</td><td>Médio</td></tr>
+        <tr><td>Cliente-Servidor</td><td>Médio</td><td>Média</td><td>Média</td><td>Médio</td></tr>
         <tr><td>Microsserviços</td><td>Alto</td><td>Alta</td><td>Altíssima</td><td>Baixo</td></tr>
         <tr><td>Orientada a Eventos</td><td>Alto</td><td>Alta</td><td>Altíssima</td><td>Mínimo</td></tr>
       </table>
+
+      <h3>Critérios de Escolha Arquitetural</h3>
+      <p>Escolher uma arquitetura sem critérios claros é apostar no escuro. O PDF da disciplina destaca cinco atributos de qualidade que devem guiar essa decisão:</p>
+
+      <h4>Desempenho</h4>
+      <p>Tempo de resposta, throughput e uso eficiente de recursos. Arquiteturas com muitas camadas de indireção (ex.: microsserviços com latência de rede) podem prejudicar o desempenho se não forem bem dimensionadas. Event-Driven absorve picos bem, mas adiciona latência de processamento assíncrono.</p>
+
+      <h4>Escalabilidade</h4>
+      <p>Capacidade de crescer sem perda de desempenho — horizontal (mais instâncias) ou vertical (mais hardware). Microsserviços permitem escalar módulos individualmente; monolitos escalam tudo ou nada.</p>
+
+      <h4>Segurança</h4>
+      <p>Controle de acesso, proteção de dados e isolamento de falhas. A arquitetura define onde as fronteiras de confiança existem. Em microsserviços, a comunicação entre serviços precisa ser autenticada mesmo internamente.</p>
+
+      <h4>Manutenibilidade</h4>
+      <p>Facilidade de corrigir, evoluir e entender o sistema. Alta coesão e baixo acoplamento são os princípios-chave. Um monolito bem estruturado pode ser mais manutenível que microsserviços mal projetados.</p>
+
+      <h4>Custo e Tempo de Desenvolvimento</h4>
+      <p>Microsserviços custam mais para montar a infraestrutura inicial (orquestração, CI/CD por serviço, observabilidade distribuída). Para startups e MVPs, monolito ou camadas entregam mais rápido com menos investimento inicial.</p>
+
+      <h3>Na Prática: dois cenários reais</h3>
+
+      <div class="callout green">
+        <strong>Cenário 1 — Startup Fintech</strong>
+        <p>Uma startup de pagamentos escolheu microsserviços desde o dia 1 para "estar pronta para escalar". Com um time de 4 pessoas, o overhead de manter múltiplos serviços, pipelines separados e comunicação via API atrasou o lançamento em meses. A lição: começar com monolito modular e migrar para microsserviços quando a escala realmente exigir é uma estratégia válida e frequentemente mais inteligente.</p>
+      </div>
+
+      <div class="callout orange">
+        <strong>Cenário 2 — E-commerce na Black Friday</strong>
+        <p>Uma plataforma de e-commerce com arquitetura monolítica não suportou o pico de acessos da Black Friday — todo o sistema ficou fora do ar, incluindo o módulo de pagamentos que processava pouquíssimas requisições. Com microsserviços, apenas o serviço de catálogo teria sofrido degradação, mantendo pagamentos e checkout funcionais. O custo do downtime justificou a migração arquitetural.</p>
+      </div>
+
+      <div class="callout">
+        <strong>A Importância da Arquitetura</strong>
+        <p>"A arquitetura representa as decisões de design significativas que moldam um sistema, onde significativo é medido pelo custo de mudança." — Robert C. Martin (2019). Decisões arquiteturais erradas se tornam dívida técnica que compromete a evolução do produto — e corrigi-las depois custa muito mais do que acertar no início.</p>
+      </div>
+
+      <h4>Referências bibliográficas desta UA</h4>
+      <ul>
+        <li>BASS, L.; CLEMENTS, P.; KAZMAN, R. <em>Software Architecture in Practice</em>. 4. ed. Addison-Wesley, 2021.</li>
+        <li>SOMMERVILLE, I. <em>Engenharia de Software</em>. 10. ed. Pearson, 2018.</li>
+        <li>PRESSMAN, R. S.; MAXIM, B. R. <em>Engenharia de Software: Uma Abordagem Profissional</em>. 9. ed. McGraw-Hill, 2021.</li>
+        <li>RICHARDS, M.; FORD, N. <em>Fundamentals of Software Architecture</em>. O'Reilly, 2024.</li>
+        <li>MARTIN, R. C. <em>Clean Architecture</em>. Prentice Hall, 2019.</li>
+      </ul>
 
       <div class="section-nav">
         <span></span>
