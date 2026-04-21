@@ -3,20 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resumos ADS</title>
+  <title>Resumos ADS — UNIVALI</title>
+  <meta name="description" content="Compilado de anotações e resumos das disciplinas do curso de Análise e Desenvolvimento de Sistemas da UNIVALI. Estude, revise e compartilhe." />
+  <meta property="og:title" content="Resumos ADS — UNIVALI" />
+  <meta property="og:description" content="Compilado de anotações e resumos de ADS: Software Design, Responsive Web, Engenharia de Requisitos e Pensamento Computacional." />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#0d1117" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
 
+<a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+
 <header>
   <a class="logo" href="index.html">Resumos<span>.dev</span></a>
   <nav>
-    <a href="https://github.com/marcusteixeirabr/resumos" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/DigitalBoostofc/resumos" target="_blank" rel="noopener" aria-label="Ver código no GitHub">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+        <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/>
+      </svg>
+      GitHub
+    </a>
   </nav>
 </header>
 
-<main>
+<main id="main-content">
   <section class="hero">
     <h1>Resumos de <em>ADS</em></h1>
     <p>
@@ -24,16 +39,23 @@
       Análise e Desenvolvimento de Sistemas. Feito para estudar, revisar e compartilhar com quem precisar.
     </p>
     <div class="badge-row">
-      <span class="badge">📚 ADS</span>
-      <span class="badge">💻 HTML · CSS · JS</span>
-      <span class="badge">🔓 Open Source</span>
+      <span class="badge">ADS · UNIVALI</span>
+      <span class="badge">HTML · CSS · JS</span>
+      <span class="badge">Open Source</span>
     </div>
   </section>
 
   <div class="grid">
 
-    <a class="card" href="software-design/index.html">
-      <span class="card-icon">🏗️</span>
+    <a class="card" href="software-design/index.html" aria-label="Acessar resumos de Software Design">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M8 21h8M12 17v4"/>
+          <path d="M7 8l2 2-2 2M11 12h4"/>
+        </svg>
+      </div>
+      <div class="card-status status-progress">Em andamento</div>
       <h2>Software Design</h2>
       <p>Arquitetura de sistemas, UML, diagramas de classes, sequência, componentes, prototipação e banco de dados.</p>
       <div class="card-footer">
@@ -42,12 +64,22 @@
           <span class="chip">Arquitetura</span>
           <span class="chip">DER/MER</span>
         </div>
-        <span class="card-arrow">→</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
       </div>
     </a>
 
-    <a class="card" href="responsive-web/index.html">
-      <span class="card-icon">🌐</span>
+    <a class="card" href="responsive-web/index.html" aria-label="Acessar resumos de Responsive Web Development">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <div class="card-status status-progress">Em andamento</div>
       <h2>Responsive Web Development</h2>
       <p>HTML5, CSS3, formulários, JavaScript, AJAX e introdução ao PHP com MySQL para desenvolvimento web.</p>
       <div class="card-footer">
@@ -56,12 +88,23 @@
           <span class="chip">CSS3</span>
           <span class="chip">JS</span>
         </div>
-        <span class="card-arrow">→</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
       </div>
     </a>
 
-    <a class="card" href="engenharia-requisitos/index.html">
-      <span class="card-icon">📋</span>
+    <a class="card" href="engenharia-requisitos/index.html" aria-label="Acessar resumos de Engenharia de Requisitos">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+          <path d="M9 12h6M9 16h4"/>
+        </svg>
+      </div>
+      <div class="card-status status-done">Concluído</div>
       <h2>Engenharia de Requisitos</h2>
       <p>Regras de negócio, requisitos funcionais e não funcionais, casos de uso, diagrama de atividades e rastreabilidade.</p>
       <div class="card-footer">
@@ -70,12 +113,21 @@
           <span class="chip">Caso de Uso</span>
           <span class="chip">UML</span>
         </div>
-        <span class="card-arrow">→</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
       </div>
     </a>
 
-    <a class="card" href="pensamento-computacional/index.html">
-      <span class="card-icon">🧠</span>
+    <a class="card" href="pensamento-computacional/index.html" aria-label="Acessar resumos de Pensamento Computacional">
+      <div class="card-icon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/>
+        </svg>
+      </div>
+      <div class="card-status status-done">Concluído</div>
       <h2>Pensamento Computacional</h2>
       <p>Fundamentos de algoritmos, lógica, linguagem C, estruturas de controle, vetores e matrizes.</p>
       <div class="card-footer">
@@ -84,7 +136,11 @@
           <span class="chip">Linguagem C</span>
           <span class="chip">Lógica</span>
         </div>
-        <span class="card-arrow">→</span>
+        <span class="card-arrow" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
       </div>
     </a>
 
@@ -93,8 +149,9 @@
 
 <footer>
   Feito com ♥ para facilitar os estudos &mdash;
-  <a href="https://github.com/marcusteixeirabr/resumos" target="_blank" rel="noopener">@marcusteixeirabr</a>
+  <a href="https://github.com/DigitalBoostofc/resumos" target="_blank" rel="noopener">@DigitalBoostofc</a>
 </footer>
 
+<script src="assets/js/nav.js"></script>
 </body>
 </html>
