@@ -348,20 +348,56 @@
     <!-- ═══════════════════════════════════════════════════ UA3 -->
     <section id="ua3">
       <h2>UA3 — Analisar e Desenvolver Plano de Projeto</h2>
-      <p class="subtitle">O Plano de Projeto de Software (PPS) é o documento que organiza como o projeto será executado: o quê, quem, quando e com quais recursos. Sem planejamento, o projeto está sujeito ao que chamamos de "síndrome do 90%" — fica 90% pronto e nunca termina.</p>
+      <p class="subtitle">O plano de projeto documenta tudo que envolve o desenvolvimento de um software: escopo, equipe, infraestrutura, cronograma, riscos e acompanhamento. Sem ele, o projeto está sujeito a instabilidade, retrabalho e custos imprevistos.</p>
 
-      <h3>Estrutura do Plano de Projeto</h3>
+      <h3>O que é o Plano de Projeto?</h3>
+      <p>O projeto de software começa quando termina a primeira iteração da engenharia de requisitos. Seu objetivo é aplicar princípios, conceitos e práticas que levem ao desenvolvimento de um sistema de alta qualidade (Pressman; Maxim, 2016). O <strong>plano de projeto</strong> é o documento que norteia toda a equipe durante o ciclo de desenvolvimento — definindo métricas, atividades por membro, estimativas e as mudanças que inevitavelmente ocorrem.</p>
+
+      <div class="callout orange">
+        <strong>Manifesto do Projeto de Software — Mitch Kapor (1991)</strong>
+        <p>"Projeto é onde você fica com um pé em dois mundos — o da tecnologia e o das pessoas. Um software bem projetado apresenta três qualidades: <strong>solidez</strong> (sem bugs que impeçam seu funcionamento), <strong>comodidade</strong> (adequado ao propósito para o qual foi planejado) e <strong>deleite</strong> (a experiência de uso deve ser prazerosa)." — citado em Pressman e Maxim (2016).</p>
+      </div>
+
+      <h3>Três características de um bom projeto (McLaughlin)</h3>
       <ul>
-        <li><strong>Escopo:</strong> o que está incluído (e o que não está). Limitar o escopo é tão importante quanto definir o que entra.</li>
-        <li><strong>Cronograma:</strong> estimativa de tempo por atividade. Ferramentas: Gráfico de Gantt, EAP (Estrutura Analítica do Projeto).</li>
-        <li><strong>Recursos:</strong> equipe, ferramentas, infraestrutura. Inclui estimar custos.</li>
-        <li><strong>Riscos:</strong> o que pode dar errado? Qual a probabilidade e o impacto? Qual o plano de mitigação?</li>
-        <li><strong>Qualidade:</strong> como saberemos que está pronto e correto? Critérios de aceite.</li>
-        <li><strong>Comunicação:</strong> quem precisa saber o quê, com que frequência.</li>
+        <li>Deve <strong>implementar todos os requisitos explícitos</strong> do modelo de requisitos e acomodar os implícitos desejados pelos envolvidos.</li>
+        <li>Deve ser um <strong>guia legível e compreensível</strong> para quem gera código, testa e dá suporte ao software.</li>
+        <li>Deve dar uma <strong>visão completa do software</strong>, tratando os domínios de dados, funcional e comportamental do ponto de vista da implementação.</li>
       </ul>
 
-      <h3>EAP — Estrutura Analítica do Projeto</h3>
-      <p>Decomposição hierárquica do trabalho em pacotes menores e gerenciáveis. O princípio é simples: divida até que cada tarefa seja estimável e atribuível a uma pessoa.</p>
+      <h3>As 7 seções do Plano de Projeto (Sommerville)</h3>
+      <table>
+        <tr><th>Seção</th><th>O que contém</th></tr>
+        <tr><td>Introdução</td><td>Objetivos do projeto e restrições que afetam o gerenciamento</td></tr>
+        <tr><td>Organização do projeto</td><td>Como a equipe é organizada; papéis e responsabilidades de cada membro</td></tr>
+        <tr><td>Análise de riscos</td><td>Riscos identificados, probabilidade de ocorrência e estratégias de mitigação</td></tr>
+        <tr><td>Requisitos de hardware e software</td><td>Infraestrutura necessária para o desenvolvimento</td></tr>
+        <tr><td>Divisão de trabalho (WBS)</td><td>Partição do projeto em atividades, milestones e entregáveis associados</td></tr>
+        <tr><td>Cronograma do projeto</td><td>Dependências entre atividades, estimativa de tempo e alocação de pessoas</td></tr>
+        <tr><td>Monitoração e relatórios</td><td>Relatórios gerenciais: o que, quando e como monitorar o progresso</td></tr>
+      </table>
+
+      <h3>Planos complementares</h3>
+      <p>Além do plano principal, planos específicos podem ser criados para dar suporte a atividades críticas:</p>
+      <table>
+        <tr><th>Plano</th><th>Descrição</th></tr>
+        <tr><td>Qualidade</td><td>Procedimentos de qualidade e normas que serão aplicados</td></tr>
+        <tr><td>Validação</td><td>Abordagem, recursos e cronograma para validação do sistema</td></tr>
+        <tr><td>Gerenciamento de configuração</td><td>Procedimentos e estruturas para controle de versão e mudanças</td></tr>
+        <tr><td>Manutenção</td><td>Previsão de requisitos, custos e esforço de manutenção pós-entrega</td></tr>
+        <tr><td>Desenvolvimento da equipe</td><td>Como as habilidades e experiências dos membros serão desenvolvidas</td></tr>
+      </table>
+
+      <h3>Custos de um projeto de software</h3>
+      <p>Sommerville (2011) destaca três parâmetros principais para calcular custos:</p>
+      <ul>
+        <li><strong>Custo de esforço</strong> — o maior componente; engloba o tempo da equipe</li>
+        <li><strong>Custos de hardware e software</strong> — licenças, servidores, ferramentas e manutenção</li>
+        <li><strong>Custos de viagens e treinamentos</strong> — deslocamentos e capacitação</li>
+      </ul>
+
+      <h3>EAP — Estrutura Analítica do Projeto (WBS)</h3>
+      <p>A EAP decompõe hierarquicamente o trabalho em pacotes gerenciáveis. O resultado é o documento central do plano: WBS (Work Breakdown Structure) com alocação pessoa-tarefa, análise de riscos, cronograma e orçamento. A regra: divida até que cada tarefa dure entre 1 semana e 8–10 semanas — mais que isso deve ser subdividida.</p>
       <div class="diagram">                   Projeto
                    /       \
            Módulo A         Módulo B
@@ -369,27 +405,47 @@
       Tarefa 1  Tarefa 2      Tarefa 3
       (2 dias)  (3 dias)      (1 dia)</div>
 
+      <h3>Quatro etapas da programação do projeto</h3>
+      <ul>
+        <li><strong>1. Identificar atividades</strong> — a partir dos requisitos de software e informações de projeto</li>
+        <li><strong>2. Identificar dependências</strong> — quais atividades precisam terminar antes de outras começar</li>
+        <li><strong>3. Estimar recursos</strong> — tempo, pessoas e infraestrutura por atividade</li>
+        <li><strong>4. Alocar pessoas e criar gráficos</strong> — Gráfico de Gantt: barras baseadas em calendário, mostrando responsáveis, duração prevista e datas de início/fim</li>
+      </ul>
+
       <h3>Modelos de ciclo de vida</h3>
       <table>
         <tr><th>Modelo</th><th>Características</th><th>Melhor para</th></tr>
-        <tr><td>Cascata (Waterfall)</td><td>Fases sequenciais, sem volta. Saída de uma fase é a entrada da próxima.</td><td>Projetos com escopo fixo e bem definido</td></tr>
-        <tr><td>Incremental</td><td>Entregas parciais funcionais em ciclos. Cada ciclo agrega funcionalidade.</td><td>Projetos com entregas contínuas ao cliente</td></tr>
-        <tr><td>Scrum / Ágil</td><td>Sprints curtos (1-4 sem.), backlog priorizado, feedback constante.</td><td>Produtos digitais com requisitos mutáveis</td></tr>
-        <tr><td>Espiral</td><td>Cada ciclo inclui análise de risco. Mais iterações = menos risco acumulado.</td><td>Sistemas críticos e de alta complexidade</td></tr>
+        <tr><td>Cascata (Waterfall)</td><td>Fases sequenciais; saída de uma fase é a entrada da próxima</td><td>Escopo fixo e bem definido</td></tr>
+        <tr><td>Incremental</td><td>Entregas parciais funcionais em ciclos; cada ciclo agrega funcionalidade</td><td>Entregas contínuas ao cliente</td></tr>
+        <tr><td>Scrum / Ágil</td><td>Sprints curtos (1–4 sem.), backlog priorizado, feedback constante</td><td>Produtos digitais com requisitos mutáveis</td></tr>
+        <tr><td>Espiral</td><td>Cada ciclo inclui análise de risco; mais iterações = menos risco acumulado</td><td>Sistemas críticos e de alta complexidade</td></tr>
       </table>
 
-      <h3>Técnicas de Estimativa</h3>
+      <h3>Técnicas de estimativa</h3>
       <div class="cards">
-        <div class="card"><h4>Pontos de Função</h4><p>Mede o tamanho funcional do software independente da tecnologia ou linguagem usada.</p></div>
-        <div class="card"><h4>Story Points</h4><p>Usado em Scrum. Representa esforço relativo entre tarefas — não horas, mas complexidade comparativa.</p></div>
+        <div class="card"><h4>Pontos de Função</h4><p>Mede o tamanho funcional do software independente de tecnologia ou linguagem.</p></div>
+        <div class="card"><h4>Story Points</h4><p>Esforço relativo entre tarefas em Scrum — não horas, mas complexidade comparativa.</p></div>
         <div class="card"><h4>COCOMO</h4><p>Modelo matemático que estima custo a partir do tamanho do sistema (linhas de código).</p></div>
-        <div class="card"><h4>Planning Poker</h4><p>Técnica colaborativa: cada membro da equipe estima independente e discutem as divergências.</p></div>
+        <div class="card"><h4>Planning Poker</h4><p>Técnica colaborativa: cada membro estima independentemente; divergências são discutidas.</p></div>
       </div>
 
       <div class="callout">
-        <strong>Estimativas são sempre erradas — e ainda assim essenciais</strong>
-        <p>Nenhuma estimativa é exata. O valor está no processo de estimativa: ele força a equipe a pensar sobre o problema antes de começar a codificar.</p>
+        <strong>Estimativas são sempre imprecisas — e ainda assim essenciais</strong>
+        <p>Nenhuma estimativa é exata. O valor está no processo: ele força a equipe a pensar sobre o problema antes de codificar. A melhor abordagem combina planejamento formal e métodos ágeis, ajustando o equilíbrio conforme o tipo de projeto (Sommerville, 2011).</p>
       </div>
+
+      <div class="callout green">
+        <strong>Dica de prova — identifique os elementos do plano</strong>
+        <p>Quando o enunciado descrever <em>como o usuário vai interagir com o sistema</em> ou <em>como o software se comunicará com outros sistemas via APIs</em>, o elemento em foco é o <strong>Projeto de Interface</strong>. Se falar de <em>equipe e papéis</em>, é <strong>Organização do Projeto</strong>. Se falar de <em>o que pode dar errado</em>, é <strong>Análise de Riscos</strong>.</p>
+      </div>
+
+      <h4>Referências bibliográficas desta UA</h4>
+      <ul>
+        <li>PRESSMAN, R. S.; MAXIM, B. R. <em>Engenharia de software: uma abordagem profissional</em>. 8. ed. Porto Alegre: AMGH, 2016.</li>
+        <li>SOMMERVILLE, I. <em>Engenharia de software</em>. 9. ed. São Paulo: Pearson, 2011.</li>
+        <li>McLAUGHLIN, R. Some notes on program design. <em>ACM SIGSOFT Software Engineering Notes</em>, v. 16, n. 4, 1991.</li>
+      </ul>
 
       <div class="section-nav">
         <a href="#" data-sec="ua2" class="prev">Fase de Projeto</a>
