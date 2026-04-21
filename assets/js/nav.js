@@ -1,20 +1,30 @@
 /* Navegação por seções sem reload de página */
 (function () {
-  const links = document.querySelectorAll('[data-sec]');
+  const links    = document.querySelectorAll('[data-sec]');
   const sections = document.querySelectorAll('section[id]');
 
-  function show(id) {
+  function show(id, push) {
+    if (!document.getElementById(id)) return;
     sections.forEach(s => s.classList.toggle('active', s.id === id));
     links.forEach(a => a.classList.toggle('active', a.dataset.sec === id));
     window.scrollTo(0, 0);
+    if (push) history.pushState({ sec: id }, '', '#' + id);
   }
 
   links.forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      show(a.dataset.sec);
+      show(a.dataset.sec, true);
     });
   });
+
+  window.addEventListener('popstate', e => {
+    const id = (e.state && e.state.sec) || location.hash.slice(1);
+    if (id) show(id, false);
+  });
+
+  const initial = location.hash.slice(1);
+  show(initial && document.getElementById(initial) ? initial : sections[0]?.id, false);
 })();
 
 /* Hamburger menu mobile */
