@@ -47,6 +47,12 @@
       <a href="#" data-sec="ua8"><span class="num">UA8</span> JavaScript</a>
       <a href="#" data-sec="ua9"><span class="num">UA9</span> AJAX e JSON</a>
     </div>
+    <div class="sidebar-group">
+      <span class="sidebar-label">PHP</span>
+      <a href="#" data-sec="ua10"><span class="num">UA10</span> PHP — Introdução</a>
+      <a href="#" data-sec="ua11"><span class="num">UA11</span> PHP — Estruturas de Controle</a>
+      <a href="#" data-sec="ua12"><span class="num">UA12</span> PHP — Outros Comandos</a>
+    </div>
   </aside>
 
   <main id="content">
@@ -1253,8 +1259,524 @@ localStorage.<span class="fn">setItem</span>(<span class="str">'usuario'</span>,
         <p>O <code>XMLHttpRequest</code> é a API antiga de AJAX. O <code>fetch</code> é o padrão moderno e deve ser preferido. <code>fetch</code> + <code>async/await</code> é a combinação mais usada hoje.</p>
       </div>
 
+      <h3>XMLHttpRequest — como funciona por baixo</h3>
+      <p>O objeto <code>XMLHttpRequest</code> (XHR) é a base original do AJAX — entender seu ciclo ajuda a compreender o <code>fetch</code>:</p>
+      <pre><code><span class="kw">var</span> xhr = <span class="kw">new</span> XMLHttpRequest();
+
+<span class="cm">// Definir o que fazer quando a resposta chegar</span>
+xhr.onreadystatechange = <span class="kw">function</span>() {
+  <span class="kw">if</span> (xhr.readyState === <span class="num">4</span> && xhr.status === <span class="num">200</span>) {
+    <span class="kw">var</span> dados = JSON.<span class="fn">parse</span>(xhr.responseText);
+    console.<span class="fn">log</span>(dados);
+  }
+};
+
+<span class="cm">// Configurar: método, URL, assíncrono=true</span>
+xhr.<span class="fn">open</span>(<span class="str">"GET"</span>, <span class="str">"server.php"</span>, <span class="kw">true</span>);
+xhr.<span class="fn">send</span>();</code></pre>
+
+      <h3>Estados do XMLHttpRequest (<code>readyState</code>)</h3>
+      <table>
+        <tr><th>readyState</th><th>Significado</th></tr>
+        <tr><td><code>0</code></td><td>Não inicializado — open() ainda não foi chamado</td></tr>
+        <tr><td><code>1</code></td><td>Carregando — open() chamado, send() ainda não</td></tr>
+        <tr><td><code>2</code></td><td>Carregado — send() chamado, cabeçalhos disponíveis</td></tr>
+        <tr><td><code>3</code></td><td>Interativo — recebendo dados parcialmente</td></tr>
+        <tr><td><code>4</code></td><td><strong>Completo</strong> — resposta recebida totalmente</td></tr>
+      </table>
+
+      <h3>Ciclo completo AJAX + JSON + PHP</h3>
+      <pre><code><span class="cm">/* server.php — PHP retorna JSON */</span>
+<span class="cm">&lt;?php</span>
+$clientes = [
+  ["nome" => "Ana",    "email" => "ana@email.com"],
+  ["nome" => "Carlos", "email" => "carlos@email.com"]
+];
+header("Content-Type: application/json");
+echo json_encode($clientes);
+<span class="cm">?&gt;</span></code></pre>
+      <pre><code><span class="cm">/* cliente.js — consome com fetch */</span>
+<span class="fn">fetch</span>(<span class="str">"server.php"</span>)
+  .<span class="fn">then</span>(res => res.<span class="fn">json</span>())
+  .<span class="fn">then</span>(clientes => {
+    clientes.<span class="fn">forEach</span>(c => {
+      console.<span class="fn">log</span>(c.nome, c.email);
+    });
+  });</code></pre>
+
+      <h3>eval() vs JSON.parse() — segurança</h3>
+      <table>
+        <tr><th></th><th><code>eval()</code></th><th><code>JSON.parse()</code></th></tr>
+        <tr><td>O que faz</td><td>Avalia <strong>qualquer</strong> expressão JavaScript</td><td>Interpreta <strong>somente</strong> JSON válido</td></tr>
+        <tr><td>Segurança</td><td>Perigoso — executa código malicioso (JS Injection)</td><td>Seguro — rejeita comandos JS</td></tr>
+        <tr><td>Uso recomendado</td><td>Nunca para dados externos</td><td>Sempre para converter JSON</td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — AJAX e APIs</strong>
+        <p><strong>Fetch API + async/await:</strong> padrão atual — substitui completamente o XMLHttpRequest na maioria dos casos.<br>
+        <strong>Axios:</strong> biblioteca popular que adiciona interceptors, cancelamento, timeout e transformação automática de JSON sobre o fetch.<br>
+        <strong>SWR / React Query / TanStack Query:</strong> bibliotecas de <em>data fetching</em> para frameworks — gerenciam cache, revalidação automática e estado de carregamento/erro.<br>
+        <strong>WebSockets:</strong> conexão bidirecional persistente para dados em tempo real (chat, notificações, dashboards) — diferente do AJAX que é sempre request-response.<br>
+        <strong>Server-Sent Events (SSE):</strong> servidor empurra atualizações para o cliente sem o cliente precisar pedir — ideal para feeds e progresso de tarefas.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA9</strong>
+        <ul>
+          <li>AJAX = <strong>Asynchronous JavaScript And XML</strong> — permite enviar e receber dados de forma assíncrona, sem recarregar a página.</li>
+          <li>Requisição <strong>assíncrona</strong> = não bloqueia o navegador enquanto aguarda a resposta do servidor.</li>
+          <li>A principal classe JavaScript do AJAX clássico é <strong>XMLHttpRequest</strong>.</li>
+          <li>JSON = <strong>JavaScript Object Notation</strong> — formato leve e simples para troca de dados.</li>
+          <li>Use <strong>JSON.parse()</strong>, nunca <code>eval()</code>, para converter texto JSON em objeto JavaScript.</li>
+          <li><code>readyState === 4</code> + <code>status === 200</code> = resposta recebida com sucesso.</li>
+          <li>PHP usa <code>json_encode()</code> para gerar JSON e <code>json_decode()</code> para consumir.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Miletto, E. M.; Bertagnolli, S. C. <em>Desenvolvimento de Software II</em>. Porto Alegre: Bookman, 2014.</p>
+
       <div class="section-nav">
         <a href="#" data-sec="ua8" class="prev">JavaScript</a>
+        <a href="#" data-sec="ua10" class="next">PHP — Introdução</a>
+      </div>
+    </section>
+
+    <!-- ===== UA10 ===== -->
+    <section id="ua10">
+      <h2>UA10 — PHP: Introdução</h2>
+
+      <h3>O que é PHP?</h3>
+      <p>PHP (PHP: Hypertext Preprocessor) é uma linguagem de script server-side de tipagem fraca e dinâmica. Os arquivos PHP usam a extensão <code>.php</code> e são executados no servidor, não no navegador. O código PHP fica entre as tags <code>&lt;?php</code> e <code>?&gt;</code>.</p>
+
+      <h3>XAMPP — ambiente de desenvolvimento local</h3>
+      <p>O XAMPP é um pacote de software livre desenvolvido pela Apache Friends que permite rodar um servidor web localmente sem necessidade de internet. O nome é acrônimo:</p>
+      <table>
+        <tr><th>Letra</th><th>Componente</th></tr>
+        <tr><td><strong>X</strong></td><td>Cross-platform — funciona em Windows, Linux e macOS</td></tr>
+        <tr><td><strong>A</strong></td><td>Apache — servidor web</td></tr>
+        <tr><td><strong>M</strong></td><td>MySQL / MariaDB — banco de dados</td></tr>
+        <tr><td><strong>P</strong></td><td>PHP — linguagem de script server-side</td></tr>
+        <tr><td><strong>P</strong></td><td>Perl — linguagem de script adicional</td></tr>
+      </table>
+      <p>Os arquivos PHP ficam em <code>c:\xampp\htdocs</code> (Windows) e são acessados via <code>http://localhost/pasta/arquivo.php</code>.</p>
+
+      <h3>Variáveis</h3>
+      <p>Toda variável começa com <code>$</code>. O PHP tem tipagem fraca — o tipo muda automaticamente conforme o contexto.</p>
+      <pre><code><span class="cm">// Declaração e tipagem dinâmica</span>
+$nome = <span class="str">"Ana"</span>;      <span class="cm">// string</span>
+$idade = <span class="num">30</span>;       <span class="cm">// integer</span>
+$preco = <span class="num">9.99</span>;     <span class="cm">// float</span>
+$ativo = <span class="kw">true</span>;    <span class="cm">// boolean</span>
+
+<span class="cm">// Regras: inicia com letra ou _; case-sensitive; sem espaços</span>
+$meu_nome = <span class="str">"Carlos"</span>;   <span class="cm">// válido</span>
+$MeuNome = <span class="str">"outro"</span>;     <span class="cm">// variável diferente de $meu_nome</span></code></pre>
+
+      <h3>Superglobais</h3>
+      <p>Variáveis nativas disponíveis em qualquer parte do código, sem precisar declarar:</p>
+      <table>
+        <tr><th>Superglobal</th><th>Conteúdo</th></tr>
+        <tr><td><code>$GLOBALS</code></td><td>Todas as variáveis do escopo global</td></tr>
+        <tr><td><code>$_SERVER</code></td><td>Informações do servidor e ambiente de execução</td></tr>
+        <tr><td><code>$_GET</code></td><td>Dados enviados pelo método HTTP GET (visíveis na URL)</td></tr>
+        <tr><td><code>$_POST</code></td><td>Dados enviados pelo método HTTP POST (não visíveis na URL)</td></tr>
+        <tr><td><code>$_FILES</code></td><td>Arquivos enviados via POST</td></tr>
+        <tr><td><code>$_COOKIE</code></td><td>Valores dos cookies HTTP</td></tr>
+        <tr><td><code>$_SESSION</code></td><td>Variáveis de sessão do usuário</td></tr>
+        <tr><td><code>$_REQUEST</code></td><td>Contém $_GET + $_POST + $_COOKIE</td></tr>
+        <tr><td><code>$_ENV</code></td><td>Variáveis de ambiente do sistema</td></tr>
+      </table>
+
+      <h3>Constantes</h3>
+      <p>Constantes mantêm o valor fixo durante toda a execução. Por convenção, usam letras maiúsculas. Não levam <code>$</code>.</p>
+      <pre><code><span class="cm">// define() — disponível desde as primeiras versões</span>
+<span class="fn">define</span>(<span class="str">"PI"</span>, <span class="num">3.14159</span>);
+<span class="cm">// const — disponível desde PHP 5.3 em escopo global</span>
+<span class="kw">const</span> VERSAO = <span class="str">"1.0"</span>;
+
+echo PI;     <span class="cm">// 3.14159</span>
+echo VERSAO; <span class="cm">// 1.0</span></code></pre>
+
+      <h3>Constantes Mágicas</h3>
+      <p>Constantes predefinidas cujo valor muda conforme onde são usadas:</p>
+      <table>
+        <tr><th>Constante</th><th>Retorna</th></tr>
+        <tr><td><code>__LINE__</code></td><td>Número da linha atual no código</td></tr>
+        <tr><td><code>__FILE__</code></td><td>Caminho completo do arquivo</td></tr>
+        <tr><td><code>__DIR__</code></td><td>Diretório do arquivo</td></tr>
+        <tr><td><code>__FUNCTION__</code></td><td>Nome da função atual</td></tr>
+        <tr><td><code>__CLASS__</code></td><td>Nome da classe atual</td></tr>
+        <tr><td><code>__TRAIT__</code></td><td>Nome do trait atual</td></tr>
+        <tr><td><code>__METHOD__</code></td><td>Nome do método da classe</td></tr>
+        <tr><td><code>__NAMESPACE__</code></td><td>Nome do namespace atual</td></tr>
+      </table>
+
+      <h3>var_dump() e phpinfo()</h3>
+      <pre><code><span class="cm">// var_dump — mostra tipo e valor; útil para depuração</span>
+$arr = [<span class="num">1</span>, <span class="str">"dois"</span>, <span class="kw">true</span>];
+<span class="fn">var_dump</span>($arr);
+<span class="cm">// array(3) { [0]=> int(1) [1]=> string(4) "dois" [2]=> bool(true) }</span>
+
+<span class="cm">// phpinfo — exibe configuração completa do ambiente PHP</span>
+<span class="fn">phpinfo</span>();                      <span class="cm">// tudo (INFO_ALL)</span>
+<span class="fn">phpinfo</span>(INFO_GENERAL);          <span class="cm">// versão, servidor, SO</span>
+<span class="fn">phpinfo</span>(INFO_CONFIGURATION);    <span class="cm">// diretivas do php.ini</span>
+<span class="fn">phpinfo</span>(INFO_MODULES);          <span class="cm">// extensões carregadas</span></code></pre>
+
+      <h3>Operadores</h3>
+      <table>
+        <tr><th>Tipo</th><th>Operadores</th><th>Descrição</th></tr>
+        <tr><td>Aritméticos</td><td><code>+ - * / % **</code></td><td>Soma, subtração, multiplicação, divisão, módulo, exponencial</td></tr>
+        <tr><td>Atribuição</td><td><code>= += -= .= </code></td><td>Atribuir valor; atribuir somando; atribuir concatenando</td></tr>
+        <tr><td>Comparação</td><td><code>== === != !== &lt; &gt; &lt;= &gt;=</code></td><td><code>==</code> compara valor; <code>===</code> compara valor <strong>e tipo</strong></td></tr>
+        <tr><td>Lógicos</td><td><code>&amp;&amp; || ! and or xor</code></td><td>E, OU, NÃO, OU exclusivo</td></tr>
+        <tr><td>String</td><td><code>. .=</code></td><td>Concatena strings</td></tr>
+        <tr><td>Controle de erro</td><td><code>@</code></td><td>Suprime erros da expressão seguinte</td></tr>
+        <tr><td>Incremento</td><td><code>++ --</code></td><td>Pré/pós incremento e decremento</td></tr>
+      </table>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — PHP e ambiente de desenvolvimento</strong>
+        <p><strong>PHP 8.x:</strong> versão atual com melhorias significativas — JIT compiler, union types, named arguments, match expression, nullsafe operator <code>?-></code>, fibers (PHP 8.1).<br>
+        <strong>Docker + DDEV / Laravel Sail:</strong> substituem o XAMPP em ambientes profissionais — cada projeto tem seu próprio container isolado, eliminando conflitos de versão.<br>
+        <strong>Composer:</strong> gerenciador de dependências oficial do PHP — equivalente ao npm para JavaScript. Essencial para qualquer projeto moderno.<br>
+        <strong>IDEs recomendadas:</strong> PhpStorm (pago, mais completo) ou VS Code com extensão PHP IntelliSense + PHP Debug.<br>
+        <strong><code>===</code> em vez de <code>==</code>:</strong> sempre prefira comparação estrita para evitar erros de tipo (ex.: <code>"0" == false</code> retorna <code>true</code>).</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA10</strong>
+        <ul>
+          <li>XAMPP: X=cross-platform, A=Apache, <strong>M=MySQL/MariaDB</strong>, P=PHP, P=Perl.</li>
+          <li>Variáveis PHP começam com <code>$</code> e são <strong>case-sensitive</strong>.</li>
+          <li>PHP tem tipagem <strong>fraca</strong> — o tipo é definido automaticamente conforme o valor atribuído.</li>
+          <li>Superglobais estão disponíveis em <strong>qualquer lugar</strong> do código sem declaração.</li>
+          <li><code>$_GET</code> = dados visíveis na URL; <code>$_POST</code> = dados ocultos (não aparecem na URL).</li>
+          <li>Constantes não levam <code>$</code>; por convenção usam LETRAS_MAIÚSCULAS.</li>
+          <li><code>define()</code> pode ser usada em qualquer escopo; <code>const</code> requer PHP 5.3+ para escopo global.</li>
+          <li><code>var_dump()</code> mostra tipo e valor — indispensável para depuração.</li>
+          <li><code>phpinfo()</code> sem parâmetros exibe tudo (<code>INFO_ALL</code>).</li>
+        </ul>
+      </div>
+
+      <p class="ref">Saraiva, M. O.; Barreto, J. S. <em>Desenvolvimento de Sistemas com PHP</em>. Porto Alegre: SAGAH, 2018.</p>
+
+      <div class="section-nav">
+        <a href="#" data-sec="ua9" class="prev">AJAX e JSON</a>
+        <a href="#" data-sec="ua11" class="next">PHP — Estruturas de Controle</a>
+      </div>
+    </section>
+
+    <!-- ===== UA11 ===== -->
+    <section id="ua11">
+      <h2>UA11 — PHP: Estruturas de Controle</h2>
+
+      <h3>Operadores relacionais e lógicos</h3>
+      <table>
+        <tr><th>Operador</th><th>Significado</th></tr>
+        <tr><td><code>==</code></td><td>Igual a (valor)</td></tr>
+        <tr><td><code>===</code></td><td>Idêntico a (valor <strong>e tipo</strong>)</td></tr>
+        <tr><td><code>!= / &lt;&gt;</code></td><td>Diferente de</td></tr>
+        <tr><td><code>!==</code></td><td>Não idêntico</td></tr>
+        <tr><td><code>&lt; / &lt;=</code></td><td>Menor que / menor ou igual</td></tr>
+        <tr><td><code>&gt; / &gt;=</code></td><td>Maior que / maior ou igual</td></tr>
+        <tr><td><code>&amp;&amp; / and</code></td><td>E lógico</td></tr>
+        <tr><td><code>|| / or</code></td><td>OU lógico</td></tr>
+        <tr><td><code>xor</code></td><td>OU exclusivo</td></tr>
+        <tr><td><code>!</code></td><td>Negação</td></tr>
+      </table>
+
+      <h3>if / elseif / else</h3>
+      <pre><code>$media = <span class="num">8.5</span>;
+
+<span class="kw">if</span> ($media >= <span class="num">9</span>) {
+    $conceito = <span class="str">"A"</span>;
+} <span class="kw">elseif</span> ($media >= <span class="num">8</span>) {
+    $conceito = <span class="str">"B"</span>;
+} <span class="kw">elseif</span> ($media >= <span class="num">7</span>) {
+    $conceito = <span class="str">"C"</span>;
+} <span class="kw">else</span> {
+    $conceito = <span class="str">"Reprovado"</span>;
+}
+echo $conceito; <span class="cm">// B</span></code></pre>
+
+      <h3>switch / case / break / default</h3>
+      <p>Substitui múltiplos <code>if/elseif</code> quando se compara uma variável com vários valores fixos. O <code>break</code> impede que os casos seguintes sejam executados.</p>
+      <pre><code>$conceito = <span class="str">"B"</span>;
+
+<span class="kw">switch</span> ($conceito) {
+    <span class="kw">case</span> <span class="str">"A"</span>:
+        echo <span class="str">"Excelente"</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="str">"B"</span>:
+        echo <span class="str">"Plenamente aprovado"</span>;
+        <span class="kw">break</span>;
+    <span class="kw">case</span> <span class="str">"C"</span>:
+        echo <span class="str">"Aprovado"</span>;
+        <span class="kw">break</span>;
+    <span class="kw">default</span>:
+        echo <span class="str">"Reprovado"</span>;
+}</code></pre>
+
+      <h3>Operador ternário</h3>
+      <p>Versão compacta do <code>if/else</code> para expressões simples: <code>condição ? valor_se_true : valor_se_false</code></p>
+      <pre><code>$media = <span class="num">7.5</span>;
+$situacao = ($media >= <span class="num">7</span>) ? <span class="str">"Aprovado"</span> : <span class="str">"Reprovado"</span>;
+echo $situacao; <span class="cm">// Aprovado</span></code></pre>
+
+      <h3>while — condição verificada antes</h3>
+      <pre><code>$i = <span class="num">1</span>;
+<span class="kw">while</span> ($i <= <span class="num">10</span>) {
+    echo $i;
+    $i++;
+}
+<span class="cm">// Saída: 12345678910</span>
+<span class="cm">// Se $i já for > 10 na entrada, o bloco nunca executa</span></code></pre>
+
+      <h3>do while — condição verificada depois</h3>
+      <pre><code>$i = <span class="num">1</span>;
+<span class="kw">do</span> {
+    echo $i;
+    $i++;
+} <span class="kw">while</span> ($i <= <span class="num">10</span>);
+<span class="cm">// Saída: 12345678910</span>
+<span class="cm">// O bloco executa pelo menos uma vez, mesmo se condição for falsa</span></code></pre>
+
+      <h3>for — número fixo de iterações</h3>
+      <pre><code><span class="cm">// Sintaxe: for (inicialização; condição; incremento)</span>
+<span class="kw">for</span> ($i = <span class="num">1</span>; $i <= <span class="num">10</span>; $i++) {
+    echo $i;
+}
+<span class="cm">// Saída: 12345678910</span>
+
+<span class="cm">// Sintaxe alternativa com endfor</span>
+<span class="kw">for</span> ($i = <span class="num">1</span>; $i <= <span class="num">5</span>; $i++):
+    echo $i . <span class="str">" "</span>;
+<span class="kw">endfor</span>;</code></pre>
+
+      <h3>continue e break</h3>
+      <pre><code><span class="cm">// continue — pula para a próxima iteração</span>
+<span class="kw">for</span> ($i = <span class="num">1</span>; $i <= <span class="num">10</span>; $i++) {
+    <span class="kw">if</span> ($i >= <span class="num">3</span> && $i <= <span class="num">6</span>) <span class="kw">continue</span>;
+    echo $i . <span class="str">" "</span>;
+}
+<span class="cm">// Saída: 1 2 7 8 9 10</span>
+
+<span class="cm">// break — encerra o laço imediatamente</span>
+<span class="kw">for</span> ($i = <span class="num">1</span>; $i <= <span class="num">10</span>; $i++) {
+    <span class="kw">if</span> ($i === <span class="num">6</span>) <span class="kw">break</span>;
+    echo $i . <span class="str">" "</span>;
+}
+<span class="cm">// Saída: 1 2 3 4 5</span></code></pre>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Estruturas de Controle PHP</strong>
+        <p><strong>match (PHP 8.0+):</strong> substitui <code>switch</code> com comparação estrita (<code>===</code>), retorna valor e não precisa de <code>break</code>.</p>
+        <pre><code>$conceito = <span class="str">"B"</span>;
+$msg = <span class="kw">match</span>($conceito) {
+    <span class="str">"A"</span>      => <span class="str">"Excelente"</span>,
+    <span class="str">"B"</span>      => <span class="str">"Plenamente aprovado"</span>,
+    <span class="str">"C"</span>      => <span class="str">"Aprovado"</span>,
+    <span class="kw">default</span> => <span class="str">"Reprovado"</span>,
+};
+echo $msg; <span class="cm">// Plenamente aprovado</span></code></pre>
+        <p><strong>Null coalescing <code>??</code> (PHP 7+):</strong> retorna o lado esquerdo se não for <code>null</code>, caso contrário o lado direito — evita verificações manuais com isset.</p>
+        <pre><code>$nome = $_GET[<span class="str">'nome'</span>] ?? <span class="str">"Visitante"</span>;</code></pre>
+        <p><strong>Null coalescing assignment <code>??=</code> (PHP 7.4+):</strong> atribui apenas se o lado esquerdo for <code>null</code>.</p>
+        <pre><code>$usuario[<span class="str">'perfil'</span>] ??= <span class="str">"padrão"</span>;</code></pre>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA11</strong>
+        <ul>
+          <li><code>==</code> compara apenas valor; <code>===</code> compara valor <strong>e tipo</strong> (identidade).</li>
+          <li>O <code>break</code> dentro do <code>switch</code> impede que os casos seguintes sejam executados (fall-through).</li>
+          <li><code>while</code>: condição verificada <strong>antes</strong> — pode nunca executar se já for falsa.</li>
+          <li><code>do while</code>: condição verificada <strong>depois</strong> — executa <strong>pelo menos uma vez</strong>.</li>
+          <li><code>for</code>: usado quando o número de iterações é <strong>conhecido</strong>.</li>
+          <li><code>continue</code> = pula o restante da iteração atual; <code>break</code> = sai do laço completamente.</li>
+          <li>Em <code>while</code>/<code>do while</code>, cuidado com <code>continue</code>: o incremento deve ficar <strong>antes</strong> do <code>continue</code>, senão loop infinito.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Saraiva, M. O.; Barreto, J. S. <em>Desenvolvimento de Sistemas com PHP</em>. Porto Alegre: SAGAH, 2018.</p>
+
+      <div class="section-nav">
+        <a href="#" data-sec="ua10" class="prev">PHP — Introdução</a>
+        <a href="#" data-sec="ua12" class="next">PHP — Outros Comandos</a>
+      </div>
+    </section>
+
+    <!-- ===== UA12 ===== -->
+    <section id="ua12">
+      <h2>UA12 — PHP: Outros Comandos</h2>
+
+      <h3>Arrays</h3>
+      <p>Um array é uma coleção de pares chave-valor. Índices numéricos começam em zero. O PHP permite tipos misturados no mesmo array.</p>
+      <pre><code><span class="cm">// Sintaxe moderna (PHP 5.4+) — preferida</span>
+$cores = [<span class="str">"Amarelo"</span>, <span class="str">"Verde"</span>, <span class="str">"Vermelho"</span>];
+
+<span class="cm">// Sintaxe antiga</span>
+$cores = <span class="fn">array</span>(<span class="str">"Amarelo"</span>, <span class="str">"Verde"</span>, <span class="str">"Vermelho"</span>);
+
+<span class="cm">// Acesso pelo índice (começa em 0)</span>
+echo $cores[<span class="num">0</span>]; <span class="cm">// Amarelo</span>
+echo $cores[<span class="num">2</span>]; <span class="cm">// Vermelho</span>
+
+<span class="cm">// Índice manual</span>
+$cores = [<span class="num">1</span> => <span class="str">"Amarelo"</span>, <span class="num">2</span> => <span class="str">"Azul"</span>];
+echo $cores[<span class="num">1</span>]; <span class="cm">// Amarelo</span>
+
+<span class="cm">// Inserção dinâmica (índice automático)</span>
+$lista = [];
+$lista[] = <span class="str">"item1"</span>;
+$lista[] = <span class="str">"item2"</span>;</code></pre>
+
+      <h3>Arrays Associativos</h3>
+      <p>Usam strings como chaves — mais legíveis que índices numéricos.</p>
+      <pre><code>$endereco = [
+    <span class="str">"rua"</span>    => <span class="str">"Av. Brasil"</span>,
+    <span class="str">"numero"</span> => <span class="str">"100"</span>,
+    <span class="str">"cidade"</span> => <span class="str">"São Paulo"</span>,
+];
+
+echo $endereco[<span class="str">"rua"</span>];    <span class="cm">// Av. Brasil</span>
+echo $endereco[<span class="str">"cidade"</span>]; <span class="cm">// São Paulo</span></code></pre>
+
+      <h3>Arrays Multidimensionais</h3>
+      <p>Arrays dentro de arrays. A notação usa múltiplos índices em sequência.</p>
+      <pre><code>$curso = [
+    <span class="str">"PHP"</span> => [
+        <span class="str">"disciplina"</span> => <span class="str">"Programação em PHP"</span>,
+        <span class="str">"CH"</span>         => <span class="num">60</span>,
+    ],
+    <span class="str">"C"</span> => [
+        <span class="str">"disciplina"</span> => <span class="str">"Programação em C"</span>,
+        <span class="str">"CH"</span>         => <span class="num">80</span>,
+    ],
+];
+
+echo $curso[<span class="str">"PHP"</span>][<span class="str">"disciplina"</span>]; <span class="cm">// Programação em PHP</span>
+echo $curso[<span class="str">"C"</span>][<span class="str">"CH"</span>];          <span class="cm">// 80</span></code></pre>
+
+      <h3>foreach</h3>
+      <pre><code><span class="cm">// Percorrer somente valores</span>
+<span class="kw">foreach</span> ($cores <span class="kw">as</span> $cor) {
+    echo $cor . <span class="str">" "</span>;
+}
+
+<span class="cm">// Percorrer chave e valor</span>
+<span class="kw">foreach</span> ($endereco <span class="kw">as</span> $chave => $valor) {
+    echo <span class="str">"$chave: $valor\n"</span>;
+}
+
+<span class="cm">// Percorrer array multidimensional com list()</span>
+<span class="kw">foreach</span> ($alunos <span class="kw">as</span> [$nome, $nota]) {
+    echo <span class="str">"$nome: $nota\n"</span>;
+}</code></pre>
+
+      <h3>Funções</h3>
+      <pre><code><span class="cm">// Definição básica</span>
+<span class="kw">function</span> <span class="fn">somar</span>($a, $b) {
+    <span class="kw">return</span> $a + $b;
+}
+echo <span class="fn">somar</span>(<span class="num">3</span>, <span class="num">4</span>); <span class="cm">// 7</span>
+
+<span class="cm">// Tipo de retorno explícito</span>
+<span class="kw">function</span> <span class="fn">dividir</span>($a, $b): <span class="kw">float</span> {
+    <span class="kw">return</span> $a / $b;
+}
+
+<span class="cm">// Parâmetro com valor padrão</span>
+<span class="kw">function</span> <span class="fn">potencia</span>($base, $exp = <span class="num">2</span>): <span class="kw">float</span> {
+    <span class="kw">return</span> $base ** $exp;
+}
+echo <span class="fn">potencia</span>(<span class="num">3</span>);    <span class="cm">// 9 (usa exp=2)</span>
+echo <span class="fn">potencia</span>(<span class="num">3</span>, <span class="num">3</span>); <span class="cm">// 27</span>
+
+<span class="cm">// Passagem por referência (&)</span>
+<span class="kw">function</span> <span class="fn">incrementar</span>(&$n) { $n++; }
+$x = <span class="num">5</span>;
+<span class="fn">incrementar</span>($x);
+echo $x; <span class="cm">// 6</span></code></pre>
+
+      <h3>Funções Variádicas</h3>
+      <p>Recebem número indeterminado de argumentos via <code>...$args</code> (PHP 5.6+).</p>
+      <pre><code><span class="kw">function</span> <span class="fn">somar</span>(...$nums): <span class="kw">float</span> {
+    $total = <span class="num">0</span>;
+    <span class="kw">foreach</span> ($nums <span class="kw">as</span> $n) $total += $n;
+    <span class="kw">return</span> $total;
+}
+echo <span class="fn">somar</span>(<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>); <span class="cm">// 10</span></code></pre>
+
+      <h3>Funções Anônimas</h3>
+      <p>Funções sem nome — podem ser atribuídas a variáveis ou passadas como callback. Note o <code>;</code> após o fechamento da chave.</p>
+      <pre><code><span class="cm">// Atribuída a variável</span>
+$dobro = <span class="kw">function</span>($n) { <span class="kw">return</span> $n * <span class="num">2</span>; };
+echo $dobro(<span class="num">5</span>); <span class="cm">// 10</span>
+
+<span class="cm">// Como callback em usort (ordenar array)</span>
+$jogadores = [[<span class="str">"Ana"</span>, <span class="num">95</span>], [<span class="str">"Bob"</span>, <span class="num">80</span>], [<span class="str">"Cia"</span>, <span class="num">88</span>]];
+<span class="fn">usort</span>($jogadores, <span class="kw">function</span>($a, $b) {
+    <span class="kw">return</span> $b[<span class="num">1</span>] - $a[<span class="num">1</span>]; <span class="cm">// decrescente por nota</span>
+});
+<span class="cm">// [[Ana, 95], [Cia, 88], [Bob, 80]]</span></code></pre>
+
+      <h3>Operações com Data e Hora</h3>
+      <pre><code><span class="cm">// date() — captura data do servidor</span>
+echo <span class="fn">date</span>(<span class="str">"d/m/Y"</span>);       <span class="cm">// ex: 21/04/2026</span>
+echo <span class="fn">date</span>(<span class="str">"H:i:s"</span>);       <span class="cm">// ex: 14:30:00</span>
+echo <span class="fn">date</span>(<span class="str">"d/m/Y H:i"</span>);   <span class="cm">// ex: 21/04/2026 14:30</span>
+
+<span class="cm">// DateTime — manipulação orientada a objetos</span>
+$hoje = <span class="kw">new</span> DateTime();
+$outra = <span class="kw">new</span> DateTime(<span class="str">"2025-01-01"</span>);
+
+<span class="cm">// Adicionar período: P=período, 1M=1 mês, 1D=1 dia</span>
+$hoje-><span class="fn">add</span>(<span class="kw">new</span> DateInterval(<span class="str">"P1M1D"</span>));
+
+<span class="cm">// Subtrair período: 1Y=1 ano</span>
+$hoje-><span class="fn">sub</span>(<span class="kw">new</span> DateInterval(<span class="str">"P1Y"</span>));
+
+<span class="cm">// Diferença entre datas</span>
+$diff = $hoje-><span class="fn">diff</span>($outra);
+echo $diff-><span class="fn">format</span>(<span class="str">"%R%a dias"</span>); <span class="cm">// ex: +365 dias</span></code></pre>
+      <p>Configure o fuso horário no <code>php.ini</code>: <code>date.timezone = America/Sao_Paulo</code>. Reinicie o Apache após alterar.</p>
+
+      <div class="callout warning">
+        <strong>Práticas Modernas — Arrays, Funções e Datas PHP</strong>
+        <p><strong>Arrow functions <code>fn=&gt;</code> (PHP 7.4+):</strong> sintaxe compacta para funções anônimas com uma expressão — captura automaticamente variáveis do escopo externo.</p>
+        <pre><code>$multiplicador = <span class="num">3</span>;
+$triplicar = <span class="kw">fn</span>($n) => $n * $multiplicador;
+echo $triplicar(<span class="num">5</span>); <span class="cm">// 15</span></code></pre>
+        <p><strong>Named arguments (PHP 8.0+):</strong> passa parâmetros pelo nome — ignora a ordem e torna o código mais legível.</p>
+        <pre><code>echo <span class="fn">substr</span>(string: <span class="str">"Hello World"</span>, offset: <span class="num">6</span>, length: <span class="num">5</span>); <span class="cm">// World</span></code></pre>
+        <p><strong>array_map / array_filter / array_reduce:</strong> funções de alta ordem para transformar arrays sem loops explícitos.</p>
+        <pre><code>$dobros = <span class="fn">array_map</span>(<span class="kw">fn</span>($n) => $n * <span class="num">2</span>, [<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>]); <span class="cm">// [2, 4, 6]</span>
+$pares  = <span class="fn">array_filter</span>([<span class="num">1</span>, <span class="num">2</span>, <span class="num">3</span>, <span class="num">4</span>], <span class="kw">fn</span>($n) => $n % <span class="num">2</span> === <span class="num">0</span>); <span class="cm">// [2, 4]</span></code></pre>
+        <p><strong>DateTimeImmutable (PHP 5.5+):</strong> versão imutável do DateTime — cada operação retorna um novo objeto, evitando efeitos colaterais.</p>
+        <p><strong>Carbon:</strong> biblioteca popular para datas (usada no Laravel) — adiciona métodos fluentes como <code>Carbon::now()->addWeeks(2)</code>.</p>
+      </div>
+
+      <div class="callout tip">
+        <strong>Dicas para a prova — UA12</strong>
+        <ul>
+          <li>Índice de array numérico começa em <strong>zero</strong> por padrão.</li>
+          <li>Array associativo usa <strong>strings como chaves</strong> — mais legível que índices numéricos.</li>
+          <li><code>foreach ($arr as $v)</code> = somente valor; <code>foreach ($arr as $k =&gt; $v)</code> = chave e valor.</li>
+          <li>Funções anônimas precisam de <code>;</code> após o <code>}</code> de fechamento.</li>
+          <li>Funções variádicas usam <code>...$args</code> — <code>$args</code> é um array com todos os argumentos passados.</li>
+          <li>Passagem por referência usa <code>&amp;</code> antes do parâmetro — altera a variável original.</li>
+          <li><code>date("Y")</code> = ano com 4 dígitos; <code>date("H")</code> = hora em 24h; <code>date("d/m/Y")</code> = formato brasileiro.</li>
+          <li>Configure sempre <code>date.timezone = America/Sao_Paulo</code> no <code>php.ini</code> antes de usar funções de data.</li>
+        </ul>
+      </div>
+
+      <p class="ref">Saraiva, M. O.; Barreto, J. S. <em>Desenvolvimento de Sistemas com PHP</em>. Porto Alegre: SAGAH, 2018.</p>
+
+      <div class="section-nav">
+        <a href="#" data-sec="ua11" class="prev">PHP — Estruturas de Controle</a>
         <span></span>
       </div>
     </section>
