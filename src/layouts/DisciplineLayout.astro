@@ -45,6 +45,77 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
     </main>
   </div>
 
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Visualizar imagem">
+    <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+    <button id="lightbox-close" class="lightbox-close" aria-label="Fechar">✕</button>
+    <button id="lightbox-prev" class="lightbox-prev" aria-label="Anterior">‹</button>
+    <button id="lightbox-next" class="lightbox-next" aria-label="Próxima">›</button>
+    <div id="lightbox-caption" class="lightbox-caption"></div>
+  </div>
+
+  <script is:inline>
+    // Lightbox
+    (function () {
+      var lb      = document.getElementById('lightbox');
+      var lbImg   = document.getElementById('lightbox-img');
+      var lbCap   = document.getElementById('lightbox-caption');
+      var lbClose = document.getElementById('lightbox-close');
+      var lbPrev  = document.getElementById('lightbox-prev');
+      var lbNext  = document.getElementById('lightbox-next');
+      var slides  = [];
+      var current = 0;
+
+      function buildIndex() {
+        slides = Array.from(document.querySelectorAll('.slide-item img'));
+      }
+
+      function open(idx) {
+        if (!slides.length) buildIndex();
+        current = idx;
+        var img = slides[current];
+        lbImg.src = img.src;
+        lbImg.alt = img.alt;
+        var fig = img.closest('figure');
+        var cap = fig ? fig.querySelector('figcaption') : null;
+        lbCap.textContent = cap ? cap.textContent : '';
+        lbPrev.style.display = slides.length > 1 ? '' : 'none';
+        lbNext.style.display = slides.length > 1 ? '' : 'none';
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function close() {
+        lb.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function prev() { open((current - 1 + slides.length) % slides.length); }
+      function next() { open((current + 1) % slides.length); }
+
+      document.addEventListener('click', function (e) {
+        var img = e.target.closest('.slide-item img');
+        if (img) {
+          buildIndex();
+          open(slides.indexOf(img));
+          return;
+        }
+        if (e.target === lb) close();
+      });
+
+      lbClose.addEventListener('click', close);
+      lbPrev.addEventListener('click', prev);
+      lbNext.addEventListener('click', next);
+
+      document.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('open')) return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  prev();
+        if (e.key === 'ArrowRight') next();
+      });
+    })();
+  </script>
+
   <script is:inline>
     // Hamburger menu
     (function () {
