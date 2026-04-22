@@ -5,7 +5,7 @@ interface Props {
   caption?: string;
 }
 const { src, alt, caption } = Astro.props;
-const base = import.meta.env.BASE_URL;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 const imgSrc = src.startsWith('/') ? `${base}${src.slice(1)}` : src;
 ---
 <figure class="slide-item">
