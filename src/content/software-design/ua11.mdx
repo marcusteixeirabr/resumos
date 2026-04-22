@@ -5,6 +5,13 @@ ua: 11
 group: "Modelagem UML"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_07.png" alt="A UML como Extensão do Pensamento" caption="UML como rascunho ágil e como planta definitiva" />
+  <SlideItem src="/assets/img/slides/mub_08.png" alt="A planta baixa que evita a refatoração dolorosa" caption="Estrutura, comportamento e arquitetura — os três eixos da UML" />
+</SlidesGrid>
 
 ### As três perspectivas do diagrama de classes
 
@@ -42,6 +49,10 @@ Uma classe é representada por um retângulo com 3 compartimentos verticais:
 <tr><td><strong>Inferior</strong></td><td>Métodos: <code>visibilidade nome(params): retorno</code></td><td>Alinhado à esquerda, primeira letra minúscula</td></tr>
 </table>
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_09.png" alt="A anatomia estrutural: Dissecando a Classe" caption="Identificador, estado (atributos) e comportamento (métodos)" />
+</SlidesGrid>
+
 ### Visibilidade
 
 <table>
@@ -51,6 +62,10 @@ Uma classe é representada por um retângulo com 3 compartimentos verticais:
 <tr><td><code>#</code></td><td>protected</td><td>Classe e suas subclasses</td></tr>
 <tr><td><code>~</code></td><td>package</td><td>Classes no mesmo pacote</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_10.png" alt="Controle de acesso lógico: Visibilidade" caption="Public, private, protected e package — controle de acoplamento" />
+</SlidesGrid>
 
 ### Multiplicidades
 
@@ -65,6 +80,10 @@ Uma classe é representada por um retângulo com 3 compartimentos verticais:
 
 Leitura: "Um Funcionário trabalha em 0..1 Empresa" E "Em uma Empresa trabalham 0..* Funcionários".
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_12.png" alt="Multiplicidade: Traduzindo regras de negócio" caption="Cada notação expressa uma regra de negócio real" />
+</SlidesGrid>
+
 ### Relacionamentos
 
 <table>
@@ -75,6 +94,10 @@ Leitura: "Um Funcionário trabalha em 0..1 Empresa" E "Em uma Empresa trabalham 
 <tr><td><strong>Agregação</strong></td><td>Linha com losango vazio</td><td>Objeto-parte é atributo do todo, mas pode existir independentemente.</td></tr>
 <tr><td><strong>Composição</strong></td><td>Linha com losango cheio</td><td>As partes só existem com o todo — são criadas e destruídas com ele. Vínculo forte (FILHA depende da PAI).</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_11.png" alt="O Espectro de Relacionamentos: Medindo o Acoplamento" caption="Do acoplamento fraco (dependência) ao forte (herança) — escolha consciente" />
+</SlidesGrid>
 
 ### Pacotes
 
@@ -95,6 +118,10 @@ Pacotes servem para dividir sistemas grandes em subsistemas, facilitando manuten
 - Nomes de classes e associações ambíguos ou incompreensíveis.
 - Inserir multiplicidades antes de estabilizar a estrutura do diagrama.
 - Pensar em questões de implementação durante a fase de modelagem.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_06.png" alt="Matriz Diagnóstica: Escolhendo a Ferramenta Certa" caption="Classes vs. Sequência vs. Componentes — quando usar cada diagrama" />
+</SlidesGrid>
 
 <Callout type="green">
 **N:N sempre gera uma classe associativa**

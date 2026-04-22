@@ -5,12 +5,18 @@ ua: 12
 group: "Modelagem UML"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### O que é um componente?
 
 Na UML, componentes são elementos de modelo que representam **partes independentes e intercambiáveis** de um sistema. Um componente fornece e consome comportamento por meio de interfaces. Pode ser um módulo, biblioteca, executável, banco de dados ou qualquer unidade física do sistema.
 
 Um sistema de software completo pode ser considerado um componente. Ao conectar interfaces fornecidas e requeridas de vários componentes, constrói-se um componente maior.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_03.png" alt="Módulos e Caixas Pretas: A Visão de Alto Nível" caption="Componentes ocultam complexidade interna e expõem apenas o necessário" />
+</SlidesGrid>
 
 ### Elementos do Diagrama
 
@@ -28,6 +34,10 @@ Um sistema de software completo pode ser considerado um componente. Ao conectar 
 <tr><td><strong>Delegação</strong></td><td>Vincula uma porta para uma interface de uma das partes do componente.</td></tr>
 </table>
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_04.png" alt="A Arte do Encaixe: Interfaces e Portas" caption="Interface fornecida (pirulito) e requerida (soquete) — o encaixe que define a arquitetura" />
+</SlidesGrid>
+
 ### Usos e aplicações
 
 - Definir aspectos executáveis e reutilizáveis do sistema.
@@ -37,6 +47,10 @@ Um sistema de software completo pode ser considerado um componente. Ao conectar 
 - Modelar sistemas em qualquer linguagem ou estilo identificando partes que interagem por meio de entradas e saídas.
 
 Segundo Ambler (2004), o principal objetivo é **possibilitar a construção de artefatos para o perfil de arquitetura da solução**, seja para a arquitetura técnica ou de negócios.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_05.png" alt="Componentes no Mundo Real: SOA e Web Services" caption="Microsserviços conectados por ESB — interoperabilidade via contratos rígidos" />
+</SlidesGrid>
 
 ### Notação UML 1 vs UML 2
 

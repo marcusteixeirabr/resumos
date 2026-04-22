@@ -5,6 +5,8 @@ ua: 16
 group: "Banco de Dados"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Do DER ao MER — as regras de conversão
 
@@ -14,6 +16,11 @@ import Callout from "../../components/Callout.astro";
 4. Relacionamentos **1:N** geram uma `FOREIGN KEY` na tabela do lado N.
 5. Relacionamentos **N:N** geram uma **tabela associativa** com as FKs de ambas as entidades.
 6. Entidades fracas incorporam a PK da entidade forte como FK.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rdb_05.png" alt="A Matriz de Tradução do Arquiteto" caption="MER conceitual → esquema lógico → SQL físico — os três mundos" />
+  <SlideItem src="/assets/img/slides/rdb_13.png" alt="Fase 2: Tradução para o Modelo Lógico" caption="Cada entidade vira tabela; cada atributo vira coluna" />
+</SlidesGrid>
 
 ### Tipos de dados mais usados
 
@@ -39,6 +46,11 @@ import Callout from "../../components/Callout.astro";
 <tr><td><code>DEFAULT</code></td><td>Valor padrão quando não informado</td></tr>
 <tr><td><code>CHECK</code></td><td>Validação de regra de negócio (ex.: preco &gt; 0)</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rdb_14.png" alt="O Ponto de Ancoragem: Chave Primária (PK)" caption="PK: numérica, única, incremental e absolutamente irrepetível" />
+  <SlideItem src="/assets/img/slides/rdb_15.png" alt="Construindo Pontes: Chave Estrangeira (FK)" caption="FK transforma o losango do DER na coluna id_referência da tabela" />
+</SlidesGrid>
 
 ### Exemplo completo — Sistema Imobiliário
 
@@ -73,6 +85,11 @@ CREATE TABLE Contrato (
 );
 ```
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rdb_03.png" alt="Fase 3: O Projeto Físico (DDL)" caption="CREATE TABLE — a abstração ganha restrições físicas de memória" />
+  <SlideItem src="/assets/img/slides/rdb_04.png" alt="O Sistema Vivo: Inserção de Dados (DML)" caption="INSERT com validação de FK — o banco rejeita registros órfãos" />
+</SlidesGrid>
+
 ### Elementos do MER
 
 O MER é constituído por três elementos básicos: **entidades**, **atributos** e **relacionamentos**. (Fileto, 2006: "facilitar o projeto do BD, possibilitando especificar a estrutura lógica geral do BD")
@@ -91,6 +108,10 @@ O MER é constituído por três elementos básicos: **entidades**, **atributos**
 <tr><td><strong>Fracas</strong></td><td>Dependem de outra entidade para existir</td><td>Fornecedor (depende de Produto existir)</td></tr>
 <tr><td><strong>Associativas</strong></td><td>Existem para representar relacionamentos com atributos próprios</td><td>"Desconto de compra" entre Fornecedor e Compra</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rdb_02.png" alt="Quando o Relacionamento Exige Sua Própria Tabela" caption="N:N entre Animal e Veterinário gera a tabela Consulta — com atributos próprios" />
+</SlidesGrid>
 
 ### Tipos de atributos
 

@@ -5,12 +5,18 @@ ua: 13
 group: "Modelagem UML"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Linhas de Vida (Lifelines)
 
 A linha de vida (lifeline) é um elemento nomeado que representa um **participante individual** na interação. É exibida como uma caixa no topo (com o nome do objeto/ator) seguida de uma linha vertical tracejada. Representa apenas uma entidade por vez — se o elemento tiver multiplicidade, a lifeline representa um representante arbitrário.
 
 Tipos de cabeça de lifeline: objeto (retângulo), ator (boneco), Boundary (fronteira — View), Control (controle — Controller), Entity (entidade — Model).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_13.png" alt="A Quarta Dimensão: Mapeando o Tempo" caption="Eixo X = participantes simultâneos; eixo Y = progressão temporal" />
+</SlidesGrid>
 
 ### Tipos de Mensagem
 
@@ -25,6 +31,10 @@ Tipos de cabeça de lifeline: objeto (retângulo), ator (boneco), Boundary (fron
 <tr><td><strong>Encontrada</strong></td><td>Seta de ponto preenchido para lifeline</td><td>Enviada de um remetente desconhecido.</td></tr>
 <tr><td><strong>Perdida</strong></td><td>Seta de lifeline para ponto preenchido</td><td>Enviada para um destinatário desconhecido.</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_14.png" alt="O Dicionário de Comunicação Dinâmica" caption="Síncrona, assíncrona, retorno, create e destroy — a gramática das mensagens" />
+</SlidesGrid>
 
 ### Focos de Controle
 
@@ -46,6 +56,10 @@ Permitem adicionar lógica processual ao diagrama: uma ou mais sequências inclu
 <tr><td><code>[assert]</code></td><td>Sequências não mostradas são inválidas</td><td>assertion</td></tr>
 </table>
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_15.png" alt="Fragmentos Combinados: Programação Visual" caption="loop, alt e opt — lógica processual expressa visualmente no diagrama" />
+</SlidesGrid>
+
 ### Arquitetura em Camadas no Diagrama de Sequência
 
 Sistemas modernos são organizados em camadas. O diagrama de sequência expressa essas camadas por meio dos tipos de lifeline:
@@ -58,6 +72,10 @@ Sistemas modernos são organizados em camadas. O diagrama de sequência expressa
 </table>
 
 Importante: no MVC, as requisições chegam ao **Controller** (não à View). O Controller solicita dados ao Model, que retorna os dados, e então o Controller envia para a View formatar o output.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mub_02.png" alt="Na Prática: O Padrão MVC em Tempo Real" caption="Diagrama de sequência completo — Usuário → View → Controller → Model" />
+</SlidesGrid>
 
 ### Passos para criar um diagrama de sequência
 
