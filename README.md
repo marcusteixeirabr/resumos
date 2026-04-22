@@ -1,69 +1,80 @@
-# 📚 Resumos ADS
+# Resumos ADS
 
-Compilado de anotações e resumos das disciplinas do curso de **Análise e Desenvolvimento de Sistemas**.  
-O objetivo é simples: ter um lugar organizado para revisar o conteúdo e ajudar colegas que estejam estudando os mesmos temas.
+Anotações e resumos das disciplinas do curso de **Análise e Desenvolvimento de Sistemas** — UNIVALI.  
+Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e ajudar colegas que estudam os mesmos temas.
+
+**Site publicado:** https://marcusteixeirabr.github.io/resumos
 
 ---
 
-## 🗂️ Disciplinas
+## Disciplinas
 
 ### Trimestre atual
 
-| Disciplina | Tópicos principais | Status |
+| Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Software Design** | Arquitetura, UML, diagramas de classes/sequência/componentes, DER/MER | 🟡 Em andamento |
-| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | 🟡 Em andamento |
+| **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | 🟡 16 UAs em andamento |
+| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | 🟡 16 UAs em andamento |
 
 ### Trimestres anteriores
 
-| Disciplina | Tópicos principais | Status |
+| Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Engenharia de Requisitos** | RF / RNF, regras de negócio, casos de uso, rastreabilidade | ✅ Concluído |
-| **Pensamento Computacional** | Algoritmos, lógica, linguagem C, vetores, matrizes | ✅ Concluído |
+| **Engenharia de Requisitos** | RF / RNF, regras de negócio, casos de uso, rastreabilidade | 🔜 Em breve |
+| **Pensamento Computacional** | Algoritmos, lógica, linguagem C, vetores, matrizes | 🔜 Em breve |
 
 ---
 
-## 🌐 Site
+## Stack
 
-Os resumos estão publicados em:  
-👉 **https://marcusteixeirabr.github.io/resumos**
+O site foi migrado de arquivos HTML monolíticos (~2 000 linhas cada) para uma arquitetura baseada em **Astro 6 + MDX**, com deploy automatizado via GitHub Actions.
 
----
+| Camada | Tecnologia |
+|---|---|
+| Framework | [Astro 6](https://astro.build) — geração estática com content collections |
+| Conteúdo | MDX (Markdown + componentes Astro) |
+| Syntax highlight | Shiki (`github-dark-dimmed`) — zero JS no cliente |
+| Busca | [Pagefind](https://pagefind.app) — índice gerado no CI, modal nativo |
+| Deploy | GitHub Actions → GitHub Pages |
 
-## 📁 Estrutura do repositório
+### Estrutura do repositório
 
 ```
 resumos/
-├── index.html                    # Página principal
-├── software-design/
-│   └── index.html
-├── responsive-web/
-│   └── index.html
-├── engenharia-requisitos/
-│   └── index.html
-└── pensamento-computacional/
-    └── index.html
+├── src/
+│   ├── content/
+│   │   ├── software-design/     # ua1.mdx … ua16.mdx
+│   │   └── responsive-web/      # ua1.mdx … ua16.mdx
+│   ├── components/              # Callout, Sidebar, SlidesGrid, SlideItem…
+│   ├── layouts/                 # BaseLayout, DisciplineLayout
+│   └── pages/                   # rotas dinâmicas por disciplina
+├── public/
+│   ├── assets/img/slides/       # imagens dos slides
+│   └── styles/                  # CSS global
+└── .github/workflows/deploy.yml
+```
+
+### Comandos
+
+```bash
+npm install       # instalar dependências
+npm run dev       # servidor local (localhost:4321)
+npm run build     # build de produção → dist/
+npm run index     # gerar índice Pagefind (requer build prévio)
 ```
 
 ---
 
-## ⚠️ Sobre o conteúdo
+## Sobre o conteúdo
 
-- Os resumos são **anotações pessoais** com base em livros, artigos e materiais de domínio público.
-- Não há garantia de completude ou ausência de erros — use com senso crítico.
-- Se encontrar algo errado ou quiser contribuir, abra uma issue ou pull request.
+> [!NOTE]
+> Os resumos são anotações pessoais com base em livros, artigos e materiais de aula.  
+> Não há garantia de completude ou ausência de erros — use com senso crítico.
 
----
-
-## 🤝 Contribuindo
-
-1. Fork o repositório
-2. Crie uma branch: `git checkout -b melhoria/nome-da-melhoria`
-3. Commit suas alterações: `git commit -m "feat: descrição"`
-4. Push e abra um Pull Request
+Se encontrar algo incorreto ou quiser contribuir, abra uma issue ou pull request.
 
 ---
 
-## 📄 Licença
+## Licença
 
 Conteúdo sob [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) — livre para compartilhar e adaptar, desde que sem fins comerciais e com atribuição.
