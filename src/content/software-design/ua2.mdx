@@ -1,0 +1,127 @@
+---
+title: "UA2 — Fase de Projeto (Modelagem)"
+subtitle: "A fase de projeto transforma requisitos em uma solução técnica detalhada. É a ponte entre 'o que o sistema deve fazer' e 'como ele vai fazer'. Modelar antes de codificar reduz retrabalho e facilita a comunicação da equipe."
+ua: 2
+group: "Arquitetura"
+---
+import Callout from "../../components/Callout.astro";
+
+### O lugar da fase de projeto no ciclo de vida
+
+Após o levantamento e a análise de requisitos, a fase de projeto descreve como o sistema funcionará internamente — arquitetura, linguagens, banco de dados, interface gráfica e outros elementos — de forma que acompanhe os objetivos definidos na análise. O projeto é desenvolvido de forma iterativa: formalidade e detalhes são acrescidos por meio de revisões constantes (Sommerville, 2011).
+
+<table>
+<tr><th>Fase</th><th>Entradas</th><th>Saídas</th></tr>
+<tr><td>Requisitos</td><td>Necessidades do cliente</td><td>Especificação de requisitos</td></tr>
+<tr><td>Análise</td><td>Especificação de requisitos</td><td>Modelo de domínio / casos de uso</td></tr>
+<tr><td>Projeto / Modelagem</td><td>Modelo de análise</td><td>Diagramas UML, arquitetura, DER</td></tr>
+<tr><td>Implementação</td><td>Diagramas e especificações</td><td>Código-fonte</td></tr>
+<tr><td>Testes</td><td>Código-fonte e critérios de aceite</td><td>Produto validado</td></tr>
+</table>
+
+Não é possível pular a fase de projeto sem pagar o preço depois. Corrigir um erro no papel custa cents; corrigi-lo em produção custa horas ou dias de engenharia.
+
+### As quatro atividades do projeto de software
+
+Sommerville (2011) destaca quatro atividades que podem fazer parte do processo de projeto de sistemas de informação:
+
+#### Projeto Arquitetural
+
+Identifica a estrutura geral do sistema: componentes principais (subsistemas ou módulos), seus relacionamentos e como são distribuídos.
+
+#### Projeto de Interface
+
+Define as interfaces entre os componentes. Uma interface precisa permite que um componente seja usado sem que outros saibam como ele é implementado.
+
+#### Projeto de Componente
+
+Projeta o funcionamento interno de cada componente. Pode ser uma declaração de funcionalidade esperada ou um modelo para gerar código automaticamente.
+
+#### Projeto de Banco de Dados
+
+Projeta as estruturas de dados do sistema e como devem ser representadas e persistidas no banco de dados.
+
+### UML — Linguagem de Modelagem Unificada
+
+A UML (Unified Modeling Language) é o padrão adotado para documentar e comunicar decisões de projeto. Fowler (2004) identifica três formas distintas de aplicar a UML:
+
+#### UML como rascunho
+
+Diagramas informais, frequentemente desenhados à mão em quadros brancos. Usados para explorar partes difíceis do problema antes de decidir a solução.
+
+#### UML como planta
+
+Diagramas detalhados usados tanto para engenharia reversa (entender código existente) quanto para geração de código (engenharia avante).
+
+#### UML como linguagem
+
+Especificação executável completa do sistema em UML, da qual o código é gerado automaticamente. Ainda em desenvolvimento teórico e de ferramentas.
+
+### Os 5 diagramas UML mais utilizados
+
+Conforme Erickson e Siau (2007), cinco diagramas da UML concentram a maior parte dos casos de uso na prática:
+
+<table>
+<tr><th>Diagrama</th><th>O que representa</th></tr>
+<tr><td>Atividades</td><td>Atividades envolvidas em um processo ou processamento de dados (fluxo de trabalho).</td></tr>
+<tr><td>Casos de Uso</td><td>Interações entre o sistema e seus atores externos (o "quê" o sistema faz).</td></tr>
+<tr><td>Sequência</td><td>Interações entre atores e sistema, ou entre componentes, ao longo do tempo (ordem das mensagens).</td></tr>
+<tr><td>Classes</td><td>Classes de objetos no sistema e as associações entre elas (estrutura estática).</td></tr>
+<tr><td>Estado</td><td>Como o sistema reage a eventos internos e externos; transições entre estados finitos.</td></tr>
+</table>
+
+### Sequência vs. Comunicação: quando usar cada um
+
+Larman (2007) compara dois diagramas de interação frequentemente confundidos:
+
+<table>
+<tr><th>Critério</th><th>Diagrama de Sequência</th><th>Diagrama de Comunicação</th></tr>
+<tr><td>Ponto forte</td><td>Mostra com clareza a ordem temporal das mensagens; amplas opções de notação</td><td>Economia de espaço — novos objetos podem ser adicionados em duas dimensões</td></tr>
+<tr><td>Ponto fraco</td><td>Cresce horizontalmente ao acrescentar objetos; consome espaço</td><td>Mais difícil visualizar a sequência; menos opções de notação</td></tr>
+<tr><td>Melhor para</td><td>Documentação formal, leitura de fluxo de chamadas, engenharia reversa</td><td>Rascunho em quadro branco (modelagem ágil), espaço físico limitado</td></tr>
+</table>
+
+### Perspectivas de modelagem (Larman)
+
+A mesma notação UML pode ser usada com três intenções diferentes:
+
+- **Perspectiva conceitual:** os diagramas descrevem coisas do mundo real ou do domínio de negócio — útil na fase de análise, antes de pensar em código.
+- **Perspectiva de especificação:** os diagramas descrevem abstrações de software com interfaces definidas, sem comprometimento com uma tecnologia específica (Java, C#, etc.).
+- **Perspectiva de implementação:** os diagramas descrevem implementações concretas em uma tecnologia específica, prontas para guiar o desenvolvimento.
+
+<Callout type="green">
+**Modelagem não é burocracia**
+
+O objetivo não é gerar documentação pela documentação. É criar um entendimento compartilhado. Um diagrama desenhado numa reunião de 30 minutos pode evitar semanas de retrabalho. A escolha de quais diagramas usar fica a critério da necessidade do projeto — pode-se usar todos ou apenas alguns dos que a UML disponibiliza (Sommerville, 2011).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Modelagem e UML**
+
+Ferramentas e abordagens que complementam ou substituem o uso tradicional da UML nos projetos atuais:
+
+- **UML como código** — ferramentas como *PlantUML* e *Mermaid.js* permitem gerar diagramas a partir de texto puro, versionado em Git junto com o código. Fim do problema de "diagramas desatualizados em PowerPoint".
+- **C4 Model (Simon Brown)** — hierarquia de 4 níveis de abstração (Contexto → Container → Componente → Código) que simplifica a comunicação arquitetural sem o overhead da notação UML completa. Amplamente adotado em times ágeis.
+- **Architecture Decision Records (ADRs)** — documentos curtos que registram *por quê* uma decisão arquitetural foi tomada. Substituem grandes documentos de especificação com registros imutáveis e auditáveis.
+- **Modelagem ágil** — o manifesto ágil não bane a modelagem; recomenda "just enough design upfront". Diagramas de sequência e componentes continuam valiosos, mas feitos em colaboração, não por um arquiteto isolado.
+- **Domain-Driven Design (DDD)** — abordagem que conecta diretamente a modelagem do software ao domínio de negócio. Conceitos como Bounded Context e Ubiquitous Language complementam o que UML representa estruturalmente.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Diagrama de atividades = **diagrama de estado** onde todos ou a maioria dos estados representam **execuções de atividades** (fluxo de trabalho).
+- A vantagem de diagramas que tem **relação direta com visão arquitetural** é a **visão mais abrangente do sistema** — permite entender módulos e partes.
+- A **primeira atividade** da fase de projeto é a **representação da arquitetura do sistema** (projeto arquitetural = projeto de alto nível).
+- Entrada da fase de projeto: **especificação de requisitos**. Saída: **modelos e artefatos que documentam as principais decisões tomadas**.
+- Diagrama de sequência: melhor para leitura de **fluxo temporal** de chamadas e documentação formal. Diagrama de comunicação: melhor para **rascunho em quadro branco** (economiza espaço).
+- As três perspectivas de uso da UML (Larman): **conceitual** (mundo real), **especificação** (abstração de software sem comprometimento tecnológico), **implementação** (tecnologia específica).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- FOWLER, M. *UML distilled*. 3. ed. Boston: Addison-Wesley, 2004.
+- LARMAN, C. *Utilizando UML e padrões*. 3. ed. Porto Alegre: Bookman, 2007.
+- ERICKSON, J.; SIAU, K. Theoretical and practical complexity of modeling methods. *Communications of the ACM*, v. 50, n. 8, 2007.
+- REZENDE, D. A. *Engenharia de software e sistemas de informação*. 3. ed. Rio de Janeiro: Brasport, 2005.

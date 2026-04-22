@@ -1,0 +1,113 @@
+/* ── Variáveis e reset global ── */
+:root {
+  --bg: #070710;
+  --surface: #0f0f1c;
+  --surface2: #161626;
+  --border: rgba(255, 255, 255, 0.07);
+  --border-hover: rgba(88, 166, 255, 0.4);
+  --accent: #58a6ff;
+  --accent2: #3fb950;
+  --accent3: #f78166;
+  --accent4: #d2a8ff;
+  --text: #f0f6fc;
+  --muted: #8b949e;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+/* Pagefind UI theme — GitHub Dimmed palette */
+:root {
+  --pagefind-ui-scale: 0.9;
+  --pagefind-ui-primary: #58a6ff;
+  --pagefind-ui-text: #f0f6fc;
+  --pagefind-ui-background: #0f0f1c;
+  --pagefind-ui-border: rgba(255,255,255,0.1);
+  --pagefind-ui-tag: #161626;
+  --pagefind-ui-font: "Inter", -apple-system, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Search button ── */
+.search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .78rem;
+  font-family: inherit;
+  padding: .3rem .65rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.search-btn:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(88,166,255,.3);
+  color: var(--text);
+}
+.search-btn kbd {
+  font-size: .66rem;
+  font-family: inherit;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 4px;
+  padding: .05rem .3rem;
+  line-height: 1.6;
+}
+.search-btn-label { display: none; }
+@media (min-width: 560px) { .search-btn-label { display: inline; } }
+
+/* ── Search modal ── */
+.search-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(3.5rem, 8vh, 6rem) 1rem 1rem;
+}
+.search-modal.open { display: flex; }
+
+.search-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.search-modal-inner {
+  position: relative;
+  width: min(640px, 100%);
+  background: var(--surface);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  overflow: hidden;
+  max-height: 72vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Pagefind UI internal tweaks */
+.search-modal-inner .pagefind-ui__search-input {
+  border-radius: var(--radius-sm) !important;
+}
+.search-modal-inner .pagefind-ui__results {
+  overflow-y: auto;
+  max-height: calc(72vh - 70px);
+}

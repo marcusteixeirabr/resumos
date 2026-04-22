@@ -1,0 +1,161 @@
+---
+title: "UA4 — CSS: Fundamentos"
+subtitle: "CSS (Cascading Style Sheets) controla a apresentação visual do HTML — cores, fontes, espaçamentos, layout e muito mais."
+ua: 4
+group: "CSS"
+---
+import Callout from "../../components/Callout.astro";
+
+### Como aplicar CSS
+
+<table>
+<tr><th>Método</th><th>Como</th><th>Quando usar</th></tr>
+<tr><td>Externo</td><td><code>&lt;link rel="stylesheet" href="style.css"&gt;</code></td><td>Sempre — é o padrão</td></tr>
+<tr><td>Interno</td><td><code>&lt;style&gt;</code> no <code>&lt;head&gt;</code></td><td>Prototipação rápida</td></tr>
+<tr><td>Inline</td><td><code>style="..."</code> na tag</td><td>Exceção — evitar</td></tr>
+</table>
+
+### Seletores
+
+```css
+/* Tag */
+p { color: red; }
+
+/* Classe */
+.destaque { font-weight: bold; }
+
+/* ID */
+#cabecalho { background: #333; }
+
+/* Descendente */
+nav a { text-decoration: none; }
+
+/* Pseudo-classe */
+a:hover { color: blue; }
+li:first-child { font-weight: bold; }
+
+/* Pseudo-elemento */
+p::first-line { font-size: 1.2em; }
+```
+
+### Box Model
+
+Todo elemento HTML é uma caixa com quatro áreas:
+
+```
+┌─────────────────────────────┐ ← margin
+│  ┌───────────────────────┐  │ ← border
+│  │  ┌─────────────────┐  │  │ ← padding
+│  │  │    CONTEÚDO     │  │  │
+│  │  └─────────────────┘  │  │
+│  └───────────────────────┘  │
+└─────────────────────────────┘
+```
+
+```css
+.caixa {
+  width: 300px;
+  padding: 16px;
+  border: 2px solid #ccc;
+  margin: 24px auto;  /* auto centraliza horizontalmente */
+  box-sizing: border-box; /* padding incluso na width */
+}
+```
+
+### Especificidade
+
+Quando há conflito de regras CSS, vence a de maior especificidade:
+
+<table>
+<tr><th>Seletor</th><th>Especificidade</th></tr>
+<tr><td><code>style=""</code> (inline)</td><td>1,0,0,0 — ganha sempre</td></tr>
+<tr><td><code>#id</code></td><td>0,1,0,0</td></tr>
+<tr><td><code>.classe</code>, <code>[attr]</code>, <code>:pseudo</code></td><td>0,0,1,0</td></tr>
+<tr><td>tag (<code>p</code>, <code>div</code>...)</td><td>0,0,0,1</td></tr>
+<tr><td><code>&#42;</code> (universal)</td><td>0,0,0,0</td></tr>
+</table>
+
+<Callout type="green">
+**Dica prática**
+
+Prefira classes a IDs no CSS — são reutilizáveis e causam menos problemas de especificidade.
+</Callout>
+
+### Comparativo: CSS externo vs interno vs inline
+
+<table>
+<tr><th>Característica</th><th>CSS Externo</th><th>CSS Interno</th><th>CSS Inline</th></tr>
+<tr><td>Manutenção</td><td>Fácil — uma mudança reflete em todas as páginas</td><td>Moderada — mudanças refletem só na página atual</td><td>Difícil — mudanças em cada elemento</td></tr>
+<tr><td>Consistência</td><td>Alta — estilos aplicados uniformemente</td><td>Moderada — só na página atual</td><td>Baixa — propenso a inconsistências</td></tr>
+<tr><td>Tempo de carregamento</td><td>Melhor — pode ser cacheado pelo navegador</td><td>Médio — carrega junto com o documento</td><td>Pior — cada elemento carrega seus próprios estilos</td></tr>
+<tr><td>Organização do código</td><td>Alta — separação clara conteúdo/estilo</td><td>Média — conteúdo e estilo no mesmo arquivo</td><td>Baixa — conteúdo e estilo misturados</td></tr>
+</table>
+
+### Unidades de medida em CSS
+
+<table>
+<tr><th>Unidade</th><th>Tipo</th><th>O que representa</th></tr>
+<tr><td><code>px</code></td><td>Absoluta</td><td>Pixel — tamanho fixo na tela</td></tr>
+<tr><td><code>%</code></td><td>Relativa</td><td>Porcentagem do elemento pai</td></tr>
+<tr><td><code>em</code></td><td>Relativa</td><td>Relativo ao font-size do elemento pai</td></tr>
+<tr><td><code>rem</code></td><td>Relativa</td><td>Relativo ao font-size do elemento raiz (<code>:root</code>)</td></tr>
+<tr><td><code>vw</code></td><td>Relativa</td><td>1% da largura da viewport</td></tr>
+<tr><td><code>vh</code></td><td>Relativa</td><td>1% da altura da viewport</td></tr>
+<tr><td><code>ch</code></td><td>Relativa</td><td>Largura do caractere "0" na fonte atual</td></tr>
+<tr><td><code>fr</code></td><td>Relativa (Grid)</td><td>Fração do espaço disponível no Grid</td></tr>
+</table>
+
+### Propriedade `float`
+
+O `float` era o principal método de layout antes do Flexbox e Grid — ainda aparece em código legado:
+
+```css
+.imagem {
+  float: left;   /* left | right | none */
+  margin: 0 1rem 1rem 0;
+}
+
+/* Limpa o float para o próximo elemento */
+.container::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+```
+
+### Tipos de seletores CSS — resumo
+
+<table>
+<tr><th>Seletor</th><th>Exemplo</th><th>Seleciona</th></tr>
+<tr><td>Universal</td><td><code>&#42;</code></td><td>Todos os elementos da página</td></tr>
+<tr><td>Tag (tipo)</td><td><code>p</code>, <code>h1</code></td><td>Todos os elementos daquele tipo</td></tr>
+<tr><td>Classe</td><td><code>.destaque</code></td><td>Elementos com <code>class="destaque"</code></td></tr>
+<tr><td>ID</td><td><code>#cabecalho</code></td><td>Elemento com <code>id="cabecalho"</code> (único)</td></tr>
+<tr><td>Descendente</td><td><code>nav a</code></td><td><code>a</code> dentro de qualquer <code>nav</code></td></tr>
+<tr><td>Filho direto</td><td><code>ul &gt; li</code></td><td><code>li</code> filho direto de <code>ul</code></td></tr>
+<tr><td>Pseudo-classe</td><td><code>a:hover</code></td><td>Elemento em determinado estado</td></tr>
+<tr><td>Pseudo-elemento</td><td><code>p::first-line</code></td><td>Parte específica do elemento</td></tr>
+<tr><td>Atributo</td><td><code>[type="email"]</code></td><td>Elementos com aquele atributo/valor</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — CSS**
+
+**CSS Variables (Custom Properties):** `:root { --cor-primaria: #3b82f6; }` — centralize valores repetidos e altere o tema de toda a página mudando uma variável.
+**Utility-first (Tailwind CSS):** tendência que usa classes utilitárias (`flex`, `p-4`, `text-lg`) direto no HTML em vez de criar classes semânticas no CSS — produtivo mas gera mais HTML verboso.
+**CSS Modules / Scoped CSS:** em projetos com React/Vue, escopo de estilo por componente evita conflitos de nomes de classe globalmente.
+**Evite `!important`:** resolve conflito de especificidade na força bruta — prefira refatorar a hierarquia de seletores.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA4**
+
+- As três formas de aplicar CSS: **inline** (atributo `style`), **interna** (tag `<style>` no `<head>`) e **externa** (arquivo `.css` via `<link>`).
+- Bloco de declaração CSS: `seletor { propriedade: valor; }` — seletor define o alvo; propriedade e valor definem o estilo.
+- O seletor universal (`*`) seleciona **todos** os elementos — especificidade zero.
+- `float: left` e `float: right` — empurra o elemento para a borda e permite que o texto flua ao redor.
+- Ordem de especificidade: inline > `#id` > `.classe` > tag > `*`.
+- CSS externo é o método recomendado para projetos reais — reutilizável, cacheável e de fácil manutenção.
+</Callout>
+
+Serpa, M. S. *Ferramentas de Desenvolvimento Web*. Porto Alegre: SAGAH, 2024. | Bertagnolli, S. C.; Miletto, E. M. *Desenvolvimento de Software II*. Porto Alegre: Bookman, 2014.

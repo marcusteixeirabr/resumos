@@ -1,0 +1,213 @@
+---
+title: "UA12 — PHP: Outros Comandos"
+subtitle: "Arrays, funções de string, manipulação de datas e includes compõem o arsenal de comandos PHP para organizar código, reutilizar lógica e manipular dados de forma eficiente."
+ua: 12
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### Arrays
+
+Um array é uma coleção de pares chave-valor. Índices numéricos começam em zero. O PHP permite tipos misturados no mesmo array.
+
+```php
+// Sintaxe moderna (PHP 5.4+) — preferida
+$cores = ["Amarelo", "Verde", "Vermelho"];
+
+// Sintaxe antiga
+$cores = array("Amarelo", "Verde", "Vermelho");
+
+// Acesso pelo índice (começa em 0)
+echo $cores[0]; // Amarelo
+echo $cores[2]; // Vermelho
+
+// Índice manual
+$cores = [1 => "Amarelo", 2 => "Azul"];
+echo $cores[1]; // Amarelo
+
+// Inserção dinâmica (índice automático)
+$lista = [];
+$lista[] = "item1";
+$lista[] = "item2";
+```
+
+### Arrays Associativos
+
+Usam strings como chaves — mais legíveis que índices numéricos.
+
+```php
+$endereco = [
+    "rua"    => "Av. Brasil",
+    "numero" => "100",
+    "cidade" => "São Paulo",
+];
+
+echo $endereco["rua"];    // Av. Brasil
+echo $endereco["cidade"]; // São Paulo
+```
+
+### Arrays Multidimensionais
+
+Arrays dentro de arrays. A notação usa múltiplos índices em sequência.
+
+```php
+$curso = [
+    "PHP" => [
+        "disciplina" => "Programação em PHP",
+        "CH"         => 60,
+    ],
+    "C" => [
+        "disciplina" => "Programação em C",
+        "CH"         => 80,
+    ],
+];
+
+echo $curso["PHP"]["disciplina"]; // Programação em PHP
+echo $curso["C"]["CH"];          // 80
+```
+
+### foreach
+
+```php
+// Percorrer somente valores
+foreach ($cores as $cor) {
+    echo $cor . " ";
+}
+
+// Percorrer chave e valor
+foreach ($endereco as $chave => $valor) {
+    echo "$chave: $valor\n";
+}
+
+// Percorrer array multidimensional com list()
+foreach ($alunos as [$nome, $nota]) {
+    echo "$nome: $nota\n";
+}
+```
+
+### Funções
+
+```php
+// Definição básica
+function somar($a, $b) {
+    return $a + $b;
+}
+echo somar(3, 4); // 7
+
+// Tipo de retorno explícito
+function dividir($a, $b): float {
+    return $a / $b;
+}
+
+// Parâmetro com valor padrão
+function potencia($base, $exp = 2): float {
+    return $base ** $exp;
+}
+echo potencia(3);    // 9 (usa exp=2)
+echo potencia(3, 3); // 27
+
+// Passagem por referência (&)
+function incrementar(&$n) { $n++; }
+$x = 5;
+incrementar($x);
+echo $x; // 6
+```
+
+### Funções Variádicas
+
+Recebem número indeterminado de argumentos via `...$args` (PHP 5.6+).
+
+```php
+function somar(...$nums): float {
+    $total = 0;
+    foreach ($nums as $n) $total += $n;
+    return $total;
+}
+echo somar(1, 2, 3, 4); // 10
+```
+
+### Funções Anônimas
+
+Funções sem nome — podem ser atribuídas a variáveis ou passadas como callback. Note o `;` após o fechamento da chave.
+
+```php
+// Atribuída a variável
+$dobro = function($n) { return $n * 2; };
+echo $dobro(5); // 10
+
+// Como callback em usort (ordenar array)
+$jogadores = [["Ana", 95], ["Bob", 80], ["Cia", 88]];
+usort($jogadores, function($a, $b) {
+    return $b[1] - $a[1]; // decrescente por nota
+});
+// [[Ana, 95], [Cia, 88], [Bob, 80]]
+```
+
+### Operações com Data e Hora
+
+```php
+// date() — captura data do servidor
+echo date("d/m/Y");       // ex: 21/04/2026
+echo date("H:i:s");       // ex: 14:30:00
+echo date("d/m/Y H:i");   // ex: 21/04/2026 14:30
+
+// DateTime — manipulação orientada a objetos
+$hoje = new DateTime();
+$outra = new DateTime("2025-01-01");
+
+// Adicionar período: P=período, 1M=1 mês, 1D=1 dia
+$hoje->add(new DateInterval("P1M1D"));
+
+// Subtrair período: 1Y=1 ano
+$hoje->sub(new DateInterval("P1Y"));
+
+// Diferença entre datas
+$diff = $hoje->diff($outra);
+echo $diff->format("%R%a dias"); // ex: +365 dias
+```
+
+Configure o fuso horário no `php.ini`: `date.timezone = America/Sao_Paulo`. Reinicie o Apache após alterar.
+
+<Callout type="warning">
+**Práticas Modernas — Arrays, Funções e Datas PHP**
+
+**Arrow functions `fn=>` (PHP 7.4+):** sintaxe compacta para funções anônimas com uma expressão — captura automaticamente variáveis do escopo externo.
+
+```php
+$multiplicador = 3;
+$triplicar = fn($n) => $n * $multiplicador;
+echo $triplicar(5); // 15
+```
+
+**Named arguments (PHP 8.0+):** passa parâmetros pelo nome — ignora a ordem e torna o código mais legível.
+
+```javascript
+echo substr(string: "Hello World", offset: 6, length: 5); // World
+```
+
+**array_map / array_filter / array_reduce:** funções de alta ordem para transformar arrays sem loops explícitos.
+
+```php
+$dobros = array_map(fn($n) => $n * 2, [1, 2, 3]); // [2, 4, 6]
+$pares  = array_filter([1, 2, 3, 4], fn($n) => $n % 2 === 0); // [2, 4]
+```
+
+**DateTimeImmutable (PHP 5.5+):** versão imutável do DateTime — cada operação retorna um novo objeto, evitando efeitos colaterais.
+
+**Carbon:** biblioteca popular para datas (usada no Laravel) — adiciona métodos fluentes como `Carbon::now()->addWeeks(2)`.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA12**
+
+- Índice de array numérico começa em **zero** por padrão.
+- Array associativo usa **strings como chaves** — mais legível que índices numéricos.
+- `foreach ($arr as $v)` = somente valor; `foreach ($arr as $k => $v)` = chave e valor.
+- Funções anônimas precisam de `;` após o `}` de fechamento.
+- Funções variádicas usam `...$args` — `$args` é um array com todos os argumentos passados.
+- Passagem por referência usa `&` antes do parâmetro — altera a variável original.
+- `date("Y")` = ano com 4 dígitos; `date("H")` = hora em 24h; `date("d/m/Y")` = formato brasileiro.
+- Configure sempre `date.timezone = America/Sao_Paulo` no `php.ini` antes de usar funções de data.
+</Callout>
+
+Saraiva, M. O.; Barreto, J. S. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018.

@@ -1,0 +1,216 @@
+---
+title: "UA1 — Introdução à Arquitetura de Sistemas"
+subtitle: "Arquitetura de software é a estrutura fundamental de um sistema — as decisões estruturais que definem seus componentes, como eles se comunicam e os princípios que guiam sua evolução. É invisível para o usuário final, mas determina tudo."
+ua: 1
+group: "Arquitetura"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### A Fundação Invisível
+
+Assim como um engenheiro civil precisa de uma planta baixa antes de erguer um prédio, o software exige um esquema estratégico antes de qualquer linha de código. Arquitetura não é o código em si — é a estrutura que organiza o código, guia sua evolução e garante eficiência a longo prazo.
+
+Decisões arquiteturais impactam diretamente **desempenho**, **custo de manutenção**, **segurança** e **capacidade de escalar**. Ignorar a arquitetura no início gera o que chamamos de *débito técnico* — problemas caros de corrigir depois.
+
+<Callout type="orange">
+**A Primeira Lei da Arquitetura**
+
+"Tudo na arquitetura de software é um **trade-off**." — Robert C. Martin. Não existe arquitetura perfeita; existem apenas opções otimizadas para contextos específicos. Escolher microsserviços não é "melhor" que monolito — depende do problema.
+</Callout>
+
+Slides — Arquitetura de Software Moderna
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_02.png" alt="A Fundação Invisível" caption="A Fundação Invisível" />
+  <SlideItem src="/assets/img/slides/msb_03.png" alt="A Primeira Lei da Arquitetura" caption="A Primeira Lei: tudo é trade-off" />
+  <SlideItem src="/assets/img/slides/msb_11.png" alt="O Contexto Dita a Regra" caption="O Contexto Dita a Regra" />
+</SlidesGrid>
+
+### O que define a escolha arquitetural?
+
+São os **Requisitos Não Funcionais (RNF)** — não o que o sistema faz, mas como ele se comporta — que determinam a arquitetura:
+
+<table>
+<tr><th>RNF</th><th>Influencia</th></tr>
+<tr><td>Escalabilidade</td><td>Microsserviços, Event-Driven</td></tr>
+<tr><td>Simplicidade / time pequeno</td><td>Monolito, MVC</td></tr>
+<tr><td>Separação de responsabilidades</td><td>Camadas (Layered)</td></tr>
+<tr><td>Integração de sistemas legados</td><td>SOA</td></tr>
+<tr><td>Alta disponibilidade / picos de carga</td><td>Orientada a Eventos</td></tr>
+</table>
+
+### Arquitetura Monolítica
+
+Toda a aplicação — interface, regras de negócio e dados — é construída como uma única unidade de implantação. É o ponto de partida natural da maioria dos sistemas.
+
+- **Vantagem:** desenvolvimento simples, fácil de testar localmente, baixa barreira de entrada.
+- **Trade-off:** alto acoplamento. Uma mudança em qualquer parte pode exigir recompilação e redeploy de tudo. Dificulta escalonamento horizontal.
+- **Quando usar:** times pequenos, sistemas novos, MVPs, domínios ainda indefinidos.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_04.png" alt="Arquitetura Monolítica" caption="Monolito: simplicidade inicial" />
+  <SlideItem src="/assets/img/slides/msb_06.png" alt="A Fronteira Distribuída" caption="A fronteira distribuída" />
+</SlidesGrid>
+
+### Arquitetura em Camadas (Layered)
+
+Organiza o sistema em níveis horizontais isolados, onde cada camada tem uma responsabilidade específica e só se comunica com a camada imediatamente adjacente.
+
+<table>
+<tr><th>Camada</th><th>Responsabilidade</th><th>Exemplos</th></tr>
+<tr><td>Apresentação</td><td>Interface com o usuário</td><td>HTML, React, API Gateway</td></tr>
+<tr><td>Negócio</td><td>Regras e lógica da aplicação</td><td>Services, Use Cases, Validações</td></tr>
+<tr><td>Dados</td><td>Acesso e persistência</td><td>Repositories, ORM, Cache, BD</td></tr>
+</table>
+
+- **Vantagem:** separação clara de responsabilidades. É possível trocar a interface sem tocar nas regras de negócio.
+- **Trade-off:** pode criar acoplamento vertical excessivo ("God Layer") se as camadas não forem bem definidas.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_05.png" alt="Arquitetura em Camadas" caption="Camadas: separação lógica" />
+</SlidesGrid>
+
+### Microsserviços
+
+Decompõe a aplicação em serviços pequenos, independentes, altamente focados em capacidades únicas de negócio. Cada serviço tem seu próprio banco de dados e pode ser deployado separadamente.
+
+- **Vantagem:** escalabilidade independente por serviço, resiliência sistêmica (falha de um pilar não derruba o prédio), autonomia de equipes.
+- **Trade-off:** complexidade operacional alta (rede, monitoramento distribuído, consistência eventual). Custo inicial elevado.
+- **Quando usar:** sistemas com alta demanda diferenciada por módulo, times grandes e autônomos, cloud-native.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_07.png" alt="Microsserviços" caption="Microsserviços: autonomia e granularidade" />
+</SlidesGrid>
+
+### Orientada a Eventos (Event-Driven)
+
+Componentes se comunicam de forma assíncrona emitindo e consumindo eventos através de um broker (ex.: Kafka, RabbitMQ). Nenhum componente precisa saber da existência do outro.
+
+- **Vantagem:** desacoplamento extremo, alta eficiência para absorver picos de carga.
+- **Trade-off:** rastreabilidade e debugging são mais difíceis. Consistência eventual exige cuidado.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_08.png" alt="Orientada a Eventos" caption="Event-Driven: desacoplamento extremo" />
+</SlidesGrid>
+
+### Arquitetura Cliente-Servidor
+
+Divide o sistema em dois papéis bem definidos: o **cliente**, que solicita recursos ou serviços, e o **servidor**, que os processa e responde. É o modelo fundamental da Web e de boa parte das aplicações corporativas.
+
+- **Vantagem:** centralização do controle e dos dados no servidor facilita manutenção, backup e aplicação de regras de segurança.
+- **Trade-off:** o servidor pode se tornar gargalo (single point of failure). Latência de rede afeta a experiência do usuário.
+- **Quando usar:** aplicações Web, sistemas de e-commerce, portais corporativos — qualquer cenário com muitos clientes acessando dados centralizados.
+
+### Arquitetura Orientada a Serviços (SOA)
+
+A SOA (*Service-Oriented Architecture*) estrutura o sistema como um conjunto de **serviços independentes e reutilizáveis**, cada um realizando uma função específica e exposto via contrato padronizado. Em vez de uma única aplicação, o sistema é composto por serviços que podem ser descobertos, invocados e combinados (Hirama, 2011).
+
+- **Vantagem:** reusabilidade e interoperabilidade — um serviço de verificação de crédito pode ser consumido por sistemas distintos sem reescrita. Serviços podem ser escritos em diferentes linguagens e rodar em plataformas heterogêneas.
+- **Trade-off:** infraestrutura complexa (ESB — Enterprise Service Bus), dependência de registros de serviço (UDDI), e protocolos verbosos como SOAP/WSDL aumentam o overhead.
+- **Quando usar:** integração de múltiplos sistemas legados heterogêneos em grandes organizações que precisam de reuso e agilidade nos negócios.
+
+A SOA é frequentemente apontada como precursora dos microsserviços — a principal diferença é a granularidade: um serviço SOA tende a cobrir um domínio inteiro, enquanto um microsserviço cobre uma única capacidade de negócio (Richards; Ford, 2024).
+
+<Callout type="default">
+**Saiba mais — MVC (Model-View-Controller)**
+
+MVC é um padrão arquitetural que organiza a aplicação em três camadas colaborativas: **Model** (dados e regras de negócio), **View** (apresentação ao usuário) e **Controller** (coordenação entre Model e View). É frequentemente aplicado dentro de uma arquitetura Cliente-Servidor — o servidor implementa Model + Controller enquanto o cliente renderiza a View. Frameworks como Spring MVC, Django e Ruby on Rails popularizaram esse padrão.
+</Callout>
+
+### Resumo comparativo
+
+<table>
+<tr><th>Estilo</th><th>Custo Inicial</th><th>Manutenção</th><th>Escalabilidade</th><th>Acoplamento</th></tr>
+<tr><td>Monolítica</td><td>Baixo</td><td>Baixa</td><td>Baixa</td><td>Alto</td></tr>
+<tr><td>Em Camadas</td><td>Médio</td><td>Média</td><td>Média</td><td>Médio</td></tr>
+<tr><td>Cliente-Servidor</td><td>Médio</td><td>Média</td><td>Média</td><td>Médio</td></tr>
+<tr><td>SOA</td><td>Alto</td><td>Média</td><td>Alta</td><td>Médio</td></tr>
+<tr><td>Microsserviços</td><td>Alto</td><td>Alta</td><td>Altíssima</td><td>Baixo</td></tr>
+<tr><td>Orientada a Eventos</td><td>Alto</td><td>Alta</td><td>Altíssima</td><td>Mínimo</td></tr>
+</table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_09.png" alt="Mapa de Decisões Comparativo" caption="Mapa de decisões comparativo" />
+</SlidesGrid>
+
+### Critérios de Escolha Arquitetural
+
+Escolher uma arquitetura sem critérios claros é apostar no escuro. O PDF da disciplina destaca cinco atributos de qualidade que devem guiar essa decisão:
+
+#### Desempenho
+
+Tempo de resposta, throughput e uso eficiente de recursos. Arquiteturas com muitas camadas de indireção (ex.: microsserviços com latência de rede) podem prejudicar o desempenho se não forem bem dimensionadas. Event-Driven absorve picos bem, mas adiciona latência de processamento assíncrono.
+
+#### Escalabilidade
+
+Capacidade de crescer sem perda de desempenho — horizontal (mais instâncias) ou vertical (mais hardware). Microsserviços permitem escalar módulos individualmente; monolitos escalam tudo ou nada.
+
+#### Segurança
+
+Controle de acesso, proteção de dados e isolamento de falhas. A arquitetura define onde as fronteiras de confiança existem. Em microsserviços, a comunicação entre serviços precisa ser autenticada mesmo internamente.
+
+#### Manutenibilidade
+
+Facilidade de corrigir, evoluir e entender o sistema. Alta coesão e baixo acoplamento são os princípios-chave. Um monolito bem estruturado pode ser mais manutenível que microsserviços mal projetados.
+
+#### Custo e Tempo de Desenvolvimento
+
+Microsserviços custam mais para montar a infraestrutura inicial (orquestração, CI/CD por serviço, observabilidade distribuída). Para startups e MVPs, monolito ou camadas entregam mais rápido com menos investimento inicial.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/msb_10.png" alt="O Paradoxo da Complexidade" caption="O paradoxo da complexidade" />
+</SlidesGrid>
+
+### Na Prática: dois cenários reais
+
+<Callout type="green">
+**Cenário 1 — Startup Fintech**
+
+Uma startup de pagamentos escolheu microsserviços desde o dia 1 para "estar pronta para escalar". Com um time de 4 pessoas, o overhead de manter múltiplos serviços, pipelines separados e comunicação via API atrasou o lançamento em meses. A lição: começar com monolito modular e migrar para microsserviços quando a escala realmente exigir é uma estratégia válida e frequentemente mais inteligente.
+</Callout>
+
+<Callout type="orange">
+**Cenário 2 — E-commerce na Black Friday**
+
+Uma plataforma de e-commerce com arquitetura monolítica não suportou o pico de acessos da Black Friday — todo o sistema ficou fora do ar, incluindo o módulo de pagamentos que processava pouquíssimas requisições. Com microsserviços, apenas o serviço de catálogo teria sofrido degradação, mantendo pagamentos e checkout funcionais. O custo do downtime justificou a migração arquitetural.
+</Callout>
+
+<Callout type="default">
+**A Importância da Arquitetura**
+
+"A arquitetura representa as decisões de design significativas que moldam um sistema, onde significativo é medido pelo custo de mudança." — Robert C. Martin (2019). Decisões arquiteturais erradas se tornam dívida técnica que compromete a evolução do produto — e corrigi-las depois custa muito mais do que acertar no início.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Arquitetura de Sistemas**
+
+O campo evoluiu além dos estilos clássicos ensinados no curso. Algumas tendências relevantes para novos projetos:
+
+- **Monolito Modular** — o "strangler fig pattern" permite migrar um monolito legado para microsserviços de forma incremental, extraindo um serviço por vez. É o caminho recomendado antes de adotar microsserviços do zero.
+- **Serverless / FaaS** — arquiteturas como AWS Lambda e Azure Functions eliminam o gerenciamento de servidores; o desenvolvedor implanta funções individuais que escalam automaticamente. Ideal para workloads pontuais e event-driven.
+- **Edge Computing** — processamento distribuído geograficamente próximo ao usuário final (CDN com lógica, Cloudflare Workers). Reduz latência em aplicações globais.
+- **Platform Engineering** — times dedicados a construir uma "plataforma interna" (IDP — Internal Developer Platform) que abstrai infraestrutura e padroniza deploys para todos os microsserviços da organização.
+- **FinOps na arquitetura** — a escolha arquitetural agora inclui custo operacional em nuvem como critério central. Microsserviços mal dimensionados geram custos muito maiores que um monolito equivalente.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Microsserviços **aumentam** a complexidade de desenvolvimento — não a reduzem. Cada serviço tem seu próprio ciclo de vida, pipeline e banco de dados.
+- Arquitetura em camadas: o benefício central é a **separação de responsabilidades** — é possível trocar a camada de interface sem alterar as regras de negócio.
+- A escolha de arquitetura impacta diretamente **eficiência, manutenção e escalabilidade** — não é uma decisão cosmética.
+- Arquitetura orientada a eventos = comunicação **assíncrona** e componentes **desacoplados**. O produtor não precisa conhecer os consumidores.
+- Microsserviços distribuídos permitem **escalabilidade global**, mas introduzem **desafios de latência e consistência entre regiões**.
+- SOA vs. Microsserviços: a principal diferença é a granularidade — serviços SOA cobrem domínios inteiros; microsserviços cobrem uma única capacidade de negócio.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BASS, L.; CLEMENTS, P.; KAZMAN, R. *Software Architecture in Practice*. 4. ed. Addison-Wesley, 2021.
+- SOMMERVILLE, I. *Engenharia de Software*. 10. ed. Pearson, 2018.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de Software: Uma Abordagem Profissional*. 9. ed. McGraw-Hill, 2021.
+- RICHARDS, M.; FORD, N. *Fundamentals of Software Architecture*. O'Reilly, 2024.
+- MARTIN, R. C. *Clean Architecture*. Prentice Hall, 2019.
+- HIRAMA, K. *Engenharia de Software: qualidade e produtividade com tecnologia*. LTC, 2011.

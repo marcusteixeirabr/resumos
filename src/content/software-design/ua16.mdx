@@ -1,0 +1,174 @@
+---
+title: "UA16 — Modelo de Entidades e Relacionamentos (MER)"
+subtitle: "O MER é a especificação lógica e implementável do banco de dados. Enquanto o DER é conceitual (independe de tecnologia), o MER detalha tabelas, colunas, tipos de dados e constraints prontos para ser implementados em SQL."
+ua: 16
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+
+### Do DER ao MER — as regras de conversão
+
+1. Cada **entidade forte** vira uma tabela.
+2. Cada **atributo** vira uma coluna com tipo de dado.
+3. O **atributo-chave** vira a `PRIMARY KEY`.
+4. Relacionamentos **1:N** geram uma `FOREIGN KEY` na tabela do lado N.
+5. Relacionamentos **N:N** geram uma **tabela associativa** com as FKs de ambas as entidades.
+6. Entidades fracas incorporam a PK da entidade forte como FK.
+
+### Tipos de dados mais usados
+
+<table>
+<tr><th>Tipo</th><th>Uso</th><th>Exemplo de coluna</th></tr>
+<tr><td><code>INT</code> / <code>BIGINT</code></td><td>Números inteiros. BIGINT para IDs de sistemas com muitos registros.</td><td>id, quantidade</td></tr>
+<tr><td><code>VARCHAR(n)</code></td><td>Texto variável até n caracteres. Mais eficiente que CHAR para dados variáveis.</td><td>nome, email, cep</td></tr>
+<tr><td><code>TEXT</code></td><td>Texto longo sem limite definido.</td><td>descricao, observacao</td></tr>
+<tr><td><code>DECIMAL(p,s)</code></td><td>Número decimal exato (p dígitos totais, s após vírgula). Nunca use FLOAT para dinheiro.</td><td>preco, salario</td></tr>
+<tr><td><code>DATE</code></td><td>Data no formato YYYY-MM-DD.</td><td>data_nascimento, data_pedido</td></tr>
+<tr><td><code>DATETIME</code></td><td>Data e hora. Considere TIMESTAMP com timezone para sistemas internacionais.</td><td>criado_em, atualizado_em</td></tr>
+<tr><td><code>BOOLEAN</code></td><td>Verdadeiro/Falso (1/0 em muitos SGBDs).</td><td>ativo, verificado, pago</td></tr>
+</table>
+
+### Constraints essenciais
+
+<table>
+<tr><th>Constraint</th><th>Garante</th></tr>
+<tr><td><code>PRIMARY KEY</code></td><td>Unicidade e não-nulidade do identificador</td></tr>
+<tr><td><code>FOREIGN KEY</code></td><td>Integridade referencial — não deixa criar um registro órfão</td></tr>
+<tr><td><code>NOT NULL</code></td><td>Campo obrigatório — nunca pode ser vazio</td></tr>
+<tr><td><code>UNIQUE</code></td><td>Valor único na tabela (ex.: email, CPF)</td></tr>
+<tr><td><code>DEFAULT</code></td><td>Valor padrão quando não informado</td></tr>
+<tr><td><code>CHECK</code></td><td>Validação de regra de negócio (ex.: preco &gt; 0)</td></tr>
+</table>
+
+### Exemplo completo — Sistema Imobiliário
+
+```sql
+CREATE TABLE Proprietario (
+  id_proprietario INT          PRIMARY KEY AUTO_INCREMENT,
+  nome            VARCHAR(100) NOT NULL,
+  cpf             VARCHAR(14)  UNIQUE NOT NULL,
+  telefone        VARCHAR(18),
+  email           VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE Imovel (
+  id_imovel       INT            PRIMARY KEY AUTO_INCREMENT,
+  endereco        VARCHAR(255)   NOT NULL,
+  tipo            VARCHAR(50)    NOT NULL,
+  preco           DECIMAL(12,2)  NOT NULL CHECK (preco > 0),
+  disponivel      BOOLEAN        DEFAULT TRUE,
+  id_proprietario INT            NOT NULL,
+  FOREIGN KEY (id_proprietario) REFERENCES Proprietario(id_proprietario)
+);
+
+CREATE TABLE Contrato (
+  id_contrato  INT  PRIMARY KEY AUTO_INCREMENT,
+  tipo         ENUM('venda', 'aluguel') NOT NULL,
+  data_inicio  DATE NOT NULL,
+  data_fim     DATE,
+  valor        DECIMAL(12,2) NOT NULL,
+  id_imovel    INT  NOT NULL REFERENCES Imovel(id_imovel),
+  id_cliente   INT  NOT NULL REFERENCES Cliente(id_cliente),
+  id_corretor  INT  REFERENCES Corretor(id_corretor)
+);
+```
+
+### Elementos do MER
+
+O MER é constituído por três elementos básicos: **entidades**, **atributos** e **relacionamentos**. (Fileto, 2006: "facilitar o projeto do BD, possibilitando especificar a estrutura lógica geral do BD")
+
+### Tipos de entidades
+
+<table>
+<tr><th>Tipo</th><th>Definição</th><th>Exemplo</th></tr>
+<tr><td><strong>Físicas</strong></td><td>Existem no mundo real</td><td>Cliente, Produto, Fornecedor, Funcionário</td></tr>
+<tr><td><strong>Lógicas</strong></td><td>Nascem da interação entre entidades físicas</td><td>Venda, Matrícula, Relatório, Grupo de usuários</td></tr>
+</table>
+
+<table>
+<tr><th>Classificação</th><th>Definição</th><th>Exemplo</th></tr>
+<tr><td><strong>Fortes</strong></td><td>Existem por si mesmas, sem dependência</td><td>Produto em sistema de estoque</td></tr>
+<tr><td><strong>Fracas</strong></td><td>Dependem de outra entidade para existir</td><td>Fornecedor (depende de Produto existir)</td></tr>
+<tr><td><strong>Associativas</strong></td><td>Existem para representar relacionamentos com atributos próprios</td><td>"Desconto de compra" entre Fornecedor e Compra</td></tr>
+</table>
+
+### Tipos de atributos
+
+<table>
+<tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr>
+<tr><td><strong>Descritivo</strong></td><td>Descreve uma característica da entidade</td><td>nome</td></tr>
+<tr><td><strong>Nominativo</strong></td><td>Descreve e também identifica a entidade como única</td><td>código do cliente</td></tr>
+<tr><td><strong>Referencial</strong></td><td>Representa a entidade na relação com outra (chave estrangeira)</td><td>CPF do cliente na tabela Venda</td></tr>
+</table>
+
+<table>
+<tr><th>Classificação</th><th>Descrição</th><th>Exemplo</th></tr>
+<tr><td><strong>Simples</strong></td><td>Um único atributo define a característica</td><td>nome</td></tr>
+<tr><td><strong>Composto</strong></td><td>Múltiplos atributos combinados definem uma característica</td><td>endereço = rua + número + bairro + cidade + estado</td></tr>
+</table>
+
+**Nota:** campos numéricos são preferidos como chave primária — o banco já indexa a coluna automaticamente, acelerando consultas.
+
+### Os três níveis do MER
+
+#### Conceitual
+
+Visão abstrata e de alto nível. Define entidades e relacionamentos sem preocupação com detalhes técnicos. Linguagem do negócio.
+
+#### Lógico
+
+Adapta o modelo conceitual para BD relacional: adiciona atributos, chaves primárias e estrangeiras. Tecnologia-independente.
+
+#### Físico
+
+Transforma o modelo lógico em tabelas reais (SQL) em um SGBD específico, com tipos de dados, constraints e índices.
+
+### Exemplo prático — Livraria (MER do zero)
+
+<table>
+<tr><th>Entidade</th><th>Chave Primária</th><th>Atributos</th></tr>
+<tr><td>Cliente</td><td>CPF</td><td>Nome, Sobrenome, Telefone, Celular, Endereço, Bairro, Cidade, Estado</td></tr>
+<tr><td>Livro</td><td>ISBN</td><td>Nome, Autor, Coautor, Estoque, Qtd_páginas, Valor, Fornecedor</td></tr>
+<tr><td>Vendedor</td><td>ID</td><td>Nome, Comissão, Horário de trabalho</td></tr>
+</table>
+
+<table>
+<tr><th>Relacionamento</th><th>Cardinalidade</th></tr>
+<tr><td>Cliente ↔ Livro</td><td>N:N (cliente compra vários livros; livro é comprado por vários clientes)</td></tr>
+<tr><td>Cliente → Vendedor</td><td>N:1 (cliente é atendido por um vendedor; vendedor atende vários clientes)</td></tr>
+<tr><td>Livro ↔ Vendedor</td><td>N:N (livro é vendido por vários; vendedor vende vários livros)</td></tr>
+</table>
+
+<Callout type="green">
+**Checklist de um MER bem feito**
+
+✓ Toda tabela tem PRIMARY KEY  | 
+          ✓ FKs definidas para toda relação  | 
+          ✓ Campos obrigatórios com NOT NULL  | 
+          ✓ Tipos de dados adequados (DECIMAL para dinheiro, nunca FLOAT)  | 
+          ✓ Sem redundância: dados que mudam em um lugar só ficam em um lugar  | 
+          ✓ Nomes consistentes (snake_case, singulares para tabelas)
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — MER e Implementação de Banco**
+
+- **Schema-as-Code com Prisma:** o arquivo `schema.prisma` define tabelas, colunas, relacionamentos e constraints em uma sintaxe legível — é o MER lógico versionado em Git, executável como migração.
+- **Migrations automáticas:** `prisma migrate dev`, `flyway migrate` e `alembic upgrade head` aplicam alterações de schema automaticamente no deploy — substituem scripts SQL manuais.
+- **Zero-downtime migrations:** em produção com alto tráfego, alterações de schema (adicionar coluna, criar índice) precisam ser feitas em etapas para não bloquear tabelas. Ferramentas como gh-ost (GitHub) e pt-online-schema-change (Percona) gerenciam isso.
+- **Normalização vs. desnormalização:** em aplicações modernas com leitura intensiva (read-heavy), desnormalizar algumas tabelas e usar banco read-replica ou Redis cache é padrão — a 3FN é o ponto de partida, não o destino.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA16**
+
+- **3 elementos do MER:** entidades, atributos e relacionamentos. (Tabelas, consultas e triggers são conceitos SQL, não MER.)
+- Entidades = objetos; atributos = características; relacionamentos = como interagem. Atributos NÃO definem relações entre entidades.
+- Relacionamento correto numa clínica: Paciente –(1:N)– Consulta (cada paciente agenda múltiplas consultas; cada consulta tem um paciente).
+- Entidade forte = existe por si só; entidade fraca = depende de outra; associativa = representa relacionamento com dados próprios.
+- Atributos: descritivo (característica), nominativo (identifica), referencial (FK para outra entidade).
+- 3 níveis do MER: conceitual → lógico → físico.
+- MER facilita o desenvolvimento — mas NÃO elimina a necessidade de definir atributos durante a implementação.
+</Callout>
+
+Barboza, F. F. M. *Modelagem e Desenvolvimento de Banco de Dados*. Porto Alegre: SAGAH, 2018. | Fileto, R. O Modelo Entidade-Relacionamento. UFSC, 2006.

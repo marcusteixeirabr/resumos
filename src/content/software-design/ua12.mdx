@@ -1,0 +1,70 @@
+---
+title: "UA12 — Diagrama de Componentes"
+subtitle: "O diagrama de componentes descreve a arquitetura física do software: como ele é dividido em partes independentes, reutilizáveis e substituíveis, e como essas partes dependem umas das outras por meio de interfaces."
+ua: 12
+group: "Modelagem UML"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que é um componente?
+
+Na UML, componentes são elementos de modelo que representam **partes independentes e intercambiáveis** de um sistema. Um componente fornece e consome comportamento por meio de interfaces. Pode ser um módulo, biblioteca, executável, banco de dados ou qualquer unidade física do sistema.
+
+Um sistema de software completo pode ser considerado um componente. Ao conectar interfaces fornecidas e requeridas de vários componentes, constrói-se um componente maior.
+
+### Elementos do Diagrama
+
+<table>
+<tr><th>Elemento</th><th>Definição</th></tr>
+<tr><td><strong>Componente</strong></td><td>Pedaço reutilizável de funcionalidade. Representado por retângulo com estereótipo <code>«component»</code>. Fornece e consome comportamento via interfaces.</td></tr>
+<tr><td><strong>Interface fornecida</strong></td><td>Grupo de operações que o componente implementa (oferece). Representada por símbolo "pirulito" (bola na ponta da linha).</td></tr>
+<tr><td><strong>Interface requerida</strong></td><td>Grupo de operações que o componente exige de outros. Representada por semicírculo ("soquete").</td></tr>
+<tr><td><strong>Dependência</strong></td><td>Seta tracejada indicando que uma interface requerida de um componente é satisfeita por uma interface fornecida de outro.</td></tr>
+<tr><td><strong>Instâncias de componentes</strong></td><td>Entidades reais em execução no sistema.</td></tr>
+<tr><td><strong>Pacotes</strong></td><td>Agrupam elementos de modelo relacionados.</td></tr>
+<tr><td><strong>Artefatos</strong></td><td>Entidades físicas: arquivos executáveis, bibliotecas, código-fonte, bancos de dados, documentos.</td></tr>
+<tr><td><strong>Parte</strong></td><td>Atributo de um componente cujo tipo é outro componente. Usado no design interno.</td></tr>
+<tr><td><strong>Assembly</strong></td><td>Conexão entre porta de interface requerida de uma parte e porta de interface fornecida de outra.</td></tr>
+<tr><td><strong>Delegação</strong></td><td>Vincula uma porta para uma interface de uma das partes do componente.</td></tr>
+</table>
+
+### Usos e aplicações
+
+- Definir aspectos executáveis e reutilizáveis do sistema.
+- Apresentar problemas de configuração por meio de relacionamentos de dependência.
+- Representar uma visão precisa do sistema antes de fazer alterações ou melhorias.
+- Descrever as peças físicas do sistema: arquivos de código-fonte, executáveis, bancos de dados, sistemas adaptáveis com balanceamento de carga.
+- Modelar sistemas em qualquer linguagem ou estilo identificando partes que interagem por meio de entradas e saídas.
+
+Segundo Ambler (2004), o principal objetivo é **possibilitar a construção de artefatos para o perfil de arquitetura da solução**, seja para a arquitetura técnica ou de negócios.
+
+### Notação UML 1 vs UML 2
+
+Na UML 1, havia um ícone característico de componente (retângulo com dois pequenos retângulos laterais). Na UML 2, esse ícone foi retirado — usa-se a caixa de classe anotada com `«component»`. Tanto a notação antiga quanto a nova são encontradas na literatura.
+
+<Callout type="default">
+**Componente ≠ Classe**
+
+Classes representam estrutura lógica no nível do código. Componentes representam unidades físicas e deployáveis. Um componente geralmente agrupa dezenas ou centenas de classes com responsabilidade comum. Use componentes quando precisar dividir o sistema em partes independentes e mostrar relacionamentos por meio de interfaces.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Diagrama de Componentes**
+
+- **C4 Model (Simon Brown)** substituiu o diagrama de componentes UML nas documentações modernas. O nível "Container" equivale ao diagrama de componentes, mas é mais intuitivo e adotado por equipes ágeis.
+- **Service Mesh (Istio, Linkerd)** é a implementação moderna de "interfaces entre componentes" em microsserviços — gerencia comunicação, observabilidade e segurança entre serviços em Kubernetes.
+- **API Contracts (OpenAPI/AsyncAPI)** substituem as "interfaces fornecidas e requeridas" do diagrama de componentes: especificam contratos entre serviços de forma legível por máquina e humanos.
+- **IaC (Infrastructure as Code)** com Terraform ou CDK descreve os componentes de infraestrutura como código — o diagrama de deployment é gerado automaticamente a partir da definição de infra.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Diagrama de componentes: descreve componentes, **interfaces e suas dependências**; reutilizáveis e substituíveis.
+- Elementos: componentes, instâncias, **pacotes, artefatos, interfaces** e relacionamentos.
+- Objetivo principal (Ambler): possibilitar a construção de artefatos para o **perfil de arquitetura da solução**.
+- Interface: elemento que define conjuntos de operações que outros elementos (classes ou componentes) **devem implementar**.
+- Peças físicas descritas pelo diagrama: arquivos executáveis, código-fonte, bancos físicos e **sistemas adaptáveis com balanceamento de carga**.
+</Callout>
+
+Referências: LEDUR, C.L. *Análise e Projeto de Sistemas*, 2017. AMBLER, S.W. *The Object Primer*, 3ª ed., 2004. PRESSMAN, R.S.; MAXIM, B.R. *Engenharia de Software*, 8ª ed., 2016.

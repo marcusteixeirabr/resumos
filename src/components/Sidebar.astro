@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'software-design'>[] | CollectionEntry<'responsive-web'>[];
+  currentSlug: string;
+  base: string; // e.g. '/software-design'
+}
+
+const { entries, currentSlug, base } = Astro.props;
+
+// Group entries by their `group` frontmatter field, preserving order
+const grouped: Record<string, typeof entries> = {};
+for (const entry of entries) {
+  const g = entry.data.group;
+  if (!grouped[g]) grouped[g] = [];
+  grouped[g].push(entry);
+}
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<aside id="sidebar" data-pagefind-ignore>
+  {Object.entries(grouped).map(([label, items]) => (
+    <div class="sidebar-group">
+      <span class="sidebar-label">{label}</span>
+      {items.map(entry => {
+        const slug = entry.id.replace(/\.mdx?$/, '');
+        const active = slug === currentSlug;
+        const num = String(entry.data.ua).padStart(2, '0');
+        return (
+          <a href={`${siteBase}${base}/${slug}/`}
+             class:list={[active && 'active']}
+             aria-current={active ? 'page' : undefined}>
+            <span class="num">UA{entry.data.ua}</span> {entry.data.title.replace(/^UA\d+ — /, '')}
+          </a>
+        );
+      })}
+    </div>
+  ))}
+</aside>

@@ -1,0 +1,167 @@
+---
+title: "UA5 — CSS3: Avançado e Responsividade"
+subtitle: "CSS3 adicionou Flexbox, Grid, variáveis, animações e media queries — as ferramentas centrais do design responsivo moderno."
+ua: 5
+group: "CSS"
+---
+import Callout from "../../components/Callout.astro";
+
+### Flexbox
+
+Ideal para layouts em uma dimensão (linha ou coluna):
+
+```css
+.container {
+  display: flex;
+  justify-content: space-between; /* eixo principal */
+  align-items: center;          /* eixo cruzado */
+  flex-wrap: wrap;              /* quebra linha se necessário */
+  gap: 1rem;
+}
+```
+
+### CSS Grid
+
+Ideal para layouts em duas dimensões (linhas e colunas):
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 colunas iguais */
+  grid-template-rows: auto;
+  gap: 1.5rem;
+}
+
+/* Item ocupando 2 colunas */
+.destaque {
+  grid-column: 1 / 3;
+}
+```
+
+### Media Queries — Responsividade
+
+```css
+/* Mobile first: estilos base são para mobile */
+.card { width: 100%; }
+
+/* Tablet */
+@media (min-width: 768px) {
+  .card { width: 48%; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card { width: 30%; }
+}
+```
+
+### Variáveis CSS (Custom Properties)
+
+```css
+:root {
+  --cor-primaria: #3b82f6;
+  --espaco-base: 1rem;
+  --fonte-titulo: 'Inter', sans-serif;
+}
+
+h1 {
+  color: var(--cor-primaria);
+  font-family: var(--fonte-titulo);
+  margin-bottom: var(--espaco-base);
+}
+```
+
+### Transições e Animações
+
+```css
+/* Transição suave */
+button {
+  background: #3b82f6;
+  transition: background 0.3s ease, transform 0.2s;
+}
+button:hover {
+  background: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* Animação com keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeIn 0.4s ease; }
+```
+
+### Propriedades de texto em CSS3
+
+<table>
+<tr><th>Propriedade</th><th>O que faz</th><th>Exemplo de valor</th></tr>
+<tr><td><code>font-family</code></td><td>Família tipográfica</td><td><code>'Inter', Arial, sans-serif</code> (fallback em cadeia)</td></tr>
+<tr><td><code>font-size</code></td><td>Tamanho da fonte</td><td><code>16px</code> | <code>1rem</code> | <code>medium</code></td></tr>
+<tr><td><code>font-weight</code></td><td>Espessura (negrito)</td><td><code>normal</code> | <code>bold</code> | <code>100–900</code></td></tr>
+<tr><td><code>color</code></td><td>Cor do texto</td><td><code>#333</code> | <code>rgb(0,0,0)</code> | <code>black</code></td></tr>
+<tr><td><code>text-align</code></td><td>Alinhamento</td><td><code>left</code> | <code>right</code> | <code>center</code> | <code>justify</code></td></tr>
+<tr><td><code>text-decoration</code></td><td>Decoração</td><td><code>none</code> | <code>underline</code> | <code>line-through</code></td></tr>
+<tr><td><code>text-indent</code></td><td>Recuo da 1ª linha</td><td><code>2em</code></td></tr>
+<tr><td><code>line-height</code></td><td>Altura da linha</td><td><code>1.5</code> (sem unidade = multiplicador)</td></tr>
+<tr><td><code>letter-spacing</code></td><td>Espaço entre caracteres</td><td><code>0.05em</code></td></tr>
+</table>
+
+### Propriedades de caixa (Box)
+
+Todo elemento HTML é uma caixa. As propriedades abaixo controlam suas dimensões e aparência:
+
+<table>
+<tr><th>Propriedade</th><th>O que faz</th></tr>
+<tr><td><code>width</code> / <code>height</code></td><td>Largura e altura do conteúdo</td></tr>
+<tr><td><code>padding</code></td><td>Espaço interno entre conteúdo e borda</td></tr>
+<tr><td><code>border</code></td><td>Borda — espessura, tipo e cor: <code>2px solid #ccc</code></td></tr>
+<tr><td><code>margin</code></td><td>Espaço externo entre o elemento e os vizinhos</td></tr>
+<tr><td><code>box-sizing: border-box</code></td><td>Padding e border incluídos na <code>width</code> — evita cálculos manuais</td></tr>
+<tr><td><code>box-shadow</code></td><td>Sombra: <code>0 4px 12px rgba(0,0,0,.15)</code></td></tr>
+<tr><td><code>background</code></td><td>Cor, imagem ou gradiente: <code>linear-gradient(135deg, #667eea, #764ba2)</code></td></tr>
+<tr><td><code>transform</code></td><td>Rotação, escala, translação: <code>rotate(45deg)</code> | <code>scale(1.1)</code> | <code>translateX(20px)</code></td></tr>
+<tr><td><code>position</code></td><td><code>static</code> | <code>relative</code> | <code>absolute</code> | <code>fixed</code> | <code>sticky</code></td></tr>
+</table>
+
+### Media Query — operadores e características
+
+<table>
+<tr><th>Operador</th><th>Uso</th><th>Exemplo</th></tr>
+<tr><td><code>and</code></td><td>Todas as condições devem ser verdadeiras</td><td><code>@media (min-width: 800px) and (orientation: landscape)</code></td></tr>
+<tr><td><code>or</code> / <code>,</code></td><td>Pelo menos uma condição verdadeira</td><td><code>@media screen, (min-width: 900px)</code></td></tr>
+<tr><td><code>not</code></td><td>Nega a condição</td><td><code>@media not (monochrome)</code></td></tr>
+<tr><td><code>only</code></td><td>Aplica só em navegadores com suporte a media query</td><td><code>@media only screen and (color)</code></td></tr>
+</table>
+
+### Breakpoints comuns — referência
+
+<table>
+<tr><th>Tamanho</th><th>Faixa típica</th><th>Estratégia</th></tr>
+<tr><td>Mobile</td><td>até 767px</td><td>Estilos base (mobile-first)</td></tr>
+<tr><td>Tablet</td><td>768px – 1023px</td><td><code>@media (min-width: 768px)</code></td></tr>
+<tr><td>Desktop</td><td>1024px – 1279px</td><td><code>@media (min-width: 1024px)</code></td></tr>
+<tr><td>Wide</td><td>1280px+</td><td><code>@media (min-width: 1280px)</code></td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — CSS3 e Responsividade**
+
+**Container Queries (`@container`):** enquanto media queries respondem ao tamanho da *viewport*, container queries respondem ao tamanho do *elemento pai* — revolução para componentes reutilizáveis em diferentes contextos de layout.
+**`@layer` (Cascade Layers):** permite organizar regras CSS em camadas com precedência controlada, acabando com guerras de especificidade em projetos grandes.
+**`prefers-color-scheme`:** media query que detecta se o usuário usa tema escuro no sistema — `@media (prefers-color-scheme: dark) { ... }`
+**`prefers-reduced-motion`:** detecta usuários que solicitaram menos animações — essencial para acessibilidade.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA5**
+
+- Seletor de **classe** = ponto (`.nome`) — pode ser usado em múltiplos elementos. Seletor de **Id** = sustenido (`#nome`) — único por página.
+- Um elemento pode ter várias classes: `class="destaque texto-grande"`. Quando propriedades conflitam, prevalece a classe declarada **primeiro no CSS**.
+- `box-sizing: border-box` garante que `padding` e `border` sejam incluídos na `width` — evita que a caixa "estoure" o layout.
+- Mobile-first: estilos base são para mobile; use `min-width` para ampliar. Desktop-first é o contrário: `max-width` para reduzir.
+- Media query pode ser declarada na tag `<link>` ou dentro do arquivo CSS com `@media`.
+- `font-family` usa lista de fallback — navegador usa a primeira fonte disponível no sistema do usuário.
+</Callout>
+
+Saraiva, M. O. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018. | Silva, M. S. *CSS3*. São Paulo: Novatec, 2012.

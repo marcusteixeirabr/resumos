@@ -1,0 +1,131 @@
+---
+title: "UA8 — Modelo de Análise Orientada a Objetos"
+subtitle: "A análise OO surgiu para superar as limitações da análise estruturada: ao invés de separar dados e processos, ela modela o sistema como uma coleção de objetos que possuem características (atributos) e comportamentos (operações). É o paradigma dominante no desenvolvimento moderno."
+ua: 8
+group: "Modelagem UML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Por que OO superou a análise estruturada?
+
+A análise estruturada era orientada a operações *ou* a dados — nunca aos dois ao mesmo tempo. A OO resolve isso encapsulando dados e operações no mesmo objeto. Sistemas complexos se tornam mais fáceis de criar, manter e evoluir porque cada objeto é responsável por si mesmo.
+
+A OOA (Object-Oriented Analysis) é uma técnica semiformal que extrai classes a partir dos requisitos. Casos de uso e classes são a base de qualquer produto OO. (Schach, 2010; Pressman & Maxim, 2016)
+
+### Os quatro pilares da OO
+
+#### Encapsulamento
+
+Dados e comportamento ficam juntos no objeto. Detalhes internos ficam ocultos — só a interface é visível. Protege a integridade e reduz o acoplamento.
+
+#### Herança
+
+Classes filhas reutilizam e estendem atributos e operações da superclasse. Alterações na superclasse se propagam automaticamente. Cuidado: herança cria acoplamento forte.
+
+#### Polimorfismo
+
+O mesmo método se comporta diferente dependendo do objeto. `animal.falar()` retorna "Au!" para Cachorro e "Miau!" para Gato — sem o cliente saber qual é qual.
+
+#### Abstração
+
+Modelar apenas o que é relevante para o contexto. Um `Carro` para sistema de vendas tem atributos diferentes de um para sistema de manutenção.
+
+### UML — A linguagem de modelagem da OO
+
+A UML (Unified Modeling Language) é a notação diagramática padrão para modelar sistemas OO. Não é uma metodologia — é uma linguagem. Criada por Booch, Rumbaugh e Jacobson ("os três amigos") na Rational Corporation em 1994, hoje é padronizada pela OMG. Fowler (2003) define três modos de usar UML:
+
+#### UML como Rascunho
+
+Diagramas informais e incompletos, frequentemente à mão no quadro branco. Objetivo: explorar o espaço do problema ou da solução rapidamente. Uso mais comum no dia a dia.
+
+#### UML como Planta
+
+Diagramas relativamente detalhados, usados antes ou depois do código. Ajuda a entender a estrutura global; podem guiar a geração de código (manual ou automática).
+
+#### UML como Linguagem
+
+Especificação executável completa — o código é gerado automaticamente a partir dos diagramas. Ainda experimental; raramente usado na prática.
+
+### Diagrama de Classes
+
+O diagrama central da análise OO. Cada classe é representada por um retângulo com três compartimentos empilhados:
+
+1. **Compartimento superior:** nome da classe
+2. **Compartimento do meio:** atributos (campos de dados)
+3. **Compartimento inferior:** operações (métodos)
+
+Os dois compartimentos inferiores são opcionais quando o contexto é claro.
+
+#### Tipos de relacionamento
+
+<table>
+<tr><th>Tipo</th><th>Semântica</th><th>Exemplo</th></tr>
+<tr><td><strong>Associação bidirecional</strong></td><td>Ambas as classes se conhecem mutuamente</td><td>Cliente ↔ Pedido</td></tr>
+<tr><td><strong>Associação unidirecional</strong></td><td>Apenas uma classe conhece a outra</td><td>Pedido → ItemPedido</td></tr>
+<tr><td><strong>Herança (Generalização)</strong></td><td>"É um" — seta aberta apontando para superclasse</td><td>PessoaFísica → Cliente</td></tr>
+<tr><td><strong>Agregação</strong></td><td>"Tem um" — parte pode existir sem o todo (losango vazio)</td><td>Departamento ◇ Funcionário</td></tr>
+<tr><td><strong>Composição</strong></td><td>"Tem um" — parte depende do todo (losango cheio)</td><td>Pedido ◆ ItemPedido</td></tr>
+<tr><td><strong>Realização</strong></td><td>Implementa uma interface (seta tracejada)</td><td>PayPal ⇢ IPagamento</td></tr>
+</table>
+
+<Callout type="green">
+**Identificando classes: técnica dos substantivos e verbos**
+
+Leia o enunciado do problema. Sublinhe **substantivos** → candidatos a classes e atributos. Sublinhe **verbos** → candidatos a métodos e relacionamentos.
+        Ex.: "Um cliente realiza um pedido que contém vários produtos. Cada produto tem nome, preço e estoque."
+        → Classes: `Cliente`, `Pedido`, `Produto`
+        → Atributos de Produto: nome, preço, estoque
+        → Relacionamentos: Cliente 1—N Pedido; Pedido N—N Produto
+</Callout>
+
+### Diagrama de Casos de Uso
+
+Cockburn (2001) define: "um caso de uso captura um contrato que descreve o comportamento do sistema sob várias condições, à medida que o sistema responde a uma solicitação de um de seus envolvidos". Basicamente, narra uma jornada de como um **ator** interage com o sistema.
+
+Perguntas que um caso de uso deve responder:
+
+- Quais são as metas do ator? Que precondições devem existir?
+- Que tarefas principais o ator realiza? Quais exceções podem ocorrer?
+- Que informações o sistema fornece, recebe ou modifica para o ator?
+
+### Os 5 diagramas essenciais da UML
+
+Uma pesquisa de 2007 (Erickson & Siau apud Sommerville, 2011) mostrou que a maioria dos usuários de UML acredita que **cinco diagramas** representam a essência de um sistema:
+
+<table>
+<tr><th>Diagrama</th><th>O que responde</th></tr>
+<tr><td><strong>Atividades</strong></td><td>Atividades envolvidas em um processo ou no processamento de dados</td></tr>
+<tr><td><strong>Casos de Uso</strong></td><td>Interações entre o sistema e seu ambiente (atores)</td></tr>
+<tr><td><strong>Sequência</strong></td><td>Interações entre atores e sistema, e entre componentes do sistema</td></tr>
+<tr><td><strong>Classes</strong></td><td>Estrutura estática — classes, atributos, operações e relacionamentos</td></tr>
+<tr><td><strong>Estados</strong></td><td>Como o sistema reage a eventos internos e externos</td></tr>
+</table>
+
+### Vantagens e Limitações da Análise OO
+
+<table>
+<tr><th></th><th>Análise Orientada a Objetos</th></tr>
+<tr><td><strong>Vantagens</strong></td><td>Modela o mundo real de forma natural; facilita criação de sistemas complexos; fácil extensão e manutenção; UML em constante evolução; melhor comunicação com o cliente</td></tr>
+<tr><td><strong>Limitações</strong></td><td>Exige tempo para criar toda a documentação de diagramas; só deve implementar após especificação completa; a equipe precisa dominar as notações UML e as ferramentas</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Análise Orientada a Objetos**
+
+- **SOLID** (Uncle Bob) é o conjunto de princípios que tornam o design OO realmente saudável: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.
+- **TypeScript** trouxe tipagem estática ao JavaScript com um modelo de tipos estrutural (não nominal como Java/C#). Classes, interfaces e generics permitem OO robusto no front-end e no back-end (Node.js).
+- **Design Patterns GoF** (Gang of Four) são as implementações clássicas dos princípios OO — Factory, Strategy, Observer, Decorator, Command. Ferramentas modernas (frameworks) os implementam internamente.
+- **Testes de unidade** são o reflexo da qualidade do design OO: classes com alta coesão e baixo acoplamento são naturalmente mais fáceis de testar. Se o teste é difícil, o design provavelmente é ruim.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A OOA é baseada em **objetos, atributos e classes** — não em hardware, estruturas de dados ou variáveis e funções.
+- Para garantir facilidade de criação e manutenção, o engenheiro deve fazer uma **modelagem clara e bem organizada**.
+- Ao identificar classes em um problema: Loja, Produto, Vendedor, Venda e Estoque são classes — não ações como "inserir vendedores" ou atributos como "cor e preço".
+- Uma **limitação** do modelo OO: não é mais fácil de implementar — exige familiaridade com notações e ferramentas.
+- O objetivo do **diagrama de objetos** é mostrar os objetos instanciados das classes (não mostrar as classes em si).
+</Callout>
+
+Referências: SCHACH, S.R. *Engenharia de Software*, 7ª ed., 2010. PRESSMAN, R.S.; MAXIM, B.R. *Engenharia de Software*, 8ª ed., 2016. LARMAN, C. *Utilizando UML e Padrões*, 3ª ed., 2007. SOMMERVILLE, I. *Engenharia de Software*, 9ª ed., 2011.

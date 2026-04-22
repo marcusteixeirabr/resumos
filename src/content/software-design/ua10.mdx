@@ -1,0 +1,124 @@
+---
+title: "UA10 — Utilizando Protótipos no Design"
+subtitle: "Os protótipos evoluem em fidelidade ao longo do projeto — de esboços em papel a simulações funcionais. Cada nível tem seu momento certo, materiais específicos e objetivos distintos."
+ua: 10
+group: "Prototipação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Os três níveis de prototipação
+
+<table>
+<tr><th>Nível</th><th>Material</th><th>Semelhança com o produto final</th><th>Quando usar</th></tr>
+<tr><td><strong>Baixo</strong></td><td>Papel, cartolina, post-its, esboços</td><td>Nenhuma ou mínima</td><td>Início do projeto; explorar estrutura e navegação</td></tr>
+<tr><td><strong>Médio</strong></td><td>Modelo computadorizado com funcionalidades limitadas</td><td>Aparência visual real, mas ações simuladas</td><td>Validar fluxos e aspectos visuais específicos</td></tr>
+<tr><td><strong>Alto</strong></td><td>Mesmos materiais do produto final; banco de dados de homologação</td><td>Idêntica ao produto final</td><td>Fase final; critério de aceite com o cliente</td></tr>
+</table>
+
+Slides — Níveis de Prototipação
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btr_07.png" alt="Wireframes — Média Fidelidade" caption="Wireframes: arquitetura da informação" />
+  <SlideItem src="/assets/img/slides/btr_08.png" alt="Alta Fidelidade" caption="Alta fidelidade: simulação final" />
+</SlidesGrid>
+
+### Detalhamento por nível
+
+#### Baixo nível
+
+- Elaborado mais rapidamente; não tem muita semelhança com o artefato final.
+- Objetivo: capturar propostas iniciais e representar estrutura, funcionalidades e navegação de forma genérica.
+- Tende a ser descartado rapidamente e substituído por versões melhoradas.
+- Qualquer pessoa pode elaborar — sem exigência de habilidades técnicas.
+
+#### Médio nível
+
+- Reúne vantagens do baixo e do alto nível.
+- Modelo computadorizado com apenas as funções mais fundamentais para avaliação.
+- Ações e reações do sistema são *simuladas* — ex.: simula exclusão de registro sem realmente deletar do banco.
+- Telas têm aspectos visuais reais da interface final.
+
+#### Alto nível
+
+- Muito semelhante ao artefato final — mesmos materiais que serão usados no produto.
+- Apresenta cores, botões, ícones, caixas de texto, janelas, exatamente como no produto final.
+- Conectado a banco de dados de desenvolvimento/homologação (não de produção).
+- Utilizado para análises aprofundadas de aspectos visuais, interatividade e usabilidade.
+- Base para a fase de aceite pelo cliente — o cliente concorda com o protótipo antes da produção.
+
+### Interface vs Interação — conceitos distintos
+
+Os termos são confundidos com frequência, mas significam coisas diferentes:
+
+<table>
+<tr><th>Conceito</th><th>Definição</th></tr>
+<tr><td><strong>Interface</strong></td><td>O componente do artefato com o qual o usuário estabelece contato — físico, perceptivo ou conceitual. É o <em>meio</em> de comunicação.</td></tr>
+<tr><td><strong>Interação</strong></td><td>O <em>processo</em> de comunicação entre o usuário e o computador, por meio da interface. É mais abrangente — inclui tudo que acontece durante o uso.</td></tr>
+</table>
+
+O contato do usuário com a interface acontece de duas formas:
+
+- **Contato físico:** manipulação de mouse, teclado, tela touch; percepção de mensagens pelo monitor ou áudio.
+- **Contato conceitual:** interpretação das respostas do sistema; verificação se os objetivos foram atingidos.
+
+A interface é aquela parte do artefato com a qual o usuário entra em contato. A interação é o processo completo de comunicação que se estabelece *por meio* dessa interface.
+
+### Prototipação em Papel — como funciona na prática
+
+O protótipo em papel é de baixo nível e pode ser confeccionado com papel, post-it, cola, tesoura e caneta. O ciclo de avaliação funciona assim:
+
+1. O designer apresenta o desenho da tela para o usuário.
+2. O designer informa uma atividade típica do domínio para o usuário executar.
+3. O usuário aponta com o dedo onde clicaria ou digitaria, e descreve o que espera que aconteça.
+4. Um membro da equipe faz o papel da **máquina** — substitui a tela conforme as ações do usuário, simulando o sistema.
+5. Um membro registra tudo que acontece durante a interação.
+6. O moderador pode questionar sobre caixas de diálogo e ações automáticas que o usuário não identificou.
+
+O protótipo em papel deve ter todos os elementos: botões, menus, submenus, caixas de diálogo, mensagens de erro. Cada ciclo pode levar horas ou minutos — permitindo muitos ciclos e modificações rápidas durante a própria avaliação.
+
+### Protótipos Descartáveis vs Evolutivos
+
+#### Descartável
+
+Criado para responder uma dúvida específica e depois serve apenas de consulta histórica. Papel e baixo nível são descartáveis por natureza.
+
+#### Evolutivo
+
+Criado na fase inicial e melhorado progressivamente conforme o projeto avança. Torna-se o produto final ao longo do tempo. Comum em ambientes ágeis.
+
+### Ferramentas de Prototipação
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btr_10.png" alt="Ecossistema de Ferramentas" caption="Ferramentas por nível de fidelidade" />
+</SlidesGrid>
+
+<table>
+<tr><th>Nível</th><th>Ferramentas</th></tr>
+<tr><td>Baixo (esboços)</td><td>Papel, caneta, post-its, quadro branco</td></tr>
+<tr><td>Baixo → Médio (wireframe)</td><td>Balsamiq, Uizard, Lucidchart</td></tr>
+<tr><td>Médio → Alto (interativo)</td><td>Marvel App, ProtoPie, Figma</td></tr>
+<tr><td>Alto (UI final)</td><td>Figma, Adobe XD, InVision, Axure RP, Sketch</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Protótipos no Design**
+
+- **Figma Auto Layout e Componentes** permitem criar protótipos de alta fidelidade com estados interativos (hover, click, overlay) diretamente no navegador — o protótipo clicável substitui documentos de especificação extensos.
+- **Storybook** é a ferramenta moderna para documentar e testar componentes UI em isolamento — especialmente em React, Vue e Angular. O componente é o protótipo.
+- **Design Tokens** são variáveis que definem cores, tipografia e espaçamento de forma centralizada — sincronizadas entre Figma e código-fonte via ferramentas como Style Dictionary.
+- **Prototipação orientada a dados:** ferramentas como Framer e Webflow permitem conectar protótipos a APIs reais — o usuário testa com dados verdadeiros, não com Lorem ipsum.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Papel e caneta como único material disponível = prototipagem de **baixo nível**.
+- Protótipos com aparência atrativa mas funcionalidades apenas visualizadas (sem interação real) = **médio nível** (editor de imagens, design gráfico).
+- Necessidade de curso de linguagem de programação para criar protótipos = protótipos de **alto nível** (programados, funcionais).
+- Interface e interação **não são sinônimos**: interface é o meio de comunicação; interação é o processo de comunicação realizado por meio da interface.
+- Protótipos **descartáveis** são usados e depois servem de consulta; **evolutivos** são melhorados ao longo do projeto.
+</Callout>
+
+Referências: ROCHA, H.V.; BARANAUSKAS, M.C.C. *Design e Avaliação de Interfaces Humano-Computador*, 2003. BARBOSA, S.D.J.; SILVA, B.S. *Interação Humano-Computador*, 2010. ROGERS, Y.; SHARP, H.; PREECE, J. *Design de Interação*, 3ª ed., 2013.

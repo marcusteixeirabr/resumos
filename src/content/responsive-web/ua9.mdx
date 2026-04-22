@@ -1,0 +1,181 @@
+---
+title: "UA9 — AJAX e JSON"
+subtitle: "AJAX permite atualizar partes da página sem recarregá-la por completo, consumindo dados de APIs em formato JSON."
+ua: 9
+group: "JavaScript"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que é AJAX?
+
+**Asynchronous JavaScript And XML** — técnica para fazer requisições HTTP assíncronas a partir do navegador, sem recarregar a página.
+
+### JSON — JavaScript Object Notation
+
+Formato leve para troca de dados entre cliente e servidor:
+
+```javascript
+{
+  "usuario": {
+    "id": 1,
+    "nome": "Marcus",
+    "ativo": true,
+    "notas": [8.5, 9.0, 7.5],
+    "endereco": null
+  }
+}
+```
+
+### Fetch API — moderno e padrão
+
+```javascript
+// GET — buscar dados
+fetch('https://api.exemplo.com/usuarios')
+  .then(res => res.json())
+  .then(dados => {
+    dados.forEach(u => console.log(u.nome));
+  })
+  .catch(err => console.error('Erro:', err));
+
+// POST — enviar dados
+fetch('/api/usuarios', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ nome: 'Ana', email: 'ana@email.com' })
+})
+  .then(res => res.json())
+  .then(novo => console.log('Criado:', novo));
+```
+
+### Async/Await — sintaxe mais limpa
+
+```javascript
+async function buscarUsuarios() {
+  try {
+    const res = await fetch('/api/usuarios');
+    const dados = await res.json();
+
+    const lista = document.querySelector('#lista');
+    dados.forEach(u => {
+      const li = document.createElement('li');
+      li.textContent = u.nome;
+      lista.appendChild(li);
+    });
+  } catch (err) {
+    console.error('Falha na requisição:', err);
+  }
+}
+
+buscarUsuarios();
+```
+
+### JSON.stringify e JSON.parse
+
+```javascript
+// Objeto JS → string JSON
+const str = JSON.stringify({ nome: "Ana", idade: 30 });
+// → '{"nome":"Ana","idade":30}'
+
+// String JSON → objeto JS
+const obj = JSON.parse('{"nome":"Ana","idade":30}');
+// → { nome: 'Ana', idade: 30 }
+
+// Salvar no LocalStorage
+localStorage.setItem('usuario', JSON.stringify(obj));
+const salvo = JSON.parse(localStorage.getItem('usuario'));
+```
+
+<Callout type="default">
+**Sobre XMLHttpRequest**
+
+O `XMLHttpRequest` é a API antiga de AJAX. O `fetch` é o padrão moderno e deve ser preferido. `fetch` + `async/await` é a combinação mais usada hoje.
+</Callout>
+
+### XMLHttpRequest — como funciona por baixo
+
+O objeto `XMLHttpRequest` (XHR) é a base original do AJAX — entender seu ciclo ajuda a compreender o `fetch`:
+
+```javascript
+var xhr = new XMLHttpRequest();
+
+// Definir o que fazer quando a resposta chegar
+xhr.onreadystatechange = function() {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    var dados = JSON.parse(xhr.responseText);
+    console.log(dados);
+  }
+};
+
+// Configurar: método, URL, assíncrono=true
+xhr.open("GET", "server.php", true);
+xhr.send();
+```
+
+### Estados do XMLHttpRequest (`readyState`)
+
+<table>
+<tr><th>readyState</th><th>Significado</th></tr>
+<tr><td><code>0</code></td><td>Não inicializado — open() ainda não foi chamado</td></tr>
+<tr><td><code>1</code></td><td>Carregando — open() chamado, send() ainda não</td></tr>
+<tr><td><code>2</code></td><td>Carregado — send() chamado, cabeçalhos disponíveis</td></tr>
+<tr><td><code>3</code></td><td>Interativo — recebendo dados parcialmente</td></tr>
+<tr><td><code>4</code></td><td><strong>Completo</strong> — resposta recebida totalmente</td></tr>
+</table>
+
+### Ciclo completo AJAX + JSON + PHP
+
+```php
+/* server.php — PHP retorna JSON */
+<?php
+$clientes = [
+  ["nome" => "Ana",    "email" => "ana@email.com"],
+  ["nome" => "Carlos", "email" => "carlos@email.com"]
+];
+header("Content-Type: application/json");
+echo json_encode($clientes);
+?>
+```
+
+```javascript
+/* cliente.js — consome com fetch */
+fetch("server.php")
+  .then(res => res.json())
+  .then(clientes => {
+    clientes.forEach(c => {
+      console.log(c.nome, c.email);
+    });
+  });
+```
+
+### eval() vs JSON.parse() — segurança
+
+<table>
+<tr><th></th><th><code>eval()</code></th><th><code>JSON.parse()</code></th></tr>
+<tr><td>O que faz</td><td>Avalia <strong>qualquer</strong> expressão JavaScript</td><td>Interpreta <strong>somente</strong> JSON válido</td></tr>
+<tr><td>Segurança</td><td>Perigoso — executa código malicioso (JS Injection)</td><td>Seguro — rejeita comandos JS</td></tr>
+<tr><td>Uso recomendado</td><td>Nunca para dados externos</td><td>Sempre para converter JSON</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — AJAX e APIs**
+
+**Fetch API + async/await:** padrão atual — substitui completamente o XMLHttpRequest na maioria dos casos.
+**Axios:** biblioteca popular que adiciona interceptors, cancelamento, timeout e transformação automática de JSON sobre o fetch.
+**SWR / React Query / TanStack Query:** bibliotecas de *data fetching* para frameworks — gerenciam cache, revalidação automática e estado de carregamento/erro.
+**WebSockets:** conexão bidirecional persistente para dados em tempo real (chat, notificações, dashboards) — diferente do AJAX que é sempre request-response.
+**Server-Sent Events (SSE):** servidor empurra atualizações para o cliente sem o cliente precisar pedir — ideal para feeds e progresso de tarefas.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA9**
+
+- AJAX = **Asynchronous JavaScript And XML** — permite enviar e receber dados de forma assíncrona, sem recarregar a página.
+- Requisição **assíncrona** = não bloqueia o navegador enquanto aguarda a resposta do servidor.
+- A principal classe JavaScript do AJAX clássico é **XMLHttpRequest**.
+- JSON = **JavaScript Object Notation** — formato leve e simples para troca de dados.
+- Use **JSON.parse()**, nunca `eval()`, para converter texto JSON em objeto JavaScript.
+- `readyState === 4` + `status === 200` = resposta recebida com sucesso.
+- PHP usa `json_encode()` para gerar JSON e `json_decode()` para consumir.
+</Callout>
+
+Miletto, E. M.; Bertagnolli, S. C. *Desenvolvimento de Software II*. Porto Alegre: Bookman, 2014.

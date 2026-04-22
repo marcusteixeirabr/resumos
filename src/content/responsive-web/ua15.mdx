@@ -1,0 +1,100 @@
+---
+title: "UA15 — PHP: Frameworks"
+subtitle: "Frameworks encapsulam boas práticas e padronizam o desenvolvimento — em vez de reinventar a roda, o desenvolvedor segue uma estrutura já testada. O MVC é o padrão central na maioria dos frameworks PHP modernos."
+ua: 15
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que é um framework?
+
+Um framework é um pacote de software com conjuntos de classes, funções e procedimentos que padronizam e agilizam o desenvolvimento. Em vez de implementar tudo do zero, o desenvolvedor segue a estrutura e as convenções do framework, beneficiando-se de componentes testados por especialistas.
+
+### Framework Zend (histórico)
+
+O material do curso apresenta o **Zend Framework 3** — framework open-source, 100% orientado a objetos, licença New BSD, compatível com PHP 5.6+. Era mantido pela empresa Zend Technologies com contribuições de Google, Microsoft e outras.
+
+<Callout type="warning">
+**Atenção — Zend foi renomeado para Laminas**
+
+Em 2019, o Zend Framework foi doado à Linux Foundation e renomeado para **Laminas Project**. O pacote `zendframework/zendframework` está abandonado. Use o equivalente moderno: `laminas/laminas-mvc`. Porém, para projetos PHP novos em 2024+, a recomendação do mercado é usar **Laravel** ou **Symfony**.
+</Callout>
+
+### Composer — o gerenciador de dependências PHP
+
+O Composer é ao PHP o que o npm é ao Node.js. Ele baixa, instala e gerencia pacotes e suas dependências automaticamente via arquivo `composer.json`.
+
+```
+# Instalar uma dependência
+composer require vendor/pacote
+
+# Instalar dependências do projeto (composer.json existente)
+composer install
+
+# Atualizar dependências
+composer update
+```
+
+### Arquitetura MVC
+
+O padrão MVC separa a aplicação em três camadas:
+
+<table>
+<tr><th>Camada</th><th>Responsabilidade</th><th>Exemplo</th></tr>
+<tr><td><strong>Model</strong></td><td>Dados, regras de negócio, acesso ao banco</td><td>Classe <code>Livro</code> com métodos de busca</td></tr>
+<tr><td><strong>View</strong></td><td>Apresentação ao usuário</td><td>Arquivo HTML/PHP que exibe a lista de livros</td></tr>
+<tr><td><strong>Controller</strong></td><td>Recebe requisições, coordena Model e View</td><td>Classe que processa POST e redireciona</td></tr>
+</table>
+
+### Fluxo de uma requisição em MVC
+
+```
+Usuário → (requisição) → Controller
+Controller → (chama) → Model (processa regras/dados)
+Model → (retorna dados) → Controller
+Controller → (passa dados) → View
+View → (exibe para) → Usuário
+```
+
+### Estrutura de projeto Zend Skeleton (referência)
+
+```
+/projeto/
+├── config/
+│   └── modules.config.php   ← rotas de cada módulo
+├── module/
+│   └── Application/
+│       ├── src/
+│       │   └── Controller/  ← controllers
+│       │   └── Model/       ← models / entidades
+│       └── view/            ← arquivos .phtml (View)
+└── public/
+    └── index.php            ← ponto de entrada
+```
+
+Arquivos de View no Zend usam extensão `.phtml`. O arquivo `module.config.php` define as rotas que o Controller recebe.
+
+<Callout type="warning">
+**Práticas Modernas — Frameworks PHP em 2024+**
+
+**Laravel:** framework mais popular do mundo PHP. Artisan CLI, Eloquent ORM, Blade templating, autenticação, queues, broadcasting — ecossistema completo. Versão atual: Laravel 11.
+**Symfony:** framework robusto e modular, base do Drupal e partes do Laravel. Excelente para APIs e sistemas enterprise.
+**Slim / Lumen:** microframeworks para APIs REST simples e leves — quando não precisa de todo o ecossistema do Laravel.
+**Laminas (antigo Zend):** mantido pela Linux Foundation, mais usado em sistemas legados.
+**Composer + PSR-4 autoloading:** base de qualquer projeto PHP moderno — define convenções de namespaces e carregamento automático de classes.
+**PHP-FIG PSRs:** padrões de interoperabilidade (PSR-7 para HTTP, PSR-12 para estilo de código, PSR-15 para middleware) seguidos por todos os frameworks modernos.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA15**
+
+- Zend é compatível com **PHP 5.6 ou mais recente**.
+- A instalação do Zend é feita **via Composer** (não executável, não já incluso no XAMPP).
+- O modelo de projeto base do Zend chama-se **Skeleton Application**.
+- `module.config.php` define as **rotas** da aplicação (mapeamento URL → Controller).
+- Arquivos da camada View no Zend têm extensão **.phtml**.
+- MVC: **Model** = dados/lógica; **View** = apresentação; **Controller** = coordenação.
+- Vantagens do MVC: desenvolvimento paralelo (designers e programadores), reúso de código, manutenção facilitada.
+</Callout>
+
+Saraiva, M. O. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018. | Zend Framework Documentation. | Laravel Documentation (laravel.com).

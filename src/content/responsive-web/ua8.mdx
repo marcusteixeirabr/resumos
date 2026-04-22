@@ -1,0 +1,233 @@
+---
+title: "UA8 — JavaScript: Comportamento"
+subtitle: "JavaScript adiciona interatividade e comportamento dinâmico às páginas web — manipulação do DOM, eventos, validações e muito mais."
+ua: 8
+group: "JavaScript"
+---
+import Callout from "../../components/Callout.astro";
+
+### Fundamentos
+
+```javascript
+// Variáveis
+const nome = "Marcus";   // imutável (preferir)
+let idade = 25;          // mutável
+
+// Funções
+function saudar(nome) {
+  return `Olá, ${nome}!`;
+}
+
+// Arrow function
+const dobrar = (n) => n * 2;
+
+// Arrays
+const frutas = ["maçã", "banana", "uva"];
+frutas.forEach(f => console.log(f));
+const maiusculas = frutas.map(f => f.toUpperCase());
+```
+
+### Manipulação do DOM
+
+```javascript
+// Selecionar elementos
+const btn = document.querySelector('#meu-botao');
+const cards = document.querySelectorAll('.card');
+
+// Modificar conteúdo
+btn.textContent = 'Clique aqui';
+btn.style.background = '#3b82f6';
+btn.classList.add('ativo');
+btn.classList.toggle('visivel');
+
+// Criar e inserir elemento
+const li = document.createElement('li');
+li.textContent = 'Novo item';
+document.querySelector('ul').appendChild(li);
+```
+
+### Eventos
+
+```javascript
+// Click
+btn.addEventListener('click', () => {
+  alert('Clicou!');
+});
+
+// Formulário
+document.querySelector('form')
+  .addEventListener('submit', (e) => {
+    e.preventDefault(); // impede o envio padrão
+    const nome = document.querySelector('#nome').value;
+    console.log(`Enviando: ${nome}`);
+  });
+
+// Input em tempo real
+document.querySelector('#busca')
+  .addEventListener('input', (e) => {
+    console.log(e.target.value);
+  });
+```
+
+### Eventos comuns
+
+<table>
+<tr><th>Evento</th><th>Quando dispara</th></tr>
+<tr><td><code>click</code></td><td>Clique do mouse</td></tr>
+<tr><td><code>submit</code></td><td>Envio de formulário</td></tr>
+<tr><td><code>input</code></td><td>Mudança em campo de texto</td></tr>
+<tr><td><code>change</code></td><td>Mudança confirmada (blur de select)</td></tr>
+<tr><td><code>keydown</code> / <code>keyup</code></td><td>Tecla pressionada/solta</td></tr>
+<tr><td><code>mouseover</code></td><td>Mouse entra no elemento</td></tr>
+<tr><td><code>DOMContentLoaded</code></td><td>DOM completamente carregado</td></tr>
+</table>
+
+<Callout type="green">
+**Boas práticas**
+
+Use `const` por padrão; use `let` só quando precisar reatribuir. Evite `var` — tem escopo de função e causa bugs difíceis de rastrear.
+</Callout>
+
+### Tipos de dados em JavaScript
+
+<table>
+<tr><th>Tipo</th><th>Descrição</th><th>Exemplo</th></tr>
+<tr><td><code>String</code></td><td>Sequência de caracteres</td><td><code>let nome = "Ana"</code></td></tr>
+<tr><td><code>Number</code></td><td>Inteiro ou ponto flutuante</td><td><code>let idade = 30</code> | <code>let pi = 3.14</code></td></tr>
+<tr><td><code>Boolean</code></td><td>Verdadeiro ou falso</td><td><code>let ativo = true</code></td></tr>
+<tr><td><code>Array</code></td><td>Lista ordenada de valores</td><td><code>let frutas = ["maçã", "banana"]</code></td></tr>
+<tr><td><code>Object</code></td><td>Coleção de pares chave-valor</td><td><code>let carro = &#123;'&#123;'&#125; marca: "Honda", ano: 2023 &#125;</code></td></tr>
+<tr><td><code>Undefined</code></td><td>Variável declarada sem valor</td><td><code>let x; // undefined</code></td></tr>
+<tr><td><code>Null</code></td><td>Ausência intencional de valor</td><td><code>let dado = null</code></td></tr>
+</table>
+
+### Operadores em JavaScript
+
+<table>
+<tr><th>Categoria</th><th>Operadores</th><th>Exemplo</th></tr>
+<tr><td>Aritméticos</td><td><code>+  -  &#42;  /  %  ++  --</code></td><td><code>10 % 3 === 1</code></td></tr>
+<tr><td>Atribuição</td><td><code>=  +=  -=  &#42;=  /=  %=</code></td><td><code>x += 5</code> (equivale a <code>x = x + 5</code>)</td></tr>
+<tr><td>Comparação</td><td><code>==  !=  ===  !==  &lt;  &gt;  &lt;=  &gt;=</code></td><td><code>10 === "10"</code> → <code>false</code> (tipo diferente)</td></tr>
+<tr><td>Lógicos</td><td><code>&amp;&amp;  ||  !</code></td><td><code>true &amp;&amp; false</code> → <code>false</code></td></tr>
+</table>
+
+### Controle de fluxo
+
+```javascript
+// if / else
+if (idade >= 18) {
+  console.log("Adulto");
+} else {
+  console.log("Menor");
+}
+
+// switch
+switch (dia) {
+  case "seg": console.log("Segunda"); break;
+  case "ter": console.log("Terça");   break;
+  default:  console.log("Outro dia");
+}
+
+// for — número de iterações conhecido
+for (let i = 0; i < 5; i++) { console.log(i); }
+
+// while — condição avaliada antes
+let i = 0;
+while (i < 5) { console.log(i); i++; }
+
+// do...while — executa ao menos uma vez
+do { console.log(i); i++; } while (i < 5);
+```
+
+### Métodos nativos úteis
+
+<table>
+<tr><th>Método</th><th>O que faz</th></tr>
+<tr><td><code>alert("msg")</code></td><td>Exibe caixa de alerta</td></tr>
+<tr><td><code>confirm("msg")</code></td><td>Caixa OK/Cancelar — retorna <code>true</code> ou <code>false</code></td></tr>
+<tr><td><code>prompt("msg")</code></td><td>Solicita valor ao usuário — retorna a string digitada</td></tr>
+<tr><td><code>parseInt("10")</code></td><td>Converte string para inteiro</td></tr>
+<tr><td><code>parseFloat("3.14")</code></td><td>Converte string para número de ponto flutuante</td></tr>
+<tr><td><code>console.log(x)</code></td><td>Exibe valor no console do navegador (F12)</td></tr>
+</table>
+
+### Métodos de seleção DOM
+
+<table>
+<tr><th>Método</th><th>Retorna</th><th>Exemplo</th></tr>
+<tr><td><code>getElementById("id")</code></td><td>Um elemento (ou null)</td><td><code>document.getElementById("btn")</code></td></tr>
+<tr><td><code>getElementsByClassName("cls")</code></td><td>HTMLCollection (vivo)</td><td><code>document.getElementsByClassName("card")</code></td></tr>
+<tr><td><code>getElementsByTagName("tag")</code></td><td>HTMLCollection (vivo)</td><td><code>document.getElementsByTagName("p")</code></td></tr>
+<tr><td><code>querySelector("sel")</code></td><td>Primeiro elemento correspondente</td><td><code>document.querySelector(".ativo")</code></td></tr>
+<tr><td><code>querySelectorAll("sel")</code></td><td>NodeList (estática)</td><td><code>document.querySelectorAll("li")</code></td></tr>
+</table>
+
+### Manipulação DOM — referência rápida
+
+```javascript
+const el = document.getElementById("box");
+
+// Conteúdo
+el.innerHTML = "<b>Novo</b>";   // interpreta HTML
+el.textContent = "Apenas texto";  // só texto (seguro)
+
+// Atributos
+el.setAttribute("class", "ativo");
+const cls = el.getAttribute("class");  // "ativo"
+el.removeAttribute("disabled");
+
+// Criar e remover
+const p = document.createElement("p");
+p.textContent = "Novo parágrafo";
+document.body.appendChild(p);
+p.parentNode.removeChild(p); // ou p.remove()
+```
+
+### Categorias de eventos
+
+<table>
+<tr><th>Categoria</th><th>Eventos principais</th></tr>
+<tr><td>Mouse</td><td><code>click</code> <code>dblclick</code> <code>mouseover</code> <code>mouseout</code> <code>mousedown</code> <code>mouseup</code></td></tr>
+<tr><td>Teclado</td><td><code>keydown</code> <code>keypress</code> <code>keyup</code></td></tr>
+<tr><td>Formulário</td><td><code>submit</code> <code>change</code> <code>focus</code> <code>blur</code> <code>input</code> <code>reset</code></td></tr>
+<tr><td>Documento / Janela</td><td><code>DOMContentLoaded</code> <code>load</code> <code>resize</code> <code>scroll</code> <code>unload</code></td></tr>
+</table>
+
+### Como incluir JavaScript na página
+
+```html
+<!-- 1. Inline (evitar) -->
+<button onclick="alert('Clicou!')">Clique</button>
+
+<!-- 2. Interno (bloco <script> no HTML) -->
+<script>
+  console.log("Página carregada");
+</script>
+
+<!-- 3. Externo (recomendado — antes de </body>) -->
+<script src="js/main.js"></script>
+```
+
+<Callout type="warning">
+**Práticas Modernas — JavaScript**
+
+**Desestruturação (ES6+):** `const { nome, idade } = usuario;` — extrai propriedades de objetos diretamente.
+**Spread/Rest:** `[...arr1, ...arr2]` une arrays; `{ ...obj, extra: 1 }` copia e estende objetos.
+**Optional Chaining (`?.`):** `usuario?.endereco?.cep` — evita erro se propriedade for `null`.
+**TypeScript:** superset tipado de JS que adiciona tipos estáticos — detecta erros em tempo de desenvolvimento, padrão em projetos React/Angular.
+**Módulos ES (`import/export`):** organizam o código em arquivos separados sem poluir o escopo global — substituem `var` global e require.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA8**
+
+- JavaScript foi criado em **1995** pela **Netscape**. **Java e JavaScript são linguagens distintas** — nomes parecidos por acordo de marketing.
+- JavaScript é **case-sensitive**: `var`, `Var` e `VAR` são tratados como identificadores diferentes.
+- `var` = escopo de função (imprevisível). `let` = escopo de bloco (mutável). `const` = escopo de bloco (imutável). Prefira sempre `const`.
+- `==` compara valor com coerção de tipo; `===` compara valor **e tipo** — sempre prefira `===`.
+- `innerHTML` interpreta HTML; `textContent` só insere texto puro (mais seguro contra XSS).
+- `addEventListener` é o método recomendado para eventos — evite atributos `onclick` inline no HTML.
+- `do...while` executa o bloco pelo menos **uma vez**, mesmo que a condição seja falsa desde o início.
+</Callout>
+
+Pinto, R. A. *Ferramentas de Desenvolvimento Web*. Porto Alegre: SAGAH, 2024. | Freeman, E.; Robson, E. *Use a Cabeça! JavaScript*. O'Reilly, 2014. | Flanagan, D. *JavaScript: O Guia Definitivo*. 7. ed. O'Reilly, 2020.

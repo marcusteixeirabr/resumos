@@ -1,0 +1,143 @@
+---
+title: "UA10 — PHP: Introdução"
+subtitle: "PHP é uma linguagem de script server-side que gera HTML dinamicamente no servidor. É a base do desenvolvimento web back-end em ambiente LAMP/XAMPP e motor de sistemas como WordPress."
+ua: 10
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que é PHP?
+
+PHP (PHP: Hypertext Preprocessor) é uma linguagem de script server-side de tipagem fraca e dinâmica. Os arquivos PHP usam a extensão `.php` e são executados no servidor, não no navegador. O código PHP fica entre as tags `<?php` e `?>`.
+
+### XAMPP — ambiente de desenvolvimento local
+
+O XAMPP é um pacote de software livre desenvolvido pela Apache Friends que permite rodar um servidor web localmente sem necessidade de internet. O nome é acrônimo:
+
+<table>
+<tr><th>Letra</th><th>Componente</th></tr>
+<tr><td><strong>X</strong></td><td>Cross-platform — funciona em Windows, Linux e macOS</td></tr>
+<tr><td><strong>A</strong></td><td>Apache — servidor web</td></tr>
+<tr><td><strong>M</strong></td><td>MySQL / MariaDB — banco de dados</td></tr>
+<tr><td><strong>P</strong></td><td>PHP — linguagem de script server-side</td></tr>
+<tr><td><strong>P</strong></td><td>Perl — linguagem de script adicional</td></tr>
+</table>
+
+Os arquivos PHP ficam em `c:\xampp\htdocs` (Windows) e são acessados via `http://localhost/pasta/arquivo.php`.
+
+### Variáveis
+
+Toda variável começa com `$`. O PHP tem tipagem fraca — o tipo muda automaticamente conforme o contexto.
+
+```php
+// Declaração e tipagem dinâmica
+$nome = "Ana";      // string
+$idade = 30;       // integer
+$preco = 9.99;     // float
+$ativo = true;    // boolean
+
+// Regras: inicia com letra ou _; case-sensitive; sem espaços
+$meu_nome = "Carlos";   // válido
+$MeuNome = "outro";     // variável diferente de $meu_nome
+```
+
+### Superglobais
+
+Variáveis nativas disponíveis em qualquer parte do código, sem precisar declarar:
+
+<table>
+<tr><th>Superglobal</th><th>Conteúdo</th></tr>
+<tr><td><code>$GLOBALS</code></td><td>Todas as variáveis do escopo global</td></tr>
+<tr><td><code>$&#95;SERVER</code></td><td>Informações do servidor e ambiente de execução</td></tr>
+<tr><td><code>$&#95;GET</code></td><td>Dados enviados pelo método HTTP GET (visíveis na URL)</td></tr>
+<tr><td><code>$&#95;POST</code></td><td>Dados enviados pelo método HTTP POST (não visíveis na URL)</td></tr>
+<tr><td><code>$&#95;FILES</code></td><td>Arquivos enviados via POST</td></tr>
+<tr><td><code>$&#95;COOKIE</code></td><td>Valores dos cookies HTTP</td></tr>
+<tr><td><code>$&#95;SESSION</code></td><td>Variáveis de sessão do usuário</td></tr>
+<tr><td><code>$&#95;REQUEST</code></td><td>Contém $_GET + $_POST + $_COOKIE</td></tr>
+<tr><td><code>$&#95;ENV</code></td><td>Variáveis de ambiente do sistema</td></tr>
+</table>
+
+### Constantes
+
+Constantes mantêm o valor fixo durante toda a execução. Por convenção, usam letras maiúsculas. Não levam `$`.
+
+```javascript
+// define() — disponível desde as primeiras versões
+define("PI", 3.14159);
+// const — disponível desde PHP 5.3 em escopo global
+const VERSAO = "1.0";
+
+echo PI;     // 3.14159
+echo VERSAO; // 1.0
+```
+
+### Constantes Mágicas
+
+Constantes predefinidas cujo valor muda conforme onde são usadas:
+
+<table>
+<tr><th>Constante</th><th>Retorna</th></tr>
+<tr><td><code>&#95;&#95;LINE&#95;&#95;</code></td><td>Número da linha atual no código</td></tr>
+<tr><td><code>&#95;&#95;FILE&#95;&#95;</code></td><td>Caminho completo do arquivo</td></tr>
+<tr><td><code>&#95;&#95;DIR&#95;&#95;</code></td><td>Diretório do arquivo</td></tr>
+<tr><td><code>&#95;&#95;FUNCTION&#95;&#95;</code></td><td>Nome da função atual</td></tr>
+<tr><td><code>&#95;&#95;CLASS&#95;&#95;</code></td><td>Nome da classe atual</td></tr>
+<tr><td><code>&#95;&#95;TRAIT&#95;&#95;</code></td><td>Nome do trait atual</td></tr>
+<tr><td><code>&#95;&#95;METHOD&#95;&#95;</code></td><td>Nome do método da classe</td></tr>
+<tr><td><code>&#95;&#95;NAMESPACE&#95;&#95;</code></td><td>Nome do namespace atual</td></tr>
+</table>
+
+### var_dump() e phpinfo()
+
+```php
+// var_dump — mostra tipo e valor; útil para depuração
+$arr = [1, "dois", true];
+var_dump($arr);
+// array(3) { [0]=> int(1) [1]=> string(4) "dois" [2]=> bool(true) }
+
+// phpinfo — exibe configuração completa do ambiente PHP
+phpinfo();                      // tudo (INFO_ALL)
+phpinfo(INFO_GENERAL);          // versão, servidor, SO
+phpinfo(INFO_CONFIGURATION);    // diretivas do php.ini
+phpinfo(INFO_MODULES);          // extensões carregadas
+```
+
+### Operadores
+
+<table>
+<tr><th>Tipo</th><th>Operadores</th><th>Descrição</th></tr>
+<tr><td>Aritméticos</td><td><code>+ - &#42; / % &#42;&#42;</code></td><td>Soma, subtração, multiplicação, divisão, módulo, exponencial</td></tr>
+<tr><td>Atribuição</td><td><code>= += -= .= </code></td><td>Atribuir valor; atribuir somando; atribuir concatenando</td></tr>
+<tr><td>Comparação</td><td><code>== === != !== &lt; &gt; &lt;= &gt;=</code></td><td><code>==</code> compara valor; <code>===</code> compara valor <strong>e tipo</strong></td></tr>
+<tr><td>Lógicos</td><td><code>&amp;&amp; || ! and or xor</code></td><td>E, OU, NÃO, OU exclusivo</td></tr>
+<tr><td>String</td><td><code>. .=</code></td><td>Concatena strings</td></tr>
+<tr><td>Controle de erro</td><td><code>@</code></td><td>Suprime erros da expressão seguinte</td></tr>
+<tr><td>Incremento</td><td><code>++ --</code></td><td>Pré/pós incremento e decremento</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — PHP e ambiente de desenvolvimento**
+
+**PHP 8.x:** versão atual com melhorias significativas — JIT compiler, union types, named arguments, match expression, nullsafe operator `?->`, fibers (PHP 8.1).
+**Docker + DDEV / Laravel Sail:** substituem o XAMPP em ambientes profissionais — cada projeto tem seu próprio container isolado, eliminando conflitos de versão.
+**Composer:** gerenciador de dependências oficial do PHP — equivalente ao npm para JavaScript. Essencial para qualquer projeto moderno.
+**IDEs recomendadas:** PhpStorm (pago, mais completo) ou VS Code com extensão PHP IntelliSense + PHP Debug.
+**`===` em vez de `==`:** sempre prefira comparação estrita para evitar erros de tipo (ex.: `"0" == false` retorna `true`).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA10**
+
+- XAMPP: X=cross-platform, A=Apache, **M=MySQL/MariaDB**, P=PHP, P=Perl.
+- Variáveis PHP começam com `$` e são **case-sensitive**.
+- PHP tem tipagem **fraca** — o tipo é definido automaticamente conforme o valor atribuído.
+- Superglobais estão disponíveis em **qualquer lugar** do código sem declaração.
+- `$_GET` = dados visíveis na URL; `$_POST` = dados ocultos (não aparecem na URL).
+- Constantes não levam `$`; por convenção usam LETRAS_MAIÚSCULAS.
+- `define()` pode ser usada em qualquer escopo; `const` requer PHP 5.3+ para escopo global.
+- `var_dump()` mostra tipo e valor — indispensável para depuração.
+- `phpinfo()` sem parâmetros exibe tudo (`INFO_ALL`).
+</Callout>
+
+Saraiva, M. O.; Barreto, J. S. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018.

@@ -1,0 +1,115 @@
+---
+title: "UA9 — Prototipação e Concepção"
+subtitle: "Um protótipo é qualquer modelo que representa partes de um design de interface para avaliação — pode ser um esboço em papel, um vídeo simulando o artefato, ou até um modelo em madeira. O importante é prototipar para que a entrega final seja alinhada às necessidades do usuário."
+ua: 9
+group: "Prototipação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+Slides — Prototipação
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btr_01.png" alt="Do Esboço à Realidade" caption="Do Esboço à Realidade" />
+  <SlideItem src="/assets/img/slides/btr_02.png" alt="Ponte de comunicação" caption="Protótipo como ponte de comunicação" />
+  <SlideItem src="/assets/img/slides/btr_03.png" alt="Circuito de Prototipação" caption="O motor do design: ciclo iterativo" />
+  <SlideItem src="/assets/img/slides/btr_11.png" alt="ROI da Prototipação" caption="O verdadeiro ROI da Prototipação" />
+</SlidesGrid>
+
+### O que é um protótipo?
+
+Um protótipo é um modelo, uma representação de um design que possibilita que stakeholders interajam com o que foi elaborado e simulem funcionalidades. Não precisa ter as características finais — pode ser um desenho em papel, esboço de tela à mão, vídeo simulado ou modelo em papelão. (Rogers, Sharp e Preece, 2013)
+
+O processo é feito em ciclos: designers elaboram → usuários avaliam → designers ajustam. Cada ciclo gera aprendizado antes de investir em desenvolvimento real. O protótipo normalmente enfatiza características ou funcionalidades específicas que se deseja testar naquele momento, não o sistema completo.
+
+### Tipos de prototipação — por fidelidade
+
+<table>
+<tr><th>Tipo</th><th>Semelhança com o artefato final</th><th>Material / Abordagem</th><th>Melhor para</th></tr>
+<tr><td><strong>Baixa fidelidade</strong></td><td>Nenhuma ou mínima</td><td>Papel, post-its, cartolina, isopor</td><td>Fases iniciais; explorar conceitos e fluxos</td></tr>
+<tr><td><strong>Alta fidelidade</strong></td><td>Muito próxima</td><td>Mesmos materiais do produto final; software real</td><td>Validação final; testes de usabilidade detalhados</td></tr>
+</table>
+
+Outra classificação, por amplitude:
+
+<table>
+<tr><th>Tipo</th><th>Descrição</th></tr>
+<tr><td><strong>Horizontal</strong></td><td>Grande variedade de funções, mas com poucos detalhes em cada uma</td></tr>
+<tr><td><strong>Vertical</strong></td><td>Poucas funções, mas cada uma detalhada ao máximo</td></tr>
+</table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btr_05.png" alt="Espectro de Fidelidade" caption="O espectro de fidelidade" />
+  <SlideItem src="/assets/img/slides/btr_09.png" alt="Mapa de Decisão" caption="Mapa de decisão por fidelidade" />
+  <SlideItem src="/assets/img/slides/btr_06.png" alt="Baixa Fidelidade" caption="Baixa fidelidade: validando com papel" />
+</SlidesGrid>
+
+### Design Conceitual
+
+O design conceitual transforma os requisitos levantados em um **modelo conceitual** — uma descrição de tudo que o usuário pode fazer durante a utilização do artefato, e quais conceitos são necessários para entender como interagir com ele.
+
+Quatro princípios fundamentam o design conceitual (Rogers, Sharp e Preece, 2013):
+
+- Manter a mente aberta para a criatividade, mas os interesses dos usuários vêm primeiro.
+- Discutir as ideias que surgirem com os stakeholders, na medida do possível.
+- Quando precisar de feedback rápido, usar **prototipação de baixa fidelidade**.
+- Fazer muitos ciclos iterativos — usuários avaliam, designer adapta.
+
+O design conceitual cuida de questões como: quais funções existem, como elas se relacionam entre si, e quais informações precisam estar disponíveis em cada momento.
+
+### Design Físico
+
+O design físico toma as decisões e escolhas para elaborar uma interface que respeite requisitos ambientais, de usuários, de usabilidade, de experiência e de restrições legais. Duas considerações principais sobre os usuários:
+
+#### Acessibilidade
+
+Tornar o artefato utilizável para o maior número de pessoas: leitores de tela, controle por voz, aumento de zoom, teclados em Braille, contraste elevado. Acessibilidade é requisito, não diferencial.
+
+#### Cultura Nacional
+
+Idioma, cores, ícones, formatos de data/hora/moeda e padrões culturais variam por região. Um produto global precisa se adaptar a essas diferenças sem forçar o usuário a se adaptar ao software.
+
+### Cenários — narrativas antes das telas
+
+Cenários são histórias informais que descrevem as atividades do usuário durante a utilização da interface. São a base para o design — antes de desenhar qualquer tela, é preciso entender o contexto de uso.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btr_04.png" alt="Cenários antes das telas" caption="Projetar cenários antes das telas" />
+</SlidesGrid>
+
+Os sete elementos de um cenário (Baranauskas e Rocha, 2003):
+
+<table>
+<tr><th>Elemento</th><th>O que descreve</th></tr>
+<tr><td><strong>Contexto</strong></td><td>Detalhes e situações que explicam os objetivos e papéis dos atores</td></tr>
+<tr><td><strong>Evento</strong></td><td>Ação externa do computador ou ambiente que interage com a interface</td></tr>
+<tr><td><strong>Avaliação</strong></td><td>Atividade mental do usuário ao interpretar uma situação</td></tr>
+<tr><td><strong>Ação</strong></td><td>Ação observável realizada pelo ator</td></tr>
+<tr><td><strong>Atores</strong></td><td>Pessoas que interagem com a interface; inclui perfil de acesso e acessibilidade</td></tr>
+<tr><td><strong>Objetivos</strong></td><td>O que o ator deseja atingir — a motivação para suas ações</td></tr>
+<tr><td><strong>Plano</strong></td><td>O raciocínio mental para converter objetivos em ações concretas</td></tr>
+</table>
+
+Cenários podem ser positivos ou negativos, pois precisam identificar as consequências de cada ideia de design. São ferramentas flexíveis, provisórias e de baixo custo — permitem obter feedback dos stakeholders sem construir um protótipo funcional completo.
+
+<Callout type="warning">
+**Práticas Modernas — Prototipação**
+
+- **Figma** tornou-se o padrão da indústria para prototipação, substituindo Balsamiq, Axure e Adobe XD. É colaborativo em tempo real, multiplataforma e gratuito para times pequenos.
+- **Design Systems** (ex.: Material Design, Ant Design, Radix UI) fornecem componentes reutilizáveis pré-testados — reduzem o tempo de prototipação e garantem consistência visual.
+- **Testes de usabilidade remotos** com ferramentas como Maze, Hotjar e UserTesting permitem coletar feedback de usuários reais sem sala física — mais rápido e barato que testes presenciais.
+- **Penpot** é a alternativa open-source ao Figma — auto-hospedada, sem lock-in de fornecedor, suporte a SVG nativo.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Esboçar desenhos de telas para que usuários avaliem e troquem ideias com designers = **Prototipação** (não brainstorming, entrevista ou questionário).
+- Protótipo muito detalhado, próximo ao produto final, em que usuários conseguem simular inclusão/exclusão = **alta fidelidade**.
+- Esclarecer responsabilidades dos usuários, elementos da interface e o que cada aspecto significa = fase de **design conceitual**.
+- Considerar limitações físicas dos usuários, região geográfica e cultura = **design físico**.
+- Um protótipo com passos descritivos do usuário (ex.: "usuário clica em Cadastro → informa dados → clica Salvar") é um protótipo que utiliza **cenários**.
+</Callout>
+
+Referências: ROGERS, Y.; SHARP, H.; PREECE, J. *Design de Interação: além da interação humano-computador*, 3ª ed., 2013. BARANAUSKAS, M.C.C.; ROCHA, H.V. *Design e Avaliação de Interfaces Humano-Computador*, 2003.

@@ -1,0 +1,136 @@
+---
+title: "UA6 — Definição do Sistema"
+subtitle: "Antes de codificar, é preciso definir claramente o que o sistema vai fazer, para quem e como será estruturado."
+ua: 6
+group: "Projeto"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que definir antes de começar
+
+- **Objetivo do sistema:** qual problema ele resolve?
+- **Público-alvo:** quem vai usar? Quais são suas necessidades?
+- **Funcionalidades principais:** o que o usuário pode fazer?
+- **Tecnologias:** frontend (HTML/CSS/JS), backend, banco de dados.
+- **Arquitetura:** como as partes se conectam?
+
+### Documento de Definição do Sistema
+
+#### Visão Geral
+
+Nome, propósito, escopo e principais usuários do sistema.
+
+#### Requisitos Funcionais
+
+O que o sistema deve fazer (cadastrar, listar, autenticar...).
+
+#### Requisitos Não Funcionais
+
+Desempenho, segurança, responsividade, acessibilidade.
+
+#### Stack Tecnológico
+
+Linguagens, frameworks, banco de dados e ferramentas escolhidas.
+
+### Estrutura de pastas recomendada
+
+```
+projeto/
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── main.js
+├── img/
+│   └── logo.png
+└── pages/
+    ├── sobre.html
+    └── contato.html
+```
+
+<Callout type="default">
+**Por que definir antes de codificar?**
+
+Sem uma definição clara, você corre o risco de construir a coisa certa do jeito errado — ou a coisa errada do jeito certo. Dez minutos de planejamento economizam horas de reescrita.
+</Callout>
+
+### Categorias de sistemas web
+
+<table>
+<tr><th>Categoria</th><th>Descrição</th><th>Exemplos</th></tr>
+<tr><td>Site de conteúdo</td><td>Exibe informações estáticas ou dinâmicas</td><td>Portais de notícias, sites institucionais</td></tr>
+<tr><td>Registro de dados / entrada do usuário</td><td>Permite que o usuário insira e consulte dados</td><td>Sistemas de cadastro, formulários</td></tr>
+<tr><td>Portal</td><td>Agrega conteúdo de múltiplas fontes/serviços</td><td>UOL, Yahoo, intranets corporativas</td></tr>
+<tr><td>Aplicação orientada à transação</td><td>Processa operações com feedback imediato</td><td>Lojas virtuais, bancos online</td></tr>
+<tr><td>Blog</td><td>Publicação cronológica de conteúdo pelo autor</td><td>WordPress, Medium</td></tr>
+</table>
+
+### Arquitetura em camadas de um sistema web
+
+#### 1. Apresentação
+
+Interface visual: HTML, CSS, JavaScript. Responsável por exibir dados e capturar interações do usuário.
+
+#### 2. Processamento da Aplicação
+
+Lógica de negócio: PHP, Node.js, Python. Processa requisições e aplica regras do domínio.
+
+#### 3. Gerenciamento de Dados
+
+Acesso ao banco: queries SQL, ORM. Intermediário entre a lógica e o armazenamento.
+
+#### 4. Banco de Dados
+
+Persistência: MySQL, PostgreSQL, MongoDB. Armazena e recupera os dados.
+
+### Anatomia de uma URL
+
+```
+http://www.exemplo.com.br/produtos/lista.php
+
+└─────────────────────────────────────────┘
+  protocolo   domínio          caminho    arquivo
+  http://  www.exemplo.com.br  /produtos/ lista.php
+```
+
+<table>
+<tr><th>Parte</th><th>Função</th></tr>
+<tr><td>Protocolo (<code>http://</code> / <code>https://</code>)</td><td>Define o tipo de transferência. HTTPS = criptografado (TLS)</td></tr>
+<tr><td>Domínio (<code>www.exemplo.com.br</code>)</td><td>Identificação do servidor na internet</td></tr>
+<tr><td>Caminho (<code>/produtos/</code>)</td><td>Estrutura de diretórios no servidor</td></tr>
+<tr><td>Arquivo (<code>lista.php</code>)</td><td>Recurso solicitado (pode ser implícito como <code>index.html</code>)</td></tr>
+</table>
+
+### Ferramentas de desenvolvimento
+
+<table>
+<tr><th>Ferramenta</th><th>Tipo</th><th>Destaque</th></tr>
+<tr><td>VS Code</td><td>IDE gratuita (atual)</td><td>Extensões, IntelliSense, Git integrado, Live Server</td></tr>
+<tr><td>Notepad++</td><td>Editor de texto</td><td>Leve, sem compilador; suporta HTML, PHP, JS</td></tr>
+<tr><td>NetBeans</td><td>IDE open source</td><td>Suporte a HTML5, PHP, Java</td></tr>
+<tr><td>Eclipse</td><td>IDE (plugins)</td><td>Várias linguagens via plugins</td></tr>
+<tr><td>Aptana Studio</td><td>IDE gratuita</td><td>HTML, CSS, JS; extensões Ruby/Python/PHP</td></tr>
+<tr><td>Dreamweaver</td><td>IDE proprietária (Adobe)</td><td>Editor visual WYSIWYG + código</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Sistemas Web**
+
+**JAMstack (JavaScript + APIs + Markup):** sites pré-gerados (SSG) servidos via CDN — ultra-rápidos, seguros e escaláveis. Ex.: Next.js, Gatsby, Astro.
+**CI/CD (Integração e Entrega Contínua):** pipelines automáticos que testam, constroem e publicam cada commit — padrão da indústria com GitHub Actions, GitLab CI.
+**Containers (Docker):** empacotam o sistema com todas as dependências, garantindo comportamento idêntico em qualquer ambiente.
+**Serverless:** funções que executam sob demanda sem gerenciar servidores — AWS Lambda, Vercel Functions, Cloudflare Workers.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA6**
+
+- Sistema **centralizado**: tudo executa no computador local. Sistema **distribuído**: parte no cliente, parte no servidor remoto.
+- A internet foi criada por **Tim Berners-Lee**; o conceito que ele introduziu foi o de **hipertexto**, que usa **hiperlinks** para navegar entre documentos.
+- Uma loja virtual é uma **aplicação orientada à transação**.
+- A interface visual de um sistema web é criada com **HTML e CSS** (não PHP, não banco de dados).
+- A ordem correta das camadas: **Apresentação → Processamento → Gerenciamento de Dados → Banco de Dados**.
+- Sistema disponível **24×7** = 24 horas por dia, 7 dias por semana.
+</Callout>
+
+Miletto, E. M.; Bertagnolli, S. C. *Desenvolvimento de Software II*. Porto Alegre: Bookman, 2014.

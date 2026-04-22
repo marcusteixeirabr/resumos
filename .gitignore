@@ -37,3 +37,10 @@ node_modules/
 *.tmp
 *.temp
 npm-debug.log*
+
+# ── Astro ────────────────────────────────────────────────────────────────────
+dist/
+.astro/
+
+# ── Pagefind (gerado no build do CI) ─────────────────────────────────────────
+pagefind/

@@ -1,0 +1,29 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entries: CollectionEntry<'software-design'>[] | CollectionEntry<'responsive-web'>[];
+  currentSlug: string;
+  base: string;
+}
+
+const { entries, currentSlug, base } = Astro.props;
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const sorted = [...entries].sort((a, b) => a.data.ua - b.data.ua);
+const idx = sorted.findIndex(e => e.id.replace(/\.mdx?$/, '') === currentSlug);
+const prev = idx > 0 ? sorted[idx - 1] : null;
+const next = idx < sorted.length - 1 ? sorted[idx + 1] : null;
+
+function label(e: typeof sorted[0]) {
+  return `UA${e.data.ua} — ${e.data.title.replace(/^UA\d+ — /, '')}`;
+}
+---
+<div class="section-nav">
+  {prev
+    ? <a class="prev" href={`${siteBase}${base}/${prev.id.replace(/\.mdx?$/, '')}/`}>{label(prev)}</a>
+    : <span></span>}
+  {next
+    ? <a class="next" href={`${siteBase}${base}/${next.id.replace(/\.mdx?$/, '')}/`}>{label(next)}</a>
+    : <span></span>}
+</div>

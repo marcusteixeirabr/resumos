@@ -1,0 +1,160 @@
+---
+title: "UA14 — Conceitos de Banco de Dados"
+subtitle: "Banco de dados relacional organiza dados em tabelas com linhas e colunas, usando SQL para criar, consultar e manipular esses dados. É a tecnologia mais usada para persistência de dados em aplicações corporativas."
+ua: 14
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+Slides — Da Planta ao Código: Banco de Dados
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btc_01.png" alt="Da Planta ao Código" caption="Da Planta ao Código" />
+  <SlideItem src="/assets/img/slides/btc_02.png" alt="A Escalabilidade Exige Engenharia" caption="A escalabilidade exige engenharia" />
+  <SlideItem src="/assets/img/slides/btc_14.png" alt="Ciclo de Vida da Engenharia de Dados" caption="Ciclo de vida da engenharia de dados" />
+</SlidesGrid>
+
+### Por que banco relacional?
+
+Imagine 30 vendas por mês controladas em planilha — funciona. Agora imagine 40 milhões de transações diárias. A planilha estoura. O banco relacional resolve escalabilidade, consistência e consultas complexas que planilhas jamais conseguiriam.
+
+### Conceitos fundamentais
+
+#### Tabela (Relação)
+
+Estrutura bidimensional: linhas (registros/tuplas) e colunas (atributos/campos).
+
+#### Chave Primária (PK)
+
+Coluna que identifica unicamente cada registro. Nunca nula, nunca duplicada. O "CPF" da linha.
+
+#### Chave Estrangeira (FK)
+
+Coluna que referencia a PK de outra tabela. Cria o "elo" entre tabelas e garante integridade referencial.
+
+#### Índice
+
+Estrutura auxiliar que acelera buscas. Pense como o índice de um livro: você não precisa ler tudo para achar o que quer.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btc_10.png" alt="PK e FK" caption="A Estrutura Física: PK & FK" />
+  <SlideItem src="/assets/img/slides/btc_11.png" alt="O Triunfo da FK" caption="O segredo da escalabilidade: FK vs. redundância" />
+</SlidesGrid>
+
+### SQL — DDL e DML
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btc_12.png" alt="SQL: DDL e DML" caption="SQL: DDL e DML" />
+  <SlideItem src="/assets/img/slides/btc_13.png" alt="Anatomia de uma consulta" caption="Anatomia de uma consulta SELECT" />
+</SlidesGrid>
+
+SQL tem duas sub-linguagens principais:
+
+- **DDL (Data Definition Language):** define a estrutura. Comandos: `CREATE TABLE`, `ALTER TABLE`, `DROP TABLE`.
+- **DML (Data Manipulation Language):** manipula os dados. Comandos: `SELECT`, `INSERT`, `UPDATE`, `DELETE`.
+
+#### SELECT — anatomia completa
+
+```sql
+SELECT   nome, telefone          -- O Quê: colunas desejadas
+FROM     Cliente                 -- De Onde: tabela fonte
+WHERE    mes_aniversario = 'janeiro' -- O Filtro: condição
+ORDER BY nome ASC;               -- Ordenação
+```
+
+#### INSERT, UPDATE, DELETE
+
+```sql
+-- Inserir
+INSERT INTO Cliente (nome, email, telefone)
+VALUES ('Marcus', 'marcus@email.com', '(47) 99999-0000');
+
+-- Atualizar
+UPDATE Produto SET preco = 29.90 WHERE id = 15;
+
+-- Deletar (sempre com WHERE!)
+DELETE FROM Pedido WHERE status = 'cancelado' AND data < '2023-01-01';
+```
+
+#### JOIN — unindo tabelas
+
+```sql
+SELECT c.nome, p.data, p.status
+FROM   Cliente c
+INNER JOIN Pedido p ON c.id = p.id_cliente
+WHERE  p.status = 'pendente';
+```
+
+<table>
+<tr><th>Tipo de JOIN</th><th>Retorna</th></tr>
+<tr><td>INNER JOIN</td><td>Apenas registros com correspondência em ambas as tabelas</td></tr>
+<tr><td>LEFT JOIN</td><td>Todos da esquerda + correspondências da direita (null onde não há)</td></tr>
+<tr><td>RIGHT JOIN</td><td>Todos da direita + correspondências da esquerda</td></tr>
+<tr><td>FULL JOIN</td><td>Todos de ambas as tabelas</td></tr>
+</table>
+
+<Callout type="orange">
+**DELETE sem WHERE = catástrofe**
+
+Nunca execute `DELETE FROM tabela` sem uma cláusula `WHERE`. Você apagará todos os registros da tabela. Em produção, isso pode ser irreversível. Sempre teste um `SELECT` com o mesmo `WHERE` antes de executar um DELETE ou UPDATE.
+</Callout>
+
+### Principais SGBDs e licenças
+
+<table>
+<tr><th>Banco de Dados</th><th>Licença</th><th>Custo de administração</th><th>Tamanho do projeto</th></tr>
+<tr><td>MySQL</td><td>Paga</td><td>Baixo</td><td>Pequeno a médio</td></tr>
+<tr><td>MariaDB</td><td>Gratuita</td><td>Baixo</td><td>Pequeno a médio</td></tr>
+<tr><td>Microsoft SQL Server (Standard/Enterprise)</td><td>Paga</td><td>Alto</td><td>Médio a grande</td></tr>
+<tr><td>Microsoft SQL Server (Express)</td><td>Gratuita</td><td>Médio</td><td>Pequeno</td></tr>
+<tr><td>PostgreSQL</td><td>Gratuita</td><td>Médio</td><td>Médio a grande</td></tr>
+<tr><td>Oracle</td><td>Paga</td><td>Alto</td><td>Grande</td></tr>
+<tr><td>MongoDB</td><td>Gratuita</td><td>Alto</td><td>Médio a grande (NoSQL)</td></tr>
+</table>
+
+MongoDB é **não relacional** — não usa SQL. Organiza dados em documentos JSON e oferece velocidade de resposta superior a consultas em cenários de alta escala.
+
+### Propriedades ACID
+
+Garantem a robustez de transações em banco de dados relacionais:
+
+#### Atomicidade
+
+A transação é tudo ou nada. Se uma operação falhar no meio, todas as alterações são desfeitas (rollback).
+
+#### Consistência
+
+O banco sai de um estado válido e chega a outro estado válido. Regras e constraints são respeitadas.
+
+#### Isolamento
+
+Transações concorrentes não interferem entre si. O resultado é como se fossem executadas em série.
+
+#### Durabilidade
+
+Uma vez confirmada (commit), a transação persiste mesmo em caso de falha de energia ou crash.
+
+<Callout type="warning">
+**Práticas Modernas — Banco de Dados**
+
+- **MySQL vs. PostgreSQL:** após a aquisição pela Oracle em 2010, PostgreSQL tornou-se a escolha preferida para novos projetos — mais recursos avançados (JSON, window functions, extensões), licença BSD, crescimento acelerado.
+- **ORMs modernos:** Prisma (TypeScript-first), TypeORM, Sequelize e Hibernate abstraem SQL e geram migrações automaticamente. Permitem trabalhar com banco de dados usando objetos e tipos.
+- **Database migrations como código:** Flyway (Java) e Alembic (Python) versionam as mudanças de schema no banco — executadas automaticamente no deploy, auditáveis e reversíveis.
+- **Banco de dados como serviço (DBaaS):** Supabase (PostgreSQL), PlanetScale (MySQL com branching), Neon (PostgreSQL serverless) eliminam a necessidade de administrar servidores de banco.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA14**
+
+- Banco de dados supera planilha em: pesquisa avançada, volume, integridade e automação.
+- **Chave primária ideal:** ISBN para livros (número único mundialmente por edição).
+- Tipos de atributos: `VARCHAR`=texto, `INT`=inteiro, `DATE`=data, `BOOLEAN`=0 ou 1.
+- Em SELECT: `SELECT` e `FROM` são obrigatórios; `WHERE` é **opcional**.
+- Projeto pequeno com orçamento limitado → **MariaDB** (gratuita, baixo custo de administração).
+- MongoDB é não relacional (NoSQL) — não usa SQL.
+- ACID: Atomicidade, Consistência, Isolamento, Durabilidade.
+</Callout>
+
+Barboza, F. F. M. *Modelagem e Desenvolvimento de Banco de Dados*. Porto Alegre: SAGAH, 2018. | Elmasri, R.; Navathe, S. B. *Fundamentals of database systems*. 4. ed. London: Pearson, 2007.

@@ -1,0 +1,149 @@
+---
+title: "UA2 — HTML5"
+subtitle: "HTML5 trouxe novas tags semânticas, APIs nativas e suporte a multimídia sem plugins."
+ua: 2
+group: "HTML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Tags Semânticas
+
+Semântica = significado. Tags semânticas descrevem o papel do conteúdo, melhorando acessibilidade e SEO:
+
+```html
+<header>  <!-- cabeçalho da página/seção -->
+<nav>     <!-- menu de navegação -->
+<main>    <!-- conteúdo principal (único por página) -->
+<article> <!-- conteúdo independente (post, notícia) -->
+<section> <!-- seção temática do conteúdo -->
+<aside>   <!-- conteúdo lateral/complementar -->
+<footer>  <!-- rodapé da página/seção -->
+```
+
+### Estrutura semântica típica
+
+```html
+<body>
+  <header>
+    <nav>...</nav>
+  </header>
+
+  <main>
+    <section>
+      <article>...</article>
+    </section>
+    <aside>...</aside>
+  </main>
+
+  <footer>...</footer>
+</body>
+```
+
+### Multimídia nativa
+
+```html
+<!-- Vídeo -->
+<video controls width="640">
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+<!-- Áudio -->
+<audio controls>
+  <source src="audio.mp3" type="audio/mpeg">
+</audio>
+```
+
+### Novas APIs HTML5
+
+#### Canvas
+
+Área de desenho 2D via JavaScript. Gráficos, jogos, animações.
+
+#### Geolocation
+
+Acesso à localização do usuário com permissão.
+
+#### LocalStorage
+
+Armazenamento de dados no navegador sem expiração.
+
+#### Web Workers
+
+Scripts em background thread — sem travar a UI.
+
+### div vs. semânticas — quando usar cada
+
+<table>
+<tr><th>Situação</th><th>Use</th></tr>
+<tr><td>Conteúdo com papel claro (nav, header...)</td><td>Tag semântica</td></tr>
+<tr><td>Container só para layout/estilo</td><td><code>div</code></td></tr>
+<tr><td>Texto inline sem papel semântico</td><td><code>span</code></td></tr>
+</table>
+
+### Âncoras — navegação dentro da página
+
+Âncoras direcionam o usuário para um ponto específico dentro da mesma página usando o atributo `id`:
+
+```html
+<!-- 1. Definir o destino com id -->
+<h2 id="contato">Contato</h2>
+
+<!-- 2. Link para o destino -->
+<a href="#contato">Ir para Contato</a>
+
+<!-- Voltar ao topo -->
+<a href="#">Voltar ao topo</a>
+```
+
+Útil em páginas longas: menus de índice no topo que pulam direto para a seção desejada.
+
+### Listas aninhadas
+
+Listas podem ser misturadas e aninhadas — uma `ul` dentro de um `li` de outra lista, inclusive de tipo diferente:
+
+```html
+<ul>
+  <li>Cores primárias
+    <ol>
+      <li>Vermelho</li>
+      <li>Azul</li>
+      <li>Amarelo</li>
+    </ol>
+  </li>
+  <li>Cores secundárias</li>
+</ul>
+```
+
+### Comparação: tags semânticas vs ``<div>``
+
+<table>
+<tr><th>Tag semântica</th><th>Significado</th><th>Equivalente genérico</th></tr>
+<tr><td><code>&lt;header&gt;</code></td><td>Cabeçalho da página ou seção</td><td><code>&lt;div id="header"&gt;</code></td></tr>
+<tr><td><code>&lt;nav&gt;</code></td><td>Bloco de navegação principal</td><td><code>&lt;div id="nav"&gt;</code></td></tr>
+<tr><td><code>&lt;main&gt;</code></td><td>Conteúdo principal (único por página)</td><td><code>&lt;div id="main"&gt;</code></td></tr>
+<tr><td><code>&lt;section&gt;</code></td><td>Uma ou mais áreas temáticas da página</td><td><code>&lt;div class="section"&gt;</code></td></tr>
+<tr><td><code>&lt;article&gt;</code></td><td>Conteúdo independente (post, notícia)</td><td><code>&lt;div class="article"&gt;</code></td></tr>
+<tr><td><code>&lt;aside&gt;</code></td><td>Conteúdo complementar / lateral</td><td><code>&lt;div id="aside"&gt;</code></td></tr>
+<tr><td><code>&lt;footer&gt;</code></td><td>Rodapé da página ou seção</td><td><code>&lt;div id="footer"&gt;</code></td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — HTML5 além do básico**
+
+**ARIA (Accessible Rich Internet Applications):** quando uma tag semântica não existe para o papel desejado, use atributos ARIA — `role="banner"`, `aria-label="..."`, `aria-hidden="true"`. Leitores de tela dependem disso.
+**Web Components:** padrão nativo que permite criar tags HTML customizadas (`<meu-componente>`) encapsulando estrutura, estilo e comportamento — base de frameworks como React e Vue.
+**Lazy loading nativo:** `<img loading="lazy">` — carrega imagens somente quando elas entram na viewport, sem JavaScript.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA2**
+
+- `<!DOCTYPE html>` (sem número de versão) indica que o documento é HTML5.
+- `<section>` define uma ou mais áreas temáticas da página.
+- `<pre>` exibe o texto tal qual está digitado no código-fonte, preservando espaços e quebras de linha.
+- Âncoras (`href="#id"`) direcionam para um ponto dentro da **mesma página** — não abrem outra URL.
+- Listas podem ser aninhadas com tipos diferentes: `ul` dentro de `ol` e vice-versa.
+- A tag `<main>` deve ser única por página; `<header>` e `<footer>` podem aparecer em múltiplas seções.
+</Callout>
+
+Saraiva, M. O. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018. | Freeman, E.; Robson, E. *Use a Cabeça! HTML e CSS*. O'Reilly, 2014.

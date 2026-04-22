@@ -1,0 +1,122 @@
+---
+title: "UA15 — Diagrama de Entidade e Relacionamento (DER)"
+subtitle: "O DER é a representação gráfica e conceitual da estrutura do banco de dados. É a 'planta baixa' do banco — independe de tecnologia e serve para alinhar o modelo com os requisitos de negócio antes de implementar."
+ua: 15
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+Slides — Modelagem com DER
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btc_03.png" alt="O Conceito Base: MER" caption="O conceito base: MER" />
+  <SlideItem src="/assets/img/slides/btc_04.png" alt="Entidades Físicas vs Lógicas" caption="Entidades físicas vs. lógicas" />
+  <SlideItem src="/assets/img/slides/btc_05.png" alt="Hierarquia de Entidades" caption="Hierarquia de dependência" />
+  <SlideItem src="/assets/img/slides/btc_06.png" alt="Atributos" caption="Atributos: o raio-X do objeto" />
+  <SlideItem src="/assets/img/slides/btc_07.png" alt="DER: O Desenho Formal" caption="DER: o desenho formal da arquitetura" />
+  <SlideItem src="/assets/img/slides/btc_08.png" alt="Notações" caption="Peter Chen vs. Padrão UML" />
+</SlidesGrid>
+
+### Elementos do DER
+
+<table>
+<tr><th>Símbolo</th><th>Elemento</th><th>Representa</th></tr>
+<tr><td>Retângulo</td><td>Entidade</td><td>Objeto do mundo real que precisa ser armazenado</td></tr>
+<tr><td>Elipse</td><td>Atributo</td><td>Característica de uma entidade</td></tr>
+<tr><td>Elipse sublinhada</td><td>Atributo-chave (PK)</td><td>Identificador único da entidade</td></tr>
+<tr><td>Elipse dupla</td><td>Atributo multivalorado</td><td>Pode ter múltiplos valores (ex.: telefones)</td></tr>
+<tr><td>Losango</td><td>Relacionamento</td><td>Associação entre entidades</td></tr>
+<tr><td>Retângulo duplo</td><td>Entidade fraca</td><td>Depende de outra para existir</td></tr>
+</table>
+
+### Entidades Físicas vs. Lógicas
+
+- **Físicas (Tangíveis):** existem concretamente no mundo real. Ex.: Cliente, Produto, Funcionário, Fornecedor.
+- **Lógicas (Conceituais):** nascem da interação estrutural para organizar o negócio. Ex.: Venda, Matrícula, Agendamento, Contrato.
+
+### Hierarquia de dependência das entidades
+
+- **Entidades Fortes:** existem por si só. Ex.: Produto, Cliente.
+- **Entidades Fracas:** dependem de uma entidade forte para existir. Ex.: Dependente (de Funcionário) — sem o Funcionário, o Dependente não tem sentido.
+- **Entidades Associativas:** nascem da relação N:N para viabilizar relacionamentos complexos. Ex.: ItemPedido (entre Pedido e Produto).
+
+### Cardinalidades
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/btc_09.png" alt="Cardinalidades" caption="Cardinalidade: a matemática do relacionamento" />
+</SlidesGrid>
+
+#### 1:1 (Um para Um)
+
+Cada instância de A se relaciona com no máximo uma de B. Ex.: Pessoa ↔ CPF, Presidente ↔ País.
+
+#### 1:N (Um para Muitos)
+
+Uma instância de A se relaciona com várias de B. Ex.: Cliente → Pedidos, Departamento → Funcionários.
+
+#### N:N (Muitos para Muitos)
+
+Várias de A se relacionam com várias de B. Exige entidade associativa. Ex.: Pedido ↔ Produto.
+
+### MER vs. DER — distinção importante
+
+<table>
+<tr><th></th><th>MER (Modelo Entidade-Relacionamento)</th><th>DER (Diagrama ER)</th></tr>
+<tr><td><strong>O que é</strong></td><td>Modelo conceitual e abstrato</td><td>Representação gráfica do MER</td></tr>
+<tr><td><strong>Nível</strong></td><td>Conceitual — independe de tecnologia</td><td>Lógico/físico — detalha tabelas e atributos</td></tr>
+<tr><td><strong>Foco</strong></td><td>Estrutura geral dos dados</td><td>Entidades, atributos, relacionamentos em diagrama</td></tr>
+<tr><td><strong>Propósito</strong></td><td>Comunicação entre equipe e cliente</td><td>Base para implementação do banco</td></tr>
+</table>
+
+### Notação de Peter Chen (original)
+
+<table>
+<tr><th>Figura</th><th>Representa</th></tr>
+<tr><td>Retângulo</td><td>Entidade</td></tr>
+<tr><td>Elipse</td><td>Atributo</td></tr>
+<tr><td>Losango</td><td>Relacionamento</td></tr>
+<tr><td>"1" e "N" ao lado das entidades</td><td>Cardinalidade</td></tr>
+</table>
+
+Problema: fica visualmente poluído em sistemas com muitas tabelas. Por isso, usa-se hoje a notação **UML**, com atributos *dentro* do retângulo da entidade.
+
+### Passos para criar um DER
+
+1. Estudar e compreender o negócio do cliente (levantamento de requisitos).
+2. Identificar as **entidades** necessárias (ex.: clínica → Cliente, Médico, Remédio, Funcionário, Fornecedor).
+3. Definir os **atributos** de cada entidade e marcar chaves primárias.
+4. Estabelecer os **relacionamentos** entre entidades (verbo de ação: "cliente *agenda* consulta").
+5. Definir a **cardinalidade** de cada relacionamento (1:1, 1:N, N:N).
+6. Identificar se há necessidade de **entidade associativa** (relacionamentos N:N).
+
+### Exemplo de DER — Loja Virtual
+
+<table>
+<tr><th>Entidade A</th><th>Relacionamento</th><th>Cardinalidade</th><th>Entidade B</th></tr>
+<tr><td>Cliente</td><td>realiza</td><td>1:N</td><td>Pedido</td></tr>
+<tr><td>Pedido</td><td>contém</td><td>N:N</td><td>Produto</td></tr>
+<tr><td colspan="4" style="font-style:italic;color:#888">Relacionamento N:N → entidade associativa ItemPedido (quantidade, preco_unitario)</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — DER e Modelagem de Banco**
+
+- **Ferramentas modernas para DER:** dbdiagram.io (texto para ER), DrawDB, Lucidchart e DBeaver (DER reverso a partir de banco existente). Figma também é usado para DER conceituais em equipes de produto.
+- **ORMs code-first** (Prisma schema, Entity Framework, TypeORM) invertem o fluxo: você define entidades em código e a ferramenta gera o DER e as migrations — o diagrama conceitual emerge do modelo de código.
+- **Database branching** (PlanetScale, Neon) permite criar branches de schema para desenvolvimento — igual a branches de código, sem impactar produção. O DER "diverge" e depois "merge" com revisão de alterações.
+- **NoSQL e esquemas flexíveis:** MongoDB (documentos), Redis (chave-valor), Neo4j (grafos) e Cassandra (colunar) resolvem problemas onde o modelo relacional é ineficiente — o DER clássico não se aplica.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA15**
+
+- DER Peter Chen: entidades = **retângulos**; atributos = elipses; relacionamentos = **losangos**. (Afirmação "entidades = losangos" é FALSA.)
+- O DER é correto quando representa entidades, atributos e relacionamentos antes da implementação — facilita identificar erros.
+- Chave primária: garante unicidade, não aceita nulos, não aceita valores repetidos. Pode ser composta.
+- Relacionamento N:N: uma entidade pode se relacionar com várias instâncias da outra e vice-versa — exige tabela intermediária.
+- MER = conceitual (abstrato); DER = representação gráfica do MER (lógico/físico).
+</Callout>
+
+Barboza, F. F. M. *Modelagem e Desenvolvimento de Banco de Dados*. Porto Alegre: SAGAH, 2018. | Rodrigues, J. Modelo Entidade Relacionamento (MER) e Diagrama Entidade-Relacionamento (DER). DevMedia, 2014.

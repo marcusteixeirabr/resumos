@@ -1,0 +1,168 @@
+---
+title: "UA1 — HTML: Fundamentos"
+subtitle: "HTML (HyperText Markup Language) é a linguagem de marcação que estrutura o conteúdo das páginas web. É a base de tudo na web."
+ua: 1
+group: "HTML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Estrutura mínima de um documento HTML
+
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Página</title>
+  </head>
+  <body>
+    <h1>Olá, mundo!</h1>
+  </body>
+</html>
+```
+
+### DOCTYPE — por que importa?
+
+O `<!DOCTYPE html>` informa ao navegador a versão do HTML sendo usada, ativando o modo de renderização correto:
+
+<table>
+<tr><th>DOCTYPE</th><th>Versão</th></tr>
+<tr><td><code>&lt;!DOCTYPE html&gt;</code></td><td>HTML5 (recomendado)</td></tr>
+<tr><td><code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" ...&gt;</code></td><td>HTML 4.01 Strict</td></tr>
+<tr><td><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" ...&gt;</code></td><td>XHTML 1.0 Strict</td></tr>
+</table>
+
+### Tags essenciais
+
+#### Títulos
+
+`h1` a `h6` — hierarquia de títulos. Use apenas um `h1` por página.
+
+#### Parágrafos
+
+`p` — bloco de texto. `br` para quebra de linha simples.
+
+#### Links
+
+`a href="url"` — âncora. `target="_blank"` abre em nova aba.
+
+#### Imagens
+
+`img src="..." alt="..."` — sempre use alt para acessibilidade.
+
+#### Listas
+
+`ul` (não ordenada) e `ol` (ordenada). Itens com `li`.
+
+#### Divisões
+
+`div` (bloco genérico) e `span` (inline genérico).
+
+### Atributos globais importantes
+
+<table>
+<tr><th>Atributo</th><th>Descrição</th></tr>
+<tr><td><code>id</code></td><td>Identificador único do elemento na página</td></tr>
+<tr><td><code>class</code></td><td>Classe(s) para estilização CSS / seleção JS</td></tr>
+<tr><td><code>style</code></td><td>CSS inline (evitar — prefira folhas externas)</td></tr>
+<tr><td><code>title</code></td><td>Tooltip ao passar o mouse</td></tr>
+<tr><td><code>data-&#42;</code></td><td>Atributos customizados para uso em JS</td></tr>
+</table>
+
+<Callout type="green">
+**Boas práticas desde o início**
+
+Sempre declare `lang` no `<html>`, use `charset="UTF-8"` e inclua a meta viewport — são os três obrigatórios para qualquer página profissional.
+</Callout>
+
+### Evolução do HTML
+
+<table>
+<tr><th>Versão</th><th>Ano</th><th>Principal contribuição</th></tr>
+<tr><td>HTML 1.0</td><td>1993</td><td>Estrutura básica: links, imagens, texto (criado por Tim Berners-Lee)</td></tr>
+<tr><td>HTML 2.0</td><td>1995</td><td>Formulários; padronizado pela IETF</td></tr>
+<tr><td>HTML 3.2</td><td>1997</td><td>Tabelas, scripts, estilos inline — W3C assume o padrão</td></tr>
+<tr><td>HTML 4.01</td><td>1999</td><td>Separação conteúdo/apresentação, incentiva CSS. Variantes: Strict, Transitional, Frameset</td></tr>
+<tr><td>XHTML 1.0</td><td>2000</td><td>HTML 4.01 com sintaxe XML mais rígida (4 variantes)</td></tr>
+<tr><td><strong>HTML5</strong></td><td>2014</td><td>Tags semânticas, APIs nativas, multimídia sem plugins, DOCTYPE simplificado</td></tr>
+</table>
+
+### Tags de formatação de texto
+
+<table>
+<tr><th>Tag</th><th>Efeito visual</th><th>Semântica</th></tr>
+<tr><td><code>&lt;strong&gt;</code></td><td>Negrito</td><td>Alta importância (semântico)</td></tr>
+<tr><td><code>&lt;b&gt;</code></td><td>Negrito</td><td>Apenas visual, sem significado</td></tr>
+<tr><td><code>&lt;em&gt;</code></td><td>Itálico</td><td>Ênfase (semântico)</td></tr>
+<tr><td><code>&lt;i&gt;</code></td><td>Itálico</td><td>Apenas visual, sem significado</td></tr>
+<tr><td><code>&lt;del&gt;</code></td><td>Tachado</td><td>Texto removido/excluído</td></tr>
+<tr><td><code>&lt;ins&gt;</code></td><td>Sublinhado</td><td>Texto inserido</td></tr>
+<tr><td><code>&lt;mark&gt;</code></td><td>Destaque amarelo</td><td>Texto relevante/marcado</td></tr>
+<tr><td><code>&lt;small&gt;</code></td><td>Menor</td><td>Texto secundário, copyright</td></tr>
+<tr><td><code>&lt;sup&gt;</code> / <code>&lt;sub&gt;</code></td><td>Sobrescrito / subscrito</td><td>Ex.: x² ou H₂O</td></tr>
+<tr><td><code>&lt;pre&gt;</code></td><td>Pré-formatado (monospace)</td><td>Respeita espaços e quebras exatamente como digitado</td></tr>
+<tr><td><code>&lt;code&gt;</code></td><td>Monospace inline</td><td>Trecho de código-fonte</td></tr>
+</table>
+
+### Atributos do elemento ``<a>``
+
+<table>
+<tr><th>Atributo</th><th>Descrição</th><th>Observação</th></tr>
+<tr><td><code>href="url"</code></td><td>Destino do link</td><td>URL completa ou caminho relativo</td></tr>
+<tr><td><code>target="&#95;blank"</code></td><td>Abre em nova aba</td><td>Sempre use <code>rel="noopener noreferrer"</code></td></tr>
+<tr><td><code>target="&#95;self"</code></td><td>Mesma aba (padrão)</td><td>—</td></tr>
+<tr><td><code>title="texto"</code></td><td>Dica ao passar o mouse</td><td>—</td></tr>
+<tr><td><code>download="nome"</code></td><td>Força download do arquivo</td><td>Pode sugerir nome diferente do original</td></tr>
+<tr><td><code>href="mailto:..."</code></td><td>Abre cliente de e-mail</td><td><code>?subject=Assunto&amp;body=Texto</code></td></tr>
+<tr><td><code>href="#id"</code></td><td>Âncora interna (mesma página)</td><td>Rola até o elemento com aquele <code>id</code></td></tr>
+</table>
+
+### Lista de definição — ``<dl>``
+
+Terceiro tipo de lista HTML: funciona como glossário, sem marcadores ou numeração.
+
+```html
+<dl>
+  <dt>HTML</dt>             <!-- dt = termo -->
+  <dd>Linguagem de marcação de hipertexto.</dd>  <!-- dd = definição -->
+
+  <dt>CSS</dt>
+  <dd>Folhas de estilo em cascata.</dd>
+</dl>
+```
+
+### Tabela — estrutura semântica completa
+
+<table>
+<tr><th>Tag / Atributo</th><th>Função</th></tr>
+<tr><td><code>&lt;table&gt;</code></td><td>Contêiner da tabela</td></tr>
+<tr><td><code>&lt;thead&gt;</code></td><td>Grupo do cabeçalho (pode ser repetido ao imprimir)</td></tr>
+<tr><td><code>&lt;tbody&gt;</code></td><td>Corpo principal da tabela</td></tr>
+<tr><td><code>&lt;tfoot&gt;</code></td><td>Rodapé da tabela (totais, notas)</td></tr>
+<tr><td><code>&lt;tr&gt;</code></td><td>Linha</td></tr>
+<tr><td><code>&lt;th&gt;</code></td><td>Célula de cabeçalho (negrito + centralizado por padrão)</td></tr>
+<tr><td><code>&lt;td&gt;</code></td><td>Célula de dados</td></tr>
+<tr><td><code>colspan="n"</code></td><td>Mescla n colunas horizontalmente</td></tr>
+<tr><td><code>rowspan="n"</code></td><td>Mescla n linhas verticalmente</td></tr>
+</table>
+
+<Callout type="warning">
+**Evite a "div-ite"**
+
+Antes do HTML5 os desenvolvedores usavam `<div>` para tudo, tornando o código ilegível — prática chamada de **div-itis**. As tags semânticas (`<header>`, `<nav>`, `<main>`, `<section>`, `<article>`, `<aside>`, `<footer>`) resolvem isso ao dar significado estrutural ao conteúdo, melhorando acessibilidade e SEO. Use `<div>` apenas quando não existir tag semântica adequada.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA1**
+
+- As 4 TAGs básicas: **`<html>`, `<head>`, `<body>` e `<title>`**.
+- Cabeçalhos de título: `<h1>` até `<h6>` — não confundir com `<title>` ou `<header>`.
+- Formatos de imagem suportados: **GIF, JPG e PNG** (não BMP, DOC, PSD, CDR).
+- Quebra de linha dentro de parágrafo: `<br/>` — não existe `<breake>` nem `<line>`.
+- Tipos de lista: `<ol>` (ordenada), `<ul>` (não ordenada) e `<dl>` (definição).
+- `<strong>` = semântico (importância); `<b>` = só visual. Idem `<em>` vs `<i>`.
+- `thead`, `tbody`, `tfoot` organizam a tabela; `colspan` mescla colunas, `rowspan` mescla linhas.
+</Callout>
+
+Machado, V. A. *Ferramentas de Desenvolvimento Web*. Porto Alegre: SAGAH, 2024. | Miletto, E. M.; Bertagnolli, S. C. *Desenvolvimento de Software II*. Porto Alegre: Bookman, 2014.

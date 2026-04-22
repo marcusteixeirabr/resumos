@@ -1,0 +1,89 @@
+---
+title: "UA7 — Modelo de Análise Estruturada"
+subtitle: "A análise estruturada é o método clássico de modelagem de sistemas: trata dados e processos como entidades separadas, representando o fluxo de informações de forma gráfica. É a base histórica que originou técnicas modernas de análise."
+ua: 7
+group: "Modelagem UML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Contexto histórico
+
+Até os anos 1970, desenvolver software era quase artesanal — sem metodologia, sem documentação padronizada. A análise estruturada emergiu nessa época como a primeira tentativa sistemática de modelar o que um sistema faz antes de codificá-lo. O princípio central: construir um **modelo lógico** (o que o sistema deve fazer) separado do **modelo físico** (como será implementado).
+
+As três notações mais usadas foram criadas por DeMarco (1978), Gane e Sarson (1979) e Yourdon e Constantine (1985) — todas equivalentes em expressividade.
+
+### DFD — Diagrama de Fluxo de Dados
+
+A principal ferramenta da análise estruturada. Representa graficamente como os dados entram no sistema, por quais processos passam, onde são armazenados e como saem. Cada refinamento sucessivo adiciona mais detalhes ao DFD.
+
+<table>
+<tr><th>Componente</th><th>Representação</th><th>Função</th><th>Regras principais</th></tr>
+<tr><td><strong>Bolha de Processo</strong></td><td>Retângulo com cantos arredondados</td><td>Transforma dados (ex.: calcular salário, emitir nota)</td><td>Nome deve ter verbo + complemento; deve ser numerado</td></tr>
+<tr><td><strong>Fluxo de Dados</strong></td><td>Seta com nome</td><td>Dados trafegando entre processos ou com o mundo externo</td><td>Todo fluxo tem nome; nomes não se repetem; não tem ação</td></tr>
+<tr><td><strong>Entidade Externa</strong></td><td>Quadrado duplo</td><td>Fonte ou destino de dados fora do sistema (usuário, outro sistema)</td><td>Não se comunica com outra entidade; não acessa depósito</td></tr>
+<tr><td><strong>Depósito de Dados</strong></td><td>Retângulo com lado aberto</td><td>Local de armazenamento (arquivo, banco, tabela)</td><td>Não pode ter só entrada ou só saída</td></tr>
+</table>
+
+#### Boas práticas para criar um DFD
+
+- Escolha nomes significativos para processos, fluxos, depósitos e terminadores.
+- Numere os processos para rastreabilidade.
+- Mantenha o DFD visualmente organizado — evite cruzamentos de setas.
+- Não deixe o DFD complexo demais: decomponha em níveis (DFD de contexto → DFD nível 0 → nível 1...).
+- Verifique a consistência entre os níveis do DFD.
+
+### DD — Dicionário de Dados
+
+O dicionário de dados (DD) complementa o DFD: lista e descreve todos os dados do sistema. É essencial para eliminar ambiguidade — o que exatamente é o campo "CPF"? Com ou sem pontuação? Obrigatório? O DD responde essas questões.
+
+Cada entrada contém: identificador, significado, conteúdo (para dados compostos), valores permitidos e unidades (para dados elementares), chave primária (para depósitos).
+
+#### Notação do DD
+
+<table>
+<tr><th>Símbolo</th><th>Significado</th><th>Exemplo</th></tr>
+<tr><td><code>=</code></td><td>É constituído por / definido por</td><td><code>pedido = cliente + itens + data</code></td></tr>
+<tr><td><code>+</code></td><td>E (concatenação)</td><td><code>nome = primeiro + último</code></td></tr>
+<tr><td><code>( )</code></td><td>Componente opcional</td><td><code>endereço = rua + (complemento) + cidade</code></td></tr>
+<tr><td><code>[ | ]</code></td><td>Alternativas (ou)</td><td><code>tipo = [físico | jurídico]</code></td></tr>
+<tr><td><code>&#123;'&#123;'&#125; &#125;</code></td><td>Componentes que se repetem (0 ou mais vezes)</td><td><code>pedido = &#123;'&#123;'&#125;item&#125;</code></td></tr>
+<tr><td><code>&#42; &#42;</code></td><td>Comentário</td><td><code>&#42; máx. 2 dígitos &#42;</code></td></tr>
+<tr><td><code>@</code></td><td>Chave primária do depósito</td><td><code>@id&#95;usuario</code></td></tr>
+</table>
+
+### Vantagens e Limitações
+
+<table>
+<tr><th></th><th>Análise Estruturada</th></tr>
+<tr><td><strong>Vantagens</strong></td><td>DFD oferece visão clara e acessível do sistema; facilita comunicação com o cliente; base para outras metodologias; simples de aprender</td></tr>
+<tr><td><strong>Limitações</strong></td><td>Não escala bem para sistemas grandes (5M+ linhas de código); não separa bem dados de comportamento; manutenção pós-entrega historicamente problemática; não modela bem sistemas OO modernos</td></tr>
+</table>
+
+<Callout type="default">
+**Por que ainda aprender análise estruturada?**
+
+Muitos sistemas legados corporativos — bancários, governamentais, industriais — foram projetados com DFD e DD. Entender essa notação é essencial para manutenção e modernização desses sistemas. Além disso, o DFD ainda é uma boa ferramenta para esboçar a visão macro de um sistema antes de detalhar os modelos OO.
+</Callout>
+
+<Callout type="warning">
+**Conteúdo histórico — Práticas Modernas**
+
+A análise estruturada (DFD/DD) é uma técnica dos anos 70–80. No desenvolvimento moderno foi amplamente substituída:
+
+- **BPMN 2.0** é o padrão moderno para modelagem de processos de negócio — equivalente contemporâneo ao DFD para comunicação com stakeholders não técnicos. Engines: Camunda, Activiti.
+- **Event Storming** (Alberto Brandolini) é a técnica ágil para descobrir o domínio de negócio em workshops colaborativos — identifica eventos, comandos e agregados de forma visual.
+- **UML substitui DFD** em projetos OO modernos: diagramas de atividades (UML) são equivalentes mais expressivos ao DFD e integram-se com os demais diagramas do sistema.
+- DFD e DD ainda são relevantes para **manutenção de sistemas legados** (COBOL, sistemas bancários, ERP antigos) e como ferramenta pedagógica para introduzir análise de sistemas.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- DFD = diagrama que mostra relações entre dados, processos e o limite do sistema.
+- Um processo no DFD representa uma **função** (bolha de processo = elemento ativo que transforma dados).
+- A principal vantagem do DFD: permite ter uma ideia mais clara do sistema proposto.
+- A principal limitação da análise estruturada: não consegue lidar com sistemas de grande porte e tem problemas de manutenção pós-entrega.
+- No DD, `{ }` = repetição (zero ou mais vezes); `( )` = opcional; `[ | ]` = alternativas.
+</Callout>
+
+Referências: SCHACH, S.R. *Engenharia de Software: os paradigmas clássicos e orientado a objetos*, 7ª ed., 2010. DEMARCO, T. *Structured Analysis and System Specification*, 1978. GANE, C.P.; SARSON, T. *Análise Estruturada de Sistemas*, 1985.

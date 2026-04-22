@@ -1,0 +1,127 @@
+---
+title: "UA5 — Arquitetura Orientada a Serviços (SOA)"
+subtitle: "SOA organiza o sistema como uma coleção de serviços de negócio reutilizáveis e interoperáveis. Cada serviço é autônomo, com responsabilidade clara e interface bem definida — como departamentos de uma empresa que se comunicam por canais padronizados."
+ua: 5
+group: "Arquitetura"
+---
+import Callout from "../../components/Callout.astro";
+
+### Por que SOA surgiu? — A evolução dos paradigmas
+
+Antes de SOA, os sistemas eram fortemente acoplados: um banco de dados era compartilhado, alterações em uma área quebravam outra, e integrar sistemas de fornecedores diferentes era um pesadelo. O modelo de TI era **reativo** — esperava o problema surgir para resolver.
+
+<table>
+<tr><th>Era</th><th>Paradigma</th><th>Problema que resolveu</th></tr>
+<tr><td>Até anos 70</td><td>Programação estruturada</td><td>Organizar código em funções e módulos</td></tr>
+<tr><td>Anos 80–90</td><td>Orientação a Objetos (OO)</td><td>Modelar entidades do mundo real; reutilização via herança</td></tr>
+<tr><td>Anos 2000</td><td>SOA</td><td>Integrar sistemas heterogêneos; expor lógica de negócio como serviço</td></tr>
+<tr><td>Anos 2010+</td><td>Cloud / Microsserviços</td><td>Escala elástica; deploy independente; SaaS/PaaS/IaaS</td></tr>
+</table>
+
+### Custo de adotar SOA
+
+Sommerville (2007) identifica duas razões pelas quais a adoção de SOA é custosa e nem sempre justificável:
+
+#### Mudança cara nos modelos existentes
+
+Transformar sistemas legados em serviços exige redesenhar interfaces, banco de dados e processos. O custo é alto e o risco de regressão é real.
+
+#### Sistemas que funcionam não precisam de SOA
+
+Se um sistema já atende ao negócio, forçar a migração para SOA pode não trazer ganho proporcional ao investimento. A decisão exige análise custo-benefício.
+
+### ESB — o coração do SOA
+
+O **Enterprise Service Bus (ESB)** é o barramento central que interconecta todos os serviços. Ele funciona como um repositório intermediário inteligente: roteia mensagens, transforma formatos, aplica segurança (via XML Encryption) e monitora o tráfego.
+
+Sem o ESB, cada serviço precisaria se conectar diretamente a todos os outros — criando uma malha de dependências insuportável (o problema de integração ponto-a-ponto). Com o ESB, todos falam com o barramento; o barramento fala com todos.
+
+### Os três pilares técnicos do SOA
+
+#### UDDI — Descoberta
+
+*Universal Description, Discovery and Integration.* Registro centralizado onde serviços se publicam e consumidores os encontram. Funciona como um "catálogo de serviços" da organização.
+
+#### WSDL — Interface
+
+*Web Services Description Language.* Descreve o contrato do serviço em XML: quais operações oferece, que parâmetros aceita, que tipo de dados retorna. É o "manual de uso" do serviço.
+
+#### SOAP — Comunicação
+
+*Simple Object Access Protocol.* Protocolo de troca de mensagens baseado em XML. Garante que cliente e servidor se comuniquem de forma padronizada, independente de linguagem ou plataforma.
+
+### Como tudo se encaixa — Localizar, Consolidar, Registrar
+
+O paradigma SOA funciona em três fases:
+
+1. **Registrar:** o provedor publica o serviço no UDDI com o contrato WSDL.
+2. **Localizar:** o consumidor consulta o UDDI para encontrar o serviço que precisa.
+3. **Consolidar (executar):** o consumidor usa o WSDL para montar a chamada SOAP e se comunicar com o serviço via ESB.
+
+### BPEL — Orquestração de Processos
+
+O **Business Process Execution Language (BPEL)** permite descrever um processo de negócio como uma sequência de chamadas a serviços. Em vez de código procedural, o fluxo é definido em XML: "chame o serviço A, depois o B, se falhar chame o C". O BPM (Business Process Management) é a notação visual usada para modelar esses processos antes de codificá-los em BPEL.
+
+### Princípios SOA
+
+#### Baixo Acoplamento
+
+Serviços independentes — a implementação interna pode mudar sem afetar os consumidores. Essa é a característica central: SOA opera no nível lógico de dependência mais baixo possível.
+
+#### Abstração
+
+O consumidor vê apenas a interface (WSDL), não a implementação. Java, .NET, Python — tanto faz.
+
+#### Reutilização
+
+A mesma lógica de negócio exposta como serviço pode ser consumida por múltiplas aplicações simultâneas.
+
+#### Composição
+
+Serviços simples se combinam via BPEL para construir processos de negócio complexos.
+
+#### Autonomia
+
+Cada serviço controla sua própria lógica, dados e ciclo de vida.
+
+#### Stateless
+
+Serviços não guardam estado entre chamadas — escala horizontal sem complicação.
+
+### SOA vs. Microsserviços
+
+Microsserviços são frequentemente descritos como "SOA feito certo". A diferença principal está na granularidade e na forma de orquestração:
+
+<table>
+<tr><th>Aspecto</th><th>SOA</th><th>Microsserviços</th></tr>
+<tr><td>Granularidade</td><td>Serviços maiores, orientados a processo de negócio</td><td>Muito pequenos, focados em uma única capacidade</td></tr>
+<tr><td>Comunicação</td><td>Via ESB centralizado (orquestração)</td><td>Direto via REST/gRPC ou mensageria (coreografia)</td></tr>
+<tr><td>Banco de dados</td><td>Geralmente compartilhado</td><td>Cada serviço tem seu próprio banco</td></tr>
+<tr><td>Deploy</td><td>Centralizado ou em grupos</td><td>Totalmente independente por serviço</td></tr>
+<tr><td>Adoção típica</td><td>Integração corporativa, ERP, sistemas bancários</td><td>Aplicações cloud-native, escala horizontal</td></tr>
+</table>
+
+<Callout type="warning">
+**Conteúdo histórico — Práticas Modernas**
+
+O material do curso reflete o estado da arte do início dos anos 2000. Algumas tecnologias ensinadas já foram **abandonadas ou substituídas**:
+
+- **UDDI público foi encerrado em 2005–2006.** Os registros públicos (IBM, Microsoft, SAP) fecharam as portas. Hoje, descoberta de serviços é feita via *API Gateway* (Kong, AWS API Gateway, Azure APIM) ou *service mesh* com service registry interno (Consul, Eureka, Kubernetes DNS).
+- **BPEL foi amplamente substituído por BPMN 2.0** com engines modernas como *Camunda*, *Temporal.io* e *Apache Airflow*. São mais fáceis de manter, observar e versionar do que XML BPEL.
+- **SOAP/WSDL perdeu espaço para REST+OpenAPI** como padrão de integração. Serviços de alta performance usam *gRPC* (Protocol Buffers + HTTP/2) no lugar de SOAP.
+- **O ESB centralizado virou antipadrão** em arquiteturas cloud-native. O modelo atual é descentralizado — cada serviço publica sua API diretamente, e um API Gateway faz roteamento, autenticação e rate limiting.
+
+Entender SOA e BPEL é importante para trabalhar com sistemas legados corporativos. Para novos projetos, o caminho é REST+OpenAPI, Kubernetes + Consul, e BPMN 2.0.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O ESB é o "repositório interconectado" do SOA — ponto central que conecta todos os serviços.
+- WSDL = interface/contrato; UDDI = descoberta/registro; SOAP = protocolo de comunicação.
+- POST = CREATE, GET = READ, PUT = UPDATE, DELETE = DELETE (mapeamento REST-CRUD).
+- A principal característica do SOA que o diferencia de arquiteturas anteriores é o **baixo nível lógico de dependência** entre os componentes.
+- BPEL usa REST para modelar processos *antes* da inserção no barramento (integração via orquestração).
+</Callout>
+
+Referências: SOMMERVILLE, I. *Engenharia de Software*, 8ª ed., 2007. MENDES, A. *Arquitetura de Software*, 2002.

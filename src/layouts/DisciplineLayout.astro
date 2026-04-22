@@ -1,0 +1,71 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'software-design'> | CollectionEntry<'responsive-web'>;
+  entries: CollectionEntry<'software-design'>[] | CollectionEntry<'responsive-web'>[];
+  disciplineTitle: string;
+  base: string;
+}
+
+const { entry, entries, disciplineTitle, base } = Astro.props;
+const slug = entry.id.replace(/\.mdx?$/, '');
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout
+  title={`${entry.data.title} — ${disciplineTitle} — Resumos ADS`}
+  description={entry.data.subtitle}
+  cssFiles={['discipline.css']}
+>
+  <header>
+    <button class="menu-btn" id="menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="back" href={`${siteBase}/`}>Início</a>
+    <h1>{disciplineTitle}</h1>
+    <button class="search-btn" id="search-btn" aria-label="Buscar (Ctrl+K)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span class="search-btn-label">Buscar</span><kbd>Ctrl K</kbd>
+    </button>
+  </header>
+
+  <div id="nav-overlay"></div>
+
+  <div class="layout">
+    <Sidebar entries={entries} currentSlug={slug} base={base} />
+
+    <main id="content" data-pagefind-body>
+      <section class="active">
+        <h2>{entry.data.title}</h2>
+        <p class="subtitle">{entry.data.subtitle}</p>
+        <slot />
+      </section>
+    </main>
+  </div>
+
+  <script is:inline>
+    // Hamburger menu
+    (function () {
+      var btn     = document.getElementById('menu-btn');
+      var sidebar = document.getElementById('sidebar');
+      var overlay = document.getElementById('nav-overlay');
+      if (!btn || !sidebar) return;
+      function close() {
+        sidebar.classList.remove('open');
+        overlay && overlay.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+      btn.addEventListener('click', function () {
+        var opening = !sidebar.classList.contains('open');
+        sidebar.classList.toggle('open');
+        overlay && overlay.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(opening));
+      });
+      overlay && overlay.addEventListener('click', close);
+      sidebar.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+</BaseLayout>

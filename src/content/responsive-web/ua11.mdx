@@ -1,0 +1,172 @@
+---
+title: "UA11 — PHP: Estruturas de Controle"
+subtitle: "Operadores, condicionais, laços e funções são os blocos de construção de qualquer lógica de programação em PHP. Dominar esses elementos é a base para criar scripts dinâmicos e processamento de dados no servidor."
+ua: 11
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### Operadores relacionais e lógicos
+
+<table>
+<tr><th>Operador</th><th>Significado</th></tr>
+<tr><td><code>==</code></td><td>Igual a (valor)</td></tr>
+<tr><td><code>===</code></td><td>Idêntico a (valor <strong>e tipo</strong>)</td></tr>
+<tr><td><code>!= / &lt;&gt;</code></td><td>Diferente de</td></tr>
+<tr><td><code>!==</code></td><td>Não idêntico</td></tr>
+<tr><td><code>&lt; / &lt;=</code></td><td>Menor que / menor ou igual</td></tr>
+<tr><td><code>&gt; / &gt;=</code></td><td>Maior que / maior ou igual</td></tr>
+<tr><td><code>&amp;&amp; / and</code></td><td>E lógico</td></tr>
+<tr><td><code>|| / or</code></td><td>OU lógico</td></tr>
+<tr><td><code>xor</code></td><td>OU exclusivo</td></tr>
+<tr><td><code>!</code></td><td>Negação</td></tr>
+</table>
+
+### if / elseif / else
+
+```php
+$media = 8.5;
+
+if ($media >= 9) {
+    $conceito = "A";
+} elseif ($media >= 8) {
+    $conceito = "B";
+} elseif ($media >= 7) {
+    $conceito = "C";
+} else {
+    $conceito = "Reprovado";
+}
+echo $conceito; // B
+```
+
+### switch / case / break / default
+
+Substitui múltiplos `if/elseif` quando se compara uma variável com vários valores fixos. O `break` impede que os casos seguintes sejam executados.
+
+```php
+$conceito = "B";
+
+switch ($conceito) {
+    case "A":
+        echo "Excelente";
+        break;
+    case "B":
+        echo "Plenamente aprovado";
+        break;
+    case "C":
+        echo "Aprovado";
+        break;
+    default:
+        echo "Reprovado";
+}
+```
+
+### Operador ternário
+
+Versão compacta do `if/else` para expressões simples: `condição ? valor_se_true : valor_se_false`
+
+```php
+$media = 7.5;
+$situacao = ($media >= 7) ? "Aprovado" : "Reprovado";
+echo $situacao; // Aprovado
+```
+
+### while — condição verificada antes
+
+```php
+$i = 1;
+while ($i <= 10) {
+    echo $i;
+    $i++;
+}
+// Saída: 12345678910
+// Se $i já for > 10 na entrada, o bloco nunca executa
+```
+
+### do while — condição verificada depois
+
+```php
+$i = 1;
+do {
+    echo $i;
+    $i++;
+} while ($i <= 10);
+// Saída: 12345678910
+// O bloco executa pelo menos uma vez, mesmo se condição for falsa
+```
+
+### for — número fixo de iterações
+
+```php
+// Sintaxe: for (inicialização; condição; incremento)
+for ($i = 1; $i <= 10; $i++) {
+    echo $i;
+}
+// Saída: 12345678910
+
+// Sintaxe alternativa com endfor
+for ($i = 1; $i <= 5; $i++):
+    echo $i . " ";
+endfor;
+```
+
+### continue e break
+
+```php
+// continue — pula para a próxima iteração
+for ($i = 1; $i <= 10; $i++) {
+    if ($i >= 3 && $i <= 6) continue;
+    echo $i . " ";
+}
+// Saída: 1 2 7 8 9 10
+
+// break — encerra o laço imediatamente
+for ($i = 1; $i <= 10; $i++) {
+    if ($i === 6) break;
+    echo $i . " ";
+}
+// Saída: 1 2 3 4 5
+```
+
+<Callout type="warning">
+**Práticas Modernas — Estruturas de Controle PHP**
+
+**match (PHP 8.0+):** substitui `switch` com comparação estrita (`===`), retorna valor e não precisa de `break`.
+
+```php
+$conceito = "B";
+$msg = match($conceito) {
+    "A"      => "Excelente",
+    "B"      => "Plenamente aprovado",
+    "C"      => "Aprovado",
+    default => "Reprovado",
+};
+echo $msg; // Plenamente aprovado
+```
+
+**Null coalescing `??` (PHP 7+):** retorna o lado esquerdo se não for `null`, caso contrário o lado direito — evita verificações manuais com isset.
+
+```php
+$nome = $_GET['nome'] ?? "Visitante";
+```
+
+**Null coalescing assignment `??=` (PHP 7.4+):** atribui apenas se o lado esquerdo for `null`.
+
+```php
+$usuario['perfil'] ??= "padrão";
+```
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA11**
+
+- `==` compara apenas valor; `===` compara valor **e tipo** (identidade).
+- O `break` dentro do `switch` impede que os casos seguintes sejam executados (fall-through).
+- `while`: condição verificada **antes** — pode nunca executar se já for falsa.
+- `do while`: condição verificada **depois** — executa **pelo menos uma vez**.
+- `for`: usado quando o número de iterações é **conhecido**.
+- `continue` = pula o restante da iteração atual; `break` = sai do laço completamente.
+- Em `while`/`do while`, cuidado com `continue`: o incremento deve ficar **antes** do `continue`, senão loop infinito.
+</Callout>
+
+Saraiva, M. O.; Barreto, J. S. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018.

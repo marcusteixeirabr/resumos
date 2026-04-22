@@ -1,0 +1,65 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  cssFiles?: string[];
+}
+
+const { title, description = 'Resumos ADS — UNIVALI', cssFiles = [] } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#070710" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href={`${base}/styles/base.css`}>
+  {cssFiles.map(f => <link rel="stylesheet" href={`${base}/styles/${f}`} />)}
+  <link rel="stylesheet" href={`${base}/pagefind/pagefind-ui.css`}>
+</head>
+<body>
+  <slot />
+
+  <!-- Search modal -->
+  <div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-label="Buscar no site" aria-hidden="true">
+    <div class="search-modal-backdrop" id="search-backdrop"></div>
+    <div class="search-modal-inner">
+      <div id="search"></div>
+    </div>
+  </div>
+
+  <script is:inline src={`${base}/pagefind/pagefind-ui.js`}></script>
+  <script is:inline define:vars={{ base }}>
+    (function () {
+      var modal    = document.getElementById('search-modal');
+      var btn      = document.getElementById('search-btn');
+      var backdrop = document.getElementById('search-backdrop');
+      var pf;
+      function openSearch() {
+        if (!pf) pf = new PagefindUI({ element: '#search', showSubResults: true, resetStyles: false });
+        modal.removeAttribute('aria-hidden');
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(function () { var i = modal.querySelector('input'); if (i) i.focus(); }, 60);
+      }
+      function closeSearch() {
+        modal.setAttribute('aria-hidden', 'true');
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      if (btn)      btn.addEventListener('click', openSearch);
+      if (backdrop) backdrop.addEventListener('click', closeSearch);
+      document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeSearch();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+---
+title: "UA16 — PHP: Padrões de Projeto"
+subtitle: "Design patterns são soluções consagradas para problemas recorrentes de organização de código. MVC, Singleton e Factory são os padrões centrais ensinados no curso e amplamente usados em frameworks PHP."
+ua: 16
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que são Design Patterns?
+
+Padrões de projeto (design patterns) são soluções reutilizáveis para problemas comuns de organização e arquitetura de software. Não existe um padrão ideal para todos os casos — cada um tem finalidade e características específicas. Os mais cobrados no curso são **MVC**, **Singleton** e **Factory**.
+
+### Padrão MVC — Model-View-Controller
+
+Separa a aplicação em três camadas com responsabilidades distintas:
+
+<table>
+<tr><th>Camada</th><th>Responsabilidade</th><th>Faz requisição para…</th></tr>
+<tr><td><strong>Model</strong></td><td>Leitura, escrita, atualização e validação de dados. Regras de negócio e lógica.</td><td>Banco de dados / fontes de dados</td></tr>
+<tr><td><strong>View</strong></td><td>Interação com o usuário. Exibe dados (HTML, XML, imagens…)</td><td>Model (via Controller)</td></tr>
+<tr><td><strong>Controller</strong></td><td>Controla as requisições do usuário. Indica qual Model e qual View usar.</td><td>Model e View</td></tr>
+</table>
+
+### Fluxo de login com MVC
+
+```
+// Estrutura de pastas básica
+/exemplo_mvc/
+├── index.php         ← ponto de entrada, dispara o Controller
+├── Controller/
+│   └── controller.php ← recebe dados, chama Model, envia para View
+├── Model/
+│   └── model.php      ← valida usuário e senha, regras de negócio
+└── View/
+    └── view.php       ← exibe formulário de login e resultado
+```
+
+### Vantagens do MVC
+
+- **Desenvolvimento paralelo:** programadores e designers podem trabalhar simultaneamente em camadas diferentes.
+- **Reúso de código:** componentes de uma camada podem ser reutilizados em outras partes do sistema.
+- **Manutenção facilitada:** código dividido em partes específicas — mais fácil localizar e corrigir problemas.
+- **Compreensão facilitada:** cada arquivo tem uma responsabilidade clara.
+
+### Padrão Singleton
+
+Garante que uma classe seja instanciada **uma única vez** em toda a execução — o mesmo objeto é retornado sempre que requisitado. Usado principalmente em: conexão com banco de dados, classes de configuração, gerenciadores de log.
+
+```sql
+// conexao.php — Singleton para conexão com banco
+class Conexao {
+    private static $instancia = null;  // armazena a única instância
+
+    private function __construct() {}  // private: impede new Conexao()
+
+    public static function getInstance() {
+        if (self::$instancia === null) {
+            self::$instancia = new PDO(
+                "mysql:host=localhost;dbname=ua16",
+                "root", ""
+            );
+        }
+        return self::$instancia;
+    }
+}
+
+// Uso: nunca new Conexao() — sempre via ::getInstance()
+$pdo = Conexao::getInstance();
+$stmt = $pdo->query("SELECT * FROM alunos");
+echo $stmt->fetch()['nome'];
+```
+
+### Regras do Singleton
+
+1. Construtor da classe deve ser **private** — impede instanciação direta com `new`.
+2. Método **`getInstance()`** deve ser sempre utilizado para obter a instância.
+3. Requisição deve usar `::` (acesso estático): `NomeClasse::getInstance()`.
+
+### Padrão Factory
+
+Cria objetos de forma dinâmica sem que o chamador precise conhecer a classe concreta — a classe "fábrica" decide qual classe instanciar com base em um parâmetro de entrada.
+
+```php
+// Interface define o contrato
+interface Veiculo {
+    public function modelo(): string;
+}
+
+// Classes concretas implementam a interface
+class Renault implements Veiculo {
+    public function modelo(): string { return "Renault Sandero"; }
+}
+class Ford implements Veiculo {
+    public function modelo(): string { return "Ford Ka"; }
+}
+
+// Classe Factory decide qual instanciar
+class VeiculoFactory {
+    public static function criar(string $marca): Veiculo {
+        return match($marca) {
+            "Renault"   => new Renault(),
+            "Ford"      => new Ford(),
+            default    => throw new \InvalidArgumentException("Marca desconhecida"),
+        };
+    }
+}
+
+// Uso: o chamador não sabe nem precisa saber qual classe é criada
+$v = VeiculoFactory::criar("Ford");
+echo $v->modelo(); // Ford Ka
+```
+
+### Benefícios do Factory
+
+- Se a classe `Veiculo` for renomeada ou alterada, muda-se apenas ela e a `VeiculoFactory`.
+- Se a criação do objeto for complexa, essa complexidade fica isolada na Factory.
+- O chamador depende da **interface**, não da implementação concreta.
+
+<Callout type="warning">
+**Práticas Modernas — Design Patterns e Arquitetura PHP**
+
+**Além do básico — outros padrões comuns:**
+**Repository Pattern:** abstrai o acesso a dados — Controllers e Services dependem de uma interface, não de queries SQL diretas. Facilita troca de banco e testes.
+**Service Layer:** lógica de negócio em classes de Serviço independentes de HTTP — reusáveis em CLI, filas e APIs.
+**Dependency Injection (DI):** dependências são "injetadas" no construtor em vez de instanciadas dentro da classe — reduz acoplamento e facilita testes.
+**Container DI (PHP-DI, Laravel Container, Symfony DI):** gerencia automaticamente as dependências — resolve classes com todas as suas injeções sem código manual.
+**Event / Observer:** desacopla partes do sistema via eventos — Laravel Events, Symfony EventDispatcher.
+**SOLID:** conjunto de 5 princípios de design OO (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion) — base para código manutenível e extensível.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA16**
+
+- MVC divide a aplicação nas camadas **Model, View e Controller** (não "Modelagem/Visualização/Classes").
+- Vantagens do MVC: **compreensão e manutenção facilitada, reúso de código, desenvolvimento rápido e paralelo**.
+- Singleton = instancia a classe **uma única vez**, compartilhando o mesmo objeto em toda a aplicação.
+- Regras do Singleton: construtor **private**, usar `getInstance()`, chamar com `::` (não com `->`).
+- Factory = classe "fábrica" que decide qual classe concreta instanciar com base nos **parâmetros recebidos**.
+- `implements` = implementa uma interface em PHP; todos os métodos da interface devem ser implementados.
+- Método/propriedade `static` é acessado com `::` sem instanciar a classe.
+</Callout>
+
+Barreto, J. S. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018.

@@ -1,0 +1,140 @@
+---
+title: "UA13 — PHP: Formulários"
+subtitle: "Formulários são a principal interface entre o usuário e o servidor. O PHP captura os dados enviados via GET ou POST, valida, sanitiza e responde dinamicamente — é o ciclo fundamental de qualquer aplicação web interativa."
+ua: 13
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### Formulários HTML + PHP — o ciclo
+
+Formulários são a principal interface entre o usuário e o servidor web. O HTML monta o formulário; o PHP processa os dados recebidos no servidor. Cada campo do formulário vira uma chave no array `$_GET` ou `$_POST`.
+
+```
+<!-- HTML: formulário envia para si mesmo via POST -->
+<form name="cadastro" method="post" action="cadastro.php">
+  <input type="text" name="nome" />
+  <input type="email" name="email" />
+  <input type="submit" name="enviar" value="Enviar" />
+</form>
+```
+
+### Atributos essenciais do `<form>`
+
+<table>
+<tr><th>Atributo</th><th>Função</th></tr>
+<tr><td><code>name</code></td><td>Identifica o formulário na página (pode haver múltiplos)</td></tr>
+<tr><td><code>method</code></td><td>Método HTTP de envio: <code>get</code> ou <code>post</code></td></tr>
+<tr><td><code>action</code></td><td>URL do script que receberá os dados; sem ele, envia para a própria página</td></tr>
+<tr><td><code>submit</code></td><td>Botão que dispara a submissão</td></tr>
+</table>
+
+### GET vs POST
+
+<table>
+<tr><th></th><th>GET</th><th>POST</th></tr>
+<tr><td>Onde os dados ficam</td><td>Na URL: <code>?nome=Ana&amp;email=…</code></td><td>No corpo da requisição — invisível na URL</td></tr>
+<tr><td>Segurança</td><td>Inseguro — dados visíveis e alteráveis pelo usuário</td><td>Mais seguro — dados ocultos</td></tr>
+<tr><td>Superglobal PHP</td><td><code>$&#95;GET['campo']</code></td><td><code>$&#95;POST['campo']</code></td></tr>
+<tr><td>Uso recomendado</td><td>Pesquisas, filtros (dados não sigilosos)</td><td>Cadastros, logins, dados sensíveis</td></tr>
+</table>
+
+### Receber e verificar dados
+
+```php
+// Verificar se o formulário foi submetido
+if (isset($_POST['enviar']) && !empty($_POST)) {
+
+    // Ler campos individuais com valor padrão se ausente (null)
+    $nome  = isset($_POST['nome'])  ? $_POST['nome']  : null;
+    $email = isset($_POST['email']) ? $_POST['email'] : null;
+
+    // PHP 7+ — forma mais curta com null coalescing
+    $nome  = $_POST['nome']  ?? null;
+    $email = $_POST['email'] ?? null;
+
+    // Percorrer todos os campos do POST
+    foreach ($_POST as $chave => $valor) {
+        echo "$chave: $valor<br>";
+    }
+}
+```
+
+<Callout type="default">
+**Campos checkbox e radio**
+
+Campos `checkbox` e `radio` **não são enviados** quando nenhuma opção está marcada — o índice nem existe no `$_POST`. Use sempre `isset()` antes de acessar:
+
+```php
+$aceite = isset($_POST['aceite']) ? "Sim" : "Não";
+```
+
+Para checkbox com múltipla seleção, declare o name como array no HTML: `name="estados[]"`. O PHP receberá um array em `$_POST['estados']` — percorra com `foreach`.
+</Callout>
+
+### Tratamento e validação de dados
+
+```php
+// Remover tags HTML e PHP (proteção contra XSS básico)
+$nome = strip_tags($_POST['nome'] ?? '');
+
+// Limpar todos os campos de uma vez
+foreach ($_POST as $k => $v) {
+    $_POST[$k] = strip_tags($v);
+}
+
+// Verificar se é numérico (aceita ponto, não vírgula)
+if (!is_numeric($_POST['idade'])) {
+    $erros[] = "Idade deve ser numérica";
+}
+
+// Sanitizar — extrair apenas inteiros e sinais + -
+$idade = filter_var($_POST['idade'], FILTER_SANITIZE_NUMBER_INT);
+
+// Validar e-mail
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    $erros[] = "E-mail inválido";
+}
+
+// Verificar se campo obrigatório está preenchido
+if (empty(trim($_POST['nome'] ?? ''))) {
+    $erros[] = "Nome obrigatório";
+}
+```
+
+### filter_var — principais filtros
+
+<table>
+<tr><th>Filtro</th><th>Tipo</th><th>O que faz</th></tr>
+<tr><td><code>FILTER&#95;VALIDATE&#95;EMAIL</code></td><td>Validate</td><td>Verifica se é e-mail válido (retorna valor ou false)</td></tr>
+<tr><td><code>FILTER&#95;VALIDATE&#95;INT</code></td><td>Validate</td><td>Verifica se é inteiro válido</td></tr>
+<tr><td><code>FILTER&#95;VALIDATE&#95;URL</code></td><td>Validate</td><td>Verifica se é URL válida</td></tr>
+<tr><td><code>FILTER&#95;SANITIZE&#95;NUMBER&#95;INT</code></td><td>Sanitize</td><td>Extrai apenas dígitos e sinais <code>+</code> <code>-</code></td></tr>
+<tr><td><code>FILTER&#95;SANITIZE&#95;EMAIL</code></td><td>Sanitize</td><td>Remove caracteres inválidos de e-mail</td></tr>
+<tr><td><code>FILTER&#95;SANITIZE&#95;STRING</code></td><td>Sanitize</td><td>Remove tags HTML (deprecated no PHP 8.1)</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Formulários PHP**
+
+**Validação em duas camadas:** HTML5 (`required`, `type="email"`, `min/max`) valida no cliente; PHP valida no servidor. As duas são necessárias — nunca confie só no cliente.
+**CSRF protection:** formulários POST devem incluir um token anti-CSRF para evitar requisições forjadas. Frameworks como Laravel e Symfony geram isso automaticamente via `@csrf` / CSRF middleware.
+**Prepared Statements:** ao usar dados de formulário em SQL, **nunca** concatene strings — use PDO com `bindParam()` ou `execute(['campo' => $valor])`.
+**htmlspecialchars():** ao exibir de volta na página dados enviados pelo usuário, use `htmlspecialchars($valor, ENT_QUOTES, 'UTF-8')` para prevenir XSS.
+**Enctype multipart/form-data:** obrigatório para upload de arquivos junto com `$_FILES`.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA13**
+
+- A interação usuário-servidor em páginas dinâmicas ocorre por meio de **formulários HTML**.
+- Propriedades do `<form>`: **name**, **method**, **action**. (Não: `class`, `to`, `select`, `input`.)
+- Sintaxe correta para leitura POST: `$_POST['nome']` (colchetes e aspas).
+- Tratamento de dados via scripts PHP ocorre no **servidor de aplicação web**.
+- `FILTER_SANITIZE_NUMBER_INT` = **extrai** apenas números inteiros e sinais `+/-`; não valida, apenas limpa.
+- `GET`: dados aparecem na URL — use apenas para dados não sigilosos.
+- `isset()` verifica se variável existe; `empty()` verifica se está vazia.
+- `strip_tags()` remove tags HTML/PHP do conteúdo enviado.
+</Callout>
+
+Saraiva, M. O. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018.

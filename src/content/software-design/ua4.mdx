@@ -1,0 +1,185 @@
+---
+title: "UA4 — Projetar a Solução"
+subtitle: "Projeto de software é o processo de traduzir requisitos em uma especificação técnica concreta. A primeira e mais importante decisão é a arquitetura — depois vem a decomposição modular e a documentação do que foi decidido."
+ua: 4
+group: "Arquitetura"
+---
+import Callout from "../../components/Callout.astro";
+
+### Projeto de software vs. Arquitetura de software
+
+São conceitos distintos mas complementares: **arquitetura** refere-se às estruturas de alto nível do sistema, às decisões estruturais fundamentais caras de mudar após implementadas (Bass; Clements; Kazman, 2012). **Projeto de software** é o processo mais amplo de criar a especificação de um artefato, incluindo componentes de baixo nível, algoritmos e a arquitetura como ponto de partida.
+
+### Cinco características da arquitetura de software
+
+#### Atender stakeholders
+
+Gerentes, usuários, operadores — cada parte interessada tem necessidades. A arquitetura equilibra e endereça todas essas preocupações.
+
+#### Separação de necessidades
+
+A complexidade é reduzida separando as necessidades em diferentes pontos de vista (vistas arquitetônicas), cada um descrevendo o sistema de um ângulo.
+
+#### Orientada pela qualidade
+
+A arquitetura é guiada por atributos de qualidade (RNFs): tolerância a falhas, extensibilidade, segurança, manutenibilidade, disponibilidade.
+
+#### Estilos recorrentes
+
+Padrões arquitetônicos são soluções reutilizáveis para necessidades recorrentes — evitam reinventar soluções já consolidadas.
+
+#### Integridade conceitual
+
+A arquitetura representa uma visão geral coerente. O arquiteto garante que adições ao sistema estejam alinhadas com essa visão.
+
+### Três tipos de projeto de software
+
+<table>
+<tr><th>Tipo</th><th>Nível de abstração</th><th>Foco</th></tr>
+<tr><td>Estrutural</td><td>Alto — visão abstrata</td><td>Visão geral do sistema como múltiplos componentes que interagem; domínio da solução proposta</td></tr>
+<tr><td>Alto nível</td><td>Médio — menos abstrato</td><td>Quebra em subsistemas e módulos; estrutura modular e interação entre subsistemas</td></tr>
+<tr><td>Detalhado</td><td>Baixo — implementação</td><td>Estrutura lógica de cada módulo, interfaces para comunicação entre módulos, algoritmos</td></tr>
+</table>
+
+### Modularização
+
+Técnica para dividir o sistema em módulos independentes, capazes de executar tarefas de forma autônoma. Segue a estratégia "dividir e conquistar". Vantagens da modularização:
+
+- Componentes pequenos são mais fáceis de manter
+- O sistema pode ser dividido com base em aspectos funcionais
+- Permite o nível de abstração desejado
+- Componentes com alta coesão podem ser reutilizados
+- Possibilidade de execução concorrente (paralela)
+- Maior segurança por isolamento
+
+### Coesão — o que é e seus 7 tipos
+
+Coesão mede o grau de relacionamento entre os elementos *dentro* de um módulo. Quanto maior, melhor o design. Do mais fraco ao mais forte:
+
+<table>
+<tr><th>Tipo</th><th>Descrição</th><th>Qualidade</th></tr>
+<tr><td>Coincidental</td><td>Agrupamento não planejado; resultado de modularização arbitrária</td><td>Pior</td></tr>
+<tr><td>Lógica</td><td>Elementos logicamente categorizados juntos, mas funcionalmente distintos</td><td>Fraca</td></tr>
+<tr><td>Temporal</td><td>Elementos processados em um ponto de tempo similar (ex.: inicialização)</td><td>Fraca</td></tr>
+<tr><td>Processual</td><td>Elementos agrupados e executados sequencialmente para uma tarefa</td><td>Moderada</td></tr>
+<tr><td>Comunicativa</td><td>Elementos sequenciais que operam sobre os mesmos dados</td><td>Moderada</td></tr>
+<tr><td>Sequencial</td><td>Saída de um elemento é entrada do próximo</td><td>Boa</td></tr>
+<tr><td>Funcional</td><td>Todos os elementos contribuem para uma única função bem definida; reutilizável</td><td>Melhor</td></tr>
+</table>
+
+### Acoplamento — o que é e seus 5 níveis
+
+Acoplamento mede o nível de interdependência *entre* módulos. Quanto menor, melhor o design. Do mais forte ao mais fraco:
+
+<table>
+<tr><th>Nível</th><th>Descrição</th><th>Qualidade</th></tr>
+<tr><td>Conteúdo</td><td>Um módulo acessa ou modifica diretamente o conteúdo interno de outro</td><td>Pior</td></tr>
+<tr><td>Comum (global)</td><td>Vários módulos têm acesso de leitura e gravação a dados globais compartilhados</td><td>Ruim</td></tr>
+<tr><td>Controle</td><td>Um módulo decide a função ou muda o fluxo de execução de outro</td><td>Moderado</td></tr>
+<tr><td>Selo</td><td>Módulos compartilham uma estrutura de dados comum e trabalham em partes diferentes dela</td><td>Moderado</td></tr>
+<tr><td>Dados</td><td>Módulos interagem apenas passando dados como parâmetros simples</td><td>Melhor</td></tr>
+</table>
+
+<Callout type="default">
+**A relação entre coesão e acoplamento**
+
+São métricas opostas mas complementares: buscamos **alta coesão** (elementos relacionados ficam juntos) e **baixo acoplamento** (módulos independem uns dos outros). Um sistema com coesão funcional e acoplamento de dados é bem projetado — cada módulo faz uma coisa só e se comunica com outros apenas por parâmetros.
+</Callout>
+
+### Princípios práticos de design
+
+#### DRY
+
+*Don't Repeat Yourself.* Cada pedaço de conhecimento deve ter uma representação única no sistema.
+
+#### KISS
+
+*Keep It Simple.* A solução mais simples que funciona é preferível à elegante que ninguém entende.
+
+#### YAGNI
+
+*You Aren't Gonna Need It.* Não implemente o que não é necessário agora.
+
+#### SOLID
+
+5 princípios de OO: SRP, Open/Closed, Liskov, Interface Segregation, Dependency Inversion.
+
+### SOLID — os 5 princípios
+
+<table>
+<tr><th>Letra</th><th>Princípio</th><th>Em prática</th></tr>
+<tr><td><strong>S</strong></td><td>Single Responsibility</td><td>Uma classe deve ter apenas um motivo para mudar</td></tr>
+<tr><td><strong>O</strong></td><td>Open/Closed</td><td>Aberta para extensão, fechada para modificação</td></tr>
+<tr><td><strong>L</strong></td><td>Liskov Substitution</td><td>Subclasses substituem a superclasse sem quebrar o sistema</td></tr>
+<tr><td><strong>I</strong></td><td>Interface Segregation</td><td>Muitas interfaces específicas são melhores que uma genérica</td></tr>
+<tr><td><strong>D</strong></td><td>Dependency Inversion</td><td>Dependa de abstrações, não de implementações concretas</td></tr>
+</table>
+
+### Padrões arquitetônicos
+
+Padrões são soluções reutilizáveis para necessidades recorrentes (Angelov; Grefen; Greefhorst, 2009). Os mais conhecidos:
+
+#### Camadas / MVC
+
+Separação em níveis horizontais; cada camada tem responsabilidade única.
+
+#### Cliente-Servidor
+
+Divisão entre quem solicita (cliente) e quem processa (servidor).
+
+#### Orientado a Eventos
+
+Componentes comunicam-se emitindo e consumindo eventos.
+
+#### SOA / Microservices
+
+Serviços autônomos com interfaces bem definidas.
+
+#### Tubos e Filtros
+
+Dados fluem por uma sequência de transformações (filtros) conectadas por tubos.
+
+#### Peer-to-Peer (P2P)
+
+Nós iguais — cada um pode ser cliente e servidor simultaneamente.
+
+### Documento de Especificação de Projeto
+
+Toda decisão de projeto deve ser documentada. O Documento de Especificação de Projeto (padrão IEEE) contém:
+
+<table>
+<tr><th>Seção</th><th>Conteúdo</th></tr>
+<tr><td>Introdução</td><td>Proposta, escopo, visão geral, referencial teórico, definições/acrônimos</td></tr>
+<tr><td>Visão geral do sistema</td><td>Descrição de alto nível do software</td></tr>
+<tr><td>Arquitetura do Sistema</td><td>Projeto arquitetural, decomposição, projeto racional</td></tr>
+<tr><td>Projeto de Dados</td><td>Descrição e dicionário de dados</td></tr>
+<tr><td>Projeto de Componente</td><td>Especificação interna de cada módulo</td></tr>
+<tr><td>Projeto de Interface</td><td>Visão geral, telas, ações e objetos</td></tr>
+<tr><td>Matriz de Requisitos</td><td>Rastreabilidade entre requisitos e componentes</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Projeto de Software**
+
+- **ADRs (Architecture Decision Records)** documentam o "por quê" de cada decisão arquitetural em arquivos Markdown versionados no Git — substituem grandes documentos de especificação que ficam desatualizados.
+- **Arquitetura Evolutiva** (Rebecca Parsons) defende adiar decisões estruturais enquanto possível e construir "fitness functions" que verificam automaticamente se a arquitetura continua saudável.
+- **Domain-Driven Design (DDD)** é a abordagem moderna para projeto de software: o modelo do sistema reflete o domínio de negócio usando uma linguagem ubíqua compartilhada por desenvolvedores e especialistas de domínio.
+- **Diagramas como código:** Mermaid, PlantUML e Structurizr geram diagramas de arquitetura a partir de texto — versioning, diff e revisão em Pull Requests substituem arquivos .vsd e .drawio.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Sistema de RH corporativo com acesso interno, servidor central e terminais → **Cliente-Servidor**. O servidor centraliza dados críticos; os terminais apenas interagem.
+- Documento de Especificação de Projeto segue padrão IEEE: 7 seções incluindo Arquitetura, Projeto de Dados, Componente e Interface.
+- **Coesão funcional** = melhor nível (todos os elementos contribuem para uma única função). **Coesão coincidental** = pior nível.
+- **Acoplamento de conteúdo** = pior nível (um módulo acessa internamente outro). **Acoplamento por mensagem** = melhor.
+- Alta coesão + baixo acoplamento = design de qualidade.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BASS, L.; CLEMENTS, P.; KAZMAN, R. *Software Architecture in Practice*. 3. ed. Boston: Addison-Wesley, 2012.
+- ANGELOV, S.; GREFEN, P.; GREEFHORST, D. A Classification of Software Reference Architectures. In: *IEEE/IFIP WICSA & ECSA*, 2009.
+- SURYANARAYANA, G.; SAMARTHYAM, G.; SHARMA, T. *Refactoring for Software Design Smells*. Burlington: Morgan Kaufmann, 2015.
+- LEDUR, C. L. *Análise e projeto de sistemas*. Porto Alegre: SAGAH, 2017.

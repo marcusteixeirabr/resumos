@@ -1,0 +1,191 @@
+---
+title: "UA6 — Projeto de Serviços Web"
+subtitle: "Projetar serviços web vai além de escolher SOAP ou REST. É preciso definir camadas, contratos, mecanismos de descoberta e de comunicação — e entender o que fica 'por trás da interface' para garantir disponibilidade, segurança e escalabilidade."
+ua: 6
+group: "Arquitetura"
+---
+import Callout from "../../components/Callout.astro";
+
+### Arquitetura em 4 Camadas
+
+A estrutura clássica de uma aplicação de serviços web divide responsabilidades em quatro camadas:
+
+<table>
+<tr><th>Camada</th><th>Responsabilidade</th><th>Tecnologias típicas</th></tr>
+<tr><td><strong>Cliente</strong></td><td>Interface com o usuário; consome os serviços</td><td>Browser, app mobile, outro sistema</td></tr>
+<tr><td><strong>Web (Container Web)</strong></td><td>Recebe requisições HTTP; delega para a camada de negócio</td><td>Servlets, JAX-RS, Spring MVC</td></tr>
+<tr><td><strong>Negócio (EJB / Business Tier)</strong></td><td>Lógica de negócio, orquestração de serviços, transações</td><td>EJB, Spring, CDI</td></tr>
+<tr><td><strong>EIS (Enterprise Information Systems)</strong></td><td>Acesso a dados, sistemas legados, bancos, filas</td><td>JPA, JDBC, JMS, conectores ERP</td></tr>
+</table>
+
+### O que fica por trás da interface
+
+A interface exposta ao consumidor é apenas a ponta do iceberg. Por trás dela, a infraestrutura garante:
+
+#### Disponibilidade e Redundância
+
+Alta disponibilidade via balanceamento de carga e redundância de instâncias — o serviço continua mesmo se um nó cair.
+
+#### Escalabilidade
+
+Capacidade de atender mais requisições adicionando recursos horizontalmente (mais instâncias) ou verticalmente (mais hardware).
+
+#### Segurança
+
+Autenticação, autorização, criptografia de mensagens (WS-Security para SOAP; JWT/OAuth 2.0 para REST).
+
+#### Interoperabilidade
+
+Capacidade de se comunicar com sistemas escritos em qualquer linguagem via protocolo padronizado.
+
+#### Orquestração
+
+Coordenação de múltiplos serviços para compor um processo de negócio mais complexo.
+
+#### Gerenciamento e Monitoramento
+
+Rastreamento de chamadas, logs, métricas de performance, alertas de falha.
+
+### HTTPServlet — o padrão de tratamento de requisições
+
+Na camada Web, cada requisição HTTP é tratada por um Servlet. O método a ser invocado depende do verbo HTTP:
+
+<table>
+<tr><th>Método do Servlet</th><th>Verbo HTTP</th><th>Uso</th></tr>
+<tr><td><code>doGet()</code></td><td>GET</td><td>Leitura, busca de recurso</td></tr>
+<tr><td><code>doPost()</code></td><td>POST</td><td>Criação de recurso</td></tr>
+<tr><td><code>doPut()</code></td><td>PUT</td><td>Atualização completa</td></tr>
+<tr><td><code>doDelete()</code></td><td>DELETE</td><td>Remoção de recurso</td></tr>
+<tr><td><code>doHead()</code></td><td>HEAD</td><td>Verifica existência sem retornar corpo</td></tr>
+<tr><td><code>doOptions()</code></td><td>OPTIONS</td><td>Retorna métodos suportados (CORS preflight)</td></tr>
+<tr><td><code>doTrace()</code></td><td>TRACE</td><td>Diagnóstico — raramente usado</td></tr>
+</table>
+
+### SOAP — Estrutura da Mensagem
+
+Toda mensagem SOAP segue uma estrutura rígida de três elementos:
+
+<table>
+<tr><th>Elemento</th><th>Obrigatório?</th><th>Função</th></tr>
+<tr><td><strong>Envelope</strong></td><td>Sim</td><td>Elemento raiz; define namespaces e estilo de codificação. É o "container" da mensagem.</td></tr>
+<tr><td><strong>Header</strong></td><td>Não</td><td>Informações adicionais (autenticação, transação, rastreamento). Quando presente, deve ser o primeiro filho do Envelope.</td></tr>
+<tr><td><strong>Body</strong></td><td>Sim</td><td>Contém o payload real da mensagem (a operação e seus parâmetros). Pode incluir o elemento <code>Fault</code> para reportar erros.</td></tr>
+</table>
+
+```
+<!-- Estrutura completa de uma mensagem SOAP -->
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <soap:Header>
+    <auth:token xmlns:auth="...">abc123</auth:token>
+  </soap:Header>
+  <soap:Body>
+    <calcularFrete>
+      <cep>88000000</cep>
+      <peso>2.5</peso>
+    </calcularFrete>
+  </soap:Body>
+</soap:Envelope>
+```
+
+### WSDL — Descrevendo o Contrato
+
+O WSDL (Web Services Description Language) é um documento XML que descreve completamente um serviço SOAP. Seus elementos principais:
+
+<table>
+<tr><th>Elemento</th><th>Parte</th><th>O que descreve</th></tr>
+<tr><td><code>&lt;types&gt;</code></td><td>Abstrata</td><td>Tipos de dados usados nas mensagens (schemas XML)</td></tr>
+<tr><td><code>&lt;message&gt;</code></td><td>Abstrata</td><td>Parâmetros de entrada e saída de cada operação</td></tr>
+<tr><td><code>&lt;portType&gt;</code></td><td>Abstrata</td><td>Conjunto de operações disponíveis (como uma interface)</td></tr>
+<tr><td><code>&lt;binding&gt;</code></td><td>Concreta</td><td>Protocolo e formato de dados para as operações</td></tr>
+<tr><td><code>&lt;operation&gt;</code></td><td>Concreta</td><td>Define entrada, saída e falhas de cada operação</td></tr>
+<tr><td><code>&lt;definitions&gt;</code></td><td>Raiz</td><td>Elemento raiz; contém namespaces e todos os demais</td></tr>
+</table>
+
+### UDDI — As Três Páginas do Registro
+
+O UDDI organiza as informações dos serviços em três categorias, analogia às antigas listas telefônicas:
+
+#### Páginas Brancas
+
+Informações gerais do provedor: nome da empresa, endereço, contatos, identificadores. "Quem é esse fornecedor?"
+
+#### Páginas Verdes
+
+Informações técnicas: endpoints de acesso, interfaces (WSDL), protocolos suportados. "Como acesso o serviço?"
+
+#### Páginas Amarelas
+
+Categorização por taxonomia de negócio (NAICS, UNSPSC). "Que tipo de serviço é esse?"
+
+### Paradigma Localizar–Vincular–Executar
+
+O fluxo completo de uso de um serviço web SOAP com UDDI:
+
+1. **Publicar:** o provedor registra o serviço no UDDI com o link para o WSDL.
+2. **Localizar:** o consumidor consulta o UDDI e encontra o serviço adequado.
+3. **Vincular:** o consumidor lê o WSDL e gera um *proxy* (stub) para invocar o serviço.
+4. **Executar:** o consumidor invoca o serviço via SOAP (RPC encapsulado em XML sobre HTTP).
+
+### REST — Representational State Transfer
+
+Proposto por Roy Fielding em sua dissertação (2000) como estilo arquitetural baseado nos princípios do HTTP. É stateless: cada requisição carrega tudo que o servidor precisa — sem sessão, sem contexto salvo no servidor. O uso de cache reduz latência e carga.
+
+#### Verbos HTTP — mapeamento CRUD
+
+<table>
+<tr><th>Verbo</th><th>Operação CRUD</th><th>Exemplo</th><th>Idempotente?</th></tr>
+<tr><td>GET</td><td>Read</td><td><code>GET /pedidos/42</code></td><td>Sim</td></tr>
+<tr><td>POST</td><td>Create</td><td><code>POST /pedidos</code></td><td>Não</td></tr>
+<tr><td>PUT</td><td>Update (total)</td><td><code>PUT /pedidos/42</code></td><td>Sim</td></tr>
+<tr><td>PATCH</td><td>Update (parcial)</td><td><code>PATCH /pedidos/42</code></td><td>Não</td></tr>
+<tr><td>DELETE</td><td>Delete</td><td><code>DELETE /pedidos/42</code></td><td>Sim</td></tr>
+</table>
+
+#### Códigos de Status HTTP
+
+<table>
+<tr><th>Código</th><th>Significado</th></tr>
+<tr><td>200 OK</td><td>Sucesso</td></tr>
+<tr><td>201 Created</td><td>Recurso criado (resposta a POST bem-sucedido)</td></tr>
+<tr><td>400 Bad Request</td><td>Requisição inválida — erro do cliente</td></tr>
+<tr><td>401 Unauthorized</td><td>Não autenticado</td></tr>
+<tr><td>403 Forbidden</td><td>Autenticado mas sem permissão</td></tr>
+<tr><td>404 Not Found</td><td>Recurso não existe</td></tr>
+<tr><td>500 Internal Server Error</td><td>Erro no servidor</td></tr>
+</table>
+
+### Quando usar SOAP vs REST
+
+<table>
+<tr><th>Aspecto</th><th>SOAP</th><th>REST</th></tr>
+<tr><td>Protocolo</td><td>Próprio (sobre HTTP/SMTP)</td><td>HTTP nativo</td></tr>
+<tr><td>Formato</td><td>XML obrigatório</td><td>JSON, XML, qualquer formato</td></tr>
+<tr><td>Contrato</td><td>WSDL (obrigatório)</td><td>OpenAPI/Swagger (recomendado)</td></tr>
+<tr><td>Segurança</td><td>WS-Security (robusto, verbose)</td><td>JWT, OAuth 2.0</td></tr>
+<tr><td>Complexidade</td><td>Alta — ferramentas de geração de código obrigatórias</td><td>Baixa — qualquer cliente HTTP funciona</td></tr>
+<tr><td>Uso típico</td><td>Sistemas bancários, ERPs, integrações corporativas legadas</td><td>APIs mobile, SPAs, microsserviços, cloud</td></tr>
+</table>
+
+<Callout type="warning">
+**Conteúdo histórico — Práticas Modernas**
+
+O material do curso tem foco em tecnologias Java/JEE do início dos anos 2000. O cenário atual é substancialmente diferente:
+
+- **UDDI foi abandonado.** Os grandes registros públicos fecharam em 2005–2006. Hoje, a descoberta de serviços usa *API Gateway* (Kong, AWS API Gateway) com catálogos internos como *Backstage* (Spotify), ou *service mesh* com Consul/Kubernetes DNS.
+- **WSDL/SOAP perderam a hegemonia para REST+OpenAPI.** A especificação OpenAPI 3.x substituiu o WSDL como contrato de API. Ferramentas como Swagger UI e Redoc geram documentação navegável automaticamente.
+- **gRPC como alternativa de alta performance.** Para comunicação interna entre microsserviços onde performance importa, o gRPC (Protocol Buffers + HTTP/2) oferece serialização binária muito mais eficiente que SOAP/XML.
+- **Java EE virou Jakarta EE.** O JEE foi doado à Eclipse Foundation e renomeado Jakarta EE. Na prática, Spring Boot domina o mercado; a maioria dos novos projetos não usa EJB.
+- **Microsserviços + Kubernetes substituem o ESB.** Cada serviço expõe uma API REST; o API Gateway faz roteamento, autenticação e rate limiting. O sidecar pattern (Envoy/Istio) cuida de observabilidade e segurança.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A arquitetura de serviços web tem **4 camadas**: cliente → web (servlets) → negócio (EJB) → EIS.
+- Páginas brancas = info geral; páginas verdes = info técnica de acesso; páginas amarelas = categorização por taxonomia.
+- Envelope SOAP = apresentação XML; Header = inicializa informações adicionais; Body = dados encapsulados (payload).
+- O consumidor precisa do **UDDI** (para encontrar) e do **WSDL** (para saber como usar) — os dois juntos permitem a integração.
+- SOAP sobre HTTP é a base do RPC via serviços web — XML encapsula a chamada de procedimento remoto trafegando sobre HTTP.
+</Callout>
+
+Referências: SOMMERVILLE, I. *Engenharia de Software*, 8ª ed., 2007. MENDES, A. *Arquitetura de Software*, 2002. FIELDING, R. *Architectural Styles and the Design of Network-based Software Architectures*, dissertação de doutorado, 2000.

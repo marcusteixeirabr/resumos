@@ -1,0 +1,124 @@
+---
+title: "UA11 — Diagrama de Classes"
+subtitle: "O diagrama de classes é o bloco de construção principal da modelagem OO. Representa a estrutura estática do sistema: classes, atributos, métodos e relacionamentos. É a base para os diagramas de comunicação, sequência e estados."
+ua: 11
+group: "Modelagem UML"
+---
+import Callout from "../../components/Callout.astro";
+
+### As três perspectivas do diagrama de classes
+
+Segundo Ambler (2016), um diagrama de classes oferece três perspectivas diferentes:
+
+#### Conceitual
+
+Representação dos conceitos do domínio. Direcionada ao cliente. Não inclui detalhes de implementação.
+
+#### Especificação
+
+Foca nas principais interfaces e métodos da arquitetura. Para quem precisa entender o sistema sem ver o código.
+
+#### Implementação
+
+A mais usada. Inclui detalhes de navegabilidade, atributos completos, tipos. Voltada para o time de desenvolvimento.
+
+### O que é uma Classe?
+
+Classes são descrições de um grupo de objetos com papéis semelhantes no sistema. Objetos derivam de:
+
+- **Coisas:** objetos tangíveis do mundo real (produto, livro, veículo).
+- **Papéis/funções:** atores em sistemas (estudante, gerente, enfermeiro).
+- **Eventos:** ocorrências registráveis (admissão, matrícula, venda).
+- **Interações:** resultados de relações entre entidades (reunião, contrato).
+
+### Anatomia de uma Classe UML
+
+Uma classe é representada por um retângulo com 3 compartimentos verticais:
+
+<table>
+<tr><th>Compartimento</th><th>Conteúdo</th><th>Convenção</th></tr>
+<tr><td><strong>Superior</strong></td><td>Nome da classe</td><td>Negrito, centralizado, primeira letra maiúscula</td></tr>
+<tr><td><strong>Meio</strong></td><td>Atributos: <code>visibilidade nome: tipo</code></td><td>Alinhado à esquerda, primeira letra minúscula</td></tr>
+<tr><td><strong>Inferior</strong></td><td>Métodos: <code>visibilidade nome(params): retorno</code></td><td>Alinhado à esquerda, primeira letra minúscula</td></tr>
+</table>
+
+### Visibilidade
+
+<table>
+<tr><th>Símbolo</th><th>Visibilidade</th><th>Acessível de</th></tr>
+<tr><td><code>+</code></td><td>public</td><td>Qualquer lugar</td></tr>
+<tr><td><code>-</code></td><td>private</td><td>Apenas dentro da própria classe</td></tr>
+<tr><td><code>#</code></td><td>protected</td><td>Classe e suas subclasses</td></tr>
+<tr><td><code>~</code></td><td>package</td><td>Classes no mesmo pacote</td></tr>
+</table>
+
+### Multiplicidades
+
+<table>
+<tr><th>Notação</th><th>Leitura</th></tr>
+<tr><td><code>0..1</code></td><td>No máximo um (pode ser zero)</td></tr>
+<tr><td><code>1</code> ou <code>1..1</code></td><td>Exatamente um</td></tr>
+<tr><td><code>0..&#42;</code> ou <code>&#42;</code></td><td>Zero ou muitos</td></tr>
+<tr><td><code>1..&#42;</code></td><td>Um ou muitos (pelo menos um)</td></tr>
+<tr><td><code>3..5</code></td><td>Entre três e cinco</td></tr>
+</table>
+
+Leitura: "Um Funcionário trabalha em 0..1 Empresa" E "Em uma Empresa trabalham 0..* Funcionários".
+
+### Relacionamentos
+
+<table>
+<tr><th>Relação</th><th>Notação</th><th>Definição</th></tr>
+<tr><td><strong>Associação</strong></td><td>Linha sólida</td><td>Relacionamento estrutural — instâncias de uma classe ligadas a outra. Pode ser bidirecional ou unidirecional.</td></tr>
+<tr><td><strong>Dependência</strong></td><td>Linha tracejada com seta</td><td>Uma mudança em um elemento afeta o outro. Objeto de uma classe usa serviços de outra.</td></tr>
+<tr><td><strong>Generalização (herança)</strong></td><td>Linha sólida com seta fechada</td><td>Elemento específico herda de um mais geral. Subclasses herdam todos os atributos e métodos da superclasse.</td></tr>
+<tr><td><strong>Agregação</strong></td><td>Linha com losango vazio</td><td>Objeto-parte é atributo do todo, mas pode existir independentemente.</td></tr>
+<tr><td><strong>Composição</strong></td><td>Linha com losango cheio</td><td>As partes só existem com o todo — são criadas e destruídas com ele. Vínculo forte (FILHA depende da PAI).</td></tr>
+</table>
+
+### Pacotes
+
+Pacotes agrupam elementos semanticamente relacionados em namespaces. Ao remover um pacote, todos os seus elementos são removidos junto. Use convenção de **domínio invertido**: `br.com.empresa.app.modulo`.
+
+Pacotes servem para dividir sistemas grandes em subsistemas, facilitando manutenção e compreensão. O nome do pacote deve expressar o propósito de suas classes.
+
+### Passos para criar um diagrama de classes
+
+1. **Identificar frases nominais** dos casos de uso — candidatos a classes.
+2. **Eliminar candidatos inapropriados**: redundantes, vagos, fora do escopo, simples atributos.
+3. **Identificar os verbos** — candidatos a métodos e relacionamentos.
+4. **Validar o modelo** — verificar se não há classes que prejudiquem o modelo.
+
+### Erros comuns de modelagem
+
+- Análise excessiva de frases nominais — coletar mais classes do que o necessário.
+- Nomes de classes e associações ambíguos ou incompreensíveis.
+- Inserir multiplicidades antes de estabilizar a estrutura do diagrama.
+- Pensar em questões de implementação durante a fase de modelagem.
+
+<Callout type="green">
+**N:N sempre gera uma classe associativa**
+
+Um Pedido contém vários Produtos e um Produto aparece em vários Pedidos — relação N:N. Não pode ser mapeada diretamente: gera a classe `ItemPedido`, que armazena os atributos da relação (quantidade, preço na data da compra).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Diagrama de Classes**
+
+- **Diagramas gerados do código:** plugins para IntelliJ IDEA, VS Code e Eclipse geram diagramas de classes automaticamente a partir do código Java/TypeScript. O diagrama fica sempre sincronizado.
+- **Mermaid classDiagram** permite escrever diagramas de classes em Markdown — renderizado pelo GitHub, GitLab e Notion. Substitui ferramentas pesadas como Enterprise Architect.
+- **TypeScript interfaces e types** são a implementação moderna de "classe abstrata" no ecossistema JS/TS — mais leves e composíveis que herança tradicional. Preferência pelo padrão *composition over inheritance*.
+- **Code reviews como design review:** Pull Requests em equipes maduras funcionam como revisão do design OO — alterações em class diagrams são discutidas via diff de código, não de documentos.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Diagrama de classes = representação da **estrutura e relações das classes** que servem de modelo para objetos.
+- Classes são representadas por **retângulos** (não círculos, quadrados ou setas).
+- Associação = relacionamentos estruturais entre instâncias; Dependência = relacionamentos de utilização; Generalização = herança.
+- Multiplicidades = informam a quantidade de instâncias de objetos que uma classe pode ter em relação a outra.
+- Visibilidades UML: **público (+), protegido (#), privado (-) e pacote (~)**.
+</Callout>
+
+Referências: LEDUR, C.L. *Análise e Projeto de Sistemas*, 2017. AMBLER, S.W. *UML 2 Class Diagram Guidelines*, 2016. BELL, D. *Fundamentos básicos de UML: o diagrama de classes*, IBM developerWorks, 2016.

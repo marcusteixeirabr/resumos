@@ -1,0 +1,97 @@
+---
+title: "UA13 — Diagrama de Sequência"
+subtitle: "O diagrama de sequência descreve as interações entre objetos em termos de troca de mensagens ao longo do tempo. Também chamado de diagrama de eventos — mostra quem chama quem, em que ordem, e permite prever como o sistema se comportará em um cenário específico."
+ua: 13
+group: "Modelagem UML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Linhas de Vida (Lifelines)
+
+A linha de vida (lifeline) é um elemento nomeado que representa um **participante individual** na interação. É exibida como uma caixa no topo (com o nome do objeto/ator) seguida de uma linha vertical tracejada. Representa apenas uma entidade por vez — se o elemento tiver multiplicidade, a lifeline representa um representante arbitrário.
+
+Tipos de cabeça de lifeline: objeto (retângulo), ator (boneco), Boundary (fronteira — View), Control (controle — Controller), Entity (entidade — Model).
+
+### Tipos de Mensagem
+
+<table>
+<tr><th>Tipo</th><th>Seta</th><th>Característica</th></tr>
+<tr><td><strong>Síncrona</strong></td><td>Linha sólida, ponta sólida</td><td>Requer resposta antes de continuar. Aguarda retorno.</td></tr>
+<tr><td><strong>Assíncrona</strong></td><td>Linha sólida, ponta aberta</td><td>Não aguarda resposta. Continua processando. Usada em multithreading e middleware.</td></tr>
+<tr><td><strong>Retorno/Resposta</strong></td><td>Linha tracejada, ponta aberta</td><td>Valor retornado ao chamador após a execução.</td></tr>
+<tr><td><strong>Self (auto-delegação)</strong></td><td>Flecha em U voltada para si</td><td>Objeto envia mensagem para si mesmo.</td></tr>
+<tr><td><strong>Criação</strong></td><td>Linha tracejada, ponta aberta → retângulo</td><td>Cria um novo objeto. Estereótipo <code>«create»</code>.</td></tr>
+<tr><td><strong>Destruição</strong></td><td>Seta com X no final</td><td>Destrói o objeto. O X marca o fim da lifeline.</td></tr>
+<tr><td><strong>Encontrada</strong></td><td>Seta de ponto preenchido para lifeline</td><td>Enviada de um remetente desconhecido.</td></tr>
+<tr><td><strong>Perdida</strong></td><td>Seta de lifeline para ponto preenchido</td><td>Enviada para um destinatário desconhecido.</td></tr>
+</table>
+
+### Focos de Controle
+
+O foco de controle (caixa de ativação) é um retângulo estreito desenhado sobre a lifeline, indicando o período em que o objeto está participando ativamente do processo. Chamadas aninhadas geram focos de controle sobrepostos.
+
+### Fragmentos Combinados
+
+Permitem adicionar lógica processual ao diagrama: uma ou mais sequências incluídas em uma moldura com execução em circunstâncias específicas.
+
+<table>
+<tr><th>Fragmento</th><th>Significado</th><th>Equivalente no código</th></tr>
+<tr><td><code>[alt]</code></td><td>Alternativa — executa um entre vários ramos condicionais</td><td><code>if / else if / else</code></td></tr>
+<tr><td><code>[opt]</code></td><td>Opcional — executa apenas se condição verdadeira</td><td><code>if</code> sem else</td></tr>
+<tr><td><code>[loop]</code></td><td>Repetição</td><td><code>for / while</code></td></tr>
+<tr><td><code>[par]</code></td><td>Paralelo — processamento simultâneo</td><td>Thread / async</td></tr>
+<tr><td><code>[break]</code></td><td>Sequência alternativa em vez de todo o resto do diagrama</td><td>break / return antecipado</td></tr>
+<tr><td><code>[neg]</code></td><td>Sequência inválida / proibida</td><td>—</td></tr>
+<tr><td><code>[critical]</code></td><td>Seção crítica — não pode ser interrompida</td><td>synchronized / mutex</td></tr>
+<tr><td><code>[assert]</code></td><td>Sequências não mostradas são inválidas</td><td>assertion</td></tr>
+</table>
+
+### Arquitetura em Camadas no Diagrama de Sequência
+
+Sistemas modernos são organizados em camadas. O diagrama de sequência expressa essas camadas por meio dos tipos de lifeline:
+
+<table>
+<tr><th>Tipo de Lifeline</th><th>Camada MVC</th><th>Responsabilidade</th></tr>
+<tr><td><strong>Boundary</strong> (fronteira)</td><td>View</td><td>Interface com o usuário</td></tr>
+<tr><td><strong>Control</strong> (controle)</td><td>Controller</td><td>Recebe requisições; coordena Model e View</td></tr>
+<tr><td><strong>Entity</strong> (entidade)</td><td>Model</td><td>Acesso a dados, lógica de negócio</td></tr>
+</table>
+
+Importante: no MVC, as requisições chegam ao **Controller** (não à View). O Controller solicita dados ao Model, que retorna os dados, e então o Controller envia para a View formatar o output.
+
+### Passos para criar um diagrama de sequência
+
+1. Escolher um **caso de uso**.
+2. Identificar os **objetos** que fazem parte da interação.
+3. Identificar o **objeto que começa** a interação.
+4. Identificar as **mensagens trocadas** entre os objetos.
+5. Identificar a **sequência** dessas mensagens.
+
+Pré-requisitos: casos de uso e diagrama de classes previamente elaborados — os métodos, atributos e classes já definidos facilitam muito a criação.
+
+<Callout type="green">
+**Como ler um diagrama de sequência**
+
+Leia de **cima para baixo** (ordem temporal). Setas sólidas = chamadas. Setas tracejadas = retornos. Retângulos sobre as lifelines = período de execução. A largura do tempo flui para baixo — mensagens mais abaixo ocorrem mais tarde.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Diagrama de Sequência**
+
+- **Mermaid sequenceDiagram** e **PlantUML** permitem criar diagramas de sequência a partir de texto — versionados em Git e renderizados em GitHub/GitLab. Substituem o uso de ferramentas gráficas.
+- **OpenAPI (Swagger)** documenta APIs REST com exemplos de request/response — é o "diagrama de sequência" da comunicação entre microsserviços. Ferramentas geram código e testes a partir do contrato.
+- **AsyncAPI** é o equivalente do OpenAPI para sistemas assíncronos (Kafka, RabbitMQ, WebSockets) — descreve os eventos e mensagens trocadas entre produtores e consumidores.
+- **Distributed Tracing** (Jaeger, Zipkin, Datadog APM) gera diagramas de sequência ao vivo a partir do tráfego real do sistema em produção — mais fiel que qualquer diagrama manual.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Linha de vida (lifeline) = **participante individual** na interação (não mensagem, não foco de controle, não fragmento).
+- Mensagem assíncrona = **não precisa de resposta** para a interação continuar.
+- Fragmento que permite **processamento simultâneo** = `[par]`.
+- No modelo MVC, o objeto do tipo **Boundary** representa a camada **View**.
+- Passos para criar: 1-Escolher caso de uso; 2-Identificar objetos; 3-Identificar quem inicia; 4-Identificar mensagens; 5-Identificar sequência.
+</Callout>
+
+Referências: LEDUR, C.L. *Análise e Projeto de Sistemas*, 2017. FOWLER, M. *UML Distilled*, 3ª ed., 2003. OBJECT MANAGEMENT GROUP. *UML Superstructure Specification 2.4.1*, 2011.

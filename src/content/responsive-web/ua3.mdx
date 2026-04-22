@@ -1,0 +1,159 @@
+---
+title: "UA3 — Formulários HTML5"
+subtitle: "HTML5 expandiu o elemento form com novos tipos de input e validação nativa no navegador, sem precisar de JavaScript."
+ua: 3
+group: "HTML"
+---
+import Callout from "../../components/Callout.astro";
+
+### Estrutura de um formulário
+
+```html
+<form action="/enviar" method="post">
+
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" name="nome" required>
+
+  <label for="email">E-mail:</label>
+  <input type="email" id="email" name="email" required>
+
+  <button type="submit">Enviar</button>
+</form>
+```
+
+### Novos tipos de input em HTML5
+
+<table>
+<tr><th>type</th><th>O que faz</th><th>Validação automática</th></tr>
+<tr><td><code>email</code></td><td>Campo de e-mail</td><td>Verifica formato name@domain</td></tr>
+<tr><td><code>url</code></td><td>Campo de URL</td><td>Verifica formato http://...</td></tr>
+<tr><td><code>number</code></td><td>Número com spinner</td><td>min, max, step</td></tr>
+<tr><td><code>range</code></td><td>Slider numérico</td><td>min, max, step</td></tr>
+<tr><td><code>date</code></td><td>Seletor de data</td><td>Formato e intervalo</td></tr>
+<tr><td><code>time</code></td><td>Seletor de hora</td><td>Formato HH:MM</td></tr>
+<tr><td><code>color</code></td><td>Seletor de cor</td><td>Retorna valor hex</td></tr>
+<tr><td><code>tel</code></td><td>Telefone</td><td>Teclado numérico no mobile</td></tr>
+<tr><td><code>search</code></td><td>Campo de busca</td><td>Botão limpar nativo</td></tr>
+</table>
+
+### Atributos de validação
+
+```html
+<!-- Obrigatório -->
+<input type="text" required>
+
+<!-- Comprimento mínimo/máximo -->
+<input type="text" minlength="3" maxlength="50">
+
+<!-- Intervalo numérico -->
+<input type="number" min="1" max="100" step="5">
+
+<!-- Padrão regex -->
+<input type="text" pattern="[0-9]{5}-[0-9]{3}" placeholder="00000-000">
+```
+
+### Outros elementos de formulário
+
+```html
+<!-- Seleção -->
+<select name="estado">
+  <option value="sc">Santa Catarina</option>
+  <option value="sp">São Paulo</option>
+</select>
+
+<!-- Área de texto -->
+<textarea name="msg" rows="4" cols="40"></textarea>
+
+<!-- Checkbox -->
+<input type="checkbox" name="aceito" id="aceito">
+<label for="aceito">Aceito os termos</label>
+```
+
+<Callout type="default">
+**GET vs POST no formulário**
+
+`method="get"` — dados na URL (visível, para buscas). `method="post"` — dados no body da requisição (para dados sensíveis, cadastros).
+</Callout>
+
+### Atributos da tag ``<form>``
+
+<table>
+<tr><th>Atributo</th><th>O que faz</th><th>Valores / Observações</th></tr>
+<tr><td><code>name</code></td><td>Nome do formulário</td><td>Identifica o form no documento (útil quando há mais de um)</td></tr>
+<tr><td><code>action</code></td><td>URL de destino dos dados</td><td>Se omitido, envia para a própria página</td></tr>
+<tr><td><code>method</code></td><td>Método HTTP de envio</td><td><code>get</code> (na URL) | <code>post</code> (no corpo)</td></tr>
+<tr><td><code>autocomplete</code></td><td>Autocompletar navegador</td><td><code>on</code> (padrão) | <code>off</code></td></tr>
+<tr><td><code>target</code></td><td>Onde exibir a resposta</td><td><code>&#95;self</code> | <code>&#95;blank</code> | <code>&#95;parent</code> | <code>&#95;top</code> | nome do iframe</td></tr>
+<tr><td><code>enctype</code></td><td>Codificação dos dados</td><td><code>application/x-www-form-urlencoded</code> (padrão) | <code>multipart/form-data</code> (upload) | <code>text/plain</code></td></tr>
+<tr><td><code>novalidate</code></td><td>Desativa validação HTML5</td><td>Atributo booleano (sem valor)</td></tr>
+</table>
+
+### Tipos de ``<input>`` — completo
+
+<table>
+<tr><th>type</th><th>O que é</th><th>Detalhe</th></tr>
+<tr><td><code>text</code></td><td>Texto livre</td><td>Aceita qualquer caractere</td></tr>
+<tr><td><code>password</code></td><td>Senha</td><td>Oculta os caracteres digitados</td></tr>
+<tr><td><code>file</code></td><td>Upload de arquivo</td><td>Exibe botão para selecionar arquivo</td></tr>
+<tr><td><code>hidden</code></td><td>Campo oculto</td><td>Invisível ao usuário, mas enviado ao servidor</td></tr>
+<tr><td><code>radio</code></td><td>Múltipla escolha única</td><td>Mesmo <code>name</code> = grupo, escolha exclusiva</td></tr>
+<tr><td><code>checkbox</code></td><td>Múltipla escolha múltipla</td><td>Permite marcar vários itens</td></tr>
+<tr><td><code>email</code></td><td>E-mail</td><td>Valida formato name@domain</td></tr>
+<tr><td><code>number</code></td><td>Número</td><td>Aceita <code>min</code>, <code>max</code>, <code>step</code></td></tr>
+<tr><td><code>range</code></td><td>Slider</td><td>Seleção visual de intervalo</td></tr>
+<tr><td><code>date</code></td><td>Data</td><td>Exibe calendário nativo</td></tr>
+<tr><td><code>month</code></td><td>Mês/ano</td><td>Seleciona mês e ano</td></tr>
+<tr><td><code>week</code></td><td>Semana/ano</td><td>Seleciona número da semana</td></tr>
+<tr><td><code>time</code></td><td>Hora</td><td>Máscara HH:MM automática</td></tr>
+<tr><td><code>color</code></td><td>Cor</td><td>Retorna valor hexadecimal</td></tr>
+<tr><td><code>tel</code></td><td>Telefone</td><td>Teclado numérico no mobile</td></tr>
+<tr><td><code>search</code></td><td>Busca</td><td>Botão de limpar nativo</td></tr>
+<tr><td><code>url</code></td><td>URL</td><td>Valida formato http://...</td></tr>
+</table>
+
+### Botões
+
+<table>
+<tr><th>Elemento</th><th>Função</th></tr>
+<tr><td><code>&lt;button type="submit"&gt;</code></td><td>Envia os dados do formulário ao servidor</td></tr>
+<tr><td><code>&lt;button type="reset"&gt;</code></td><td>Limpa todos os campos do formulário</td></tr>
+<tr><td><code>&lt;button type="button"&gt;</code></td><td>Botão genérico — ação definida via JavaScript</td></tr>
+<tr><td><code>&lt;input type="submit"&gt;</code></td><td>Equivalente ao button submit (forma legada)</td></tr>
+</table>
+
+### Atributos de validação e controle
+
+<table>
+<tr><th>Atributo</th><th>Efeito</th><th>Exemplo</th></tr>
+<tr><td><code>required</code></td><td>Campo obrigatório</td><td><code>&lt;input required&gt;</code></td></tr>
+<tr><td><code>placeholder</code></td><td>Texto de dica dentro do campo</td><td><code>placeholder="00000-000"</code></td></tr>
+<tr><td><code>autofocus</code></td><td>Foco automático ao carregar a página</td><td><code>&lt;input autofocus&gt;</code></td></tr>
+<tr><td><code>readonly</code></td><td>Campo visível mas não editável</td><td><code>&lt;input readonly&gt;</code> — valor enviado</td></tr>
+<tr><td><code>disabled</code></td><td>Campo desabilitado</td><td><code>&lt;input disabled&gt;</code> — valor NÃO enviado</td></tr>
+<tr><td><code>minlength</code> / <code>maxlength</code></td><td>Limita caracteres</td><td><code>minlength="3" maxlength="50"</code></td></tr>
+<tr><td><code>min</code> / <code>max</code> / <code>step</code></td><td>Limita intervalo numérico</td><td><code>min="0" max="10" step="0.5"</code></td></tr>
+<tr><td><code>pattern</code></td><td>Regex de validação</td><td><code>pattern="[0-9]&#123;'&#123;'&#125;5&#125;-[0-9]&#123;'&#123;'&#125;3&#125;"</code></td></tr>
+<tr><td><code>title</code></td><td>Mensagem de dica na validação</td><td><code>title="Digite um CEP válido"</code></td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Formulários**
+
+**Constraint Validation API:** via JavaScript, `input.checkValidity()` retorna `true/false` e `input.validationMessage` traz a mensagem de erro — permite mensagens de validação customizadas sem remover a validação nativa.
+**ARIA em formulários:** use `aria-describedby` para associar mensagens de erro ao campo, e `aria-required="true"` para campos obrigatórios — leitores de tela precisam disso.
+**Validação client-side ≠ segurança:** validação HTML5 é UX, não segurança. Sempre valide também no servidor — nunca confie apenas no browser.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA3**
+
+- Formulários HTML são usados para **agrupar elementos de uma página** com o objetivo de captar ou disponibilizar informações.
+- A interação cliente-servidor em formulários se dá por **solicitação e resposta**.
+- `method="get"` → dados visíveis na URL após o `?`. `method="post"` → dados no corpo da requisição (invisíveis).
+- `type="hidden"` → campo invisível ao usuário, mas seu valor é enviado ao servidor normalmente.
+- `readonly` → impede edição mas o valor é enviado. `disabled` → impede edição e o valor NÃO é enviado.
+- `radio` → só um item pode ser selecionado. `checkbox` → múltiplos itens podem ser selecionados.
+- `enctype="multipart/form-data"` é obrigatório para upload de arquivos.
+</Callout>
+
+Saraiva, M. O. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018. | Crowther, B. et al. *HTML5 e CSS3*. 2014.

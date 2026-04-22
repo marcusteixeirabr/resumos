@@ -1,0 +1,24 @@
+---
+import { getCollection, render } from 'astro:content';
+import DisciplineLayout from '../../layouts/DisciplineLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('responsive-web');
+  return entries.map(entry => ({
+    params: { slug: entry.id },
+    props:  { entry, entries },
+  }));
+}
+
+const { entry, entries } = Astro.props;
+const { Content } = await render(entry);
+const sorted = [...entries].sort((a, b) => a.data.ua - b.data.ua);
+---
+<DisciplineLayout
+  entry={entry}
+  entries={sorted}
+  disciplineTitle="Responsive Web Development"
+  base="/responsive-web"
+>
+  <Content />
+</DisciplineLayout>

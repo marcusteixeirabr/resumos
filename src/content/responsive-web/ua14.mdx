@@ -1,0 +1,139 @@
+---
+title: "UA14 — PHP: CRUD com MySQL"
+subtitle: "CRUD (Create, Read, Update, Delete) é o ciclo completo de persistência de dados. Com PHP e MySQL via PDO, é possível construir sistemas completos de gestão de registros com formulários, listagens e exclusão segura."
+ua: 14
+group: "PHP"
+---
+import Callout from "../../components/Callout.astro";
+
+### O que é CRUD?
+
+CRUD é o conjunto fundamental de operações de persistência de dados em qualquer sistema:
+
+<table>
+<tr><th>Letra</th><th>Operação</th><th>SQL</th><th>Descrição</th></tr>
+<tr><td><strong>C</strong></td><td>Create</td><td><code>INSERT INTO</code></td><td>Inserir novo registro</td></tr>
+<tr><td><strong>R</strong></td><td>Read</td><td><code>SELECT</code></td><td>Consultar / listar registros</td></tr>
+<tr><td><strong>U</strong></td><td>Update</td><td><code>UPDATE … SET</code></td><td>Atualizar registro existente</td></tr>
+<tr><td><strong>D</strong></td><td>Delete</td><td><code>DELETE FROM</code></td><td>Excluir registro</td></tr>
+</table>
+
+### Estrutura de arquivos de um módulo CRUD
+
+<table>
+<tr><th>Arquivo</th><th>Responsabilidade</th></tr>
+<tr><td><code>inicia.php</code></td><td>Constantes de configuração (host, usuário, senha, banco)</td></tr>
+<tr><td><code>funcoes.php</code></td><td>Função de conexão PDO + funções utilitárias (validação de CPF, datas…)</td></tr>
+<tr><td><code>index.php</code></td><td>Tela principal — lista todos os registros (READ), botões Incluir/Alterar/Excluir</td></tr>
+<tr><td><code>form&#95;inclui.php</code></td><td>Formulário HTML para inserção (campos = colunas da tabela, exceto PK autoincrementada)</td></tr>
+<tr><td><code>inclui.php</code></td><td>Processa o INSERT, valida campos, redireciona após sucesso</td></tr>
+<tr><td><code>form&#95;altera.php</code></td><td>Formulário pré-preenchido com dados do registro selecionado</td></tr>
+<tr><td><code>altera.php</code></td><td>Processa o UPDATE com a chave primária recebida via GET/POST</td></tr>
+<tr><td><code>exclui.php</code></td><td>Executa o DELETE após confirmação do usuário</td></tr>
+</table>
+
+### Conexão com PDO
+
+```php
+// funcoes.php — conexão PDO reutilizável
+function conecta_bd() {
+    try {
+        $pdo = new PDO(
+            "mysql:host=localhost;dbname=ua14;charset=utf8",
+            "root",
+            ""
+        );
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    } catch (PDOException $e) {
+        die("Erro de conexão: " . $e->getMessage());
+    }
+}
+```
+
+### INSERT — gravar novo registro
+
+```php
+// inclui.php — usando prepared statement (evita SQL injection)
+require_once "inicia.php";
+
+$titulo = $_POST['titulo'] ?? null;
+$autor  = $_POST['autor']  ?? null;
+
+if (empty($titulo) || empty($autor)) {
+    die("Preencha todos os campos.");
+}
+
+$pdo  = conecta_bd();
+$stmt = $pdo->prepare("INSERT INTO livros (titulo, autor) VALUES (:titulo, :autor)");
+$ok   = $stmt->execute([':titulo' => $titulo, ':autor' => $autor]);
+
+if ($ok) {
+    header("Location: index.php");
+} else {
+    echo "Erro ao incluir.";
+}
+```
+
+### SELECT — listar registros
+
+```sql
+// index.php — buscar e exibir todos os registros
+$pdo   = conecta_bd();
+$total = $pdo->query("SELECT COUNT(*) FROM livros")->fetchColumn();
+$stmt  = $pdo->query("SELECT * FROM livros ORDER BY titulo");
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo $row['titulo'] . " — " . $row['autor'] . "<br>";
+}
+```
+
+### UPDATE — alterar registro
+
+```sql
+// altera.php — atualizar campos de um registro específico
+$cod   = $_POST['cod_livro'] ?? null;
+$titulo = $_POST['titulo']   ?? null;
+
+$pdo  = conecta_bd();
+$stmt = $pdo->prepare("UPDATE livros SET titulo = :titulo WHERE cod_livro = :cod");
+$ok   = $stmt->execute([':titulo' => $titulo, ':cod' => $cod]);
+
+if ($ok) header("Location: index.php");
+```
+
+### DELETE — excluir registro
+
+```sql
+// exclui.php — sempre use WHERE para não apagar tudo!
+$cod = $_GET['cod'] ?? null;
+
+$pdo  = conecta_bd();
+$stmt = $pdo->prepare("DELETE FROM livros WHERE cod_livro = :cod");
+$stmt->execute([':cod' => $cod]);
+header("Location: index.php");
+```
+
+<Callout type="warning">
+**Práticas Modernas — CRUD PHP/MySQL**
+
+**PDO + Prepared Statements:** padrão atual — evita SQL Injection e suporta múltiplos SGBDs. Nunca concatene variáveis direto no SQL.
+**ORM (Object-Relational Mapping):** em projetos reais, camadas como Eloquent (Laravel), Doctrine (Symfony) ou Propel mapeiam tabelas a classes PHP, eliminando SQL manual e tornando o código mais expressivo.
+**Migrations:** controle de versão do banco de dados via arquivos de migração (Laravel `php artisan migrate`, Phinx). Mantém o schema consistente entre ambientes (dev/staging/prod).
+**MVC/Repository Pattern:** separe a lógica de acesso ao banco (Repository) da lógica de negócio (Service) e da apresentação (Controller/View). Evita misturar HTML com queries SQL no mesmo arquivo.
+**WHERE obrigatório no DELETE/UPDATE:** um DELETE sem WHERE apaga todos os registros da tabela — erro grave e irreversível sem backup.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA14**
+
+- CRUD = **C**reate (INSERT), **R**ead (SELECT), **U**pdate (UPDATE), **D**elete (DELETE).
+- `INSERT INTO` = operação **Create** — grava novos registros.
+- `DELETE FROM produtos WHERE estoque = 0` = remove produtos com estoque zero.
+- A cláusula `WHERE` no DELETE é essencial para **evitar apagar todos os registros** da tabela.
+- `UPDATE … SET … WHERE id = 8` = operação **Update** — modifica campo de registro específico.
+- PDO (PHP Data Objects) = interface para conexão com o banco de dados.
+- Arquivos separados por função (inicia, funcoes, form, inclui, altera, exclui) = melhor organização e manutenção.
+</Callout>
+
+Barreto, J. S. *Desenvolvimento de Sistemas com PHP*. Porto Alegre: SAGAH, 2018. | Silberschatz, A.; Korth, H. F.; Sudarshan, S. *Database System Concepts*. McGraw-Hill, 2011.

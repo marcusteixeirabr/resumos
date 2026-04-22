@@ -1,0 +1,112 @@
+---
+title: "UA7 — Projetando o Site"
+subtitle: "Projetar o site significa definir sua arquitetura de informação, fluxo de navegação e identidade visual antes de escrever código."
+ua: 7
+group: "Projeto"
+---
+import Callout from "../../components/Callout.astro";
+
+### Arquitetura de Informação
+
+Organização e estruturação do conteúdo para que o usuário encontre o que precisa facilmente:
+
+- **Mapa do site (Sitemap):** hierarquia de todas as páginas.
+- **Fluxo do usuário:** caminhos que o usuário percorre para completar tarefas.
+- **Navegação:** menus, breadcrumbs, links internos.
+
+### Processo de Design
+
+<table>
+<tr><th>Etapa</th><th>Entregável</th></tr>
+<tr><td>1. Pesquisa / briefing</td><td>Personas, benchmark de concorrentes</td></tr>
+<tr><td>2. Arquitetura</td><td>Sitemap, fluxos de usuário</td></tr>
+<tr><td>3. Wireframe</td><td>Esboço de baixa fidelidade da estrutura</td></tr>
+<tr><td>4. Identidade visual</td><td>Paleta de cores, tipografia, ícones</td></tr>
+<tr><td>5. Mockup/Protótipo</td><td>Telas com visual final no Figma</td></tr>
+<tr><td>6. Implementação</td><td>HTML + CSS + JS</td></tr>
+</table>
+
+### Boas práticas de UX/UI
+
+#### Consistência
+
+Mesmos estilos, comportamentos e vocabulário em toda a interface.
+
+#### Feedback
+
+O sistema sempre avisa o usuário sobre o resultado de suas ações.
+
+#### Mobile First
+
+Projete primeiro para a menor tela, expanda progressivamente.
+
+#### Acessibilidade
+
+Contraste adequado, texto alternativo, navegação por teclado.
+
+### Paleta de cores — referência rápida
+
+Use a regra **60-30-10**: 60% cor dominante (fundo), 30% cor secundária (texto/elementos), 10% cor de destaque (CTAs).
+
+### Site estático vs. aplicação web
+
+<table>
+<tr><th>Característica</th><th>Site Estático</th><th>Aplicação Web</th></tr>
+<tr><td>Interatividade</td><td>Baixa</td><td>Alta</td></tr>
+<tr><td>Personalização</td><td>Limitada</td><td>Avançada</td></tr>
+<tr><td>Atualização de conteúdo</td><td>Manual (editar arquivo)</td><td>Dinâmica (banco de dados)</td></tr>
+<tr><td>Uso de banco de dados</td><td>Raro</td><td>Frequente</td></tr>
+<tr><td>Exemplos</td><td>Páginas institucionais, blogs simples</td><td>Lojas virtuais, redes sociais, e-learning</td></tr>
+</table>
+
+### Fases do desenvolvimento de uma aplicação web
+
+<table>
+<tr><th>Fase</th><th>O que envolve</th><th>Entregável</th></tr>
+<tr><td>1. Definição de requisitos</td><td>Identificar funcionalidades, público-alvo, tecnologias</td><td>Documento de requisitos (RF / RNF)</td></tr>
+<tr><td>2. Projeto de sistema</td><td>Arquitetura, wireframes, banco de dados</td><td>Protótipo, modelo de dados</td></tr>
+<tr><td>3. Implementação e teste unitário</td><td>Escrever o código; testar cada componente isolado</td><td>Código-fonte + testes</td></tr>
+<tr><td>4. Integração e teste de sistema</td><td>Verificar se todos os componentes funcionam juntos</td><td>Aplicação integrada validada</td></tr>
+<tr><td>5. Operação e manutenção</td><td>Publicar, monitorar, corrigir bugs e evoluir</td><td>Sistema em produção</td></tr>
+</table>
+
+### Principais frameworks e ferramentas
+
+<table>
+<tr><th>Ferramenta</th><th>Tipo</th><th>Para quê</th></tr>
+<tr><td>Bootstrap</td><td>Framework CSS (Twitter)</td><td>Layout responsivo rápido com classes utilitárias e componentes prontos</td></tr>
+<tr><td>React</td><td>Biblioteca JS (Meta/Facebook)</td><td>Interfaces componentizadas com Virtual DOM — camada de visualização</td></tr>
+<tr><td>Laravel</td><td>Framework PHP (Taylor Otwell)</td><td>Backend MVC robusto — roteamento, ORM Eloquent, autenticação integrada</td></tr>
+<tr><td>Vue.js</td><td>Framework JS progressivo</td><td>Interfaces reativas; curva de aprendizado menor que React</td></tr>
+<tr><td>Node.js</td><td>Runtime JS (servidor)</td><td>JavaScript no backend — APIs REST, tempo real</td></tr>
+</table>
+
+### Requisitos — funcionais vs. não funcionais
+
+<table>
+<tr><th>Tipo</th><th>Descrição</th><th>Exemplo prático</th></tr>
+<tr><td>Funcional (RF)</td><td>O que o sistema deve <strong>fazer</strong></td><td>"O sistema deve permitir que usuários façam login e logout"</td></tr>
+<tr><td>Não funcional (RNF)</td><td>Como o sistema deve <strong>se comportar</strong></td><td>"As páginas devem carregar em menos de 2 segundos"; "Suportar dispositivos móveis"</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — Desenvolvimento Web**
+
+**Design System:** biblioteca de componentes visuais reutilizáveis (botões, cores, tipografia) que garante consistência em produtos digitais — Google Material, Apple HIG, Tailwind UI.
+**Acessibilidade (WCAG):** diretrizes internacionais — contraste mínimo 4,5:1 para texto normal, navegação por teclado, atributos ARIA. É requisito legal em muitos países.
+**Progressive Web Apps (PWA):** sites que se comportam como apps nativos — instaláveis, funcionam offline (Service Worker), notificações push.
+**Figma:** ferramenta de design colaborativo que substituiu Adobe XD e Sketch como padrão da indústria para wireframes, mockups e protótipos interativos.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a prova — UA7**
+
+- Uma **aplicação web** difere de um site estático por ter interatividade, personalização e uso de banco de dados.
+- **Bootstrap** foi desenvolvido pela equipe do **Twitter**; facilita criação de layouts responsivos.
+- **React** usa **Virtual DOM** para melhorar performance — não atualiza o DOM real diretamente.
+- **Laravel** adota o padrão **MVC** (Model-View-Controller) e possui ORM chamado **Eloquent**.
+- As fases em cascata: requisitos → projeto → implementação/teste → integração → operação.
+- Regra **60-30-10**: 60% cor dominante, 30% secundária, 10% destaque.
+</Callout>
+
+Serpa, M. S. *Ferramentas de Desenvolvimento Web*. Porto Alegre: SAGAH, 2024. | Sommerville, I. *Engenharia de Software*. 10. ed. São Paulo: Pearson, 2018.
