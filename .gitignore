@@ -41,6 +41,14 @@ npm-debug.log*
 # ── Astro ────────────────────────────────────────────────────────────────────
 dist/
 .astro/
+.output/
 
 # ── Pagefind (gerado no build do CI) ─────────────────────────────────────────
 pagefind/
+
+# ── Cache e build ────────────────────────────────────────
+.cache/
+.parcel-cache/
+.turbo/
+.vercel/
+.netlify/
