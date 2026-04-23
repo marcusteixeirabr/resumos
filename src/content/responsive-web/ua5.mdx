@@ -5,6 +5,8 @@ ua: 5
 group: "CSS"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Flexbox
 
@@ -107,6 +109,10 @@ button:hover {
 <tr><td><code>letter-spacing</code></td><td>Espaço entre caracteres</td><td><code>0.05em</code></td></tr>
 </table>
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cva_08.webp" alt="Formatando Textos e Tipografia — font-family, color, text-align, line-height" caption="Tipografia CSS: font-family, color, font-size, text-align, line-height" />
+</SlidesGrid>
+
 ### Propriedades de caixa (Box)
 
 Todo elemento HTML é uma caixa. As propriedades abaixo controlam suas dimensões e aparência:
@@ -123,6 +129,10 @@ Todo elemento HTML é uma caixa. As propriedades abaixo controlam suas dimensõe
 <tr><td><code>transform</code></td><td>Rotação, escala, translação: <code>rotate(45deg)</code> | <code>scale(1.1)</code> | <code>translateX(20px)</code></td></tr>
 <tr><td><code>position</code></td><td><code>static</code> | <code>relative</code> | <code>absolute</code> | <code>fixed</code> | <code>sticky</code></td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cva_09.webp" alt="Media Queries — lógica de responsividade" caption="Magia responsiva: @media adapta o layout ao tamanho da tela" />
+</SlidesGrid>
 
 ### Media Query — operadores e características
 
@@ -143,6 +153,10 @@ Todo elemento HTML é uma caixa. As propriedades abaixo controlam suas dimensõe
 <tr><td>Desktop</td><td>1024px – 1279px</td><td><code>@media (min-width: 1024px)</code></td></tr>
 <tr><td>Wide</td><td>1280px+</td><td><code>@media (min-width: 1280px)</code></td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cva_10.webp" alt="Síntese: A Anatomia de uma Página Moderna" caption="Síntese: CSS + HTML + responsividade — a anatomia de uma página moderna" />
+</SlidesGrid>
 
 <Callout type="warning">
 **Práticas Modernas — CSS3 e Responsividade**
