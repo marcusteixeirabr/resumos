@@ -105,13 +105,13 @@ Divide o sistema em dois papéis bem definidos: o **cliente**, que solicita recu
 
 ### Arquitetura Orientada a Serviços (SOA)
 
-A SOA (*Service-Oriented Architecture*) estrutura o sistema como um conjunto de **serviços independentes e reutilizáveis**, cada um realizando uma função específica e exposto via contrato padronizado. Em vez de uma única aplicação, o sistema é composto por serviços que podem ser descobertos, invocados e combinados (Hirama, 2011).
+A SOA (*Service-Oriented Architecture*) estrutura o sistema como um conjunto de **serviços independentes e reutilizáveis**, cada um realizando uma função específica e exposto via contrato padronizado. Em vez de uma única aplicação, o sistema é composto por serviços que podem ser descobertos, invocados e combinados.
 
 - **Vantagem:** reusabilidade e interoperabilidade — um serviço de verificação de crédito pode ser consumido por sistemas distintos sem reescrita. Serviços podem ser escritos em diferentes linguagens e rodar em plataformas heterogêneas.
 - **Trade-off:** infraestrutura complexa (ESB — Enterprise Service Bus), dependência de registros de serviço (UDDI), e protocolos verbosos como SOAP/WSDL aumentam o overhead.
 - **Quando usar:** integração de múltiplos sistemas legados heterogêneos em grandes organizações que precisam de reuso e agilidade nos negócios.
 
-A SOA é frequentemente apontada como precursora dos microsserviços — a principal diferença é a granularidade: um serviço SOA tende a cobrir um domínio inteiro, enquanto um microsserviço cobre uma única capacidade de negócio (Richards; Ford, 2024).
+A SOA é frequentemente apontada como precursora dos microsserviços — a principal diferença é a granularidade: um serviço SOA tende a cobrir um domínio inteiro, enquanto um microsserviço cobre uma única capacidade de negócio.
 
 <Callout type="default">
 **Saiba mais — MVC (Model-View-Controller)**
@@ -180,7 +180,7 @@ Uma plataforma de e-commerce com arquitetura monolítica não suportou o pico de
 <Callout type="default">
 **A Importância da Arquitetura**
 
-"A arquitetura representa as decisões de design significativas que moldam um sistema, onde significativo é medido pelo custo de mudança." — Robert C. Martin (2019). Decisões arquiteturais erradas se tornam dívida técnica que compromete a evolução do produto — e corrigi-las depois custa muito mais do que acertar no início.
+A arquitetura representa as decisões de design significativas que moldam um sistema — onde "significativo" é medido pelo custo de mudança. Decisões arquiteturais erradas se tornam dívida técnica que compromete a evolução do produto — e corrigi-las depois custa muito mais do que acertar no início.
 </Callout>
 
 <Callout type="warning">
