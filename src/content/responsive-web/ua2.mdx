@@ -5,6 +5,8 @@ ua: 2
 group: "HTML"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Tags Semânticas
 
@@ -19,6 +21,10 @@ Semântica = significado. Tags semânticas descrevem o papel do conteúdo, melho
 <aside>   <!-- conteúdo lateral/complementar -->
 <footer>  <!-- rodapé da página/seção -->
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hdb_04.webp" alt="Tags semânticas HTML5 vs divs genéricos" caption="Tags semânticas HTML5 vs divs genéricos" />
+</SlidesGrid>
 
 ### Estrutura semântica típica
 
@@ -52,6 +58,10 @@ Semântica = significado. Tags semânticas descrevem o papel do conteúdo, melho
   <source src="audio.mp3" type="audio/mpeg">
 </audio>
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hdb_05.webp" alt="Elementos de texto e mídia nativa" caption="Elementos de texto e mídia nativa" />
+</SlidesGrid>
 
 ### Novas APIs HTML5
 

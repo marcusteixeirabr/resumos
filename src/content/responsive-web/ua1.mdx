@@ -5,6 +5,14 @@ ua: 1
 group: "HTML"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hdb_01.webp" alt="Construindo a Web — guia visual do HTML5" caption="Construindo a Web — guia visual do HTML5" />
+  <SlideItem src="/assets/img/slides/hdb_03.webp" alt="Estrutura do documento: head e body" caption="Estrutura do documento: head e body" />
+  <SlideItem src="/assets/img/slides/hdb_02.webp" alt="Anatomia de uma tag HTML" caption="Anatomia de uma tag HTML" />
+</SlidesGrid>
 
 ### Estrutura mínima de um documento HTML
 
@@ -133,6 +141,10 @@ Terceiro tipo de lista HTML: funciona como glossário, sem marcadores ou numera�
 ```
 
 ### Tabela — estrutura semântica completa
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hdb_06.webp" alt="Arquitetura das tabelas HTML" caption="Arquitetura das tabelas HTML" />
+</SlidesGrid>
 
 <table>
 <tr><th>Tag / Atributo</th><th>Função</th></tr>
