@@ -4,6 +4,8 @@ Anotações e resumos das disciplinas do curso de **Análise e Desenvolvimento d
 Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e ajudar colegas que estudam os mesmos temas.
 
 **Site publicado:** https://samuelgomezdev.github.io/resumos/
+
+
 🃏 Flashcards, Quiz e Simulado https://samuelgomezdev.github.io/resumos/estudo_interativo.html
 ---
 
