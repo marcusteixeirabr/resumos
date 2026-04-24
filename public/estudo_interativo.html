@@ -242,8 +242,8 @@ function renderFlashcards(){
   cards.forEach((fc,i)=>{
     const d=document.createElement('div');d.className='flashcard-wrap';d.dataset.idx=i;
     d.innerHTML=`<div class="flashcard-inner">
-      <div class="flashcard-front"><div class="flashcard-tag">${fc.tag}</div><div class="flashcard-question">${fc.q}</div><div class="flashcard-hint">clique ↺</div></div>
-      <div class="flashcard-back"><div class="flashcard-tag">${fc.tag}</div><div class="flashcard-answer">${fc.a}</div></div>
+      <div class="flashcard-front"><div class="flashcard-tag">${escHtml(fc.tag)}</div><div class="flashcard-question">${escHtml(fc.q)}</div><div class="flashcard-hint">clique ↺</div></div>
+      <div class="flashcard-back"><div class="flashcard-tag">${escHtml(fc.tag)}</div><div class="flashcard-answer">${escHtml(fc.a)}</div></div>
     </div>`;
     d.addEventListener('click',()=>{d.classList.toggle('flipped');seenCards.add(i);updateFCP(cards.length)});
     c.appendChild(d);
@@ -289,7 +289,7 @@ function showQQ(){
   const L=['A','B','C','D'],c=document.getElementById('q-opts');c.innerHTML='';
   q.opts.forEach((o,i)=>{
     const d=document.createElement('div');d.className='option';
-    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${o}</span>`;
+    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${escHtml(o)}</span>`;
     d.addEventListener('click',()=>answerQ(i,d));c.appendChild(d);
   });
   document.getElementById('q-exp').className='explanation';
@@ -363,7 +363,7 @@ function showSimQ(){
     const d=document.createElement('div');
     d.className='option'+(simAnss[simCur]===i?(i===q.c?' correct':' wrong'):'');
     if(simAnss[simCur]!==null)d.classList.add('disabled');
-    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${o}</span>`;
+    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${escHtml(o)}</span>`;
     d.addEventListener('click',()=>{if(simAnss[simCur]!==null)return;simAnss[simCur]=i;renderSimNav();showSimQ()});
     c.appendChild(d);
   });
@@ -411,10 +411,10 @@ function finishSimulado(){
     const d=document.createElement('div');
     d.style.cssText='margin-bottom:11px;padding:13px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);font-size:0.83rem;';
     d.innerHTML=`<div style="font-weight:700;margin-bottom:5px">${icon} Q${i+1} <span style="color:var(--text-muted);font-weight:400">· ${q.d}</span></div>
-      <div style="line-height:1.5;margin-bottom:5px">${q.text}</div>
-      ${!blank2&&!ok2?`<div style="color:var(--secondary);margin-bottom:3px">❌ Sua resposta: ${q.opts[a]}</div>`:''}
-      <div style="color:var(--success)">✅ Correta: ${q.opts[q.c]}</div>
-      <div style="color:#9090b0;margin-top:5px;font-style:italic">💡 ${q.exp}</div>`;
+      <div style="line-height:1.5;margin-bottom:5px">${escHtml(q.text)}</div>
+      ${!blank2&&!ok2?`<div style="color:var(--secondary);margin-bottom:3px">❌ Sua resposta: ${escHtml(q.opts[a])}</div>`:''}
+      <div style="color:var(--success)">✅ Correta: ${escHtml(q.opts[q.c])}</div>
+      <div style="color:#9090b0;margin-top:5px;font-style:italic">💡 ${escHtml(q.exp)}</div>`;
     rev.appendChild(d);
   });
 }
@@ -427,6 +427,8 @@ function resetSimulado(){
 }
 
 // ─── UTILS ────────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
 function showSection(id,btn){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
