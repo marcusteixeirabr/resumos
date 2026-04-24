@@ -5,6 +5,8 @@ ua: 15
 group: "PHP"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### O que é um framework?
 
@@ -55,6 +57,10 @@ Model → (retorna dados) → Controller
 Controller → (passa dados) → View
 View → (exibe para) → Usuário
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/wab_06.webp" alt="Arquitetura MVC: fluxo View → Controller → Model → View com exemplo de login" caption="Arquitetura MVC — fluxo de uma requisição" />
+</SlidesGrid>
 
 ### Estrutura de projeto Zend Skeleton (referência)
 

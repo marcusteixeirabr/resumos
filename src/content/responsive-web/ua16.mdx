@@ -5,6 +5,13 @@ ua: 16
 group: "PHP"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/wab_01.webp" alt="A Arquitetura da Web: Do Macro ao Micro — design de sistemas, SDLC e padrões MVC, Singleton e Factory" caption="A Arquitetura da Web: Do Macro ao Micro" />
+  <SlideItem src="/assets/img/slides/wab_07.webp" alt="Tipologia dos Padrões de Projeto: MVC (Arquitetura Estrutural), Singleton e Factory (Criação de Objetos)" caption="Tipologia dos Padrões de Projeto" />
+</SlidesGrid>
 
 ### O que são Design Patterns?
 
@@ -76,6 +83,10 @@ echo $stmt->fetch()['nome'];
 2. Método **`getInstance()`** deve ser sempre utilizado para obter a instância.
 3. Requisição deve usar `::` (acesso estático): `NomeClasse::getInstance()`.
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/wab_08.webp" alt="Padrão Singleton: construtor privado, getInstance() e única instância na memória" caption="Padrão Singleton" />
+</SlidesGrid>
+
 ### Padrão Factory
 
 Cria objetos de forma dinâmica sem que o chamador precise conhecer a classe concreta — a classe "fábrica" decide qual classe instanciar com base em um parâmetro de entrada.
@@ -115,6 +126,11 @@ echo $v->modelo(); // Ford Ka
 - Se a classe `Veiculo` for renomeada ou alterada, muda-se apenas ela e a `VeiculoFactory`.
 - Se a criação do objeto for complexa, essa complexidade fica isolada na Factory.
 - O chamador depende da **interface**, não da implementação concreta.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/wab_09.webp" alt="Padrão Factory: interface central, fábrica intermediária e alta flexibilidade na criação de objetos" caption="Padrão Factory" />
+  <SlideItem src="/assets/img/slides/wab_10.webp" alt="O Modelo Unificado da Engenharia Web: Controller (MVC) + Factory + Model + Singleton + View" caption="O Modelo Unificado da Engenharia Web" />
+</SlidesGrid>
 
 <Callout type="warning">
 **Práticas Modernas — Design Patterns e Arquitetura PHP**
