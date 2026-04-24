@@ -1,4 +1,4 @@
-# Resumos ADS — Fork por Samuel Gomes
+# Resumos ADS — Fork por Samuel Gomez
 
 🌐 **Site:** https://samuelgomezdev.github.io/resumos/
 
