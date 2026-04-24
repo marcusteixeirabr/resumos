@@ -5,6 +5,8 @@ ua: 9
 group: "JavaScript"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### O que é AJAX?
 
@@ -111,6 +113,10 @@ xhr.open("GET", "server.php", true);
 xhr.send();
 ```
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_09.webp" alt="A Troca de Dados: ciclo Ajax/JSON — Gatilho (XMLHttpRequest) → Servidor (PHP) → Resposta (JSON) → Tratamento (JSON.parse())" caption="A Troca de Dados: Ajax & JSON" />
+</SlidesGrid>
+
 ### Estados do XMLHttpRequest (`readyState`)
 
 <table>
@@ -155,6 +161,10 @@ fetch("server.php")
 <tr><td>Segurança</td><td>Perigoso — executa código malicioso (JS Injection)</td><td>Seguro — rejeita comandos JS</td></tr>
 <tr><td>Uso recomendado</td><td>Nunca para dados externos</td><td>Sempre para converter JSON</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_10.webp" alt="Síntese: O Ciclo Completo da Interatividade — Evento → Ajax/Servidor → JSON→Array → Fluxo de Controle → DOM Manipulation" caption="Síntese: O Ciclo Completo da Interatividade" />
+</SlidesGrid>
 
 <Callout type="warning">
 **Práticas Modernas — AJAX e APIs**

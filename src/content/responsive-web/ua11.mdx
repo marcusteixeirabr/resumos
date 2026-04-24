@@ -5,6 +5,8 @@ ua: 11
 group: "PHP"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Operadores relacionais e lógicos
 
@@ -61,6 +63,10 @@ switch ($conceito) {
 }
 ```
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/psa_02.webp" alt="Fundamentos: Estruturas de Controle — O Caminho Principal (if/elseif/else) e O Caminho Multi-vias (switch)" caption="Estruturas de Controle: if/else e switch" />
+</SlidesGrid>
+
 ### Operador ternário
 
 Versão compacta do `if/else` para expressões simples: `condição ? valor_se_true : valor_se_false`
@@ -109,6 +115,10 @@ for ($i = 1; $i <= 5; $i++):
     echo $i . " ";
 endfor;
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/psa_03.webp" alt="O Ciclo de Vida dos Dados: Estruturas de Repetição — for, do...while, while, break e continue" caption="Estruturas de Repetição: for / while / do...while" />
+</SlidesGrid>
 
 ### continue e break
 

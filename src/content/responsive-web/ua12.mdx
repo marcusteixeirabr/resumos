@@ -5,6 +5,8 @@ ua: 12
 group: "PHP"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### Arrays
 
@@ -84,6 +86,10 @@ foreach ($alunos as [$nome, $nota]) {
     echo "$nome: $nota\n";
 }
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/psa_04.webp" alt="Estruturando a Informação: Arrays Indexados, Associativos e Multidimensionais + foreach e funções PHP" caption="Arrays e Funções em PHP" />
+</SlidesGrid>
 
 ### Funções
 

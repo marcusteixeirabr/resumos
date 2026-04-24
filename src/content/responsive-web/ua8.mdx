@@ -9,7 +9,8 @@ import SlidesGrid from "../../components/SlidesGrid.astro";
 import SlideItem from "../../components/SlideItem.astro";
 
 <SlidesGrid>
-  <SlideItem src="/assets/img/slides/hdb_10.webp" alt="HTML, CSS e JavaScript — o ecossistema front-end" caption="HTML, CSS e JavaScript — o ecossistema front-end" />
+  <SlideItem src="/assets/img/slides/jib_01.webp" alt="JavaScript: O Motor da Interatividade Web — da sintaxe ao sistema" caption="JavaScript: O Motor da Interatividade Web" />
+  <SlideItem src="/assets/img/slides/jib_02.webp" alt="A Anatomia da Web: HTML (estrutura), CSS (apresentação), JavaScript (comportamento)" caption="A Anatomia da Web" />
 </SlidesGrid>
 
 ### Fundamentos
@@ -52,6 +53,11 @@ li.textContent = 'Novo item';
 document.querySelector('ul').appendChild(li);
 ```
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_06.webp" alt="A Árvore do DOM: Document → html → head/body → elementos filhos" caption="A Árvore do DOM" />
+  <SlideItem src="/assets/img/slides/jib_07.webp" alt="Manipulando o DOM: Consulta (getElementById, querySelector) e Ação (innerHTML, style, createElement)" caption="Manipulando o DOM: Consulta e Ação" />
+</SlidesGrid>
+
 ### Eventos
 
 ```javascript
@@ -75,6 +81,10 @@ document.querySelector('#busca')
   });
 ```
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_08.webp" alt="O Sistema Nervoso: Dissecando Eventos — Alvo (Target), Ouvinte (Listener), Gatilho (Event Type), Resposta (Function)" caption="Dissecando Eventos: addEventListener" />
+</SlidesGrid>
+
 ### Eventos comuns
 
 <table>
@@ -94,6 +104,10 @@ document.querySelector('#busca')
 Use `const` por padrão; use `let` só quando precisar reatribuir. Evite `var` — tem escopo de função e causa bugs difíceis de rastrear.
 </Callout>
 
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_04.webp" alt="Declaração de Variáveis: var (legado, evitar), let (flexível, escopo de bloco), const (imutável, preferir)" caption="Declaração de Variáveis: var / let / const" />
+</SlidesGrid>
+
 ### Tipos de dados em JavaScript
 
 <table>
@@ -106,6 +120,10 @@ Use `const` por padrão; use `let` só quando precisar reatribuir. Evite `var` �
 <tr><td><code>Undefined</code></td><td>Variável declarada sem valor</td><td><code>let x; // undefined</code></td></tr>
 <tr><td><code>Null</code></td><td>Ausência intencional de valor</td><td><code>let dado = null</code></td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_03.webp" alt="Tipos Primitivos: String, Number, Boolean, Array e Object com exemplos de código" caption="Tipos Primitivos em JavaScript" />
+</SlidesGrid>
 
 ### Operadores em JavaScript
 
@@ -144,6 +162,10 @@ while (i < 5) { console.log(i); i++; }
 // do...while — executa ao menos uma vez
 do { console.log(i); i++; } while (i < 5);
 ```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/jib_05.webp" alt="Fluxo de Controle: condicionais (if/switch) e laços de repetição (for/while)" caption="Fluxo de Controle: Lógica e Iteração" />
+</SlidesGrid>
 
 ### Métodos nativos úteis
 

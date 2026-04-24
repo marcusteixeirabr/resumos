@@ -5,6 +5,8 @@ ua: 14
 group: "PHP"
 ---
 import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
 
 ### O que é CRUD?
 
@@ -17,6 +19,10 @@ CRUD é o conjunto fundamental de operações de persistência de dados em qualq
 <tr><td><strong>U</strong></td><td>Update</td><td><code>UPDATE … SET</code></td><td>Atualizar registro existente</td></tr>
 <tr><td><strong>D</strong></td><td>Delete</td><td><code>DELETE FROM</code></td><td>Excluir registro</td></tr>
 </table>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/psa_06.webp" alt="Persistência: O Ecossistema CRUD com PDO — Create (form_insct.php), Read (lista.php), Update (form_altera.php), Delete (exclui.php)" caption="Persistência: O Ecossistema CRUD com PDO" />
+</SlidesGrid>
 
 ### Estrutura de arquivos de um módulo CRUD
 
