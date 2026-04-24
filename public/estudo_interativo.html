@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estudo Interativo — ADS UNIVALI (Completo)</title>
+<style>
+:root{--primary:#6c63ff;--primary-dark:#5249cc;--secondary:#ff6b6b;--success:#4caf50;--warning:#ff9800;--bg:#0f0f1a;--bg2:#1a1a2e;--bg3:#16213e;--card:#1e1e3f;--text:#e8e8f0;--text-muted:#9090b0;--border:#3a3a5c;--radius:12px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh}
+.nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;gap:6px;height:58px;position:sticky;top:0;z-index:100;flex-wrap:wrap}
+.nav-title{font-weight:700;font-size:1rem;color:var(--primary);margin-right:12px;white-space:nowrap}
+.nav-btn{padding:7px 15px;border-radius:20px;border:2px solid transparent;cursor:pointer;font-size:0.82rem;font-weight:600;transition:all 0.2s;background:transparent;color:var(--text-muted)}
+.nav-btn:hover{color:var(--text);border-color:var(--border)}
+.nav-btn.active{background:var(--primary);color:white;border-color:var(--primary)}
+.section{display:none;padding:28px 20px;max-width:920px;margin:0 auto}
+.section.active{display:block}
+.filter-bar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:20px}
+.filter-btn{padding:5px 13px;border-radius:16px;border:1.5px solid var(--border);background:transparent;color:var(--text-muted);cursor:pointer;font-size:0.78rem;font-weight:600;transition:all 0.2s}
+.filter-btn:hover,.filter-btn.active{background:var(--primary);border-color:var(--primary);color:white}
+/* FLASHCARDS */
+.flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px}
+.flashcard-wrap{perspective:1000px;height:195px;cursor:pointer}
+.flashcard-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform 0.5s}
+.flashcard-wrap.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:18px;border:1.5px solid var(--border)}
+.flashcard-front{background:var(--card)}
+.flashcard-back{background:linear-gradient(135deg,#1e1e4f,#2a2a5a);transform:rotateY(180deg);border-color:var(--primary)}
+.flashcard-tag{font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:10px}
+.flashcard-question{font-size:0.9rem;font-weight:600;line-height:1.5}
+.flashcard-answer{font-size:0.82rem;line-height:1.55;color:#c8c8ff}
+.flashcard-hint{position:absolute;bottom:9px;right:12px;font-size:0.67rem;color:var(--text-muted)}
+.fc-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.fc-progress span{font-size:0.83rem;color:var(--text-muted)}
+/* QUIZ */
+.quiz-header{margin-bottom:24px}
+.quiz-header h2{font-size:1.25rem;margin-bottom:4px}
+.quiz-header p{color:var(--text-muted);font-size:0.88rem}
+.quiz-progress-bar{height:5px;background:var(--border);border-radius:3px;margin:14px 0}
+.quiz-progress-fill{height:100%;background:var(--primary);border-radius:3px;transition:width 0.4s}
+.question-card{background:var(--card);border-radius:var(--radius);padding:26px;border:1.5px solid var(--border)}
+.question-num{font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--primary);margin-bottom:10px}
+.question-text{font-size:1rem;font-weight:600;line-height:1.6;margin-bottom:22px}
+.options{display:flex;flex-direction:column;gap:9px}
+.option{padding:13px 16px;border-radius:9px;border:1.5px solid var(--border);background:var(--bg2);cursor:pointer;font-size:0.9rem;transition:all 0.2s;display:flex;align-items:center;gap:11px}
+.option:hover:not(.disabled){border-color:var(--primary);background:rgba(108,99,255,0.1)}
+.option.correct{border-color:var(--success);background:rgba(76,175,80,0.15);color:#a5e6a8}
+.option.wrong{border-color:var(--secondary);background:rgba(255,107,107,0.15);color:#ffb0b0}
+.option-letter{width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.78rem;flex-shrink:0}
+.option.correct .option-letter{background:var(--success);border-color:var(--success);color:white}
+.option.wrong .option-letter{background:var(--secondary);border-color:var(--secondary);color:white}
+.explanation{margin-top:14px;padding:14px;background:rgba(108,99,255,0.1);border-left:3px solid var(--primary);border-radius:6px;font-size:0.86rem;line-height:1.6;color:#c0c0e8;display:none}
+.explanation.show{display:block}
+.quiz-nav{display:flex;gap:11px;margin-top:22px;flex-wrap:wrap}
+.btn{padding:11px 22px;border-radius:9px;border:none;cursor:pointer;font-weight:700;font-size:0.88rem;transition:all 0.2s}
+.btn-primary{background:var(--primary);color:white}
+.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary)}
+.btn-success{background:var(--success);color:white}
+.btn-success:hover{opacity:0.9}
+.result-card{background:var(--card);border-radius:var(--radius);padding:36px;text-align:center;border:1.5px solid var(--border)}
+.result-score{font-size:3.8rem;font-weight:900;margin:18px 0}
+.result-score.pass{color:var(--success)}
+.result-score.fail{color:var(--secondary)}
+.result-breakdown{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+.result-stat{background:var(--bg2);padding:14px 22px;border-radius:10px;text-align:center}
+.result-stat .num{font-size:1.7rem;font-weight:700}
+.result-stat .label{font-size:0.78rem;color:var(--text-muted);margin-top:3px}
+/* SIMULADO */
+.simulado-intro{background:var(--card);border-radius:var(--radius);padding:30px;border:1.5px solid var(--border);text-align:center}
+.simulado-intro h2{font-size:1.4rem;margin-bottom:10px}
+.simulado-intro p{color:var(--text-muted);font-size:0.9rem;line-height:1.6;margin-bottom:6px}
+.simulado-meta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:22px 0}
+.meta-item{background:var(--bg2);padding:11px 18px;border-radius:10px;font-size:0.84rem}
+.meta-item strong{color:var(--primary);display:block;font-size:1.2rem}
+.timer{font-size:1.4rem;font-weight:700;color:var(--primary);padding:9px 18px;background:var(--bg2);border-radius:10px;border:2px solid var(--primary)}
+.timer.warning{color:var(--warning);border-color:var(--warning);animation:pulse 1s infinite}
+.timer.danger{color:var(--secondary);border-color:var(--secondary);animation:pulse 0.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.6}}
+.sim-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;gap:12px;flex-wrap:wrap}
+.sim-question-nav{display:flex;flex-wrap:wrap;gap:6px;margin-top:22px}
+.sim-q-btn{width:34px;height:34px;border-radius:7px;border:1.5px solid var(--border);background:var(--bg2);color:var(--text-muted);cursor:pointer;font-size:0.78rem;font-weight:700;transition:all 0.15s}
+.sim-q-btn.answered{border-color:var(--primary);background:rgba(108,99,255,0.2);color:var(--primary)}
+.sim-q-btn.current{border-color:var(--warning);background:rgba(255,152,0,0.2);color:var(--warning)}
+.hidden{display:none!important}
+h1{font-size:1.8rem;margin-bottom:6px}
+h3{color:var(--text-muted);font-weight:400;font-size:0.92rem;margin-bottom:22px}
+code{background:rgba(108,99,255,0.2);padding:2px 5px;border-radius:4px;font-size:0.84em;font-family:monospace;color:#c8c8ff}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-left:6px}
+.badge-sd{background:rgba(108,99,255,0.2);color:var(--primary)}
+.badge-rw{background:rgba(255,107,107,0.2);color:var(--secondary)}
+
+  /* TOPBAR */
+  .topbar{background:#0a0a14;border-bottom:1px solid var(--border);padding:7px 20px;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem}
+  .back-link{color:var(--text-muted);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s;font-weight:600}
+  .back-link:hover{color:var(--primary)}
+  .topbar-author{color:var(--text-muted);font-size:0.75rem}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a href="/resumos/" class="back-link">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Voltar ao site
+  </a>
+  <span class="topbar-author">Samuel Gomes · ADS UNIVALI</span>
+</div>
+<nav class="nav">
+  <span class="nav-title">📚 ADS UNIVALI — Completo</span>
+  <button class="nav-btn active" onclick="showSection('flashcards',this)">🃏 Flashcards</button>
+  <button class="nav-btn" onclick="showSection('quiz',this)">❓ Quiz</button>
+  <button class="nav-btn" onclick="showSection('simulado',this)">🎯 Simulado</button>
+</nav>
+
+<!-- FLASHCARDS -->
+<div id="flashcards" class="section active">
+  <h1>Flashcards</h1>
+  <h3>UA1–UA16 de ambas as disciplinas · Clique para revelar</h3>
+  <div class="filter-bar" id="fc-filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all',this)">Todos</button>
+    <button class="filter-btn" onclick="filterCards('Software Design',this)">Software Design</button>
+    <button class="filter-btn" onclick="filterCards('Responsive Web',this)">Responsive Web</button>
+  </div>
+  <div class="fc-progress">
+    <span id="fc-count">0 / 0 vistos</span>
+    <button class="btn btn-outline" style="padding:7px 14px;font-size:0.8rem" onclick="resetCards()">↺ Resetar</button>
+  </div>
+  <div class="flashcard-grid" id="flashcard-container"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="section">
+  <div id="quiz-filter">
+    <h1>Quiz</h1>
+    <h3>10 questões aleatórias · Precisa de 80% para passar</h3>
+    <div class="filter-bar">
+      <button class="filter-btn active" onclick="startQuiz('all',this)">Todas as disciplinas</button>
+      <button class="filter-btn" onclick="startQuiz('Software Design',this)">Software Design</button>
+      <button class="filter-btn" onclick="startQuiz('Responsive Web',this)">Responsive Web</button>
+    </div>
+  </div>
+  <div id="quiz-active" class="hidden">
+    <div class="quiz-header"><h2 id="quiz-title">Quiz</h2><p>Selecione a alternativa correta</p></div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="quiz-pf" style="width:0%"></div></div>
+    <div class="question-card">
+      <div class="question-num" id="q-num"></div>
+      <div class="question-text" id="q-text"></div>
+      <div class="options" id="q-opts"></div>
+      <div class="explanation" id="q-exp"></div>
+    </div>
+    <div class="quiz-nav">
+      <button class="btn btn-primary hidden" id="next-btn" onclick="nextQuestion()">Próxima →</button>
+      <button class="btn btn-success hidden" id="finish-btn" onclick="finishQuiz()">Ver Resultado ✓</button>
+      <button class="btn btn-outline" onclick="resetQuiz()">← Voltar</button>
+    </div>
+  </div>
+  <div id="quiz-result" class="hidden">
+    <div class="result-card">
+      <div style="font-size:2.8rem">🎓</div>
+      <h2 style="margin:12px 0">Resultado</h2>
+      <div class="result-score" id="r-pct"></div>
+      <p id="r-msg" style="color:var(--text-muted);margin-bottom:18px"></p>
+      <div class="result-breakdown">
+        <div class="result-stat"><div class="num" id="r-ok" style="color:var(--success)">0</div><div class="label">Acertos</div></div>
+        <div class="result-stat"><div class="num" id="r-err" style="color:var(--secondary)">0</div><div class="label">Erros</div></div>
+        <div class="result-stat"><div class="num" id="r-tot">0</div><div class="label">Total</div></div>
+      </div>
+      <div style="display:flex;gap:11px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="resetQuiz()">Tentar de Novo</button>
+        <button class="btn btn-outline" onclick="showSection('simulado',document.querySelector('.nav-btn:nth-child(4)'))">Ir para Simulado →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIMULADO -->
+<div id="simulado" class="section">
+  <div id="sim-intro">
+    <div class="simulado-intro">
+      <div style="font-size:2.8rem">🎯</div>
+      <h2>Simulado Completo — ADS UNIVALI</h2>
+      <p>Prova cronometrada com questões de Software Design (UA1–UA16) e Responsive Web (UA1–UA16).</p>
+      <p style="font-size:0.8rem;margin-top:8px;color:#6c63ff">Material criado por Samuel Gomes · ADS UNIVALI</p>
+      <div class="simulado-meta">
+        <div class="meta-item"><strong>30</strong>Questões</div>
+        <div class="meta-item"><strong>40 min</strong>Tempo limite</div>
+        <div class="meta-item"><strong>60%</strong>Para aprovação</div>
+      </div>
+      <button class="btn btn-primary" style="font-size:1rem;padding:13px 30px" onclick="startSimulado()">Iniciar Simulado →</button>
+    </div>
+  </div>
+  <div id="sim-active" class="hidden">
+    <div class="sim-header">
+      <div><span style="font-size:0.78rem;color:var(--text-muted)">SIMULADO ADS</span><br><span id="sim-qi" style="font-weight:700">Questão 1 / 30</span></div>
+      <div class="timer" id="sim-timer">40:00</div>
+    </div>
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="sim-pf" style="width:0%"></div></div>
+    <div class="question-card">
+      <div class="question-num" id="sim-qnum"></div>
+      <div class="question-text" id="sim-qtext"></div>
+      <div class="options" id="sim-qopts"></div>
+    </div>
+    <div class="sim-question-nav" id="sim-qnav"></div>
+    <div class="quiz-nav" style="margin-top:22px">
+      <button class="btn btn-primary" onclick="simNext()">Próxima →</button>
+      <button class="btn btn-success" onclick="finishSimulado()">Entregar Prova ✓</button>
+    </div>
+  </div>
+  <div id="sim-result" class="hidden">
+    <div class="result-card">
+      <div style="font-size:2.8rem" id="sim-emoji">📊</div>
+      <h2 style="margin:12px 0">Resultado do Simulado</h2>
+      <div class="result-score" id="sim-pct"></div>
+      <p id="sim-rmsg" style="color:var(--text-muted);margin-bottom:6px"></p>
+      <p id="sim-time" style="color:var(--text-muted);font-size:0.83rem;margin-bottom:18px"></p>
+      <div class="result-breakdown">
+        <div class="result-stat"><div class="num" id="sim-ok" style="color:var(--success)">0</div><div class="label">Acertos</div></div>
+        <div class="result-stat"><div class="num" id="sim-err" style="color:var(--secondary)">0</div><div class="label">Erros</div></div>
+        <div class="result-stat"><div class="num" id="sim-blank">0</div><div class="label">Em branco</div></div>
+        <div class="result-stat"><div class="num" id="sim-sd">0</div><div class="label">Soft. Design</div></div>
+        <div class="result-stat"><div class="num" id="sim-rw">0</div><div class="label">Resp. Web</div></div>
+      </div>
+      <div id="sim-review" style="margin-top:22px;text-align:left"></div>
+      <button class="btn btn-primary" style="margin-top:22px" onclick="resetSimulado()">Novo Simulado</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const flashcards = [{"d": "Software Design", "tag": "UA1 · Arquitetura", "q": "O que é arquitetura de software?", "a": "A estrutura fundamental de um sistema — decisões estruturais que definem componentes, como se comunicam e princípios que guiam sua evolução. Invisível ao usuário, mas determina desempenho, custo e segurança."}, {"d": "Software Design", "tag": "UA1 · Arquitetura", "q": "Qual é a 'Primeira Lei da Arquitetura' (Robert C. Martin)?", "a": "'Tudo na arquitetura de software é um trade-off.' Não existe arquitetura perfeita — existem opções otimizadas para contextos específicos."}, {"d": "Software Design", "tag": "UA1 · Arquitetura", "q": "Quando usar arquitetura Monolítica vs Microsserviços?", "a": "Monolítica: times pequenos, MVPs, domínios indefinidos. Microsserviços: demanda diferenciada por módulo, times grandes, cloud-native — mas com alta complexidade operacional."}, {"d": "Software Design", "tag": "UA1 · Arquitetura", "q": "O que é arquitetura Orientada a Eventos?", "a": "Componentes se comunicam de forma assíncrona via broker (Kafka, RabbitMQ). Vantagem: desacoplamento extremo, absorve picos. Desvantagem: rastreabilidade difícil, consistência eventual."}, {"d": "Software Design", "tag": "UA2 · Modelagem", "q": "Quais são as 4 atividades do projeto de software?", "a": "1) Projeto Arquitetural (estrutura geral), 2) Projeto de Interface (entre componentes), 3) Projeto de Componente (lógica interna), 4) Projeto de Banco de Dados (persistência)."}, {"d": "Software Design", "tag": "UA2 · Modelagem", "q": "Qual é a saída (output) da fase de Projeto/Modelagem?", "a": "Diagramas UML, arquitetura técnica e DER (Diagrama Entidade-Relacionamento). Entrada: modelo de análise; saída: especificação técnica para implementação."}, {"d": "Software Design", "tag": "UA3 · Plano de Projeto", "q": "Quais são as 7 seções do Plano de Projeto?", "a": "1) Introdução, 2) Organização do projeto, 3) Análise de riscos, 4) Requisitos de hw/sw, 5) Divisão de trabalho (WBS), 6) Cronograma, 7) Monitoração e relatórios."}, {"d": "Software Design", "tag": "UA3 · Plano de Projeto", "q": "O que é WBS (Work Breakdown Structure)?", "a": "A partição do projeto em atividades, milestones e entregáveis. Permite estimar tempo e alocar pessoas a cada tarefa. É uma das 7 seções do Plano de Projeto."}, {"d": "Software Design", "tag": "UA4 · Projeto", "q": "Quais são as 5 características da arquitetura de software?", "a": "1) Atender stakeholders, 2) Separação de necessidades (vistas), 3) Orientada pela qualidade (RNFs), 4) Estilos recorrentes (padrões), 5) Integridade conceitual."}, {"d": "Software Design", "tag": "UA4 · Projeto", "q": "Quais são os 3 tipos de projeto de software?", "a": "1) Estrutural (alto — visão abstrata do sistema), 2) Alto nível (médio — subsistemas e módulos), 3) Detalhado (baixo — algoritmos e estruturas de dados)."}, {"d": "Software Design", "tag": "UA5 · SOA", "q": "O que é ESB (Enterprise Service Bus)?", "a": "O barramento central do SOA: roteia mensagens, transforma formatos, aplica segurança (XML Encryption) e monitora o tráfego. Elimina a integração ponto-a-ponto (N×(N-1) conexões)."}, {"d": "Software Design", "tag": "UA5 · SOA", "q": "Quais são os dois principais custos de adotar SOA?", "a": "1) Mudança cara nos modelos existentes (redesenho de sistemas legados), 2) Sistemas que já funcionam não justificam o investimento — análise custo-benefício é obrigatória."}, {"d": "Software Design", "tag": "UA6 · Serviços Web", "q": "Quais são as 4 camadas da arquitetura de serviços web?", "a": "1) Cliente (interface/browser), 2) Web/Container Web (recebe HTTP), 3) Negócio/EJB (lógica e orquestração), 4) EIS — Enterprise Information Systems (dados e sistemas legados)."}, {"d": "Software Design", "tag": "UA6 · Serviços Web", "q": "Quais verbos HTTP mapeiam para o padrão HTTPServlet?", "a": "GET → doGet() (leitura), POST → doPost() (criação), PUT → doPut() (atualização completa), DELETE → doDelete() (remoção), HEAD → doHead() (verificar existência)."}, {"d": "Software Design", "tag": "UA7 · Análise Estruturada", "q": "Quais são os 4 componentes de um DFD?", "a": "1) Bolha de Processo (retângulo arredondado — transforma dados), 2) Fluxo de Dados (seta nomeada), 3) Entidade Externa (quadrado duplo — fora do sistema), 4) Depósito de Dados (retângulo aberto — armazenamento)."}, {"d": "Software Design", "tag": "UA7 · Análise Estruturada", "q": "O que é o Dicionário de Dados (DD) e qual símbolo usa?", "a": "Documenta o significado de cada dado no sistema. Símbolos: '=' (é composto por), '+' (e), '()' (opcional), '[|]' (alternativas/ou), '{}' (repete), '@' (chave primária)."}, {"d": "Software Design", "tag": "UA8 · Análise OO", "q": "Quais são os 4 pilares da Orientação a Objetos?", "a": "1) Encapsulamento (ocultar estado interno), 2) Herança (reutilizar e especializar), 3) Polimorfismo (mesmo método, comportamentos diferentes), 4) Abstração (modelar essência, ignorar detalhes irrelevantes)."}, {"d": "Software Design", "tag": "UA8 · Análise OO", "q": "Qual a diferença entre Agregação e Composição em UML?", "a": "Agregação (losango vazio): 'tem um' — parte pode existir sem o todo. Ex: Departamento ◇ Funcionário. Composição (losango cheio): parte depende do todo. Ex: Pedido ◆ ItemPedido."}, {"d": "Software Design", "tag": "UA9 · Prototipação", "q": "Qual a diferença entre protótipo Horizontal e Vertical?", "a": "Horizontal: grande variedade de funções com poucos detalhes em cada (visão ampla). Vertical: poucas funções, cada uma detalhada ao máximo (aprofundamento de módulo crítico)."}, {"d": "Software Design", "tag": "UA9 · Prototipação", "q": "Qual a diferença entre Design Conceitual e Físico?", "a": "Design Conceitual: define o que o sistema faz do ponto de vista do usuário, sem tecnologia. Design Físico: define como será implementado — tecnologias, estrutura de telas, acessibilidade."}, {"d": "Software Design", "tag": "UA10 · Protótipos", "q": "Quais são os 3 níveis de fidelidade de protótipos?", "a": "Baixo: papel/post-its, sem semelhança visual — para validar fluxos. Médio: computadorizado com visual parcial. Alto: materiais reais, banco de homologação — igual ao produto final."}, {"d": "Software Design", "tag": "UA10 · Protótipos", "q": "Qual a diferença entre protótipo Descartável e Evolutivo?", "a": "Descartável: criado para explorar ideias e descartado após — não vira o sistema final. Evolutivo: refinado iterativamente até se tornar o produto de produção."}, {"d": "Software Design", "tag": "UA11 · Diagrama de Classes", "q": "Quais são os símbolos de visibilidade em UML?", "a": "+ público (qualquer lugar), - privado (só dentro da classe), # protegido (classe e subclasses), ~ pacote (classes no mesmo pacote)."}, {"d": "Software Design", "tag": "UA11 · Diagrama de Classes", "q": "O que significam as multiplicidades 0..1, 1, 1..*, e *?", "a": "0..1 = no máximo um (pode ser zero), 1 = exatamente um, 1..* = um ou mais, * = zero ou mais (qualquer quantidade)."}, {"d": "Software Design", "tag": "UA12 · Componentes", "q": "O que é um componente em UML?", "a": "Pedaço reutilizável de funcionalidade do sistema. Possui interfaces fornecidas (o que oferece) e requeridas (o que precisa). Representado por retângulo com estereótipo <<component>>."}, {"d": "Software Design", "tag": "UA12 · Componentes", "q": "O que é Interface Fornecida vs Interface Requerida?", "a": "Fornecida (círculo/bola): operações que o componente implementa e oferece. Requerida (semicírculo/soquete): operações que o componente precisa de outros para funcionar."}, {"d": "Software Design", "tag": "UA13 · Sequência", "q": "Quais são os tipos de mensagens no Diagrama de Sequência?", "a": "Síncrona (seta sólida cheia — aguarda resposta), Assíncrona (seta aberta — não aguarda), Retorno (tracejada aberta), Self (auto-delegação), Criação (tracejada → retângulo), Destruição (seta com X)."}, {"d": "Software Design", "tag": "UA13 · Sequência", "q": "O que são Fragmentos Combinados no Diagrama de Sequência?", "a": "Estruturas de controle: [alt] = if/else, [opt] = if sem else, [loop] = for/while, [par] = paralelo/threads, [break] = retorno antecipado, [neg] = sequência inválida/proibida."}, {"d": "Software Design", "tag": "UA14 · Banco de Dados", "q": "Quais são os 4 tipos de JOIN no SQL?", "a": "INNER JOIN: só com correspondência em ambas as tabelas. LEFT JOIN: todos da esquerda + correspondências. RIGHT JOIN: todos da direita + correspondências. FULL JOIN: todos de ambas."}, {"d": "Software Design", "tag": "UA14 · Banco de Dados", "q": "Qual a diferença entre Chave Primária (PK) e Chave Estrangeira (FK)?", "a": "PK: identificador único de cada registro da tabela — não nulo, não duplicado. FK: referência a uma PK de outra tabela, garantindo integridade referencial (registro não pode ser órfão)."}, {"d": "Software Design", "tag": "UA15 · DER", "q": "Quais são os símbolos básicos do DER?", "a": "Retângulo = Entidade, Elipse = Atributo, Elipse sublinhada = Atributo-chave (PK), Elipse dupla = Atributo multivalorado, Losango = Relacionamento, Retângulo duplo = Entidade fraca."}, {"d": "Software Design", "tag": "UA15 · DER", "q": "Quais são as 3 cardinalidades do DER?", "a": "1:1 (um para um — ex: pessoa ↔ passaporte), 1:N (um para muitos — ex: cliente ↔ pedidos), N:N (muitos para muitos — ex: alunos ↔ disciplinas — gera tabela intermediária)."}, {"d": "Software Design", "tag": "UA16 · MER", "q": "Quais são as constraints essenciais do MER/SQL?", "a": "PRIMARY KEY (unicidade + não nulo), FOREIGN KEY (integridade referencial), NOT NULL (campo obrigatório), UNIQUE (valor único na tabela), DEFAULT (valor padrão), CHECK (validação de regra de negócio)."}, {"d": "Software Design", "tag": "UA16 · MER", "q": "Qual a diferença entre MER e DER?", "a": "MER (Modelo): abstrato/conceitual — independe de tecnologia, comunica com cliente. DER (Diagrama): representação gráfica — lógico/físico, base para implementação do banco."}, {"d": "Responsive Web", "tag": "UA1 · HTML", "q": "O que é DOCTYPE e por que importa?", "a": "<!DOCTYPE html> informa a versão HTML5 ao navegador, ativando o modo correto de renderização. Sem ele, o browser usa 'quirks mode' (compatibilidade legada), causando comportamentos imprevisíveis."}, {"d": "Responsive Web", "tag": "UA1 · HTML", "q": "Qual a estrutura mínima de um documento HTML5?", "a": "<!DOCTYPE html>, <html lang='pt-BR'>, <head> com charset UTF-8 + meta viewport + <title>, e <body>. O charset e o viewport são essenciais para internacionalização e responsividade."}, {"d": "Responsive Web", "tag": "UA2 · HTML5", "q": "Quais são as tags semânticas do HTML5?", "a": "<header> (cabeçalho), <nav> (menu de navegação), <main> (conteúdo principal — único por página), <article> (conteúdo independente), <section> (seção temática), <aside> (lateral), <footer> (rodapé)."}, {"d": "Responsive Web", "tag": "UA2 · HTML5", "q": "Qual a diferença entre <article> e <section>?", "a": "<article>: conteúdo autossuficiente que faz sentido fora do contexto da página (post, notícia). <section>: agrupa conteúdo tematicamente relacionado ao contexto da página."}, {"d": "Responsive Web", "tag": "UA3 · Formulários", "q": "Quais novos tipos de input o HTML5 adicionou?", "a": "email (valida formato), url, number (min/max/step), range (slider), date, time, color (hex picker). Todos com validação nativa no navegador, sem necessidade de JavaScript."}, {"d": "Responsive Web", "tag": "UA3 · Formulários", "q": "Qual a diferença entre GET e POST em formulários HTML?", "a": "GET: dados visíveis na URL — para buscas e filtros (não sensíveis). POST: dados no corpo da requisição — para cadastros, logins e dados sensíveis. POST é mais seguro."}, {"d": "Responsive Web", "tag": "UA4 · CSS", "q": "Quais são as 3 formas de aplicar CSS? Qual é recomendada?", "a": "Externo (<link href='style.css'>) — sempre preferido. Interno (<style> no <head>) — prototipação. Inline (style='...' na tag) — evitar. O externo separa estrutura de apresentação."}, {"d": "Responsive Web", "tag": "UA4 · CSS", "q": "Qual a ordem de especificidade dos seletores CSS?", "a": "Inline style > ID (#) > Classe (.) / pseudoclasse / atributo > Tag. Em valores: inline=1000, ID=100, classe=10, tag=1, universal=0. !important override tudo (usar com cautela)."}, {"d": "Responsive Web", "tag": "UA5 · CSS3", "q": "Quando usar Flexbox vs CSS Grid?", "a": "Flexbox: layouts em 1 dimensão (linha OU coluna) — menus, alinhamento de itens. Grid: layouts em 2 dimensões (linhas E colunas) — layouts de página completos. São complementares."}, {"d": "Responsive Web", "tag": "UA5 · CSS3", "q": "Quais são os pilares do design responsivo?", "a": "1) Meta viewport, 2) Media queries (@media), 3) Unidades relativas (%, rem, vw/vh), 4) Flexbox/Grid para layouts fluidos. Mobile First: começar pelo menor breakpoint."}, {"d": "Responsive Web", "tag": "UA6 · Definição do Sistema", "q": "Quais são as 4 camadas da arquitetura de um sistema web?", "a": "1) Apresentação (interface/browser), 2) Processamento da Aplicação (lógica de negócio no servidor), 3) Gerenciamento de Dados (acesso ao banco), 4) Banco de Dados (persistência)."}, {"d": "Responsive Web", "tag": "UA6 · Definição do Sistema", "q": "Quais são as 5 categorias de sistemas web?", "a": "Site de conteúdo, Registro de dados (entrada do usuário), Portal (agrega fontes), Aplicação orientada à transação (loja virtual, banco), Blog (publicação cronológica)."}, {"d": "Responsive Web", "tag": "UA7 · Design do Site", "q": "Quais são as etapas do processo de design de um site?", "a": "1) Pesquisa/briefing (personas), 2) Arquitetura (sitemap, fluxos), 3) Wireframe (esboço baixa fidelidade), 4) Identidade visual (cores, tipografia), 5) Mockup/Protótipo (Figma), 6) Implementação."}, {"d": "Responsive Web", "tag": "UA7 · Design do Site", "q": "Qual a diferença entre site estático e aplicação web?", "a": "Estático: baixa interatividade, atualização manual (editar arquivo), personalização limitada. Aplicação web: alta interatividade, atualização dinâmica (banco de dados), personalização avançada."}, {"d": "Responsive Web", "tag": "UA8 · JavaScript", "q": "O que é manipulação do DOM com JavaScript?", "a": "O DOM (Document Object Model) é a representação em árvore do HTML. JavaScript acessa e modifica elementos via document.getElementById(), querySelector(), innerHTML, classList, etc."}, {"d": "Responsive Web", "tag": "UA8 · JavaScript", "q": "Quais são os eventos JavaScript mais importantes?", "a": "click, submit (envio de form), input (digitação), change (blur de select), keydown/keyup, mouseover, DOMContentLoaded (DOM pronto). Adicionados com addEventListener()."}, {"d": "Responsive Web", "tag": "UA9 · AJAX e JSON", "q": "O que é AJAX e qual a vantagem?", "a": "Asynchronous JavaScript And XML: atualiza partes da página sem recarregar completamente. Vantagem: UX mais fluida, menos tráfego. Implementado com Fetch API (moderno) ou XMLHttpRequest."}, {"d": "Responsive Web", "tag": "UA9 · AJAX e JSON", "q": "Por que usar JSON.parse() em vez de eval() para converter JSON?", "a": "eval() executa qualquer expressão JS — perigoso, vulnerável a JS Injection. JSON.parse() interpreta SOMENTE JSON válido, rejeitando comandos JS maliciosos. Sempre usar JSON.parse()."}, {"d": "Responsive Web", "tag": "UA10 · PHP Intro", "q": "O que significa XAMPP?", "a": "X = Cross-platform (Win/Linux/Mac), A = Apache (servidor web), M = MySQL/MariaDB (banco de dados), P = PHP (linguagem server-side), P = Perl. Permite rodar servidor web localmente sem internet."}, {"d": "Responsive Web", "tag": "UA10 · PHP Intro", "q": "Quais são as principais superglobais do PHP?", "a": "$_GET (dados via URL), $_POST (corpo da requisição), $_SESSION (sessão do usuário), $_COOKIE, $_FILES (upload), $_SERVER (info do servidor), $_REQUEST ($_GET+$_POST+$_COOKIE)."}, {"d": "Responsive Web", "tag": "UA11 · PHP Estruturas", "q": "Qual a diferença entre == e === em PHP?", "a": "== (igual de valor): compara apenas o valor, com coerção de tipo. === (idêntico): compara valor E tipo sem coerção. Ex: 0 == false (true), mas 0 === false (false)."}, {"d": "Responsive Web", "tag": "UA11 · PHP Estruturas", "q": "Quais são as estruturas de repetição do PHP?", "a": "while (condição antes — pode não executar), do...while (condição depois — executa ao menos uma vez), for (número fixo de iterações). continue pula iteração; break sai do laço."}, {"d": "Responsive Web", "tag": "UA12 · PHP Comandos", "q": "Quais são os tipos de array em PHP?", "a": "Array indexado (índices numéricos), Array associativo (chaves string como 'nome' => 'Ana'), Array multidimensional (arrays dentro de arrays). Percorridos com foreach."}, {"d": "Responsive Web", "tag": "UA12 · PHP Comandos", "q": "O que são funções variádicas e anônimas em PHP?", "a": "Variádicas: recebem número variável de argumentos com ...$args. Anônimas (closures): funções sem nome atribuídas a variáveis ou passadas como argumento. Ex: $soma = function($a, $b) { return $a + $b; };"}, {"d": "Responsive Web", "tag": "UA13 · PHP Formulários", "q": "Quais filtros importantes tem a função filter_var() do PHP?", "a": "FILTER_VALIDATE_EMAIL (valida e-mail), FILTER_VALIDATE_INT (valida inteiro), FILTER_VALIDATE_URL (valida URL), FILTER_SANITIZE_STRING (remove tags HTML). Essencial para segurança."}, {"d": "Responsive Web", "tag": "UA13 · PHP Formulários", "q": "Quais são os atributos essenciais da tag <form> em HTML?", "a": "name (identifica o form), method (get ou post), action (URL do script destino — sem ele, envia para a própria página), submit (botão de envio)."}, {"d": "Responsive Web", "tag": "UA14 · PHP CRUD", "q": "O que é CRUD e qual SQL corresponde a cada operação?", "a": "C = Create → INSERT INTO, R = Read → SELECT, U = Update → UPDATE...SET, D = Delete → DELETE FROM. É o ciclo completo de persistência de dados."}, {"d": "Responsive Web", "tag": "UA14 · PHP CRUD", "q": "O que é PDO e por que usar em vez de mysql_*?", "a": "PDO (PHP Data Objects): abstração de acesso a banco que suporta múltiplos SGBDs (MySQL, PostgreSQL, SQLite). Funções mysql_* foram removidas no PHP 7. PDO usa prepared statements — previne SQL Injection."}, {"d": "Responsive Web", "tag": "UA15 · PHP Frameworks", "q": "O que é o padrão MVC e quais são suas camadas?", "a": "Model-View-Controller: Model (dados, regras de negócio, banco), View (apresentação ao usuário — HTML/PHP), Controller (recebe requisições, coordena Model e View). Separa responsabilidades claramente."}, {"d": "Responsive Web", "tag": "UA15 · PHP Frameworks", "q": "O que é o Composer no ecossistema PHP?", "a": "Gerenciador de dependências PHP (como npm para JavaScript). Permite instalar, atualizar e autocarregar bibliotecas via composer.json. Base de todos os frameworks PHP modernos (Laravel, Symfony)."}, {"d": "Responsive Web", "tag": "UA16 · Design Patterns", "q": "Quais são os 3 Design Patterns abordados na UA16?", "a": "1) MVC (Model-View-Controller) — separação de responsabilidades. 2) Singleton — garante uma única instância de uma classe. 3) Factory — centraliza a criação de objetos, desacoplando quem cria de quem usa."}, {"d": "Responsive Web", "tag": "UA16 · Design Patterns", "q": "Quais são as regras do padrão Singleton?", "a": "1) Construtor privado (ninguém pode instanciar com new), 2) Atributo estático que guarda a instância, 3) Método estático getInstance() que cria a instância apenas se ela ainda não existir."}];
+const allQuestions = [{"d": "Software Design", "text": "Qual estilo arquitetural é mais adequado para um MVP com time pequeno?", "opts": ["Microsserviços com Kubernetes", "SOA com ESB", "Monolítico", "Orientada a Eventos com Kafka"], "c": 2, "exp": "A arquitetura Monolítica é recomendada para times pequenos, MVPs e domínios indefinidos: desenvolvimento simples, fácil de testar, baixa barreira de entrada."}, {"d": "Software Design", "text": "Na arquitetura em Camadas, qual é a ordem correta do topo para a base?", "opts": ["Dados → Negócio → Apresentação", "Apresentação → Negócio → Dados", "Negócio → Apresentação → Dados", "Apresentação → Dados → Negócio"], "c": 1, "exp": "Apresentação (interface com usuário) → Negócio (regras) → Dados (persistência). Cada camada comunica apenas com a imediatamente adjacente."}, {"d": "Software Design", "text": "O que são Requisitos Não Funcionais (RNF) e qual seu papel na arquitetura?", "opts": ["Descrevem funcionalidades do usuário — irrelevantes para arquitetura", "Não descrevem o que o sistema faz, mas como se comporta — determinam a escolha arquitetural", "São apenas requisitos de desempenho isolados", "Definem o banco de dados a ser usado"], "c": 1, "exp": "RNFs (escalabilidade, segurança, manutenibilidade) definem COMO o sistema se comporta e são o fator principal na escolha da arquitetura."}, {"d": "Software Design", "text": "Qual é a principal saída (output) da fase de Projeto/Modelagem no ciclo de vida do software?", "opts": ["Especificação de requisitos do cliente", "Código-fonte da aplicação", "Diagramas UML, arquitetura e DER", "Produto final validado e testado"], "c": 2, "exp": "A fase de Projeto/Modelagem recebe o modelo de análise e produz: Diagramas UML, arquitetura técnica e DER — especificação técnica para a equipe de implementação."}, {"d": "Software Design", "text": "Qual das quatro atividades do projeto define a estrutura geral do sistema?", "opts": ["Projeto de Interface", "Projeto de Componente", "Projeto de Banco de Dados", "Projeto Arquitetural"], "c": 3, "exp": "O Projeto Arquitetural identifica os componentes principais (subsistemas/módulos), seus relacionamentos e como são distribuídos — é a visão estrutural de mais alto nível."}, {"d": "Software Design", "text": "Qual seção do Plano de Projeto contém a partição em atividades e milestones?", "opts": ["Análise de riscos", "Cronograma do projeto", "WBS — Divisão de trabalho", "Monitoração e relatórios"], "c": 2, "exp": "A WBS (Work Breakdown Structure) é a seção que partição o projeto em atividades, milestones e entregáveis, permitindo estimar tempo e alocar pessoas."}, {"d": "Software Design", "text": "Qual das 5 características garante que novas adições ao sistema se alinhem com a visão geral?", "opts": ["Separação de necessidades", "Integridade conceitual", "Orientada pela qualidade", "Atender stakeholders"], "c": 1, "exp": "A Integridade Conceitual garante que a arquitetura mantém uma visão geral coerente e que todas as adições estejam alinhadas com ela — papel do arquiteto de software."}, {"d": "Software Design", "text": "O que o ESB (Enterprise Service Bus) resolve no SOA?", "opts": ["Autenticação de usuários no sistema", "A integração ponto-a-ponto onde cada serviço se conectaria a todos os outros", "O armazenamento centralizado de dados", "A transformação de HTML em XML"], "c": 1, "exp": "Sem ESB, N serviços precisariam de N×(N-1) conexões diretas. O ESB centraliza: todos falam com o barramento, que roteia, transforma e monitora as mensagens."}, {"d": "Software Design", "text": "Em qual era/paradigma o SOA surgiu?", "opts": ["Até anos 70 — programação estruturada", "Anos 80-90 — orientação a objetos", "Anos 2000 — para integrar sistemas heterogêneos", "Anos 2010+ — cloud native"], "c": 2, "exp": "O SOA surgiu nos anos 2000 para resolver o problema de integrar sistemas heterogêneos e expor lógica de negócio como serviço reutilizável."}, {"d": "Software Design", "text": "Na arquitetura de serviços web em 4 camadas, qual camada abriga a lógica de negócio?", "opts": ["Camada Cliente", "Camada Web (Container Web)", "Camada de Negócio (EJB)", "Camada EIS"], "c": 2, "exp": "A Camada de Negócio (EJB/Business Tier) é responsável pela lógica de negócio, orquestração de serviços e transações. A camada Web recebe o HTTP e delega para ela."}, {"d": "Software Design", "text": "Qual método HTTPServlet é mapeado para o verbo HTTP DELETE?", "opts": ["doGet()", "doPost()", "doPut()", "doDelete()"], "c": 3, "exp": "Mapeamento REST-Servlet: GET→doGet (leitura), POST→doPost (criação), PUT→doPut (atualização), DELETE→doDelete (remoção), HEAD→doHead (verificar existência)."}, {"d": "Software Design", "text": "No DFD, qual elemento representa uma fonte ou destino de dados FORA do sistema?", "opts": ["Bolha de Processo", "Fluxo de Dados", "Entidade Externa", "Depósito de Dados"], "c": 2, "exp": "A Entidade Externa (quadrado duplo) representa fontes ou destinos de dados fora do sistema (usuários, outros sistemas). Não é processada pelo sistema — apenas interage com ele."}, {"d": "Software Design", "text": "No Dicionário de Dados, o símbolo [ | ] representa:", "opts": ["Concatenação de campos", "Componente opcional", "Alternativas (OU entre opções)", "Campo que se repete"], "c": 2, "exp": "[ | ] representa alternativas/seleção: o campo pode assumir um dos valores listados. Ex: tipo = [físico | jurídico]. Já () = opcional, {} = repete, + = e/concatenação."}, {"d": "Software Design", "text": "O que representa uma Composição (losango cheio) no Diagrama de Classes UML?", "opts": ["Herança — 'é um tipo de'", "Agregação — parte pode existir sem o todo", "Composição — parte depende totalmente do todo para existir", "Realização de interface"], "c": 2, "exp": "Composição (losango cheio ◆): parte não pode existir sem o todo. Ex: ItemPedido não existe sem Pedido. Já Agregação (losango vazio ◇): parte pode existir independente (Funcionário sem Departamento)."}, {"d": "Software Design", "text": "Qual dos 4 pilares OO permite que o mesmo método tenha comportamentos diferentes em subclasses?", "opts": ["Encapsulamento", "Herança", "Polimorfismo", "Abstração"], "c": 2, "exp": "Polimorfismo: o mesmo método (ex: calcularSalario()) tem comportamentos diferentes em cada subclasse (FuncionarioCLT, FuncionarioPJ). Permite tratar objetos diferentes de forma uniforme."}, {"d": "Software Design", "text": "Qual é a principal diferença entre protótipo Horizontal e Vertical?", "opts": ["Horizontal tem mais detalhes por função; Vertical tem mais funções", "Horizontal tem grande variedade de funções com poucos detalhes; Vertical tem poucas funções com máximo detalhe", "Horizontal é em papel; Vertical é digital", "Horizontal é descartável; Vertical é evolutivo"], "c": 1, "exp": "Horizontal: breadth — muitas funções, poucos detalhes (visão ampla do sistema). Vertical: depth — poucas funções, máximo detalhamento (aprofundamento de módulo crítico)."}, {"d": "Software Design", "text": "Qual nível de prototipação usa os mesmos materiais do produto final e banco de homologação?", "opts": ["Baixo nível", "Médio nível", "Alto nível", "Ultra fidelidade"], "c": 2, "exp": "Alto nível: usa os mesmos materiais do produto final com banco de dados de homologação — semelhança idêntica ao produto real. Baixo = papel; Médio = computadorizado parcial."}, {"d": "Software Design", "text": "Qual tipo de protótipo é criado para explorar ideias e NÃO se torna o sistema final?", "opts": ["Evolutivo", "Vertical", "Descartável", "De alto nível"], "c": 2, "exp": "Protótipo Descartável: criado para explorar e validar ideias rapidamente, descartado após aprendizagem. Evolutivo: refinado iterativamente até virar o produto de produção."}, {"d": "Software Design", "text": "Qual símbolo UML representa visibilidade 'private' em um Diagrama de Classes?", "opts": ["+ (mais)", "- (menos/hífen)", "# (cerquilha/hash)", "~ (til)"], "c": 1, "exp": "Visibilidade em UML: + = public (qualquer lugar), - = private (só na própria classe), # = protected (classe e subclasses), ~ = package (mesmo pacote)."}, {"d": "Software Design", "text": "O que significa a multiplicidade '1..*' em um Diagrama de Classes?", "opts": ["No máximo um", "Exatamente um", "Um ou mais (pelo menos um)", "Zero ou mais"], "c": 2, "exp": "1..* = um ou mais — pelo menos um é obrigatório. 0..1 = no máximo um. 1 = exatamente um. * ou 0..* = zero ou mais (qualquer quantidade)."}, {"d": "Software Design", "text": "O que é uma Interface Requerida em um Diagrama de Componentes?", "opts": ["Operações que o componente implementa e oferece a outros", "Operações que o componente precisa de outros para funcionar", "Dependência entre dois componentes do mesmo pacote", "Uma porta de comunicação entre o sistema e o usuário"], "c": 1, "exp": "Interface Requerida (semicírculo/soquete): operações que o componente PRECISA de outros para funcionar. Interface Fornecida (círculo/bola): operações que o componente IMPLEMENTA e oferece."}, {"d": "Software Design", "text": "No Diagrama de Sequência, o fragmento [alt] equivale a qual estrutura de código?", "opts": ["for / while (laço)", "if / else if / else (condicional)", "try / catch (tratamento de erro)", "break / return (saída antecipada)"], "c": 1, "exp": "[alt] = alternativa — if/else if/else. [loop] = for/while. [opt] = if sem else. [break] = saída antecipada. [par] = processamento paralelo/threads."}, {"d": "Software Design", "text": "Qual tipo de mensagem no Diagrama de Sequência NÃO aguarda resposta antes de continuar?", "opts": ["Síncrona", "Assíncrona", "Retorno", "Self (auto-delegação)"], "c": 1, "exp": "Mensagem Assíncrona (seta aberta): o objeto continua processando sem aguardar resposta. Síncrona (seta sólida cheia): bloqueia aguardando retorno antes de prosseguir."}, {"d": "Software Design", "text": "Qual tipo de JOIN retorna APENAS registros com correspondência em AMBAS as tabelas?", "opts": ["LEFT JOIN", "RIGHT JOIN", "FULL JOIN", "INNER JOIN"], "c": 3, "exp": "INNER JOIN: só retorna registros que têm correspondência em ambas as tabelas. LEFT/RIGHT JOIN incluem todos de um lado + null do outro. FULL JOIN inclui todos de ambos."}, {"d": "Software Design", "text": "Qual a função da FOREIGN KEY em um banco relacional?", "opts": ["Identificar unicamente cada registro da tabela", "Garantir integridade referencial — impede registros órfãos", "Acelerar as consultas SELECT", "Definir o campo obrigatório da tabela"], "c": 1, "exp": "FOREIGN KEY garante integridade referencial: um registro filho não pode referenciar uma PK que não existe na tabela pai. Impede 'registros órfãos'."}, {"d": "Software Design", "text": "No DER, qual símbolo representa um Relacionamento entre entidades?", "opts": ["Retângulo", "Elipse", "Losango", "Retângulo duplo"], "c": 2, "exp": "Losango = Relacionamento (associação entre entidades). Retângulo = Entidade. Elipse = Atributo. Elipse sublinhada = Atributo-chave (PK). Retângulo duplo = Entidade fraca."}, {"d": "Software Design", "text": "Uma relação N:N (muitos para muitos) no DER exige o quê na implementação?", "opts": ["Uma FK em uma das tabelas", "Duas FKs na tabela de maior cardinalidade", "Uma tabela intermediária (associativa) com as FKs de ambas", "Apenas um índice composto nas duas tabelas"], "c": 2, "exp": "N:N gera uma tabela intermediária/associativa com as FKs de ambas as entidades envolvidas. Ex: Alunos ↔ Disciplinas → tabela Matriculas(id_aluno, id_disciplina)."}, {"d": "Software Design", "text": "Qual constraint SQL garante que um campo nunca pode ser nulo?", "opts": ["UNIQUE", "DEFAULT", "NOT NULL", "CHECK"], "c": 2, "exp": "NOT NULL garante que o campo é obrigatório. UNIQUE = valor único na tabela. DEFAULT = valor padrão quando não informado. CHECK = valida regra de negócio (ex: preco > 0)."}, {"d": "Software Design", "text": "Qual tipo de dado SQL deve ser usado para valores monetários? Por quê?", "opts": ["FLOAT — precisão de ponto flutuante", "INT — arredonda automaticamente", "DECIMAL(p,s) — precisão exata sem erros de arredondamento", "VARCHAR — flexibilidade de formato"], "c": 2, "exp": "DECIMAL(p,s) garante precisão exata. FLOAT e DOUBLE usam ponto flutuante binário, que pode gerar erros de arredondamento em valores monetários (ex: 0.1 + 0.2 ≠ 0.3 em float)."}, {"d": "Responsive Web", "text": "Qual é o propósito do <!DOCTYPE html>?", "opts": ["Definir o idioma da página", "Informar ao navegador que o documento usa HTML5, ativando o modo de renderização correto", "Importar estilos CSS externos automaticamente", "Declarar o título da página"], "c": 1, "exp": "<!DOCTYPE html> ativa o modo de renderização HTML5. Sem ele, o browser usa 'quirks mode' — compatibilidade legada que pode causar comportamentos imprevisíveis no layout."}, {"d": "Responsive Web", "text": "Qual tag HTML5 é mais adequada para envolver um artigo de blog que faz sentido fora do contexto do site?", "opts": ["<section>", "<div>", "<article>", "<aside>"], "c": 2, "exp": "<article> é para conteúdo autossuficiente que pode existir fora do contexto da página. <section> é para seções temáticas relacionadas ao contexto. <aside> é para conteúdo lateral/complementar."}, {"d": "Responsive Web", "text": "Qual tag semântica deve ser usada APENAS UMA VEZ por página?", "opts": ["<header>", "<section>", "<main>", "<article>"], "c": 2, "exp": "<main> representa o conteúdo principal da página e deve aparecer apenas uma vez. <header>, <footer> e <section> podem aparecer múltiplas vezes (em diferentes seções/articles)."}, {"d": "Responsive Web", "text": "Qual input type HTML5 valida automaticamente o formato name@domain?", "opts": ["type='text' com atributo pattern", "type='email'", "type='url'", "type='login'"], "c": 1, "exp": "type='email' valida automaticamente o formato de e-mail sem JavaScript. HTML5 adicionou: email, url, number, range, date, time, color — todos com validação nativa."}, {"d": "Responsive Web", "text": "Qual método de formulário deve ser usado para enviar dados sensíveis como senhas?", "opts": ["GET — mais eficiente", "POST — dados no corpo da requisição, não visíveis na URL", "PUT — padrão REST", "SEND — método nativo HTML5"], "c": 1, "exp": "POST envia dados no corpo da requisição — não visíveis na URL. GET expõe dados na URL (visíveis, armazenados em logs/histórico). Para login/cadastro/dados sensíveis: sempre POST."}, {"d": "Responsive Web", "text": "Qual é a forma RECOMENDADA de aplicar CSS em um projeto profissional?", "opts": ["CSS inline (style='...' na tag)", "Tag <style> dentro do <body>", "Arquivo externo linkado com <link rel='stylesheet'>", "Atributo class sem arquivo CSS"], "c": 2, "exp": "Arquivo externo é o padrão profissional: separa estrutura (HTML) de apresentação (CSS), permite reutilização em múltiplas páginas e facilita manutenção em equipe."}, {"d": "Responsive Web", "text": "Qual seletor CSS tem MAIOR especificidade?", "opts": ["Seletor de tag (p, div)", "Seletor de classe (.menu)", "Seletor de ID (#cabecalho)", "Seletor universal (*)"], "c": 2, "exp": "Hierarquia: inline(1000) > ID(100) > classe(10) > tag(1) > universal(0). O seletor de ID (#) tem especificidade 100, muito maior que classe(10) ou tag(1)."}, {"d": "Responsive Web", "text": "Qual propriedade CSS controla o alinhamento no eixo PRINCIPAL do Flexbox?", "opts": ["align-items", "justify-content", "flex-direction", "align-content"], "c": 1, "exp": "justify-content controla o eixo principal (horizontal por padrão). align-items controla o eixo cruzado (vertical). Valores: flex-start, flex-end, center, space-between, space-around."}, {"d": "Responsive Web", "text": "O que faz grid-template-columns: repeat(3, 1fr) no CSS Grid?", "opts": ["Cria 1 coluna que repete 3 vezes", "Cria 3 colunas de tamanho igual dividindo o espaço disponível", "Define gap de 3fr entre colunas", "Cria 3 linhas de altura igual"], "c": 1, "exp": "repeat(3, 1fr) cria 3 colunas iguais. '1fr' = 1 fração do espaço disponível. Com 900px e gap zero, cada coluna tem 300px. 'fr' distribui proporcionalmente o espaço livre."}, {"d": "Responsive Web", "text": "Qual das categorias de sistemas web processa operações com feedback imediato (ex: loja virtual)?", "opts": ["Site de conteúdo", "Blog", "Portal", "Aplicação orientada à transação"], "c": 3, "exp": "Aplicação orientada à transação: processa operações com feedback imediato — lojas virtuais, sistemas bancários online, reservas. Alta interatividade e personalização avançada."}, {"d": "Responsive Web", "text": "Qual entregável do processo de design representa o esboço de BAIXA fidelidade da estrutura?", "opts": ["Mockup no Figma", "Sitemap", "Wireframe", "Protótipo navegável"], "c": 2, "exp": "Wireframe é o esboço de baixa fidelidade — mostra estrutura e hierarquia sem visual final. Mockup = visual completo (alta fidelidade). Sitemap = mapa de páginas/hierarquia."}, {"d": "Responsive Web", "text": "Qual evento JavaScript é disparado quando o DOM está completamente carregado?", "opts": ["window.onload", "DOMContentLoaded", "document.ready", "pageLoaded"], "c": 1, "exp": "DOMContentLoaded dispara quando o DOM está pronto, sem esperar imagens e estilos externos. window.onload espera TODOS os recursos (imagens, CSS). DOMContentLoaded é mais rápido."}, {"d": "Responsive Web", "text": "Qual método JavaScript seleciona um elemento pelo atributo ID?", "opts": ["document.querySelector('#id')", "document.getElementById('id')", "document.getElement('id')", "Ambas A e B estão corretas"], "c": 3, "exp": "Ambas funcionam: getElementById('id') retorna o elemento diretamente. querySelector('#id') usa seletor CSS. getElementById é mais eficiente para IDs; querySelector é mais flexível (aceita qualquer seletor CSS)."}, {"d": "Responsive Web", "text": "Por que JSON.parse() é mais seguro que eval() para converter JSON?", "opts": ["JSON.parse() é mais rápido", "eval() só aceita JSON válido", "JSON.parse() interpreta apenas JSON, rejeitando código JS malicioso; eval() executa qualquer expressão", "Não há diferença de segurança"], "c": 2, "exp": "eval() executa qualquer código JavaScript — vulnerável a JS Injection. JSON.parse() aceita SOMENTE JSON válido, rejeitando comandos JS. Para dados externos: sempre JSON.parse()."}, {"d": "Responsive Web", "text": "Qual readyState do XMLHttpRequest indica que a resposta foi COMPLETAMENTE recebida?", "opts": ["0 — não inicializado", "2 — carregado", "3 — interativo", "4 — completo"], "c": 3, "exp": "readyState 4 = Completo: resposta totalmente recebida. 0=não iniciado, 1=open() chamado, 2=send() chamado/headers disponíveis, 3=recebendo parcialmente, 4=resposta completa."}, {"d": "Responsive Web", "text": "O que significa o 'M' no acrônimo XAMPP?", "opts": ["Mac — suporte ao macOS", "Module — módulo de extensão", "MySQL/MariaDB — banco de dados", "Media — suporte a multimídia"], "c": 2, "exp": "XAMPP: X=Cross-platform, A=Apache (servidor web), M=MySQL/MariaDB (banco de dados), P=PHP, P=Perl. O XAMPP é o ambiente de desenvolvimento local mais usado para PHP."}, {"d": "Responsive Web", "text": "Qual superglobal PHP contém os dados enviados via URL (query string)?", "opts": ["$_POST", "$_SESSION", "$_GET", "$_SERVER"], "c": 2, "exp": "$_GET: dados na URL (?nome=Ana&email=...). $_POST: dados no corpo da requisição (formulários POST). $_SESSION: dados de sessão do usuário. $_SERVER: informações do servidor."}, {"d": "Responsive Web", "text": "Em PHP, qual é o resultado de: 0 == false?", "opts": ["false — tipos diferentes", "true — coerção de tipo: 0 e false são iguais em valor", "Erro de tipo", "true apenas com ==="], "c": 1, "exp": "0 == false retorna TRUE porque == faz coerção de tipo (0 é convertido para false). Já 0 === false retorna FALSE porque === compara tipo também (int ≠ boolean)."}, {"d": "Responsive Web", "text": "Qual estrutura de repetição PHP garante que o bloco executa ao menos uma vez?", "opts": ["while", "for", "do...while", "foreach"], "c": 2, "exp": "do...while: o bloco executa primeiro, a condição é verificada depois — garante ao menos uma execução. while verifica a condição ANTES, podendo não executar se falsa de início."}, {"d": "Responsive Web", "text": "Qual é a estrutura correta de um array associativo em PHP?", "opts": ["$arr = [0, 1, 2]", "$arr = array('nome' => 'Ana', 'idade' => 25)", "$arr = {nome: 'Ana', idade: 25}", "$arr = ['Ana', 25]"], "c": 1, "exp": "Array associativo PHP usa a sintaxe chave => valor: array('nome' => 'Ana') ou ['nome' => 'Ana']. Diferente de array indexado ([0,1,2]) e de objeto JS ({})."}, {"d": "Responsive Web", "text": "Qual função PHP valida e sanitiza dados de formulário contra injeções?", "opts": ["htmlspecialchars()", "validate_input()", "filter_var()", "check_form()"], "c": 2, "exp": "filter_var() com filtros como FILTER_VALIDATE_EMAIL, FILTER_VALIDATE_INT e FILTER_SANITIZE_STRING valida e sanitiza dados. É essencial para segurança em formulários PHP."}, {"d": "Responsive Web", "text": "Na estrutura de arquivos de um módulo CRUD PHP, qual arquivo processa o INSERT?", "opts": ["index.php", "inicia.php", "form_inclui.php", "inclui.php"], "c": 3, "exp": "inclui.php: processa o INSERT, valida campos e redireciona após sucesso. form_inclui.php: exibe o formulário HTML. index.php: lista registros (READ). inicia.php: configurações."}, {"d": "Responsive Web", "text": "Por que usar PDO em vez das funções mysql_* para conectar ao banco em PHP?", "opts": ["PDO é mais lento mas mais simples", "mysql_* foram removidas no PHP 7 e PDO usa prepared statements (previne SQL Injection)", "PDO só funciona com MySQL", "Não há diferença prática"], "c": 1, "exp": "mysql_* foram removidas no PHP 7+. PDO suporta múltiplos SGBDs e usa prepared statements com ? ou :param, prevenindo SQL Injection — fundamental para segurança."}, {"d": "Responsive Web", "text": "No padrão MVC, qual camada recebe as requisições do usuário e coordena Model e View?", "opts": ["Model", "View", "Controller", "Router"], "c": 2, "exp": "Controller: recebe requisições, decide qual Model chamar para dados e qual View renderizar. Model: dados e regras de negócio. View: apresentação (HTML/template)."}, {"d": "Responsive Web", "text": "O que é o Composer no ecossistema PHP?", "opts": ["Um editor de código PHP", "O servidor web embutido do PHP", "O gerenciador de dependências PHP (como npm para JavaScript)", "Um framework PHP completo"], "c": 2, "exp": "Composer é o gerenciador de dependências PHP. Instala, atualiza e autocarrega bibliotecas via composer.json/composer.lock. Base de frameworks modernos como Laravel e Symfony."}, {"d": "Responsive Web", "text": "Qual Design Pattern garante que uma classe tenha apenas UMA instância em todo o sistema?", "opts": ["Factory", "MVC", "Singleton", "Observer"], "c": 2, "exp": "Singleton: construtor privado + atributo estático + getInstance() que cria a instância apenas se ainda não existir. Usado para conexão com banco, logger, config — recursos compartilhados."}, {"d": "Responsive Web", "text": "Qual é o papel do padrão Factory?", "opts": ["Garantir uma única instância de classe", "Separar a interface da implementação", "Centralizar a criação de objetos, desacoplando quem cria de quem usa", "Definir a estrutura MVC da aplicação"], "c": 2, "exp": "Factory centraliza a criação de objetos: em vez de new Classe() espalhado no código, uma fábrica decide qual subclasse instanciar. Desacopla quem usa de quem cria, facilitando extensão."}];
+
+// ─── FLASHCARDS ───────────────────────────────────────────────────────────
+let seenCards=new Set(),fcFilter='all';
+
+function getFC(){return fcFilter==='all'?flashcards:flashcards.filter(c=>c.d===fcFilter)}
+
+function renderFlashcards(){
+  const c=document.getElementById('flashcard-container');
+  const cards=getFC();c.innerHTML='';
+  cards.forEach((fc,i)=>{
+    const d=document.createElement('div');d.className='flashcard-wrap';d.dataset.idx=i;
+    d.innerHTML=`<div class="flashcard-inner">
+      <div class="flashcard-front"><div class="flashcard-tag">${escHtml(fc.tag)}</div><div class="flashcard-question">${escHtml(fc.q)}</div><div class="flashcard-hint">clique ↺</div></div>
+      <div class="flashcard-back"><div class="flashcard-tag">${escHtml(fc.tag)}</div><div class="flashcard-answer">${escHtml(fc.a)}</div></div>
+    </div>`;
+    d.addEventListener('click',()=>{d.classList.toggle('flipped');seenCards.add(i);updateFCP(cards.length)});
+    c.appendChild(d);
+  });
+  updateFCP(cards.length);
+}
+
+function updateFCP(t){document.getElementById('fc-count').textContent=`${seenCards.size} / ${t} vistos`}
+
+function filterCards(f,btn){
+  fcFilter=f;seenCards.clear();
+  document.querySelectorAll('#fc-filter-bar .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');renderFlashcards();
+}
+
+function resetCards(){
+  seenCards.clear();
+  document.querySelectorAll('.flashcard-wrap').forEach(c=>c.classList.remove('flipped'));
+  updateFCP(getFC().length);
+}
+
+// ─── QUIZ ─────────────────────────────────────────────────────────────────
+let qqs=[],qCur=0,qAns=false,qScore=0;
+
+function startQuiz(filter,btn){
+  document.querySelectorAll('#quiz-filter .filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  qqs=filter==='all'?[...allQuestions]:allQuestions.filter(q=>q.d===filter);
+  qqs=shuffle(qqs).slice(0,10);qCur=0;qScore=0;qAns=false;
+  document.getElementById('quiz-filter').style.display='none';
+  document.getElementById('quiz-active').classList.remove('hidden');
+  document.getElementById('quiz-result').classList.add('hidden');
+  const titles={'all':'Quiz Geral','Software Design':'Quiz · Software Design','Responsive Web':'Quiz · Responsive Web'};
+  document.getElementById('quiz-title').textContent=titles[filter];
+  showQQ();
+}
+
+function showQQ(){
+  const q=qqs[qCur],t=qqs.length;
+  document.getElementById('q-num').textContent=`Questão ${qCur+1} de ${t} · ${q.d}`;
+  document.getElementById('q-text').textContent=q.text;
+  document.getElementById('quiz-pf').style.width=`${(qCur/t)*100}%`;
+  const L=['A','B','C','D'],c=document.getElementById('q-opts');c.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const d=document.createElement('div');d.className='option';
+    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${escHtml(o)}</span>`;
+    d.addEventListener('click',()=>answerQ(i,d));c.appendChild(d);
+  });
+  document.getElementById('q-exp').className='explanation';
+  document.getElementById('next-btn').classList.add('hidden');
+  document.getElementById('finish-btn').classList.add('hidden');
+  qAns=false;
+}
+
+function answerQ(idx,el){
+  if(qAns)return;qAns=true;
+  const q=qqs[qCur];
+  document.querySelectorAll('#q-opts .option').forEach(o=>o.classList.add('disabled'));
+  document.querySelectorAll('#q-opts .option')[q.c].classList.add('correct');
+  if(idx!==q.c)el.classList.add('wrong');else qScore++;
+  const e=document.getElementById('q-exp');e.textContent='💡 '+q.exp;e.className='explanation show';
+  if(qCur<qqs.length-1)document.getElementById('next-btn').classList.remove('hidden');
+  else document.getElementById('finish-btn').classList.remove('hidden');
+}
+
+function nextQuestion(){qCur++;showQQ()}
+
+function finishQuiz(){
+  document.getElementById('quiz-active').classList.add('hidden');
+  document.getElementById('quiz-result').classList.remove('hidden');
+  const t=qqs.length,p=Math.round((qScore/t)*100);
+  const e=document.getElementById('r-pct');e.textContent=p+'%';e.className='result-score '+(p>=80?'pass':'fail');
+  document.getElementById('r-msg').textContent=p>=80?'🎉 Aprovado! Você atingiu 80% ou mais.':'📚 Continue estudando. Precisa de 80% para avançar.';
+  document.getElementById('r-ok').textContent=qScore;
+  document.getElementById('r-err').textContent=t-qScore;
+  document.getElementById('r-tot').textContent=t;
+}
+
+function resetQuiz(){
+  document.getElementById('quiz-active').classList.add('hidden');
+  document.getElementById('quiz-result').classList.add('hidden');
+  document.getElementById('quiz-filter').style.display='';
+}
+
+// ─── SIMULADO ─────────────────────────────────────────────────────────────
+let simQs=[],simCur=0,simAnss=[],simTimer=null,simLeft=40*60,simStart=null;
+
+function startSimulado(){
+  simQs=shuffle([...allQuestions]).slice(0,30);
+  simCur=0;simAnss=new Array(30).fill(null);simLeft=40*60;simStart=Date.now();
+  document.getElementById('sim-intro').classList.add('hidden');
+  document.getElementById('sim-active').classList.remove('hidden');
+  document.getElementById('sim-result').classList.add('hidden');
+  renderSimNav();showSimQ();
+  simTimer=setInterval(tickSim,1000);
+}
+
+function tickSim(){
+  simLeft--;updateSimTimer();
+  if(simLeft<=0){clearInterval(simTimer);finishSimulado()}
+}
+
+function updateSimTimer(){
+  const m=Math.floor(simLeft/60).toString().padStart(2,'0'),s=(simLeft%60).toString().padStart(2,'0');
+  const e=document.getElementById('sim-timer');e.textContent=`${m}:${s}`;
+  e.className='timer'+(simLeft<300?' danger':simLeft<600?' warning':'');
+}
+
+function showSimQ(){
+  const q=simQs[simCur];
+  document.getElementById('sim-qi').textContent=`Questão ${simCur+1} / ${simQs.length}`;
+  document.getElementById('sim-qnum').textContent=q.d;
+  document.getElementById('sim-qtext').textContent=q.text;
+  document.getElementById('sim-pf').style.width=`${((simCur+1)/simQs.length)*100}%`;
+  const L=['A','B','C','D'],c=document.getElementById('sim-qopts');c.innerHTML='';
+  q.opts.forEach((o,i)=>{
+    const d=document.createElement('div');
+    d.className='option'+(simAnss[simCur]===i?(i===q.c?' correct':' wrong'):'');
+    if(simAnss[simCur]!==null)d.classList.add('disabled');
+    d.innerHTML=`<div class="option-letter">${L[i]}</div><span>${escHtml(o)}</span>`;
+    d.addEventListener('click',()=>{if(simAnss[simCur]!==null)return;simAnss[simCur]=i;renderSimNav();showSimQ()});
+    c.appendChild(d);
+  });
+  renderSimNav();
+}
+
+function renderSimNav(){
+  const nav=document.getElementById('sim-qnav');nav.innerHTML='';
+  simQs.forEach((_,i)=>{
+    const b=document.createElement('button');
+    b.className='sim-q-btn'+(simAnss[i]!==null?' answered':'')+(i===simCur?' current':'');
+    b.textContent=i+1;b.addEventListener('click',()=>{simCur=i;showSimQ()});nav.appendChild(b);
+  });
+}
+
+function simNext(){if(simCur<simQs.length-1){simCur++;showSimQ()}}
+
+function finishSimulado(){
+  clearInterval(simTimer);
+  const elapsed=Math.round((Date.now()-simStart)/1000);
+  const mm=Math.floor(elapsed/60).toString().padStart(2,'0'),ss=(elapsed%60).toString().padStart(2,'0');
+  document.getElementById('sim-active').classList.add('hidden');
+  document.getElementById('sim-result').classList.remove('hidden');
+  let ok=0,err=0,blank=0,sdOk=0,rwOk=0;
+  simQs.forEach((q,i)=>{
+    if(simAnss[i]===null)blank++;
+    else if(simAnss[i]===q.c){ok++;if(q.d==='Software Design')sdOk++;else rwOk++;}
+    else err++;
+  });
+  const p=Math.round((ok/simQs.length)*100);
+  const e=document.getElementById('sim-pct');e.textContent=p+'%';e.className='result-score '+(p>=60?'pass':'fail');
+  document.getElementById('sim-emoji').textContent=p>=80?'🏆':p>=60?'✅':'📚';
+  document.getElementById('sim-rmsg').textContent=p>=80?'Excelente! Acima de 80%.':p>=60?'Aprovado! Atingiu 60%.':'Reprovado. Revise e tente novamente.';
+  document.getElementById('sim-time').textContent=`⏱ Tempo: ${mm}:${ss}`;
+  document.getElementById('sim-ok').textContent=ok;
+  document.getElementById('sim-err').textContent=err;
+  document.getElementById('sim-blank').textContent=blank;
+  document.getElementById('sim-sd').textContent=sdOk+' ✓';
+  document.getElementById('sim-rw').textContent=rwOk+' ✓';
+  const rev=document.getElementById('sim-review');
+  rev.innerHTML='<div style="font-size:0.88rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:14px">Revisão Completa</div>';
+  simQs.forEach((q,i)=>{
+    const a=simAnss[i],ok2=a===q.c,blank2=a===null;
+    const icon=blank2?'⬜':ok2?'✅':'❌';
+    const d=document.createElement('div');
+    d.style.cssText='margin-bottom:11px;padding:13px;border-radius:9px;background:var(--bg2);border:1.5px solid var(--border);font-size:0.83rem;';
+    d.innerHTML=`<div style="font-weight:700;margin-bottom:5px">${icon} Q${i+1} <span style="color:var(--text-muted);font-weight:400">· ${q.d}</span></div>
+      <div style="line-height:1.5;margin-bottom:5px">${escHtml(q.text)}</div>
+      ${!blank2&&!ok2?`<div style="color:var(--secondary);margin-bottom:3px">❌ Sua resposta: ${escHtml(q.opts[a])}</div>`:''}
+      <div style="color:var(--success)">✅ Correta: ${escHtml(q.opts[q.c])}</div>
+      <div style="color:#9090b0;margin-top:5px;font-style:italic">💡 ${escHtml(q.exp)}</div>`;
+    rev.appendChild(d);
+  });
+}
+
+function resetSimulado(){
+  clearInterval(simTimer);
+  document.getElementById('sim-intro').classList.remove('hidden');
+  document.getElementById('sim-active').classList.add('hidden');
+  document.getElementById('sim-result').classList.add('hidden');
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn){document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active')}
+}
+
+function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b}
+
+// Init
+renderFlashcards();
+</script>
+</body>
+</html>
