@@ -13,8 +13,8 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | 🟡 16 UAs em andamento |
-| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | 🟡 16 UAs em andamento |
+| **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
+| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
 
 ### Trimestres anteriores
 
