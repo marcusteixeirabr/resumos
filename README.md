@@ -6,6 +6,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 **Site publicado:** https://marcusteixeirabr.github.io/resumos
 
 **Flashcards, Quiz & Simulado:** https://samuelgomezdev.github.io/resumos/estudo_interativo.html
+
 ---
 
 ## Disciplinas
