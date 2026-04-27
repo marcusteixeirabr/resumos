@@ -301,7 +301,8 @@ header nav a:hover { color: var(--text); }
 .icon-blue   { background: rgba(88, 166, 255, 0.12);  color: var(--accent); }
 .icon-green  { background: rgba(63, 185, 80, 0.12);   color: var(--accent2); }
 .icon-purple { background: rgba(210, 168, 255, 0.12); color: var(--accent4); }
-.icon-orange { background: rgba(247, 129, 102, 0.12); color: var(--accent3); }
+.icon-orange  { background: rgba(247, 129, 102, 0.12); color: var(--accent3); }
+.icon-yellow  { background: rgba(227, 179, 65, 0.12);  color: var(--accent5); }
 
 /* ── Status badge ── */
 .card-status {
@@ -461,7 +462,8 @@ html[data-theme="light"] .card:hover {
 html[data-theme="light"] .icon-blue   { background: rgba(9,105,218,.1);  color: var(--accent); }
 html[data-theme="light"] .icon-green  { background: rgba(26,127,55,.1);  color: var(--accent2); }
 html[data-theme="light"] .icon-purple { background: rgba(102,57,183,.1); color: var(--accent4); }
-html[data-theme="light"] .icon-orange { background: rgba(212,75,58,.1);  color: var(--accent3); }
+html[data-theme="light"] .icon-orange  { background: rgba(212,75,58,.1);  color: var(--accent3); }
+html[data-theme="light"] .icon-yellow  { background: rgba(154,103,0,.1);  color: var(--accent5); }
 
 html[data-theme="light"] .status-done     { background: rgba(26,127,55,.08);  border-color: rgba(26,127,55,.2); }
 html[data-theme="light"] .status-progress { background: rgba(9,105,218,.07);  border-color: rgba(9,105,218,.18); }
@@ -500,7 +502,8 @@ html[data-theme="light"] .hero-glow-3 {
   html:not([data-theme="dark"]) .icon-blue   { background: rgba(9,105,218,.1);  color: var(--accent); }
   html:not([data-theme="dark"]) .icon-green  { background: rgba(26,127,55,.1);  color: var(--accent2); }
   html:not([data-theme="dark"]) .icon-purple { background: rgba(102,57,183,.1); color: var(--accent4); }
-  html:not([data-theme="dark"]) .icon-orange { background: rgba(212,75,58,.1);  color: var(--accent3); }
+  html:not([data-theme="dark"]) .icon-orange  { background: rgba(212,75,58,.1);  color: var(--accent3); }
+  html:not([data-theme="dark"]) .icon-yellow  { background: rgba(154,103,0,.1);  color: var(--accent5); }
   html:not([data-theme="dark"]) .chip { background: rgba(0,14,77,.05); border-color: rgba(0,14,77,.08); }
   html:not([data-theme="dark"]) .hero-meta { background: rgba(255,255,255,.7); }
   html:not([data-theme="dark"]) footer { border-top-color: var(--border); }

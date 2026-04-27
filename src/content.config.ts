@@ -17,4 +17,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.mdx', base: './src/content/responsive-web' }),
     schema: disciplineSchema,
   }),
+  'programming-data-persistence': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/programming-data-persistence' }),
+    schema: disciplineSchema,
+  }),
 };

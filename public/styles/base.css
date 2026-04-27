@@ -9,6 +9,7 @@
   --accent2: #3fb950;
   --accent3: #f78166;
   --accent4: #d2a8ff;
+  --accent5: #e3b341;
   --text: #f0f6fc;
   --muted: #8b949e;
   --radius: 16px;
@@ -45,6 +46,7 @@
     --accent2: #1a7f37;
     --accent3: #d44b3a;
     --accent4: #6639b7;
+    --accent5: #9a6700;
     --text: #0d1117;
     --muted: #57606a;
     --btn-surface: rgba(0,14,77,.04);
@@ -71,6 +73,7 @@ html[data-theme="light"] {
   --accent2: #1a7f37;
   --accent3: #d44b3a;
   --accent4: #6639b7;
+  --accent5: #9a6700;
   --text: #0d1117;
   --muted: #57606a;
   --btn-surface: rgba(0,14,77,.04);

@@ -1,0 +1,179 @@
+---
+title: "UA1 — Introdução à Manipulação de Arquivos"
+subtitle: "Arquivos são conjuntos de dados persistidos fora da memória principal — a base de qualquer sistema que precisa guardar informações entre execuções. Entender como criá-los, lê-los, gravá-los e fechá-los corretamente é o ponto de partida da persistência de dados."
+ua: 1
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que são arquivos digitais
+
+Arquivo é uma coleção de dados relacionados, armazenada em dispositivos de memória auxiliar (HD, SSD, pendrive, nuvem) e identificada por um nome. Diferentemente de variáveis — que existem apenas enquanto o programa está em execução — arquivos **persistem após o encerramento do programa**, garantindo que os dados sobrevivam entre sessões.
+
+O nome de um arquivo é composto por duas partes:
+
+- **Nome:** definido pelo criador; deve ser descritivo para facilitar buscas futuras.
+- **Extensão:** sufixo que identifica o tipo do arquivo e o programa capaz de abri-lo (`.docx`, `.pdf`, `.mp3`). Funciona como o "sobrenome" do arquivo — diz ao sistema operacional como lê-lo.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gma_01.webp" alt="Guia de Manipulação de Arquivos" caption="Visão geral: o que é um arquivo, anatomia, operações e segurança" />
+</SlidesGrid>
+
+### Tipos de arquivos
+
+**Arquivos de texto**
+
+Armazenam caracteres legíveis em qualquer editor de texto simples. A unidade básica de acesso é o **caractere**.
+
+| Formato | Programa |
+|---|---|
+| `.doc` / `.docx` | Microsoft Word |
+| `.odt` | LibreOffice Writer |
+| `.txt` | Qualquer editor de texto |
+| `.pdf` | Adobe Reader (e outros) |
+
+**Planilhas**
+
+Grades de células vinculadas a fórmulas matemáticas. Permitem desde somas simples até planejamentos financeiros complexos. Principais: `.xls`/`.xlsx` (Excel), `.ods` (LibreOffice Calc).
+
+**Apresentações**
+
+Slides sequenciais para exibição. Principais: `.ppt`/`.pptx` (PowerPoint), `.odp` (LibreOffice Impress).
+
+**Multimídia**
+
+Inclui vídeo (`.mp4`, `.avi`), áudio (`.mp3`, `.wav`, `.wma`) e imagem (`.jpeg`, `.bmp`, `.gif`). São os arquivos que mais circulam na web e os mais suscetíveis a ocultar vírus — exigem cautela redobrada em ambientes corporativos.
+
+**Compressão**
+
+Agrupam vários arquivos em um único pacote comprimido, reduzindo o espaço ocupado. Principais: `.zip`, `.rar`.
+
+<Callout type="orange">
+**PDF — Portable Document Format**
+
+O PDF preserva o layout original de um documento independentemente do SO ou software do receptor. Salvar um `.doc` como `.pdf` impede edições pelo receptor — embora ferramentas modernas já consigam editar PDFs, o que exige atenção extra ao usá-lo para proteger documentos importantes.
+</Callout>
+
+### Formas de manipulação de arquivos
+
+**Criação**
+Instanciar um novo arquivo requer domínio básico do software. Processadores de texto permitem uso intuitivo desde o início; planilhas eletrônicas exigem conhecimento mínimo de fórmulas para serem úteis.
+
+**Edição**
+Todas as alterações em arquivos digitais ficam rastreadas internamente — é possível auditá-las por análise pericial ou pelas próprias ferramentas do software. Ao editar um arquivo de terceiros, é imprescindível ter autorização prévia.
+
+**Salvamento**
+O maior risco é a **perda por má nomeação** (nome genérico impede localização futura) ou por **falha no hardware** de armazenamento. A prática recomendada é nomear descritivamente e manter cópias em pelo menos um local adicional.
+
+**Impressão**
+Transporte do conteúdo digital para o suporte físico. Ao imprimir e assinar fisicamente, a possibilidade de edição silenciosa é suprimida — relevante para documentos legais.
+
+**Digitalização**
+Caminho inverso da impressão: converte o documento físico em arquivo digital (geralmente PDF via scanner), preservando assinaturas e marcas originais.
+
+### Segurança: backup
+
+Backup é a cópia de segurança dos dados, espelhada em outro local para garantir recuperação em caso de perda ou dano.
+
+| Modalidade | Descrição | Risco |
+|---|---|---|
+| Pen drive / HD externo | Hardware físico para transferência manual | Depende do usuário executar; sujeito a desgaste físico |
+| Nuvem | Servidor virtual; acessível de qualquer dispositivo com internet | Depende de conexão; custo de plano |
+| Backup no próprio sistema | Ferramentas nativas do SO com restauração automática | Falha no disco apaga original e backup juntos |
+
+<Callout type="tip">
+**Boas práticas de backup**
+
+- Mantenha pelo menos duas cópias em locais físicos distintos.
+- Use nomes de arquivo descritivos para facilitar buscas futuras.
+- Prefira a nuvem para arquivos críticos: imune a falhas de hardware e acessível remotamente.
+</Callout>
+
+Outras ferramentas complementam o backup: **firewalls** bloqueiam acessos não autorizados à rede; **antivírus** detectam e removem malwares que podem corromper ou roubar arquivos.
+
+### Operações com arquivos em programas
+
+Toda linguagem de programação oferece comandos para manipular arquivos. As operações fundamentais são:
+
+| Operação | Descrição |
+|---|---|
+| **Abrir** | Vincula uma variável do programa ao arquivo físico no disco |
+| **Ler** | Lê dados do arquivo para a memória do programa |
+| **Escrever** | Grava dados da memória no arquivo |
+| **Fechar** | Libera o arquivo de volta ao sistema operacional |
+
+<Callout type="warning">
+**Fechar o arquivo é obrigatório**
+
+Não fechar um arquivo pode causar perda de dados (gravações pendentes em buffer não são persistidas), corrupção e bloqueio de acesso por outros processos. Em Python, o idioma moderno é usar `with open(...) as f:` — o arquivo é fechado automaticamente ao sair do bloco.
+</Callout>
+
+**Verificação de fim de arquivo (EOF)**
+
+Ao ler sequencialmente, é obrigatório testar se chegou ao fim do arquivo antes de cada leitura — caso contrário, o programa tenta ler além do conteúdo e gera erro.
+
+```
+algoritmo "leitura-arquivo"
+arquivo "dados.txt"
+var
+  linha : caracter
+inicio
+  repita
+    leia(arquivo, linha)
+    escreval("Lido: ", linha)
+  ate fim(arquivo)
+fimalgoritmo
+```
+
+### Arquivos de texto vs. arquivos binários
+
+| Característica | Texto | Binário |
+|---|---|---|
+| Unidade de acesso | Caractere | Byte |
+| Legível sem programa especial | Sim | Não |
+| Portabilidade entre linguagens | Alta | Baixa |
+| Eficiência de armazenamento | Menor | Maior |
+| Exemplos | `.txt`, `.csv`, `.json` | `.exe`, `.png`, `.mp3` |
+
+Arquivos de texto são preferíveis para **intercâmbio de dados entre sistemas em linguagens diferentes** — qualquer linguagem sabe ler e escrever texto. Arquivos binários são mais eficientes em espaço e velocidade, mas a interpretação depende do formato específico e não é portável entre linguagens distintas.
+
+### Acesso sequencial vs. acesso direto (randômico)
+
+**Acesso sequencial:** os registros são lidos um a um, na ordem em que foram gravados, do início ao fim. Não é possível ir diretamente ao registro N sem percorrer os N-1 anteriores. É o modelo dos arquivos de texto.
+
+**Acesso direto (randômico):** é possível acessar qualquer registro diretamente por meio de um endereço (posição), sem percorrer os anteriores. Típico de arquivos binários com registros de tamanho fixo.
+
+| | Acesso sequencial | Acesso direto |
+|---|---|---|
+| Navegação | Um a um, do início | Qualquer posição diretamente |
+| Tipo comum | Arquivo de texto | Arquivo binário com registros fixos |
+| Exemplo | Leitura linha a linha de um `.log` | Banco de dados simples em C |
+
+<Callout type="warning">
+**Práticas Modernas — Manipulação de Arquivos**
+
+- **Formatos estruturados:** no desenvolvimento moderno, arquivos de texto raramente armazenam dados livres — seguem formatos como **JSON** (APIs e configurações), **CSV** (dados tabulares) e **YAML** (configurações legíveis por humanos como Docker e GitHub Actions).
+- **Arquivos binários de alto desempenho:** formatos como **Parquet** (colunar) e **Protocol Buffers** substituem CSVs em pipelines de grande volume — até 10× mais rápidos e com compressão nativa.
+- **Streams em vez de carga total:** carregar um arquivo inteiro na memória antes de processar não escala. A abordagem moderna é processar em **stream** (linha a linha ou bloco a bloco), mantendo consumo de memória constante.
+- **Nuvem como sistema de arquivos:** AWS S3, Google Cloud Storage e Azure Blob Storage expõem as mesmas operações (abrir, ler, escrever) sobre objetos remotos, tratados como arquivos virtuais com chaves e versões.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Ordenação não é** uma operação básica de manipulação de arquivos — as básicas são: abrir, ler, escrever e fechar.
+- Para usar um arquivo em um programa é necessário **vincular uma variável de memória ao arquivo físico** — isso é o que o comando "abrir" faz.
+- **Fechar o arquivo libera-o para o sistema operacional** — sem fechar, outros processos podem não conseguir acessá-lo.
+- A unidade básica de **arquivos de texto é o caractere**; de **arquivos binários é o byte**.
+- Arquivos de texto são melhores para **compartilhamento entre sistemas em linguagens diferentes** — binários não são portáveis entre linguagens distintas.
+- Acesso direto (randômico) = ir a **qualquer registro diretamente por endereço**; acesso sequencial = percorrer **um a um desde o início**.
+- **"Comparar" não é uma operação de arquivo** — as operações são: abrir, ler, escrever e fechar.
+- Arquivos de multimídia são os mais suscetíveis a ocultar vírus — use antivírus e bom senso no ambiente corporativo.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- QUIRINO, A. *Algoritmo e Programação*. Porto Alegre: SAGAH, 2018.
+- VELLOSO, F. C. *Informática: conceitos básicos*. 8. ed. Rio de Janeiro: Elsevier Campus, 2011.
