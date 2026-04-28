@@ -21,4 +21,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.mdx', base: './src/content/programming-data-persistence' }),
     schema: disciplineSchema,
   }),
+  'database-design-for-apps': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/database-design-for-apps' }),
+    schema: disciplineSchema,
+  }),
 };

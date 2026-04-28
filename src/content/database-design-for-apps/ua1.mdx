@@ -1,0 +1,156 @@
+---
+title: "UA1 — Introdução a Banco de Dados"
+subtitle: "Banco de dados é uma coleção organizada de informações gerenciada por um SGBD. Esta UA abrange conceito, tipos (relacional, hierárquico, em rede, objeto-relacional) e linguagens SQL (DDL, DML e DCL)."
+ua: 1
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é um banco de dados
+
+Um banco de dados é uma coleção de informações organizadas para que possam ser facilmente acessadas, gerenciadas e atualizadas. Os dados são estruturados em **tabelas** compostas por:
+
+- **Colunas (atributos):** identificam a categoria do dado (ex.: nome, salário, departamento).
+- **Linhas (registros):** cada linha representa uma instância única desses dados.
+- **Índices:** estruturas que aceleram buscas, evitando varredura completa da tabela.
+
+Os bancos de dados são indexados para facilitar a localização de informações relevantes e suportam operações de inserção, atualização, exclusão e consulta.
+
+Um **sistema gerenciador de banco de dados (SGBD)** é o software que intermedia o acesso dos usuários e aplicações ao banco. Ele fornece controle de leitura/gravação, geração de relatórios e procedimentos de análise.
+
+### Abstração de dados
+
+Para o usuário final, o banco de dados deve parecer simples — os detalhes físicos de armazenamento ficam ocultos. Essa transparência é organizada em três níveis:
+
+| Nível | Descrição |
+|---|---|
+| **Visão do usuário** | O que o usuário enxerga: formulários, relatórios, consultas |
+| **Conceitual (lógico)** | Estrutura das tabelas, relacionamentos e restrições |
+| **Físico** | Como os dados são armazenados em disco (blocos, arquivos, índices) |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpb_01.webp" alt="Guia Prático de Bancos de Dados" caption="Conceito, abstração, tipos de BD e linguagens SQL (DDL, DML, DCL) — visão geral" />
+</SlidesGrid>
+
+### Modelo relacional e projeto de banco de dados
+
+O modelo mais usado é o **relacional**: tabelas se relacionam entre si por meio de chaves. Cada tabela contém informações específicas de um único conjunto de dados — misturar entidades distintas em uma mesma tabela viola o projeto correto.
+
+Exemplo prático (clínica veterinária):
+
+| Tabela | Campos principais |
+|---|---|
+| **Pacientes** | id_paciente, nome, tipo |
+| **Proprietários** | id_proprietário, nome, endereço, telefone |
+| **Visitas** | id_visita, id_paciente, data, hora |
+| **Faturamento** | id_faturamento, id_visita, id_paciente, valor, forma_pagamento |
+
+A tabela `Pacientes` é vinculada à `Proprietários` pelo `id_paciente`. O relacionamento permite consultas cruzadas sem duplicar dados.
+
+<Callout type="orange">
+**Regra de ouro do projeto relacional**
+
+Cada tabela deve conter no máximo um conjunto de informações. O projeto deve ser baseado nos requisitos de negócio compreendidos antes da implementação.
+</Callout>
+
+### Tipos de banco de dados
+
+#### Relacional
+
+Funciona como uma coleção de relações (tabelas). Cada linha representa fatos do mundo real. É fácil de criar, acessar e estender — novas categorias de dados podem ser adicionadas sem modificar os aplicativos existentes.
+
+#### Hierárquico
+
+Usa níveis de dados que seguem um padrão de árvore. Os registros são vinculados apenas à tabela imediatamente acima ou abaixo. Útil quando os dados seguem uma hierarquia rígida e só podem ser acessados por um único caminho (ex.: organograma empresarial).
+
+#### Em rede
+
+Permite que vários registros sejam vinculados ao mesmo arquivo proprietário — relação **muitos para muitos**. É mais flexível que o hierárquico, pois um membro pode estar vinculado a múltiplos proprietários.
+
+#### Objeto-relacional
+
+Combina o modelo relacional com recursos de orientação a objetos. Oferece:
+
+- **Expansibilidade:** novos tipos de dados definidos pelo usuário.
+- **Tipos complexos:** combinação de tipos existentes em estruturas compostas.
+- **Herança:** objetos e tabelas que herdam propriedades de outros objetos.
+
+| Tipo | Estrutura | Flexibilidade | Exemplo de uso |
+|---|---|---|---|
+| Relacional | Tabelas planas | Alta | Sistemas transacionais |
+| Hierárquico | Árvore (pai → filhos) | Baixa | Organograma, sistema de arquivos |
+| Em rede | Grafo (muitos para muitos) | Média | Redes de telecomunicações |
+| Objeto-relacional | Tabelas + herança/tipos | Muito alta | Sistemas com dados complexos |
+
+### Linguagens de banco de dados
+
+O SQL (Structured Query Language) é a linguagem padrão para interação com bancos de dados relacionais. Suas instruções se dividem em três categorias:
+
+#### DDL — Data Definition Language (Definição)
+
+Define a **estrutura** do banco de dados: cria, altera e remove objetos.
+
+| Instrução | Função |
+|---|---|
+| `CREATE` | Cria banco de dados ou tabela |
+| `ALTER` | Altera a estrutura de um objeto |
+| `DROP` | Descarta (remove) um objeto |
+| `TRUNCATE` | Remove todos os registros de uma tabela |
+| `RENAME` | Renomeia um objeto |
+
+#### DML — Data Manipulation Language (Manipulação)
+
+Opera sobre os **dados** dentro das estruturas criadas pela DDL.
+
+| Instrução | Função |
+|---|---|
+| `SELECT` | Busca (consulta) registros |
+| `INSERT` | Insere novos registros |
+| `UPDATE` | Atualiza registros existentes |
+| `DELETE` | Exclui registros |
+
+#### DCL — Data Control Language (Controle)
+
+Gerencia **permissões** de acesso ao banco.
+
+| Instrução | Função |
+|---|---|
+| `GRANT` | Concede privilégios a um usuário |
+| `REVOKE` | Revoga privilégios concedidos |
+
+<Callout type="tip">
+**SQL na prática**
+
+DDL e DML não são linguagens separadas no dia a dia — fazem parte do mesmo SQL. Um comando `CREATE TABLE` (DDL) define a estrutura; um `INSERT` (DML) popula os dados. Já `GRANT` e `REVOKE` (DCL) controlam quem pode fazer o quê.
+</Callout>
+
+### Práticas Modernas
+
+- **SGBDs relacionais dominantes:** PostgreSQL, MySQL e SQLite são os mais usados no desenvolvimento moderno. O PostgreSQL é considerado o mais robusto para produção; o SQLite é ideal para aplicativos locais e testes.
+- **Bancos NoSQL:** para dados não estruturados ou de alta escala, surgem alternativas ao modelo relacional — MongoDB (documentos), Redis (chave-valor), Cassandra (colunar wide), Neo4j (grafos). Cada um resolve um problema específico melhor que o relacional.
+- **ORMs:** ferramentas como Prisma, Hibernate e SQLAlchemy abstraem o SQL e mapeiam tabelas para objetos de código — reduzem erros e aceleram o desenvolvimento, mas exigem entender o SQL gerado por baixo.
+- **Migrações de banco:** em projetos profissionais, alterações de estrutura (DDL) são feitas por arquivos de migração versionados (ex.: Flyway, Liquibase, Prisma Migrate) — nunca manualmente em produção.
+- **Chaves primárias modernas:** além do `INT AUTO_INCREMENT`, o padrão atual usa UUIDs (v4 ou v7) ou ULIDs para identificadores únicos distribuídos — evitam colisão entre servidores e facilitam replicação.
+
+### Dicas para a Prova
+
+<Callout type="tip">
+- **SGBD** fornece controle de leitura/gravação, relatórios e análise — não é só um "repositório de arquivos".
+- Em uma tabela relacional: **colunas = atributos**; **linhas = registros**.
+- Banco **hierárquico** = dados acessíveis por **um único caminho** em estrutura de árvore.
+- Banco **em rede** = relação **muitos para muitos** entre registros.
+- `SELECT` é **DML** (manipulação de dados), não DDL.
+- `ALTER` é **DDL** (definição de estrutura), não DML.
+- `GRANT` e `REVOKE` são **DCL** (controle de acesso).
+- O modelo mais usado nos sistemas de informação modernos é o **relacional**.
+- O projeto do banco deve ser baseado nos **requisitos de negócio** levantados antes da implementação.
+- Cada tabela deve conter informações de **um único conjunto de dados** — misturar entidades é erro de projeto.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- CÓRDOVA JÚNIOR, R. *Fundamentos Computacionais*. Porto Alegre: SAGAH, 2018. Cap. Banco de dados.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. São Paulo: Pearson, 2005.
+- GEREMIA, J. *Tutorial de introdução a banco de dados*. 2010.
