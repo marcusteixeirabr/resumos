@@ -131,6 +131,71 @@ Interface associada ao documento que permite manipular estilos via JavaScript. E
 **History**
 Interface que fornece acesso ao histórico de navegação do contexto atual.
 
+<Callout type="warning">
+**Atenção — conteúdo desatualizado**
+
+O material do livro (2019) usa padrões que ainda funcionam, mas que o mercado abandonou:
+
+- `var` — substituído por `const` e `let` (ES6+, 2015), que têm escopo de bloco e evitam bugs silenciosos
+- `onclick="..."` inline no HTML — mistura comportamento com estrutura; a prática atual é separar completamente via `addEventListener`
+- `getElementById` e `getElementsByTagName` como selectors principais — `querySelector`/`querySelectorAll` são mais flexíveis e amplamente preferidos
+- `element.style.property = 'value'` para alterações visuais — `classList.toggle()` e `classList.add/remove` são preferidos por manter o CSS no CSS
+- `innerHTML` com dados do usuário — vetor direto de XSS; usar `textContent` para texto puro
+</Callout>
+
+### Práticas Modernas
+
+**Seletores modernos**
+`querySelector()` e `querySelectorAll()` aceitam qualquer seletor CSS — são mais expressivos e substituem `getElementById`, `getElementsByTagName` e `getElementsByClassName` na maioria dos casos:
+
+```js
+const btn = document.querySelector('#meu-botao');
+const itens = document.querySelectorAll('.item');
+```
+
+**`addEventListener` em vez de handlers inline**
+Separa comportamento do HTML, permite múltiplos listeners no mesmo elemento e facilita testes:
+
+```js
+document.querySelector('#btn').addEventListener('click', function() {
+  // lógica aqui
+});
+```
+
+**`classList` para manipulação de estilos**
+Manter CSS no CSS e alternar classes via JavaScript — muito mais manutenível que `element.style.color = 'red'`:
+
+```js
+element.classList.add('ativo');
+element.classList.remove('oculto');
+element.classList.toggle('expandido');
+```
+
+**`textContent` em vez de `innerHTML` para dados do usuário**
+`innerHTML` interpreta HTML — se o conteúdo vier do usuário, é XSS. Usar `textContent` para texto puro:
+
+```js
+// Arriscado:
+p.innerHTML = campoInput.value;
+
+// Seguro:
+p.textContent = campoInput.value;
+```
+
+**`const`/`let` em vez de `var`**
+`var` tem escopo de função e comportamento de hoisting que causa bugs difíceis de rastrear. `const` e `let` têm escopo de bloco — preferir `const` por padrão:
+
+```js
+const heading = document.createElement('h1');
+let contador = 0;
+```
+
+**Virtual DOM e frameworks**
+React, Vue e Angular introduziram o conceito de Virtual DOM: o desenvolvedor descreve o estado da UI e o framework calcula as alterações mínimas no DOM real. Para UIs simples, manipulação direta do DOM é suficiente; para aplicações complexas, frameworks evitam inconsistências e melhoram performance.
+
+**Web Components**
+Padrão nativo W3C para criar componentes reutilizáveis com DOM encapsulado (Shadow DOM), sem dependência de frameworks. Suportados por todos os navegadores modernos desde 2020.
+
 <Callout type="tip">
 **Dicas para a Prova**
 

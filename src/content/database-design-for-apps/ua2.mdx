@@ -135,6 +135,44 @@ A **arquitetura de três esquemas** separa o usuário da aplicação do banco de
 | **DBA (Administrador de BD)** | Gerencia recursos do SGBD; define usuários e níveis de acesso; monitora o sistema; realiza backups e manutenções preventivas |
 | **Usuários finais** | Usam o aplicativo e, por consequência, o banco de dados |
 
+<Callout type="warning">
+**Atenção — dados desatualizados**
+
+O quadro de SGBDs e o ranking de popularidade citados no livro são de **fevereiro de 2020**. O cenário mudou:
+
+- **PostgreSQL** subiu significativamente e, nas pesquisas de desenvolvedores (Stack Overflow, 2023-2024), é consistentemente o banco mais usado e o mais amado — supera MySQL e SQL Server em preferência
+- **IBM DB2** e **Interbase** perderam relevância de mercado
+- O **MongoDB** manteve posição forte, mas o crescimento de PostgreSQL com extensão `pgvector` começa a disputar espaço até em casos de uso de IA
+- SGBDs gerenciados na nuvem (RDS, Aurora, Cloud SQL) dominam novos projetos — a maioria dos quadros de 2020 sequer os menciona
+</Callout>
+
+### Práticas Modernas
+
+**Bancos de dados gerenciados (DBaaS)**
+O modelo atual em empresas é contratar o banco como serviço — o provedor de nuvem cuida de instalação, backups, patches, failover e escalabilidade. O DBA migra de administrador de servidor para arquiteto de dados e otimizador de queries:
+
+| Serviço | Provedor | Base |
+|---|---|---|
+| Amazon RDS / Aurora | AWS | MySQL, PostgreSQL, MariaDB |
+| Cloud SQL | Google Cloud | MySQL, PostgreSQL, SQL Server |
+| Azure SQL | Microsoft | SQL Server / PostgreSQL |
+| Cosmos DB | Microsoft | NoSQL multi-modelo |
+
+**Bancos serverless**
+Escalam automaticamente para zero quando não há tráfego — sem custo ocioso. Exemplos: PlanetScale (MySQL), Neon (PostgreSQL), CockroachDB Serverless. Ideais para projetos com tráfego variável.
+
+**NewSQL**
+Bancos que combinam a **escalabilidade horizontal do NoSQL** com as **garantias ACID do relacional**. Permitem escalar leituras e escritas em múltiplos nós sem abrir mão de transações consistentes. Exemplos: CockroachDB, TiDB, Google Spanner.
+
+**Bancos vetoriais (Vector Databases)**
+Categoria que explodiu com a IA generativa (2023+). Armazenam embeddings (representações numéricas de texto, imagem, áudio) e permitem busca por similaridade semântica — base de sistemas RAG (Retrieval-Augmented Generation). Exemplos: Pinecone, Weaviate, Qdrant. O PostgreSQL com extensão `pgvector` também suporta buscas vetoriais.
+
+**OLTP vs. OLAP e bancos analíticos**
+SGBDs tradicionais são otimizados para OLTP (transações rápidas, muitas escritas simultâneas). Para análise de grandes volumes, surgiram bancos colunares e analíticos: DuckDB (embedded, OLAP em memória), ClickHouse (OLAP distribuído de alta performance), BigQuery (serverless analytics da Google).
+
+**O papel do DBA hoje**
+O DBA moderno trabalha com infraestrutura como código (Terraform para provisionar instâncias de BD), monitoramento de custos de cloud, tuning de queries via ferramentas automatizadas e segurança de dados (criptografia em repouso e em trânsito, controle de acesso granular via IAM).
+
 <Callout type="tip">
 **Dicas para a Prova**
 
