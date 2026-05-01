@@ -1,0 +1,150 @@
+---
+title: "UA2 — DOM: Document Object Model"
+subtitle: "O DOM é a representação em memória de um documento HTML ou XML — uma árvore de objetos que o navegador constrói ao carregar a página e que pode ser acessada e manipulada por qualquer linguagem de programação."
+ua: 2
+group: "Desenvolvimento Web"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é o DOM
+
+O DOM (_Document Object Model_) é uma interface de representação que define como documentos HTML e XML são lidos pelos navegadores. Ao carregar uma página, o navegador cria um objeto que representa a estrutura do documento e disponibiliza meios para que essa estrutura seja acessada e modificada por código.
+
+O DOM não é uma linguagem de programação — ele é independente de linguagem. Qualquer linguagem (JavaScript, Python etc.) pode manipulá-lo. Na prática, JavaScript é a mais utilizada por rodar diretamente no navegador.
+
+Existem dois padrões principais implementados pela maioria dos navegadores modernos:
+
+- **W3C DOM**
+- **WHATWG DOM**
+
+Alguns navegadores estendem esses padrões, por isso é preciso atenção ao usar recursos não padronizados — o documento pode ser processado por DOMs diferentes em navegadores diferentes.
+
+### Estrutura da árvore DOM
+
+O DOM é organizado como uma **árvore de objetos**. O objeto `window` é a raiz — ele representa o navegador e possui três filhos diretos:
+
+- **`document`** — objeto raiz do documento HTML; pai de todos os elementos da página.
+- **`location`** — captura a URL atual e permite redirecionar o navegador.
+- **`history`** — armazena o histórico de URLs visitadas no contexto de navegação.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/dom_01.webp" alt="DOM — Estrutura da Web Dinâmica" caption="Infográfico: níveis de especificação do DOM segundo a W3C" />
+</SlidesGrid>
+
+Com o modelo DOM, o JavaScript pode:
+
+- Criar e alterar elementos e atributos HTML dinamicamente
+- Modificar estilos CSS sem recarregar a página
+- Reagir a eventos do usuário (cliques, teclas, scroll)
+- Enviar e receber dados via AJAX sem recarregar a página
+
+### Acessando o DOM
+
+Para manipular o DOM, usa-se os objetos `document` ou `window` dentro de uma tag `<script>` ou em um arquivo `.js` externo.
+
+Exemplo simples — alerta ao carregar a página:
+
+```html
+<body onload="window.alert('Hello DOM World!');">
+```
+
+Exemplo criando um título dinamicamente:
+
+```html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <title>Título da Página</title>
+  <script>
+    window.onload = function() {
+      var heading = document.createElement("h1");
+      var heading_text = document.createTextNode("Texto do Título");
+      heading.appendChild(heading_text);
+      document.body.appendChild(heading);
+    }
+  </script>
+</head>
+<body></body>
+</html>
+```
+
+Exemplo capturando valor de um campo de texto:
+
+```html
+<script>
+  var capturado = "";
+  function capturar() {
+    capturado = document.getElementById('valor').value;
+    document.getElementById('valorDigitado').innerHTML = capturado;
+  }
+</script>
+<input type="text" id="valor">
+<input type="submit" onclick="capturar()" value="Clique aqui!">
+<p id="valorDigitado"></p>
+```
+
+### Propriedades fundamentais do objeto `document`
+
+| Propriedade / Método | Descrição |
+|---|---|
+| `documentElement` | Recupera o elemento raiz `<html>` |
+| `getElementById(id)` | Retorna o elemento com o ID correspondente |
+| `createElement(tag)` | Cria um novo nó de elemento |
+| `createAttribute(name)` | Cria um novo nó de atributo |
+| `createTextNode(text)` | Cria um novo nó de texto |
+| `getElementsByTagName(tag)` | Retorna lista de elementos pela tag informada |
+| `appendChild(node)` | Insere um novo elemento filho |
+| `removeChild(node)` | Remove um elemento filho |
+| `parentNode` | Retorna o nó pai de um dado nó |
+
+### Tipos de dados do DOM
+
+| Tipo | Descrição |
+|---|---|
+| `Document` | Objeto raiz do documento |
+| `Node` | Todo objeto no documento HTML é um nó — de elemento, atributo ou texto |
+| `Element` | Baseado em `Node`; representa um elemento HTML |
+| `NodeList` | Lista de elementos acessada por índice: `list[1]` ou `list.item(1)` |
+| `Attribute` | Nós de atributo (menos utilizados que nós de elemento) |
+| `NamedNodeMap` | Coleção acessada por nome ou índice; sem ordem específica |
+
+### Interfaces do DOM: Core, HTML e CSS
+
+**Core**
+API básica suficiente para acessar e manipular conteúdos HTML e XML. Permite popular um objeto `Document` usando apenas chamadas da própria API DOM.
+
+**HTML (`HTMLDocument`)**
+Interface para documentos HTML. Dá acesso a recursos do navegador, como a janela ou aba (`Window`) em que a página está sendo exibida.
+
+**CSS (`Style`)**
+Interface associada ao documento que permite manipular estilos via JavaScript. Exemplo: mudar a cor de um elemento ao clicar em um botão:
+
+```html
+<button onclick="document.getElementById('id1').style.color = 'red'">
+  Clique em mim!
+</button>
+```
+
+**History**
+Interface que fornece acesso ao histórico de navegação do contexto atual.
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Para obter um elemento pelo ID use `getElementById()` — não `querySelector()` nem `getElementsByTagName()`.
+- Para alterar estilo via JavaScript: `document.getElementById('id').style.color = 'blue'`.
+- Os filhos diretos do `window` são: **location**, **document** e **history** — não são `body`, `html` ou `header`.
+- A linguagem de script para manipular o DOM é **JavaScript** — HTML, CSS e XML não são linguagens de script.
+- Os dois padrões DOM modernos são **W3C DOM** e **WHATWG DOM** — não HTTP, FTP ou SSH.
+- O DOM não é uma linguagem de programação — é uma interface independente de linguagem.
+- O objeto `document` é a raiz do documento HTML; o objeto `window` representa o próprio navegador.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- NEUMANN, F. B. *Programação Front End II*. Porto Alegre: SAGAH.
+- MDN Web Docs. *Introdução ao DOM*. Mozilla Developer Network, 2019.
+- W3C. *Document Object Model (Core) Level 1*. World Wide Web Consortium, 1998.
