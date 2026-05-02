@@ -1,0 +1,279 @@
+---
+title: "UA3 — Trabalhando com links e formulários"
+subtitle: "A tag âncora <a> interliga páginas HTML via links relativos, absolutos ou de e-mail, enquanto <form> e <input> constroem formulários que enviam dados do usuário a um servidor."
+ua: 3
+group: "Desenvolvimento Web"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Links e âncoras em HTML
+
+HTML permite que páginas sejam interligadas por meio dos chamados _links_, definidos pela _tag_ âncora `<a>`. O endereço para o qual o _link_ aponta é informado no atributo `href`:
+
+```html
+<a href="#">Eu sou um link</a>
+```
+
+Por padrão, navegadores exibem _links_ de texto sublinhados e na cor azul, salvo estilização via CSS. Quando `href` recebe o valor `#`, ao clicar nada acontece; se o valor for vazio, a página é recarregada.
+
+#### Links relativos
+
+_Links_ relativos apontam para arquivos locais — no mesmo dispositivo que o arquivo HTML. O valor do `href` deve ser exatamente o nome do arquivo, incluindo a extensão:
+
+```html
+<!-- pagina1.html -->
+<h1>Eu sou a página 1</h1>
+<a href="pagina2.html">Link para a página 2</a>
+```
+
+Para acessar arquivos em subdiretórios, inclua o caminho relativo (`html/pagina2.html`). Para subir um nível, use `../` antes do nome.
+
+#### Links absolutos
+
+_Links_ absolutos apontam para endereços externos. O `href` deve conter o protocolo (`http` ou `https`) seguido do endereço:
+
+```html
+<a href="https://www.google.com.br">Google</a>
+```
+
+#### Links para e-mails
+
+Use a palavra `mailto:` seguida do endereço de e-mail. O navegador abrirá o programa de e-mail padrão do sistema:
+
+```html
+<a href="mailto:contato@exemplo.com.br">Contato por e-mail</a>
+```
+
+#### Links em imagens
+
+_Links_ e imagens podem ser combinados — basta inserir a tag `<img>` dentro da âncora `<a>` no lugar do texto:
+
+```html
+<a href="#">
+  <img src="imagem.png">
+</a>
+```
+
+#### Atributo `target`
+
+O atributo `target` define o contexto de navegação em que o _link_ será aberto:
+
+| Valor | Comportamento |
+|---|---|
+| `_self` | Abre na aba atual (padrão quando `target` não é definido) |
+| `_blank` | Abre em uma nova aba |
+| `_parent` | Abre no _frame_ pai |
+| `_top` | Abre no corpo inteiro da janela |
+
+---
+
+### Formulários HTML
+
+Formulários permitem que usuários interajam com sistemas _web_, estabelecendo conexão entre cliente e servidor. Os dados preenchidos são enviados para serem processados por linguagens de programação _back-end_.
+
+#### Tag `<form>`
+
+Formulários são criados com a _tag_ `<form>`, que aceita os seguintes atributos principais:
+
+| Atributo | Descrição |
+|---|---|
+| `name` | Nome que identifica o formulário |
+| `action` | Endereço para onde o formulário será enviado |
+| `method` | Método de envio: `post` ou `get` |
+| `enctype` | Formato de transmissão dos dados (usado com `post`) |
+
+O `enctype` pode receber: `application/x-www-form-urlencoded` (padrão), `multipart/form-data` (envio de arquivos) ou `multipart/form-data` (HTML5).
+
+```html
+<form action="processa_formulario.php" method="post" name="meu_formulario">
+  [...]
+</form>
+```
+
+#### Métodos GET e POST
+
+| Método | Comportamento |
+|---|---|
+| `GET` | Transmite os dados diretamente pela URL. Limita o envio a _strings_ de até 255 caracteres |
+| `POST` | Encapsula os dados e os envia junto ao corpo da requisição HTTP |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hlf_01.webp" alt="Guia HTML — Links e Formulários" caption="Infográfico: tipos de input de formulários HTML — dados textuais, campos de marcação, botões e arquivos" />
+</SlidesGrid>
+
+---
+
+### Tag `<input>` e seus tipos
+
+A principal _tag_ utilizada em formulários é `<input>`, que aceita os atributos:
+
+- `name` — nome do campo, usado para processamento _back-end_
+- `value` — valor padrão exibido no campo
+- `placeholder` — texto de dica exibido dentro da caixa (desaparece ao clicar)
+- `type` — tipo do campo
+
+Os tipos disponíveis para `<input>`:
+
+| Valor | Descrição |
+|---|---|
+| `text` | Caixa de texto simples |
+| `email` | Caixa de texto com validação de e-mail |
+| `password` | Campo de senha (oculta os caracteres) |
+| `checkbox` | Caixa de seleção múltipla |
+| `radio` | Caixa de seleção única |
+| `file` | Envio de arquivo |
+| `submit` | Botão de submissão do formulário |
+| `hidden` | Campo oculto (não exibido ao usuário) |
+| `button` | Botão simples |
+
+#### Tipos `text`, `email` e `password`
+
+Os três tipos são parecidos em aparência. A diferença é que `email` valida o formato do endereço (exige `@`) e `password` oculta os caracteres digitados:
+
+```html
+<form action="#" method="post" name="formulario">
+  <input type="text" name="texto" placeholder="Digite um nome">
+  <input type="email" name="email" placeholder="Digite um e-mail">
+  <input type="password" name="senha" placeholder="Digite a senha">
+</form>
+```
+
+#### Tipos `checkbox` e `radio`
+
+`checkbox` permite múltiplas seleções; `radio` permite apenas uma escolha por grupo. Para serem tratados como grupo, os campos devem ter o mesmo valor no atributo `name`:
+
+```html
+<form action="#" method="post" name="formulario">
+  <h1>Checkbox</h1>
+  <p><input type="checkbox" name="opcao" value="1"><label>1</label></p>
+  <p><input type="checkbox" name="opcao" value="2"><label>2</label></p>
+
+  <h1>Radio</h1>
+  <p><input type="radio" name="escolha" value="1"><label>1</label></p>
+  <p><input type="radio" name="escolha" value="2"><label>2</label></p>
+</form>
+```
+
+#### Tipos `hidden` e `file`
+
+`hidden` armazena informações que não devem ser exibidas ao usuário, como códigos de identificação. `file` exibe um botão para seleção de arquivo:
+
+```html
+<input type="file" name="arquivo">
+<input type="hidden" value="codigo_secreto_123">
+```
+
+#### Tipos `button` e `submit`
+
+Ambos executam ações ao serem clicados. O `submit` é o responsável pelo envio do formulário — ao clicar, a página é redirecionada para o endereço informado em `action`. O texto do botão é definido pelo atributo `value`:
+
+```html
+<input type="button" value="Botão comum">
+<input type="submit" value="Enviar">
+```
+
+---
+
+### Tag `<select>`
+
+A _tag_ `<select>` cria uma lista de opções para o usuário escolher. Cada opção é definida pela _tag_ `<option>`, que recebe um `value` (valor enviado) e um texto visível:
+
+```html
+<form action="#" method="post" name="formulario">
+  <select name="selecione">
+    <option value="1">Opção 1</option>
+    <option value="2">Opção 2</option>
+  </select>
+</form>
+```
+
+---
+
+### Tag `<textarea>`
+
+`<textarea>` é similar ao `<input type="text">`, mas permite que o usuário redimensione e preencha áreas de texto maiores. O tamanho padrão é controlado pelos atributos `cols` (colunas) e `rows` (linhas):
+
+```html
+<textarea cols="50" rows="10"></textarea>
+```
+
+<Callout type="warning">
+**Atenção — conteúdo desatualizado**
+
+O material do livro (2019) usa PHP como destino padrão de formulários (`action="processa_formulario.php"`). O ecossistema atual adota abordagens diferentes:
+
+- Formulários raramente enviam para arquivos PHP diretamente — o padrão atual é enviar para **APIs REST** que retornam JSON, usando `fetch` ou `axios` no _front-end_
+- O atributo `enctype="multipart/form-data"` continua necessário para upload de arquivos, mas o processamento no servidor é feito via frameworks como Express (Node.js), FastAPI (Python) ou Spring (Java)
+- O método `GET` para formulários é desencorajado por expor dados sensíveis na URL — usar `POST` por padrão
+- O atributo `name` no `<form>` raramente é necessário hoje — formulários são identificados e manipulados via JavaScript por seletor CSS (`document.querySelector('form')`)
+</Callout>
+
+### Práticas Modernas
+
+**`<label>` associado ao `<input>` com `for`/`id`**
+O material mostra `<label>` seguido do texto sem associação formal. A prática correta é vincular rótulo e campo, melhorando acessibilidade e área de clique:
+
+```html
+<label for="nome">Nome</label>
+<input type="text" id="nome" name="nome">
+```
+
+**Validação nativa do HTML5**
+Antes de usar JavaScript para validar campos, aproveite os atributos nativos — o navegador os valida automaticamente antes de enviar:
+
+```html
+<input type="email" required>
+<input type="text" minlength="3" maxlength="50" required>
+<input type="number" min="1" max="100">
+```
+
+**`fetch` em vez de `action` para envio assíncrono**
+A forma moderna de enviar formulários sem recarregar a página usa a API `fetch` e lê os dados via `FormData`:
+
+```js
+document.querySelector('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const dados = new FormData(e.target);
+  const resposta = await fetch('/api/contato', {
+    method: 'POST',
+    body: dados,
+  });
+  const resultado = await resposta.json();
+});
+```
+
+**`<button type="submit">` em vez de `<input type="submit">`**
+`<button>` aceita HTML interno (ícones, formatação) e é mais flexível:
+
+```html
+<button type="submit">Enviar formulário</button>
+```
+
+**`target="_blank"` com `rel="noopener noreferrer"`**
+Abrir links em nova aba sem esse atributo expõe a página original a ataques via `window.opener`. Sempre combine:
+
+```html
+<a href="https://exemplo.com" target="_blank" rel="noopener noreferrer">Link externo</a>
+```
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A _tag_ âncora é `<a>` e o atributo que define o destino do _link_ é `href` — não `src` nem `url`.
+- Para abrir um _link_ em nova aba: `target="_blank"` — não `target="new"` nem `target="nova"`.
+- Para _link_ de e-mail: `href="mailto:endereco@exemplo.com"` — o prefixo é `mailto:`, não `email:`.
+- Formulários são criados com `<form>` e enviados com `<input type="submit">` — um `<input type="button">` simples **não** envia o formulário.
+- `checkbox` permite múltiplas seleções; `radio` permite apenas uma por grupo — para formar um grupo de `radio`, todos devem ter o mesmo `name`.
+- `hidden` oculta o campo do usuário mas ainda o envia ao servidor — usado para dados de controle, não para segurança real.
+- GET expõe os dados na URL; POST os encapsula no corpo da requisição.
+- `<textarea>` usa `cols` e `rows` para definir tamanho — não `width` e `height` como atributos HTML.
+- `<select>` usa `<option>` para definir cada item da lista.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MARIANO, D. C. B. *Programação Front End I*. Porto Alegre: SAGAH.
+- MDN Web Docs. *\<form\>: The Form element*. Mozilla Developer Network, 2019.
+- SILVA, M. S. *Fundamentos de HTML5 e CSS3*. São Paulo: Novatec, 2015.
