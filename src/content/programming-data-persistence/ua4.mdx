@@ -1,0 +1,247 @@
+---
+title: "UA4 — Protocolo HTTP"
+subtitle: "Como navegadores e servidores conversam: WWW, URL, tipos de documentos, mensagens HTTP, cookies e servidores proxy."
+ua: 4
+group: "Desenvolvimento Web"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### World Wide Web (WWW)
+
+A Web foi proposta por Tim Berners-Lee em 1989 no CERN para permitir que pesquisadores em diferentes localidades acessassem as pesquisas uns dos outros. O conceito comercial surgiu no início da década de 1990.
+
+A Web é um repositório de informações distribuído pelo mundo onde documentos — chamados **páginas Web** — são vinculados entre si por **hiperlinks**. Dois conceitos explicam seu crescimento:
+
+- **Distribuição**: qualquer servidor no mundo pode publicar uma nova página sem sobrecarregar servidores centrais
+- **Vinculação**: uma página pode referenciar outra armazenada em qualquer lugar do mundo
+
+O termo original **hipertexto** (documentos de texto vinculados) evoluiu para **hipermídia**, pois páginas Web podem conter texto, imagem, áudio e vídeo.
+
+A WWW é um serviço **cliente-servidor**: o cliente (navegador) envia pedidos; o servidor Web retorna respostas. Como uma página pode referenciar arquivos em servidores diferentes, uma única visita pode gerar múltiplas transações pedido/resposta.
+
+---
+
+### Arquitetura do navegador (browser)
+
+Todo navegador é composto por três partes:
+
+| Componente | Função |
+|---|---|
+| **Controlador** | Recebe entrada do teclado/mouse e coordena os demais componentes |
+| **Protocolos cliente** | Comunicam-se com o servidor (HTTP, FTP, SSH, SMTP) |
+| **Interpretadores** | Exibem o documento na tela (HTML, JavaScript, Java) |
+
+**Servidores Web** armazenam as páginas e respondem às solicitações. Para eficiência, usam **cache** (respostas em memória RAM, mais rápida que disco) e **multithreading** (atender múltiplos pedidos simultaneamente). Exemplos populares: Apache e IIS.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gph_01.webp" alt="Desvendando o Protocolo HTTP e a Web" caption="Infográfico: arquitetura da navegação, URL, documentos Web, ciclo HTTP Request/Response, cookies e métodos GET/POST/PUT" />
+</SlidesGrid>
+
+---
+
+### URL — Localizador Uniforme de Recursos
+
+Uma página Web precisa de um identificador único: a **URL (Uniform Resource Locator)**. Ela combina quatro partes:
+
+```
+protocolo://host:porta/caminho
+```
+
+| Parte | Descrição | Exemplo |
+|---|---|---|
+| **Protocolo** | Programa cliente-servidor a usar | `http`, `ftp` |
+| **Host** | Endereço IP ou nome de domínio do servidor | `www.exemplo.com` ou `64.23.56.17` |
+| **Porta** | Inteiro de 16 bits; HTTP usa **80** por padrão | `:80` (omitido quando padrão) |
+| **Caminho** | Localização e nome do arquivo no servidor | `/noticias/artigo1` |
+
+**Exemplo:**
+```
+http://www.exemplo.com.br/compsci/artigo/
+│        │                 │
+protocolo host              caminho
+```
+
+A porta só aparece na URL quando for diferente da padrão. HTTP usa 80; HTTPS usa 443.
+
+---
+
+### Tipos de documentos Web
+
+| Tipo | Onde é gerado | Quando o conteúdo é definido | Tecnologias |
+|---|---|---|---|
+| **Estático** | Servidor | Quando o arquivo é criado | HTML, XML, XHTML, XSL |
+| **Dinâmico** | Servidor | A cada solicitação | CGI, JSP, ASP |
+| **Ativo** | Cliente | No dispositivo do usuário | Java applets, JavaScript |
+
+- **Documentos estáticos**: o servidor entrega uma cópia fiel do arquivo — o usuário não pode alterar o conteúdo original.
+- **Documentos dinâmicos**: um script ou programa é executado no servidor a cada pedido. Exemplo clássico: uma página que exibe a data e hora atual. O conteúdo varia entre requisições.
+- **Documentos ativos**: o servidor envia um programa ou script que roda **no cliente** (no navegador). Usado para animações, interações em tempo real e formulários com validação.
+
+---
+
+### Protocolo HTTP
+
+O **HTTP (HyperText Transfer Protocol)** define como cliente e servidor trocam mensagens para recuperar páginas Web.
+
+Características fundamentais:
+- Roda na **camada de aplicação** usando **TCP** na **porta 80**
+- **Orientado à conexão**: uma conexão TCP precisa ser estabelecida antes de qualquer troca
+- **Sem estado (stateless)**: o servidor não guarda informações entre requisições (o mecanismo de cookies resolve isso)
+
+#### Conexões não persistentes × persistentes
+
+| Tipo | Comportamento | Versão |
+|---|---|---|
+| **Não persistente** | Uma nova conexão TCP para cada objeto solicitado | HTTP < 1.1 |
+| **Persistente** | A conexão fica aberta para múltiplas solicitações | HTTP 1.1 (padrão) |
+
+Na conexão **não persistente**, se uma página tem N imagens no mesmo servidor, são necessárias N+1 conexões TCP — cada uma com seu handshake de 3 vias. Isso gera alta carga computacional e latência. A conexão **persistente** resolve isso reaproveita a mesma conexão TCP, economizando tempo e recursos.
+
+#### Formato das mensagens HTTP
+
+**Mensagem de pedido (Request):**
+```
+GET /pagina.html HTTP/1.1          ← Linha de solicitação (método + URL + versão)
+Accept: text/html                  ← Linhas de cabeçalho
+Accept-language: pt-BR
+                                   ← Linha em branco
+(corpo — presente em PUT e POST)
+```
+
+**Mensagem de resposta (Response):**
+```
+HTTP/1.1 200 OK                    ← Linha de estado (versão + código + frase)
+Date: Mon, 10-Jan-2011 13:15:14    ← Linhas de cabeçalho
+Content-type: text/html
+Content-length: 2048
+                                   ← Linha em branco
+(corpo do documento)
+```
+
+#### Métodos HTTP
+
+| Método | Ação |
+|---|---|
+| `GET` | Solicita um documento ao servidor |
+| `HEAD` | Solicita apenas as informações do cabeçalho (sem o corpo) |
+| `PUT` | Envia um documento do cliente para o servidor |
+| `POST` | Envia informações ao servidor para adicionar ou modificar |
+| `TRACE` | Ecoa o pedido recebido — usado para depuração |
+| `DELETE` | Remove uma página Web no servidor |
+| `OPTIONS` | Consulta as opções disponíveis para um recurso |
+
+#### Códigos de estado da resposta
+
+| Faixa | Significado | Exemplos |
+|---|---|---|
+| **1xx** | Informativo | `100 Continue` |
+| **2xx** | Sucesso | `200 OK`, `204 No Content` |
+| **3xx** | Redirecionamento | `301 Moved Permanently`, `304 Not Modified` |
+| **4xx** | Erro no cliente | `401 Unauthorized`, `404 Not Found` |
+| **5xx** | Erro no servidor | `501 Not Implemented`, `503 Service Unavailable` |
+
+---
+
+### Cookies
+
+A Web foi projetada como **sem estado** — o servidor não lembra de um pedido para outro. Cookies foram criados para suprir essa limitação quando a Web passou a incluir lojas virtuais, portais personalizados e autenticação.
+
+**Como funcionam:**
+
+1. O servidor cria um cookie com informações sobre o cliente e o inclui na resposta (`Set-Cookie: ID`)
+2. O navegador armazena o cookie em um arquivo local organizado por domínio
+3. A cada novo pedido para aquele servidor, o navegador inclui o cookie automaticamente (`Cookie: ID`)
+4. O servidor reconhece o cliente e recupera o estado da sessão
+
+O conteúdo do cookie **nunca é lido pelo navegador nem exibido ao usuário** — é enviado pelo servidor e devolvido ao servidor.
+
+**Usos típicos:** carrinhos de compras, autenticação de usuários, portais personalizados, rastreamento por agências de publicidade.
+
+---
+
+### Servidor proxy
+
+Um **servidor proxy** mantém um cache de respostas a pedidos recentes. Quando um cliente faz uma solicitação:
+
+1. O pedido vai ao proxy
+2. Se o proxy tem a resposta em cache → devolve diretamente ao cliente
+3. Se não tem → age como cliente, busca no servidor original, armazena no cache e repassa ao cliente
+
+**Benefícios:** reduz a carga no servidor original, diminui o tráfego de rede e melhora a latência.
+
+O proxy funciona ao mesmo tempo como servidor (para os clientes da rede) e como cliente (para os servidores externos). Pode ser instalado em cascata: no próprio computador do usuário, na LAN corporativa ou no ISP.
+
+**HTTPS:** o HTTP padrão não oferece segurança. Quando executado sobre **SSL/TLS**, passa a se chamar **HTTPS**, garantindo confidencialidade, autenticação e integridade dos dados.
+
+---
+
+<Callout type="warning">
+**Atenção — conteúdo desatualizado**
+
+O livro (Forouzan & Mosharraf, 2013) tem mais de uma década e vários pontos já não refletem a realidade atual:
+
+- **HTTP/1.1 não é mais "a versão mais atual"**: o **HTTP/2** (2015) introduziu multiplexação de streams e compressão de cabeçalhos; o **HTTP/3** (2022) substituiu o TCP pelo protocolo QUIC (UDP), reduzindo ainda mais a latência
+- **Java applets** para documentos ativos estão **extintos**: foram removidos de todos os browsers entre 2017 e 2019; hoje JavaScript e WebAssembly são os padrões
+- **CGI** como tecnologia dinâmica é **obsoleto**: substituído por Node.js, Python (Django/FastAPI), Ruby on Rails, PHP moderno etc.
+- **Internet Explorer e Netscape Navigator** entre os browsers citados: o IE foi aposentado em 2022; o Netscape deixou de existir em 2008
+- **Apache vs IIS** — o livro os apresenta como as únicas opções: o **Nginx** ultrapassou o IIS em market share e hoje rivaliza com o Apache; servidores modernos como **Caddy** automatizam HTTPS
+- **Cookies sem regulamentação**: o livro não menciona privacidade; hoje há LGPD (Brasil) e GDPR (Europa) que impõem restrições ao uso de cookies de rastreamento
+</Callout>
+
+### Práticas Modernas
+
+**HTTP/2 e HTTP/3**
+As versões modernas do HTTP resolvem limitações que o livro trata como problemas em aberto:
+
+- **HTTP/2**: uma única conexão TCP com múltiplos streams paralelos (multiplexação) — elimina a necessidade de abrir várias conexões para carregar recursos de uma página
+- **HTTP/3 / QUIC**: usa UDP em vez de TCP, eliminando o *head-of-line blocking* e reduzindo latência em redes instáveis (móvel, Wi-Fi com perda de pacote)
+
+**HTTPS como padrão, não exceção**
+Hoje todos os sites devem usar HTTPS. Navegadores marcam sites HTTP como "Não seguro"; o Google penaliza sites sem HTTPS no ranking de busca. Ferramentas como **Let's Encrypt** oferecem certificados TLS gratuitos e automáticos.
+
+**Documentos ativos: JavaScript e WebAssembly**
+Java applets foram extintos. O padrão atual para código ativo no cliente é:
+
+- **JavaScript** — linguagem nativa do browser, com frameworks como React, Vue e Angular criando SPAs (Single Page Applications)
+- **WebAssembly (WASM)** — bytecode de alta performance executado no browser, permite portar código C/C++/Rust para a web
+
+**Service Workers e cache offline**
+Uma evolução moderna do servidor proxy: **Service Workers** são scripts JavaScript que interceptam requisições no próprio browser, podendo servir conteúdo do cache mesmo sem conexão à internet — base das PWAs (Progressive Web Apps).
+
+**CDN como proxy distribuído**
+Redes de entrega de conteúdo (**CDN** — Content Delivery Network) são a evolução em escala global do servidor proxy: dezenas ou centenas de servidores distribuídos pelo mundo entregam o conteúdo ao usuário a partir do servidor geograficamente mais próximo.
+
+**Cookies modernos e privacidade**
+As flags de segurança `HttpOnly`, `Secure` e `SameSite` tornaram-se obrigatórias em cookies de sessão. Cookies de rastreamento de terceiros estão sendo extintos pelos browsers em nome da privacidade — e substituídos por alternativas como o **Privacy Sandbox** do Google.
+
+**DevTools do browser**
+Para inspecionar tráfego HTTP na prática, hoje ninguém precisa do Wireshark: a aba **Network** das DevTools (F12) de qualquer browser moderno mostra todas as requisições, cabeçalhos, cookies, tempo de resposta e códigos de estado em tempo real.
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A Web foi proposta por **Tim Berners-Lee em 1989** no CERN; a Web comercial surgiu no início dos anos 1990.
+- Uma **URL** tem quatro partes: **protocolo**, **host**, **porta** e **caminho** — nessa ordem.
+- A porta padrão do HTTP é **80**; a do HTTPS é **443**.
+- Navegadores têm três partes: **controlador**, **protocolos cliente** e **interpretadores**.
+- **Documentos estáticos**: conteúdo fixo definido na criação; **dinâmicos**: gerados no servidor a cada pedido; **ativos**: programa/script executado no cliente.
+- HTTP usa **TCP** na **porta 80** e é um protocolo **sem estado (stateless)**.
+- **Conexão não persistente**: nova conexão TCP para cada objeto — alta carga; **persistente** (HTTP 1.1): reaprovei ta a mesma conexão — padrão atual.
+- Mensagem de pedido: **linha de solicitação** (método + URL + versão) + cabeçalho + corpo.
+- Mensagem de resposta: **linha de estado** (versão + código + frase) + cabeçalho + corpo.
+- Faixas de códigos de estado: 2xx = sucesso, 3xx = redirecionamento, 4xx = erro do **cliente**, **5xx = erro do servidor**.
+- `GET` solicita; `POST` envia dados; `PUT` publica documento; `HEAD` pede só o cabeçalho; `DELETE` remove.
+- **Cookies** permitem que um servidor "sem estado" mantenha sessão — o cookie é criado e lido pelo servidor, não pelo usuário.
+- **Servidor proxy** = cache de respostas recentes → reduz carga no servidor original e melhora latência.
+- **HTTPS** = HTTP sobre SSL/TLS → garante confidencialidade, autenticação e integridade.
+- Erro de servidor = faixa **5xx** (ex: 501 Não implementado, 503 Serviço indisponível).
+- Para melhorar o desempenho de acesso à Web numa rede corporativa, usa-se um **servidor proxy**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- FOROUZAN, B. A.; MOSHARRAF, F. *Redes de computadores: uma abordagem top-down*. Porto Alegre: AMGH, 2013.
+- TANENBAUM, A. S.; WETHERALL, D. J. *Redes de computadores*. 5. ed. São Paulo: Pearson, 2011.
+- MDN Web Docs. *HTTP*. Mozilla Foundation. Disponível em: https://developer.mozilla.org/pt-BR/docs/Web/HTTP
