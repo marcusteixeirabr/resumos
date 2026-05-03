@@ -1,0 +1,154 @@
+---
+title: "UA4 — Projeto de Banco de Dados"
+subtitle: "Do requisito ao banco real: as seis etapas do projeto de BD e os fundamentos do modelo Entidade-Relacionamento."
+ua: 4
+group: "Projeto de BD"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Etapas do projeto de banco de dados
+
+O projeto de um banco de dados raramente existe de forma isolada — ele faz parte de um projeto maior de software. O processo é dividido em seis etapas:
+
+| Etapa | O que acontece |
+|---|---|
+| **1. Análise de Requisitos** | Levantamento informal do que deve ser armazenado: entrevistas com usuários, estudo do ambiente operacional e documentação existente. Identifica regras de negócio. |
+| **2. Projeto Conceitual** | Produz um esquema de alto nível — independente de SGBD — usando o modelo ER. O objetivo é uma descrição que todos os envolvidos (técnicos e não técnicos) consigam entender. |
+| **3. Projeto Lógico** | Converte o esquema ER em um esquema relacional: tabelas, colunas, chaves primárias e estrangeiras. O resultado é o **esquema lógico**. |
+| **4. Refinamento do Esquema** | Analisa as relações obtidas e refina problemas em potencial por meio de **normalização** — teoria que reestrutura relações para garantir propriedades desejáveis. |
+| **5. Projeto Físico** | Considera a carga de trabalho esperada e refina o projeto para desempenho: criação de índices, agrupamento de tabelas, ajustes de armazenamento. |
+| **6. Projeto de Aplicativos e Segurança** | Identifica entidades, processos e papéis do sistema; define quais partes do BD cada papel pode acessar e implementa as regras de acesso no SGBD. |
+
+O modelo ER é central nas três primeiras etapas. As etapas não são rígidas em cascata — projetos reais intercalam e repetem fases até atingir um resultado satisfatório.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/pbd_01.webp" alt="Ciclo de vida do projeto de banco de dados" caption="Infográfico: as quatro fases principais do ciclo de vida do projeto de BD — da análise de requisitos ao projeto físico" />
+</SlidesGrid>
+
+---
+
+### O modelo Entidade-Relacionamento (ER)
+
+O modelo ER permite descrever os dados de uma organização em termos de **objetos e seus relacionamentos**. É usado principalmente na etapa de projeto conceitual para criar uma representação de alto nível antes de qualquer decisão sobre SGBD.
+
+#### Entidades e conjuntos de entidades
+
+Uma **entidade** é um objeto do mundo real distinguível dos demais. Um **conjunto de entidades** é uma coleção de entidades semelhantes. Conjuntos de entidades não precisam ser disjuntos: um funcionário pode pertencer ao conjunto de funcionários do departamento A e ao do departamento B ao mesmo tempo.
+
+#### Atributos, domínio e chave primária
+
+Cada entidade é descrita por um conjunto de **atributos**. Todas as entidades de um mesmo conjunto compartilham os mesmos atributos.
+
+- **Domínio**: conjunto de valores possíveis para um atributo. Exemplo: o domínio do atributo `nome` pode ser cadeias de até 20 caracteres; o domínio de `avaliação` pode ser inteiros de 1 a 10.
+- **Chave primária**: conjunto mínimo de atributos cujos valores identificam unicamente uma entidade no conjunto. Pode haver mais de uma chave candidata; uma delas é designada como primária.
+
+No diagrama ER, conjuntos de entidades são representados por retângulos, atributos por ovais, e os atributos da chave primária são **sublinhados**.
+
+**Exemplo — conjunto de entidades `Funcionários`:**
+
+```
+[ Funcionários ] — atributos: cpf (PK), nome, vaga
+```
+
+#### Relacionamentos e conjuntos de relacionamentos
+
+Um **relacionamento** é uma associação entre duas ou mais entidades. Um **conjunto de relacionamentos** agrupa relacionamentos semelhantes.
+
+Relacionamentos também podem ter **atributos descritivos**: registram informações sobre a associação, não sobre as entidades em si. Exemplo: o relacionamento `Trabalha_em` entre `Funcionários` e `Departamentos` pode ter o atributo `desde` (data de início do vínculo).
+
+**Exemplo — conjunto de relacionamentos `Trabalha_em`:**
+
+```
+[ Funcionários ] — (Trabalha_em) — [ Departamentos ]
+                         |
+                       desde
+```
+
+Cada relacionamento em `Trabalha_em` é identificado unicamente pela combinação de `cpf` (funcionário) e `id-depto` (departamento): não pode haver dois valores de `desde` para o mesmo par.
+
+#### Instância de um conjunto de relacionamentos
+
+Uma **instância** é um "retrato" do conjunto de relacionamentos em um determinado momento — o conjunto de todos os relacionamentos existentes naquele instante.
+
+---
+
+<Callout type="warning">
+**Atenção — material antigo**
+
+O livro desta UA (Ramakrishnan & Gehrke, 2003; tradução 2008) tem mais de 20 anos. Alguns pontos merecem atenção:
+
+- As ferramentas citadas (Sybase PowerDesigner, Oracle Designer com URLs da época) estão descontinuadas ou completamente substituídas
+- A visão de projeto em seis etapas sequenciais é didática, mas projetos reais raramente seguem esse fluxo em cascata — abordagens ágeis e iterativas são a norma
+- O modelo ER descrito é uma das muitas variantes: não há padrão universal, e ferramentas diferentes usam notações ligeiramente distintas (Crow's Foot, Chen, UML)
+- A menção à UML como alternativa ao ER é datada: UML de classe ainda é usada, mas o foco em diagramas de banco de dados migrou para ferramentas especializadas
+</Callout>
+
+### Práticas Modernas
+
+**Ferramentas modernas de modelagem ER**
+Em vez das ferramentas clássicas citadas no livro, o mercado usa hoje:
+
+- **dbdiagram.io** — modelagem ER como código (DBML), gera SQL diretamente
+- **draw.io / Lucidchart** — diagramas visuais colaborativos com suporte a notação Crow's Foot
+- **DBeaver / DataGrip** — integram modelagem e gerenciamento do BD no mesmo ambiente
+- **ERDPlus** — gratuito, focado em ensino, suporta notações Chen e Crow's Foot
+
+**ER como código (DBML)**
+Manter o modelo ER em texto versionável no repositório é a prática atual:
+
+```dbml
+Table funcionarios {
+  cpf       int     [primary key]
+  nome      varchar
+  vaga      int
+}
+
+Table departamentos {
+  id_depto  int     [primary key]
+  nome_depto varchar
+  orcamento int
+}
+
+Table trabalha_em {
+  cpf       int     [ref: > funcionarios.cpf]
+  id_depto  int     [ref: > departamentos.id_depto]
+  desde     date
+}
+```
+
+**Projeto ágil de BD**
+As seis etapas do livro são úteis como referência, mas projetos ágeis usam ciclos curtos:
+
+1. Modelagem conceitual rápida (esboço ER)
+2. Esquema lógico mínimo — apenas o necessário para a sprint atual
+3. Migration versionada (Flyway, Liquibase, Alembic) aplicada automaticamente no CI/CD
+4. Refinamento incremental à medida que os requisitos evoluem
+
+**Domain-Driven Design (DDD)**
+Em arquiteturas modernas, o esquema do BD emerge do **domínio da aplicação** — as entidades do modelo ER espelham as classes do domínio de negócio. ORMs como **Prisma**, **SQLAlchemy** e **Hibernate** sincronizam os dois mundos automaticamente.
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O projeto de BD é dividido em **seis etapas**: Análise de Requisitos → Projeto Conceitual → Projeto Lógico → Refinamento do Esquema → Projeto Físico → Projeto de Aplicativos e Segurança.
+- **Análise de Requisitos**: entrevistas, estudo do ambiente, identificação das regras de negócio — é a etapa mais informal.
+- **Projeto Conceitual**: usa o modelo ER e produz o esquema conceitual (alto nível, independente de SGBD).
+- **Projeto Lógico**: converte o ER em esquema relacional — tabelas, colunas, chaves, detalhes do SGBD escolhido.
+- **Projeto Físico**: etapa final com detalhes técnicos de armazenamento, scripts DDL e ajuste de performance — fortemente ligada ao SGBD.
+- **Refinamento do Esquema**: aplica normalização para eliminar redundâncias e anomalias.
+- **Entidade** = objeto do mundo real; **Conjunto de entidades** = coleção de entidades semelhantes.
+- **Atributo** descreve propriedades de uma entidade; **Domínio** é o conjunto de valores possíveis para um atributo.
+- **Chave primária** = conjunto mínimo de atributos que identifica unicamente uma entidade.
+- **Relacionamento** = associação entre entidades; pode ter **atributos descritivos** próprios.
+- No diagrama ER: entidades em retângulos, atributos em ovais, atributos da PK são sublinhados.
+- **Big Data** refere-se a volumes massivos de dados não estruturados (redes sociais, IoT, logs) — um CRM de uma empresa específica não é Big Data, pois seus dados são estruturados e controlados.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2011.
+- HEUSER, C. A. *Projeto de banco de dados*. 6. ed. Porto Alegre: Bookman, 2009.
+- SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. *Sistema de banco de dados*. 6. ed. Rio de Janeiro: Elsevier, 2012.
