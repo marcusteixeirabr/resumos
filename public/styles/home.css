@@ -386,6 +386,29 @@ header nav a:hover { color: var(--text); }
   transform: translateX(4px);
 }
 
+/* ── Disclaimer ── */
+.disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  margin-top: 2.5rem;
+  padding: .85rem 1.1rem;
+  background: rgba(255,255,255,.03);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  font-size: .78rem;
+  line-height: 1.65;
+}
+
+.disclaimer svg {
+  flex-shrink: 0;
+  margin-top: .15rem;
+  opacity: .65;
+}
+
+.disclaimer p { margin: 0; }
+
 /* ── Footer ── */
 footer {
   border-top: 1px solid var(--border);
@@ -486,6 +509,11 @@ html[data-theme="light"] .hero-badge {
 
 html[data-theme="light"] footer { border-top-color: var(--border); }
 
+html[data-theme="light"] .disclaimer {
+  background: rgba(0,14,77,.025);
+  border-color: var(--border);
+}
+
 html[data-theme="light"] .hero-glow-1 {
   background: radial-gradient(ellipse, rgba(9,105,218,.1), transparent 70%);
 }
@@ -507,4 +535,5 @@ html[data-theme="light"] .hero-glow-3 {
   html:not([data-theme="dark"]) .chip { background: rgba(0,14,77,.05); border-color: rgba(0,14,77,.08); }
   html:not([data-theme="dark"]) .hero-meta { background: rgba(255,255,255,.7); }
   html:not([data-theme="dark"]) footer { border-top-color: var(--border); }
+  html:not([data-theme="dark"]) .disclaimer { background: rgba(0,14,77,.025); border-color: var(--border); }
 }
