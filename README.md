@@ -15,7 +15,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 |---|---|---|
 | **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
 | **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
-| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM | 🟡 4/16 UAs em andamento |
+| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM | 🟡 5/16 UAs em andamento |
 | **Database Design for Apps** | Conceitos de banco de dados, tipos (relacional, hierárquico, em rede, objeto-relacional), modelagem e linguagens SQL, arquitetura de BD, SGBDs | 🟡 5/16 UAs em andamento |
 
 ### Trimestres anteriores

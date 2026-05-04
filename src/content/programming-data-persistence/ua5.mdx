@@ -1,0 +1,201 @@
+---
+title: "UA5 — JavaScript XMLHttpRequest e API Web"
+subtitle: "Como o navegador troca dados com o servidor sem recarregar a página — do objeto XMLHttpRequest às APIs Web modernas."
+ua: 5
+group: "Desenvolvimento Web"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Objeto XMLHttpRequest
+
+O **XMLHttpRequest** é um objeto JavaScript que permite a troca de dados entre cliente e servidor sem recarregar a página. A ideia central é simples: atualizar partes de uma página Web dinamicamente, sem precisar de uma nova requisição completa ao servidor.
+
+Foi criado pela Microsoft para o Internet Explorer 4.0 e, com o tempo, todos os demais browsers — Firefox, Safari, Opera, Chrome — o implementaram. Hoje é suportado nativamente por todos os navegadores modernos.
+
+---
+
+### Criando um objeto XMLHttpRequest
+
+A criação é direta — basta instanciar o construtor:
+
+```javascript
+var xhttp = new XMLHttpRequest();
+```
+
+A partir da instância, todos os métodos e propriedades do objeto ficam disponíveis.
+
+---
+
+### Métodos
+
+| Método | Descrição |
+|---|---|
+| `new XMLHttpRequest()` | Cria um novo objeto XMLHttpRequest. |
+| `open(method, url, async, user, psw)` | Configura a requisição: tipo (GET/POST), URL, modo assíncrono/síncrono e credenciais opcionais. |
+| `send()` | Envia a requisição ao servidor (GET). |
+| `send(string)` | Envia a requisição com dados no corpo (POST). |
+| `abort()` | Cancela uma requisição em andamento. |
+| `setRequestHeader()` | Adiciona um par chave/valor ao cabeçalho da requisição. |
+| `getAllResponseHeaders()` | Retorna todas as informações do cabeçalho da resposta. |
+| `getResponseHeader()` | Retorna um campo específico do cabeçalho da resposta. |
+
+---
+
+### Propriedades
+
+| Propriedade | Descrição |
+|---|---|
+| `onreadystatechange` | Define a função callback a ser chamada sempre que `readyState` mudar. |
+| `readyState` | Estado atual da requisição (0 a 4 — veja tabela abaixo). |
+| `responseText` | Resposta do servidor como string de texto. |
+| `responseXML` | Resposta do servidor como documento XML. |
+| `status` | Código HTTP numérico da resposta (ex.: `200`, `404`). |
+| `statusText` | Código e texto juntos (ex.: `200 OK`, `404 Not Found`). |
+
+#### readyState — os 5 estados
+
+| Valor | Significado |
+|---|---|
+| `0` | Solicitação não inicializada — objeto criado, mas `open()` ainda não foi chamado. |
+| `1` | Conexão com o servidor estabelecida — `open()` foi chamado. |
+| `2` | Solicitação recebida pelo servidor — `send()` foi chamado e o servidor respondeu os cabeçalhos. |
+| `3` | Solicitação em processamento — o servidor está transmitindo a resposta. |
+| `4` | Solicitação concluída — resposta pronta para ser lida. |
+
+O callback `onreadystatechange` é disparado a cada mudança de estado. Na prática, verifica-se sempre `readyState === 4 && status === 200` antes de processar a resposta.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gjx_01.webp" alt="JavaScript XMLHttpRequest: Dinamismo na Web" caption="Infográfico: fundamentos do XMLHttpRequest, fluxo da requisição (open → send → onreadystatechange), métodos GET vs. POST e os 5 valores do readyState." />
+</SlidesGrid>
+
+---
+
+### Enviando requisições: GET e POST
+
+A forma mais direta de fazer uma requisição é combinar `open()` com `send()`:
+
+```javascript
+// GET — busca um recurso no servidor
+xhttp.open("GET", "dados.txt", true);
+xhttp.send();
+
+// POST — envia dados ao servidor
+xhttp.open("POST", "processa.php", true);
+xhttp.send("nome=Marcus&curso=ADS");
+```
+
+Os parâmetros do `open()`:
+- **method** — `"GET"` ou `"POST"`;
+- **url** — caminho do arquivo ou endpoint no servidor;
+- **async** — `true` para assíncrono (recomendado); `false` para síncrono (bloqueia a UI).
+
+**GET vs. POST:**
+
+| | GET | POST |
+|---|---|---|
+| Uso típico | Buscar dados simples | Enviar volumes maiores de dados ou dados sensíveis |
+| Dados na URL | Sim (parâmetros visíveis) | Não (dados no corpo da requisição) |
+| Cache | Pode ser cacheado | Não é cacheado |
+
+---
+
+### APIs Web
+
+Uma **API** (*Application Programming Interface*) é um conjunto de construções que permite usar funcionalidades complexas por meio de uma sintaxe simples. As APIs Web do JavaScript se dividem em duas categorias:
+
+**APIs de navegadores** — integradas ao browser, expõem recursos do ambiente:
+- Web Audio API — manipulação de áudio (alterar volume, aplicar efeitos);
+- Geolocation API — localização do dispositivo;
+- Canvas API — desenho e gráficos 2D/3D;
+- DOM API — manipulação da estrutura da página.
+
+**APIs de terceiros** — fornecidas por serviços externos; o código precisa ser carregado de outro servidor:
+- API do Twitter/X — busca e exibe tweets;
+- API do Google Maps — exibe mapas e rotas;
+- APIs REST de backend — endpoints que retornam dados em JSON.
+
+As APIs que fazem uso do XMLHttpRequest internamente atualizam pequenas seções da página de forma independente — sem recarregamento completo — e são a base do que ficou conhecido como **AJAX** (*Asynchronous JavaScript and XML*).
+
+---
+
+### Construindo uma aplicação com XMLHttpRequest
+
+Um padrão clássico de uso: uma página carrega o conteúdo de outra página via XMLHttpRequest ao clicar em um link, sem navegação completa.
+
+**Estrutura:**
+- `pagina.html` — conteúdo a ser carregado;
+- `principal.html` — página principal que faz a requisição.
+
+**JavaScript em `principal.html`:**
+
+```javascript
+function getXmlHttpRequest() {
+  return new XMLHttpRequest();
+}
+
+function alteraURL(url) {
+  var xmlhttp = getXmlHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+      document.getElementById("conteudo").innerHTML = xmlhttp.responseText;
+    }
+  };
+
+  xmlhttp.open("GET", url, true);
+  xmlhttp.send();
+}
+```
+
+O link dispara `alteraURL("pagina.html")`. O XMLHttpRequest busca o conteúdo de `pagina.html` e, ao concluir (`readyState === 4`, `status === 200`), injeta o HTML no `<div id="conteudo">` da página principal.
+
+---
+
+<Callout type="warning">
+**Material baseado em tecnologia legada.** O livro (*Programação Back-End III*, Pedro Henrique Chagas Freitas) usa XMLHttpRequest "cru", sem abstrações. Na prática atual, o XMLHttpRequest foi amplamente substituído pela **Fetch API** (ES6, 2015), que é mais simples, baseada em Promises e nativa em todos os browsers modernos. O livro ainda cita suporte ao Internet Explorer — descontinuado pela Microsoft em junho de 2022. O modo síncrono (`async: false`) é considerado obsoleto e gera aviso nos browsers atuais, pois trava a thread principal da UI.
+</Callout>
+
+### Práticas Modernas
+
+- **Fetch API** — substituto nativo e moderno do XMLHttpRequest. Sintaxe baseada em Promises, muito mais legível:
+  ```javascript
+  fetch("dados.json")
+    .then(res => res.json())
+    .then(data => console.log(data));
+  ```
+- **async/await** — açúcar sintático sobre Promises que torna o código assíncrono tão legível quanto síncrono:
+  ```javascript
+  async function carregaDados() {
+    const res = await fetch("dados.json");
+    const data = await res.json();
+    console.log(data);
+  }
+  ```
+- **Axios** — biblioteca popular que abstrai Fetch/XMLHttpRequest, adiciona interceptors, transforma JSON automaticamente e simplifica o tratamento de erros.
+- **JSON como formato padrão** — o livro menciona `responseXML`, mas JSON substituiu XML como formato dominante para troca de dados em APIs Web. `responseText` + `JSON.parse()` (ou Fetch com `.json()`) é o padrão atual.
+- **REST e GraphQL** — arquiteturas de API modernas. REST usa verbos HTTP (GET, POST, PUT, DELETE) sobre recursos com URLs semânticas; GraphQL permite consultas flexíveis e reduz over-fetching.
+- **CORS** (*Cross-Origin Resource Sharing*) — mecanismo de segurança do browser que restringe requisições a domínios diferentes do de origem. Toda requisição XHR/Fetch para uma API de terceiro passa por esse controle; o servidor precisa enviar os cabeçalhos `Access-Control-Allow-Origin` corretos.
+- **Service Workers** — interceptam requisições de rede no browser para cache offline, push notifications e estratégias de resiliência (PWA).
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- XMLHttpRequest serve para **atualizar partes da página sem recarregá-la** (questão 1 — resposta: C).
+- O método para **cancelar** uma requisição é `abort()` (questão 2 — resposta: E).
+- A combinação para enviar requisições é `open()` + `send()` (questão 3 — resposta: B).
+- As duas categorias de APIs Web são **APIs de navegadores** e **APIs de terceiros** (questão 4 — resposta: A).
+- Os estados do `readyState` são: **0** = não inicializado, **1** = conexão estabelecida, **2** = solicitação recebida, **3** = em processamento, **4** = concluída (questão 5 — resposta: C).
+- O terceiro argumento de `open()` é o `async`: `true` = assíncrono, `false` = síncrono.
+- `onreadystatechange` é o evento disparado a cada mudança de estado — sempre verificar `readyState === 4 && status === 200` antes de usar a resposta.
+</Callout>
+
+---
+
+### Referências
+
+- FREITAS, P. H. C. *Programação back-end III*. Porto Alegre: SAGAH, [s.d.]. Cap. JavaScript XMLHttpRequest e API Web.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed. Porto Alegre: AMGH, 2011.
