@@ -1,0 +1,214 @@
+---
+title: "UA6 — Servlets Web"
+subtitle: "Como Java gera páginas dinâmicas no servidor — do CGI legado ao servlet moderno com HttpServlet, ciclo de vida e processamento de formulários."
+ua: 6
+group: "Desenvolvimento Web"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que são Servlets?
+
+Um **servlet** é uma classe Java executada no lado do servidor. Seu papel é receber requisições HTTP vindas de um cliente (normalmente um navegador), processá-las e devolver uma resposta — geralmente HTML gerado dinamicamente.
+
+O nome vem de *serv*er + app*let*: a ideia de um "pequeno servidor". Como Java é orientada a objetos, um servlet é simplesmente um objeto de uma classe Java que implementa a interface `Servlet` (direta ou indiretamente via herança de `HttpServlet`).
+
+---
+
+### Contexto histórico: de CGI aos Servlets
+
+A web nasceu com conteúdo **estático** (HTML puro). Para gerar conteúdo dinâmico, a primeira tecnologia amplamente usada foi o **CGI** (*Common Gateway Interface*):
+
+- O servidor web inicia um **novo processo** para cada requisição recebida.
+- Criar processos é caro: consome CPU e memória.
+- CGI tem pouca escalabilidade — um site popular rapidamente sobrecarrega o servidor.
+
+A tecnologia Java Servlet foi criada para superar essas limitações:
+
+| Aspecto | CGI | Servlet |
+|---|---|---|
+| Instâncias | Um processo por requisição | Uma instância reutilizada em memória |
+| Linguagem | Qualquer (Perl, C…) | Java (portável, robusto) |
+| Escalabilidade | Baixa | Alta |
+| Gerenciamento | Manual | Pelo contêiner servlet (ex.: Tomcat) |
+
+---
+
+### Benefícios dos Servlets
+
+- **Desempenho** — o servlet permanece residente na memória após a primeira carga; não é criado um processo novo a cada requisição.
+- **Portabilidade** — como qualquer programa Java, roda em qualquer sistema operacional sem mudanças.
+- **Ciclo de desenvolvimento rápido** — acesso a todo o ecossistema de bibliotecas Java.
+- **Robustez** — gerenciado pela JVM: sem vazamentos de memória, sem necessidade de coleta de lixo manual.
+- **Aceitação ampla** — padrão Java EE/Jakarta EE, suportado por múltiplos fornecedores e contêineres.
+
+---
+
+### O Contêiner Servlet
+
+Os servlets **não são executados diretamente** — eles precisam de um ambiente chamado **contêiner servlet** (também chamado de *servlet container* ou *servidor de aplicação*). É ele quem:
+
+1. Recebe a requisição HTTP do cliente.
+2. Encontra qual servlet deve tratá-la (pelo mapeamento de URL).
+3. Instancia e inicializa o servlet (se necessário).
+4. Invoca o método de serviço do servlet com os objetos de requisição e resposta.
+5. Envia a resposta de volta ao cliente.
+
+O contêiner mais popular é o **Apache Tomcat**, que também funciona como servidor web básico.
+
+---
+
+### Ciclo de Vida de um Servlet
+
+O ciclo de vida é controlado pelo contêiner e segue três etapas:
+
+1. **`init()`** — chamado uma única vez, quando o servlet é carregado pela primeira vez. Usado para inicializar recursos (abrir conexões, carregar configurações).
+2. **`service()`** — chamado pelo contêiner a cada requisição, passando os objetos `ServletRequest` e `ServletResponse`. Na `HttpServlet`, este método despacha para `doGet()`, `doPost()` etc.
+3. **`destroy()`** — chamado quando o contêiner remove o servlet. Libera recursos (fecha conexões, grava logs).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gsw_01.webp" alt="Dominando Java Servlets: O Coração da Web Dinâmica" caption="Infográfico: fundamentos e vantagens dos servlets (CGI vs Servlet, portabilidade, robustez), fluxo de funcionamento no contêiner (Tomcat), ciclo de vida (init → service → destroy) e diferença entre doGet e doPost." />
+</SlidesGrid>
+
+---
+
+### Pacotes da API Servlet
+
+A API Servlet é distribuída em quatro pacotes principais:
+
+| Pacote | Conteúdo |
+|---|---|
+| `jakarta.servlet` | Classes e interfaces genéricas — contrato entre servlet e contêiner. |
+| `jakarta.servlet.http` | Classes e interfaces específicas para HTTP (`HttpServlet`, `HttpServletRequest`, `HttpServletResponse`). |
+| `jakarta.servlet.annotation` | Anotações como `@WebServlet`, `@WebFilter`, `@WebListener`. |
+| `jakarta.servlet.descriptor` | Tipos para acesso a informações de configuração da aplicação web. |
+
+---
+
+### A Classe HttpServlet
+
+Para criar um servlet HTTP, a prática é estender `HttpServlet` e sobrescrever os métodos correspondentes aos verbos HTTP que a classe precisa tratar:
+
+| Método | Verbo HTTP | Uso típico |
+|---|---|---|
+| `doGet()` | GET | Buscar e exibir dados |
+| `doPost()` | POST | Enviar dados de formulário |
+| `doPut()` | PUT | Atualizar um recurso |
+| `doDelete()` | DELETE | Remover um recurso |
+| `doHead()` | HEAD | Cabeçalhos sem corpo |
+
+Os objetos `HttpServletRequest` e `HttpServletResponse` encapsulam a requisição e a resposta, poupando o desenvolvedor de manipular dados HTTP brutos.
+
+---
+
+### Exemplo Básico — "Hello World"
+
+```java
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import jakarta.servlet.ServletException;
+
+@WebServlet("/MeuServlet")
+public class MeuServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+                         throws ServletException, IOException {
+        response.getWriter().append("Hello World!");
+    }
+}
+```
+
+- A anotação `@WebServlet("/MeuServlet")` define a URL de acesso: `http://localhost:8080/MinhaApp/MeuServlet`.
+- A classe estende `HttpServlet` e sobrescreve `doGet()`.
+- `request` traz os dados da requisição; `response` é usado para enviar a resposta.
+
+---
+
+### Lendo Dados de Formulários HTML
+
+Um padrão muito comum é um formulário HTML que envia dados via POST para um servlet, que os processa e devolve uma resposta.
+
+**Formulário HTML:**
+
+```html
+<form name="formCadastro" method="post" action="CadastroCliente">
+    Código:  <input type="text" name="codigo" /><br/>
+    Nome:    <input type="text" name="nome" /><br/>
+    Contato: <input type="text" name="contato" /><br/>
+    <input type="submit" value="Cadastrar Cliente" />
+</form>
+```
+
+**Servlet `CadastroCliente`:**
+
+```java
+@WebServlet("/CadastroCliente")
+public class CadastroCliente extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+                          throws ServletException, IOException {
+        String codigo  = request.getParameter("codigo");
+        String nome    = request.getParameter("nome");
+        String contato = request.getParameter("contato");
+
+        String resposta = codigo + " - " + nome + " " + contato;
+        response.getWriter().append(resposta);
+    }
+}
+```
+
+`request.getParameter("nomeDoCampo")` retorna o valor do campo HTML cujo atributo `name` corresponde ao argumento passado.
+
+---
+
+<Callout type="warning">
+**Conteúdo parcialmente desatualizado.** O livro (Rafael Leal Martins, *Servlets web*, SAGAH) usa os pacotes `javax.servlet.*` — renomeados para `jakarta.servlet.*` a partir do Jakarta EE 9 (2020), após a transferência da especificação para a Eclipse Foundation. Projetos novos devem usar `jakarta.*`. O material também cita applets Java como precursores — eles foram extintos do Java SE 11 (2018) e estão completamente descontinuados. CGI é obsoleto há décadas. A IDE sugerida (Eclipse) ainda é usada, mas IntelliJ IDEA domina o mercado profissional atualmente.
+</Callout>
+
+### Práticas Modernas
+
+- **Jakarta EE** — nome atual do Java EE. A partir da versão 9 (2020), todos os pacotes `javax.*` foram renomeados para `jakarta.*`. Use sempre `jakarta.servlet.*` em projetos novos.
+- **Spring Boot** — o framework Java mais adotado na indústria. Abstrai completamente os servlets: você escreve controllers com `@RestController` e `@GetMapping`/`@PostMapping`, e o Spring MVC despacha as requisições internamente. Inclui servidor Tomcat/Netty embutido — nenhuma instalação externa necessária.
+  ```java
+  @RestController
+  public class ClienteController {
+      @PostMapping("/clientes")
+      public String cadastrar(@RequestBody Cliente c) {
+          return c.getCodigo() + " - " + c.getNome();
+      }
+  }
+  ```
+- **Quarkus e Micronaut** — frameworks modernos otimizados para containers e GraalVM native image. Inicialização em milissegundos, consumo de memória muito menor que Tomcat tradicional.
+- **APIs REST com JSON** — servlets que geram HTML dinamicamente são raros no desenvolvimento atual. O padrão moderno é separar front-end (React, Vue, Angular) de back-end (API REST em Java) — o servidor retorna JSON, não HTML.
+- **Containers Docker** — o deployment moderno empacota a aplicação + Tomcat (ou servidor embutido) em uma imagem Docker. Não há instalação manual de servidor de aplicação.
+- **Programação reativa** — Spring WebFlux e Vert.x implementam I/O não bloqueante sobre o modelo de servlets, para alta concorrência com menos threads.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Servlet é uma **classe Java** que responde a requisições HTTP — não é um framework nem um servidor (questão 2 — resposta: E).
+- Métodos disponíveis em `HttpServlet`: `doGet()`, `doPost()`, `destroy()` — e também `init()`, `service()`, `doHead()`, `doPut()` etc. (questão 1 — resposta: C).
+- A assinatura correta do `doGet`: `protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException` (questão 3 — resposta: E).
+- O **primeiro** método chamado no ciclo de vida é **`init()`** (questão 4 — resposta: D).
+- Para criar um servlet, a classe deve **estender `HttpServlet`** (não implementar a interface diretamente) (questão 5 — resposta: B).
+- O contêiner mais popular é o **Apache Tomcat**.
+- `request.getParameter("nome")` lê o valor de um campo de formulário HTML pelo atributo `name`.
+- `@WebServlet("/caminho")` define a URL de acesso ao servlet (substitui o mapeamento em `web.xml`).
+</Callout>
+
+---
+
+### Referências
+
+- MARTINS, R. L. *Servlets web*. In: *Programação back-end III*. Porto Alegre: SAGAH, [s.d.].
+- BASHAM, B. *Use a cabeça!: servlets and JSP*. 2. ed. Rio de Janeiro: Alta Books, 2009.
+- KURNIAWAN, B. *Java for the web with servlets, JSP, and EJB*. Indianapolis: New Riders, 2002.
+- JAVA Platform, Enterprise Edition (Java EE) 8: the Java EE tutorial. Java EE, c2017.
