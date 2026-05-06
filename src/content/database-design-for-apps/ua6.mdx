@@ -1,0 +1,216 @@
+---
+title: "UA6 — Linguagem de Definição de Dados (DDL)"
+subtitle: "Como o SQL organiza a criação, alteração e exclusão de estruturas em um banco de dados relacional."
+ua: 6
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é DDL
+
+A **DDL (Data Definition Language)** é a sublinguagem do SQL responsável por **definir estruturas** em um banco de dados: criar tabelas, modificá-las e excluí-las. Ela não manipula dados em si — isso é papel da DML — mas define o esqueleto sobre o qual os dados serão armazenados.
+
+O SQL surgiu nos laboratórios da IBM nos anos 1970 e consolidou-se como a linguagem padrão para bancos de dados relacionais nas décadas seguintes. Por ser **declarativa** (não procedural), o SQL descreve *o que* deve ser feito, não *como* — aproximando a linguagem da lógica do usuário.
+
+---
+
+### Ramificações do SQL
+
+O SQL é dividido em quatro (ou cinco) sublinguagens, cada uma com propósito distinto:
+
+| Sigla | Nome | Responsabilidade |
+|---|---|---|
+| **DDL** | Data Definition Language | Criação, alteração e exclusão de estruturas (tabelas, índices, visões) |
+| **DML** | Data Manipulation Language | Inserção, atualização, exclusão e consulta de dados |
+| **DTL** | Data Transaction Language | Controle de transações (COMMIT, ROLLBACK, SAVEPOINT) |
+| **DCL** | Data Control Language | Permissões de acesso (GRANT, REVOKE) |
+| **DQL** | Data Query Language | Consultas (SELECT) — alguns autores separam do DML |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gel_01.webp" alt="Ciclo de vida da modelagem e linguagens SQL" caption="Infográfico: o ciclo de vida de modelagem e desenvolvimento de BD, com as sublinguagens DDL, DML, DTL e DCL nos níveis de abstração de dados." />
+</SlidesGrid>
+
+---
+
+### Abstração de dados
+
+Para entender onde cada sublinguagem atua, é preciso conhecer os três níveis de abstração de um banco de dados:
+
+| Nível | O que representa |
+|---|---|
+| **Físico** | Como os dados estão armazenados fisicamente no disco. É o nível mais baixo. |
+| **Lógico** | Quais dados existem e quais são seus relacionamentos. Define a estrutura relacional. |
+| **Visão** | Como os dados aparecem para o usuário final — abstrações simplificadas do nível lógico. |
+
+**Independência de dados** é a capacidade de alterar um nível sem impactar o outro:
+- **Independência física** — modificar o esquema físico (ex.: reorganizar armazenamento) sem afetar o esquema lógico.
+- **Independência lógica** — modificar o esquema lógico (ex.: adicionar coluna) sem invalidar as visões dos usuários.
+
+A DDL opera principalmente nos níveis lógico e físico — ela define as tabelas (estrutura lógica) e, ao fazê-lo, determina como os dados serão fisicamente persistidos.
+
+---
+
+### Instruções DDL
+
+As três instruções principais da DDL são:
+
+| Instrução | O que faz |
+|---|---|
+| `CREATE` | Cria uma nova estrutura (tabela, índice, visão, domínio) |
+| `ALTER` | Modifica uma estrutura existente (adiciona/remove colunas, adiciona constraints) |
+| `DROP` | Elimina uma estrutura completamente |
+
+Com a evolução do SQL, dois comandos adicionais foram incorporados:
+- **`TRUNCATE`** — remove todos os registros de uma tabela sem eliminar sua estrutura (mais rápido que `DELETE` sem `WHERE`, pois não registra cada linha removida).
+- **`RENAME`** — renomeia uma estrutura existente.
+
+A DDL também abrange índices e domínios:
+
+```sql
+CREATE INDEX idx_nome ON empregado(nome);   -- cria índice para otimizar buscas
+ALTER INDEX idx_nome RENAME TO idx_emp_nome;
+DROP INDEX idx_nome;
+
+CREATE DOMAIN salario AS DECIMAL(10,2) CHECK (VALUE > 0); -- tipo de dado personalizado
+```
+
+---
+
+### VDL e views
+
+Alguns autores mencionam o **VDL (View Definition Language)** como a parte do DDL dedicada a visões. Uma **VIEW** é uma tabela virtual: ela não armazena dados diretamente, mas exibe o resultado de uma consulta `SELECT` como se fosse uma tabela.
+
+```sql
+CREATE VIEW servidores_ativos AS
+  SELECT nome, cargo FROM servidor_publico WHERE ativo = TRUE;
+
+DROP VIEW servidores_ativos;
+```
+
+As views são úteis para restringir o que cada usuário enxerga no banco, abstraindo a complexidade das tabelas subjacentes.
+
+---
+
+### Exemplos práticos
+
+#### CREATE TABLE
+
+```sql
+CREATE TABLE servidor_publico (
+    cpf         CHAR(11)     NOT NULL,
+    nome        VARCHAR(40)  NOT NULL,
+    data_nasc   DATE,
+    cod_coord   INT,
+    PRIMARY KEY (cpf),
+    FOREIGN KEY (cod_coord) REFERENCES coordenacao(cod_coord)
+);
+```
+
+#### ALTER TABLE
+
+```sql
+-- Adicionar coluna
+ALTER TABLE servidor_publico ADD COLUMN email VARCHAR(100);
+
+-- Adicionar constraint
+ALTER TABLE servidor_publico
+    ADD CONSTRAINT fk_projeto FOREIGN KEY (cod_proj) REFERENCES projeto(cod_proj);
+```
+
+#### DROP TABLE
+
+```sql
+-- DROP simples (falha se houver referências)
+DROP TABLE coordenacao;
+
+-- DROP com CASCADE: remove também as referências a esta tabela em outras tabelas
+DROP TABLE administra CASCADE;
+```
+
+O `CASCADE` é necessário quando a tabela que será removida é referenciada por chaves estrangeiras em outras tabelas — sem ele, o SGBD bloqueia a exclusão.
+
+---
+
+### Esquema completo: exemplo Ministério
+
+Para ilustrar o uso integrado da DDL, considere um ministério com servidores públicos, coordenações e projetos:
+
+```sql
+CREATE TABLE servidor_publico (
+    cpf       CHAR(11)    NOT NULL PRIMARY KEY,
+    nome      VARCHAR(40) NOT NULL,
+    data_nasc DATE,
+    cod_coord INT
+);
+
+CREATE TABLE coordenacao (
+    cod_coord INT         NOT NULL PRIMARY KEY,
+    nome      VARCHAR(40) NOT NULL
+);
+
+CREATE TABLE projeto (
+    cod_proj    INT         NOT NULL PRIMARY KEY,
+    tipo        VARCHAR(20),
+    descricao   VARCHAR(100),
+    cod_coord   INT,
+    FOREIGN KEY (cod_coord) REFERENCES coordenacao(cod_coord)
+);
+
+CREATE TABLE trabalha (
+    cpf      CHAR(11) NOT NULL,
+    cod_proj INT      NOT NULL,
+    PRIMARY KEY (cpf, cod_proj),
+    FOREIGN KEY (cpf)      REFERENCES servidor_publico(cpf),
+    FOREIGN KEY (cod_proj) REFERENCES projeto(cod_proj)
+);
+
+CREATE TABLE administra (
+    cpf      CHAR(11) NOT NULL,
+    cod_proj INT      NOT NULL,
+    PRIMARY KEY (cpf, cod_proj),
+    FOREIGN KEY (cpf)      REFERENCES servidor_publico(cpf),
+    FOREIGN KEY (cod_proj) REFERENCES projeto(cod_proj)
+);
+```
+
+O esquema `Ministério` representado por cinco tabelas ilustra como a DDL converte um modelo lógico (entidades e relacionamentos) em estruturas físicas no SGBD.
+
+---
+
+<Callout type="warning">
+**Material com referências de 2010–2012.** O conteúdo conceitual de DDL (CREATE/ALTER/DROP, abstração em três níveis, independência de dados) é válido e atemporal. Porém, o livro base usa MySQL como único SGBD de exemplo, cita Oracle, DB2 e MySQL como os principais SGBDs do mercado sem mencionar PostgreSQL e bancos NoSQL modernos. O mapeamento DDL → esquema físico está ligeiramente simplificado em relação ao que SGBDs modernos oferecem (tablespaces, particionamento, índices parciais etc.).
+</Callout>
+
+### Práticas Modernas
+
+- **PostgreSQL como padrão de mercado** — superou o MySQL em popularidade em muitos cenários de produção. Oferece DDL mais expressiva: tipos personalizados (`CREATE TYPE`), extensões (`CREATE EXTENSION`), particionamento declarativo (`PARTITION BY`), índices parciais e expressões no `CREATE INDEX`.
+- **Migrations como DDL versionada** — em vez de executar DDL direto no banco, equipes usam ferramentas de migration (Flyway, Liquibase, Prisma Migrate, Alembic, Laravel Migrations) que registram cada alteração incremental como arquivo versionado. Isso permite replicar o esquema em qualquer ambiente e reverter mudanças com precisão.
+- **DDL transacional** — no PostgreSQL, comandos DDL como `CREATE TABLE` e `ALTER TABLE` participam de transações e podem ser revertidos com `ROLLBACK`. No MySQL/MariaDB, DDL causa commit implícito — comportamento que surpreende quem vem do PostgreSQL.
+- **`ALTER TABLE` sem bloqueio** — em tabelas grandes em produção, `ALTER TABLE` pode bloquear leituras e escritas por minutos. Ferramentas como `pg_repack` (PostgreSQL) e `pt-online-schema-change` (MySQL) permitem alterações de esquema sem downtime.
+- **Schemas e namespaces** — PostgreSQL permite múltiplos schemas dentro de um banco (`CREATE SCHEMA financeiro`), organizando tabelas em namespaces. Isso evita conflitos de nomes e permite controle de acesso granular por schema.
+- **ORM e DDL gerada** — frameworks como Prisma, Hibernate e SQLAlchemy geram DDL automaticamente a partir dos modelos de código, sincronizando o esquema do banco com a definição da aplicação.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- DDL = **definição de estruturas**: CREATE, ALTER, DROP (e adicionalmente TRUNCATE, RENAME). Não manipula dados — isso é DML.
+- As quatro ramificações do SQL: **DDL** (estruturas), **DML** (dados), **DTL** (transações), **DCL** (permissões). SELECT pode ser tratado como DQL separado.
+- Três níveis de abstração: **físico** (armazenamento), **lógico** (estrutura relacional), **visão** (perspectiva do usuário).
+- **Independência física** = mudar o físico sem impactar o lógico. **Independência lógica** = mudar o lógico sem impactar as visões.
+- `DROP TABLE ... CASCADE` remove a tabela e as referências de FK que apontam para ela em outras tabelas.
+- `TRUNCATE` remove todos os registros mas mantém a estrutura da tabela; `DROP` remove a estrutura inteira.
+- Uma **VIEW** é uma tabela virtual — resultado de um SELECT armazenado como objeto no banco. Criada com `CREATE VIEW`, removida com `DROP VIEW`.
+- Questões do PDF: DROP (DDL, B); DDL define estruturas de dados (E); ALTER TABLE é DDL (A); CREATE TABLE cria tabela (A); DROP TABLE exclui toda a estrutura (C).
+</Callout>
+
+---
+
+### Referências
+
+- FREITAS, P. H. C. *Modelagem e desenvolvimento de banco de dados*. Porto Alegre: SAGAH, 2021.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- KORTH, H. F.; SILBERSCHATZ, A.; SUDARSHAN, S. *Sistemas de banco de dados*. 6. ed. Rio de Janeiro: Campus, 2012.
