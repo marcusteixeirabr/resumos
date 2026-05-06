@@ -1,4 +1,6 @@
 ---
+import Font from 'astro/components/Font.astro';
+
 interface Props {
   title: string;
   description?: string;
@@ -44,9 +46,8 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     })();
   </script>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <Font cssVariable="--font-outfit" preload />
+  <Font cssVariable="--font-jetbrains-mono" />
   <link rel="stylesheet" href={`${base}/styles/base.css`}>
   {cssFiles.map(f => <link rel="stylesheet" href={`${base}/styles/${f}`} />)}
   <link rel="stylesheet" href={`${base}/pagefind/pagefind-ui.css`}>
