@@ -1,0 +1,231 @@
+---
+title: "UA7 — Linguagem de Manipulação de Dados (DML)"
+subtitle: "INSERT, SELECT, UPDATE e DELETE — os quatro verbos que permitem inserir, consultar, atualizar e excluir dados em um banco relacional via SQL."
+ua: 7
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é DML?
+
+A **DML** (*Data Manipulation Language*) é a sublinguagem do SQL responsável pela manipulação dos dados armazenados nas tabelas de um banco relacional. Enquanto a DDL define *estruturas* (CREATE, ALTER, DROP), a DML opera sobre os *dados* que preenchem essas estruturas.
+
+A DML surgiu da necessidade de padronizar o acesso a dados em sistemas de informação concorrentes: sem uma linguagem comum, cada sistema manipulava os dados de forma despadronizada, comprometendo consistência e integridade.
+
+Os quatro verbos DML são:
+
+| Verbo | Ação |
+|---|---|
+| `INSERT` | Inserir novos registros em uma tabela |
+| `SELECT` | Consultar/recuperar registros |
+| `UPDATE` | Atualizar registros existentes |
+| `DELETE` | Excluir registros |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdm_01.webp" alt="Guia Essencial da Linguagem DML" caption="Infográfico: fundamentos da DML, os 4 pilares (INSERT/SELECT e UPDATE/DELETE), sintaxe básica de cada comando e diferença entre DELETE (DML) e DROP (DDL)." />
+</SlidesGrid>
+
+---
+
+### INSERT — Inserindo Dados
+
+O `INSERT` popula uma tabela com novos registros. A sintaxe básica é:
+
+```sql
+INSERT INTO nome_tabela (coluna1, coluna2, ...)
+VALUES (valor1, valor2, ...);
+```
+
+Exemplo com a tabela `HOSPITAL`:
+
+```sql
+INSERT INTO HOSPITAL (codMEDICO, nomeMedico, especialidadeMedico)
+VALUES (5658547, 'Henrique', 'Cirurgião');
+
+INSERT INTO HOSPITAL (codMEDICO, nomeMedico, especialidadeMedico)
+VALUES (986752, 'Marcos', 'Clínico');
+
+INSERT INTO HOSPITAL (codMEDICO, nomeMedico, especialidadeMedico)
+VALUES (842321, 'Gabriela', 'Ginecologista');
+```
+
+Resultado:
+
+| codMEDICO | nomeMedico | especialidadeMedico |
+|---|---|---|
+| 5658547 | Henrique | Cirurgião |
+| 986752 | Marcos | Clínico |
+| 842321 | Gabriela | Ginecologista |
+
+---
+
+### SELECT — Consultando Dados
+
+O `SELECT` recupera registros de uma ou mais tabelas. É a instrução mais utilizada nos sistemas de informação — toda consulta passa por ela.
+
+```sql
+SELECT coluna1, coluna2
+FROM nome_tabela
+WHERE condição;
+```
+
+Exemplo — buscar nome e especialidade pelo código do médico:
+
+```sql
+SELECT nomeMedico, especialidadeMedico
+FROM HOSPITAL
+WHERE codMEDICO = 5658547;
+```
+
+Resultado:
+
+| nomeMedico | especialidadeMedico |
+|---|---|
+| Henrique | Cirurgião |
+
+Para retornar todas as colunas, usa-se o curinga `*`:
+
+```sql
+SELECT * FROM HOSPITAL;
+```
+
+---
+
+### UPDATE — Atualizando Dados
+
+O `UPDATE` modifica registros já existentes. Deve ser sempre combinado com `WHERE` para evitar atualizar a tabela inteira por acidente.
+
+```sql
+UPDATE nome_tabela
+SET coluna = novo_valor
+WHERE condição;
+```
+
+Exemplo — Marcos concluiu residência em oftalmologia:
+
+```sql
+UPDATE HOSPITAL
+SET especialidadeMedico = 'Oftalmologista'
+WHERE codMEDICO = 986752;
+```
+
+Resultado:
+
+| codMEDICO | nomeMedico | especialidadeMedico |
+|---|---|---|
+| 5658547 | Henrique | Cirurgião |
+| 986752 | Marcos | **Oftalmologista** |
+| 842321 | Gabriela | Ginecologista |
+
+> Há situações em que o `UPDATE` não pode ser usado — o dado precisa ser reinserido com `INSERT` e o registro antigo removido com `DELETE`.
+
+---
+
+### DELETE — Excluindo Dados
+
+O `DELETE` remove registros específicos de uma tabela. Assim como o `UPDATE`, exige `WHERE` para delimitar o escopo.
+
+```sql
+DELETE FROM nome_tabela
+WHERE condição;
+```
+
+Exemplo — Felipe ausentou-se do hospital:
+
+```sql
+DELETE FROM HOSPITAL
+WHERE codMEDICO = 843957;
+```
+
+Para apagar **todos** os registros de uma tabela (sem remover a estrutura):
+
+```sql
+DELETE FROM HOSPITAL;
+```
+
+#### DELETE vs. DROP — uma distinção importante
+
+| Instrução | Sublinguagem | O que elimina |
+|---|---|---|
+| `DELETE` | DML | Registros (dados) dentro de uma tabela |
+| `DROP` | DDL | A estrutura completa da tabela (e todos os seus dados) |
+
+---
+
+### Combinando Comandos: INSERT + SELECT
+
+É possível copiar dados de uma tabela para outra combinando `INSERT` e `SELECT` em uma única instrução:
+
+```sql
+INSERT INTO tabela_destino (coluna1, coluna2)
+SELECT coluna1, coluna2
+FROM tabela_origem
+WHERE condição;
+```
+
+Isso é útil para duplicar subconjuntos de dados, criar tabelas de histórico ou migrar registros entre schemas.
+
+---
+
+### Schema de Banco de Dados
+
+Um **schema** é um agrupamento lógico de estruturas — tabelas, índices, campos e outros objetos — dentro do banco de dados. As instruções DML operam sobre os dados contidos nesses schemas. A normalização do banco influencia diretamente como os schemas são segmentados.
+
+---
+
+### Variações do SQL
+
+A essência da DML (`INSERT`, `SELECT`, `UPDATE`, `DELETE`) é universal, mas cada fornecedor de SGBD adiciona extensões à linguagem:
+
+| Dialeto | Fornecedor | Extensões típicas |
+|---|---|---|
+| **T-SQL** | Microsoft (SQL Server) | Procedimentos armazenados, variáveis, `TOP` |
+| **PL/SQL** | Oracle | Blocos procedurais, cursores, exceções |
+| **PL/pgSQL** | PostgreSQL | Funções, triggers, tipos customizados |
+
+---
+
+<Callout type="warning">
+**Atenção ao contexto do material.** O livro base (Pedro Henrique Chagas Freitas, SAGAH) usa exemplos com Oracle e T-SQL como referências de "variações". A obra referencia Elmasri & Navathe (2010) e Korth (2012) — fontes sólidas, mas que não cobrem recursos modernos de SQL como CTEs (`WITH`), funções de janela (`OVER/PARTITION BY`), `MERGE`, `UPSERT` e JSON. O `SELECT` tratado aqui é apenas o básico: a cláusula é muito mais rica do que o material apresenta.
+</Callout>
+
+### Práticas Modernas
+
+- **Funções de janela (Window Functions)** — `OVER()`, `PARTITION BY`, `ROW_NUMBER()`, `RANK()`, `LAG()`, `LEAD()` permitem análises complexas sem subconsultas aninhadas. Disponíveis no PostgreSQL, SQL Server e MySQL 8+.
+- **CTEs (Common Table Expressions)** — a cláusula `WITH` cria consultas nomeadas reutilizáveis dentro de uma instrução, tornando queries complexas muito mais legíveis:
+  ```sql
+  WITH medicos_cirurgioes AS (
+      SELECT * FROM HOSPITAL WHERE especialidadeMedico = 'Cirurgião'
+  )
+  SELECT * FROM medicos_cirurgioes;
+  ```
+- **UPSERT** — `INSERT ... ON CONFLICT DO UPDATE` (PostgreSQL) e `MERGE` (SQL Server/Oracle) combinam insert e update em uma única operação atômica, evitando race conditions.
+- **Transações explícitas** — envolva operações DML críticas em `BEGIN`/`COMMIT`/`ROLLBACK` para garantir atomicidade e permitir desfazer alterações em caso de erro.
+- **Prepared statements** — nunca concatene valores diretamente em strings SQL. Use parâmetros (`$1`, `?`, `:param`) para prevenir SQL injection e melhorar performance com planos de execução reutilizados.
+- **EXPLAIN / EXPLAIN ANALYZE** — antes de executar um `SELECT` em tabelas grandes, analise o plano de execução para identificar full table scans e criar índices adequados.
+- **Soft delete** — em vez de `DELETE FROM tabela WHERE id = X`, muitos sistemas adicionam uma coluna `deleted_at TIMESTAMP` e filtram com `WHERE deleted_at IS NULL`, preservando o histórico de dados.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- DML opera em **dados** (linhas/registros); DDL opera em **estruturas** (tabelas, esquemas). `DELETE` é DML; `DROP` é DDL — questão clássica de confusão.
+- Os quatro verbos DML são `INSERT`, `SELECT`, `UPDATE` e `DELETE` — o `DROP` não pertence à DML (questão 1, resposta: C).
+- Sintaxe correta do `INSERT`: `INSERT INTO nome_tabela (lista-de-colunas) VALUES (lista_dados)` — sem `WHERE` (questão 2, resposta: B).
+- Para copiar dados entre tabelas: `INSERT INTO tabela2 (...) SELECT ... FROM tabela1 WHERE (condição)` (questão 3, resposta: B).
+- Para atualizar o endereço de um departamento específico: `UPDATE Empresa SET Endereco = '...' WHERE Cód_Departamento = 2` — sempre usar a chave primária no `WHERE`, não colunas não únicas (questão 4, resposta: A).
+- Para apagar **todos** os registros de uma tabela: `DELETE FROM TABELA` — sem `WHERE` e sem `ALL` (questão 5, resposta: A).
+- `UPDATE` sempre precisa de `SET` e idealmente de `WHERE`; `DELETE` idealmente precisa de `WHERE`. Ambos sem `WHERE` afetam **todos** os registros.
+</Callout>
+
+---
+
+### Referências
+
+- FREITAS, P. H. C. *Linguagem de manipulação de dados (DML)*. In: *Modelagem e desenvolvimento de banco de dados*. Porto Alegre: SAGAH, [s.d.].
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. *Sistema de banco de dados*. 7. ed. Rio de Janeiro: LTC, 2020.
