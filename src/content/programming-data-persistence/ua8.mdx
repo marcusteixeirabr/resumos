@@ -1,0 +1,168 @@
+---
+title: "UA8 — Sistemas Gerenciadores de Banco de Dados"
+subtitle: "Um SGBD é a camada de software que transforma dados brutos em ativos gerenciáveis — controlando acesso, garantindo integridade e abstraindo o armazenamento em três níveis."
+ua: 8
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é um SGBD?
+
+Um **sistema gerenciador de banco de dados (SGBD)** é um conjunto de componentes de software projetado para dar suporte à criação, utilização e manutenção de bancos de dados. Inicialmente criados para oferecer armazenamento e recuperação eficiente, os SGBDs evoluíram — pressionados pelas exigências do mercado e pela inovação tecnológica — para fornecer uma ampla gama de recursos: aquisição, armazenamento, disseminação, manutenção, recuperação e formatação de dados.
+
+Sem um SGBD, cada aplicação precisaria reimplementar controle de concorrência, segurança, backup e consistência — tarefas complexas e propensas a falhas.
+
+---
+
+### Vantagens de um SGBD
+
+#### Independência de Dados
+
+Os programas aplicativos não precisam conhecer os detalhes de representação e armazenamento dos dados. O SGBD oferece uma **visão abstrata** que oculta a complexidade interna, protegendo os aplicativos de mudanças na estrutura do banco.
+
+#### Acesso Eficiente aos Dados
+
+O SGBD utiliza técnicas sofisticadas — índices, buffers, algoritmos de acesso — para armazenar e recuperar dados com eficiência, especialmente em dispositivos de armazenamento externos como discos e SSDs.
+
+#### Integridade e Segurança dos Dados
+
+O SGBD garante que restrições de integridade sejam respeitadas (por exemplo, impedir que um salário acima do orçamento do departamento seja inserido) e controla quais dados são visíveis a diferentes classes de usuários.
+
+#### Administração de Dados
+
+Centralizar a administração permite que especialistas (DBAs) organizem a representação dos dados para minimizar redundância e otimizar o desempenho — beneficiando todos os usuários e aplicações que compartilham a mesma base.
+
+#### Acesso Concorrente e Recuperação de Falha
+
+O SGBD planeja o acesso concorrente de forma que, da perspectiva de cada usuário, parece que apenas uma pessoa acessa os dados por vez. Também garante que os dados sejam restaurados a um estado consistente após falhas de sistema.
+
+#### Tempo Reduzido de Desenvolvimento de Aplicativo
+
+Ao prover funções comuns a múltiplas aplicações (consulta, transação, segurança, concorrência), o SGBD reduz o esforço de desenvolvimento. Aplicativos construídos sobre um SGBD tendem a ser mais robustos porque as tarefas críticas são tratadas pela camada de gerenciamento.
+
+---
+
+### Quando NÃO Usar um SGBD
+
+Apesar das vantagens, há situações em que um SGBD pode não ser a melhor escolha:
+
+- **Restrições rígidas de tempo real** — o overhead de um SGBD genérico pode ser inaceitável em sistemas com requisitos de latência extremamente baixos.
+- **Operações críticas altamente customizadas** — um código específico e otimizado pode superar o desempenho geral de um SGBD.
+- **Manipulação de dados não suportada pela linguagem de consulta** — se a aplicação exige formas de acesso que o modelo de dados não suporta nativamente, a abstração pode se tornar um obstáculo.
+
+---
+
+### O Modelo Relacional
+
+O modelo de dados mais utilizado atualmente é o **modelo relacional**. Nele, o construtor central é uma **relação** — um conjunto de registros com estrutura definida.
+
+#### Esquema e Instância
+
+Uma **descrição dos dados** em termos de um modelo de dados é chamada de **esquema**. No modelo relacional, o esquema de uma relação especifica seu nome, o nome de cada campo (atributo/coluna) e o tipo de cada campo:
+
+```
+Alunos(id-aluno: string, nome: string, login: string, idade: integer, média: real)
+```
+
+Uma **instância** da relação é o conjunto de registros armazenados em um dado momento. Cada linha corresponde a um registro que segue o esquema definido.
+
+#### Restrições de Integridade
+
+Restrições de integridade são condições que os registros de uma relação devem satisfazer — por exemplo, exigir que todo aluno tenha um `id-aluno` único. A expressividade dessas restrições é um aspecto fundamental de qualquer modelo de dados.
+
+Um exemplo clássico de projeto ineficiente: nunca se deve criar um campo como `idade`, cujo valor muda constantemente. A melhor prática é armazenar `data_nascimento` e calcular a idade quando necessário.
+
+#### Outros Modelos de Dados
+
+Além do relacional, existem outros modelos de dados históricos e alternativos:
+
+| Modelo | Exemplos de SGBD |
+|---|---|
+| Hierárquico | IMS (IBM) |
+| Em rede | IDS, IDMS |
+| Orientado a objetos | ObjectStore, Versant |
+| Objeto-relacional | Oracle, IBM DB2, Informix |
+
+O modelo relacional permanece dominante; o objeto-relacional combina características relacionais com orientação a objetos.
+
+---
+
+### Níveis de Abstração em um SGBD
+
+Os dados em um SGBD são descritos em **três níveis de abstração**, cada um com seu próprio esquema:
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ops_01.webp" alt="O Poder dos Sistemas Gerenciadores de Banco de Dados (SGBD)" caption="Infográfico: vantagens estratégicas do SGBD (integridade e segurança reforçada, recuperação de falhas e backup, independência de dados) e os 3 níveis de abstração — externo/visão, conceitual/lógico e físico/armazenamento." />
+</SlidesGrid>
+
+#### Esquema Conceitual (Lógico)
+
+Descreve **quais dados estão armazenados** e **quais são os relacionamentos** entre as entidades, em termos do modelo de dados do SGBD. É o nível central — o mais próximo da visão do analista e do desenvolvedor de banco de dados.
+
+Exemplo (banco de dados de universidade):
+```
+Alunos(id-aluno, nome, login, idade, média)
+Professores(id-prof, nomep, sal)
+Cursos(id-curso, nomec, créditos)
+Matriculado(id-aluno, id-curso, nota)
+Ministra(id-prof, id-curso)
+```
+
+#### Esquema Físico
+
+Especifica **como os dados são realmente armazenados** em dispositivos de armazenamento secundário (discos, fitas). Define a organização dos arquivos e as estruturas auxiliares — os **índices** — utilizados para acelerar a recuperação de dados.
+
+Exemplo: armazenar todas as relações como arquivos não ordenados e criar índices na primeira coluna das relações `Alunos`, `Professores` e `Cursos`.
+
+#### Esquema Externo (Visões)
+
+Permite que o acesso aos dados seja **customizado e autorizado** para diferentes grupos de usuários. Um banco de dados tem exatamente um esquema conceitual e um esquema físico, mas pode ter **múltiplos esquemas externos**. Cada visão é definida com base nas relações do esquema conceitual e processada sob demanda — seus registros não ficam armazenados separadamente.
+
+Exemplo: uma visão `InfoCurso(id-curso, nomep, matriculados)` permite que alunos consultem o professor e o número de matriculados sem expor o salário dos docentes.
+
+---
+
+### Independência de Dados
+
+A **independência de dados** é uma das principais vantagens de usar um SGBD: os programas de aplicação são isolados de mudanças na forma como os dados são estruturados e armazenados.
+
+- **Independência lógica** — alterações no esquema conceitual (ex.: dividir a relação `Professores` em `Professores-público` e `Professores-particular`) podem ser absorvidas pelas visões externas sem afetar as aplicações que as consultam.
+- **Independência física** — mudanças no esquema físico (ex.: adicionar ou remover um índice, reorganizar arquivos) não precisam alterar o esquema conceitual nem as aplicações.
+
+---
+
+<Callout type="warning">
+**Conteúdo desatualizado.** O livro base (Ramakrishnan & Gehrke, 3ª ed., 2003/2008) lista como SGBDs relevantes DB2, Informix, Oracle, Sybase, Access, FoxBase, Paradox, Tandem — vários descontinuados ou marginalizados. O material não cobre bancos NoSQL, NewSQL, cloud-native ou vetoriais, categorias que dominam novas arquiteturas desde os anos 2010.
+</Callout>
+
+### Práticas Modernas
+
+- **PostgreSQL domina o relacional open-source** — suporte nativo a JSON, arrays, full-text search, extensões como `pgvector` para IA, DDL transacional e comunidade ativa. É a escolha padrão para novos projetos.
+- **NoSQL cobre o que o relacional não resolve** — MongoDB (documentos JSON), Redis (chave-valor em memória), Cassandra (colunar para escrita massiva) e Neo4j (grafos para relacionamentos complexos).
+- **NewSQL = SQL + escalabilidade horizontal** — CockroachDB, TiDB e Google Spanner oferecem distribuição geográfica com garantias ACID plenas, algo impensável na era do livro.
+- **DBaaS na nuvem** — Amazon RDS, Azure SQL, Google Cloud SQL e Neon eliminam a administração de infraestrutura. A independência de dados do SGBD se estende agora à independência de infraestrutura.
+- **ORMs como quarta camada de abstração** — Prisma (Node.js), Hibernate (Java), SQLAlchemy (Python) e Eloquent (PHP) adicionam uma camada acima do esquema externo, mapeando relações diretamente para objetos da aplicação.
+- **Bancos vetoriais** — Pinecone, Weaviate e `pgvector` armazenam embeddings de modelos de linguagem e permitem busca por similaridade semântica, unindo SGBD tradicional e IA generativa.
+- **OLAP moderno** — Snowflake, BigQuery e DuckDB separam storage de compute e usam armazenamento colunar, superando em ordens de magnitude o desempenho analítico dos SGBDs relacionais tradicionais.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Definição de SGBD:** conjunto de componentes de software que dá suporte à criação, utilização e manutenção de bancos de dados (questão 5 — a evolução foi motivada por exigências do mercado, inovação dos produtos e aumento na complexidade dos dados, opção E).
+- As **6 vantagens principais** são: independência de dados, acesso eficiente, integridade e segurança, administração de dados, acesso concorrente e recuperação de falha, e tempo reduzido de desenvolvimento.
+- A funcionalidade que **melhora a segurança e garante somente acessos autorizados** é a **restrição de acesso não autorizado** (questão 1, opção B).
+- A funcionalidade que oferece **recuperação quando há falhas de hardware e software** é o **backup e recuperação** (questão 3, opção C).
+- Os **três níveis de abstração** são **físico**, **conceitual** (lógico) e **externo** (visão). O nível conceitual descreve quais dados são armazenados e os relacionamentos entre eles (questão 2, opção A).
+- O campo **`idade`** na relação `Alunos` é um projeto ineficiente porque muda constantemente — armazenar `data_nascimento` e calcular a idade é a abordagem correta (questão 4, opção D).
+</Callout>
+
+---
+
+### Referências
+
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. *Sistema de banco de dados*. 7. ed. Rio de Janeiro: LTC, 2020.
