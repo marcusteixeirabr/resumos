@@ -1,0 +1,161 @@
+---
+title: "UA8 — DQL: Linguagem de Consulta de Dados"
+subtitle: "A DQL tem um único comando — o SELECT — e é a instrução mais usada no SQL: ela consulta dados sem modificá-los, filtrando resultados com FROM, WHERE, DISTINCT e ORDER BY."
+ua: 8
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é DQL?
+
+A **DQL (Data Query Language)** é a sublinguagem do SQL dedicada exclusivamente à **consulta de dados**. Ao contrário da DDL (que define estruturas) e da DML (que insere, atualiza e remove dados), a DQL tem um único propósito: recuperar informações de uma base de dados sem alterá-las.
+
+A DQL possui um **único comando**: o `SELECT`.
+
+---
+
+### DQL ou DML? Uma discussão conceitual
+
+Existe um debate entre autores sobre onde classificar o `SELECT`:
+
+- **Visão DQL:** o `SELECT` pertence à DQL porque apenas *consulta* dados, sem modificá-los. O princípio fundamental da DQL é que o dado permanece **puro** após a consulta.
+- **Visão DML:** alguns autores colocam o `SELECT` na DML, argumentando que ao consultar um dado já se está, de certa forma, manipulando-o.
+
+Na prática, isso é um **mero formalismo**. O que importa é dominar o funcionamento e a lógica do `SELECT` — não a categoria onde ele é classificado.
+
+---
+
+### O Comando SELECT
+
+O `SELECT` é a principal ponte entre sistemas e dados em bancos relacionais. A partir dele, é possível realizar consultas simples ou extremamente complexas, retornando campos, aplicando filtros, ordenando resultados e cruzando tabelas.
+
+**Sintaxe fundamental:**
+
+```sql
+SELECT nome_campo FROM nome_tabela WHERE condição_esperada
+```
+
+Cada parte tem um papel claro:
+
+| Cláusula | Função |
+|---|---|
+| `SELECT` | Identifica **qual campo** (dado) deve ser retornado |
+| `FROM` | Indica **em qual tabela** o campo está localizado |
+| `WHERE` | Define **a condição** que restringe os registros retornados |
+
+---
+
+### A Cláusula WHERE
+
+A cláusula `WHERE` é essencial para **filtrar resultados**. Sem ela, o `SELECT` retorna *todos* os registros da tabela — o que pode sobrecarregar o SGBD em bases com milhares ou milhões de registros.
+
+```sql
+-- Retorna todos os registros (sem filtro)
+SELECT * FROM Times;
+
+-- Retorna apenas Nome_Time e Região_Time (campos específicos)
+SELECT Nome_Time, Região_Time FROM Times;
+
+-- Filtro simples: apenas o Corinthians
+SELECT Nome_Time, Região_Time FROM Times WHERE Nome_Time = 'Corinthians';
+```
+
+O `WHERE` aceita múltiplos operadores:
+
+| Operador | Uso |
+|---|---|
+| `=` | Igualdade |
+| `>`, `>=`, `<`, `<=` | Comparações numéricas |
+| `AND` | Ambas as condições devem ser verdadeiras |
+| `OR` | Ao menos uma condição deve ser verdadeira |
+
+---
+
+### Exemplos Práticos com a Tabela CLIENTES
+
+A tabela `CLIENTES` possui os campos `CODIGO`, `NOME` e `UF`. Exemplos de consultas:
+
+```sql
+-- Buscar cliente específico pelo código
+SELECT CODIGO, NOME FROM CLIENTES WHERE CODIGO = 10;
+
+-- Buscar todos os clientes do Rio de Janeiro
+SELECT CODIGO, NOME FROM CLIENTES WHERE UF = 'RJ';
+
+-- Buscar clientes com código entre 100 e 500 (AND)
+SELECT CODIGO, NOME FROM CLIENTES WHERE CODIGO >= 100 AND CODIGO <= 500;
+
+-- Buscar clientes de MG ou SP (OR)
+SELECT CODIGO, NOME FROM CLIENTES WHERE UF = 'MG' OR UF = 'SP';
+```
+
+---
+
+### DISTINCT e ORDER BY
+
+Além do `WHERE`, existem cláusulas para refinar ainda mais as consultas:
+
+```sql
+-- DISTINCT: elimina valores duplicados de uma coluna
+SELECT DISTINCT Nome_Campo FROM Nome_Tabela;
+
+-- ORDER BY: ordena os resultados (ASC = crescente, DESC = decrescente)
+SELECT Nome, Regiao FROM Times ORDER BY Nome ASC;
+```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpl_01.webp" alt="Domine a Linguagem DQL: O Poder do SELECT" caption="Infográfico: fundamentos da DQL (o comando SELECT como única instrução, integridade dos dados, conceito de query), a sintaxe essencial SELECT+FROM+WHERE, refinamento com ORDER BY e DISTINCT, a importância da cláusula WHERE (evitar sobrecarga) e um exemplo prático com a tabela Times." />
+</SlidesGrid>
+
+---
+
+### Normalização e Qualidade das Consultas
+
+A normalização do banco de dados impacta diretamente a eficiência das consultas DQL. Ao usar o `SELECT` em bases **desnormalizadas**, o retorno pode conter:
+
+- Registros redundantes e desnecessários
+- Inconsistências nos dados retornados
+- Perda de desempenho por excesso de dados
+
+O ideal é que a base esteja **normalizada até pelo menos a 3ª Forma Normal (3FN)** antes de realizar consultas complexas. Isso garante retornos eficientes e dados de qualidade.
+
+---
+
+<Callout type="warning">
+**Conteúdo limitado.** O livro base (Pedro Henrique Chagas Freitas, SAGAH) apresenta apenas o `SELECT` básico com `WHERE`, `AND`, `OR` e `DISTINCT`. Não cobre `JOIN`, `GROUP BY`, `HAVING`, subconsultas, CTEs (`WITH`) ou funções de janela (window functions) — recursos essenciais para qualquer uso real de DQL em sistemas corporativos.
+</Callout>
+
+### Práticas Modernas
+
+- **JOINs são o coração da DQL real** — `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN` e `FULL OUTER JOIN` permitem cruzar dados entre tabelas relacionadas, que é o uso mais frequente em sistemas corporativos.
+- **Agregação com GROUP BY + HAVING** — funções como `COUNT()`, `SUM()`, `AVG()`, `MAX()` e `MIN()` combinadas com `GROUP BY` geram totalizações; `HAVING` filtra grupos (equivale ao `WHERE` para agregações).
+- **CTEs (Common Table Expressions)** — o `WITH nome AS (SELECT ...)` cria consultas temporárias nomeadas, tornando queries complexas legíveis e reutilizáveis dentro da mesma instrução.
+- **Window functions** — `ROW_NUMBER()`, `RANK()`, `LEAD()`, `LAG()`, `SUM() OVER()` realizam cálculos sobre conjuntos de linhas sem colapsar os resultados como o `GROUP BY` faz. São imprescindíveis em relatórios e análises.
+- **EXPLAIN ANALYZE** — comando do PostgreSQL (e equivalentes em outros SGBDs) que mostra o plano de execução da query, indicando onde estão os gargalos de performance.
+- **Índices aceleram o WHERE** — criar índices nas colunas usadas em `WHERE`, `JOIN ON` e `ORDER BY` pode reduzir o tempo de consulta de minutos para milissegundos.
+- **ORMs ocultam o SELECT** — Prisma, Hibernate, SQLAlchemy e Eloquent traduzem chamadas de método em SQL otimizado, mas conhecer DQL continua essencial para depurar queries geradas.
+- **Data Lakes e SQL analítico** — DuckDB, BigQuery e Snowflake estendem a DQL para volumes massivos de dados com armazenamento colunar, executando `SELECT` sobre petabytes em segundos.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A instrução que pertence à DQL é o **SELECT** (questão 1, opção B). INSERT é DML, REVOKE e GRANT são DCL, CREATE é DDL.
+- Os recursos da DQL **se limitam à consulta** à base de dados — ela não manipula nem altera dados (questão 2, opção E).
+- A instrução que a DQL implementa é o **SELECT** (questão 3, opção C — `SELECT TABLE` na sintaxe da questão).
+- A instrução correta para consultar um dado é **`SELECT ALUNO`** (questão 4, opção A). ALTER é DDL, INSERT é DML, REVOKE é DCL.
+- A cláusula `WHERE` indica que **a consulta deve se limitar a um parâmetro** (questão 5, opção B) — ela restringe os registros retornados conforme a condição especificada.
+- Consultas sem `WHERE` retornam *todos* os registros da tabela (`SELECT * FROM Tabela`) — possível, mas custoso em bases grandes.
+- O `DISTINCT` elimina valores duplicados; o `ORDER BY` ordena os resultados.
+</Callout>
+
+---
+
+### Referências
+
+- FREITAS, P. H. C. *Modelagem e desenvolvimento de banco de dados*. Porto Alegre: SAGAH, 2020.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
