@@ -374,6 +374,30 @@ tr:hover td { background: rgba(255,255,255,.015); }
 .callout ul { margin: .4rem 0 0; padding-left: 1.2rem; }
 .callout ul li { font-size: .8rem; }
 
+/* ── Audio Summary ── */
+.audio-summary {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  margin: 1.5rem 0;
+  padding: .9rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.audio-summary figcaption {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.audio-summary figcaption svg { flex-shrink: 0; color: var(--accent); }
+.audio-summary audio { width: 100%; height: 36px; }
+
 /* ── Diagram ASCII ── */
 .diagram {
   background: rgba(5, 5, 15, 0.6);
