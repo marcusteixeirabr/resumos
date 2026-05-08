@@ -93,6 +93,24 @@ header h1 {
 
 header .search-btn { margin-left: auto; }
 
+.pdf-download {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+  padding: .28rem .55rem;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: .72rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color .2s, border-color .2s;
+}
+.pdf-download:hover { color: var(--text); border-color: var(--text-muted); }
+
 .tag {
   font-size: .65rem;
   font-weight: 600;
@@ -689,8 +707,79 @@ footer a:hover { text-decoration: underline; }
   .slides-grid { grid-template-columns: 1fr 1fr; }
 }
 
+@media (max-width: 768px) {
+  .pdf-label { display: none; }
+  .pdf-download { padding: .28rem .4rem; }
+}
+
 @media (max-width: 480px) {
   .slides-grid { grid-template-columns: 1fr; }
   .section-nav { flex-direction: column; }
   .section-nav a { justify-content: center; }
+}
+
+/* ── Print / PDF ── */
+@media print {
+  /* Ocultar chrome da interface */
+  header,
+  #nav-overlay,
+  #sidebar,
+  .section-nav,
+  .audio-summary,
+  .slides-grid,
+  .lightbox,
+  .pdf-download,
+  #pagefind-search { display: none !important; }
+
+  /* Layout de coluna única */
+  html, body { background: #fff !important; color: #111 !important; }
+  .layout { display: block; }
+  main { padding: 1.5rem 2rem; max-width: 100%; margin: 0; }
+
+  /* Tipografia */
+  section.active h2 { font-size: 1.4rem; color: #111; page-break-after: avoid; }
+  .subtitle { font-size: .9rem; color: #555; margin-bottom: 1.5rem; }
+  h3 { font-size: 1rem; color: #111; margin-top: 1.2rem; page-break-after: avoid; break-after: avoid; }
+  p, li { font-size: .85rem; line-height: 1.6; color: #111; }
+  a { color: #333; text-decoration: underline; }
+  hr { border-color: #ddd; }
+
+  /* Tabelas */
+  table { border-collapse: collapse; width: 100%; page-break-inside: avoid; break-inside: avoid; }
+  th, td { border: 1px solid #ccc !important; padding: .25rem .5rem; font-size: .8rem; color: #111 !important; }
+  th { background: #f0f0f0 !important; }
+  td:first-child { color: #111 !important; }
+
+  /* Código */
+  pre {
+    background: #f5f5f5 !important;
+    border: 1px solid #ddd !important;
+    padding: .6rem;
+    font-size: .75rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  pre * { color: #333 !important; background: transparent !important; }
+  :not(pre) > code {
+    background: #eee !important;
+    color: #333 !important;
+    padding: .1em .3em;
+    border-radius: 3px;
+    font-size: .82em;
+  }
+
+  /* Callouts */
+  .callout {
+    border: 1px solid #ccc !important;
+    background: #fafafa !important;
+    padding: .6rem .9rem;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .callout * { color: #111 !important; }
+  .callout.warning { border-left: 3px solid #c8900a !important; }
+  .callout.tip     { border-left: 3px solid #7b60b4 !important; }
+  .callout.green   { border-left: 3px solid #2ea043 !important; }
 }
