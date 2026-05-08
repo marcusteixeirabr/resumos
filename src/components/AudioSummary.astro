@@ -4,6 +4,8 @@ interface Props {
   title?: string;
 }
 const { src, title } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
+const audioSrc = src.startsWith('/') ? `${base}${src.slice(1)}` : src;
 ---
 <figure class="audio-summary">
   <figcaption>
@@ -13,6 +15,6 @@ const { src, title } = Astro.props;
     {title ?? "Resumo em áudio"}
   </figcaption>
   <audio controls preload="metadata">
-    <source src={src} type="audio/mp4" />
+    <source src={audioSrc} type="audio/mp4" />
   </audio>
 </figure>
