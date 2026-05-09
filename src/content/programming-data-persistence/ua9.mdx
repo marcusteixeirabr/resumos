@@ -1,0 +1,202 @@
+---
+title: "UA9 — Linguagem SQL: Noções Básicas"
+subtitle: "SQL é a linguagem padrão dos bancos de dados relacionais. Ela engloba DDL (define estruturas), DML (manipula dados), DCL (controla acessos) e TCL (controla transações) — e tudo começa com o SELECT."
+ua: 9
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é SQL?
+
+A **SQL (Structured Query Language)** é a linguagem de banco de dados relacional mais amplamente utilizada no mundo. Ela foi originalmente desenvolvida pela IBM nos projetos SEQUEL-XRM e System-R (1974–1977), em resposta ao trabalho do Dr. Ted Codd sobre o modelo relacional (1970). Com a força da IBM por trás do SQL, outros fabricantes rapidamente adotaram variantes da linguagem, e ela se tornou o padrão de fato da indústria.
+
+O padrão internacional atual — mantido pela ANSI/ISO — é chamado de **SQL:1999**, com extensões posteriores (SQL:2003, SQL:2011, SQL:2016...). A maioria dos SGBDs modernos segue esse padrão com pequenas variações dialetais.
+
+---
+
+### Categorias da SQL
+
+A linguagem SQL é composta por várias subcategorias, cada uma com finalidade específica:
+
+| Categoria | Sigla | Finalidade | Principais comandos |
+|---|---|---|---|
+| Data Definition Language | DDL | Criar, alterar e excluir estruturas | `CREATE`, `ALTER`, `DROP`, `TRUNCATE` |
+| Data Manipulation Language | DML | Inserir, consultar, atualizar e excluir dados | `SELECT`, `INSERT`, `UPDATE`, `DELETE` |
+| Data Control Language | DCL | Controlar privilégios de acesso | `GRANT`, `REVOKE` |
+| Transact Control Language | TCL | Controlar transações | `COMMIT`, `ROLLBACK` |
+
+---
+
+### Consultas SQL Básicas
+
+O formato fundamental de uma consulta SQL é:
+
+```sql
+SELECT [DISTINCT] lista_de_colunas
+FROM   lista_de_tabelas
+WHERE  condição
+```
+
+Cada cláusula tem um papel definido:
+
+| Cláusula | Função |
+|---|---|
+| `SELECT` | Define **quais colunas** aparecem no resultado (projeção) |
+| `FROM` | Define **de quais tabelas** os dados serão lidos |
+| `WHERE` | Define **a condição** que filtra as linhas (seleção) |
+| `DISTINCT` | Elimina linhas **duplicadas** do resultado |
+
+**Detalhe importante:** apesar do nome, a cláusula `SELECT` realiza *projeção* (escolha de colunas), enquanto a cláusula `WHERE` realiza *seleção* (escolha de linhas). Essa inversão em relação à nomenclatura da álgebra relacional é um acidente histórico do padrão.
+
+---
+
+### Exemplos com o Esquema Marinheiros/Barcos/Reservas
+
+O livro usa um esquema clássico com três tabelas:
+
+```
+Marinheiros(id_marin, nome_marin, avaliacao, idade)
+Barcos(id_barco, nome_barco, cor)
+Reservas(id_marin, id_barco, dia)
+```
+
+**Exemplo 1 — Projeção simples:**
+```sql
+-- Nomes e idades de todos os marinheiros (sem duplicatas)
+SELECT DISTINCT nome_marin, idade
+FROM Marinheiros;
+```
+
+**Exemplo 2 — Seleção com WHERE:**
+```sql
+-- Marinheiros com avaliação acima de 7
+SELECT id_marin, nome_marin, avaliacao, idade
+FROM Marinheiros AS M
+WHERE M.avaliacao > 7;
+```
+
+**Exemplo 3 — JOIN implícito entre duas tabelas:**
+```sql
+-- Nomes dos marinheiros que reservaram o barco 103
+SELECT M.nome_marin
+FROM Marinheiros M, Reservas R
+WHERE M.id_marin = R.id_marin AND R.id_barco = 103;
+```
+
+A lógica por trás de um JOIN implícito é o **produto cartesiano**: o SGBD combina todas as linhas de `Marinheiros` com todas as de `Reservas`, depois o `WHERE` filtra apenas os pares que satisfazem a condição.
+
+**Exemplo 4 — JOIN de três tabelas:**
+```sql
+-- Nomes dos marinheiros que reservaram um barco vermelho
+SELECT M.nome_marin
+FROM Marinheiros M, Reservas R, Barcos B
+WHERE M.id_marin = R.id_marin
+  AND R.id_barco = B.id_barco
+  AND B.cor = 'vermelho';
+```
+
+---
+
+### DISTINCT e Multiconjuntos
+
+Sem `DISTINCT`, o SQL retorna um **multiconjunto** — uma coleção que pode ter linhas repetidas. Com `DISTINCT`, duplicatas são eliminadas, e o resultado é um **conjunto** no sentido estrito.
+
+```sql
+-- Sem DISTINCT: pode retornar "Horatio" duas vezes
+SELECT nome_marin, idade FROM Marinheiros;
+
+-- Com DISTINCT: cada par (nome, idade) aparece uma vez
+SELECT DISTINCT nome_marin, idade FROM Marinheiros;
+```
+
+---
+
+### Expressões e LIKE
+
+A cláusula `SELECT` aceita expressões aritméticas e aliases:
+
+```sql
+-- Incrementar avaliação na consulta (sem alterar o banco)
+SELECT M.nome_marin, M.avaliacao + 1 AS avaliacao_incrementada
+FROM Marinheiros M;
+```
+
+O operador `LIKE` permite busca por padrão em strings:
+
+| Curinga | Significado |
+|---|---|
+| `%` | Zero ou mais caracteres quaisquer |
+| `_` | Exatamente um caractere qualquer |
+
+```sql
+-- Nomes que começam e terminam com B e têm ao menos 3 caracteres
+SELECT nome_marin
+FROM Marinheiros
+WHERE nome_marin LIKE 'B_%B';
+```
+
+---
+
+### CREATE TABLE e ALTER TABLE
+
+Além das consultas, a DDL define a estrutura das tabelas:
+
+```sql
+-- Criar tabela com tipos de dados
+CREATE TABLE Pessoa_Fisica (
+    num_pessoa_pf  NUMBER(5),
+    nom_pessoa     VARCHAR(30),
+    num_CPF        NUMBER(11),
+    dat_nascimento DATE,
+    idt_sexo       CHAR(1)
+);
+
+-- Adicionar nova coluna a uma tabela existente
+ALTER TABLE Pessoa_Fisica
+ADD (UF_pessoa CHAR(2));
+```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gls_01.webp" alt="Guia Essencial da Linguagem SQL" caption="Infográfico: visão geral da linguagem SQL — categorias (DDL, DML, DCL, TCL), estrutura do SELECT, principais instruções e sua finalidade no contexto de banco de dados." />
+</SlidesGrid>
+
+---
+
+<Callout type="warning">
+**Material desatualizado.** O livro base (Ramakrishnan & Gehrke, 3ª ed., 2003/2011) usa o padrão **SQL:1999** como referência — defasado em relação ao SQL:2016+ amplamente adotado hoje. O capítulo excerptado cobre apenas SELECT básico com JOINs implícitos (produto cartesiano + WHERE); não cobre `JOIN` explícito, `GROUP BY`, `HAVING`, `ORDER BY`, funções de janela (window functions), CTEs (`WITH`), subconsultas correlacionadas, `UPSERT` (`INSERT ... ON CONFLICT`) nem tipos de dados modernos (JSON/JSONB, arrays, UUID). O esquema Marinheiros/Barcos/Reservas é didático mas distante de sistemas reais.
+</Callout>
+
+### Práticas Modernas
+
+- **`JOIN` explícito é o padrão atual** — `INNER JOIN ... ON` substitui o produto cartesiano com WHERE e deixa a intenção mais clara: `FROM Marinheiros M INNER JOIN Reservas R ON M.id_marin = R.id_marin`. O JOIN implícito ainda funciona, mas é considerado estilo antigo.
+- **`LEFT JOIN` / `RIGHT JOIN` / `FULL OUTER JOIN`** — permitem incluir linhas sem correspondência na outra tabela, essenciais em relatórios onde registros podem não ter relações preenchidas.
+- **`GROUP BY` + funções agregadas** — `COUNT()`, `SUM()`, `AVG()`, `MAX()`, `MIN()` agrupam e totalizam dados; `HAVING` filtra grupos (equivale ao WHERE para agregações).
+- **Window functions** — `ROW_NUMBER()`, `RANK()`, `LEAD()`, `LAG()`, `SUM() OVER(PARTITION BY ...)` realizam cálculos sobre janelas de linhas sem colapsar o resultado como `GROUP BY` faz.
+- **CTEs (`WITH`)** — `WITH nome AS (SELECT ...)` cria consultas temporárias nomeadas, tornando queries complexas legíveis e evitando subconsultas aninhadas.
+- **TCL na prática** — `BEGIN; ... COMMIT;` (ou `ROLLBACK;` em caso de erro) garantem atomicidade: todas as operações de um bloco ocorrem juntas ou nenhuma ocorre.
+- **Tipos modernos** — `SERIAL`/`BIGSERIAL` (PostgreSQL) ou `AUTO_INCREMENT` (MySQL) para PKs autoincrementadas; `TEXT` em vez de `VARCHAR(n)` no PostgreSQL; `BOOLEAN`, `JSONB`, `UUID`, `TIMESTAMPTZ` são nativos em SGBDs modernos.
+- **`EXPLAIN ANALYZE`** — exibe o plano de execução real de uma query, mostrando onde o SGBD está gastando tempo; ferramenta essencial para otimizar SELECTs lentos.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- As instruções DCL são exclusivamente **GRANT e REVOKE** (questão 1, opção E). `CREATE` e `DROP` são DDL; `COMMIT` e `DELETE` são TCL e DML respectivamente; "Revok" é erro ortográfico.
+- As palavras-chave válidas para usar com `SELECT` são **FROM, WHERE e ORDER BY** (questão 2, opção D). `SHOW` e `DESCRIBE` são comandos de administração, não cláusulas do `SELECT`; `CREATE` é DDL; `MODIFY` não é cláusula SQL padrão.
+- As instruções TCL (Transact Control Language) são **COMMIT e ROLLBACK** (questão 3, opção C). `UPDATE` e `DELETE` são DML; `DROP` e `ALTER` são DDL.
+- A sintaxe correta para criar a tabela Pessoa_Fisica com **todos os cinco campos** é a opção B — `CREATE TABLE Pessoa_Fisica (num_pessoa_pf NUMBER(5), nom_pessoa VARCHAR(30), num_CPF NUMBER(11), dat_nascimento DATE, idt_sexo CHAR(1))`. As demais opções estão incompletas (faltam campos) ou sem o `CREATE TABLE`.
+- Para adicionar um novo campo a uma tabela existente usa-se **`ALTER TABLE ... ADD`** (questão 5, opção A). `MODIFY` altera coluna existente; `DROP` remove; `DELETE` e `CREATE` não são cláusulas válidas para `ALTER TABLE`.
+- `SELECT *` retorna **todas as colunas** — útil em consultas interativas, mas desaconselhado em código de produção porque o esquema fica implícito.
+- O `DISTINCT` elimina duplicatas; sem ele, o resultado é um **multiconjunto** (pode ter linhas repetidas).
+</Callout>
+
+---
+
+### Referências
+
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. *Sistemas de banco de dados*. 6. ed. Rio de Janeiro: Campus, 2012.

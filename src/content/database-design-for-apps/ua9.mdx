@@ -1,0 +1,152 @@
+---
+title: "UA9 — DCL: Linguagem de Controle de Dados"
+subtitle: "A DCL é a sublinguagem do SQL responsável pela segurança de acesso: GRANT concede privilégios e REVOKE os revoga, controlando quem pode acessar quais tabelas, colunas e bancos de dados."
+ua: 9
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é DCL?
+
+A **DCL (Data Control Language)** é a sublinguagem do SQL responsável pelo **controle de acesso** às bases de dados. Enquanto a DDL define estruturas e a DML manipula dados, a DCL orquestra *quem pode acessar o quê* — implementando segurança diretamente no nível do banco de dados.
+
+A DCL nasceu da necessidade de separar as responsabilidades dentro do SQL: dados estratégicos, sigilosos ou restritos precisam de controle de acesso independente das operações sobre os dados em si. Ela cria um alinhamento entre a área de **banco de dados** (que implementa os privilégios) e a área de **segurança da informação** (que define as políticas).
+
+A DCL possui dois comandos:
+
+| Comando | Função |
+|---|---|
+| `GRANT` | Concede privilégios de acesso a usuários ou perfis |
+| `REVOKE` | Remove ou revoga privilégios concedidos anteriormente |
+
+---
+
+### GRANT — Concedendo Privilégios
+
+O `GRANT` permite atribuir privilégios de acesso a um **usuário** ou **perfil de usuário** em um banco de dados — o acesso pode ser concedido a nível de dado, coluna, tabela ou banco inteiro.
+
+**Sintaxe básica:**
+
+```sql
+CREATE USER 'Usuario1'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON BancodeDados1.* TO 'Usuario1'@'localhost';
+```
+
+O `IDENTIFIED BY` garante que o usuário seja autenticado por senha no momento da criação. O `ALL` concede todos os privilégios sobre o banco especificado.
+
+**Exemplo com usuário `jeffrey`:**
+
+```sql
+CREATE USER 'jeffrey'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL ON db1.* TO 'jeffrey'@'localhost';
+```
+
+Nesse caso, `jeffrey` recebe acesso total ao banco `db1` a partir do host local.
+
+---
+
+### REVOKE — Revogando Privilégios
+
+O `REVOKE` é o oposto do `GRANT`: remove privilégios que foram concedidos anteriormente. Ele é acionado quando:
+
+- Um funcionário é promovido e não deve mais acessar determinados dados
+- Um funcionário sai da empresa
+- As regras de negócio mudam e os grupos de acesso são reorganizados
+
+**Importante:** só se pode revogar um privilégio que foi previamente concedido. A ordem natural é sempre `GRANT` → `REVOKE`.
+
+```sql
+-- Revogar apenas o SELECT de jeffrey no db1
+REVOKE SELECT ON db1 FROM 'jeffrey'@'localhost';
+
+-- Revogar INSERT no db1
+REVOKE INSERT ON db1 FROM 'jeffrey'@'localhost';
+
+-- Revogar todos os privilégios de jeffrey
+REVOKE ALL PRIVILEGES;
+```
+
+---
+
+### Perfis de Usuários
+
+Na prática, é mais eficiente trabalhar com **perfis** (roles) do que com usuários individuais. Um perfil agrupa privilégios e pode ser atribuído a vários usuários:
+
+- `Perfil Chefe_Divisão_RH` → acesso às tabelas de RH
+- `Perfil Analista_Financeiro` → acesso às tabelas de finanças
+
+Um coordenador que muda de divisão terá os privilégios do perfil anterior revogados via `REVOKE` e receberá os do novo perfil via `GRANT`. Isso mantém o **princípio do menor privilégio**: cada usuário acessa apenas o necessário para sua função.
+
+---
+
+### Tabela de Privilégios do GRANT
+
+O `GRANT` pode ser combinado com privilégios específicos para controle granular:
+
+| Privilégio | Efeito |
+|---|---|
+| `ALL [PRIVILEGES]` | Todos os privilégios no nível especificado |
+| `SELECT` | Permite consultas |
+| `INSERT` | Permite inserção de dados |
+| `UPDATE` | Permite atualização de dados |
+| `DELETE` | Permite exclusão de dados |
+| `CREATE` | Permite criar bancos e tabelas |
+| `DROP` | Permite excluir bancos e tabelas |
+| `ALTER` | Permite alterar tabelas com `ALTER TABLE` |
+| `CREATE USER` | Permite criar, excluir e renomear usuários |
+| `CREATE VIEW` | Permite criar e alterar visões |
+| `INDEX` | Permite criar e remover índices |
+| `REFERENCES` | Permite criar chave estrangeira |
+| `EXECUTE` | Permite executar rotinas armazenadas |
+| `GRANT OPTION` | Permite conceder ou remover privilégios de outras contas |
+| `FILE` | Permite ao usuário ler ou gravar arquivos no servidor |
+| `EVENT` | Permite criar eventos no banco de dados |
+| `PROXY` | Permite proxy de usuário |
+
+Todos esses privilégios também podem ser combinados com `REVOKE` para removê-los de forma granular.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ssd_01.webp" alt="Segurança SQL: Comandos DCL" caption="Infográfico: funcionamento das instruções GRANT e REVOKE para concessão e restrição de acesso a tabelas em um banco de dados, com exemplos de hierarquia entre perfis de usuário." />
+</SlidesGrid>
+
+---
+
+<Callout type="warning">
+**Conteúdo MySQL-cêntrico e simplificado.** O livro base (Pedro Henrique Chagas Freitas, SAGAH) apresenta DCL apenas com a sintaxe do MySQL, focada em `GRANT ALL` e `REVOKE ALL`. Não cobre RBAC via `CREATE ROLE`, Row-Level Security (RLS), Column-Level Security, políticas de auditoria, controle por esquemas/namespaces ou as diferenças de implementação entre MySQL, PostgreSQL e outros SGBDs modernos.
+</Callout>
+
+### Práticas Modernas
+
+- **RBAC (Role-Based Access Control)** — o padrão moderno é criar *roles* (papéis) com `CREATE ROLE` e atribuí-las a usuários via `GRANT role TO usuario`. Isso evita a repetição de GRANTs individuais e facilita a gestão de centenas de usuários. MySQL 8+, PostgreSQL e SQL Server suportam roles nativamente.
+- **Row-Level Security (RLS)** — no PostgreSQL, é possível restringir o acesso por *linha*, não apenas por tabela. Com `CREATE POLICY`, um usuário vê apenas as linhas que lhe pertencem (ex.: um vendedor vê só seus pedidos). Isso vai além do que `GRANT/REVOKE` consegue expressar.
+- **Column-Level Security** — `GRANT SELECT (coluna1, coluna2) ON tabela TO usuario` permite expor apenas colunas específicas, útil para ocultar campos sensíveis como CPF e salário.
+- **Princípio do Menor Privilégio** — conceder sempre o privilégio mínimo necessário para a tarefa. Contas de aplicação raramente precisam de `CREATE`, `DROP` ou `ALTER`; apenas `SELECT`, `INSERT`, `UPDATE` e `DELETE` nas tabelas pertinentes.
+- **Views como camada de segurança** — criar views que expõem apenas os dados permitidos e conceder `SELECT` na view (não na tabela base) é uma alternativa poderosa ao RLS, compatível com qualquer SGBD relacional.
+- **`ALTER USER`** — em vez de recriar usuários, `ALTER USER` permite modificar senhas, papéis e características de contas existentes sem revogar todos os privilégios.
+- **IAM integrado a SGBDs em nuvem** — AWS RDS/Aurora, Cloud SQL e Azure SQL permitem autenticação via IAM (Identity and Access Management) sem necessitar de `CREATE USER` manual. O acesso é gerido externamente ao banco.
+- **Auditoria com pgAudit** — registrar todos os `GRANT` e `REVOKE` executados é prática obrigatória em ambientes regulados (LGPD, PCI-DSS, HIPAA). O pgAudit faz isso no PostgreSQL sem alterações na aplicação.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A instrução DCL correta é **`GRANT ALL ON db_orçamento * TO 'Tiago'`** (questão 1, opção C). "GRANTE" é erro de grafia; INSERT e UPDATE são DML; SELECT é DQL/DML.
+- Para remover **todos os privilégios** de um usuário: **`REVOKE ALL PRIVILEGES`** (questão 2, opção A). `GRANT ALL PRIVILEGES` faz o oposto — concede.
+- O `REVOKE` é usado para **remover acesso a uma tabela** (questão 3, opção D). Ele não insere, atualiza, deleta dados nem cria tabelas.
+- O `GRANT` é o comando DCL para **atribuir acesso a uma tabela** (questão 4, opção B). Inserir dados é `INSERT` (DML); alterar tabelas é `ALTER` (DDL); excluir tabela é `DROP` (DDL).
+- A permissão DCL pode ser aplicada **para usuários com perfil e para usuários sem perfil** (questão 5, opção E). O GRANT não exige que o destinatário pertença a um grupo — pode ser concedido diretamente a qualquer usuário.
+- `REVOKE` pressupõe que o privilégio foi concedido antes — não existe REVOKE sem GRANT anterior.
+- A **ordem correta** é sempre: `CREATE USER` → `GRANT` → (quando necessário) `REVOKE`.
+</Callout>
+
+---
+
+### Referências
+
+- FREITAS, P. H. C. *Modelagem e desenvolvimento de banco de dados*. Porto Alegre: SAGAH, 2020.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- HEUSER, C. A. *Projeto de banco de dados*. 6. ed. Porto Alegre: Bookman, 2010.
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
