@@ -1,0 +1,175 @@
+---
+title: "UA10 — Gerenciamento de Transações"
+subtitle: "Uma transação é uma unidade de trabalho indivisível no banco de dados: ou tudo é concluído (COMMIT) ou nada é salvo (ROLLBACK). As propriedades ACID e os mecanismos de controle de concorrência garantem confiabilidade mesmo com múltiplos usuários simultâneos."
+ua: 10
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é uma Transação?
+
+Uma **transação de banco de dados** é um conjunto de operações que deve ser processado como uma **unidade de trabalho**. Isso significa que ou todas as operações dentro da transação são concluídas com sucesso, ou nenhuma delas tem efeito permanente sobre o banco de dados.
+
+O conceito vai além do uso cotidiano da palavra: em BD, uma transação é definida pelo usuário e pode envolver qualquer número de leituras e escritas. Um sistema de reserva aérea, por exemplo, pode tratar a combinação de reserva de ida e de volta como uma única transação — afinal, nenhum viajante quer a ida sem o retorno.
+
+Exemplos de transações habituais:
+
+| Sistema | Transação | Descrição |
+|---|---|---|
+| Entrada de pedidos | Adicionar pedido | Cliente faz um novo pedido |
+| Entrada de pedidos | Verificar situação | Cliente confere o status de um pedido |
+| Folha de pagamento | Contratar funcionário | Novo funcionário começa a trabalhar |
+| Folha de pagamento | Pagar ao funcionário | Pagamento periódico pelos serviços prestados |
+
+---
+
+### Instruções SQL para Transações
+
+O SQL oferece três instruções para delimitar e controlar transações:
+
+| Instrução | Função |
+|---|---|
+| `START TRANSACTION` | Marca o início de uma transação |
+| `COMMIT` | Torna permanentes todas as alterações da transação |
+| `ROLLBACK` | Desfaz todas as alterações da transação, restaurando o estado anterior |
+
+Qualquer instrução SQL entre `START TRANSACTION` e `COMMIT` faz parte da mesma transação. O `ROLLBACK` funciona como um "desfazer em lote" — não apenas a última ação, mas toda a sequência de operações da transação.
+
+**Exemplo clássico — transação em caixa eletrônico:**
+
+```sql
+START TRANSACTION;
+
+SELECT numero_conta, tipo, saldo FROM conta WHERE ...;
+
+-- Se saldo suficiente:
+UPDATE conta SET saldo = saldo - valor WHERE numero_conta = conta_debito;
+UPDATE conta SET saldo = saldo + valor WHERE numero_conta = conta_credito;
+INSERT INTO lancamentos (conta, tipo, valor, data) VALUES (...);
+
+COMMIT;
+
+-- Em caso de erro:
+-- ROLLBACK;
+```
+
+O `UPDATE` de débito e o `UPDATE` de crédito devem estar na **mesma transação**: sem isso, uma falha entre os dois deixaria o dinheiro "no ar" — debitado de uma conta, mas nunca creditado na outra.
+
+> **Nota:** o padrão SQL:2003 usa `START TRANSACTION`. Alguns SGBDs aceitam `BEGIN` como alternativa. O Oracle não exige instrução explícita para iniciar — a transação começa automaticamente com o primeiro comando SQL após um `COMMIT`.
+
+---
+
+### Propriedades ACID
+
+Para garantir confiabilidade, os SGBDs asseguram que toda transação obedeça às **propriedades ACID**:
+
+**Atômica (Atomic)**
+A transação não pode ser subdividida: ou todo o trabalho é concluído, ou nada é realizado. Um caixa eletrônico nunca debita de uma conta sem creditar na correspondente. Se algo falhar no meio, a transação inteira é desfeita.
+
+**Consistente (Consistent)**
+Se as restrições do banco forem válidas antes da transação, elas continuarão válidas depois. Uma transferência entre contas não pode deixar nenhuma conta com saldo negativo se a regra de negócio proíbe isso — a transação é rejeitada integralmente.
+
+**Isolada (Isolated)**
+Transações não interferem umas nas outras de maneiras não permitidas. Uma transação nunca sobrescreve alterações feitas por outra em andamento. Do ponto de vista de cada usuário, o banco de dados se comporta como se ele fosse o único a acessá-lo naquele momento.
+
+**Durável (Durable)**
+Após o `COMMIT`, as alterações são permanentes. Mesmo uma falha de hardware cinco minutos depois não apaga os efeitos da transação já confirmada.
+
+Os SGBDs garantem as propriedades ACID por meio de dois serviços transparentes ao desenvolvedor:
+
+- **Transparência de recuperação:** o SGBD restaura automaticamente o banco ao estado anterior se ocorrer uma falha durante a transação.
+- **Transparência de concorrência:** mesmo com múltiplos usuários simultâneos, cada um opera como se o banco fosse exclusivo para ele.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gid_01.webp" alt="Gerenciamento e Integridade de Dados" caption="Infográfico: propriedades ACID, controle de concorrência e ferramentas de recuperação em gerenciamento de transações." />
+</SlidesGrid>
+
+---
+
+### Controle de Concorrência
+
+A maioria das organizações depende de bancos de dados multiusuário — bancos, companhias aéreas, e-commerce. Permitir que múltiplos usuários acessem o banco simultaneamente aumenta o **throughput** (número de transações por unidade de tempo), mas cria risco de interferência.
+
+**Hot spots** são os dados mais críticos nesse cenário: itens que múltiplos usuários tentam alterar ao mesmo tempo — como os assentos restantes de um vôo popular ou o estoque de um produto em promoção.
+
+#### Problemas de interferência
+
+**1. Atualização perdida (Lost Update)**
+Ocorre quando duas transações leem o mesmo valor, calculam separadamente e escrevem resultados conflitantes. Exemplo: AR = 10 (assentos restantes). Transação A e B leem 10 ao mesmo tempo. Ambas subtraem 1 localmente e escrevem 9. O resultado final é 9, quando deveria ser 8 — uma reserva foi perdida.
+
+**2. Dependência não-efetivada (Dirty Read)**
+Uma transação lê dados escritos por outra que ainda não executou `COMMIT`. Se essa segunda transação for revertida com `ROLLBACK`, a primeira usou um valor "fantasma" — um dado que na prática nunca existiu.
+
+**3. Recuperações inconsistentes**
+Ocorrem em três formas:
+- **Sumário incorreto:** uma transação calcula uma função de sumarização (soma, contagem) enquanto outra modifica parte dos dados. O resultado final mistura valores antes e depois da alteração.
+- **Leitura fantasma:** uma mesma consulta executada duas vezes retorna resultados diferentes porque outra transação inseriu ou removeu linhas que atendem à condição da consulta.
+- **Leitura não-repetível:** uma mesma linha lida duas vezes retorna valores diferentes porque outra transação a modificou no intervalo.
+
+#### Ferramentas de controle de concorrência
+
+**Bloqueios (Locks)**
+Antes de acessar um item do banco, a transação obtém um bloqueio sobre ele (linha, bloco, subconjunto ou tabela inteira). Outras transações que tentarem acessar o mesmo item precisam aguardar o desbloqueio.
+
+**Protocolo de bloqueio em duas fases (2PL)**
+Garante que transações executadas simultaneamente produzam o mesmo resultado que teriam se executadas sequencialmente. Fase 1 (crescente): a transação só obtém bloqueios. Fase 2 (encolhimento): a transação só libera bloqueios.
+
+**Deadlock (Bloqueio perpétuo)**
+Ocorre quando duas transações ficam indefinidamente esperando uma pela outra: A aguarda um recurso bloqueado por B, enquanto B aguarda um recurso bloqueado por A. Os SGBDs detectam e resolvem deadlocks revertendo uma das transações.
+
+**Savepoints**
+Permitem criar pontos de restauração dentro de uma transação. Em vez de reverter a transação inteira no caso de deadlock, o SGBD pode reverter apenas até o último savepoint, reduzindo o trabalho perdido.
+
+```sql
+START TRANSACTION;
+INSERT INTO pedido (...) VALUES (...);
+SAVEPOINT apos_pedido;
+
+INSERT INTO item_pedido (...) VALUES (...);
+-- Se erro aqui: ROLLBACK TO SAVEPOINT apos_pedido;
+
+COMMIT;
+```
+
+**Checkpoint**
+O SGBD grava periodicamente no log o estado de todas as transações ativas. Em caso de falha, a recuperação começa a partir do último checkpoint — sem precisar reprocessar todo o histórico desde o início. O intervalo entre checkpoints afeta diretamente o tempo de recuperação.
+
+---
+
+<Callout type="warning">
+**Livro desatualizado (Oracle 10g / SQL:2003).** O livro base (Michael V. Mannino, AMGH, 3ª ed., 2014 — tradução de edição de 2008) usa Oracle 10g e SQL:2003 como referência principal. Não cobre níveis de isolamento (`READ COMMITTED`, `REPEATABLE READ`, `SERIALIZABLE`), MVCC (controle de concorrência multiversão), transações distribuídas com 2PC, nem os recursos modernos de monitoramento de performance em SGBDs atuais.
+</Callout>
+
+### Práticas Modernas
+
+- **Níveis de isolamento SQL** — o SQL padrão define 4 níveis (`READ UNCOMMITTED`, `READ COMMITTED`, `REPEATABLE READ`, `SERIALIZABLE`), cada um com um equilíbrio diferente entre consistência e throughput. O PostgreSQL usa `READ COMMITTED` como padrão; o MySQL/InnoDB usa `REPEATABLE READ`. Escolher o nível correto é uma decisão de projeto, não um detalhe.
+- **MVCC (Multi-Version Concurrency Control)** — PostgreSQL, Oracle e MySQL/InnoDB implementam MVCC em vez de bloqueios exclusivos para leituras. Cada transação enxerga um *snapshot* do banco no momento em que começou, eliminando a maioria dos bloqueios de leitura e aumentando o throughput drasticamente.
+- **`BEGIN` / `COMMIT` / `ROLLBACK` explícitos** — em aplicações modernas, todo bloco de operações relacionadas deve ser envolvido em uma transação explícita. ORMs como Hibernate, SQLAlchemy e Prisma oferecem APIs de transação que garantem o `ROLLBACK` automático em caso de exceção.
+- **Transações distribuídas e 2PC (Two-Phase Commit)** — em arquiteturas de microsserviços com múltiplos bancos, o protocolo 2PC coordena `COMMIT` ou `ROLLBACK` em todos os participantes. Alternativas como Saga Pattern evitam 2PC trocando consistência forte por eventual.
+- **`EXPLAIN ANALYZE` para transações lentas** — identificar queries lentas dentro de transações é essencial. No PostgreSQL, `pg_stat_activity` mostra transações abertas há muito tempo (*long-running transactions*), que mantêm bloqueios e degradam o sistema inteiro.
+- **Monitoramento de deadlocks** — PostgreSQL registra deadlocks em `pg_log`; MySQL os expõe em `SHOW ENGINE INNODB STATUS`. Deadlocks frequentes indicam problemas de design de transação ou de ordem de acesso a tabelas.
+- **Transações em bancos NoSQL** — MongoDB 4+ e Cassandra suportam transações ACID multi-documento. Bancos de dados como DynamoDB oferecem `TransactWriteItems` para operações atômicas. O dogma "NoSQL não tem transações" está superado.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Propriedades ACID:** Atômica, Consistente, Isolada, Durável — a resposta correta é a opção **D** (questão 4). "Interna", "Controlada" e "Distribuída" não fazem parte do acrônimo.
+- **Deadlock** é a situação em que transação (1) fica esperando indefinidamente que transação (2) libere um recurso (questão 1, opção **A**). Não confundir com Savepoint (ponto de restauração) nem Checkpoint (ponto de gravação no log).
+- **Checkpoint** é o recurso que grava o estado das transações ativas no log em intervalos específicos para reduzir o tempo de recuperação (questão 2, opção **B**). Commit efetiva; Rollback reverte; Buffer é área de memória.
+- **Savepoint** é o que o SGBD usa para reverter uma transação ao último estado consistente sem desfazê-la inteira (questão 3, opção **C**). Resolve deadlocks de forma menos destrutiva que um `ROLLBACK` total.
+- **Bloqueio** impede que outros usuários acessem um item de dados em uso (questão 5, opção **E**). Antes de acessar qualquer item, a transação deve obter um bloqueio.
+- `COMMIT` torna as alterações **permanentes**; `ROLLBACK` as **desfaz**; `START TRANSACTION` apenas **abre** a transação.
+- Transações longas (com interação do usuário dentro delas) aumentam o tempo de espera para outros usuários — a boa prática é manter transações curtas e posicionar a interação com o usuário *fora* do bloco de transação.
+</Callout>
+
+---
+
+### Referências
+
+- MANNINO, M. V. *Projeto, desenvolvimento de aplicações e administração de banco de dados*. 3. ed. Porto Alegre: AMGH, 2014.
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
