@@ -1,0 +1,264 @@
+---
+title: "UA11 — SQL: Conceitos e Funcionalidades"
+subtitle: "A SQL é a linguagem padrão para interagir com bancos de dados relacionais — ela organiza seus comandos em cinco sublinguagens (DML, DDL, DCL, DTL, DQL) e oferece operadores lógicos, relacionais, cláusulas condicionais e funções de agregação para construir consultas precisas e eficientes."
+ua: 11
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é a linguagem SQL
+
+A **SQL (Structured Query Language)** é a linguagem padrão para interação com sistemas de gerenciamento de banco de dados relacionais. Ela surgiu na década de 1970 a partir de um estudo de **E. F. Codd** no laboratório de pesquisa da IBM em San Jose, Califórnia, e evoluiu da linguagem SEQUEL, criada para o sistema IBM System R.
+
+A SQL é a intermediária entre o que precisa ser feito e o banco de dados: para que qualquer operação aconteça — inserção, remoção, edição ou consulta — é necessário que a sintaxe e os valores estejam corretos.
+
+Por ser de fácil aprendizado e amplamente padronizada, é utilizada diariamente por DBAs e desenvolvedores nos principais SGBDs do mercado:
+
+| SGBD | Tipo |
+|---|---|
+| MySQL / MariaDB | Relacional |
+| PostgreSQL | Relacional |
+| Microsoft SQL Server | Relacional |
+| Oracle Database | Relacional |
+| MongoDB | **Não relacional** — não usa SQL |
+
+O MongoDB armazena e recupera dados de forma diferente dos bancos relacionais, o que lhe confere alta velocidade em certos tipos de consulta, mas o torna incompatível com a linguagem SQL padrão.
+
+**Sintaxe básica:**
+
+```sql
+SELECT atributos   -- obrigatório
+FROM tabela        -- obrigatório
+WHERE condição     -- opcional
+```
+
+---
+
+### Operadores Lógicos
+
+Os operadores lógicos combinam ou negam condições em uma consulta, permitindo filtros mais precisos.
+
+| Operador | Ação |
+|---|---|
+| `AND` | Retorna apenas quando **todas** as condições forem verdadeiras |
+| `OR` | Retorna quando **pelo menos uma** das condições for verdadeira |
+| `NOT` | Retorna o **contrário** da expressão |
+
+Todos os exemplos a seguir usam a tabela `clientes` abaixo:
+
+| ClienteNome | Idade | Estado | E-mail |
+|---|---|---|---|
+| João | 15 | São Paulo | — |
+| Maria | 22 | Paraná | — |
+| Felipe | 53 | Rio de Janeiro | felipe@aaa.com |
+| Conceição | 56 | Rio de Janeiro | conceicao@aaa.com |
+| Sophie | 24 | São Paulo | sophie@aaa.com |
+| Augusto | 40 | Minas Gerais | — |
+
+```sql
+-- Clientes do Paraná OU de São Paulo
+SELECT ClienteNome FROM clientes
+WHERE Estado = 'Paraná' OR Estado = 'São Paulo';
+
+-- Clientes do Rio de Janeiro cujo nome é Felipe
+SELECT ClienteNome FROM clientes
+WHERE Estado = 'Rio de Janeiro' AND ClienteNome = 'Felipe';
+
+-- Clientes que NÃO são do Rio de Janeiro
+SELECT ClienteNome FROM clientes
+WHERE NOT Estado = 'Rio de Janeiro';
+
+-- NOT combinado com IN
+SELECT ClienteNome FROM clientes
+WHERE Estado NOT IN ('São Paulo', 'Paraná');
+```
+
+---
+
+### Operadores Relacionais
+
+Usados para comparar valores na cláusula `WHERE`:
+
+| Operador | Ação |
+|---|---|
+| `=` | Igual |
+| `<>` | Diferente |
+| `>` | Maior |
+| `>=` | Maior ou igual |
+| `<` | Menor |
+| `<=` | Menor ou igual |
+| `BETWEEN` | Dentro de um intervalo (inclusivo) |
+| `NOT BETWEEN` | Fora do intervalo |
+| `LIKE` | Padrão com curinga `%` (qualquer sequência) ou `_` (caractere único) |
+| `NOT LIKE` | Não corresponde ao padrão |
+| `IN` | Valor presente em uma lista |
+| `NOT IN` | Valor ausente da lista |
+
+```sql
+-- Clientes com mais de 50 anos
+SELECT ClienteNome FROM clientes WHERE Idade > 50;
+
+-- Clientes entre 50 e 60 anos (inclusivo)
+SELECT ClienteNome FROM clientes WHERE Idade BETWEEN 50 AND 60;
+
+-- Clientes cujo nome começa com "J"
+SELECT ClienteNome FROM clientes WHERE ClienteNome LIKE 'J%';
+
+-- Clientes com até 30 anos
+SELECT ClienteNome FROM clientes WHERE Idade <= 30;
+
+-- Clientes de SP ou MG (forma compacta com IN)
+SELECT ClienteNome FROM clientes WHERE Estado IN ('São Paulo', 'Minas Gerais');
+```
+
+---
+
+### Cláusulas Condicionais
+
+Definem como os dados são filtrados, agrupados, ordenados e combinados:
+
+| Cláusula | Ação |
+|---|---|
+| `FROM` | Indica a(s) tabela(s) de origem |
+| `WHERE` | Filtra linhas individuais |
+| `GROUP BY` | Agrupa linhas com valores iguais |
+| `HAVING` | Filtra grupos (após `GROUP BY`) |
+| `ORDER BY` | Ordena o resultado (`ASC` crescente, `DESC` decrescente) |
+| `DISTINCT` | Retorna valores sem repetição |
+| `UNION` | Combina duas consultas eliminando duplicatas |
+| `UNION ALL` | Combina duas consultas mantendo duplicatas |
+
+```sql
+-- Clientes ordenados por nome (crescente)
+SELECT ClienteNome FROM clientes ORDER BY ClienteNome;
+
+-- Estados cadastrados, sem repetição
+SELECT DISTINCT Estado FROM clientes;
+
+-- Quantidade de clientes por estado
+SELECT Estado, COUNT(*) FROM clientes GROUP BY Estado;
+
+-- Estados com mais de 1 cliente
+SELECT Estado, COUNT(*) FROM clientes
+GROUP BY Estado HAVING COUNT(*) > 1;
+```
+
+**UNION vs UNION ALL:**
+
+```sql
+-- Combina listas sem repetir e-mails iguais
+SELECT Email FROM clientes_rj
+UNION
+SELECT Email FROM clientes_sp;
+
+-- Combina listas mantendo todos os registros, mesmo repetidos
+SELECT Email FROM clientes_rj
+UNION ALL
+SELECT Email FROM clientes_sp;
+```
+
+`UNION` remove duplicatas automaticamente (mais lento); `UNION ALL` preserva tudo (mais rápido, útil quando duplicatas são esperadas ou irrelevantes).
+
+---
+
+### Funções de Agregação
+
+Calculam valores resumidos sobre conjuntos de linhas:
+
+| Função | Ação |
+|---|---|
+| `AVG(col)` | Média dos valores |
+| `COUNT(*)` | Número de linhas |
+| `SUM(col)` | Soma dos valores |
+| `MAX(col)` | Maior valor |
+| `MIN(col)` | Menor valor |
+
+```sql
+SELECT AVG(Idade)  FROM clientes;                              -- média de idade
+SELECT COUNT(*)    FROM clientes WHERE Estado = 'Rio de Janeiro'; -- qtde RJ
+SELECT SUM(Idade)  FROM clientes;                              -- soma das idades
+SELECT MAX(Idade)  FROM clientes;                              -- cliente mais velho
+SELECT MIN(Idade)  FROM clientes;                              -- cliente mais novo
+```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gels_01.webp" alt="Guia Essencial da Linguagem SQL" caption="Infográfico: operadores lógicos AND, OR e NOT aplicados na linguagem SQL para refinamento de consultas em bancos de dados relacionais." />
+</SlidesGrid>
+
+---
+
+### Sublinguagens da SQL
+
+A SQL é dividida em cinco sublinguagens, cada uma com escopo e responsabilidade específicos:
+
+**DML — Data Manipulation Language**
+Manipula os dados existentes nas tabelas.
+Comandos: `INSERT`, `UPDATE`, `DELETE`, `SELECT`
+
+```sql
+INSERT INTO clientes VALUES ('Gregório', 45, 'Amazonas', 'gregorio@aaa.com');
+UPDATE clientes SET Estado = 'Goiás' WHERE ClienteNome = 'Gregório';
+DELETE FROM clientes WHERE ClienteNome = 'Gregório';
+```
+
+**DDL — Data Definition Language**
+Define e modifica a estrutura das tabelas (esquema).
+Comandos: `CREATE`, `DROP`, `ALTER`
+
+```sql
+CREATE TABLE fornecedores (Nome varchar(255), Telefone varchar(255), Endereco varchar(255));
+DROP TABLE fornecedores;
+```
+
+**DCL — Data Control Language**
+Gerencia permissões de acesso dos usuários.
+Comandos: `GRANT`, `REVOKE`
+
+**DTL — Data Transaction Language**
+Controla transações, garantindo atomicidade das operações.
+Comandos: `START TRANSACTION` (ou `BEGIN WORK`), `COMMIT`, `ROLLBACK`
+
+**DQL — Data Query Language**
+Consulta dados sem modificá-los.
+Comando: `SELECT`
+
+> Alguns autores classificam o `SELECT` dentro da DML; outros o separam como DQL. Ambas as classificações são aceitas — o que importa é entender a função de cada comando.
+
+---
+
+<Callout type="warning">
+**Material introdutório — lacunas importantes.** O livro base (Fabrício Felipe Meleto Barboza, *Modelagem e Desenvolvimento de Banco de Dados*, SAGAH) apresenta SQL de forma superficial. O exemplo de `OR` no livro está sintaticamente incorreto (`WHERE Estado = 'Paraná' OR 'São Paulo'` — falta repetir `Estado =`). Não cobre JOINs, subconsultas, CTEs, window functions, índices, transações complexas, tipos de dados avançados nem diferenças de sintaxe entre SGBDs.
+</Callout>
+
+### Práticas Modernas
+
+- **`IN` no lugar de múltiplos `OR`** — `WHERE Estado IN ('SP', 'RJ', 'MG')` é mais legível e igualmente eficiente do que encadear vários `OR`. Para listas negativas, `NOT IN` é mais claro que `NOT (col = 'x' OR col = 'y')`.
+- **`NOT EXISTS` e `NOT IN` com NULLs** — `NOT IN` pode produzir resultados inesperados quando a lista contém `NULL`: qualquer comparação com `NULL` retorna `UNKNOWN`, fazendo a consulta retornar zero linhas. Prefira `NOT EXISTS` em subconsultas quando houver risco de nulos.
+- **`UNION` vs `UNION ALL`** — use `UNION ALL` por padrão quando souber que não há duplicatas ou não precisar removê-las. `UNION` implica um `DISTINCT` interno, que é mais custoso. Remova duplicatas explicitamente quando necessário, não por padrão.
+- **JOINs — o que este material não cobre** — na prática, a maioria das consultas reais combina dados de múltiplas tabelas com `INNER JOIN`, `LEFT JOIN`, `RIGHT JOIN` e `FULL OUTER JOIN`. Operar somente com `WHERE` para junção (produto cartesiano) é uma prática legada e propensa a erros.
+- **Funções de agregação com `GROUP BY` + `HAVING`** — `AVG`, `SUM`, `COUNT` raramente são usadas sem `GROUP BY` em cenários reais. Filtrar grupos com `HAVING AVG(Idade) > 30` é o padrão para relatórios por categoria.
+- **Window functions** — `AVG(Idade) OVER (PARTITION BY Estado)` calcula a média por estado sem colapsar as linhas individuais, algo impossível de fazer limpo com `GROUP BY` puro. Disponível em PostgreSQL, MySQL 8+, SQL Server e Oracle.
+- **SQL injection** — nunca concatenar valores de usuário diretamente em strings SQL. Usar sempre *prepared statements* (`?` ou `:param`) para separar código de dados — a principal defesa contra SQL injection.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **`ORDER BY`** — permite ordenar por uma ou mais colunas, com `ASC` (crescente, padrão) ou `DESC` (decrescente). Funciona em colunas de qualquer tipo (texto, número, data). A assertiva "ORDER sozinho é suficiente" é **falsa**; "ordenação só para numéricos" também é **falsa**. Sequência: **V, V, F, F** (questão 1, opção **A**).
+- **`AVG()`** calcula a média de valores de uma coluna. E as funções `SUM()`, `AVG()` e `COUNT()` permitem cálculos estatísticos sobre conjuntos de dados — a asserção II justifica corretamente a I. Resposta: **A** (ambas verdadeiras, II justifica I) — questão 2.
+- **`GRANT`** concede permissões (SELECT, INSERT, UPDATE, DELETE etc.) a usuários. **Não** remove permissões — isso é papel do `REVOKE`. As afirmativas I, II e IV são corretas; III é falsa. Resposta: **C** — questão 3.
+- **`UNION ALL`** retorna o resultado de duas consultas **sem remover duplicatas** (opção **C**). `UNION` é quem elimina duplicatas. `UNION ALL` não exige mesma base, não ordena automaticamente e não depende de chave estrangeira — questão 4.
+- **`INSERT`** pertence à **DML** (Data Manipulation Language), que manipula dados nas tabelas — opção **A**. DDL define estrutura; DCL controla permissões; DTL gerencia transações; DQL consulta dados — questão 5.
+- Macete das sublinguagens: **DML** = dados (INSERT/UPDATE/DELETE/SELECT) · **DDL** = definição de estrutura (CREATE/ALTER/DROP) · **DCL** = controle de acesso (GRANT/REVOKE) · **DTL** = transações (COMMIT/ROLLBACK) · **DQL** = consulta pura (SELECT).
+</Callout>
+
+---
+
+### Referências
+
+- BARBOZA, F. F. M. *Modelagem e desenvolvimento de banco de dados*. Porto Alegre: SAGAH, 2022.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson, 2010.
+- MANNINO, M. V. *Projeto, desenvolvimento de aplicações e administração de banco de dados*. 3. ed. Porto Alegre: AMGH, 2014.
