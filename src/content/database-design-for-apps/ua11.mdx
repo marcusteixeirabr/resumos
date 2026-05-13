@@ -1,0 +1,366 @@
+---
+title: "UA11 — Rotinas de Programação em BD"
+subtitle: "Procedures, functions e triggers permitem centralizar lógica diretamente no banco de dados, automatizando processos e reduzindo o acoplamento entre aplicação e SGBD."
+ua: 11
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/database-design-for-apps/ua11.m4a" title="Dominando rotinas de programação em banco de dados" />
+
+### Por que usar rotinas no banco de dados?
+
+Rotinas de banco de dados — procedures, functions e triggers — são blocos de código SQL armazenados diretamente no SGBD. Elas garantem que certos processos aconteçam de forma automática, organizada e segura, independentemente da aplicação que acessa o banco.
+
+**Vantagens em relação ao código na aplicação:**
+
+| Vantagem | O que significa |
+|---|---|
+| Performance | Menos tráfego entre aplicação e BD — a lógica roda onde os dados estão |
+| Segurança | A aplicação não precisa de acesso direto a tabelas — só chama a rotina |
+| Manutenção | Lógica centralizada: alterar no BD propaga para todas as aplicações |
+| Automação | Triggers disparam sem intervenção humana ou da aplicação |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/drp_01.webp" alt="Infográfico: Dominando rotinas de programação em banco de dados — os três pilares (Procedures, Functions, Triggers) e comparativo de uso" />
+</SlidesGrid>
+
+---
+
+### Procedures (Procedimentos armazenados)
+
+Uma **procedure** é um bloco de comandos SQL nomeado, armazenado no banco de dados. Pode receber parâmetros e executar operações como INSERT, UPDATE, DELETE e SELECT sem necessariamente retornar um valor.
+
+**Tipos de parâmetro:**
+
+| Modo | Comportamento |
+|---|---|
+| `IN` | Valor fornecido por quem chama; não pode ser modificado dentro da procedure |
+| `OUT` | Valor definido dentro da procedure e retornado para quem chamou |
+| `IN OUT` | Recebe valor externo e pode ser modificado internamente |
+
+**Estrutura (Oracle PL/SQL):**
+
+```sql
+CREATE [OR REPLACE] PROCEDURE NomeProcedimento
+  [(parametro1 modo tipo, ...)]
+IS
+  -- declarações de variáveis locais
+BEGIN
+  -- sequência de instruções
+[EXCEPTION
+  -- tratamento de erros]
+END;
+```
+
+**Exemplo prático — listar produtos do dia:**
+
+```sql
+-- Criação
+CREATE OR REPLACE PROCEDURE listar_produtos_dia IS
+BEGIN
+  SELECT nome, descricao, valor
+  FROM produto
+  WHERE DATE(data_criacao) = CURDATE()
+  ORDER BY data_criacao DESC;
+END;
+
+-- Execução (Oracle)
+BEGIN
+  listar_produtos_dia;
+END;
+```
+
+**Com parâmetro de entrada:**
+
+```sql
+CREATE OR REPLACE PROCEDURE buscar_produto_por_nome
+  (p_nome IN VARCHAR2) IS
+BEGIN
+  SELECT nome, descricao, valor
+  FROM produto
+  WHERE nome = p_nome;
+END;
+
+-- Chamada
+BEGIN
+  buscar_produto_por_nome('batom');
+END;
+```
+
+---
+
+### Functions (Funções)
+
+Uma **function** é similar a uma procedure, mas **deve retornar exatamente um valor**. Funções são projetadas para uso em expressões SQL — podem aparecer em cláusulas `SELECT`, `WHERE` e `ORDER BY`.
+
+**Diferença fundamental em relação à procedure:**
+- Procedures: zero ou múltiplos resultados via parâmetros `OUT`
+- Functions: exatamente um valor de retorno via `RETURN`
+- Functions: somente parâmetros `IN` (sem `OUT` ou `IN OUT`)
+
+**Estrutura (Oracle PL/SQL):**
+
+```sql
+CREATE [OR REPLACE] FUNCTION NomeFuncao
+  [(parametro1 IN tipo, ...)]
+RETURN TipoDado
+IS
+  -- declarações
+BEGIN
+  -- instruções com RETURN obrigatório
+[EXCEPTION
+  -- tratamento de erros]
+END;
+```
+
+**Exemplo — recuperar nome de aluno por CPF:**
+
+```sql
+CREATE OR REPLACE FUNCTION fn_NomeAluno
+  (p_cpf IN aluno.cpf%TYPE) RETURN VARCHAR2 IS
+  v_nome aluno.nome%TYPE;
+BEGIN
+  SELECT nome INTO v_nome FROM aluno WHERE cpf = p_cpf;
+  RETURN v_nome;
+EXCEPTION
+  WHEN NO_DATA_FOUND THEN RETURN NULL;
+END;
+
+-- Uso em um SELECT (ponto forte das functions)
+SELECT cpf, fn_NomeAluno(cpf) AS nome FROM registro;
+```
+
+---
+
+### Cursores
+
+Procedures e functions que precisam processar **múltiplas linhas** de uma consulta usam cursores. Um cursor é um ponteiro para o conjunto de resultados de um SELECT.
+
+**Cursor implícito (FOR loop):**
+O PL/SQL declara, abre e fecha automaticamente dentro de uma instrução `FOR`.
+
+```sql
+FOR registro IN (SELECT * FROM produto WHERE ativo = 1) LOOP
+  -- processa cada linha: registro.nome, registro.valor, etc.
+END LOOP;
+```
+
+**Cursor explícito:**
+Declarado na seção `DECLARE`, operado manualmente com `OPEN`, `FETCH` e `CLOSE`.
+
+```sql
+DECLARE
+  CURSOR cur_produtos IS SELECT nome, valor FROM produto;
+  v_nome produto.nome%TYPE;
+  v_valor produto.valor%TYPE;
+BEGIN
+  OPEN cur_produtos;
+  LOOP
+    FETCH cur_produtos INTO v_nome, v_valor;
+    EXIT WHEN cur_produtos%NOTFOUND;
+    -- processa v_nome e v_valor
+  END LOOP;
+  CLOSE cur_produtos;
+END;
+```
+
+**Atributos de cursor:**
+
+| Atributo | Valor |
+|---|---|
+| `%ISOPEN` | Verdadeiro se o cursor estiver aberto |
+| `%FOUND` | Verdadeiro se o último FETCH retornou uma linha |
+| `%NOTFOUND` | Verdadeiro se o último FETCH não encontrou linha |
+| `%ROWCOUNT` | Número de linhas recuperadas até o momento |
+
+---
+
+### Pacotes (Packages)
+
+Um **package** agrupa procedures, functions, cursores, variáveis e constantes relacionados em uma única unidade. Facilita reutilização e separação entre interface pública e implementação privada.
+
+É composto de duas partes:
+1. **Interface (especificação):** declara o que é público — acessível externamente.
+2. **Corpo (body):** contém as implementações — pode ter objetos privados.
+
+```sql
+-- Interface pública
+CREATE OR REPLACE PACKAGE pck_Vendas IS
+  PROCEDURE registrar_venda(p_produto_id IN NUMBER, p_qtd IN NUMBER);
+  FUNCTION total_vendas_dia RETURN NUMBER;
+END pck_Vendas;
+
+-- Chamada
+BEGIN
+  pck_Vendas.registrar_venda(101, 5);
+END;
+```
+
+---
+
+### Triggers (Gatilhos)
+
+Um **trigger** é uma regra armazenada no SGBD que dispara automaticamente em resposta a um evento — INSERT, UPDATE ou DELETE em uma tabela. Não é chamado diretamente: o próprio banco o executa quando a condição ocorre.
+
+**Usos típicos:**
+- **Restrições de integridade complexas** — verificações que referenciam outras tabelas (impossível em `CREATE TABLE`)
+- **Restrições de transição** — comparar valores antes e depois de uma atualização (ex.: limitar aumento salarial a 10%)
+- **Propagação de atualização** — manter saldos, estoques ou contadores derivados automaticamente
+- **Relatório de exceção** — registrar condições incomuns em vez de rejeitar a transação
+- **Trilha de auditoria** — histórico completo de quem alterou o quê e quando
+
+**Classificação dos triggers (SQL:2003):**
+
+| Dimensão | Opções |
+|---|---|
+| Granularidade | `FOR EACH ROW` (por linha afetada) ou instrução (uma vez por comando SQL) |
+| Momento de disparo | `BEFORE`, `AFTER` ou `INSTEAD OF` |
+| Evento | `INSERT`, `UPDATE`, `DELETE` (combináveis com `OR`) |
+
+**Estrutura (Oracle PL/SQL):**
+
+```sql
+CREATE [OR REPLACE] TRIGGER NomeGatilho
+  {BEFORE | AFTER | INSTEAD OF}
+  {INSERT | UPDATE | DELETE} [OR {INSERT | UPDATE | DELETE}]
+  ON NomeTabela
+  [FOR EACH ROW]
+  [WHEN (condicao)]
+BEGIN
+  -- corpo do gatilho (sem parâmetros)
+[EXCEPTION
+  -- tratamento de erros]
+END;
+```
+
+**Acesso aos valores antes e depois da alteração:**
+- `:NEW.coluna` — valor novo (disponível em INSERT e UPDATE)
+- `:OLD.coluna` — valor antigo (disponível em UPDATE e DELETE)
+
+**Exemplo — auditoria de inserção na tabela Curso:**
+
+```sql
+CREATE OR REPLACE TRIGGER tr_Curso_IA
+AFTER INSERT ON Curso
+FOR EACH ROW
+BEGIN
+  INSERT INTO log_auditoria (tabela, acao, data_hora)
+  VALUES ('Curso', 'INSERT', SYSDATE);
+END;
+```
+
+<Callout type="warning">
+**Material baseado em Oracle PL/SQL — sintaxe não é universal**
+
+O livro usa exclusivamente a sintaxe Oracle PL/SQL com `CREATE PROCEDURE ... IS BEGIN ... END`, `EXCEPTION WHEN OTHERS`, cursores explícitos e packages. Isso **não é SQL padrão** — cada SGBD tem sua própria linguagem procedural:
+
+- **MySQL:** usa `DELIMITER`, `CREATE PROCEDURE nome(IN p tipo) BEGIN ... END`, executa com `CALL nome(params)`.
+- **PostgreSQL:** usa `PL/pgSQL` — `CREATE OR REPLACE FUNCTION nome(params) RETURNS tipo AS $$ BEGIN ... RETURN ...; END; $$ LANGUAGE plpgsql;`. Triggers no PostgreSQL exigem uma função separada que retorna `TRIGGER`.
+- **SQL Server:** usa `T-SQL` — `CREATE PROCEDURE nome @param tipo AS BEGIN ... END`, executa com `EXEC nome @param`.
+
+O conceito de trigger `INSTEAD OF` (mencionado no livro) é extensão Oracle — não faz parte do SQL:2003 padrão, embora PostgreSQL também o suporte para views.
+
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**Procedures e functions em bancos modernos:**
+
+```sql
+-- MySQL: procedure com parâmetro
+DELIMITER //
+CREATE PROCEDURE buscar_produto(IN p_nome VARCHAR(100))
+BEGIN
+  SELECT nome, preco FROM produtos WHERE nome LIKE CONCAT('%', p_nome, '%');
+END //
+DELIMITER ;
+
+CALL buscar_produto('batom');
+
+-- PostgreSQL: função equivalente (retorna uma query)
+CREATE OR REPLACE FUNCTION buscar_produto(p_nome TEXT)
+RETURNS TABLE(nome TEXT, preco NUMERIC) AS $$
+BEGIN
+  RETURN QUERY
+    SELECT p.nome, p.preco FROM produtos p
+    WHERE p.nome ILIKE '%' || p_nome || '%';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM buscar_produto('batom');
+```
+
+**Triggers em PostgreSQL (requerem função separada):**
+
+```sql
+-- Função chamada pelo trigger
+CREATE OR REPLACE FUNCTION fn_auditar_produto()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO log_auditoria(tabela, acao, usuario, data_hora)
+  VALUES (TG_TABLE_NAME, TG_OP, current_user, now());
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger que chama a função
+CREATE TRIGGER tr_produto_auditoria
+AFTER INSERT OR UPDATE OR DELETE ON produtos
+FOR EACH ROW EXECUTE FUNCTION fn_auditar_produto();
+```
+
+**Quando usar (e quando evitar) stored procedures:**
+
+| Use | Evite |
+|---|---|
+| ETL e processamento em lote pesado | CRUD simples (use ORM) |
+| Lógica que precisa ser atômica com os dados | Lógica de negócio complexa (difícil de testar e versionar) |
+| Operações que precisam rodar sem aplicação | Quando o código precisa ser portável entre SGBDs |
+| Auditoria e segurança granular | Ambientes serverless (procedures ficam ociosas) |
+
+**Ferramentas e padrões modernos:**
+
+- **pgAudit** (PostgreSQL) e **MySQL Audit Plugin** — auditoria configurável sem triggers manuais
+- **Migrations versionadas** (Flyway, Liquibase) — versionar procedures e triggers como código
+- **Event Sourcing** e **Domain Events** — alternativa arquitetural a triggers para propagar mudanças
+- **ORMs** (TypeORM, Prisma, Hibernate, SQLAlchemy) — gerenciam lógica de negócio na aplicação; usam procedures apenas para operações críticas de performance
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**O que cai sobre rotinas de programação em BD:**
+
+1. **Procedure vs Function:** Procedure executa ações e pode ter parâmetros `OUT`; Function **retorna um valor obrigatoriamente** e só aceita parâmetros `IN` — ideal para uso em expressões SELECT.
+
+2. **Modos de parâmetro:** `IN` (entrada, somente leitura), `OUT` (saída, escrito dentro), `IN OUT` (leitura + escrita).
+
+3. **Cursores — para múltiplas linhas:** Cursor implícito usa `FOR linha IN (SELECT ...)` — mais simples. Cursor explícito usa `DECLARE CURSOR`, `OPEN`, `FETCH`, `CLOSE` — mais controle. `%NOTFOUND` sinaliza fim do conjunto.
+
+4. **Triggers — regra evento-condição-ação:**
+   - Não são chamados diretamente — o SGBD os dispara automaticamente.
+   - `BEFORE`: roda antes da instrução SQL (verificação de restrição).
+   - `AFTER`: roda após a instrução (propagação, auditoria).
+   - `FOR EACH ROW`: dispara uma vez por linha afetada (mais comum).
+   - `:NEW` = valor novo; `:OLD` = valor anterior. Em INSERT só há `:NEW`; em DELETE só há `:OLD`.
+
+5. **Exercícios da UA:**
+   - *O que é procedure?* → Conjunto de comandos SQL identificado por um nome e armazenado no banco de dados.
+   - *Vantagem de rotinas?* → Diminuir a intervenção do programador nas tarefas.
+   - *O que é trigger?* → Conjunto de comandos executados automaticamente após (ou antes de) uma ação no banco.
+   - *Função dos LOGs nas rotinas?* → Registrar data e hora das execuções ou erros.
+   - *Característica de rotinas automatizadas?* → Possuem total autonomia na execução — o SGBD as dispara sem intervenção da aplicação.
+</Callout>
+
+---
+
+### Referências
+
+- MANNINO, Michael V. *Projeto, Desenvolvimento de Aplicações e Administração de Banco de Dados*. 3. ed. Porto Alegre: AMGH, 2014. Cap. 11 — Procedimentos Armazenados e Gatilhos.
