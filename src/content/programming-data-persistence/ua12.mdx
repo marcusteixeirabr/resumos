@@ -1,0 +1,323 @@
+---
+title: "UA12 — Funções de Agregação e Agrupamento em SQL"
+subtitle: "Como resumir conjuntos inteiros de dados com COUNT, SUM, AVG, MIN e MAX, e como organizar esses cálculos por grupos usando GROUP BY e HAVING."
+ua: 12
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Funções de agregação
+
+Funções de agregação calculam um único valor a partir de um conjunto de linhas. São classificadas como DQL e aparecem no `SELECT` no lugar de um atributo comum.
+
+Sintaxe básica:
+
+```sql
+SELECT <função de agregação> FROM nomeTabela [WHERE condição];
+```
+
+**As cinco funções padrão:**
+
+| Função | O que faz | Ignora NULL? |
+|---|---|---|
+| `COUNT(*)` | Conta todas as linhas, incluindo NULLs | Não |
+| `COUNT(coluna)` | Conta linhas com valor não-nulo na coluna | Sim |
+| `SUM(coluna)` | Soma os valores numéricos | Sim |
+| `AVG(coluna)` | Calcula a média aritmética | Sim |
+| `MIN(coluna)` | Retorna o menor valor | Sim |
+| `MAX(coluna)` | Retorna o maior valor | Sim |
+
+**Tabela de referência usada nos exemplos (paciente):**
+
+| CPF | NOME | CIDADE | SEXO | IDADE |
+|---|---|---|---|---|
+| 11111111111 | JULIA SANTOS | RIO DE JANEIRO | F | 35 |
+| 22222222222 | MARIA OLIVEIRA | null | F | 30 |
+| 33333333333 | JOÃO DA SILVA | null | M | 25 |
+| 44444444444 | CARLOS FERREIRA | NITERÓI | M | 28 |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gsa_01.webp" alt="Infográfico: Guia SQL — Dominando Funções de Agregação e Agrupamento — COUNT/SUM/AVG/MIN/MAX, GROUP BY, HAVING e fluxo de execução WHERE→GROUP BY→HAVING" />
+</SlidesGrid>
+
+---
+
+### COUNT — contando linhas
+
+```sql
+-- Conta todas as linhas (inclusive com NULL)
+SELECT COUNT(*) FROM paciente;
+-- Resultado: 4
+
+-- Conta linhas onde cidade NÃO é nulo
+SELECT COUNT(cidade) FROM paciente;
+-- Resultado: 2 (MARIA e JOÃO têm cidade = null)
+```
+
+> `NULL` em SQL significa ausência de valor — não é zero, não é string vazia.
+
+---
+
+### SUM, AVG, MIN, MAX
+
+```sql
+SELECT SUM(idade) FROM paciente;   -- 118
+SELECT AVG(idade) FROM paciente;   -- 29,50
+SELECT MIN(idade) FROM paciente;   -- 25
+SELECT MAX(idade) FROM paciente;   -- 35
+
+-- Alias com AS melhora a legibilidade da coluna resultado
+SELECT MAX(idade) AS MaiorIdade FROM paciente;
+```
+
+**`DISTINCT` com funções de agregação:**
+`COUNT`, `AVG` e `SUM` aceitam `DISTINCT` para considerar somente valores únicos:
+
+```sql
+SELECT COUNT(DISTINCT cidade) FROM paciente; -- conta cidades únicas não-nulas
+```
+
+---
+
+### GROUP BY — agrupando resultados
+
+A cláusula `GROUP BY` divide o conjunto de linhas em grupos pelo valor de uma coluna. A função de agregação é então aplicada a cada grupo separadamente.
+
+Formato:
+
+```sql
+SELECT coluna, <função de agregação>
+FROM tabela
+[WHERE condição]
+GROUP BY coluna;
+```
+
+**Regra fundamental:** todo atributo no `SELECT` que não for função de agregação **deve estar no `GROUP BY`**.
+
+**Exemplo — quantidade de estudantes por cidade:**
+
+```sql
+SELECT cidade, COUNT(*)
+FROM estudante
+GROUP BY cidade;
+```
+
+| CIDADE | COUNT(*) |
+|---|---|
+| RIO DE JANEIRO | 3 |
+| NITERÓI | 1 |
+
+**Com `WHERE` antes do agrupamento:**
+O `WHERE` filtra as linhas *antes* de o `GROUP BY` ser executado:
+
+```sql
+SELECT cidade, COUNT(*)
+FROM estudante
+WHERE idade < 30
+GROUP BY cidade;
+```
+
+Só entram no agrupamento as linhas que passaram pelo filtro.
+
+---
+
+### HAVING — filtrando grupos
+
+`HAVING` filtra os grupos *após* o `GROUP BY` — é para grupos o que o `WHERE` é para linhas individuais.
+
+```sql
+SELECT coluna, <função de agregação>
+FROM tabela
+GROUP BY coluna
+HAVING condição_sobre_grupo;
+```
+
+**Exemplo — cidades com mais de um estudante:**
+
+```sql
+SELECT cidade, COUNT(*)
+FROM estudante
+GROUP BY cidade
+HAVING COUNT(*) > 1;
+```
+
+| CIDADE | COUNT(*) |
+|---|---|
+| RIO DE JANEIRO | 3 |
+
+NITERÓI foi excluído porque não passou na condição `HAVING COUNT(*) > 1`.
+
+**Ordem de processamento lógico:**
+
+```
+1. WHERE   → filtra linhas individuais
+2. GROUP BY → agrupa as linhas restantes
+3. HAVING  → filtra grupos pelo resultado da agregação
+4. SELECT  → projeta colunas e funções
+```
+
+---
+
+### Consultas em múltiplas tabelas
+
+Agregações podem ser combinadas com junções de tabelas. O processo é o mesmo: identificar tabelas, igualar PK e FK para fazer o JOIN, depois aplicar a função.
+
+**Exemplo — faturamento total de janeiro/2020:**
+
+```sql
+SELECT SUM(preco)
+FROM procedimento p, consulta c, atendimento a
+WHERE a.idconsulta = c.id
+  AND p.codigo = a.idProcedimento
+  AND data >= '01/01/2020'
+  AND data <= '31/01/2020';
+-- Resultado: 370,00
+```
+
+**Exemplo — médico com mais de um procedimento e contagem distinta:**
+
+```sql
+SELECT m.nome,
+       COUNT(*)                          AS qtdeConsultas,
+       COUNT(DISTINCT a.idProcedimento)  AS qtdeProc
+FROM medico m, consulta c, atendimento a
+WHERE a.idconsulta = c.id
+  AND m.crm = c.crmmedico
+GROUP BY m.nome;
+```
+
+O `COUNT(DISTINCT col)` evita contar o mesmo procedimento duas vezes para o mesmo médico.
+
+---
+
+### Subconsultas com funções de agregação
+
+Um resultado de agregação pode ser usado como filtro via subconsulta no `WHERE`:
+
+```sql
+-- Nome do paciente mais novo
+SELECT nome FROM paciente
+WHERE idade = (SELECT MIN(idade) FROM paciente);
+-- Resultado: ANTONIO MANOEL (67 anos)
+```
+
+Quando a subconsulta pode retornar mais de um valor, use `IN` em vez de `=`:
+
+```sql
+SELECT nome FROM paciente
+WHERE idade IN (SELECT MIN(idade) FROM paciente);
+```
+
+<Callout type="warning">
+**Material usa referências datadas e JOIN implícito**
+
+O livro referencia Silberschatz (1999) e Mannino (2008) e adota o JOIN implícito (produto cartesiano via `FROM tabela1, tabela2 WHERE pk = fk`). Essa sintaxe funciona, mas é considerada prática ruim em SQL moderno:
+
+- **Use `JOIN` explícito** (`INNER JOIN ... ON`) — mais legível, menos propenso a produto cartesiano acidental.
+- **`COUNT(*)` vs `COUNT(1)`** — produzem o mesmo resultado na prática; `COUNT(*)` é o idiomático.
+- O livro não cobre `ROLLUP`, `CUBE`, `GROUPING SETS`, funções de janela (`OVER`/`PARTITION BY`) nem `FILTER`, todos disponíveis em SGBDs modernos.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**JOIN explícito (preferido sobre produto cartesiano):**
+
+```sql
+-- Em vez de:
+SELECT m.nome, COUNT(*) FROM medico m, consulta c
+WHERE m.crm = c.crmmedico GROUP BY m.nome;
+
+-- Use:
+SELECT m.nome, COUNT(*)
+FROM medico m
+INNER JOIN consulta c ON m.crm = c.crmmedico
+GROUP BY m.nome;
+```
+
+**Window functions — agregação sem colapsar linhas:**
+
+```sql
+-- Mostra cada paciente com a média de idade de todos ao lado
+SELECT nome, idade,
+       AVG(idade) OVER () AS media_geral,
+       RANK() OVER (ORDER BY idade DESC) AS ranking_idade
+FROM paciente;
+```
+
+**ROLLUP — totais parciais e total geral:**
+
+```sql
+SELECT cidade, sexo, COUNT(*)
+FROM paciente
+GROUP BY ROLLUP(cidade, sexo);
+-- Gera subtotais por cidade e o total geral automaticamente
+```
+
+**FILTER (PostgreSQL) — agregar com condição inline:**
+
+```sql
+SELECT
+  COUNT(*) AS total,
+  COUNT(*) FILTER (WHERE situacao = 'realizada') AS realizadas,
+  COUNT(*) FILTER (WHERE situacao = 'cancelada') AS canceladas
+FROM consulta;
+```
+
+**CTEs para legibilidade em consultas complexas:**
+
+```sql
+WITH consultas_por_medico AS (
+  SELECT m.nome, COUNT(*) AS qtde
+  FROM medico m
+  INNER JOIN consulta c ON m.crm = c.crmmedico
+  WHERE c.situacao = 'realizada'
+  GROUP BY m.nome
+)
+SELECT * FROM consultas_por_medico
+WHERE qtde > 2
+ORDER BY qtde DESC;
+```
+
+**NULL em agregações — sempre explicitize com COALESCE:**
+
+```sql
+-- SUM retorna NULL se todas as linhas forem NULL — defenda-se:
+SELECT COALESCE(SUM(preco), 0) AS total FROM procedimento;
+```
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**O que cai sobre funções de agregação e agrupamento:**
+
+1. **Identificar função de agregação:** COUNT, SUM, AVG, MIN, MAX são funções de agregação. ORDER BY, GROUP BY e WHERE são cláusulas — não são funções de agregação.
+
+2. **NULL e COUNT:** `COUNT(*)` conta todas as linhas, inclusive com NULL. `COUNT(coluna)` ignora NULLs. SUM, AVG, MIN e MAX sempre ignoram NULLs.
+
+3. **Regra do GROUP BY:** todo atributo não-agregado no SELECT precisa estar no GROUP BY — do contrário, a query é inválida.
+
+4. **WHERE vs HAVING:**
+   - `WHERE` filtra linhas *antes* do agrupamento → pode usar índices.
+   - `HAVING` filtra grupos *após* o GROUP BY → só pode referenciar funções de agregação ou colunas do GROUP BY.
+
+5. **Exercícios da UA:**
+   - *Função de agregação?* → C) `COUNT`
+   - *Quantidade de alunos cadastrados?* → A) `SELECT COUNT(*) FROM Alunos`
+   - *Total de vendas por atendente?* → B) `SELECT cpfAtendente, SUM(valorVenda) FROM atendimentos GROUP BY cpfAtendente`
+   - *Função que filtra no agrupamento?* → E) `HAVING`
+   - *Calcular média de idades?* → D) `AVG`
+</Callout>
+
+---
+
+### Referências
+
+- PAES, Claudia Abreu. *Consultas em Banco de Dados* — cap. Funções de agregação e agrupamento de dados em SQL. [S.l.]: [s.n.], 2020.
+- MANNINO, Michael V. *Projeto, Desenvolvimento de Aplicações e Administração de Banco de Dados*. 3. ed. Porto Alegre: AMGH, 2008/2014.
+- SILBERSCHATZ, A.; KORTH, H. F.; SUDARSHAN, S. *Sistema de Banco de Dados*. 3. ed. São Paulo: Makron Books, 1999.
