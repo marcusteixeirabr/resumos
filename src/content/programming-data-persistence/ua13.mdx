@@ -1,0 +1,263 @@
+---
+title: "UA13 — União de Conjuntos em SQL"
+subtitle: "UNION e UNION ALL combinam resultados de múltiplas consultas SELECT — a escolha entre eles impacta diretamente a remoção de duplicatas e o desempenho da query."
+ua: 13
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Operação de união em álgebra relacional
+
+Na álgebra relacional, a operação de **união** (representada por ∪) retorna todas as tuplas que ocorrem em pelo menos uma das relações. É o equivalente exato da união da teoria de conjuntos.
+
+**Requisito de compatibilidade:** as duas relações devem ter o mesmo número de atributos e os atributos da esquerda para a direita devem ter os mesmos domínios (tipos de dados). O nome dos atributos **não precisa ser idêntico** — só o tipo importa.
+
+**Resultado:** herda os nomes dos atributos da **primeira** relação do operador.
+
+**A operação é comutativa:** `R1 ∪ R2` é equivalente a `R2 ∪ R1`.
+
+**Exemplo:** dadas as tabelas `aluno` e `funcionario` (ambas com `nome`, `telefone`, `idade`):
+
+| aluno | → | funcionario |
+|---|---|---|
+| Anthony Thomas | | Andrea Sebastiana |
+| Kaique Daniel | | **Anthony Thomas** ← duplicado |
+| Liz Eliane | | Matheus da Silva |
+| Mariana Evelyn | | Rita Silvana |
+| Yago Ricardo | | |
+
+`aluno ∪ funcionario` retorna 8 tuplas únicas — Anthony Thomas aparece nas duas tabelas mas é listado **uma única vez**.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cuv_01.webp" alt="Infográfico: União de Conjuntos em SQL — UNION (remove duplicatas, mais lento) vs UNION ALL (mantém duplicatas, mais rápido), requisito de compatibilidade e UNION ALL como alternativa ao OR" />
+</SlidesGrid>
+
+---
+
+### UNION em SQL
+
+O `UNION` combina os resultados de dois ou mais `SELECT` eliminando as linhas duplicadas. Internamente executa um `SELECT DISTINCT` sobre o resultado combinado.
+
+```sql
+SELECT nome, idade FROM professor
+UNION
+SELECT nome, idade FROM aluno
+```
+
+**Resultado:** lista única de nomes e idades; quem aparecer nas duas tabelas é exibido uma só vez.
+
+**Regras obrigatórias:**
+- Mesmo número de colunas em cada `SELECT`
+- Tipos de dados compatíveis na mesma posição
+- A cláusula `ORDER BY`, se usada, vai no final (após o último `SELECT`)
+
+---
+
+### UNION ALL em SQL
+
+O `UNION ALL` mantém todas as linhas, incluindo duplicatas. Não executa `SELECT DISTINCT`, o que o torna **mais rápido** que o `UNION`.
+
+```sql
+-- Sorteio: inscritos em dois canais; inscrito em ambos aparece duas vezes (mais chances)
+SELECT codigo_canal, nome, sobrenome FROM inscritos
+WHERE codigo_canal = 14
+UNION ALL
+SELECT codigo_canal, nome, sobrenome FROM inscritos
+WHERE codigo_canal = 18
+```
+
+**Quando usar cada um:**
+
+| Situação | Cláusula |
+|---|---|
+| Unicidade é obrigatória | `UNION` |
+| Duplicatas são intencionais | `UNION ALL` |
+| Sabe-se que não há repetições | `UNION ALL` — evita custo do DISTINCT |
+| Precisa usar junto com `GROUP BY` depois | `UNION ALL` — preserva todos os dados para agregação |
+
+---
+
+### UNION ALL como alternativa ao OR
+
+Uma otimização importante: `UNION ALL` pode substituir `OR` em cláusulas `WHERE` com ganho de performance quando as colunas têm **índices**.
+
+```sql
+-- Com OR: o banco pode usar índice apenas para uma das condições
+SELECT email FROM funcionarios
+WHERE cidade = 'Porto Alegre' OR disp_viajar = 'sim'
+
+-- Com UNION ALL: cada SELECT pode usar seu próprio índice
+SELECT email FROM funcionarios WHERE cidade = 'Porto Alegre'
+UNION ALL
+SELECT email FROM funcionarios WHERE disp_viajar = 'sim'
+```
+
+Ambas as queries retornam o mesmo resultado. A versão com `UNION ALL` é mais eficiente quando há índice em `cidade` mas não em `disp_viajar` — cada sub-consulta pode aproveitar o índice disponível para ela.
+
+**Atenção:** não faz sentido usar `UNION` com `SELECT DISTINCT` — a operação `DISTINCT` seria executada duas vezes desnecessariamente.
+
+---
+
+### Exemplo completo no PostgreSQL
+
+Tabelas `cliente` (cod, nome_empresa, nome_cliente, cidade) e `fornecedor` (cod, nome_empresa, cidade).
+
+**Listar cidades únicas com clientes ou fornecedores:**
+
+```sql
+SELECT cidade FROM cliente
+UNION
+SELECT cidade FROM fornecedor
+ORDER BY cidade;
+```
+
+Resultado: Alegrete, Belo Horizonte, Porto Alegre, Rio de Janeiro, Salvador, São Paulo — sem repetições.
+
+**Contar clientes + fornecedores por cidade:**
+
+```sql
+SELECT COUNT(cidade), cidade
+FROM (
+  SELECT cidade FROM cliente
+  UNION ALL
+  SELECT cidade FROM fornecedor
+) AS cidades
+GROUP BY cidade
+ORDER BY COUNT(cidade) DESC;
+```
+
+O `UNION ALL` dentro da subquery preserva os duplicados — necessário para que o `COUNT` posterior conte corretamente quantas vezes cada cidade aparece no total.
+
+---
+
+### EXPLAIN — analisando o plano de execução
+
+O comando `EXPLAIN` do PostgreSQL retorna o plano de execução de uma query sem executá-la de fato. Mostra:
+
+- Quais estruturas de dados e índices são usados
+- Algoritmos aplicados em cada etapa
+- Custo estimado de cada operação
+- Tempo consumido por fase
+
+```sql
+EXPLAIN SELECT COUNT(cidade), cidade
+FROM (
+  SELECT cidade FROM cliente UNION ALL SELECT cidade FROM fornecedor
+) AS cidades
+GROUP BY cidade ORDER BY COUNT(cidade) DESC;
+```
+
+**Ordem das operações no plano (exemplo do livro):**
+1. **Seq Scan** nas tabelas `cliente` e `fornecedor` — varredura sequencial (maior custo: ~51% do tempo)
+2. **Append** — anexa os resultados (operação do `UNION ALL`, custo mínimo)
+3. **Aggregate** — agrupa por cidade com `COUNT`
+4. **Sort** — ordena por `COUNT DESC`
+
+O `EXPLAIN ANALYZE` (com `ANALYZE`) executa a query de fato e retorna tempos reais — mais preciso para diagnóstico de performance.
+
+<Callout type="warning">
+**Limitações do material**
+
+O livro cobre apenas `UNION` e `UNION ALL`. Não aborda os outros operadores de conjunto SQL padrão:
+
+- **`INTERSECT`** — retorna somente as linhas comuns a ambas as consultas
+- **`INTERSECT ALL`** — igual, mas mantendo duplicatas
+- **`EXCEPT`** / **`MINUS`** — retorna linhas presentes na primeira consulta mas ausentes na segunda
+
+Esses operadores seguem as mesmas regras de compatibilidade e são suportados pelo PostgreSQL. Oracle usa `MINUS` em vez de `EXCEPT`.
+
+O livro usa PostgreSQL como referência, o que é uma escolha moderna e adequada — diferente de outras UAs que baseiam exemplos em Oracle ou MySQL.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**INTERSECT e EXCEPT — operadores que o livro não cobre:**
+
+```sql
+-- INTERSECT: funcionários que também são clientes
+SELECT nome FROM funcionarios
+INTERSECT
+SELECT nome FROM clientes;
+
+-- EXCEPT: funcionários que não são clientes
+SELECT nome FROM funcionarios
+EXCEPT
+SELECT nome FROM clientes;
+```
+
+**EXPLAIN ANALYZE para diagnóstico real:**
+
+```sql
+-- Retorna plano + tempos reais de execução
+EXPLAIN ANALYZE
+SELECT cidade FROM cliente
+UNION ALL
+SELECT cidade FROM fornecedor;
+```
+
+Saída inclui `actual time=...` e `rows=...` para cada nó — essencial para identificar operações lentas.
+
+**CTE com UNION para queries complexas:**
+
+```sql
+-- Organiza a união em etapas nomeadas e legíveis
+WITH todas_cidades AS (
+  SELECT cidade, 'cliente' AS origem FROM cliente
+  UNION ALL
+  SELECT cidade, 'fornecedor' AS origem FROM fornecedor
+)
+SELECT cidade, COUNT(*) AS total, COUNT(DISTINCT origem) AS tipos
+FROM todas_cidades
+GROUP BY cidade
+ORDER BY total DESC;
+```
+
+**Boas práticas:**
+
+| Prática | Por quê |
+|---|---|
+| Preferir `UNION ALL` quando não há duplicados | Evita o custo do `DISTINCT` implícito |
+| Usar `UNION ALL` antes de `GROUP BY` | Preserva os dados para agregação correta |
+| Testar com `EXPLAIN ANALYZE` | Revela se o banco usa `Seq Scan` ou índice |
+| Criar índices nas colunas de filtro | Viabiliza a otimização `OR → UNION ALL` |
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**O que cai sobre UNION e UNION ALL:**
+
+1. **UNION:** combina resultados de dois `SELECT` **removendo duplicatas**. Executa internamente um `SELECT DISTINCT`. Mais lento.
+
+2. **UNION ALL:** mantém **todas** as linhas, incluindo duplicatas. Não executa `DISTINCT`. Mais rápido.
+
+3. **Regra de compatibilidade:** as queries devem ter o **mesmo número de colunas** com **tipos de dados compatíveis** na mesma posição. O nome das colunas não precisa ser igual.
+
+4. **Resultado herda os nomes da primeira query.** `ORDER BY` vai no final.
+
+5. **UNION ALL como alternativa ao OR:** mais eficiente quando as colunas têm índices, pois cada sub-consulta pode usar seu índice separadamente.
+
+6. **EXPLAIN** (PostgreSQL): analisa o plano de execução de uma query. `EXPLAIN ANALYZE` executa de fato e mostra tempos reais.
+
+7. **Cardinalidade:**
+   - `UNION`: `|R1 ∪ R2|` ≤ `|R1| + |R2|` (remove duplicados)
+   - `UNION ALL`: sempre `|R1| + |R2|` (empilha tudo)
+
+8. **Exercícios da UA:**
+   - *O que é UNION?* → Retorna todas as linhas das duas consultas **removendo as duplicadas**.
+   - *30 funcionários + 30 clientes, 20% em ambos (= 6):* `UNION` retorna `30 + 30 - 6 = 54` linhas.
+   - *UNION ALL de A={43,80,86,61,28,4} e B={16,58,28,35,18,79}:* UNION = 11 elementos únicos; UNION ALL = 12 elementos (6+6).
+   - *Comando PostgreSQL para analisar query:* `EXPLAIN`.
+   - *União é comutativa?* → Sim: R1 ∪ R2 = R2 ∪ R1.
+</Callout>
+
+---
+
+### Referências
+
+- SERPA, Matheus da Silva. *Consultas em Banco de Dados*. Porto Alegre: SAGAH. Cap. — União de conjuntos em SQL.
