@@ -1,0 +1,335 @@
+---
+title: "UA12 — Programação em BD: Procedures, Functions e Triggers"
+subtitle: "Stored procedures, funções e triggers centralizam lógica no servidor do banco de dados, reduzindo tráfego de rede e garantindo integridade independente da aplicação."
+ua: 12
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Linguagem SQL e suas famílias de comandos
+
+O SQL é uma linguagem padronizada para gerenciamento de bancos de dados relacionais, desenvolvida pela IBM no final dos anos 1970 e padronizada pelo ANSI no início dos anos 1980. Por ser um padrão universal, uma consulta escrita para MySQL pode funcionar, com pequenas variações, no PostgreSQL, no Oracle ou no SQL Server.
+
+Os comandos SQL se dividem em três famílias:
+
+| Família | Sigla | Função | Exemplos |
+|---|---|---|---|
+| Data Definition Language | DDL | Criar, alterar e remover estruturas do banco | `CREATE`, `ALTER`, `DROP`, `TRUNCATE`, `RENAME` |
+| Data Control Language | DCL | Controlar permissões de acesso | `GRANT`, `REVOKE`, `DENY` |
+| Data Manipulation Language | DML | Manipular dados nas tabelas | `INSERT`, `UPDATE`, `DELETE`, `SELECT` |
+
+**Instruções DDL:**
+
+- `CREATE DATABASE nome` — cria um novo banco de dados
+- `CREATE TABLE nome (col tipo, ...)` — cria uma tabela
+- `ALTER TABLE nome ADD coluna tipo` — adiciona coluna
+- `ALTER TABLE nome DROP COLUMN coluna` — remove coluna
+- `DROP TABLE nome` — remove a tabela e todos os seus dados
+- `TRUNCATE TABLE nome` — remove apenas os dados, preservando a estrutura
+- `RENAME TABLE nome TO novo_nome` — renomeia a tabela
+
+**Instruções DCL:**
+
+- `GRANT privilegio ON objeto TO usuario` — concede permissão
+- `REVOKE privilegio ON objeto FROM usuario` — revoga permissão concedida (não nega — apenas desfaz a autorização)
+- `DENY` (T-SQL/SQL Server) — nega explicitamente, sobrepondo qualquer `GRANT`
+
+**O comando SELECT:**
+
+```sql
+SELECT coluna1, coluna2
+FROM tabela
+WHERE condicao
+ORDER BY coluna ASC|DESC;
+```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gps_01.webp" alt="Infográfico: Dominando a Programação de Banco de Dados com SQL — famílias DDL/DML/DCL, stored procedures, gatilhos e ganho de performance no servidor" />
+</SlidesGrid>
+
+---
+
+### Stored Procedures (Procedimentos Armazenados)
+
+Uma **stored procedure** é um bloco de instruções SQL nomeado e armazenado diretamente no banco de dados. Pode receber parâmetros, executar operações de INSERT, UPDATE, DELETE e SELECT, e retornar resultados.
+
+**Vantagem principal:** a lógica roda no servidor do banco, não na aplicação — menos tráfego de rede e melhor performance, especialmente em sistemas com acesso via Internet.
+
+**Modos de parâmetro (MySQL):**
+
+| Modo | Comportamento |
+|---|---|
+| `IN` | Valor fornecido por quem chama; somente leitura dentro da procedure |
+| `OUT` | Definido dentro da procedure e devolvido para quem chamou |
+| `INOUT` | Recebe valor externo e pode ser modificado internamente |
+
+**Sintaxe básica (MySQL):**
+
+```sql
+CREATE PROCEDURE nome_procedimento ([IN|OUT|INOUT param tipo, ...])
+BEGIN
+  -- instruções SQL
+END;
+```
+
+O nome deve seguir as regras de identificadores: sem espaços, não pode iniciar com número ou caracteres especiais (exceto `_`). Os parênteses são obrigatórios mesmo sem parâmetros.
+
+**Para executar uma procedure:**
+
+```sql
+CALL nome_procedimento(argumentos);
+```
+
+**Exemplo 1 — parâmetro de entrada (IN):**
+
+```sql
+-- Retorna produtos limitados pela quantidade informada
+CREATE PROCEDURE consulta_produtos (IN quantidade INT)
+BEGIN
+  SELECT nome, preco FROM Produtos LIMIT quantidade;
+END;
+
+CALL consulta_produtos(10);
+```
+
+**Exemplo 2 — parâmetro de saída (OUT):**
+
+```sql
+-- Conta o total de produtos e armazena na variável de saída
+CREATE PROCEDURE contar_produtos (OUT quantidade INT)
+BEGIN
+  SELECT COUNT(*) INTO quantidade FROM Produtos;
+END;
+
+-- Chamada
+CALL contar_produtos(@total);
+SELECT @total;
+```
+
+---
+
+### Functions SQL
+
+Uma **function** é semelhante a uma stored procedure, mas com duas diferenças fundamentais:
+
+1. **Deve retornar exatamente um valor** via `RETURN` — obrigatório
+2. **Pode ser usada diretamente em expressões SQL** — em `SELECT`, `WHERE`, `ORDER BY`
+
+Funções são ideais para cálculos, formatações e recuperação de valores pontuais.
+
+**Sintaxe básica (MySQL):**
+
+```sql
+CREATE OR REPLACE FUNCTION nome_function (param tipo, ...)
+RETURNS tipo_dado
+BEGIN
+  DECLARE variavel tipo;
+  -- instruções
+  RETURN valor;
+END;
+```
+
+- `CREATE OR REPLACE` — recria a função se já existir, sem erro
+- `RETURNS tipo_dado` — declara o tipo do valor de retorno
+- O `RETURN` dentro do corpo é obrigatório
+
+**Exemplo — retornar nome de funcionário por código:**
+
+```sql
+CREATE OR REPLACE FUNCTION retornar_nome_funcionario (p_codigo INT)
+RETURNS VARCHAR(30)
+BEGIN
+  DECLARE v_nome VARCHAR(30);
+  SELECT nomeFuncionario INTO v_nome
+  FROM Tab_funcionarios
+  WHERE codFuncionario = p_codigo;
+  RETURN v_nome;
+END;
+```
+
+**Formas de chamar a função:**
+
+```sql
+-- Diretamente em um SELECT
+SELECT retornar_nome_funcionario(90);
+
+-- Como parte de uma expressão
+SELECT codFuncionario, retornar_nome_funcionario(codFuncionario) AS nome
+FROM Tab_funcionarios
+WHERE codFuncionario = 90;
+```
+
+---
+
+### Triggers (Gatilhos)
+
+Um **trigger** é um procedimento armazenado que **dispara automaticamente** quando ocorre uma tentativa de INSERT, UPDATE ou DELETE em uma tabela associada. Não pode ser chamado diretamente e não aceita parâmetros.
+
+**Características:**
+- Associado a uma tabela específica (tabela de trigger)
+- Executa automaticamente — sem intervenção da aplicação
+- Não retorna valores
+- Tabelas temporárias criadas dentro de uma trigger ficam em memória cache — execução rápida
+
+**Opções de momento de disparo:**
+
+| Opção | Comportamento |
+|---|---|
+| `FOR` (padrão) | Dispara junto com a ação |
+| `AFTER` | Dispara após a ação ser concluída |
+| `INSTEAD OF` | Substitui a ação — executa no lugar dela |
+
+**Sintaxe básica:**
+
+```sql
+CREATE TRIGGER nome_trigger
+FOR|AFTER|INSTEAD OF INSERT|UPDATE|DELETE
+ON nome_tabela
+AS
+BEGIN
+  -- instruções
+END;
+```
+
+**Exemplo — registrar inclusão e atualizar tabela de caixa:**
+
+```sql
+CREATE TRIGGER tr_registrar_inclusao
+AFTER INSERT ON PEDIDOS
+AS
+BEGIN
+  DECLARE @VALOR VARCHAR(30), @DATE DATETIME;
+  SET @VALOR = 'valor incluído';
+  SET @DATE = GETDATE();
+
+  INSERT INTO TAB_TEMP (VALOR, DATAINCLUSAO) VALUES (@VALOR, @DATE);
+  UPDATE CAIXA SET VALORPAGAMENTO = @VALOR WHERE DATACAIXA = @DATE;
+END;
+```
+
+O exemplo acima usa uma tabela temporária `TAB_TEMP` que existe apenas dentro da trigger.
+
+**Usos comuns de triggers:**
+- Verificar integridade de dados com lógica complexa (difícil de expressar em `CONSTRAINT`)
+- Propagar alterações para tabelas relacionadas
+- Registrar trilha de auditoria (quem fez o quê e quando)
+- Exibir mensagens de erro personalizadas em violações de integridade
+
+<Callout type="warning">
+**Mistura de sintaxes e simplificações do livro**
+
+O material desta UA usa sintaxe inconsistente: os exemplos de **stored procedure e function** seguem o estilo **MySQL** (`IN`/`OUT`/`INOUT`, `CALL`, `CREATE OR REPLACE FUNCTION ... RETURNS`), mas o exemplo de **trigger** usa **T-SQL (SQL Server)** com variáveis `@VALOR`, `@DATE` e a função `GETDATE()` — que não existem em MySQL ou PostgreSQL.
+
+Pontos adicionais que o livro não aborda:
+- **MySQL** exige `DELIMITER //` antes de criar procedures/functions e `DELIMITER ;` depois — sem isso, o terminal interpreta o `;` interno como fim do comando
+- **PostgreSQL** usa PL/pgSQL: `CREATE OR REPLACE FUNCTION ... RETURNS tipo AS $$ BEGIN ... END; $$ LANGUAGE plpgsql;`; triggers exigem uma função separada que retorna `TRIGGER`
+- `DENY` (citado no DCL) é exclusivo do **SQL Server** — MySQL e PostgreSQL não têm esse comando
+- A UA repete temas já vistos: DDL (UA6), DML (UA7), DCL (UA9) e rotinas em PL/SQL com Oracle (UA11)
+
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**MySQL — sintaxe correta para criação de procedures:**
+
+```sql
+-- O DELIMITER é obrigatório no terminal MySQL
+DELIMITER //
+
+CREATE PROCEDURE buscar_produto (IN p_nome VARCHAR(100))
+BEGIN
+  SELECT nome, preco FROM produtos WHERE nome LIKE CONCAT('%', p_nome, '%');
+END //
+
+DELIMITER ;
+
+CALL buscar_produto('camiseta');
+```
+
+**PostgreSQL — function equivalente:**
+
+```sql
+CREATE OR REPLACE FUNCTION buscar_produto(p_nome TEXT)
+RETURNS TABLE(nome TEXT, preco NUMERIC) AS $$
+BEGIN
+  RETURN QUERY
+    SELECT p.nome, p.preco FROM produtos p
+    WHERE p.nome ILIKE '%' || p_nome || '%';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM buscar_produto('camiseta');
+```
+
+**PostgreSQL — trigger com função separada:**
+
+```sql
+-- PostgreSQL exige função retornando TRIGGER
+CREATE OR REPLACE FUNCTION fn_auditar_pedido()
+RETURNS TRIGGER AS $$
+BEGIN
+  INSERT INTO log_auditoria(tabela, acao, usuario, data_hora)
+  VALUES (TG_TABLE_NAME, TG_OP, current_user, now());
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_pedido_auditoria
+AFTER INSERT OR UPDATE OR DELETE ON pedidos
+FOR EACH ROW EXECUTE FUNCTION fn_auditar_pedido();
+```
+
+**Quando usar cada abordagem:**
+
+| Recurso | Use quando | Evite quando |
+|---|---|---|
+| Stored procedure | Processamento em lote, operações atômicas complexas | CRUD simples — use ORM |
+| Function | Cálculo ou lookup de valor único reutilizado em queries | Operações com efeitos colaterais (prefira procedure) |
+| Trigger | Auditoria automática, integridade entre tabelas | Lógica de negócio complexa — dificulta debugging e versionamento |
+
+**Ferramentas modernas:**
+- **Flyway / Liquibase** — versionar procedures, functions e triggers como migrations de código
+- **pgAudit** (PostgreSQL) e **MySQL Audit Plugin** — auditoria configurável sem triggers manuais
+- **Debezium / CDC (Change Data Capture)** — alternativa event-driven a triggers para propagação de mudanças entre sistemas
+- **ORMs** (Prisma, TypeORM, Hibernate) — gerenciam lógica na aplicação; só delegar ao BD quando performance ou segurança exigirem
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**O que cai sobre programação em BD:**
+
+1. **DDL, DCL, DML:** `GRANT` é DCL. `CREATE` e `DROP` são DDL. `INSERT`, `UPDATE`, `DELETE` são DML. `TRUNCATE` remove dados sem remover a estrutura (DDL). `DROP TABLE` remove a tabela inteira.
+
+2. **CREATE DATABASE:** `CREATE DATABASE Locadora_NovoTempo` cria um banco de dados vazio — sem tabelas, sem dados.
+
+3. **Procedure vs Function:**
+   - **Procedure** pode ou não retornar valor; usa `OUT`/`INOUT`; chamada com `CALL`.
+   - **Function** deve **sempre** retornar um valor via `RETURN`; pode ser usada em expressões SQL.
+
+4. **Modos de parâmetro (MySQL):** `IN` = só entrada; `OUT` = só saída; `INOUT` = entrada e saída.
+
+5. **Trigger:**
+   - Não pode ser chamada diretamente — dispara automaticamente.
+   - Não aceita parâmetros.
+   - `FOR` / `AFTER` / `INSTEAD OF` controlam o momento do disparo.
+   - Tabelas temporárias da trigger ficam em memória cache — execução eficiente.
+
+6. **Restrição de stored procedures:** a **falta de padronização da sintaxe** entre SGBDs (cada banco tem sua variação).
+
+7. **SELECT correto para consultar imóvel de código 1090:**
+   ```sql
+   SELECT Codigo, Endereco, Proprietario FROM Imoveis WHERE Codigo = 1090
+   ```
+</Callout>
+
+---
+
+### Referências
+
+- CÓRDOVA JÚNIOR, Ramiro. *Modelagem e Desenvolvimento de Banco de Dados*. Porto Alegre: SAGAH. Cap. — Criação de programas para banco de dados, procedimentos, funções, gatilhos.
