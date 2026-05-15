@@ -274,15 +274,45 @@ interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 ---
 
-### Dicas para a prova
+### Dicas para a Prova
 
-- **JDBC** = API Java para conectar a SGBDs relacionais; faz parte do JavaSE
-- **Driver tipo 4 (Pure Java)** = o mais usado em produção; melhor desempenho; sem dependências nativas
-- **`DriverManager.getConnection(url, user, pass)`** = ponto de entrada para criar uma `Connection`
-- **`Statement`** = executa SQL simples; **`PreparedStatement`** = pré-compilado, paramétrico, previne SQL injection
-- **`executeQuery()`** → `ResultSet` (SELECT) | **`executeUpdate()`** → `int` linhas afetadas (INSERT/UPDATE/DELETE/DDL)
-- **`ResultSet.next()`** avança o cursor linha a linha; `getString("col")` / `getInt("col")` lê os valores
-- **`Class.forName()`** era obrigatório até JDBC 3.x; no JDBC 4.0+ (Java 6+) o driver é carregado automaticamente
-- **Hibernate** = ORM popular que implementa JPA e abstrai o JDBC com mapeamento objeto/relacional
+<Callout type="tip">
+**O que cai sobre JDBC e acesso a bancos de dados em Java:**
 
-*Livro base: Vanessa Stangherlin Machado Paixão Cortes. Programação Orientada a Objetos com Banco de Dados. SAGAH.*
+1. **JDBC** = Java Database Connectivity. API Java padrão para conectar aplicações a SGBDs relacionais. Faz parte do JavaSE (pacote `java.sql`).
+
+2. **Driver JDBC** = componente intermediário entre a API Java e o protocolo do SGBD. Quatro tipos: ponte ODBC-JDBC (1), API nativa (2), rede/middleware (3), Pure Java (4). **Tipo 4 é o mais recomendado para produção.**
+
+3. **`DriverManager.getConnection(url, user, pass)`** = cria e retorna um objeto `Connection`. A URL varia por SGBD: `jdbc:mysql://...`, `jdbc:postgresql://...`, etc.
+
+4. **`Statement`** = executa SQL diretamente. **`PreparedStatement`** = pré-compila o SQL com parâmetros `?`; previne SQL injection e é mais eficiente em execuções repetidas.
+
+5. **`executeQuery()`** → `ResultSet` (SELECT). **`executeUpdate()`** → `int` com linhas afetadas (INSERT, UPDATE, DELETE, DDL).
+
+6. **`ResultSet`** = cursor sobre as linhas retornadas. `next()` avança linha a linha e retorna `false` ao final. Leitura por `getString("col")`, `getInt("col")`, `getDouble("col")`, etc.
+
+7. **`Class.forName("com.mysql.jdbc.Driver")`** = carregava o driver manualmente até JDBC 3.x. No JDBC 4.0+ (Java 6+) é desnecessário — driver carregado automaticamente via SPI.
+
+8. **Hibernate** = ORM popular que implementa a JPA (Jakarta Persistence API) e abstrai o JDBC com mapeamento objeto/relacional automático.
+
+9. **Exercícios da UA:**
+   - *Qual classe Java gerencia a abertura de conexões com o BD?* → `DriverManager` (método `getConnection()`).
+   - *Qual interface representa a conexão ativa com o banco?* → `Connection`.
+   - *Qual a diferença entre `Statement` e `PreparedStatement`?* → `PreparedStatement` pré-compila o SQL e aceita parâmetros `?`, evitando SQL injection; `Statement` executa SQL direto, sem parâmetros.
+   - *Qual método usar para executar um SELECT?* → `executeQuery()` → retorna `ResultSet`.
+   - *Qual método usar para INSERT/UPDATE/DELETE?* → `executeUpdate()` → retorna `int` (número de linhas afetadas).
+   - *Como percorrer todas as linhas de um `ResultSet`?* → `while (rs.next()) { ... }` — `next()` retorna `false` quando não há mais linhas.
+   - *Qual tipo de driver JDBC é mais recomendado para um único SGBD?* → Tipo 4 (Pure Java): melhor desempenho, sem dependências nativas no cliente.
+   - *O que faz `Class.forName()` e por que está obsoleto?* → Carregava o driver JDBC manualmente. Obsoleto desde JDBC 4.0 (Java 6), que carrega o driver automaticamente via ServiceLoader.
+</Callout>
+
+---
+
+### Referências
+
+- COUTINHO, P. C. Introdução à API Java Database Connectivity (JDBC). *DevMedia*, 2010.
+- BALES, D. *Java programming with Oracle JDBC*. Sebastopol: O'Reilly, 2002.
+- MACHADO, R. P.; FRANCO, M. H. I.; BERTAGNOLLI, S. C. *Desenvolvimento de software III*: programação de sistemas web orientada a objetos em Java. Porto Alegre: Bookman, 2016.
+- SAKURAI, R. G. Conexão com bancos de dados usando JDBC. *Universidade Java*, 2020.
+- YANG, H. *JDBC tutorials: Herong's tutorial examples*. [Florida]: Herong Yang, 2018.
+- CORTES, Vanessa Stangherlin Machado Paixão. Fundamentos de programação com acesso a bancos de dados relacionais. In: *Programação Orientada a Objetos com Banco de Dados*. Porto Alegre: SAGAH.
