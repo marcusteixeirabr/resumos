@@ -1,0 +1,288 @@
+---
+title: "UA14 — Programação com Acesso a Bancos de Dados"
+subtitle: "JDBC (Java Database Connectivity) é a API Java padrão para conectar aplicações a SGBDs relacionais — usando drivers, Connection, Statement, PreparedStatement e ResultSet."
+ua: 14
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é JDBC?
+
+**JDBC (Java Database Connectivity)** é uma API Java que padroniza o processo de conexão de aplicações Java a sistemas de gerenciamento de banco de dados relacionais. Ela faz parte do **Java Standard Edition (JavaSE)** e oferece um conjunto de interfaces e classes que permitem:
+
+- Abrir e fechar conexões com diferentes SGBDs
+- Enviar consultas SQL ao banco de dados
+- Processar os resultados retornados
+
+A API é agnóstica quanto ao SGBD utilizado — o mesmo código Java pode se conectar a MySQL, PostgreSQL, Oracle ou SQL Server simplesmente trocando o driver e a URL de conexão.
+
+A versão **JDBC 4.3** (Java SE 9) inclui dois pacotes principais:
+
+| Pacote | Conteúdo |
+|---|---|
+| `java.sql` (Core API) | Interfaces fundamentais: Connection, Statement, PreparedStatement, ResultSet |
+| `javax.sql` (Standard Extension) | Pool de conexões, transações distribuídas, JNDI, RowSet API |
+
+---
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gcd_01.webp" alt="Guia de Conectividade de Dados — 4 tipos de drivers JDBC e arquitetura da API" />
+</SlidesGrid>
+
+---
+
+### Drivers JDBC
+
+Para conectar um aplicativo Java a um banco de dados via JDBC, é necessário um **driver JDBC** — um componente de software intermediário entre a API Java e o protocolo proprietário do SGBD. Existem quatro categorias:
+
+| Tipo | Nome | Descrição | Vantagem | Desvantagem |
+|---|---|---|---|---|
+| 1 | Ponte ODBC-JDBC | Conecta via ODBC da Microsoft; código nativo | Fácil de usar; suporta qualquer BD | Desempenho degradado; requer ODBC instalado no cliente |
+| 2 | API Nativa | Usa API nativa do BD com classes Java (ex.: Oracle OCI) | Melhor desempenho que tipo 1 | Driver nativo precisa ser instalado em cada cliente |
+| 3 | JDBC Rede | Usa servidor intermediário (middleware) para traduzir protocolo | Sem biblioteca no cliente; suporta múltiplos BDs | Requer servidor intermediário; manutenção complexa |
+| 4 | Pure Java | Escrito 100% em Java; conecta diretamente ao BD (ex.: Oracle Thin) | Melhor desempenho; sem software extra no cliente | Driver específico por banco |
+
+**Regra prática para escolha:**
+- Acessando apenas um BD (Oracle, MySQL, PostgreSQL): use **tipo 4**
+- Acessando múltiplos SGBDs simultaneamente: use **tipo 3**
+- Tipo 2 quando tipo 3 não está disponível para o SGBD
+- Tipo 1 apenas para desenvolvimento e testes
+
+---
+
+### Conectando ao BD — `Connection`
+
+Antes de qualquer operação, é preciso estabelecer uma conexão. O ponto de entrada é `DriverManager.getConnection()`, que recebe a URL do BD, usuário e senha:
+
+```java
+Connection connection = DriverManager.getConnection(url, usuario, senha);
+```
+
+As URLs de conexão variam por SGBD:
+
+| SGBD | URL de Conexão JDBC |
+|---|---|
+| MySQL | `jdbc:mysql://<servidor>:<porta>/<banco>` |
+| PostgreSQL | `jdbc:postgresql://<servidor>:<porta>/<banco>` |
+| Oracle | `jdbc:oracle:thin:<user>/<senha>@<servidor>:<porta>:<serviço>` |
+| SQL Server | `jdbc:sqlserver://<servidor>:<porta>[;propriedade=valor]` |
+| DB2 | `jdbc:db2://<servidor>:<porta>/<banco>` |
+
+Exemplo completo de classe de conexão com MySQL:
+
+```java
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Conexao {
+
+    public Connection conectar() {
+        Connection conn = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver"); // desnecessário no JDBC 4.0+
+            conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/db_exemplo", "root", "987654"
+            );
+            System.out.println("Conectou ao banco de dados.");
+        } catch (SQLException ex) {
+            System.out.println("Erro: Não conseguiu conectar ao BD.");
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Erro: Não encontrou o driver do BD.");
+        }
+        return conn;
+    }
+
+    public void desconectar(Connection conn) {
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Desconectou do banco de dados.");
+            }
+        } catch (SQLException ex) {
+            System.out.println("Não conseguiu desconectar do BD.");
+        }
+    }
+}
+```
+
+O objeto `Connection` retornado permite executar qualquer comando SQL a partir de outras classes como `Statement` ou `PreparedStatement`.
+
+---
+
+### Executando SQL — `Statement` e `PreparedStatement`
+
+Após conectar, o próximo passo é criar um objeto que represente a instrução SQL. Há duas opções:
+
+#### `Statement` — para consultas simples
+
+```java
+Statement stmt = conn.createStatement();
+
+// DDL — cria tabela
+stmt.executeUpdate("CREATE TABLE usuarios (codigo INT, nome VARCHAR(50))");
+
+// DML — executa INSERT, UPDATE, DELETE; retorna linhas afetadas
+int linhas = stmt.executeUpdate("INSERT INTO usuarios VALUES (1, 'Ana')");
+
+// DQL — executa SELECT; retorna ResultSet
+ResultSet resultado = stmt.executeQuery("SELECT * FROM usuarios");
+```
+
+#### `PreparedStatement` — para consultas parametrizadas
+
+A principal diferença é que `PreparedStatement` **pré-compila** a instrução SQL, tornando execuções repetidas mais rápidas e, mais importante, prevenindo **ataques de injeção de SQL** ao separar o código SQL dos dados:
+
+```java
+String sql = "INSERT INTO usuarios VALUES (?, ?)";
+PreparedStatement ps = conn.prepareStatement(sql);
+
+ps.setInt(1, 42);          // primeiro parâmetro: código
+ps.setString(2, "Maria");  // segundo parâmetro: nome
+int linhas = ps.executeUpdate();
+```
+
+| Método | Uso |
+|---|---|
+| `executeQuery(sql)` | SELECT — retorna `ResultSet` |
+| `executeUpdate(sql)` | INSERT / UPDATE / DELETE / DDL — retorna linhas afetadas |
+| `setInt(pos, valor)` | Define parâmetro inteiro no PreparedStatement |
+| `setString(pos, valor)` | Define parâmetro texto no PreparedStatement |
+
+---
+
+### Manipulando Resultados — `ResultSet`
+
+O objeto `ResultSet` representa o conjunto de linhas retornado por um SELECT. A navegação é feita por cursor, linha a linha:
+
+```java
+Statement stmt = conn.createStatement();
+ResultSet resultado = stmt.executeQuery("SELECT * FROM usuarios");
+
+while (resultado.next()) {
+    int codigo  = resultado.getInt("codigo");
+    String nome = resultado.getString("nome");
+    System.out.println(codigo + "\t" + nome);
+}
+```
+
+**Métodos de navegação:**
+
+| Método | Ação |
+|---|---|
+| `next()` | Avança para a próxima linha (retorna `false` no fim) |
+| `previous()` | Retrocede para a linha anterior |
+| `first()` | Vai para a primeira linha |
+| `last()` | Vai para a última linha |
+
+**Métodos de leitura (por nome da coluna):**
+
+| Método | Tipo retornado |
+|---|---|
+| `getInt("coluna")` | `int` |
+| `getString("coluna")` | `String` |
+| `getDouble("coluna")` | `double` |
+| `getTime("coluna")` | `Time` |
+| `getDate("coluna")` | `Date` |
+
+---
+
+<Callout type="warning">
+**Material baseado em referências de 2010–2018**
+
+O livro usa práticas que estão parcialmente desatualizadas:
+
+- **`Class.forName("com.mysql.jdbc.Driver")`** — desnecessário desde o **JDBC 4.0 (Java 6)**. O driver é carregado automaticamente pelo Service Provider Interface (SPI). Manter esse código não quebra nada, mas é ruído.
+- **`com.mysql.jdbc.Driver`** — namespace antigo. Desde o MySQL Connector/J 8.x, a classe correta é `com.mysql.cj.jdbc.Driver`.
+- **Credenciais no código** — o exemplo hardcoda usuário/senha diretamente no código Java. Em ambientes reais, use variáveis de ambiente ou gerenciadores de segredo (Vault, AWS Secrets Manager).
+- **Sem try-with-resources** — desde o **Java 7**, `Connection`, `Statement` e `ResultSet` implementam `AutoCloseable` e devem ser gerenciados com try-with-resources para garantir o fechamento mesmo em caso de exceção.
+- **Sem pool de conexões** — criar/fechar `Connection` a cada operação é extremamente custoso em produção.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**Try-with-resources (Java 7+):** fecha Connection, Statement e ResultSet automaticamente, mesmo em exceções:
+
+```java
+String url = "jdbc:postgresql://localhost:5432/meubanco";
+String sql = "SELECT * FROM usuarios";
+
+try (Connection conn = DriverManager.getConnection(url, "user", "pass");
+     Statement  stmt = conn.createStatement();
+     ResultSet  rs   = stmt.executeQuery(sql)) {
+
+    while (rs.next()) {
+        System.out.println(rs.getString("nome"));
+    }
+} // conn, stmt e rs fechados automaticamente aqui
+```
+
+**HikariCP — pool de conexões de alta performance:** em vez de criar uma nova `Connection` a cada requisição (operação lenta), use um pool que reutiliza conexões abertas:
+
+```java
+HikariConfig config = new HikariConfig();
+config.setJdbcUrl("jdbc:postgresql://localhost:5432/meubanco");
+config.setUsername("user");
+config.setPassword("pass");
+config.setMaximumPoolSize(10);
+
+HikariDataSource ds = new HikariDataSource(config);
+Connection conn = ds.getConnection(); // obtém do pool
+```
+
+**PreparedStatement sempre (não Statement):** nunca concatene valores do usuário em uma string SQL. Use `?` como parâmetro:
+
+```java
+// ERRADO — vulnerável a SQL injection
+stmt.executeQuery("SELECT * FROM users WHERE login='" + input + "'");
+
+// CERTO
+PreparedStatement ps = conn.prepareStatement(
+    "SELECT * FROM users WHERE login = ?");
+ps.setString(1, input);
+```
+
+**JPA / Jakarta Persistence API:** para aplicações que não precisam de controle SQL de baixo nível, JPA (implementado pelo Hibernate, EclipseLink, etc.) oferece mapeamento objeto/relacional automático — sem escrever SQL para CRUD básico:
+
+```java
+@Entity
+public class Usuario {
+    @Id @GeneratedValue
+    private Long id;
+    private String nome;
+}
+
+// Busca sem SQL
+Usuario u = entityManager.find(Usuario.class, 42L);
+```
+
+**Spring Data JPA:** vai além do JPA e gera queries automaticamente a partir do nome dos métodos:
+
+```java
+interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    List<Usuario> findByNomeContaining(String trecho);
+}
+```
+
+**Flyway / Liquibase:** versione alterações de schema como código. Nunca execute `CREATE TABLE` manualmente em produção.
+
+**Conexão segura:** nunca hardcode credenciais. Use variáveis de ambiente (`System.getenv("DB_PASSWORD")`) ou integre com AWS Secrets Manager, HashiCorp Vault ou Kubernetes Secrets.
+
+---
+
+### Dicas para a prova
+
+- **JDBC** = API Java para conectar a SGBDs relacionais; faz parte do JavaSE
+- **Driver tipo 4 (Pure Java)** = o mais usado em produção; melhor desempenho; sem dependências nativas
+- **`DriverManager.getConnection(url, user, pass)`** = ponto de entrada para criar uma `Connection`
+- **`Statement`** = executa SQL simples; **`PreparedStatement`** = pré-compilado, paramétrico, previne SQL injection
+- **`executeQuery()`** → `ResultSet` (SELECT) | **`executeUpdate()`** → `int` linhas afetadas (INSERT/UPDATE/DELETE/DDL)
+- **`ResultSet.next()`** avança o cursor linha a linha; `getString("col")` / `getInt("col")` lê os valores
+- **`Class.forName()`** era obrigatório até JDBC 3.x; no JDBC 4.0+ (Java 6+) o driver é carregado automaticamente
+- **Hibernate** = ORM popular que implementa JPA e abstrai o JDBC com mapeamento objeto/relacional
+
+*Livro base: Vanessa Stangherlin Machado Paixão Cortes. Programação Orientada a Objetos com Banco de Dados. SAGAH.*
