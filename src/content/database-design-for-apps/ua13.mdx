@@ -1,0 +1,277 @@
+---
+title: "UA13 — Administração de Dados e Banco de Dados"
+subtitle: "DA e DBA têm papéis complementares: o primeiro define políticas estratégicas; o segundo implementa e garante segurança, desempenho e integridade no nível técnico."
+ua: 13
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O papel estratégico dos dados nas organizações
+
+Nas organizações modernas, os dados deixaram de ser apenas um subproduto das operações e passaram a ser um ativo estratégico. Os **bancos de dados operacionais** sustentam as atividades diárias — processamento de pedidos, controle financeiro, gestão de estoques, distribuição de produtos — e também fornecem a matéria-prima para a tomada de decisão gerencial em diferentes níveis.
+
+| Nível Gerencial | Tipo de Decisão | Fonte de Dados |
+|---|---|---|
+| **Baixa** (operacional) | Escala de funcionários, correção de atrasos, gargalos de produção | Relatórios de exceções diretamente dos BDs operacionais |
+| **Média** (tática) | Previsão de vendas, seleção de fornecedores, orçamentos | Dados resumidos e integrados de múltiplos BDs operacionais |
+| **Alta** (estratégica) | Identificar novos mercados, realocar recursos entre divisões | Dados externos + dados internos resumidos e integrados |
+
+**Qualidade de dados e gestão do conhecimento**
+
+A qualidade dos dados é um fator crítico. O nível de qualidade suficiente para operações (transações diárias) costuma ser insuficiente para a tomada de decisão estratégica. Inconsistências na identificação de um cliente, por exemplo, podem comprometer análises de alto nível.
+
+Além da tecnologia, o gerenciamento eficaz de dados exige alinhar três elementos:
+
+1. **Tecnologia** — SGBDs, ferramentas de BI, infraestrutura
+2. **Processamento humano** — capacidade analítica das pessoas
+3. **Dinâmica organizacional** — processos, cultura e estrutura da empresa
+
+---
+
+### DA vs DBA — Dois perfis complementares
+
+Existem dois papéis especializados na gestão de dados dentro das organizações:
+
+**Administrador de Dados (DA — Data Administrator)**
+
+Ocupa posição de **média ou alta gerência** com responsabilidades estratégicas e corporativas:
+
+- Desenvolve o **modelo de dados corporativo** — visão integrada de todos os bancos da organização, menos detalhada, focada nos principais assuntos
+- Estabelece padrões e políticas entre bancos de dados (nomeação, compartilhamento e propriedade de dados)
+- Negocia prazos contratuais com fornecedores de tecnologia da informação
+- Desenvolve planos de longo prazo de TI
+
+**Administrador de Banco de Dados (DBA — Database Administrator)**
+
+Desempenha **função de suporte técnico** com foco nos SGBDs individuais:
+
+- Desenvolve conhecimento detalhado dos SGBDs usados
+- Realiza modelagem de dados e projeto lógico de banco de dados
+- Faz cumprir os padrões definidos pela administração de dados
+- Monitora o desempenho do banco de dados
+- Realiza avaliação técnica de SGBDs
+- Cria instruções de segurança, integridade e processamento de regras
+
+**Diferença-chave:** o DA vê os recursos de informação de forma ampla — inclui BDs relacionais, arquivos, páginas web e fontes externas. O DBA considera normalmente apenas os dados armazenados nos bancos de dados.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ges_01.webp" alt="Infográfico: Gestão Estratégica de Dados — DA vs. DBA e Segurança. Compara as atribuições do Administrador de Dados (foco gerencial: modelo corporativo, políticas de longo prazo) com as do DBA (foco técnico: modelagem física, monitoramento, segurança e gatilhos). Destaca a sinergia organizacional e apresenta os três pilares de controle de acesso DCL: controle discricionário, GRANT e REVOKE." />
+</SlidesGrid>
+
+---
+
+### Segurança em banco de dados
+
+A segurança envolve proteger o banco contra acesso não autorizado e ações mal-intencionadas. Os SGBDs ajudam criando, armazenando e aplicando **regras de autorização** que definem quem pode acessar quais dados e para quais operações.
+
+**Fluxo de controle de acesso:**
+
+1. O DBA cria regras de autorização (quem acessa o quê)
+2. O usuário tenta se conectar → o sistema **autentica** a identidade
+3. A cada solicitação, o sistema verifica se as regras de autorização são respeitadas
+
+**Controle de acesso discricionário**
+
+O tipo mais comum nos SGBDs comerciais. Os usuários recebem privilégios específicos sobre partes definidas do banco — geralmente sobre **visões** (views), não diretamente sobre tabelas, para um controle mais refinado. Privilégios podem ser concedidos a **papéis** (roles) em vez de usuários individuais, o que simplifica a manutenção.
+
+**Controle de acesso obrigatório**
+
+Menos flexível. A cada objeto é atribuído um **nível de classificação** (confidencial, secreto, ultrassecreto) e a cada usuário é atribuído um **nível de autorização**. O acesso só é permitido se o nível do usuário for suficiente para o nível do objeto. Usado em bancos de dados altamente sensíveis (defesa nacional, coleta de informações secretas) — poucos SGBDs comerciais o aceitam.
+
+**Criptografia**
+
+Os SGBDs aceitam criptografia de dados. O algoritmo de **chave pública** é o preferido atualmente; o padrão de criptografia simétrica (DES) pode ser quebrado com poder computacional suficiente.
+
+---
+
+### Instruções SQL de segurança (SQL:2003)
+
+**Criando papéis (roles):**
+
+```sql
+-- Cria um papel simples
+CREATE ROLE ProfessorSI;
+
+-- Cria papel com permissão de administrar (repassar) o papel
+CREATE ROLE AdministradorSI WITH ADMIN CURRENT_ROLE;
+
+CREATE ROLE ConsultorSI;
+
+-- Remove um papel
+DROP ROLE ProfessorSI;
+```
+
+A cláusula `WITH ADMIN` permite que o usuário ao qual o papel foi atribuído repasse esse papel a outros. Deve ser usada com moderação.
+
+**Concedendo e revogando privilégios:**
+
+```sql
+-- Cria uma visão para restringir o acesso a colunas específicas
+CREATE VIEW MediaGeralAlunoSI AS
+  SELECT CPFAluno, NomeAluno, SobrenomeAluno, MediaAluno
+  FROM Aluno
+  WHERE Especializacao = 'SI';
+
+-- Concede SELECT na visão a três papéis
+GRANT SELECT ON MediaGeralAlunoSI
+  TO ProfessorSI, ConsultorSI, AdministradorSI;
+
+-- Concede UPDATE apenas em uma coluna, apenas ao administrador
+GRANT UPDATE ON MediaGeralAlunoSI.MediaAluno TO AdministradorSI;
+
+-- Designa usuários aos papéis
+GRANT ProfessorSI TO Mannino;
+GRANT ConsultorSI TO Olson;
+
+-- Permite que Smith repasse o papel AdministradorSI a outros
+GRANT AdministradorSI TO Smith WITH GRANT OPTION;
+
+-- Revoga o SELECT do papel ProfessorSI (RESTRICT: só revoga se não concedido por outros)
+REVOKE SELECT ON MediaGeralAlunoSI FROM ProfessorSI RESTRICT;
+```
+
+**Privilégios disponíveis no SQL:2003:**
+
+| Privilégio | Descrição |
+|---|---|
+| `SELECT` | Consulta o objeto; pode ser restrito a colunas individuais |
+| `UPDATE` | Modifica valores; pode ser restrito a colunas individuais |
+| `INSERT` | Adiciona linhas; pode ser restrito a colunas |
+| `DELETE` | Exclui linhas; não pode ser restrito a colunas |
+| `TRIGGER` | Cria gatilho em uma tabela específica |
+| `REFERENCES` | Referencia colunas de uma tabela em restrições de integridade |
+| `EXECUTE` | Executa um procedimento armazenado |
+
+**`WITH GRANT OPTION` vs `WITH ADMIN OPTION`:**
+
+- `WITH GRANT OPTION` (em `GRANT`) — permite que o usuário repasse o **privilégio** a outros
+- `WITH ADMIN OPTION` / `WITH ADMIN CURRENT_ROLE` (em `CREATE ROLE`) — permite que o usuário repasse o **papel** a outros
+
+Ambas as opções ampliam significativamente o poder do usuário e devem ser usadas com moderação.
+
+<Callout type="warning">
+**Material baseado em Oracle 10g e SQL:2003 — tecnologias desatualizadas**
+
+O livro-texto desta UA (Mannino, 3ª ed., AMGH 2014, baseado em Oracle 10g) foi escrito com SQL:2003 como referência de padronização. Pontos importantes de atualização:
+
+- **Oracle 10g** foi lançado em 2003 — versões atuais são Oracle 21c e 23ai, com suporte completo a JSON, ML e arquitetura multilocatária
+- **SQL:2003** já foi substituído por versões posteriores (SQL:2008, SQL:2011, SQL:2016, SQL:2023)
+- **Microsoft Access 2003** (citado para controle de permissões gráfico) é um SGBD de desktop há muito descontinuado para ambientes corporativos
+- A UA reutiliza temas de DCL já vistos na UA9, mas acrescenta `CREATE ROLE`, `WITH GRANT OPTION` e `WITH ADMIN OPTION` — que são relevantes e corretos em SGBDs modernos
+- A UA menciona "ambientes de processamento" (centralizado, distribuído, datawarehouse) mas o trecho disponível do livro encerra antes de detalhar esses ambientes
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**RBAC com CREATE ROLE (PostgreSQL):**
+
+```sql
+-- Cria papéis sem login (grupos)
+CREATE ROLE leitura;
+CREATE ROLE editor;
+CREATE ROLE administrador;
+
+-- Concede privilégios ao papel
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO leitura;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO editor;
+
+-- Atribui papéis a usuários
+GRANT leitura TO joao;
+GRANT editor TO maria;
+GRANT administrador TO smith WITH ADMIN OPTION;
+
+-- Revoga o papel
+REVOKE editor FROM maria;
+```
+
+**Row-Level Security (RLS) — controle linha por linha:**
+
+```sql
+-- Ativa segurança por linha na tabela
+ALTER TABLE pedidos ENABLE ROW LEVEL SECURITY;
+
+-- Política: cada usuário só vê seus próprios pedidos
+CREATE POLICY ver_proprios_pedidos ON pedidos
+  USING (usuario = current_user);
+```
+
+**Column-Level Security — via views:**
+
+```sql
+-- Oculta colunas sensíveis expondo apenas o necessário por papel
+CREATE VIEW v_funcionarios_publico AS
+  SELECT id, nome, departamento  -- sem salario, cpf, etc.
+  FROM funcionarios;
+
+GRANT SELECT ON v_funcionarios_publico TO leitura;
+```
+
+**Princípio do Menor Privilégio (PoLP):**
+
+- Conceder apenas os privilégios mínimos necessários para cada função
+- Prefira `GRANT ... ON VIEW` em vez de `GRANT ... ON TABLE`
+- Revogue privilégios imediatamente ao mudar de função ou desligamento
+- Evite `WITH GRANT OPTION` e `WITH ADMIN OPTION` exceto para DBAs explícitos
+
+**Ferramentas modernas de administração:**
+
+| Ferramenta | Finalidade |
+|---|---|
+| **pgAdmin / DBeaver** | Administração gráfica de PostgreSQL e outros SGBDs |
+| **pgAudit** | Auditoria detalhada de acesso (log de quem fez o quê) |
+| **Flyway / Liquibase** | Versionar DDL e políticas de segurança como migrations |
+| **IAM em nuvem** (AWS IAM, GCP IAM) | Integrar autenticação do banco com identidades corporativas |
+| **Vault (HashiCorp)** | Gerenciar senhas e credenciais de banco de forma dinâmica |
+| **Data Catalog** (Google, AWS Glue) | Equivalente moderno ao dicionário de dados corporativo |
+
+**Data Governance moderna:**
+
+O papel do DA evoluiu para **Data Governance**: ferramentas como Apache Atlas, Collibra e Alation automatizam o catálogo de dados corporativo, rastreiam linhagem de dados e aplicam políticas de qualidade e privacidade (LGPD/GDPR) em escala.
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**O que cai sobre administração de dados e BD:**
+
+1. **DA vs DBA — distinção clássica:**
+   - **DA** = posição gerencial (média/alta), foco estratégico e corporativo. Responsável: modelo de dados corporativo, políticas entre bancos, planos de longo prazo, negociação com fornecedores de TI.
+   - **DBA** = função de suporte técnico, foco em SGBDs individuais. Responsável: modelagem física, monitoramento de desempenho, segurança SQL, avaliação técnica de SGBDs.
+   - DA considera todos os dados (arquivos, web, fontes externas + BDs); DBA considera apenas os dados nos BDs.
+
+2. **Níveis gerenciais e dados:**
+   - Baixa (operacional) → relatórios de exceção dos BDs operacionais
+   - Média (tática) → dados resumidos e integrados
+   - Alta (estratégica) → dados externos + internos integrados e resumidos
+
+3. **Controle de acesso discricionário vs obrigatório:**
+   - **Discricionário:** usuários recebem privilégios a partes específicas; o mais comum nos SGBDs comerciais
+   - **Obrigatório:** nível de autorização do usuário deve corresponder ao nível de classificação do objeto (confidencial, secreto, ultrassecreto); menos flexível, usado em bancos altamente sensíveis
+
+4. **CREATE ROLE / GRANT / REVOKE:**
+   - `CREATE ROLE nome` — cria um papel; `DROP ROLE` remove
+   - `WITH ADMIN CURRENT_ROLE` — permite repassar o papel a outros
+   - `GRANT privilegio ON objeto TO usuario_ou_papel`
+   - `WITH GRANT OPTION` — permite que o receptor repasse o privilégio
+   - `REVOKE privilegio ON objeto FROM usuario RESTRICT` — revoga apenas se o privilégio não foi concedido por mais de uma origem
+   - Privilégios: SELECT, UPDATE (pode ser por coluna), INSERT (pode ser por coluna), DELETE (não pode ser por coluna), TRIGGER, REFERENCES, EXECUTE
+
+5. **Questão frequente — DA e DBA:**
+   - Resposta correta: "O DA foca os recursos de informação em um contexto amplo, estabelecendo políticas e padrões, enquanto o DBA lida com SGBDs individuais, monitoramento de desempenho e integridade."
+   - Cuidado: não inverter os papéis; DBA não é cargo gerencial, DA não faz SQL de segurança diretamente.
+
+6. **Metadados:** o dicionário de dados armazena **metadados** — descritores que definem origem, uso, domínio de valores e significado dos dados.
+
+7. **BD operacional:** sustenta as atividades diárias da organização (processamento de pedidos, manufatura, contas a pagar).
+</Callout>
+
+---
+
+### Referências
+
+- MANNINO, Michael V. *Projeto, Desenvolvimento de Aplicações e Administração de Banco de Dados*. 3. ed. Porto Alegre: AMGH, 2014. Cap. 14 — Administração de Dados e de Banco de Dados.
