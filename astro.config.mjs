@@ -1,6 +1,17 @@
 import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 
+const restartOnNewContent = {
+  name: 'restart-on-new-mdx',
+  configureServer(server) {
+    server.watcher.on('add', (file) => {
+      if (file.includes('/src/content/') && file.endsWith('.mdx')) {
+        server.restart();
+      }
+    });
+  },
+};
+
 export default defineConfig({
   site: 'https://marcusteixeirabr.github.io',
   base: '/resumos',
@@ -26,4 +37,7 @@ export default defineConfig({
       weights: [400, 500],
     },
   ],
+  vite: {
+    plugins: [restartOnNewContent],
+  },
 });
