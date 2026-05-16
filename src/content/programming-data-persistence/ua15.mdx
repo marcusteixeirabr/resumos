@@ -1,0 +1,392 @@
+---
+title: "UA15 — Servidores de Aplicação JPA"
+subtitle: "JPA (Java Persistence API) é a especificação oficial para persistência em Java — o Hibernate é sua implementação mais conhecida, traduzindo tabelas em objetos via ORM."
+ua: 15
+group: "Banco de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O problema com JDBC puro e o surgimento da JPA
+
+A UA14 mostrou como o **JDBC** conecta Java a SGBDs. Mas desenvolver exclusivamente com JDBC e SQL puro tem um custo alto: cada operação exige dezenas de linhas de código repetitivo para gerenciar conexões, preparar queries, iterar sobre ResultSets e tratar exceções.
+
+Com foco em produtividade, surgiu o **Hibernate** — um framework de mapeamento objeto-relacional que simplifica toda essa camada. O sucesso do Hibernate foi tão grande na comunidade Java que serviu de base para a criação de um padrão oficial: a **Java Persistence API (JPA)**.
+
+**JPA é uma especificação, não uma implementação.** Ela define as regras (interfaces, anotações, comportamentos esperados) que frameworks de persistência devem seguir. Para usá-la, é necessária uma implementação concreta — como Hibernate, EclipseLink ou OpenJPA. Isso garante portabilidade: uma aplicação escrita com JPA pode migrar entre implementações apenas ajustando configurações, sem reescrever o código de acesso a dados.
+
+---
+
+### POJO — Plain Old Java Object
+
+O bloco fundamental do mapeamento JPA é o **POJO** (Plain Old Java Object): uma classe Java simples com apenas atributos, construtores e métodos acessores (getters e setters), sem necessidade de herança ou implementação de interfaces especiais.
+
+```java
+public class Filme {
+    private int codigo;
+    private String titulo;
+    private int dataLancamento;
+
+    public int getCodigo() { return codigo; }
+    public void setCodigo(int codigo) { this.codigo = codigo; }
+
+    public String getTitulo() { return titulo; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
+
+    public int getDataLancamento() { return dataLancamento; }
+    public void setDataLancamento(int dataLancamento) {
+        this.dataLancamento = dataLancamento;
+    }
+}
+```
+
+A JPA utiliza POJOs para representar entidades do banco de dados: cada instância do POJO corresponde a uma linha (tupla) de uma tabela.
+
+---
+
+### Mapeamento objeto-relacional (ORM)
+
+A técnica **ORM** (Object Relational Mapping) faz a correspondência entre os dois modelos:
+
+| Modelo relacional | Modelo orientado a objetos |
+|---|---|
+| Tabela | Classe (POJO) |
+| Coluna | Atributo |
+| Tupla (linha) | Objeto (instância) |
+| Chave primária | Atributo identificado com `@Id` |
+
+O ORM elimina a necessidade de escrever SQL para operações CRUD — o framework gera os comandos automaticamente a partir dos **metadados** inseridos via anotações no POJO.
+
+**Anotações principais do JPA/Hibernate:**
+
+| Anotação | Função |
+|---|---|
+| `@Entity` | Define que o POJO corresponde a uma tabela do banco |
+| `@Table(name = "...")` | Especifica o nome exato da tabela (quando diferente da classe) |
+| `@Id` | Define o atributo que é chave primária |
+| `@GeneratedValue` | Define a estratégia de geração da PK (equivale ao `AUTO_INCREMENT`) |
+| `@Column(name = "...")` | Mapeia o atributo a uma coluna específica |
+| `@Version` | Controla versão/simultaneidade (optimistic locking) |
+| `@OrderBy` | Ordena coleções — equivale ao `ORDER BY` do SQL |
+
+**Exemplo da classe Filme com anotações:**
+
+```java
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "filme")
+public class Filme {
+
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
+    private int codigo;
+
+    @Column(name = "titulo")
+    private String titulo;
+
+    @Column(name = "lancamento")
+    private int dataLancamento;
+
+    // getters e setters
+}
+```
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/dpd_01.webp" alt="Infográfico: processo de mapeamento objeto-relacional (ORM) com JPA — relação entre tabelas SQL e POJOs Java, anotações e servidores de aplicação." />
+</SlidesGrid>
+
+**Mapeamento de componentes**
+
+Quando um POJO possui referência a outro objeto (composição), o objeto interno é chamado de **componente**. O componente não possui identidade própria (`@Id`) — suas colunas são incorporadas na tabela da entidade pai:
+
+```java
+public class Ator {
+    private int codigo;
+    private java.util.Date dataNasc;
+    private Nome nome;  // componente
+    // getters e setters
+}
+
+public class Nome {
+    String primeiroNome;
+    String ultimoNome;
+    // getters e setters
+}
+```
+
+A tabela resultante no banco terá as colunas: `codigo`, `datanasc`, `primeironome`, `ultimonome`. A anotação `@Embeddable` (na classe Nome) e `@Embedded` (no atributo em Ator) fazem esse mapeamento na JPA moderna.
+
+---
+
+### Servidores de aplicação e implementações JPA
+
+A JPA sozinha não funciona — ela precisa de uma **implementação** e de um ambiente de execução.
+
+**Tipos de servidores Java:**
+
+| Tipo | Característica | Exemplos |
+|---|---|---|
+| **Servidor de aplicação completo** | Implementa toda a especificação Jakarta EE | JBoss/WildFly, WebSphere, GlassFish, WebLogic |
+| **Servlet container** | Implementação parcial — suporta Servlets/JSP, mas não o stack Jakarta EE completo | Apache Tomcat, Jetty |
+
+Para aplicações robustas e corporativas, servidores de aplicação completos são recomendados. Para aplicações mais simples, o Tomcat com Hibernate é suficiente.
+
+**Implementações JPA mais conhecidas:**
+
+**Hibernate** — a primeira a usar ORM como elemento central, surgiu antes mesmo da JPA e serviu de inspiração para a especificação. Suporta SQL nativo e HQL (Hibernate Query Language). É a implementação mais usada na prática.
+
+**EclipseLink** — implementação de referência da JPA. Novas funcionalidades da especificação são testadas nela primeiro antes de serem repassadas às demais.
+
+**OpenJPA** (Apache) — projeto open source da Apache Software Foundation. Suporta SQL nativo e JPQL (Java Persistence Query Language), além de integração com ANT, Maven e Eclipse.
+
+**JBoss/WildFly** — servidor de aplicação open source mantido pela Red Hat. Usa Hibernate como implementação JPA interna e suporta Jakarta EE e Eclipse MicroProfile.
+
+---
+
+### CRUD com JPA e Hibernate
+
+O ponto de entrada para manipular dados é o **`EntityManager`**, obtido a partir de um **`EntityManagerFactory`** configurado via `persistence.xml`.
+
+**Configuração mínima (persistence.xml):**
+
+```xml
+<persistence-unit name="processos">
+    <properties>
+        <property name="jakarta.persistence.jdbc.url"
+                  value="jdbc:mysql://localhost:3306/meubanco"/>
+        <property name="jakarta.persistence.jdbc.driver"
+                  value="com.mysql.cj.jdbc.Driver"/>
+        <property name="jakarta.persistence.jdbc.user" value="root"/>
+        <property name="jakarta.persistence.jdbc.password" value="senha"/>
+        <property name="hibernate.dialect"
+                  value="org.hibernate.dialect.MySQLDialect"/>
+        <property name="hibernate.show_sql" value="true"/>
+    </properties>
+</persistence-unit>
+```
+
+**Estrutura base da classe de operações:**
+
+```java
+EntityManagerFactory emf =
+    Persistence.createEntityManagerFactory("processos");
+EntityManager em = emf.createEntityManager();
+
+// operações CRUD aqui
+
+em.close();
+emf.close();
+```
+
+**Busca por chave primária:**
+
+```java
+Filme filme = em.find(Filme.class, 1);
+System.out.println(filme.getTitulo() + " — " + filme.getDataLancamento());
+```
+
+**Inserção (persist):**
+
+```java
+Filme filme = new Filme();
+filme.setTitulo("O Despertar da Força");
+filme.setDataLancamento(2015);
+
+em.getTransaction().begin();
+em.persist(filme);       // gera o INSERT
+em.getTransaction().commit();
+```
+
+**Atualização:** após `find()`, o objeto passa a ser gerenciado pelo EntityManager. Qualquer alteração feita dentro de uma transação é automaticamente detectada e gera um `UPDATE`:
+
+```java
+Filme filme = em.find(Filme.class, 7);
+
+em.getTransaction().begin();
+filme.setDataLancamento(2015);  // EntityManager detecta a mudança
+em.getTransaction().commit();   // gera o UPDATE automaticamente
+```
+
+**Exclusão (remove):**
+
+```java
+Filme filme = em.find(Filme.class, 7);  // obrigatório: objeto deve estar gerenciado
+
+em.getTransaction().begin();
+em.remove(filme);   // gera o DELETE
+em.getTransaction().commit();
+```
+
+**Regra importante:** `persist()` e `remove()` só operam sobre objetos **gerenciados** pelo EntityManager. Para atualizar um objeto que veio de fora do contexto de persistência (objeto **desanexado**), usa-se `merge()`.
+
+**Controle de transações:**
+
+As operações que alteram dados (`persist`, `remove`, atualizações de atributos) devem estar dentro de um bloco de transação: `begin()` inicia e `commit()` confirma. Se uma operação falhar, o bloco inteiro pode ser desfeito com `rollback()`, garantindo a integridade do banco.
+
+<Callout type="warning">
+**Pacote `javax.persistence` → `jakarta.persistence` desde Jakarta EE 9**
+
+O livro-texto (Santos, *Integração de Aplicações*, SAGAH) usa o pacote `javax.persistence` nos imports. Desde **Jakarta EE 9 (2020)**, a Oracle transferiu a especificação para a Eclipse Foundation e o pacote foi renomeado para **`jakarta.persistence`**. Todo código moderno com JPA/Hibernate 6+ deve usar `jakarta.persistence`. O pacote `javax.persistence` ainda existe no Hibernate 5.x (modo de compatibilidade), mas está deprecado.
+
+Outros pontos desatualizados do material:
+- Referências a **NetBeans 8.2**, **GlassFish 3** e **Eclipse Neon** — ferramentas de 2016/2017 muito defasadas
+- Uso de `javax.persistence.schema-generation.database.action=drop-and-create` sem alertar que isso destrói dados em produção
+- Ausência de pool de conexões (HikariCP é padrão hoje)
+- Spring Boot + Spring Data JPA é a abordagem dominante no mercado, mas não é mencionada
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**Jakarta Persistence 3.x com Hibernate 6:**
+
+```java
+// Pacote correto para projetos modernos
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
+public class Filme {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String titulo;
+    private int dataLancamento;
+    // getters e setters
+}
+```
+
+**Spring Boot + Spring Data JPA (padrão de mercado):**
+
+```java
+// Repositório gerado automaticamente — sem EntityManager manual
+public interface FilmeRepository extends JpaRepository<Filme, Long> {
+    List<Filme> findByTitulo(String titulo);
+    List<Filme> findByDataLancamentoGreaterThan(int ano);
+}
+
+// No serviço
+@Service
+public class FilmeService {
+    @Autowired
+    private FilmeRepository repository;
+
+    public Filme salvar(Filme filme) {
+        return repository.save(filme);  // INSERT ou UPDATE automático
+    }
+
+    public Optional<Filme> buscar(Long id) {
+        return repository.findById(id);
+    }
+
+    public void remover(Long id) {
+        repository.deleteById(id);
+    }
+}
+```
+
+**Pool de conexões com HikariCP** (integrado ao Spring Boot automaticamente):
+
+```properties
+# application.properties
+spring.datasource.url=jdbc:mysql://localhost:3306/meubanco
+spring.datasource.username=root
+spring.datasource.password=senha
+spring.datasource.hikari.maximum-pool-size=10
+spring.jpa.hibernate.ddl-auto=validate
+```
+
+**Migrations com Flyway** — nunca usar `drop-and-create` em produção:
+
+```sql
+-- V1__create_filme_table.sql
+CREATE TABLE filme (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    data_lancamento INT NOT NULL
+);
+```
+
+**Frameworks reativos modernos:**
+
+| Framework | Característica |
+|---|---|
+| **Spring Boot** + Spring Data JPA | Padrão de mercado; integração automática com Hibernate |
+| **Quarkus** + Hibernate Reactive | JVM nativa, GraalVM, baixo consumo de memória |
+| **Micronaut** Data JPA | Injeção de dependência em tempo de compilação |
+| **Spring Data R2DBC** | Acesso reativo a banco (sem JPA — coroutines/WebFlux) |
+
+**Testando a camada de persistência:**
+
+```java
+// Testcontainers: banco MySQL real em container Docker durante os testes
+@Testcontainers
+@SpringBootTest
+class FilmeRepositoryTest {
+    @Container
+    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8");
+
+    @Test
+    void deveSalvarEBuscarFilme() {
+        Filme f = new Filme("Matrix", 1999);
+        repository.save(f);
+        assertThat(repository.findById(f.getId())).isPresent();
+    }
+}
+```
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**Questões e gabarito — UA15 Servidores de aplicação JPA:**
+
+1. *"Analise as afirmativas sobre anotações ORM e classifique em V/F: `@Id` (PK), `@Table` (uma ou mais tabelas), `@Entity` (ligado a tabela), `@GeneratedValue` (estratégias de PK), `@Column` (insere novas colunas)."*
+   - **Resposta: B** → V–F–V–V–F
+   - `@Table` mapeia apenas **uma** tabela específica (F); `@Column` mapeia/especifica coluna **existente**, não insere nova coluna na tabela (F — isso é DDL, não anotação JPA).
+
+2. *"O EntityManager atua sobre um conjunto de classes persistentes definidas em qual tag do persistence.xml?"*
+   - **Resposta: D** — `persistence-unit`
+
+3. *"`Pessoa pessoa = entityManager.find(Pessoa.class, 121)` — o que acontece com o objeto pessoa?"*
+   - **Resposta: A** — Os dados da tupla com id 121 são carregados no objeto pessoa. O `find` busca no banco e retorna o objeto gerenciado — nenhuma transação é necessária para operações de leitura.
+
+4. *"Sobre o Hibernate, qual afirmativa é correta?"*
+   - **Resposta: A** — O Hibernate implementa as especificações da JPA, atuando entre a camada JDBC e a camada de acesso a dados da aplicação. O JDBC ainda é usado internamente pelo Hibernate (ele não o elimina — apenas abstrai).
+
+5. *"Analise as afirmativas sobre expectativas de uso da JPA: abstrair SQL, eliminar dependência de BD relacional, reduzir tempo com SQL, controlador XML, camada de apresentação gerencia persistência."*
+   - **Resposta: C** → V–F–V–F–F
+   - JPA abstrai SQL e reduz tempo de desenvolvimento, mas **não elimina** a dependência de BD relacional — apenas abstrai o SQL. JPA não fornece controlador XML nem transfere persistência para a camada de apresentação.
+
+**Conceitos-chave para fixar:**
+- JPA = especificação (padrão); Hibernate = implementação (framework)
+- POJO = classe simples sem herança; mapeado via anotações (`@Entity`, `@Id`, `@Column`)
+- ORM: tabela → POJO; coluna → atributo; tupla → objeto
+- `EntityManagerFactory` → `EntityManager` → operações CRUD
+- `persist()` → INSERT; `find()` → SELECT por PK; `remove()` → DELETE; `merge()` → UPDATE de objeto desanexado
+- Transações obrigatórias para INSERT, UPDATE e DELETE: `begin()` + `commit()`
+- `find()` não exige transação; retorna objeto já gerenciado pelo EntityManager
+- Servlet container (Tomcat) = JPA parcial; Servidor de aplicação (WildFly) = Jakarta EE completo
+- EclipseLink = implementação de referência da JPA (mudanças são testadas nela primeiro)
+</Callout>
+
+---
+
+### Referências
+
+- SANTOS, Marcelo da Silva dos. *Integração de Aplicações* — Servidores de aplicação JPA. SAGAH.
+- HIBERNATE. *Idiomatic persistence for Java and relational databases*. Disponível em: https://hibernate.org/orm
+- APACHE SOFTWARE FOUNDATION. *Welcome to Apache OpenJPA project*. Disponível em: http://openjpa.apache.org/
+- ECLIPSE FOUNDATION. *Java Persistence API (JPA) extensions reference for EclipseLink*. 2013.
