@@ -1,0 +1,301 @@
+---
+title: "UA14 — Segurança e Controle de Acesso"
+subtitle: "Integridade, disponibilidade e confidencialidade são os três pilares da segurança em bancos de dados — protegidos por GRANT, REVOKE e modelos de controle de acesso."
+ua: 14
+group: "SQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Problemas de segurança em banco de dados
+
+Nem todos os usuários de um sistema devem acessar todas as funcionalidades disponíveis. A segurança de um banco de dados envolve proteger as informações contra três tipos de ameaças:
+
+| Objetivo | O que protege |
+|---|---|
+| **Integridade** | Evita que dados sejam modificados sem autorização ou de forma incorreta |
+| **Disponibilidade** | Garante que usuários registrados possam acessar os dados quando necessário |
+| **Confidencialidade** | Impede que informações sensíveis sejam expostas a usuários não autorizados |
+
+**Exemplo clássico:** em um sistema acadêmico, alunos acessam as próprias notas (disponibilidade), mas não podem alterá-las (integridade) nem ver as notas dos colegas (confidencialidade).
+
+**Quatro medidas de controle para atingir esses objetivos:**
+
+1. **Controle de acesso** — criação de contas e senhas para moderar o acesso ao SGBD
+2. **Controle de ingerência** — restringe acesso a bancos de dados estatísticos (resumos e agregações sobre populações de dados)
+3. **Controle de fluxo** — impede que informações se propaguem de forma descontrolada a usuários não autorizados
+4. **Criptografia** — protege dados confidenciais transmitidos em rede; algoritmos como chave pública são utilizados para criptografar partes específicas do banco (ex.: transações financeiras)
+
+**Papel do DBA na segurança:**
+
+O **administrador de banco de dados (DBA)** é o principal responsável pela segurança. Suas atribuições incluem:
+
+- Criar contas e senhas para grupos de usuários
+- Conceder e revogar privilégios especiais (modificação, exclusão, inserção de registros)
+- Atribuir diferentes níveis de segurança às contas
+- Manter registro de todas as alterações realizadas por cada usuário durante a sessão
+
+O gerenciamento de contas costuma ser feito por uma tabela criptografada com apenas dois campos: identificador da conta e senha.
+
+---
+
+### DCL — Concessão e Revogação de Privilégios
+
+O método mais comum de controle de acesso em SQL é a **concessão e revogação de privilégios** via DCL. Os privilégios operam em dois níveis:
+
+**Nível de conta:** aplicado à conta de forma geral, independente de relações específicas.
+
+```sql
+-- Concede privilégio de criar tabelas, visões, triggers ou banco ao usuário U1
+GRANT CREATE TO U1;
+
+-- Concede inserção e exclusão nas relações COLABORADOR e DEPARTAMENTO ao U2
+-- (sem permissão de repassar esses privilégios)
+GRANT INSERT, DELETE ON COLABORADOR, DEPARTAMENTO TO U2;
+
+-- Concede inserção e exclusão ao U3 COM permissão de repassar
+GRANT INSERT, DELETE ON COLABORADOR, DEPARTAMENTO TO U3 WITH GRANT OPTION;
+
+-- Concede consulta na relação DEPARTAMENTO ao U4
+GRANT SELECT ON DEPARTAMENTO TO U4;
+
+-- Revoga o SELECT de U4 na relação DEPARTAMENTO
+REVOKE SELECT ON DEPARTAMENTO FROM U4;
+```
+
+**Nível de relação:** privilégios concedidos sobre tabelas, views ou colunas específicas.
+
+```sql
+-- Restringe U3 a consultar apenas nome, data de nascimento e endereço
+-- de funcionários do departamento 4 — via view
+CREATE VIEW U3COLABORADOR AS
+  SELECT Nome, Data_Nasc, Endereco
+  FROM FUNCIONARIO
+  WHERE Dnr = 4;
+
+-- Concede acesso à view com permissão de repassar
+GRANT SELECT ON U3COLABORADOR TO U3 WITH GRANT OPTION;
+
+-- Concede atualização apenas no atributo Salario da relação COLABORADOR
+GRANT UPDATE ON COLABORADOR (Salario) TO U4;
+```
+
+Os privilégios `UPDATE` e `INSERT` aceitam especificação de atributos. `SELECT` e `DELETE` **não** permitem essa restrição por coluna — para limitar o acesso a colunas em uma consulta, usa-se uma **view**.
+
+**Tabela de privilégios disponíveis:**
+
+| Privilégio | Descrição |
+|---|---|
+| `ALL` | Todos os privilégios, exceto GRANT OPTION |
+| `ALTER` | Alterar tabelas, colunas e índices |
+| `CREATE` | Criar tabelas, visões, triggers ou banco de dados |
+| `DELETE` | Excluir dados de tabelas |
+| `DROP` | Excluir tabelas, visões, triggers ou banco de dados |
+| `FILE` | Ler e gravar arquivos no servidor |
+| `INDEX` | Adicionar ou excluir índices |
+| `INSERT` | Incluir dados nas tabelas |
+| `OPTION` | Repassar privilégios a outros usuários |
+| `PROCESS` | Visualizar e eliminar processos do sistema |
+| `SELECT` | Realizar consultas |
+| `SHOW DATABASES` | Visualizar os bancos de dados |
+| `UPDATE` | Atualizar dados das tabelas |
+| `USAGE` | Conectar ao servidor |
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/sbd_01.webp" alt="Infográfico: principais comandos DCL para concessão de privilégios em SQL — GRANT e REVOKE com exemplos de sintaxe e níveis de acesso." />
+</SlidesGrid>
+
+<Callout type="warning">
+**Tabela de privilégios é MySQL-cêntrica — não é padrão SQL**
+
+O Quadro 1 do livro-texto (Cardoso & Cardoso, 2012) lista privilégios como `FILE`, `PROCESS`, `SHOW DATABASES` e `USAGE` que são **específicos do MySQL** e não fazem parte do SQL padrão (ISO/IEC). O padrão SQL define privilégios como `SELECT`, `INSERT`, `UPDATE`, `DELETE`, `REFERENCES`, `TRIGGER` e `EXECUTE`. Ao trabalhar com PostgreSQL, SQL Server ou Oracle, o conjunto de privilégios disponíveis será diferente.
+
+Além disso, o livro contém um erro tipográfico: o exemplo de REVOKE usa `TO` em vez de `FROM` (`REVOKE SELECT ON DEPARTAMENTO TO U4`). A sintaxe correta é `REVOKE ... FROM`.
+</Callout>
+
+---
+
+### Modelos de Segurança de Acesso
+
+Grandes organizações possuem muitos usuários que precisam de acesso a partes distintas do banco de dados. Três modelos principais são usados para organizar esse controle:
+
+**1. Controle de Acesso Discricionário (DAC)**
+
+O modelo mais utilizado em SGBDs comerciais. Permite conceder e revogar privilégios sobre relações de forma explícita e granular. O usuário tem ou não tem um determinado privilégio — não há gradações.
+
+- **Vantagem:** alta flexibilidade; adequado a uma variedade grande de aplicações
+- **Desvantagem:** vulnerável a ataques como cavalos de Troia — o modelo não controla como a informação é usada após o acesso autorizado
+
+**2. Controle de Acesso Obrigatório (MAC)**
+
+Cada objeto recebe um **nível de classificação** (confidencial, secreto, ultrassecreto) e cada usuário recebe um **nível de autorização**. O acesso só é permitido quando a autorização do usuário corresponde ou supera o nível do objeto.
+
+- **Vantagem:** alto grau de proteção no fluxo de informações
+- **Desvantagem:** rigidez — exige classificação precisa de todos os sujeitos e objetos; aplicado em ambientes militares e de inteligência; raramente disponível em SGBDs comerciais comuns
+
+**3. Controle de Acesso Baseado em Papéis (RBAC)**
+
+Os privilégios são atribuídos a **papéis** (roles), não diretamente a usuários. Usuários recebem papéis de acordo com sua função na organização. Cada sessão pode ter mais de um papel ativo, mas é mapeada para um único usuário.
+
+```sql
+-- Cria e remove papéis
+CREATE ROLE operador_caixa;
+CREATE ROLE coordenador_vendas;
+DROP ROLE operador_caixa;
+
+-- Atribui privilégios ao papel
+GRANT SELECT, INSERT ON vendas TO operador_caixa;
+
+-- Atribui o papel ao usuário
+GRANT operador_caixa TO joao;
+
+-- Permite que joao repasse o papel a outros
+GRANT coordenador_vendas TO maria WITH GRANT OPTION;
+
+-- Revoga o papel
+REVOKE operador_caixa FROM joao;
+```
+
+O RBAC pode ser usado em conjunto com DAC ou MAC. O controle de acesso é compatível com **exclusão mútua de papéis**: dois papéis podem ser definidos como mutuamente exclusivos para impedir que um usuário acumule funções que requeiram supervisão mútua (ex.: quem autoriza pagamento não pode também executá-lo). Essa exclusão pode ser em **tempo de autorização** (permanente) ou **tempo de execução** (limite máximo de duração).
+
+**4. Controle de Acesso em Nível de Linha (Row-Level Security)**
+
+Regras de acesso são aplicadas linha por linha. Cada linha recebe um **rótulo** de sensibilidade; usuários com nível de autorização suficiente acessam apenas as linhas cujo rótulo seja menor ou igual ao seu. Pode ser aplicado em `SELECT`, `INSERT`, `UPDATE` e `DELETE`.
+
+```sql
+-- Exemplo: usuário com rótulo 50 acessa somente linhas com nível_seguranca <= 50
+DELETE FROM documentos
+WHERE classificacao <= 50;  -- o SGBD avalia cada linha individualmente
+```
+
+---
+
+<Callout type="warning">
+**Material baseado em Elmasri/Navathe 2010 e Pichetti — pontos desatualizados**
+
+- A tabela de privilégios do livro é MySQL-cêntrica e não representa o padrão SQL moderno
+- O exemplo de REVOKE usa `TO` em vez de `FROM` — erro de digitação do livro-texto
+- O controle de acesso em nível de linha (RLS) existia de forma proprietária em SGBDs como Oracle Virtual Private Database; o PostgreSQL só introduziu `CREATE POLICY` com `ROW LEVEL SECURITY` nativo na versão 9.5 (2016)
+- A maioria dos SGBDs comerciais atuais oferece somente DAC; MAC permanece restrito a ambientes de alta segurança
+- Os livros não abordam **Dynamic Data Masking** (mascaramento dinâmico de dados sensíveis), disponível em SQL Server, Oracle e PostgreSQL moderno
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**RBAC em PostgreSQL:**
+
+```sql
+-- Cria papéis sem login (grupos de permissão)
+CREATE ROLE leitura;
+CREATE ROLE editor;
+CREATE ROLE administrador;
+
+-- Concede privilégios ao papel
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO leitura;
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO editor;
+
+-- Atribui papéis a usuários
+GRANT leitura TO joao;
+GRANT editor TO maria;
+GRANT administrador TO dba_smith WITH ADMIN OPTION;
+
+-- Revoga papel
+REVOKE editor FROM maria;
+```
+
+**Row-Level Security nativo (PostgreSQL 9.5+):**
+
+```sql
+ALTER TABLE pedidos ENABLE ROW LEVEL SECURITY;
+
+-- Cada usuário só vê seus próprios pedidos
+CREATE POLICY ver_proprios ON pedidos
+  USING (usuario = current_user);
+
+-- DBA vê tudo (sem restrição de linha)
+CREATE POLICY acesso_admin ON pedidos
+  TO administrador
+  USING (true);
+```
+
+**Column-Level Security — via views:**
+
+```sql
+-- Oculta colunas sensíveis (salário, CPF) expondo apenas o necessário
+CREATE VIEW v_funcionarios_rh AS
+  SELECT id, nome, departamento, cargo
+  FROM funcionarios;  -- sem salario, cpf, conta_bancaria
+
+GRANT SELECT ON v_funcionarios_rh TO editor;
+```
+
+**Dynamic Data Masking (SQL Server / Oracle):**
+
+```sql
+-- Mascara CPF para usuários sem permissão de desmascaramento
+ALTER TABLE clientes
+  ALTER COLUMN cpf ADD MASKED WITH (FUNCTION = 'partial(3,"****",2)');
+```
+
+**Princípio do Menor Privilégio (PoLP):**
+
+- Conceder sempre o mínimo necessário para cada função
+- Preferir `GRANT ... ON VIEW` a `GRANT ... ON TABLE`
+- Revogar privilégios imediatamente ao mudar de função ou no desligamento
+- Evitar `WITH GRANT OPTION` exceto para DBAs designados
+
+| Ferramenta | Finalidade |
+|---|---|
+| **pgAudit** | Auditoria detalhada de acesso no PostgreSQL (log de quem fez o quê e quando) |
+| **Flyway / Liquibase** | Versionar políticas de segurança e DDL como migrations rastreáveis |
+| **Vault (HashiCorp)** | Gerenciar credenciais e senhas de forma dinâmica e segura |
+| **IAM em nuvem** (AWS/GCP/Azure) | Integrar autenticação do banco com identidades corporativas |
+| **Transparent Data Encryption (TDE)** | Criptografia em repouso — disponível em SQL Server, Oracle e PostgreSQL via pgcrypto |
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**Questões e gabarito — UA14 Segurança e Controle de Acesso:**
+
+1. *"As ameaças de segurança se relacionam a um ou mais objetivos gerais. Qual alternativa descreve corretamente um desses objetivos?"*
+   - **Resposta: D** — Disponibilidade: permitir acesso aos dados a usuários devidamente autorizados.
+   - Descarte: A (Acessibilidade não é objetivo oficial); B (Sigilo não permite atualização por externos — é o oposto); C (Confidencialidade protege exposição indevida, não modificação); E (Integridade protege modificações, não acesso).
+
+2. *"Qual das quatro medidas de controle é descrita corretamente?"*
+   - **Resposta: C** — Controle de fluxo: controla o deslocamento de informações a usuários não autorizados.
+   - Descarte: A (Controle de acesso cria contas, não protege transmissão — isso é criptografia); B (Controle de ingerência trata de BD estatísticos, não contas); D (Criptografia protege transmissão, não interpreta resumos); E (Controle de gerência não é uma das quatro medidas).
+
+3. *"`GRANT SELECT, UPDATE (NOTA), INSERT, DELETE ON ALUNOS TO PROFESSOR5 WITH GRANT OPTION` — o que faz?"*
+   - **Resposta: B** — Concede à conta PROFESSOR5 privilégios de recuperar, atualizar o atributo nota, inserir e excluir tuplas da relação ALUNOS, **com permissão de repassar** esses privilégios a outras contas.
+   - Descarte: A (conta errada: PROFESSOR, não PROFESSOR5); C (relação errada: ALUNO, não ALUNOS); D e E (interpreta a ordem dos privilégios de forma incorreta).
+
+4. *"Qual instrução revoga corretamente ALTER e DROP da relação CLIENTE para o usuário usu_teste?"*
+   - **Resposta: A** — `REVOKE ALTER, DROP ON CLIENTE TO USU_TESTE;`
+   - Descarte: B (UPDATE/DELETE não equivalem a ALTER/DROP); C (USAGE/INDEX são outros privilégios); D (DELETE não é DROP); E (CREATE não é ALTER).
+
+5. *"Qual afirmação descreve corretamente uma característica da autorização baseada em papéis?"*
+   - **Resposta: B** — Pode ser utilizada tanto com controles de acesso discricionário quanto obrigatório.
+   - Descarte: A (papéis se criam com CREATE ROLE, não DROP ROLE); C (a exclusão **mútua** impede que papéis coexistam, não que sejam controlados por um método chamado "inclusão múltipla"); D (cada sessão pode ter mais de um papel, mas é mapeada para **um único usuário**); E (a exclusão múltipla **separa** tarefas entre pessoas, não as agrupa para um usuário fazer sozinho).
+
+**Conceitos-chave para fixar:**
+- DAC = discricionário = mais comum; MAC = obrigatório = militar/alto sigilo
+- GRANT repassa privilégio; `WITH GRANT OPTION` repassa a capacidade de repassar
+- `REVOKE ... FROM` (não `TO`) — erro frequente em provas
+- `UPDATE` e `INSERT` permitem restringir a colunas; `SELECT` e `DELETE` não
+- Papéis: `CREATE ROLE` / `DROP ROLE` — atribuídos via `GRANT papel TO usuario`
+- RLS: controle linha por linha com rótulos de sensibilidade
+</Callout>
+
+---
+
+### Referências
+
+- PICHETTI, Roni Francisco. *Banco de Dados* — Segurança e controle de acesso. SAGAH.
+- ELMASRI, R.; NAVATHE, S. B. *Sistemas de banco de dados*. 6. ed. São Paulo: Pearson Brasil, 2010.
+- RAMAKRISHNAN, R.; GEHRKE, J. *Sistemas de gerenciamento de banco de dados*. 3. ed. Porto Alegre: AMGH, 2011.
+- CARDOSO, V.; CARDOSO, G. *Linguagem SQL: fundamentos e práticas*. São Paulo: Saraiva, 2012.
