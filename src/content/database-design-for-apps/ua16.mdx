@@ -1,0 +1,233 @@
+---
+title: "UA16 — Migrações para NoSQL"
+subtitle: "Migrar de um banco relacional para NoSQL não é simples — exige planejamento organizacional e técnico rigoroso para minimizar riscos de perda de dados, incompatibilidade e tempo de inatividade."
+ua: 16
+group: "NoSQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Por que migrar de um banco relacional para NoSQL?
+
+Bancos relacionais são confiáveis e bem organizados — mas em determinadas situações apresentam limitações que levam empresas a optar por sistemas NoSQL. Os **três principais motivadores** dessa decisão são:
+
+| Motivo | Definição |
+|---|---|
+| **Desenvolvimento de novas aplicações** | Construção de aplicações baseadas em outros modelos e estruturas de dados |
+| **Atualizações de aplicações existentes** | Necessidade de modelos mais flexíveis de armazenamento e processamento |
+| **Integrações entre sistemas** | Fusão de sistemas com arquiteturas e estruturas de dados diferentes que precisam se comunicar |
+
+**Limitações práticas dos bancos relacionais em larga escala:**
+
+- **Alta concorrência em leitura e escrita** — bloqueios de tabela reduzem a performance
+- **Rigidez estrutural** — qualquer alteração de schema exige migrações complexas
+- **Dados não estruturados** — textos, imagens e vídeos (como em redes sociais) não se encaixam bem em tabelas
+- **Escalabilidade limitada** — escalar verticalmente tem custo crescente; escalar horizontalmente é complexo em RDBMS
+
+> Bancos NoSQL oferecem **flexibilidade, fluência, alto desempenho e robustez** — não para substituir o modelo relacional, mas para complementá-lo. Arquiteturas híbridas (relacional + NoSQL) são comuns.
+
+---
+
+### Riscos da migração
+
+Migrar dados é uma operação crítica. Três riscos principais devem ser considerados:
+
+| Risco | Descrição |
+|---|---|
+| **Perda de informação** | Pode ocorrer durante o processo; um bom planejamento minimiza o impacto — backups permitem recuperação |
+| **Problemas de compatibilidade** | Tipos de dados, extensões de arquivos ou sistemas operacionais incompatíveis podem inviabilizar a migração |
+| **Falhas catastróficas** | Erros de software não previstos podem causar tempo de inatividade prolongado ou perda irrecuperável de dados |
+
+Quando uma migração ocorre, **as aplicações que usam o banco também precisam ser alteradas** — tanto a forma de conexão quanto a forma de ler e gravar dados no novo SGBD.
+
+---
+
+### Processo de migração
+
+A migração bem-sucedida exige preparação em dois níveis: organizacional e técnico.
+
+#### Do ponto de vista organizacional
+
+| Passo | Definição |
+|---|---|
+| **Orçamento** | Recursos financeiros dedicados à contratação de mão de obra especializada |
+| **Estratégia** | Levantamento de requisitos, prioridades e planejamento do cronograma |
+| **Usuários** | Os usuários finais devem participar — eles conhecem as regras de negócio e ajudam a priorizar os dados mais críticos |
+
+#### Do ponto de vista técnico
+
+| Passo | Definição |
+|---|---|
+| **Auditoria** | Verificar dados obsoletos, campos não utilizados e capacidade do banco de destino |
+| **Backup** | Cópia de segurança obrigatória antes de qualquer migração — permite restauração em caso de falha |
+| **Validação dos dados** | Verificar integridade no banco de origem e no banco de destino durante e após a migração |
+| **Testes** | Medir a performance do novo SGBD após a migração — só desativar o banco anterior após muitos testes |
+| **Mapeamento de tipos** | Identificar tipos de dados incompatíveis e convertê-los antes ou durante a migração |
+| **Caracteres** | Cuidado com codificações (charset) — incompatibilidades podem causar erros silenciosos ou perda de dados |
+| **Modelagem de dados** | Adaptar a estrutura relacional ao modelo NoSQL escolhido (ex.: tabela → coleção JSON em MongoDB) |
+| **Controle de falhas** | Monitorar desconexões, problemas de gravação e erros inesperados de ponta a ponta |
+
+**Exemplo de mapeamento relacional → NoSQL documental (MongoDB):**
+
+```
+Tabela (relacional)  →  Coleção (NoSQL)
+Linha/registro       →  Documento (JSON/BSON)
+Coluna               →  Atributo do documento
+```
+
+---
+
+### Etapas da migração
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gmr_01.webp" alt="Guia de migração de banco relacional para NoSQL — desafios, etapas e métodos" />
+</SlidesGrid>
+
+A migração ocorre em uma sequência de fases estruturadas:
+
+| Fase | Descrição |
+|---|---|
+| **Pré-migração** | Fase preparatória no SGBD de origem — organização de todos os dados a migrar |
+| **Fases 1 a 5** | Processos variáveis por projeto — podem ser mais ou menos do que 5 fases |
+| **Pós-migração** | Dados já transferidos para o NoSQL — comparação com a origem para verificar integridade |
+
+**Processos envolvidos:**
+
+| Processo | Definição |
+|---|---|
+| **Origem** | SGBD relacional de onde os dados serão extraídos |
+| **Destino** | SGBD NoSQL para onde os dados serão transferidos |
+| **EI** (Extração Inicial) | Extração inicial dos dados da base relacional |
+| **EO** (Extração On-line) | Extração contínua das operações que ocorrem no banco durante a migração |
+| **RI** (Replicação Inicial) | Replicação dos dados extraídos pelo EI para o destino |
+| **RO** (Replicação On-line) | Replicação dos dados extraídos pelo EO, mantendo-se on-line durante a sincronização |
+| **Coletor (C1)** | Comunicação monitorada entre os servidores de origem e destino |
+| **Exportação CSV** | Gravação dos dados em formato CSV e envio ao servidor de destino (off-line) |
+| **Importação CSV** | Leitura dos dados CSV no servidor de destino (off-line) |
+
+---
+
+### Métodos de migração
+
+Existem dois tipos principais: **on-line** (aplicação permanece em execução durante a migração) e **off-line** (aplicação é pausada). O mercado adota três variações:
+
+#### 1. Migração on-line com sincronização contínua
+
+A aplicação permanece conectada ao SGBD de origem com sincronia total durante toda a transferência. Ela só é conectada ao novo banco quando a migração é concluída. Exige conhecimentos avançados em programação.
+
+| Fase | O que acontece |
+|---|---|
+| Pré-migração | Aplicação e dados no banco relacional |
+| Fase 1 | Aplicação em execução + EI dos dados |
+| Fase 2 | Aplicação em execução + RI no servidor de destino |
+| Fase 3 | Aplicação em execução + EO dos dados |
+| Fase 4 | Aplicação em execução + RO dos dados |
+| Pós-migração | Aplicação e dados no banco NoSQL |
+
+#### 2. Migração off-line por meio de uma ferramenta
+
+Semelhante à on-line, mas a aplicação **não está em execução**. Um software de migração controla o processo. Exemplo: **Oracle GoldenGate** — realiza replicação heterogênea entre SGBDs de versões, sistemas operacionais e estruturas diferentes.
+
+| Pré-migração | Fase 1 | Fase 2 | Pós-migração |
+|---|---|---|---|
+| Dados no relacional | EI no servidor de origem | RI no servidor de destino | Dados no NoSQL |
+
+#### 3. Migração off-line manual por meio de scripts
+
+Processo totalmente manual conduzido por um especialista. Os dados são extraídos, convertidos para CSV e carregados no servidor de destino.
+
+| Pré-migração | Fase 1 | Fase 2 | Pós-migração |
+|---|---|---|---|
+| Dados no relacional | Gerar arquivo CSV e enviar ao destino | Ler CSV no servidor de destino | Dados no NoSQL |
+
+<Callout type="warning">
+**Material com referências desatualizadas**
+
+- O livro menciona o **Oracle GoldenGate** (2019) como principal ferramenta de migração off-line. Embora ainda exista, o mercado evoluiu bastante desde então.
+- Não há menção a ferramentas modernas como **AWS Database Migration Service (DMS)**, **Google Datastream**, **Debezium** (CDC baseado em log), **Apache Kafka** com Kafka Connect, **Airbyte** ou **dbt**.
+- O processo de migração descrito é manual e sequencial — em produção moderna, ferramentas de CDC (Change Data Capture) permitem migrações contínuas com impacto mínimo.
+- O capítulo não cobre **testes de carga**, **rollback** planejado nem **blue-green deployments** para zero downtime.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**Ferramentas modernas de migração e integração:**
+
+| Ferramenta | Tipo | Uso |
+|---|---|---|
+| **AWS DMS** | Gerenciado | Migração online relacional → NoSQL (ex.: RDS → DynamoDB) |
+| **Google Datastream** | CDC | Replicação contínua de mudanças do banco de origem |
+| **Debezium** | CDC open source | Captura de mudanças via transaction log — zero downtime |
+| **Apache Kafka + Connect** | Streaming | Pipeline de dados em tempo real entre bancos heterogêneos |
+| **Airbyte** | ETL open source | Sincronização de dados entre fontes relacionais e NoSQL |
+| **dbt** | Transformação | Transformação de dados durante a migração |
+
+**Estratégias de migração sem downtime:**
+
+- **Strangler Fig Pattern**: migrar funcionalidade por funcionalidade, roteando gradualmente o tráfego para o novo banco
+- **Blue-Green Deployment**: manter dois ambientes paralelos; redirecionar o tráfego quando o novo estiver validado
+- **Feature Flags**: controlar qual banco cada feature usa durante a transição
+- **Dual Write**: a aplicação escreve simultaneamente em ambos os bancos durante a transição
+
+**Modelagem relacional → NoSQL (considerações práticas):**
+
+```
+# Relacional
+CREATE TABLE pedidos (id, cliente_id, data, total)
+CREATE TABLE itens_pedido (pedido_id, produto_id, qtd, preco)
+
+# MongoDB (desnormalização intencional)
+{
+  _id: ObjectId,
+  cliente_id: "...",
+  data: ISODate,
+  total: 99.90,
+  itens: [
+    { produto_id: "...", qtd: 2, preco: 49.95 }
+  ]
+}
+```
+
+Desnormalizar (embed) é correto em NoSQL quando os dados são sempre acessados juntos. Referências (lookup) só fazem sentido quando o dado relacionado é compartilhado por muitos documentos.
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**Q: Quais os 3 principais motivos que levam empresas a migrar para NoSQL?**
+(1) Desenvolvimento de novas aplicações; (2) Atualização de aplicações existentes; (3) Integração entre sistemas.
+
+**Q: Quais os 3 riscos principais da migração?**
+(1) Perda de informação; (2) Problemas de compatibilidade; (3) Falhas catastróficas.
+
+**Q: O que deve ser feito ANTES de iniciar qualquer migração?**
+Backup — cópia de segurança é etapa obrigatória antes de qualquer manipulação dos dados.
+
+**Q: Quais são os 3 métodos de migração?**
+(1) On-line com sincronização contínua; (2) Off-line por ferramenta; (3) Off-line manual por scripts.
+
+**Q: Qual a diferença entre EI e EO?**
+EI (Extração Inicial) extrai os dados que já existiam no banco. EO (Extração On-line) captura as operações que ocorrem *durante* a migração, mantendo os dados sincronizados.
+
+**Q: Qual o papel dos usuários no processo de migração?**
+Auxiliam no esclarecimento de regras de negócio e na priorização dos dados mais críticos a serem migrados.
+
+**Q: O que é mapeamento de tipos de dados?**
+Identificar quais tipos de dados do banco de origem existem no banco de destino — e converter os que não têm equivalente antes ou durante a migração.
+
+**Gabarito dos exercícios do livro:** 1-B / 2-C / 3-A / 4-E / 5-C
+</Callout>
+
+---
+
+### Referências
+
+- BEZERRA, Wheslley Rimar. *Migrações de bases relacionais para bases NoSQL*. In: **Banco de dados não relacional**. [S.l.]: [s.n.], 2020.
+- FROZZA, A. A. et al. DINo: uma ferramenta para importação de dados em bancos de dados NoSQL. In: Escola Regional de Banco de Dados, 14., 2018.
+- MACHADO, R. et al. Uma Aplicação para Migração de Dados de Banco Relacional para MongoDB. In: Escola Regional de Engenharia de Software, 3., 2019.
+- OLIVEIRA, F. V. *Migração de bases de dados relacionais para NoSQL: métodos de análise*. Dissertação (Mestrado). Instituto Universitário de Lisboa, 2017.
+- SADALAGE, P. J.; FOWLER, M. *NoSQL essencial: um guia conciso para o mundo emergente de persistência poliglota*. São Paulo: Novatec, 2013.

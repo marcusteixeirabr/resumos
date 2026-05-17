@@ -1,0 +1,222 @@
+---
+title: "UA15 — Banco de Dados NoSQL"
+subtitle: "NoSQL não veio para substituir o modelo relacional, mas para complementá-lo — oferecendo escalabilidade horizontal, schema flexível e alta disponibilidade para cenários de Big Data."
+ua: 15
+group: "NoSQL"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Dados, informação e conhecimento
+
+Antes de falar em NoSQL, é importante distinguir três conceitos que fundamentam a área:
+
+| Conceito | Definição |
+|---|---|
+| **Dado** | Forma bruta da informação — fragmento sem significado sozinho (ex: "Jorge") |
+| **Informação** | Resultado do processamento de dados — passa a ter significado (ex: "Jorge é aluno") |
+| **Conhecimento** | Extração, organização e cruzamento de informações — o maior ativo intangível das empresas |
+
+A relação hierárquica é: **Dados → Informação → Conhecimento**. Desde os primeiros computadores, o armazenamento e a manipulação eficiente de dados é uma preocupação central da computação.
+
+---
+
+### Modelos de dados históricos
+
+Ao longo do tempo, diferentes modelos foram criados para organizar dados:
+
+| Modelo | Característica principal |
+|---|---|
+| **Hierárquico** | Registros organizados em forma de árvore; cada tipo tem apenas uma raiz |
+| **Em rede** | Extensão do hierárquico; relacionamentos via links entre registros |
+| **Relacional** | Dados organizados em tabelas com chaves primárias e estrangeiras — modelo dominante no mercado |
+| **Orientado a objetos** | Dados armazenados como objetos, organizados em classes |
+
+O **SGBD** (Sistema Gerenciador de Banco de Dados) é o conjunto de ferramentas e linguagem para criar, alterar e manipular essas estruturas de dados.
+
+---
+
+### Big Data e os limites do modelo relacional
+
+O volume de dados gerado diariamente cresce de forma exponencial: transações bancárias, e-mails, redes sociais, companhias aéreas, operadoras de telefonia. Esse fenômeno é chamado de **Big Data**.
+
+O problema é que bancos relacionais são, por natureza, **normalizados** — o que exige muitos JOINs à medida que o volume e a complexidade crescem. Isso impacta diretamente a performance em cenários de alta concorrência e escala.
+
+Além disso, bancos relacionais tradicionais se baseiam nas propriedades **ACID**:
+
+| Propriedade | Significado |
+|---|---|
+| **Atomicity** | A transação é "tudo ou nada" — ou completa integralmente ou não acontece |
+| **Consistency** | Dados devem estar em conformidade com o schema após qualquer transação |
+| **Isolation** | Transações simultâneas são executadas de forma isolada |
+| **Durability** | O sistema se recupera de falhas mantendo o último estado consistente |
+
+Essas garantias tornam o modelo relacional confiável — mas também rígido para cenários de Big Data.
+
+---
+
+### NoSQL — "Not Only SQL"
+
+**NoSQL** surgiu em 1998 como uma alternativa ao modelo relacional para trabalhar com grandes volumes de dados variados. O nome não se refere a um movimento contra o SQL, mas sim a uma classe de bancos de dados que **não se limita ao modelo relacional**.
+
+> NoSQL possibilita o armazenamento de dados em diferentes formatos e estruturas, sem restringir ao modelo tabular.
+
+Bancos NoSQL normalmente adotam o modelo **BASE** em vez de ACID:
+
+| Propriedade BASE | Significado |
+|---|---|
+| **Basically Available** | O sistema sempre responde (mesmo com dados potencialmente desatualizados) |
+| **Soft State** | O estado do sistema pode mudar mesmo sem entrada de novos dados |
+| **Eventual Consistency** | A consistência dos dados será atingida *em algum momento futuro* |
+
+Isso é possível graças ao **Teorema CAP**: em um sistema distribuído, só é possível garantir duas das três propriedades ao mesmo tempo — Consistência (C), Disponibilidade (A) e Tolerância à Partição (P). Bancos NoSQL geralmente priorizam A e P.
+
+---
+
+### Comparativo SQL vs. NoSQL
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/csn_01.webp" alt="Comparativo entre bancos de dados SQL e NoSQL — modelo de dados, ACID, desempenho, escala e APIs" />
+</SlidesGrid>
+
+| Aspecto | SQL (Relacional) | NoSQL |
+|---|---|---|
+| **Modelo de dados** | Tabelas com schema rígido (colunas, índices, FKs definidos) | Schema flexível; chave de partição, documentos JSON/XML, grafos ou colunas |
+| **Propriedades** | ACID completo | Troca ACID por flexibilidade e escalabilidade horizontal |
+| **Desempenho** | Depende do subsistema de disco; otimização via índices e estrutura de tabelas | Depende do tamanho do cluster e latência de rede |
+| **Escala** | Vertical (hardware mais rápido) | Horizontal (clusters de baixo custo) |
+| **APIs** | Consultas SQL analisadas e executadas pelo RDBMS | APIs baseadas em objetos; chaves de partição para recuperação |
+| **Ferramentas** | Rico ecossistema voltado ao desenvolvimento de apps relacionais | Ferramentas de gerenciamento de cluster e escalabilidade |
+
+---
+
+### Características dos bancos NoSQL
+
+**1. Escalabilidade horizontal**
+
+À medida que o volume cresce, NoSQL permite adicionar mais nós ao cluster sem a complexidade do modelo relacional. A técnica de **Sharding** distribui dados em múltiplas partições ao longo de diferentes nós na rede — rompendo a cadeia de relacionamentos que travaria um RDBMS. Bancos NoSQL não usam locks de tabela, o que elimina a contenção em alta concorrência.
+
+**2. Schema-free (ausência de esquema)**
+
+NoSQL não exige um schema rígido pré-definido. Cada documento ou registro pode ter estruturas diferentes. Essa flexibilidade facilita a escalabilidade e alta disponibilidade — mas não garante integridade dos dados (responsabilidade transferida para a aplicação).
+
+**3. Replicação nativa**
+
+O suporte nativo à replicação reduz o tempo de recuperação de informações e contribui para a escalabilidade horizontal.
+
+**4. API simples de acesso**
+
+O foco em NoSQL não é o armazenamento em si, mas a **recuperação eficiente** dos dados. As APIs são projetadas para acesso rápido por chave de partição, documento ou grafo.
+
+**5. Consistência eventual**
+
+Baseada no Teorema CAP, a consistência dos dados não é garantida imediatamente após uma transação — mas o sistema garante que, *em algum momento*, todos os nós terão o dado atualizado. O modelo BASE formaliza essa abordagem.
+
+---
+
+### Técnicas usadas na implementação de NoSQL
+
+| Técnica | O que faz |
+|---|---|
+| **Map/Reduce** | Distribui problemas grandes em pequenos subproblemas nos nós (fase map), resolve cada um e agrega os resultados de volta para a raiz (fase reduce) |
+| **Consistent Hashing** | Mecanismo de distribuição de dados entre nós que minimiza a migração de dados quando nós são adicionados ou removidos |
+| **MVCC** (Multiversion Concurrency Control) | Suporta transações paralelas sem locks — leituras e escritas ocorrem simultaneamente via versões dos dados |
+| **Vector Clocks** | Ordena eventos em sistemas distribuídos, identificando qual versão de um dado é a mais atual |
+
+---
+
+### Tipos de bancos NoSQL
+
+| Tipo | Características | Exemplos |
+|---|---|---|
+| **Colunar** | Otimizado para leitura/escrita de colunas em vez de linhas; excelente para analytics | Apache Cassandra, HBase |
+| **Orientado a documentos** | Armazena dados como documentos JSON/BSON/XML; schema variável por documento | MongoDB, CouchDB, RavenDB |
+| **Grafos** | Armazena vértices e bordas (edges) com propriedades; ideal para relacionamentos complexos | Neo4j, Amazon Neptune |
+| **Chave-valor** | Armazena pares chave → valor na memória; altíssima performance em leitura | Redis, Amazon DynamoDB, Memcached |
+
+**Exemplos citados no livro:** Google BigTable (colunar), Amazon Dynamo (chave-valor), Facebook Cassandra (colunar), Apache HBase (colunar), LinkedIn Voldemort (chave-valor).
+
+<Callout type="warning">
+**Material desatualizado — leitura crítica necessária**
+
+- O livro (2017) usa "Facebook Cassandra" — o Cassandra foi doado para a **Apache Foundation em 2008** e não tem mais relação com o Facebook.
+- "Amazon Dynamo" era um sistema interno da AWS. O produto público equivalente é o **DynamoDB**, uma evolução do Dynamo original.
+- "LinkedIn Valdemort" (grafia correta: **Voldemort**) foi descontinuado pelo LinkedIn em favor de outras soluções.
+- O livro não cita **Redis** (hoje um dos bancos mais usados no mundo para cache e chave-valor) nem **Firebase Firestore**, **MongoDB Atlas** ou outras soluções modernas em nuvem.
+- A tabela comparativa vem da AWS (2017) — dados de desempenho e ferramentas mudaram significativamente.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+**Bancos NoSQL consolidados em produção (2024):**
+
+| Categoria | Banco | Destaque |
+|---|---|---|
+| Documentos | **MongoDB** | JSON nativo, Atlas (cloud), agregações com $lookup |
+| Documentos | **Firebase Firestore** | Tempo real, ideal para apps mobile |
+| Chave-valor | **Redis** | Cache em memória, pub/sub, streams, vetores |
+| Chave-valor | **Amazon DynamoDB** | Serverless, escala automática, Global Tables |
+| Colunar | **Apache Cassandra** | Write-heavy, multi-datacenter, CQL (similar ao SQL) |
+| Grafos | **Neo4j** | Cypher Query Language, detecção de fraudes, redes sociais |
+| Multi-modelo | **Azure Cosmos DB** | Suporta múltiplos modelos (documentos, grafos, chave-valor) |
+| Vetor | **Pinecone / pgvector** | Busca semântica, RAG para LLMs |
+
+**NoSQL e SQL coexistindo:**
+
+O mercado atual raramente usa *apenas* SQL ou *apenas* NoSQL. Arquiteturas modernas combinam os dois:
+- **PostgreSQL com JSONB**: banco relacional com suporte nativo a documentos JSON indexáveis — um híbrido poderoso
+- **Arquitetura políglota**: cada serviço escolhe o banco mais adequado ao seu padrão de acesso
+- **NewSQL** (CockroachDB, PlanetScale): bancos que oferecem ACID + escalabilidade horizontal
+- **Teorema PACELC**: extensão moderna do CAP que também considera latência vs. consistência mesmo sem partição
+
+**Quando escolher NoSQL:**
+- Dados com estrutura variável ou semi-estruturada
+- Volume massivo com requisito de escala horizontal
+- Requisito de baixa latência e alta disponibilidade (ex.: catálogo de produtos, sessões de usuário, feed de eventos)
+- Dados de grafos (redes sociais, detecção de fraude, recomendações)
+
+**Quando manter o modelo relacional:**
+- Dados altamente estruturados com integridade referencial crítica
+- Transações financeiras com ACID obrigatório
+- Relatórios analíticos complexos com múltiplos JOINs
+
+---
+
+### Dicas para a Prova
+
+<Callout type="tip">
+**Q: O que significa NoSQL?**
+"Not Only SQL" — não é contra o SQL, mas oferece alternativas para armazenamento de dados não limitadas ao modelo relacional.
+
+**Q: NoSQL veio para substituir o banco relacional?**
+Não. NoSQL surgiu como alternativa e complemento, especialmente para Big Data. Empresas podem (e frequentemente devem) usar ambos.
+
+**Q: Quais as principais características dos bancos NoSQL?**
+(1) Escalabilidade horizontal; (2) Schema-free; (3) Replicação nativa; (4) API simples; (5) Consistência eventual.
+
+**Q: O que é o Teorema CAP?**
+Em um sistema distribuído, só é possível garantir 2 das 3 propriedades: Consistência (C), Disponibilidade (A) e Tolerância à Partição (P). NoSQL geralmente prioriza A + P.
+
+**Q: Qual a diferença entre ACID e BASE?**
+ACID garante consistência imediata e integridade total (usado em bancos relacionais). BASE aceita inconsistência temporária priorizando disponibilidade (usado em bancos NoSQL).
+
+**Q: Cite os 4 tipos de bancos NoSQL.**
+Colunar, Orientado a Documentos, Grafos e Chave-Valor.
+
+**Q: O que é Map/Reduce?**
+Técnica que divide um problema grande em subproblemas distribuídos em nós (map), resolve cada um localmente e agrega os resultados (reduce). Muito usado em Big Data.
+
+**Gabarito dos exercícios do livro:** 1-D / 2-C / 3-A / 4-E / 5-A
+</Callout>
+
+---
+
+### Referências
+
+- CAMPOS, Jorge Brandão de. *Analisar e compreender a utilização do banco de dados NoSQL*. In: **Administração de Banco de Dados**. [S.l.]: SAGAH, [2017].
+- ALECRIM, Emerson. O que é Big Data? Infowester, 2013.
+- OLIVEIRA, Claudio Alves de. Bancos de Dados NoSQL. IBM Developer, 2013.
+- AMAZON WEB SERVICES. O que é NoSQL? Disponível em: https://aws.amazon.com/pt/nosql/
