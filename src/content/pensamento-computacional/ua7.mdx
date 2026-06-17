@@ -1,0 +1,176 @@
+---
+title: "UE7 — Expressões e Atribuições"
+subtitle: "Expressões são a forma como computadores avaliam condições e calculam resultados. Dominar operadores aritméticos, relacionais e lógicos — e entender a precedência entre eles — é essencial para escrever algoritmos que produzem resultados corretos."
+ua: 7
+group: "Linguagem C"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_07.webp" alt="A Lógica em Ação: Construindo Raciocínio com Expressões — operadores e precedência" caption="Operadores e precedência: como o computador avalia expressões compostas" />
+</SlidesGrid>
+
+### O que é uma expressão
+
+Uma expressão é uma combinação de **operandos** (variáveis, constantes, valores literais) e **operadores** que o computador avalia para produzir um resultado.
+
+```
+resultado = (a + b) * c - d / 2
+            ┗━━━━━━━━━━━━━━━━━━━ expressão
+```
+
+Existem três tipos de expressões:
+- **Aritméticas:** resultado numérico (inteiro ou real).
+- **Relacionais:** resultado lógico (verdadeiro ou falso) pela comparação de dois valores.
+- **Lógicas:** resultado lógico pela combinação de expressões relacionais.
+
+### Operadores aritméticos
+
+| Operador | Operação | Pseudocódigo | Em C |
+|---|---|---|---|
+| `+` | Adição | `a + b` | `a + b` |
+| `-` | Subtração | `a - b` | `a - b` |
+| `*` | Multiplicação | `a * b` | `a * b` |
+| `/` | Divisão | `a / b` | `a / b` |
+| `**` | Potenciação | `a ** b` | `pow(a, b)` (math.h) |
+| `Div` / `div` | Divisão inteira | `a Div b` | `a / b` (com inteiros) |
+| `Mod` / `%` | Resto da divisão | `a Mod b` | `a % b` |
+
+**Exemplo de uso do Mod (resto):**
+
+```pseudocode
+// Verificar se um número é par
+se (numero Mod 2) = 0 então
+  escreval("Par")
+senão
+  escreval("Ímpar")
+```
+
+**Divisão inteira vs. divisão real:**
+
+Em pseudolinguagem, `7 Div 2 = 3` (descarta a parte decimal). Em C, a divisão de dois inteiros sempre produz um inteiro: `7 / 2 = 3`. Para obter resultado real, pelo menos um operando deve ser real: `7.0 / 2 = 3.5` ou `(float)7 / 2 = 3.5`.
+
+### Precedência dos operadores aritméticos
+
+A ordem de avaliação segue a matemática convencional:
+
+1. **Potenciação** (`**`) — maior precedência
+2. **Multiplicação, Divisão, Div, Mod** (`*`, `/`, `Div`, `Mod`)
+3. **Adição e Subtração** (`+`, `-`) — menor precedência
+
+Operadores de mesma precedência são avaliados da **esquerda para a direita**.
+
+Parênteses sempre alteram a ordem de avaliação — avaliados primeiro, do mais interno para o mais externo.
+
+```pseudocode
+// Sem parênteses:
+2 + 3 * 4 = 2 + 12 = 14
+
+// Com parênteses:
+(2 + 3) * 4 = 5 * 4 = 20
+```
+
+### Operadores relacionais
+
+Comparam dois valores e produzem um resultado lógico (Verdadeiro ou Falso):
+
+| Operador | Significado | Pseudocódigo | Em C |
+|---|---|---|---|
+| `=` | Igual a | `a = b` | `a == b` |
+| `<>` | Diferente de | `a <> b` | `a != b` |
+| `>` | Maior que | `a > b` | `a > b` |
+| `>=` | Maior ou igual | `a >= b` | `a >= b` |
+| `<` | Menor que | `a < b` | `a < b` |
+| `<=` | Menor ou igual | `a <= b` | `a <= b` |
+
+<Callout type="warning">
+**Armadilha clássica em C: `=` vs `==`**
+
+Em pseudolinguagem, `=` é comparação de igualdade. Em C, `=` é atribuição e `==` é comparação. Escrever `if (x = 5)` em vez de `if (x == 5)` é um erro semântico gravíssimo — o código compila, mas o resultado é errado: `x` recebe o valor 5 e a condição é sempre verdadeira (pois 5 é diferente de zero).
+
+Compiladores modernos emitem um aviso (`warning`) para essa situação, mas não impedem a compilação.
+</Callout>
+
+### Operadores lógicos
+
+Combinam expressões relacionais para formar condições mais complexas:
+
+| Operador | Pseudocódigo | C | Resultado |
+|---|---|---|---|
+| E (AND) | `a e b` | `a && b` | Verdadeiro apenas se **ambos** forem verdadeiros |
+| OU (OR) | `a ou b` | `a \|\| b` | Verdadeiro se **pelo menos um** for verdadeiro |
+| NÃO (NOT) | `não a` | `!a` | Inverte o valor lógico |
+
+**Tabela verdade do E:**
+
+| A | B | A e B |
+|---|---|---|
+| V | V | V |
+| V | F | F |
+| F | V | F |
+| F | F | F |
+
+**Tabela verdade do OU:**
+
+| A | B | A ou B |
+|---|---|---|
+| V | V | V |
+| V | F | V |
+| F | V | V |
+| F | F | F |
+
+### Precedência global dos operadores
+
+Quando uma expressão mistura operadores de tipos diferentes, a avaliação segue esta ordem:
+
+1. **Parênteses** (sempre primeiro)
+2. **Operadores aritméticos** (`**`, depois `*`/`/`/`Div`/`Mod`, depois `+`/`-`)
+3. **Operadores relacionais** (`=`, `<>`, `>`, `>=`, `<`, `<=`)
+4. **Operadores lógicos** (`não`, depois `e`, depois `ou`)
+
+**Exemplo complexo:**
+
+```pseudocode
+media > 7.0 e frequencia >= 0.75
+```
+
+Avaliação:
+1. `media > 7.0` → Verdadeiro ou Falso (relacional)
+2. `frequencia >= 0.75` → Verdadeiro ou Falso (relacional)
+3. `resultado1 e resultado2` → Verdadeiro apenas se ambos forem V (lógico)
+
+### Atribuição
+
+A atribuição armazena o resultado de uma expressão em uma variável:
+
+```pseudocode
+variavel ← expressão
+```
+
+Em C:
+
+```c
+variavel = expressao;
+```
+
+O lado direito é **sempre avaliado completamente antes** de ser armazenado na variável do lado esquerdo.
+
+```c
+int x = 5;
+x = x + 1;   /* x agora vale 6 — incremento */
+x = x * 2;   /* x agora vale 12 */
+```
+
+### Práticas Modernas
+
+- **Operadores de incremento/decremento em C:** `x++` (pós-incremento), `++x` (pré-incremento), `x--`, `--x`. A diferença importa quando usados em expressões maiores.
+- **Operadores compostos de atribuição:** `x += 5` equivale a `x = x + 5`. Também: `-=`, `*=`, `/=`, `%=`.
+- **Short-circuit evaluation:** em C e na maioria das linguagens, `A && B` não avalia `B` se `A` for falso (resultado já seria falso). `A || B` não avalia `B` se `A` for verdadeiro. Isso é fundamental para evitar erros como `if (ptr != NULL && ptr->valor > 0)`.
+- **Operadores bit a bit:** `&`, `|`, `^`, `~`, `<<`, `>>` — operam sobre bits individuais. Fundamentais em sistemas embarcados, protocolos de rede e criptografia.
+- **Operador ternário:** `resultado = (condicao) ? valorSeVerdadeiro : valorSeFalso;` — expressão condicional compacta.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 2.

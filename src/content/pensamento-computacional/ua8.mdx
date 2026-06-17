@@ -1,0 +1,144 @@
+---
+title: "UE8 — Tipos de Dados e Variáveis em C"
+subtitle: "Em C, cada variável tem um tipo preciso que define o espaço de memória reservado e as operações permitidas. Conhecer os cinco tipos fundamentais, seus modificadores e como declarar e inicializar variáveis corretamente é base indispensável para programar em C."
+ua: 8
+group: "Linguagem C"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_05.webp" alt="Os Materiais Básicos: Armazenando Informação com Variáveis e Tipos de Dados" caption="Variáveis como gavetas etiquetadas: cada tipo define o que pode ser guardado e quanto espaço ocupa" />
+</SlidesGrid>
+
+### A memória como um armário de gavetas
+
+Uma boa analogia para memória e variáveis: imagine um grande armário com gavetas de tamanhos diferentes. Cada gaveta tem uma etiqueta (nome da variável) e um tamanho específico (tipo). Você só pode guardar na gaveta aquilo que cabe nela — não dá para guardar um colchão em uma gaveta pequena.
+
+Em C, quando você declara uma variável, o compilador:
+1. Reserva um espaço de memória do tamanho adequado ao tipo.
+2. Associa o nome da variável a esse endereço de memória.
+3. O espaço pode conter "lixo" (valores de uso anterior da memória) se não for inicializado.
+
+### Os tipos fundamentais em C
+
+```c
+int    idade;         /* números inteiros */
+char   inicial;       /* um único caractere */
+float  peso;          /* número real, precisão simples (4 bytes) */
+double salario;       /* número real, precisão dupla (8 bytes) */
+void   nada;          /* tipo vazio — usado em funções sem retorno */
+```
+
+| Tipo | Tamanho típico | Faixa de valores | Uso |
+|---|---|---|---|
+| `int` | 4 bytes | -2.147.483.648 a 2.147.483.647 | Contadores, índices, idades |
+| `char` | 1 byte | -128 a 127 (ou 0 a 255) | Caracteres, flags de 1 byte |
+| `float` | 4 bytes | ±3.4 × 10⁻³⁸ a ±3.4 × 10³⁸ | Números reais (precisão ~7 dígitos) |
+| `double` | 8 bytes | ±1.7 × 10⁻³⁰⁸ a ±1.7 × 10³⁰⁸ | Números reais (precisão ~15 dígitos) |
+| `void` | 0 bytes | — | Funções sem retorno, ponteiros genéricos |
+
+<Callout type="warning">
+**Tamanhos dependem da plataforma**
+
+Os tamanhos acima são típicos para sistemas de 32/64 bits com GCC, mas **não são garantidos pelo padrão C**. Em sistemas embarcados de 8 bits, `int` pode ter apenas 2 bytes. Use `sizeof(int)` para verificar o tamanho real na plataforma. Para tamanhos garantidos, use `<stdint.h>`: `int32_t` (sempre 32 bits), `uint8_t` (sempre 8 bits sem sinal), etc.
+</Callout>
+
+### Modificadores de tipo
+
+Modificadores ajustam o comportamento dos tipos básicos:
+
+| Modificador | Efeito | Exemplo |
+|---|---|---|
+| `short` | Reduz o tamanho de memória | `short int n;` — geralmente 2 bytes |
+| `long` | Aumenta o tamanho de memória | `long int n;` — geralmente 8 bytes em 64 bits |
+| `unsigned` | Remove o sinal (só positivos) | `unsigned int n;` — 0 a 4.294.967.295 |
+| `signed` | Mantém o sinal (positivo e negativo) | `signed char c;` — -128 a 127 |
+
+```c
+unsigned int contagem = 0;   /* nunca será negativo */
+long long int populacao;     /* para números muito grandes */
+short int temperatura;       /* -32768 a 32767 — suficiente para graus Celsius */
+```
+
+### Declaração e inicialização de variáveis
+
+**Declaração** reserva o espaço de memória:
+
+```c
+int idade;
+float altura;
+char inicial;
+```
+
+**Inicialização** atribui um valor inicial:
+
+```c
+int idade = 25;
+float altura = 1.75;
+char inicial = 'M';
+```
+
+**Por que inicializar é importante?** Variáveis não inicializadas contêm "lixo" — valores aleatórios deixados de usos anteriores da memória. Usar uma variável não inicializada é um comportamento indefinido em C e causa bugs imprevisíveis.
+
+```c
+int x;
+printf("%d\n", x);  /* ERRADO: x contém lixo — resultado imprevisível */
+
+int y = 0;
+printf("%d\n", y);  /* CORRETO: y contém 0 de forma garantida */
+```
+
+### Regras para nomear identificadores em C
+
+| Regra | Exemplo válido | Exemplo inválido |
+|---|---|---|
+| Começa com letra ou `_` | `nome`, `_total` | `1nome`, `123` |
+| Letras, dígitos e `_` apenas | `nota_final`, `x2` | `nota-final`, `x@2` |
+| Sem espaços | `mediaFinal` | `media final` |
+| Não pode ser palavra reservada | `valor` | `int`, `if`, `while` |
+| Case-sensitive | `Nota` ≠ `nota` ≠ `NOTA` | — |
+
+**Palavras reservadas do C** (não podem ser identificadores):
+`auto`, `break`, `case`, `char`, `const`, `continue`, `default`, `do`, `double`, `else`, `enum`, `extern`, `float`, `for`, `goto`, `if`, `int`, `long`, `register`, `return`, `short`, `signed`, `sizeof`, `static`, `struct`, `switch`, `typedef`, `union`, `unsigned`, `void`, `volatile`, `while`.
+
+### Boas práticas de nomenclatura
+
+```c
+/* Ruim: nomes sem significado */
+int a, b, c;
+float x;
+
+/* Bom: nomes descritivos */
+int idadeAluno;
+float notaFinal;
+int quantidadeProdutos;
+
+/* Constantes: maiúsculas com underscore */
+#define MAX_ALUNOS 50
+#define PI 3.14159265
+```
+
+### Declaração múltipla e escopo
+
+Em C, é possível declarar múltiplas variáveis do mesmo tipo em uma linha:
+
+```c
+int nota1, nota2, nota3;
+float media, desvio;
+```
+
+O **escopo** de uma variável é a região do código onde ela é acessível. Variáveis declaradas dentro de uma função só existem durante a execução dessa função (variáveis locais). Variáveis declaradas fora de qualquer função são globais (acessíveis em todo o arquivo).
+
+### Práticas Modernas
+
+- **`<stdint.h>` para portabilidade:** `int8_t`, `int16_t`, `int32_t`, `int64_t`, `uint8_t`, `uint32_t` etc. garantem tamanhos exatos independente da plataforma.
+- **`bool` em C99:** o header `<stdbool.h>` define `bool`, `true` e `false`. Em C23, são palavras-chave nativas.
+- **`const` para constantes:** em vez de `#define PI 3.14`, use `const double PI = 3.14159265;` — tem tipo, respeita escopo e pode ser depurado.
+- **Tipos em linguagens modernas:** Python usa duck typing (o tipo é inferido do valor), TypeScript adiciona tipagem opcional ao JS, Rust tem um sistema de tipos extremamente rigoroso que previne bugs em tempo de compilação.
+- **`sizeof` é seu amigo:** `printf("int tem %zu bytes\n", sizeof(int));` — sempre use para verificar o tamanho real na plataforma alvo.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: Tipos de Dados e Variáveis*. Porto Alegre: SAGAH.

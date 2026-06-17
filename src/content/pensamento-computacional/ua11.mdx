@@ -1,0 +1,182 @@
+---
+title: "UE11 — Condicionais Compostos e Aninhados"
+subtitle: "Quando uma decisão leva a outra, usamos condicionais aninhados (if dentro de if). Quando existem mais de dois caminhos possíveis, encadeamos else-if. Dominar esses padrões é essencial para modelar lógicas de negócio complexas."
+ua: 11
+group: "Estruturas de Controle"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Seleção aninhada e encadeada
+
+Não há restrição sobre o tipo de comando que pode aparecer dentro de um bloco `se-então` ou `senão`. Em particular, é perfeitamente válido colocar **outro comando de seleção** dentro de um bloco — isso se chama **aninhamento** ou **encadeamento**.
+
+**Quando usar:**
+- Quando existem **mais de dois caminhos** possíveis baseados em diferentes condições.
+- Quando uma decisão só faz sentido **após** outra decisão ser tomada.
+
+### Problema clássico: conceito por média
+
+Calcular o conceito de um aluno com base na média:
+- Conceito A: Média ≥ 9,0
+- Conceito B: 7,5 ≤ Média < 9,0
+- Conceito C: 6,0 ≤ Média < 7,5
+- Conceito D: Média < 6,0
+
+#### Solução com múltiplos ifs independentes (INEFICIENTE)
+
+```pseudocode
+se media >= 9
+então conceito ← 'A'
+fimse
+se (media < 9) e (media >= 7.5)
+então conceito ← 'B'
+fimse
+se (media < 7.5) e (media >= 6)
+então conceito ← 'C'
+fimse
+se media < 6
+então conceito ← 'D'
+fimse
+```
+
+Problema: **todas as condições são sempre avaliadas**, mesmo depois de encontrar a correta. Ineficiente e desnecessário.
+
+#### Solução com if-else encadeado (EFICIENTE)
+
+```pseudocode
+se media >= 9 então
+  conceito ← 'A'
+senão
+  se media >= 7.5 então
+    conceito ← 'B'
+  senão
+    se media >= 6 então
+      conceito ← 'C'
+    senão
+      conceito ← 'D'
+    fimse
+  fimse
+fimse
+```
+
+Aqui, uma vez que a primeira condição verdadeira é encontrada, as demais **não são avaliadas**. Muito mais eficiente.
+
+**Em C (estilo idiomático `else if`):**
+
+```c
+char conceito;
+
+if (media >= 9.0) {
+    conceito = 'A';
+} else if (media >= 7.5) {
+    conceito = 'B';
+} else if (media >= 6.0) {
+    conceito = 'C';
+} else {
+    conceito = 'D';
+}
+
+printf("Conceito: %c\n", conceito);
+```
+
+O estilo `else if` é mais legível que o aninhamento profundo, mas é semanticamente equivalente.
+
+### Exemplo completo: sistema de frete
+
+Calcular o frete com base na região e quantidade de peças:
+
+```c
+#include <stdio.h>
+
+int main() {
+    int regiao, pecas;
+    float frete_por_peca, total;
+    
+    printf("Região (1-Sul, 2-Sudeste, 3-Centro-Oeste): ");
+    scanf("%d", &regiao);
+    
+    printf("Quantidade de peças: ");
+    scanf("%d", &pecas);
+    
+    if (regiao == 1) {
+        frete_por_peca = 1.00;
+    } else if (regiao == 2) {
+        frete_por_peca = 1.20;
+    } else if (regiao == 3) {
+        frete_por_peca = 1.50;
+    } else {
+        printf("Região inválida!\n");
+        return 1;
+    }
+    
+    if (pecas <= 1000) {
+        total = pecas * frete_por_peca;
+    } else {
+        float desconto = frete_por_peca * 0.88;  /* 12% de desconto */
+        total = (1000 * frete_por_peca) + ((pecas - 1000) * desconto);
+    }
+    
+    printf("Total do frete: R$ %.2f\n", total);
+    return 0;
+}
+```
+
+### Aninhamento vs. encadeamento
+
+| Abordagem | Quando usar | Cuidado |
+|---|---|---|
+| **Múltiplos ifs independentes** | Condições não mutuamente exclusivas (todas podem ser verdadeiras) | Mais lento; avalia tudo sempre |
+| **if-else encadeado** | Condições mutuamente exclusivas; o primeiro verdadeiro encerra | Mais eficiente; cuidado com ordem das condições |
+| **if aninhado** | Decisão só faz sentido dentro de outro contexto | Cuidado com indentação — código fica difícil de ler |
+
+<Callout type="warning">
+**Aninhamento profundo — o "código pirâmide"**
+
+Múltiplos níveis de aninhamento criam o chamado "pyramid of doom" ou "código pirâmide" — difícil de ler, difícil de manter:
+
+```c
+if (a) {
+    if (b) {
+        if (c) {
+            if (d) {
+                /* lógica real aqui */
+            }
+        }
+    }
+}
+```
+
+A solução moderna é usar **guard clauses** (retornar cedo quando a condição falha) ou extrair blocos em funções separadas.
+</Callout>
+
+### Práticas Modernas
+
+- **Guard clauses:** ao invés de aninhar, retorne cedo quando a condição falha. O código "feliz" fica no nível mais externo:
+
+```c
+int processar(int valor) {
+    if (valor < 0) return -1;         /* guarda: sai cedo se inválido */
+    if (valor > 100) return -2;       /* guarda: sai cedo se fora de faixa */
+    /* aqui sabemos que 0 <= valor <= 100 */
+    return valor * 2;
+}
+```
+
+- **Extrair lógica em funções:** cada nível de aninhamento pode virar uma função com nome descritivo.
+- **Pattern matching (Python 3.10+):**
+
+```python
+match conceito:
+    case 'A': print("Excelente!")
+    case 'B': print("Bom")
+    case 'C': print("Suficiente")
+    case _:   print("Reprovado")
+```
+
+- **Tabelas de decisão:** quando há muitas condições combinadas, uma tabela de decisão (matriz) pode ser mais clara que if-else aninhado.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 4.

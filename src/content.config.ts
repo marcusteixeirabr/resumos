@@ -25,4 +25,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.mdx', base: './src/content/database-design-for-apps' }),
     schema: disciplineSchema,
   }),
+  'pensamento-computacional': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/pensamento-computacional' }),
+    schema: disciplineSchema,
+  }),
 };

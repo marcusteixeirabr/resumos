@@ -1,0 +1,125 @@
+---
+title: "UE4 — Conceitos Básicos e Tipos de Dados"
+subtitle: "Antes de escrever qualquer algoritmo funcional, é preciso entender como os dados são representados internamente e como organizá-los em variáveis e constantes. Escolher o tipo de dado certo é tão importante quanto escolher o algoritmo certo."
+ua: 4
+group: "Algoritmos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Como um computador executa um algoritmo
+
+Para entender variáveis e tipos de dados, é útil visualizar como um computador realmente executa um algoritmo. Imagine um professor calculando médias de uma turma de cinco alunos:
+
+1. O professor **lê** a nota de cada prova (entrada de dados — como `scanf` ou `ler()`).
+2. **Anota** os valores no quadro — cada espaço nomeado (Nota1, Nota2...) é uma **variável**.
+3. Usa uma **calculadora** para somar as notas (processador).
+4. **Escreve** o resultado na folha para a direção (saída de dados — como `printf` ou `escrever()`).
+
+O quadro é a **memória RAM**: rápida, temporária e organizada em espaços nomeados. Cada espaço guarda um valor de um tipo específico.
+
+### Variáveis
+
+Uma **variável** é um espaço de memória com nome, reservado para guardar um valor durante a execução do programa. O valor pode ser alterado ao longo da execução — daí o nome "variável".
+
+```pseudocode
+var
+  idade      : inteiro
+  altura     : real
+  nome       : caractere
+  aprovado   : lógico
+```
+
+Características de uma variável:
+- **Nome (identificador):** permite referenciar o espaço de memória pelo código.
+- **Tipo:** define que tipo de dado pode ser armazenado e quanta memória é reservada.
+- **Valor:** o dado armazenado naquele momento.
+- **Endereço:** posição física na memória (gerenciado automaticamente).
+
+### Constantes
+
+Uma **constante** é como uma variável, mas seu valor é definido uma vez e nunca é alterado durante a execução. Constantes tornam o código mais legível e fácil de manutenção.
+
+```pseudocode
+constante PI = 3.14159
+constante TAXA_IPI = 0.15
+constante MAX_ALUNOS = 50
+```
+
+Se a taxa de IPI mudar, basta alterar a definição da constante em um lugar — não precisa caçar todos os `0.15` espalhados pelo código.
+
+### Tipos de dados básicos
+
+| Tipo | O que armazena | Exemplos de valores |
+|---|---|---|
+| **Inteiro** | Números sem casas decimais | -100, 0, 42, 1000 |
+| **Real** | Números com casas decimais | 3.14, -0.5, 98.6, 1.0 |
+| **Caractere** | Um único símbolo ou texto | 'A', '7', '$', "João" |
+| **Lógico** | Verdadeiro ou falso | Verdadeiro, Falso / True, False |
+
+A escolha do tipo correto impacta:
+- **Memória consumida:** `inteiro` usa menos espaço que `real`.
+- **Operações disponíveis:** não faz sentido somar dois valores lógicos.
+- **Precisão:** calcular o valor de π como inteiro resultaria em 3, perdendo toda a precisão.
+
+### Identificadores: regras de nomenclatura
+
+Um identificador (nome de variável, constante, função) deve seguir regras:
+
+**Regras obrigatórias:**
+- Começar com letra ou underscore (`_`), nunca com número.
+- Não conter espaços.
+- Não usar caracteres especiais (`@`, `#`, `$`, `!`).
+- Não coincidir com palavras reservadas da linguagem (`if`, `while`, `int`...).
+
+**Boas práticas:**
+- Use nomes **descritivos**: `notaFinal` é melhor que `nf` ou `x`.
+- Para múltiplas palavras: camelCase (`totalVendas`) ou snake_case (`total_vendas`).
+- Evite letras maiúsculas no início de variáveis (reserve para classes/tipos em algumas linguagens).
+
+```pseudocode
+// Ruim — nomes sem significado
+var
+  a, b, c, d : real
+
+// Bom — nomes descritivos
+var
+  nota1, nota2, nota3, mediaFinal : real
+```
+
+### Representação interna dos dados
+
+Internamente, o computador armazena **tudo em binário** (base 2). Entender isso ajuda a evitar erros sutis:
+
+**Inteiros** são armazenados em complemento de dois. Um `int` de 32 bits pode guardar de -2.147.483.648 a 2.147.483.647. Ultrapassar esse limite causa **overflow** — o valor "volta" ao início da faixa, causando comportamento imprevisível.
+
+**Reais** seguem o padrão IEEE 754. Um `float` tem 32 bits e uma `double` tem 64 bits. Por causa da representação binária, certos valores decimais não têm representação exata:
+
+```
+0.1 + 0.2 = 0.30000000000000004  (em ponto flutuante)
+```
+
+Nunca compare floats com `==` — use uma tolerância (epsilon).
+
+**Caracteres** são codificados como inteiros. O padrão ASCII associa cada caractere a um número (ex: 'A' = 65, 'a' = 97, '0' = 48). Unicode (UTF-8) estende isso para suportar todos os idiomas do mundo.
+
+**Lógico (booleano):** internamente é 0 (falso) ou qualquer valor diferente de 0 (verdadeiro). Em C, não existe tipo booleano nativo na versão C89 — usa-se `int`.
+
+<Callout type="warning">
+**Tipos de dados variam entre linguagens**
+
+A pseudolinguagem usada nesta UE usa tipos genéricos (inteiro, real, caractere, lógico). Em C, os tipos são `int`, `float`/`double`, `char` e não existe `bool` nativo antes do C99. Em Python, os tipos são dinâmicos e mudam automaticamente. Em Java e C#, existem tipos primitivos e tipos objeto. Nunca assuma que os mesmos nomes de tipos funcionam em todas as linguagens.
+</Callout>
+
+### Práticas Modernas
+
+- **Tipagem estática vs. dinâmica:** C, Java e Rust exigem declaração de tipos (tipagem estática). Python e JavaScript inferem tipos em tempo de execução (tipagem dinâmica). TypeScript adiciona tipagem estática opcional ao JavaScript.
+- **`stdint.h` em C:** em vez de `int` (tamanho varia por plataforma), use `int32_t`, `uint8_t` etc. para tamanho garantido — essencial em sistemas embarcados.
+- **`bool` em C99:** o header `<stdbool.h>` define o tipo `bool` e as constantes `true`/`false` no C moderno.
+- **`sizeof` operator:** em C, `sizeof(int)` retorna o tamanho em bytes na plataforma atual — não assuma que é sempre 4.
+- **Tipos modernos:** `BigInt` no JavaScript para inteiros arbitrários; `Decimal` no Python para cálculos financeiros sem erro de ponto flutuante; `uuid` como tipo nativo no PostgreSQL.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014.

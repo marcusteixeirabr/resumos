@@ -1,0 +1,126 @@
+---
+title: "UE6 — Linguagem C: Conceitos Básicos"
+subtitle: "C é uma das linguagens mais influentes da história da computação. Criada em 1972, serviu de base para Unix, Linux e inúmeras outras linguagens. Entender sua história, estrutura e processo de compilação é o primeiro passo para escrever programas reais."
+ua: 6
+group: "Linguagem C"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_04.webp" alt="A Caixa de Ferramentas do Desenvolvedor: materiais e técnicas para construir soluções" caption="Ferramentas do desenvolvedor: compiladores, IDEs e o processo de criação de programas" />
+</SlidesGrid>
+
+### O que é uma linguagem de programação
+
+Uma linguagem de programação é um conjunto formal de regras (sintaxe) que permite escrever instruções que o computador pode executar. O computador só entende **linguagem de máquina** (sequências de 0s e 1s), então é necessário um processo de **tradução** do código humano para código de máquina.
+
+```
+Algoritmo (ideia) → Código-fonte (.c) → [Compilador] → Executável (0s e 1s) → Execução
+```
+
+Linguagens de programação se dividem em níveis:
+
+| Nível | Características | Exemplos |
+|---|---|---|
+| **Baixo nível** | Próximo ao hardware, controle total da memória | Assembly |
+| **Médio nível** | Mescla controle de hardware com abstrações | **C** |
+| **Alto nível** | Abstrai detalhes do hardware, mais próximo da linguagem humana | Python, Java, JavaScript |
+
+### Histórico da linguagem C
+
+A linguagem C tem uma genealogia clara:
+
+```
+CPL (1963) → BCPL (1967) → B (1969) → C (1972)
+```
+
+- **CPL:** linguagem ambiciosa mas pesada demais para aplicações práticas.
+- **BCPL:** versão simplificada da CPL, desenvolvida por Martin Richards.
+- **B:** Ken Thompson criou B para desenvolver o sistema Unix no Bell Labs.
+- **C:** Dennis Ritchie, também no Bell Labs, criou C em 1972 adicionando tipos de dados e outras melhorias ao B. A primeira versão foi criada para o computador PDP-11 junto com o sistema operacional Unix.
+
+C se tornou a base sobre a qual o Unix foi reescrito em 1973 — uma decisão revolucionária, pois sistemas operacionais eram escritos exclusivamente em Assembly até então.
+
+### Características da linguagem C
+
+- **Portabilidade:** código C compilado funciona em qualquer máquina que tenha um compilador C — do microcontrolador ao supercomputador.
+- **Variedade de operadores:** suporta operações aritméticas, lógicas, bit a bit, ponteiros e muito mais.
+- **Sintaxe elegante e estruturada:** clara o suficiente para aprendizado, poderosa o suficiente para sistemas reais.
+- **Acesso direto à memória:** ponteiros permitem manipular endereços de memória, essencial para sistemas embarcados e kernels.
+- **Desacoplamento via funções:** o código pode ser organizado em funções independentes, facilitando manutenção e reutilização.
+
+### O processo de compilação
+
+```
+Código-fonte (.c) → [Pré-processador] → [Compilador] → [Linker] → Executável
+```
+
+1. **Pré-processador:** processa as diretivas `#include` e `#define`, expandindo macros e incluindo arquivos de cabeçalho.
+2. **Compilador:** traduz o código C para código objeto (linguagem de máquina não-linkado).
+3. **Linker:** une o código objeto com as bibliotecas necessárias, gerando o executável final.
+
+Para compilar um programa C com GCC:
+
+```bash
+gcc programa.c -o programa
+./programa
+```
+
+### Estrutura básica de um programa C
+
+```c
+#include <stdio.h>      /* 1: inclui a biblioteca padrão de I/O */
+
+int main() {            /* 2: função principal — ponto de entrada */
+    printf("Olá, Mundo!\n");  /* 3: instrução de saída */
+    return 0;           /* 4: indica que o programa terminou com sucesso */
+}
+```
+
+Linha a linha:
+1. `#include <stdio.h>` — importa a biblioteca padrão de entrada/saída, que contém `printf` e `scanf`.
+2. `int main()` — toda execução começa aqui. O `int` indica que a função retorna um inteiro ao sistema operacional.
+3. `printf(...)` — exibe texto na tela. O `\n` é o caractere de nova linha.
+4. `return 0` — retorna 0 ao sistema operacional, sinalizando execução bem-sucedida. Valores diferentes de 0 indicam erros.
+
+### IDEs e compiladores
+
+| Ferramenta | Plataforma | Características |
+|---|---|---|
+| **GCC** (GNU Compiler Collection) | Linux / macOS / Windows (via MinGW) | Compilador padrão, linha de comando |
+| **Code::Blocks** | Windows / Linux / macOS | IDE gratuita, integra GCC |
+| **Dev-C++** | Windows | IDE leve, boa para iniciantes |
+| **VS Code + extensão C/C++** | Multiplataforma | Editor moderno, depurador integrado |
+| **CLion** | Multiplataforma | IDE profissional da JetBrains (pago) |
+| **Replit / OnlineGDB** | Web | Sem instalação, ideal para aprendizado |
+
+<Callout type="warning">
+**Padrões do C: a linguagem evoluiu muito**
+
+O livro base desta disciplina usa C sem especificar a versão. Na prática, existem padrões diferentes:
+
+| Padrão | Ano | Principais adições |
+|---|---|---|
+| C89/ANSI C | 1989 | Primeiro padrão oficial |
+| C99 | 1999 | `bool`, comentários `//`, `long long`, `stdint.h` |
+| C11 | 2011 | `_Atomic`, melhorias em Unicode |
+| C17/C18 | 2018 | Correções de defeitos do C11 |
+| C23 | 2023 | `nullptr`, `bool`/`true`/`false` como palavras-chave nativas |
+
+Sempre verifique qual padrão seu compilador usa. Com GCC: `gcc -std=c99 programa.c`.
+</Callout>
+
+### Práticas Modernas
+
+- **C ainda domina o mundo real:** Linux Kernel, Git, SQLite, Python (CPython), Redis, e praticamente todos os sistemas embarcados e firmwares são escritos em C ou C++.
+- **Rust como sucessor moderno:** Rust oferece segurança de memória sem garbage collector, prevenindo classes inteiras de bugs comuns em C (buffer overflow, use-after-free, data races). O Linux Kernel começou a aceitar código Rust em 2022.
+- **C++ para orientação a objetos:** extensão de C com classes, templates e a Standard Library. Usado em jogos (Unreal Engine), sistemas de alto desempenho e infraestrutura.
+- **WebAssembly:** código C pode ser compilado para WebAssembly e executado no navegador com performance próxima à nativa — C no frontend!
+- **Compilação cruzada (cross-compilation):** compilar código C em um PC para rodar em um microcontrolador ARM ou RISC-V é prática comum em IoT e sistemas embarcados.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: A Linguagem C — Conceitos Básicos*. Porto Alegre: SAGAH.
+- KERNIGHAN, B. W.; RITCHIE, D. M. *The C Programming Language*. 2. ed. Prentice Hall, 1988.

@@ -1,0 +1,126 @@
+---
+title: "UE2 — Modelagem de Soluções"
+subtitle: "Modelos são abstrações da realidade que permitem estudar, projetar e comunicar sistemas antes de construí-los. Do ciclo de vida do software à UML, passando por Design Thinking e requisitos, a modelagem é a ponte entre o problema e o código."
+ua: 2
+group: "Pensamento Computacional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_11.webp" alt="A Obra em Ação: Da Teoria à Prática" caption="Da teoria à prática: aplicar fundamentos para construir soluções robustas" />
+  <SlideItem src="/assets/img/slides/rpc_12.webp" alt="Além do Código: Projetando Soluções Robustas — ciclo de vida iterativo e UML" caption="Ciclo de vida iterativo e UML: as ferramentas do projetista" />
+  <SlideItem src="/assets/img/slides/rpc_13.webp" alt="A Etapa Crítica: Requisitos Funcionais e Não Funcionais" caption="RF vs. RNF: entender o que construir antes de como construir" />
+</SlidesGrid>
+
+### O que é um modelo
+
+Um modelo é uma **representação simplificada de um sistema ou objeto**, criada para facilitar a compreensão, análise ou comunicação. Modelos existem há milênios: economistas criam modelos financeiros, biólogos modelam ecossistemas, arquitetos fazem maquetes.
+
+Na computação, modelos são especialmente úteis porque sistemas de software são abstratos e invisíveis. Antes de escrever código, é fundamental ter uma representação clara de como o sistema deve funcionar.
+
+> Um modelo foca em características importantes e elimina detalhes desnecessários — a qualidade de um modelo está na relevância do que ele representa, não na quantidade de detalhes.
+
+### Tipos de modelos
+
+| Categoria | O que representa | Exemplos |
+|---|---|---|
+| **Estáticos** | Estrutura do sistema (o que existe) | Diagrama de classes, DER, mapa de dados |
+| **Dinâmicos** | Comportamento do sistema (o que acontece) | Diagrama de sequência, diagrama de estados, fluxograma |
+| **Físicos** | Leiaute e infraestrutura | Diagrama de componentes, diagrama de implantação |
+
+Em um mesmo projeto, usam-se múltiplos modelos: cada um oferece uma **perspectiva diferente** do mesmo sistema.
+
+### Ciclo de vida do software
+
+O desenvolvimento de software moderno é **iterativo**, não sequencial. Em vez de tentar especificar tudo de uma vez e depois implementar, o ciclo se repete em ciclos curtos:
+
+```
+Analisar → Projetar → Implementar → Testar → [volta para Analisar]
+```
+
+Cada iteração entrega uma versão funcional do sistema, que é avaliada pelos usuários, gerando novos requisitos para a próxima iteração.
+
+<Callout type="warning">
+**Processo sequencial está ultrapassado**
+
+O livro base desta UE apresenta o processo de desenvolvimento como linear (cascata): requisitos → análise → projeto → implementação → testes → manutenção. Na prática, essa abordagem falha em projetos complexos porque os requisitos mudam e erros descobertos tardiamente são caros de corrigir.
+
+Metodologias ágeis (Scrum, Kanban, XP) dominam o mercado atual e se baseiam em ciclos iterativos curtos, feedback contínuo e adaptação.
+</Callout>
+
+### UML — Unified Modeling Language
+
+A UML é uma **linguagem gráfica padronizada** para especificar, visualizar, construir e documentar sistemas de software. Não é uma metodologia — é um conjunto de notações que pode ser usado com qualquer processo de desenvolvimento.
+
+Os principais diagramas UML se dividem em:
+
+**Diagramas estruturais (estáticos):**
+- **Diagrama de classes**: mostra classes, atributos, métodos e relacionamentos (associação, herança, composição)
+- **Diagrama de componentes**: mostra módulos do sistema e suas dependências
+- **Diagrama de implantação**: mostra a infraestrutura física (servidores, dispositivos, conexões)
+
+**Diagramas comportamentais (dinâmicos):**
+- **Diagrama de casos de uso**: mostra interações entre atores e o sistema
+- **Diagrama de sequência**: mostra a troca de mensagens entre objetos ao longo do tempo
+- **Diagrama de atividades**: fluxo de trabalho, similar a um fluxograma
+- **Diagrama de estados**: ciclo de vida de um objeto (estados e transições)
+
+**Exemplo de diagrama de classes simplificado:**
+
+```
+┌─────────────────┐         ┌──────────────────┐
+│     Aluno       │  1    * │    Disciplina    │
+├─────────────────┤─────────├──────────────────┤
+│ - nome: string  │         │ - codigo: string │
+│ - matricula: int│         │ - cargaHoraria:  │
+├─────────────────┤         │   int            │
+│ + matricular()  │         ├──────────────────┤
+│ + consultarNotas│         │ + oferecer()     │
+└─────────────────┘         │ + cancelar()     │
+                            └──────────────────┘
+```
+
+### Requisitos: RF e RNF
+
+Antes de modelar o sistema, é necessário entender **o que ele precisa fazer**. Requisitos se dividem em duas categorias fundamentais:
+
+**Requisitos Funcionais (RF)** — descrevem **o que** o sistema deve fazer:
+- RF01: O sistema deve permitir que cada professor registre notas.
+- RF02: O sistema deve permitir que um estudante realize sua matrícula.
+- RF03: O sistema deve gerar relatório de frequência por turma.
+
+**Requisitos Não Funcionais (RNF)** — descrevem **como** o sistema deve se comportar:
+- RNF01 (Desempenho): O sistema deve atualizar a nota do estudante em até 2 segundos.
+- RNF02 (Portabilidade): O sistema deve poder ser migrado para outro SO em no máximo 60 dias.
+- RNF03 (Usabilidade): O auxiliar deve conseguir realizar o cadastro em não mais que 10 minutos.
+
+| Aspecto | RF | RNF |
+|---|---|---|
+| Pergunta | O que o sistema faz? | Como o sistema se comporta? |
+| Teste | Funcional (aceita/rejeita) | Medição (tempo, taxa de erro, carga) |
+| Exemplos | Login, relatório, cálculo | Velocidade, segurança, disponibilidade |
+
+### Design Thinking e Canvas
+
+**Design Thinking** é uma abordagem para resolver problemas complexos centrada no usuário. Suas fases são: Empatia → Definição → Ideação → Prototipação → Teste.
+
+O **Canvas** (Business Model Canvas ou Project Canvas) é uma ferramenta visual que resume em um único quadro os principais aspectos de um projeto ou negócio — parceiros, atividades, recursos, proposta de valor, relacionamento com clientes, canais, segmentos, estrutura de custos e fontes de receita.
+
+Ambos aplicam diretamente os pilares do pensamento computacional: decomposição (dividir o problema em blocos do canvas), abstração (focar nos elementos mais relevantes), reconhecimento de padrões (identificar o que é comum entre casos de uso).
+
+### Práticas Modernas
+
+- **Ferramentas de modelagem online:** draw.io (diagrams.net), Lucidchart, Miro e Figma substituíram o Enterprise Architect em muitas equipes — colaboração em tempo real, sem instalação.
+- **DBML e dbdiagram.io:** para modelagem de banco de dados, o formato textual DBML permite versionar o modelo junto com o código.
+- **Domain-Driven Design (DDD):** metodologia que alinha o modelo de software ao modelo de negócio através de Ubiquitous Language, Bounded Contexts e Aggregates.
+- **Event Storming:** técnica colaborativa que usa post-its para mapear fluxos de eventos em um sistema — extremamente eficaz para descobrir requisitos em sistemas complexos.
+- **Architecture Decision Records (ADR):** documentos curtos que registram decisões de arquitetura, o contexto em que foram tomadas e as alternativas descartadas.
+- **C4 Model:** alternativa moderna à UML — quatro níveis de abstração (Context, Container, Component, Code) cada um com um diagrama simples.
+
+#### Referências bibliográficas desta UA
+
+- MASCHIETTO, L. G. *Pensamento Computacional: Modelagem de Soluções*. Porto Alegre: SAGAH.
+- BEECHER, K. *Computational Thinking*. BCS, 2017.
+- FOWLER, M. *UML Distilled*. 3. ed. Addison-Wesley, 2003.

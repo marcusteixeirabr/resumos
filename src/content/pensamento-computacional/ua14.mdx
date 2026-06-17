@@ -1,0 +1,180 @@
+---
+title: "UE14 — Correção de Erros, Depuração e Documentação"
+subtitle: "Todo programador comete erros — a diferença está em saber encontrá-los e corrigi-los eficientemente. Erros léxicos e sintáticos são detectados pelo compilador; erros semânticos exigem testes e depuração. Um código bem documentado e indentado reduz drasticamente o tempo gasto consertando bugs."
+ua: 14
+group: "Boas Práticas"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_14.webp" alt="Garantindo a Qualidade: A Arte de Encontrar e Corrigir Erros — sintaxe, semântica e depuração" caption="Erros de sintaxe x erros de semântica: o compilador pega um, o teste pega o outro" />
+</SlidesGrid>
+
+### Os três tipos de erros em programação
+
+#### Erros léxicos
+
+Ocorrem quando o código contém combinações de caracteres que não formam um token válido da linguagem — símbolos desconhecidos, identificadores com caracteres inválidos.
+
+```c
+int preço = 10;   /* ERRO LÉXICO: 'ç' não é válido em identificadores C */
+int val@r = 5;    /* ERRO LÉXICO: '@' não é permitido */
+```
+
+Detectados pelo compilador na fase de análise léxica. O compilador rejeita o arquivo — não gera executável.
+
+#### Erros sintáticos
+
+Violações das regras gramaticais da linguagem. A estrutura do código não segue o formato esperado.
+
+```c
+int main() {
+    int x = 5
+    printf("%d\n", x);   /* ERRO: falta ';' na linha anterior */
+}
+
+if x > 0 {               /* ERRO: falta parênteses em volta da condição */
+    printf("positivo\n");
+```
+
+Também detectados na compilação. A mensagem de erro geralmente indica a **linha** do problema (às vezes a linha seguinte — o compilador só percebe o erro quando encontra algo inesperado).
+
+**Erros sintáticos comuns em C:**
+- Esquecer `;` no final de instrução
+- Esquecer `{` ou `}` em blocos
+- Usar variável sem declará-la
+- Esquecer `&` no `scanf`
+- Parênteses desbalanceados
+
+#### Erros semânticos (lógicos)
+
+O código está correto sintaticamente — compila sem erros — mas o **resultado é incorreto** porque a lógica está errada.
+
+```c
+/* Objetivo: verificar se aprovado (media >= 7) */
+float media = 8.0;
+if (media < 7) {         /* ERRO SEMÂNTICO: condição invertida */
+    printf("Aprovado\n");  /* exibe "Aprovado" para reprovados */
+} else {
+    printf("Reprovado\n"); /* exibe "Reprovado" para aprovados */
+}
+```
+
+O compilador não detecta — o código é válido. Apenas **testes e depuração** revelam o problema.
+
+| Tipo de erro | Detectado por | Exemplo |
+|---|---|---|
+| Léxico | Compilador (fase léxica) | Caractere inválido no identificador |
+| Sintático | Compilador (fase sintática) | Falta de `;`, `{}` desbalanceado |
+| Semântico | Testes e depuração | Condição invertida, cálculo errado |
+
+### Depuração (debugging)
+
+**Debug** é o processo sistemático de identificar, isolar e corrigir bugs. O termo vem de 1947, quando Grace Hopper encontrou uma mariposa (bug) presa em um relé de computador.
+
+#### Estratégias de depuração
+
+**1. Printf debugging (mais simples):**
+
+Inserir `printf` estratégicos para rastrear o valor das variáveis em pontos específicos:
+
+```c
+float nota1 = 7, nota2 = 8, nota3 = 9;
+printf("[DEBUG] nota1=%f, nota2=%f, nota3=%f\n", nota1, nota2, nota3);
+float media = (nota1 + nota2 + nota3) / 3;
+printf("[DEBUG] media calculada: %f\n", media);
+if (media >= 6) {
+    printf("Aprovado\n");
+}
+```
+
+**2. Debugger do IDE (mais poderoso):**
+
+Permite executar o código passo a passo, inspecionar variáveis em tempo real e definir pontos de parada (breakpoints).
+
+Operações básicas do debugger:
+- **Breakpoint:** marca uma linha onde a execução deve pausar.
+- **Step over (F10):** executa a linha atual e para na próxima.
+- **Step into (F11):** entra na função chamada na linha atual.
+- **Step out (Shift+F11):** termina a execução da função atual e retorna ao chamador.
+- **Watch:** monitora o valor de uma variável em tempo real.
+
+**3. Rubber duck debugging:**
+
+Explicar o código linha a linha para uma "pato de borracha" (ou qualquer pessoa) frequentemente revela o bug — ao verbalizar o raciocínio, inconsistências se tornam óbvias.
+
+### Indentação
+
+Indentação é o **recuo visual** aplicado a blocos de código para indicar hierarquia e pertencimento. Em C, é uma convenção (não obrigatória), mas é absolutamente fundamental para a legibilidade.
+
+```c
+/* SEM indentação — ilegível */
+int main(){int x=5;if(x>0){printf("positivo\n");}else{printf("não positivo\n");}return 0;}
+
+/* COM indentação — legível */
+int main() {
+    int x = 5;
+    if (x > 0) {
+        printf("positivo\n");
+    } else {
+        printf("não positivo\n");
+    }
+    return 0;
+}
+```
+
+Convenções comuns: 2 espaços (Google C++ Style), 4 espaços (maioria dos projetos), 1 tab (Linux Kernel). O importante é ser **consistente** — não misture espaços e tabs.
+
+### Documentação por comentários
+
+Comentários explicam **o porquê** — não o que (o código já diz o que). Um comentário que apenas repete o código é ruído, não documentação.
+
+```c
+/* RUIM: comentário que não adiciona informação */
+i++;  /* incrementa i */
+
+/* BOM: comentário que explica a razão */
+i++;  /* pula o cabeçalho do arquivo (primeira linha é sempre metadado) */
+```
+
+**Tipos de comentários em C:**
+
+```c
+// Comentário de linha (C99+)
+
+/* Comentário de bloco — pode ocupar
+   múltiplas linhas */
+
+/**
+ * Comentário de documentação (estilo Doxygen)
+ * @param a primeiro número
+ * @param b segundo número
+ * @return a soma de a e b
+ */
+int somar(int a, int b) {
+    return a + b;
+}
+```
+
+<Callout type="warning">
+**Depuração tem limites sem testes formais**
+
+Depurar manualmente encontra bugs conhecidos — mas não garante que o programa funcione para todos os casos. Um programa pode passar pela depuração manual e ainda ter bugs em casos extremos (zero, valores muito grandes, strings vazias, etc.).
+
+Testes unitários automatizados verificam o comportamento para muitos casos de forma sistemática e repetível. No desenvolvimento profissional, escrever testes é tão importante quanto escrever o código.
+</Callout>
+
+### Práticas Modernas
+
+- **Linters:** ferramentas como `clang-tidy` e `cppcheck` analisam o código estaticamente e apontam problemas antes da compilação. `ESLint` para JavaScript, `Pylint`/`Ruff` para Python.
+- **Sanitizers do GCC/Clang:** compilar com `-fsanitize=address,undefined` detecta erros de memória e comportamento indefinido em tempo de execução.
+- **Análise estática:** SonarQube, Coverity e PVS-Studio detectam bugs complexos analisando o código sem executá-lo.
+- **Testes unitários:** `CUnit` para C, `JUnit` para Java, `pytest` para Python, `Jest` para JavaScript. Testes são código — precisam de manutenção como qualquer outro.
+- **CI/CD:** testes automatizados rodando em cada commit no GitHub Actions ou GitLab CI capturam regressões antes de chegar à produção.
+- **GitHub Copilot e assistentes de IA:** aceleram a escrita de código, mas podem introduzir bugs — a habilidade de depurar e revisar código gerado por IA é mais importante do que nunca.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: Correção de Erros, Depuração e Documentação*. Porto Alegre: SAGAH.

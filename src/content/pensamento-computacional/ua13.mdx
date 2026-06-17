@@ -1,0 +1,223 @@
+---
+title: "UE13 — Estruturas de Repetição"
+subtitle: "Repetir um bloco de código é uma das operações mais poderosas da programação. Em vez de escrever 40 vezes a mesma instrução para processar 40 alunos, um loop faz isso em 3 linhas. while, for e do-while são as três formas de laço em C — cada uma com seu caso de uso ideal."
+ua: 13
+group: "Estruturas de Controle"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_09.webp" alt="A Eficiência da Automação: Estruturas de Repetição — while e for com fluxogramas" caption="While (teste antes) e For (contador fixo): os dois laços mais usados em programação" />
+</SlidesGrid>
+
+### Por que repetir
+
+Imagine calcular a média de 40 alunos sem estrutura de repetição: você precisaria escrever 40 vezes o bloco de leitura e cálculo. Com um loop, o mesmo bloco é escrito uma vez e executado 40 vezes — ou qualquer número de vezes.
+
+Dois conceitos-chave em qualquer loop:
+
+- **Variável de controle (contadora):** controla quantas vezes o loop foi executado.
+- **Condição de parada:** expressão lógica que determina quando o loop deve terminar.
+
+### while: repetir ENQUANTO a condição for verdadeira
+
+O `while` testa a condição **antes** de cada iteração. Se a condição já for falsa na primeira verificação, o bloco nunca é executado.
+
+**Sintaxe:**
+
+```c
+while (condição) {
+    /* bloco executado repetidamente enquanto condição for verdadeira */
+    /* a variável de controle DEVE ser modificada aqui */
+}
+```
+
+**Exemplo — contar de 1 a 5:**
+
+```c
+int contador = 1;           /* inicialização ANTES do loop */
+while (contador <= 5) {     /* condição: testa ANTES de cada iteração */
+    printf("%d\n", contador);
+    contador++;             /* incremento DENTRO do loop */
+}
+```
+
+**Dois erros clássicos com while:**
+
+```c
+/* ERRO 1: variável inicializada com valor que torna a condição falsa imediatamente */
+int i = 6;
+while (i <= 5) {            /* nunca executa — i já começa maior que 5 */
+    printf("%d\n", i);
+    i++;
+}
+
+/* ERRO 2: loop infinito — variável de controle nunca é modificada */
+int j = 1;
+while (j <= 5) {
+    printf("%d\n", j);
+    /* j nunca muda → condição sempre verdadeira → loop infinito */
+}
+```
+
+**while com condição de entrada (sentinela):**
+
+Útil quando o número de repetições não é conhecido previamente:
+
+```c
+int valor, soma = 0;
+printf("Digite valores (0 para encerrar): ");
+scanf("%d", &valor);
+
+while (valor != 0) {
+    soma += valor;
+    scanf("%d", &valor);
+}
+
+printf("Soma: %d\n", soma);
+```
+
+### for: repetir um número DEFINIDO de vezes
+
+O `for` é o laço mais compacto para quando o número de repetições é conhecido. Toda a lógica de controle (inicialização, condição, incremento) fica em uma única linha:
+
+**Sintaxe:**
+
+```c
+for (inicialização; condição; incremento) {
+    /* bloco executado */
+}
+```
+
+**Exemplo — contar de 1 a 10:**
+
+```c
+for (int i = 1; i <= 10; i++) {
+    printf("%d\n", i);
+}
+```
+
+**Equivalência with/for:**
+
+```c
+/* while equivalente */
+int i = 1;           /* inicialização */
+while (i <= 10) {    /* condição */
+    printf("%d\n", i);
+    i++;             /* incremento */
+}
+```
+
+**Exemplos práticos:**
+
+```c
+/* Somar os primeiros N inteiros */
+int n, soma = 0;
+scanf("%d", &n);
+for (int i = 1; i <= n; i++) {
+    soma += i;
+}
+printf("Soma de 1 a %d: %d\n", n, soma);
+
+/* Tabuada do 7 */
+for (int i = 1; i <= 10; i++) {
+    printf("7 x %d = %d\n", i, 7 * i);
+}
+
+/* Decremento: contar de 10 a 1 */
+for (int i = 10; i >= 1; i--) {
+    printf("%d\n", i);
+}
+```
+
+### do-while: executar PELO MENOS UMA VEZ
+
+O `do-while` testa a condição **após** cada iteração. Garantia: o bloco é executado pelo menos uma vez, mesmo que a condição seja falsa logo na primeira verificação.
+
+**Sintaxe:**
+
+```c
+do {
+    /* bloco executado */
+} while (condição);   /* note o ponto-e-vírgula obrigatório aqui */
+```
+
+**Caso de uso clássico — menu que exige uma entrada válida:**
+
+```c
+int opcao;
+do {
+    printf("\n1. Calcular média\n");
+    printf("2. Calcular soma\n");
+    printf("3. Sair\n");
+    printf("Opção: ");
+    scanf("%d", &opcao);
+    
+    if (opcao < 1 || opcao > 3) {
+        printf("Opção inválida! Tente novamente.\n");
+    }
+} while (opcao < 1 || opcao > 3);
+
+printf("Você escolheu a opção %d\n", opcao);
+```
+
+### Comparativo dos três tipos de laço
+
+| Estrutura | Quando usar | Teste | Garantia de execução |
+|---|---|---|---|
+| `while` | Número de repetições desconhecido; controle por condição | Antes | Pode não executar (se condição já for falsa) |
+| `for` | Número de repetições conhecido; iteração com contador | Antes | Pode não executar (se condição já for falsa) |
+| `do-while` | Precisa executar pelo menos uma vez (menus, validação) | Depois | Sempre executa ao menos uma vez |
+
+### Variáveis acumuladoras e contadoras
+
+```c
+int n, soma = 0, contagem = 0;
+float media;
+
+printf("Digite notas (-1 para encerrar): ");
+scanf("%d", &n);
+
+while (n != -1) {
+    soma += n;         /* acumulador: acumula a soma */
+    contagem++;        /* contadora: conta quantas notas foram digitadas */
+    scanf("%d", &n);
+}
+
+if (contagem > 0) {
+    media = (float)soma / contagem;
+    printf("Média de %d notas: %.1f\n", contagem, media);
+}
+```
+
+<Callout type="warning">
+**Loop infinito e `break`**
+
+Se a condição de parada nunca for atingida, o programa trava em loop infinito. Para interromper um loop prematuramente, use `break`. Para pular para a próxima iteração sem executar o restante do bloco, use `continue`.
+
+```c
+for (int i = 0; i < 100; i++) {
+    if (i == 10) break;      /* sai do loop quando i = 10 */
+    if (i % 2 == 0) continue; /* pula os pares, só imprime ímpares */
+    printf("%d\n", i);
+}
+```
+
+Use `break` e `continue` com moderação — em excesso, tornam o fluxo difícil de seguir.
+</Callout>
+
+### Práticas Modernas
+
+- **Range-based for (C++11):** `for (int x : vetor) { printf("%d\n", x); }` — itera sobre coleções sem índice explícito.
+- **Iteradores e generators (Python):** `for item in lista:` — abstrai o controle do índice completamente.
+- **forEach/map/filter (JavaScript, Java):** funções de alta ordem eliminam loops explícitos para transformações de coleções.
+- **List comprehension (Python):** `pares = [x for x in range(10) if x % 2 == 0]` — cria listas com uma expressão.
+- **Programação funcional:** `map`, `filter`, `reduce` processam coleções sem loops imperativos.
+- **Loops paralelos:** `#pragma omp parallel for` (OpenMP em C) distribui iterações entre múltiplos núcleos de CPU.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: Estruturas de Repetição*. Porto Alegre: SAGAH.
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 5.

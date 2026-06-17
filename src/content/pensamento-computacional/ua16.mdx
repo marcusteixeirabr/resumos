@@ -1,0 +1,226 @@
+---
+title: "UE16 — Matrizes: Estruturas de Dados Homogêneas 2D"
+subtitle: "Uma matriz é um array bidimensional: linhas e colunas, dois índices, dados homogêneos. Da tabela de notas ao tabuleiro de xadrez, do processamento de imagens à álgebra linear em IA — matrizes estão no coração das estruturas de dados mais importantes da computação."
+ua: 16
+group: "Estruturas de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_15.webp" alt="A Jornada Completa: Você é o Arquiteto da Solução — do pensamento ao código estruturado" caption="A jornada completa: do problema ao pensamento computacional, do algoritmo ao código robusto" />
+</SlidesGrid>
+
+### Da fileira para a grade: de vetores a matrizes
+
+Um vetor organiza dados em **uma dimensão** (uma fileira). Mas muitos problemas reais têm estrutura bidimensional:
+- Notas de vários alunos em várias provas (alunos × provas)
+- Pixels de uma imagem (linhas × colunas)
+- Assentos em um cinema (fileiras × poltronas)
+- Células de uma planilha (linhas × colunas)
+
+Para esses casos, o vetor é insuficiente — precisamos de uma **matriz** (array bidimensional).
+
+### O que é uma matriz
+
+Uma matriz é uma **estrutura de dados homogênea de duas dimensões**:
+- Todos os elementos são do mesmo tipo.
+- Dois índices (linha e coluna) identificam cada elemento de forma única.
+- Em C, é armazenada contiguamente na memória (row-major order: linha por linha).
+
+**Analogia do teatro:** para especificar um assento em um teatro, você precisa de dois dados: a fileira (1ª dimensão) e o número do assento dentro da fileira (2ª dimensão). Só um dos dois não é suficiente.
+
+### Declaração em C
+
+```c
+tipo nome[linhas][colunas];
+```
+
+Exemplos:
+
+```c
+float notas[7][6];    /* 7 alunos, 6 avaliações (5 notas + média) */
+int tabuleiro[8][8];  /* tabuleiro de xadrez */
+char imagem[480][640]; /* imagem 640×480 em tons de cinza */
+```
+
+**Acessando um elemento:**
+
+```c
+notas[6][4]  /* nota da 7ª linha (índice 6), 5ª coluna (índice 4) */
+             /* lembrar: índices começam em 0 */
+```
+
+### Percorrendo uma matriz com loops aninhados
+
+O padrão para processar todos os elementos de uma matriz usa **dois loops `for` aninhados**:
+- Loop externo: itera sobre as **linhas**
+- Loop interno: itera sobre as **colunas**
+
+```c
+#define LINHAS 3
+#define COLUNAS 4
+
+float matriz[LINHAS][COLUNAS];
+
+/* Leitura: preencher a matriz */
+for (int i = 0; i < LINHAS; i++) {          /* percorre linhas */
+    for (int j = 0; j < COLUNAS; j++) {     /* percorre colunas */
+        printf("Elemento [%d][%d]: ", i, j);
+        scanf("%f", &matriz[i][j]);
+    }
+}
+
+/* Escrita: exibir a matriz */
+for (int i = 0; i < LINHAS; i++) {
+    for (int j = 0; j < COLUNAS; j++) {
+        printf("%.1f\t", matriz[i][j]);
+    }
+    printf("\n");   /* nova linha ao final de cada linha da matriz */
+}
+```
+
+### Exemplo completo: notas de alunos
+
+```c
+#include <stdio.h>
+#define ALUNOS 5
+#define PROVAS 3
+
+int main() {
+    float notas[ALUNOS][PROVAS];
+    float medias[ALUNOS];
+    
+    /* Leitura das notas */
+    for (int i = 0; i < ALUNOS; i++) {
+        printf("Notas do aluno %d:\n", i + 1);
+        for (int j = 0; j < PROVAS; j++) {
+            printf("  Prova %d: ", j + 1);
+            scanf("%f", &notas[i][j]);
+        }
+    }
+    
+    /* Cálculo das médias por aluno */
+    for (int i = 0; i < ALUNOS; i++) {
+        float soma = 0;
+        for (int j = 0; j < PROVAS; j++) {
+            soma += notas[i][j];
+        }
+        medias[i] = soma / PROVAS;
+    }
+    
+    /* Relatório */
+    printf("\n--- Resultado ---\n");
+    for (int i = 0; i < ALUNOS; i++) {
+        printf("Aluno %d: média %.1f — %s\n",
+               i + 1,
+               medias[i],
+               medias[i] >= 6.0 ? "Aprovado" : "Reprovado");
+    }
+    return 0;
+}
+```
+
+### Operações clássicas com matrizes
+
+#### Soma por coluna
+
+```c
+for (int j = 0; j < COLUNAS; j++) {
+    float soma_col = 0;
+    for (int i = 0; i < LINHAS; i++) {
+        soma_col += matriz[i][j];
+    }
+    printf("Soma coluna %d: %.1f\n", j, soma_col);
+}
+```
+
+#### Matriz transposta
+
+A transposta de uma matriz A (M×N) é uma matriz B (N×M) onde B[j][i] = A[i][j]:
+
+```c
+float transposta[COLUNAS][LINHAS];
+for (int i = 0; i < LINHAS; i++) {
+    for (int j = 0; j < COLUNAS; j++) {
+        transposta[j][i] = matriz[i][j];
+    }
+}
+```
+
+#### Encontrar o maior elemento e sua posição
+
+```c
+float max = matriz[0][0];
+int max_linha = 0, max_col = 0;
+
+for (int i = 0; i < LINHAS; i++) {
+    for (int j = 0; j < COLUNAS; j++) {
+        if (matriz[i][j] > max) {
+            max = matriz[i][j];
+            max_linha = i;
+            max_col = j;
+        }
+    }
+}
+printf("Máximo: %.1f em [%d][%d]\n", max, max_linha, max_col);
+```
+
+### Matrizes com mais de duas dimensões
+
+C suporta arrays com N dimensões:
+
+```c
+int cubo[3][4][5];       /* 3D: pense num cubo de dados */
+cubo[1][2][3] = 42;      /* elemento na posição (1, 2, 3) */
+```
+
+Usos práticos de 3D:
+- Sequências de imagens ao longo do tempo (frame × linha × coluna)
+- Dados de temperatura em latitude × longitude × altitude
+- Tensores em aprendizado de máquina
+
+<Callout type="warning">
+**Cuidado com a inicialização e os limites**
+
+Assim como vetores, matrizes em C não são inicializadas automaticamente — contêm "lixo". Inicialize explicitamente:
+
+```c
+float matriz[3][3] = {{0}};  /* inicializa todos com 0 */
+```
+
+E assim como vetores, C não verifica limites de acesso. Acessar `matriz[3][0]` em uma matriz `[3][4]` é comportamento indefinido — pode sobrescrever dados adjacentes silenciosamente.
+</Callout>
+
+### Práticas Modernas
+
+- **NumPy (Python):** `np.array([[1,2],[3,4]])` — operações de álgebra linear vetorizadas, sem loops explícitos. Multiplicação de matrizes: `A @ B` ou `np.dot(A, B)`.
+- **Tensores em IA:** PyTorch e TensorFlow representam dados (imagens, textos, áudio) como tensores N-dimensionais. Todo o treinamento de redes neurais é álgebra tensorial.
+- **GPU e CUDA:** multiplicação de matrizes é paralela por natureza — cada elemento do resultado pode ser calculado independentemente. GPUs têm milhares de núcleos para isso.
+- **Imagens como matrizes:** uma imagem colorida é um tensor 3D (altura × largura × 3 canais RGB). Filtros de imagem (blur, sharpening) são operações de convolução — matrizes deslizando sobre matrizes.
+- **Sparse matrices:** quando a maioria dos elementos é zero (grafos, sistemas de equações grandes), representar apenas os elementos não-zero economiza memória e acelera cálculos.
+
+### A jornada completa
+
+Esta última UE marca o fim de um percurso que começou no pensamento abstrato e chegou à estrutura de dados:
+
+```
+Problema real
+    ↓
+Pensamento Computacional (decompor, abstrair, identificar padrões)
+    ↓
+Algoritmo (lógica + estruturas de controle)
+    ↓
+Código estruturado em C (tipos, variáveis, funções)
+    ↓
+Estruturas de dados (vetores, matrizes)
+    ↓
+Solução funcional, testada e documentada
+```
+
+A maestria não está em memorizar sintaxe — está em desenvolver o raciocínio que transforma uma necessidade em uma solução elegante e robusta.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 7.

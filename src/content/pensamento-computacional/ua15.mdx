@@ -1,0 +1,206 @@
+---
+title: "UE15 — Vetores: Estruturas de Dados Homogêneas 1D"
+subtitle: "Um vetor (array unidimensional) é a estrutura de dados mais fundamental: uma sequência de elementos do mesmo tipo, acessados por índice. É a base de listas, strings em C e incontáveis algoritmos de ordenação e busca."
+ua: 15
+group: "Estruturas de Dados"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_10.webp" alt="Organizando a Informação: Das Gavetas aos Arquivos — Vetores (Array 1D) e Matrizes (Array 2D)" caption="Vetores: uma fileira de escaninhos numerados — cada um guarda um elemento do mesmo tipo" />
+</SlidesGrid>
+
+### O problema das variáveis individuais
+
+Imagine armazenar as notas de 50 alunos usando variáveis individuais:
+
+```c
+float nota1, nota2, nota3, ..., nota50;  /* impossível na prática */
+```
+
+Além do código absurdamente longo, seria impossível processar essas notas com um loop, pois cada variável tem um nome diferente.
+
+A solução é o **vetor** (array): uma única variável que armazena múltiplos valores do mesmo tipo, acessados por um índice numérico.
+
+### O que é um vetor
+
+Um vetor é uma **estrutura de dados homogênea de uma dimensão**:
+- **Homogênea:** todos os elementos são do mesmo tipo.
+- **Uma dimensão:** um único índice identifica cada elemento.
+- **Acesso aleatório:** qualquer elemento pode ser acessado diretamente pelo índice, sem percorrer os anteriores.
+
+Pense em uma fileira de escaninhos numerados: cada escaninho tem um número (índice) e guarda um valor do mesmo tipo.
+
+### Declaração em C
+
+```c
+tipo nome[tamanho];
+```
+
+Exemplos:
+
+```c
+float notas[50];      /* vetor de 50 reais — notas de uma turma */
+int idades[10];       /* vetor de 10 inteiros */
+char inicial[26];     /* vetor de 26 caracteres — letras do alfabeto */
+```
+
+**Importante em C:**
+- O índice começa em **0** (não em 1). Um vetor de tamanho N tem índices de 0 a N-1.
+- `notas[0]` é o primeiro elemento; `notas[49]` é o último de um vetor de 50 elementos.
+- Acessar `notas[50]` em um vetor de tamanho 50 é **acesso fora dos limites** — comportamento indefinido.
+
+### Acesso e manipulação
+
+```c
+notas[0] = 7.5;         /* atribuição: guarda 7.5 no primeiro elemento */
+printf("%f", notas[0]); /* leitura: exibe o primeiro elemento */
+scanf("%f", &notas[0]); /* entrada: lê um valor para o primeiro elemento */
+```
+
+O índice pode ser uma variável — isso é o que torna o vetor poderoso:
+
+```c
+int i = 3;
+notas[i] = 8.0;          /* acessa o quarto elemento (índice 3) */
+notas[i + 1] = 9.0;      /* acessa o quinto elemento (índice 4) */
+```
+
+### Percorrendo um vetor com for
+
+O padrão clássico para processar todos os elementos de um vetor:
+
+```c
+#define N 5
+float notas[N];
+
+/* Leitura: preencher o vetor com dados do usuário */
+for (int i = 0; i < N; i++) {
+    printf("Nota %d: ", i + 1);
+    scanf("%f", &notas[i]);
+}
+
+/* Cálculo da média */
+float soma = 0;
+for (int i = 0; i < N; i++) {
+    soma += notas[i];
+}
+float media = soma / N;
+printf("Média: %.1f\n", media);
+```
+
+### Inicialização de vetores
+
+```c
+/* Inicialização na declaração */
+int pares[5] = {2, 4, 6, 8, 10};
+float notas[3] = {7.0, 8.5, 9.0};
+
+/* Inicialização parcial (restante recebe 0) */
+int v[10] = {1, 2, 3};   /* v[0]=1, v[1]=2, v[2]=3, v[3..9]=0 */
+
+/* Todos os elementos a zero */
+int zeros[100] = {0};
+```
+
+### Operações fundamentais com vetores
+
+#### Busca linear (encontrar um elemento)
+
+```c
+int buscar(int vetor[], int tamanho, int valor) {
+    for (int i = 0; i < tamanho; i++) {
+        if (vetor[i] == valor) {
+            return i;   /* retorna o índice onde encontrou */
+        }
+    }
+    return -1;          /* retorna -1 se não encontrou */
+}
+```
+
+#### Encontrar máximo e mínimo
+
+```c
+float maximo(float vetor[], int n) {
+    float max = vetor[0];
+    for (int i = 1; i < n; i++) {
+        if (vetor[i] > max) {
+            max = vetor[i];
+        }
+    }
+    return max;
+}
+```
+
+#### Exemplo completo
+
+```c
+#include <stdio.h>
+#define MAX_ALUNOS 50
+
+int main() {
+    float notas[MAX_ALUNOS];
+    int n;
+    
+    printf("Quantos alunos? (máx %d): ", MAX_ALUNOS);
+    scanf("%d", &n);
+    
+    for (int i = 0; i < n; i++) {
+        printf("Nota do aluno %d: ", i + 1);
+        scanf("%f", &notas[i]);
+    }
+    
+    float soma = 0, max = notas[0], min = notas[0];
+    for (int i = 0; i < n; i++) {
+        soma += notas[i];
+        if (notas[i] > max) max = notas[i];
+        if (notas[i] < min) min = notas[i];
+    }
+    
+    printf("Média: %.1f\n", soma / n);
+    printf("Maior nota: %.1f\n", max);
+    printf("Menor nota: %.1f\n", min);
+    return 0;
+}
+```
+
+### Strings em C: vetores de char
+
+Em C, não existe um tipo `string` nativo. Strings são **vetores de `char`** terminados pelo caractere nulo `'\0'`:
+
+```c
+char nome[20] = "Maria";
+/* armazena: ['M','a','r','i','a','\0', lixo, lixo, ...] */
+
+printf("%s\n", nome);      /* %s para imprimir toda a string */
+scanf("%19s", nome);        /* lê até 19 chars + '\0' */
+```
+
+Funções da biblioteca `<string.h>`:
+- `strlen(s)` — comprimento da string (sem contar '\0')
+- `strcpy(dest, src)` — copia string
+- `strcat(dest, src)` — concatena strings
+- `strcmp(s1, s2)` — compara strings (0 se iguais)
+
+<Callout type="warning">
+**Cuidados com arrays em C**
+
+C **não verifica limites de array** em tempo de execução. Acessar `vetor[50]` em um array de tamanho 50 é um bug silencioso que sobrescreve memória de outras variáveis — pode causar desde resultados incorretos até falhas de segmentação (segfault) e vulnerabilidades de segurança.
+
+Compile com `-Wall -Wextra` para habilitar avisos, e use ferramentas como AddressSanitizer (`-fsanitize=address`) para detectar acessos fora dos limites em tempo de execução.
+</Callout>
+
+### Práticas Modernas
+
+- **Python lists:** `notas = [7.0, 8.5, 9.0]` — tamanho dinâmico, aceita qualquer tipo, sem limite declarado.
+- **JavaScript arrays:** `const notas = [7, 8.5, 9]` — similar ao Python.
+- **Rust `Vec<T>`:** vetor dinâmico com verificação de limites em tempo de execução — sem buffer overflow possível.
+- **Algoritmos de ordenação:** Bubble Sort é o mais simples de implementar, mas O(n²). QuickSort e MergeSort são O(n log n) — use `qsort()` da stdlib.h em C.
+- **Busca binária:** em arrays **ordenados**, a busca binária é O(log n) — muito mais eficiente que a busca linear O(n).
+- **Slices:** Go, Rust e Python têm o conceito de slice — uma visão de parte de um array sem cópia dos dados.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 6.

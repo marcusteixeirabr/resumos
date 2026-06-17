@@ -1,0 +1,181 @@
+---
+title: "UE9 — Entrada e Saída de Dados em C"
+subtitle: "printf e scanf são as funções de entrada e saída mais usadas em C. Entender seus códigos de formatação, a sintaxe correta e as armadilhas que escondem é o que separa um programa que compila de um programa que funciona corretamente."
+ua: 9
+group: "Linguagem C"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Funções e bibliotecas
+
+Em C, as operações de entrada e saída não fazem parte da linguagem em si — são fornecidas pela **biblioteca padrão** `stdio.h` (Standard Input/Output). Para usá-la, é necessário incluí-la no início do programa:
+
+```c
+#include <stdio.h>
+```
+
+Uma **função** é um bloco de instruções com nome que realiza uma tarefa específica. Quando você escreve `printf(...)`, está chamando uma função que outras pessoas já escreveram e que está pronta para usar. É exatamente como a analogia de fazer café: você não precisa entender como o café é cultivado e processado — só precisa saber como preparar.
+
+### Saída: printf()
+
+`printf` (print formatted) exibe dados formatados na tela (saída padrão — `stdout`).
+
+**Sintaxe básica:**
+
+```c
+printf("texto literal\n");
+printf("texto com variavel: %d\n", variavel);
+printf("multiplas: %d e %f\n", inteiro, real);
+```
+
+### Códigos de formatação
+
+Os especificadores de formato (format specifiers) indicam ao `printf` como interpretar e exibir cada variável:
+
+| Especificador | Tipo | Exemplo |
+|---|---|---|
+| `%d` | `int` (inteiro decimal) | `printf("%d", 42);` → `42` |
+| `%i` | `int` (inteiro — alternativa ao %d) | `printf("%i", -5);` → `-5` |
+| `%f` | `float` / `double` (real) | `printf("%f", 3.14);` → `3.140000` |
+| `%.2f` | Real com 2 casas decimais | `printf("%.2f", 3.14159);` → `3.14` |
+| `%c` | `char` (caractere único) | `printf("%c", 'A');` → `A` |
+| `%s` | String (cadeia de caracteres) | `printf("%s", "Olá");` → `Olá` |
+| `%lf` | `double` (em scanf) | `scanf("%lf", &valor);` |
+| `%ld` | `long int` | `printf("%ld", 1000000L);` |
+| `%u` | `unsigned int` | `printf("%u", 255u);` → `255` |
+
+**Sequências de escape:**
+
+| Sequência | Efeito |
+|---|---|
+| `\n` | Nova linha |
+| `\t` | Tabulação (tab) |
+| `\\` | Barra invertida literal |
+| `\"` | Aspas duplas literais |
+| `\0` | Caractere nulo (fim de string) |
+
+**Exemplo completo com printf:**
+
+```c
+#include <stdio.h>
+
+int main() {
+    int    idade      = 20;
+    float  altura     = 1.75;
+    char   inicial    = 'M';
+    
+    printf("Nome começa com: %c\n", inicial);
+    printf("Idade: %d anos\n", idade);
+    printf("Altura: %.2f m\n", altura);
+    printf("Nascido em: %d\n", 2024 - idade);
+    return 0;
+}
+```
+
+Saída:
+```
+Nome começa com: M
+Idade: 20 anos
+Altura: 1.75 m
+Nascido em: 2004
+```
+
+### Entrada: scanf()
+
+`scanf` (scan formatted) lê dados do teclado (entrada padrão — `stdin`) e os armazena em variáveis.
+
+**Sintaxe:**
+
+```c
+scanf("%d", &variavel);
+```
+
+O `&` (operador de endereço) é **obrigatório** — ele passa o **endereço de memória** da variável para o `scanf`, que precisa saber onde escrever o valor lido.
+
+```c
+#include <stdio.h>
+
+int main() {
+    int   idade;
+    float salario;
+    char  inicial;
+    
+    printf("Digite sua idade: ");
+    scanf("%d", &idade);
+    
+    printf("Digite seu salário: ");
+    scanf("%f", &salario);
+    
+    printf("Digite sua inicial: ");
+    scanf(" %c", &inicial);  /* espaço antes de %c ignora whitespace pendente */
+    
+    printf("Idade: %d, Salário: %.2f, Inicial: %c\n", idade, salario, inicial);
+    return 0;
+}
+```
+
+**Diferença importante: `%f` vs `%lf`:**
+- Em `printf`: `%f` funciona tanto para `float` quanto para `double` (promoção automática).
+- Em `scanf`: `%f` lê para `float` e `%lf` lê para `double`. Usar `%f` com uma variável `double` é um bug.
+
+<Callout type="warning">
+**scanf tem sérios problemas de segurança**
+
+`scanf("%s", buffer)` não verifica o tamanho do buffer — se o usuário digitar mais caracteres do que o buffer suporta, ocorre **buffer overflow**, sobrescrevendo memória adjacente. Isso é uma das vulnerabilidades mais exploradas na história da segurança.
+
+O código a seguir é seguro: `scanf("%19s", buffer)` (limita a 19 caracteres + '\0'). Mas a abordagem mais robusta é usar `fgets`:
+
+```c
+char buffer[20];
+fgets(buffer, sizeof(buffer), stdin);  /* seguro: limita ao tamanho do buffer */
+```
+
+Em programas profissionais, `scanf` é evitado. Use `fgets` para strings e `strtol`/`strtod` para converter números.
+</Callout>
+
+### Exemplo completo: calculadora simples
+
+```c
+#include <stdio.h>
+
+int main() {
+    float a, b, resultado;
+    char operador;
+    
+    printf("Digite: número operador número\n");
+    printf("Exemplo: 10 + 5\n");
+    scanf("%f %c %f", &a, &operador, &b);
+    
+    if (operador == '+') resultado = a + b;
+    else if (operador == '-') resultado = a - b;
+    else if (operador == '*') resultado = a * b;
+    else if (operador == '/') {
+        if (b != 0) resultado = a / b;
+        else {
+            printf("Erro: divisão por zero!\n");
+            return 1;
+        }
+    }
+    else {
+        printf("Operador inválido!\n");
+        return 1;
+    }
+    
+    printf("%.2f %c %.2f = %.2f\n", a, operador, b, resultado);
+    return 0;
+}
+```
+
+### Práticas Modernas
+
+- **Em C++:** use `std::cin` e `std::cout` — mais seguros e com verificação de tipos em tempo de compilação.
+- **`fgets` + `sscanf`:** padrão mais seguro para entrada em C. `fgets` lê a linha inteira, `sscanf` parseia a string com formatação.
+- **Em Python:** `input()` retorna sempre uma string; converta com `int()`, `float()` etc. Sem risco de buffer overflow.
+- **Validação de entrada:** em sistemas reais, **nunca confie na entrada do usuário**. Valide sempre: tipo correto, faixa válida, ausência de caracteres maliciosos.
+- **Formatação moderna:** C++20 introduziu `std::format` similar ao Python f-strings. Antes disso, use `snprintf` para strings formatadas em C.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: Entrada e Saída de Dados*. Porto Alegre: SAGAH.

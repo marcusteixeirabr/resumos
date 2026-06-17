@@ -1,0 +1,168 @@
+---
+title: "UE3 — Pensamento Lógico e Algorítmico"
+subtitle: "A lógica é o alicerce do pensamento computacional: de Aristóteles a Turing, o raciocínio ordenado sempre foi o meio de transformar premissas em conclusões. Algoritmos são a expressão prática dessa lógica — sequências finitas e precisas que transformam entradas em saídas."
+ua: 3
+group: "Pensamento Computacional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_03.webp" alt="O Coração de Tudo: O Algoritmo — fluxograma e analogia da receita de macarrão" caption="O algoritmo como sequência finita e bem definida de passos — da receita ao fluxograma" />
+</SlidesGrid>
+
+### A lógica como fundamento
+
+A lógica é a ciência do raciocínio válido. Ela define as regras que permitem derivar conclusões verdadeiras a partir de premissas verdadeiras.
+
+O conceito moderno de lógica foi impulsionado por nomes como:
+
+- **George Boole (1815–1864):** álgebra booleana — base de todos os circuitos digitais e operações lógicas em programação.
+- **Gottfried Wilhelm Leibniz (1646–1716):** sonhava com uma linguagem universal do pensamento racional.
+- **Alan Turing (1912–1954):** formalizou o conceito de computação com a Máquina de Turing — o modelo teórico de qualquer computador.
+- **Bertrand Russell (1872–1970):** tentou fundamentar toda a matemática na lógica.
+
+O pensamento computacional não inventou a lógica — ele aplicou sistematicamente séculos de raciocínio formal à solução de problemas do mundo real.
+
+### Silogismos: a forma mais simples de raciocínio lógico
+
+Um silogismo é uma forma de raciocínio composta por **premissas** que levam a uma **conclusão**:
+
+```
+Premissa 1: Todo ser humano é mortal.
+Premissa 2: Sócrates é ser humano.
+Conclusão:  Sócrates é mortal.
+```
+
+Em programação, silogismos aparecem nas estruturas condicionais:
+
+```pseudocode
+se (nota >= 6) então
+    aluno está aprovado
+senão
+    aluno está reprovado
+```
+
+### Método indutivo vs. dedutivo
+
+#### Método dedutivo
+
+Parte de premissas gerais (aceitas como verdadeiras) e chega a conclusões específicas. Se as premissas são verdadeiras e o raciocínio é válido, a conclusão é **necessariamente verdadeira**.
+
+```
+Premissa geral: Sempre que chove, o gramado fica molhado.
+Fato observado: Hoje está chovendo.
+Conclusão:      O gramado está molhado.
+```
+
+O método dedutivo é a base do método científico e da maioria dos algoritmos determinísticos.
+
+#### Método indutivo
+
+Parte de observações específicas e generaliza para uma lei ou padrão. A conclusão é **provável**, mas não garantida — uma única observação contrária pode invalidá-la.
+
+```
+Observação: 99 bolas vermelhas e 1 preta numa caixa.
+100 pessoas retiraram uma bola.
+João é uma dessas 100 pessoas.
+Conclusão provável: João provavelmente retirou uma bola vermelha.
+```
+
+O método indutivo é a base do aprendizado de máquina: o modelo observa exemplos e generaliza padrões.
+
+| Método | Direção | Garantia | Uso em computação |
+|---|---|---|---|
+| Dedutivo | Geral → Específico | Conclusão certa | Algoritmos determinísticos, compiladores |
+| Indutivo | Específico → Geral | Conclusão provável | Machine learning, estatística |
+
+### O que é um algoritmo
+
+Um algoritmo é uma **sequência finita e bem definida de instruções** que, quando executadas na ordem estabelecida, resolvem um problema em tempo finito.
+
+Para ser considerado um algoritmo, a sequência deve:
+1. Ter um **estado inicial** definido.
+2. Ser composta de **ações claras, precisas e não ambíguas**.
+3. Produzir **dados de saída corretos** para as entradas fornecidas.
+4. **Terminar** após um número finito de passos.
+
+**Exemplo clássico — usar um orelhão:**
+
+```
+1. Leve o fone ao ouvido.
+2. Insira seu cartão no orifício apropriado.
+3. Aguarde o sinal para discar.
+4. Ao ouvir o sinal, disque o número desejado.
+5. Ao final da ligação, retorne o fone à posição original.
+6. Retire o cartão.
+```
+
+Esse é um algoritmo perfeito: tem início definido, passos claros e termina.
+
+### Formas de representar algoritmos
+
+#### Linguagem natural
+
+A forma mais simples — escrever os passos em português. Problema: ambígua e sujeita a interpretações diferentes.
+
+#### Pseudocódigo
+
+Linguagem intermediária entre português e código de programação. Usa estruturas formais sem se prender à sintaxe de nenhuma linguagem específica.
+
+```pseudocode
+algoritmo "calcular-media"
+var
+  nota1, nota2, nota3, media: real
+início
+  ler(nota1, nota2, nota3)
+  media ← (nota1 + nota2 + nota3) / 3
+  escrever("Média:", media)
+  se media >= 6 então
+    escrever("Aprovado")
+  senão
+    escrever("Reprovado")
+  fimse
+fimalgoritmo
+```
+
+#### Fluxograma
+
+Representação gráfica usando símbolos padronizados:
+
+| Símbolo | Forma | Uso |
+|---|---|---|
+| Início/Fim | Oval (elipse) | Marca o início e o fim do algoritmo |
+| Processo | Retângulo | Operações, cálculos, atribuições |
+| Entrada/Saída | Paralelogramo | Leitura de dados / exibição de resultados |
+| Decisão | Losango | Condição com saída Verdadeiro/Falso |
+| Conector | Seta | Liga os blocos na sequência correta |
+
+### Dificuldades comuns com lógica e algoritmos
+
+| Dificuldade | Descrição | Como evitar |
+|---|---|---|
+| Loop infinito | Condição de parada nunca é atingida | Garantir que a variável de controle é modificada |
+| Condição mal definida | A condição não cobre todos os casos | Testar com valores-limite e casos extremos |
+| Ordem incorreta das instruções | Passos fora de sequência produzem resultados errados | Revisar o fluxograma antes de codificar |
+| Falta de caso base (recursão) | Função recursiva sem condição de parada | Sempre definir o caso base antes do recursivo |
+| Ambiguidade | Instrução admite mais de uma interpretação | Usar pseudocódigo formal em vez de linguagem natural |
+
+<Callout type="warning">
+**Pseudocódigo não é universal**
+
+Cada livro e professor usa uma variação diferente de pseudocódigo. O importante não é a sintaxe exata, mas a **clareza da lógica**. Ao implementar em C ou outra linguagem, a tradução do pseudocódigo para código real exige atenção às regras específicas da linguagem.
+</Callout>
+
+### Práticas Modernas
+
+- **Algoritmos de IA:** redes neurais e transformers (como GPT) são algoritmos — mas aprendidos por indução a partir de dados, não escritos explicitamente por humanos.
+- **Algoritmos de busca modernos:** A* (pathfinding em jogos), Dijkstra (GPS), BFS/DFS (redes sociais). Todos seguem a definição clássica de algoritmo.
+- **Ordenação eficiente:** algoritmos como QuickSort e MergeSort têm complexidade O(n log n) vs. O(n²) do BubbleSort — a escolha do algoritmo impacta diretamente a escalabilidade.
+- **Pseudocódigo em IA:** hoje é comum usar linguagem natural para descrever algoritmos para LLMs, que os traduzem para código — o PC continua sendo o raciocínio central, mesmo quando a "codificação" é feita por IA.
+- **Teoria da complexidade:** O(n), O(log n), O(n²), O(2ⁿ) — mede a eficiência de algoritmos à medida que a entrada cresce. Fundamental para sistemas em escala.
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. S. *Pensamento Computacional: Pensamento Lógico e Algorítmico*. Porto Alegre: SAGAH.
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014.
+- CORMEN, T. H. et al. *Introduction to Algorithms*. 3. ed. MIT Press, 2009.

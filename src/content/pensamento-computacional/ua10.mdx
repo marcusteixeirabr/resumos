@@ -1,0 +1,205 @@
+---
+title: "UE10 — Comandos Condicionais: Seleção Simples e Dupla"
+subtitle: "Algoritmos não são apenas sequências lineares. A capacidade de tomar decisões — executar diferentes blocos de código dependendo de uma condição — é o que torna um programa verdadeiramente útil. O comando if é a estrutura fundamental para isso."
+ua: 10
+group: "Estruturas de Controle"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_08.webp" alt="O Poder da Decisão: Estruturas Condicionais — fluxograma se-então-senão" caption="Seleção dupla: o fluxograma mostra claramente que apenas um dos dois caminhos é percorrido" />
+</SlidesGrid>
+
+### Por que precisamos de decisões
+
+Até agora, os algoritmos executavam todos os passos na sequência, sem exceção. Mas a maioria dos problemas reais exige escolhas:
+
+- Calcular desconto **se** o cliente for VIP.
+- Exibir "Aprovado" **se** a média for ≥ 6, **senão** "Reprovado".
+- Somar um valor **se** for positivo.
+
+Estruturas condicionais são o mecanismo que permite alterar o fluxo de execução com base na avaliação de uma condição lógica.
+
+### Seleção simples (se-então)
+
+A seleção simples executa um bloco **apenas se** a condição for verdadeira. Se for falsa, nada acontece — o fluxo simplesmente passa para a próxima instrução após o bloco.
+
+**Pseudocódigo:**
+
+```pseudocode
+se <expressão lógica>
+então
+  <comando ou bloco de comandos>
+fimse
+```
+
+**Em C:**
+
+```c
+if (condição) {
+    /* executado somente se condição for verdadeira */
+}
+```
+
+**Exemplo — informar aprovação:**
+
+```pseudocode
+ler(nota1, nota2, nota3)
+media ← (nota1 + nota2 + nota3) / 3
+escrever("Média: ", media)
+se media >= 6
+então
+  escrever("Aprovado!")
+fimse
+```
+
+Em C:
+
+```c
+float nota1, nota2, nota3, media;
+scanf("%f %f %f", &nota1, &nota2, &nota3);
+media = (nota1 + nota2 + nota3) / 3;
+printf("Média: %.1f\n", media);
+if (media >= 6) {
+    printf("Aprovado!\n");
+}
+```
+
+### Comando composto
+
+Quando é necessário executar **múltiplos comandos** dentro de uma seleção, agrupa-se em um bloco delimitado por `início...fim` (pseudocódigo) ou `{ }` (C):
+
+```pseudocode
+se (nota1 >= 6) e (nota2 >= 6) e (nota3 >= 6)
+então início
+  media ← (nota1 + nota2 + nota3) / 3
+  escreval("Todas as notas acima da média!")
+  escreval("Média: ", media)
+fim
+fimse
+```
+
+Em C:
+
+```c
+if (nota1 >= 6 && nota2 >= 6 && nota3 >= 6) {
+    media = (nota1 + nota2 + nota3) / 3;
+    printf("Todas as notas acima da média!\n");
+    printf("Média: %.1f\n", media);
+}
+```
+
+### Seleção dupla (se-então-senão)
+
+A seleção dupla define **dois caminhos mutuamente exclusivos**: um para quando a condição é verdadeira, outro para quando é falsa. Exatamente um dos dois blocos é sempre executado.
+
+**Pseudocódigo:**
+
+```pseudocode
+se <expressão lógica>
+então
+  <comando se verdadeiro>
+senão
+  <comando se falso>
+fimse
+```
+
+**Em C:**
+
+```c
+if (condição) {
+    /* executado se verdadeiro */
+} else {
+    /* executado se falso */
+}
+```
+
+**Exemplo — aprovado ou reprovado:**
+
+```c
+float nota1, nota2, nota3, media;
+scanf("%f %f %f", &nota1, &nota2, &nota3);
+media = (nota1 + nota2 + nota3) / 3;
+printf("Média: %.1f\n", media);
+
+if (media >= 6) {
+    printf("Aprovado!\n");
+} else {
+    printf("Reprovado.\n");
+}
+```
+
+O fluxograma deixa claro que apenas um dos dois ramos é percorrido:
+
+```
+         [INÍCIO]
+             |
+    [ler nota1, nota2, nota3]
+             |
+    [media = (n1+n2+n3)/3]
+             |
+    [media >= 6?]
+      /          \
+    Sim           Não
+     |             |
+[Aprovado]   [Reprovado]
+      \          /
+       [  FIM  ]
+```
+
+<Callout type="warning">
+**Chaves obrigatórias em C para múltiplos comandos**
+
+Em C, se você omitir as chaves `{ }`, apenas a **primeira instrução** após o `if` ou `else` será condicional. As demais serão executadas sempre:
+
+```c
+/* ERRADO: sem chaves, só o printf é condicional */
+if (media >= 6)
+    printf("Aprovado!\n");
+    printf("Parabéns!\n");   /* ← isso SEMPRE executa */
+
+/* CORRETO: com chaves */
+if (media >= 6) {
+    printf("Aprovado!\n");
+    printf("Parabéns!\n");
+}
+```
+
+A boa prática é **sempre usar chaves**, mesmo para blocos de uma única instrução. Isso evita bugs ao adicionar linhas ao bloco depois.
+</Callout>
+
+### Casos especiais e boas práticas
+
+**Condição com variável booleana:**
+
+```c
+int aprovado = (media >= 6);  /* 1 se verdadeiro, 0 se falso */
+if (aprovado) {
+    printf("Aprovado!\n");
+}
+```
+
+**Evitar else desnecessário (early return):**
+
+Em funções, usar `return` cedo elimina o `else`:
+
+```c
+float calcularDesconto(int vip, float valor) {
+    if (!vip) return 0;  /* retorna cedo se não for VIP */
+    return valor * 0.10;
+}
+```
+
+### Práticas Modernas
+
+- **Guard clauses:** retornar cedo para evitar aninhamento excessivo — o "happy path" fica no nível mais externo.
+- **Operador ternário:** `resultado = (media >= 6) ? "Aprovado" : "Reprovado";` — para atribuições simples baseadas em condição.
+- **Evitar else quando possível:** se o bloco `if` sempre termina com `return`, o `else` é desnecessário — reduz aninhamento e melhora legibilidade.
+- **`switch` para múltiplas condições de igualdade:** quando há muitos `else if` comparando a mesma variável com constantes, `switch` é mais legível e pode ser mais eficiente.
+- **Pattern matching moderno:** Rust `match`, Python 3.10+ `match/case`, Kotlin `when` — substitutos modernos do if-else encadeado, com verificação de exaustividade pelo compilador.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 4.

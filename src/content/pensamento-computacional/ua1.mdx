@@ -1,0 +1,108 @@
+---
+title: "UE1 — Fundamentos do Pensamento Computacional"
+subtitle: "Pensamento computacional não é sobre programar computadores — é sobre aprender a decompor problemas, reconhecer padrões, abstrair detalhes e construir algoritmos. Uma habilidade humana fundamental que amplia a capacidade de resolver qualquer tipo de problema."
+ua: 1
+group: "Pensamento Computacional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_01.webp" alt="Do Pensamento à Execução: Uma Jornada pela Lógica e Código" caption="Visão geral da disciplina: do pensamento à execução" />
+  <SlideItem src="/assets/img/slides/rpc_02.webp" alt="O Ponto de Partida: os quatro pilares do Pensamento Computacional" caption="Os quatro pilares: Decomposição, Reconhecimento de Padrões, Abstração e Algoritmos" />
+</SlidesGrid>
+
+### O que é pensamento computacional
+
+Pensamento computacional (PC) é uma estratégia baseada no uso da tecnologia para **projetar soluções e resolver problemas de forma eficaz**. Ao contrário do que o nome sugere, ele não exige o uso de computadores nem está restrito à programação — representa, antes de tudo, uma forma de pensar que qualquer pessoa pode desenvolver.
+
+A definição mais difundida o descreve como os processos de pensamento envolvidos na **formulação de um problema** e na **expressão de sua solução** de tal forma que um computador (humano ou máquina) possa executar com eficácia.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ipc_01.webp" alt="Infográfico: aplicações e características do Pensamento Computacional" caption="Infográfico — como o PC se aplica e suas principais características" />
+</SlidesGrid>
+
+O PC se manifesta em três estágios:
+
+1. **Abstração** (formulação do problema): identificar os elementos essenciais da situação, ignorando detalhes irrelevantes.
+2. **Automação** (expressão da solução): descrever a solução de forma que possa ser executada, seja por humanos ou máquinas.
+3. **Análise** (execução e avaliação): executar a solução e verificar se ela resolve o problema conforme esperado.
+
+### Os quatro pilares
+
+O pensamento computacional se apoia em quatro habilidades fundamentais:
+
+#### Decomposição
+
+Dividir um problema complexo em partes menores e mais gerenciáveis. Cada parte é analisada e resolvida separadamente; depois, as soluções parciais são combinadas para formar a solução completa.
+
+**Exemplo:** Para construir um site, decompõe-se o problema em partes: design, banco de dados, back-end, autenticação, deploy. Cada parte é resolvida independentemente.
+
+#### Reconhecimento de padrões
+
+Identificar **similaridades e regularidades** entre problemas ou entre partes de um mesmo problema. Reconhecer padrões permite reutilizar soluções já conhecidas, em vez de começar do zero.
+
+**Exemplo:** Perceber que diferentes formulários de cadastro (usuário, produto, fornecedor) seguem o mesmo padrão de validação permite criar uma função genérica de validação.
+
+#### Abstração
+
+Focar nos **detalhes relevantes** e ignorar os irrelevantes para o problema em questão. A abstração permite criar modelos simplificados da realidade que são suficientemente precisos para resolver o problema sem sobrecarga desnecessária.
+
+**Exemplo:** Para calcular a rota mais curta entre duas cidades, o mapa pode ser abstraído como um grafo de nós e arestas — sem precisar representar relevo, vegetação ou clima.
+
+#### Algoritmo
+
+Criar um conjunto de **instruções claras, ordenadas e finitas** que resolvem o problema. O algoritmo é o ponto de junção dos outros três pilares: usa a decomposição para organizar os passos, o reconhecimento de padrões para reutilizar estruturas, e a abstração para trabalhar com representações simplificadas.
+
+| Pilar | Pergunta central | Exemplo |
+|---|---|---|
+| Decomposição | Como dividir este problema? | Dividir "construir app" em módulos |
+| Reconhecimento de padrões | O que este problema tem em comum com outros? | Todos os CRUDs seguem o mesmo padrão |
+| Abstração | O que posso ignorar sem comprometer a solução? | Ignorar fuso horário ao calcular dias corridos |
+| Algoritmo | Quais são os passos exatos da solução? | Pseudocódigo passo a passo |
+
+### Onde o PC está presente
+
+O pensamento computacional está embutido em praticamente toda tecnologia moderna:
+
+- **Dispositivos móveis:** cada toque na tela aciona uma sequência de algoritmos que identificam o gesto, interpretam a intenção e executam a ação correta.
+- **Mecanismos de busca:** decompõem a consulta do usuário, abstraem o conteúdo de bilhões de páginas e aplicam algoritmos de relevância para ordenar os resultados.
+- **Aplicativos de transporte:** reconhecem padrões de demanda e oferta para calcular preços e rotas dinamicamente.
+- **Computação em nuvem:** provedores como Google e AWS abstraem a complexidade física de datacenters, oferecendo recursos computacionais como serviço.
+
+### Diferença entre PC e programação
+
+Uma confusão frequente é identificar pensamento computacional com programação. A programação é apenas uma das formas de **expressar** uma solução computacional — mas o PC existe antes dela.
+
+```
+Problema real → [Pensamento Computacional] → Solução lógica → [Programação] → Código
+```
+
+É possível aplicar PC para organizar uma agenda, planejar uma viagem ou projetar um processo de negócios — sem escrever uma linha de código.
+
+<Callout type="warning">
+**Material com limitações**
+
+O livro base desta UE trata o PC como uma abordagem relativamente nova, surgida com a popularização dos computadores. Na prática, os fundamentos lógicos do PC remontam a Aristóteles, Leibniz e Turing — o que mudou foi a aplicação sistemática desses conceitos à solução de problemas computacionais e cotidianos.
+
+Além disso, o conceito evoluiu além do que o livro descreve: atualmente o PC é ensinado desde o ensino fundamental em vários países e está na base de disciplinas como ciência de dados, inteligência artificial e design de sistemas.
+</Callout>
+
+### Práticas Modernas
+
+O pensamento computacional ganhou nova dimensão com o avanço da inteligência artificial e da automação:
+
+- **Prompt engineering**: escrever instruções precisas para LLMs (como ChatGPT) é puro PC — decomposição do problema, abstração do contexto, algoritmo na forma de prompt.
+- **Low-code/no-code**: ferramentas como Bubble, Retool e n8n permitem construir fluxos lógicos complexos sem código, aplicando diretamente os pilares do PC.
+- **Algoritmos de ML**: treinar um modelo de machine learning exige decomposição (quais features usar?), abstração (como representar os dados?) e reconhecimento de padrões (o que o modelo aprende?).
+- **DevOps e automação**: pipelines de CI/CD são algoritmos expressos em YAML — cada job é um passo de um algoritmo maior.
+- **Ciência de dados**: explorar um dataset segue o fluxo PC: decompor (quais colunas importam?), abstrair (normalizar, codificar), reconhecer padrões (correlações, outliers), algoritmizar (pipeline de transformação).
+
+O PC é hoje reconhecido pela UNESCO, ISTE e CSTA como competência digital essencial do século XXI — tão fundamental quanto ler e escrever.
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. R. *Pensamento Computacional: Fundamentos*. Porto Alegre: SAGAH.
+- BEECHER, K. *Computational Thinking: A Beginner's Guide to Problem-Solving and Programming*. BCS, 2017.
+- WING, J. M. Computational thinking. *Communications of the ACM*, v. 49, n. 3, 2006.

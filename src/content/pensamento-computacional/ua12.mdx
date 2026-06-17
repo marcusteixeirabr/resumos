@@ -1,0 +1,202 @@
+---
+title: "UE12 — Estruturas de Seleção: if-else e switch em C"
+subtitle: "Em C, o if-else e o switch são as duas estruturas principais para controle de fluxo baseado em condições. Enquanto o if funciona com qualquer expressão lógica, o switch é otimizado para comparações de igualdade com valores discretos. O operador ternário completa o repertório para casos simples."
+ua: 12
+group: "Estruturas de Controle"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Revisão: fluxo sequencial vs. seletivo
+
+Em um fluxo **sequencial**, todas as instruções são executadas na ordem em que aparecem, sempre. Em um fluxo **seletivo**, a execução de um bloco de instruções depende da avaliação de uma condição — apenas um dos caminhos possíveis é percorrido.
+
+### if simples, composto e encadeado
+
+**Simples (um caminho adicional):**
+
+```c
+if (numero > 0) {
+    printf("Positivo\n");
+}
+/* se numero <= 0, nada acontece */
+```
+
+**Composto (dois caminhos):**
+
+```c
+if (numero > 0) {
+    printf("Positivo\n");
+} else {
+    printf("Não positivo\n");
+}
+```
+
+**Encadeado (múltiplos caminhos):**
+
+```c
+if (numero > 0) {
+    printf("Positivo\n");
+} else if (numero < 0) {
+    printf("Negativo\n");
+} else {
+    printf("Zero\n");
+}
+```
+
+Exemplo do livro: situação do aluno com base em três regras (média < 5 = reprovado, 5 ≤ média < 7 = recuperação, ≥ 7 = aprovado):
+
+```c
+float media;
+scanf("%f", &media);
+
+if (media < 5.0) {
+    printf("Reprovado\n");
+} else if (media < 7.0) {
+    printf("Em recuperação\n");
+} else {
+    printf("Aprovado\n");
+}
+```
+
+### switch: seleção por valor
+
+O `switch` avalia uma expressão e compara o resultado com uma série de constantes (`case`). É uma alternativa mais legível ao `if-else` encadeado quando se compara uma única variável com múltiplos valores.
+
+**Sintaxe:**
+
+```c
+switch (expressao) {
+    case valor1:
+        /* instruções */
+        break;
+    case valor2:
+        /* instruções */
+        break;
+    default:
+        /* executado quando nenhum case casa */
+}
+```
+
+**Exemplo — converter número de mês para nome:**
+
+```c
+int mes;
+scanf("%d", &mes);
+
+switch (mes) {
+    case 1:  printf("Janeiro\n");   break;
+    case 2:  printf("Fevereiro\n"); break;
+    case 3:  printf("Março\n");     break;
+    case 4:  printf("Abril\n");     break;
+    case 5:  printf("Maio\n");      break;
+    case 6:  printf("Junho\n");     break;
+    case 7:  printf("Julho\n");     break;
+    case 8:  printf("Agosto\n");    break;
+    case 9:  printf("Setembro\n");  break;
+    case 10: printf("Outubro\n");   break;
+    case 11: printf("Novembro\n");  break;
+    case 12: printf("Dezembro\n");  break;
+    default: printf("Mês inválido\n");
+}
+```
+
+### O papel do break
+
+`break` encerra a execução do `switch` imediatamente. Sem ele, ocorre **fall-through**: a execução "cai" para o próximo case, executando-o independentemente da condição.
+
+```c
+/* Fall-through proposital: agrupar casos */
+switch (dia) {
+    case 1:  /* domingo */
+    case 7:  /* sábado */
+        printf("Fim de semana\n");
+        break;
+    default:
+        printf("Dia útil\n");
+}
+```
+
+<Callout type="warning">
+**switch tem limitações importantes em C**
+
+- Só funciona com tipos inteiros (`int`, `char`, `enum`) — **não funciona com `float`, `double` ou strings**.
+- Os valores dos `case` devem ser **constantes** — não podem ser variáveis ou expressões em tempo de execução.
+- Esquecer o `break` é um dos bugs mais comuns em C — o compilador não avisa por padrão.
+
+Para comparar strings ou usar expressões complexas, use `if-else`.
+</Callout>
+
+### Operador ternário
+
+O operador ternário é uma forma compacta de escrever um `if-else` que produz um valor:
+
+```
+variavel = (condição) ? valor_se_verdadeiro : valor_se_falso;
+```
+
+**Exemplo:**
+
+```c
+/* Com if-else: */
+float maior;
+if (a > b) {
+    maior = a;
+} else {
+    maior = b;
+}
+
+/* Com operador ternário: */
+float maior = (a > b) ? a : b;
+```
+
+O ternário é elegante para expressões simples, mas **evite aninhá-lo** — torna o código ilegível:
+
+```c
+/* Ruim: ternário aninhado */
+int x = (a > 0) ? ((a > 10) ? 2 : 1) : 0;
+
+/* Bom: if-else explicito */
+int x;
+if (a > 10)      x = 2;
+else if (a > 0)  x = 1;
+else             x = 0;
+```
+
+### Comparativo: if-else vs switch vs ternário
+
+| Situação | Melhor opção |
+|---|---|
+| Condição com operadores (`>`, `<`, `>=`) | `if-else` |
+| Comparar mesma variável com múltiplos valores inteiros | `switch` |
+| Atribuição simples baseada em condição | operador ternário |
+| Strings ou floats | `if-else` (switch não suporta) |
+| Muitos casos com mesmo tipo de tratamento | `switch` com fall-through |
+
+### Práticas Modernas
+
+- **`switch` em linguagens modernas:** Java e C# permitem `switch` com strings. Swift, Kotlin e Rust têm expressões `when`/`match` muito mais poderosas.
+- **Expressão switch (Java 14+, C# 8+):**
+
+```java
+String resultado = switch (nota) {
+    case "A" -> "Excelente";
+    case "B" -> "Bom";
+    case "C" -> "Suficiente";
+    default  -> "Reprovado";
+};
+```
+
+- **`match` no Rust:** verifica exaustividade em tempo de compilação — o compilador garante que todos os casos foram tratados.
+- **`match/case` no Python 3.10+:** suporta desestruturação de objetos, não apenas igualdade.
+- **Lookup tables:** substituir longos if-else ou switch por um array/map pode ser mais eficiente e legível:
+
+```c
+const char* meses[] = {"", "Janeiro", "Fevereiro", ..., "Dezembro"};
+printf("%s\n", meses[mes]);  /* ao invés do switch de 12 cases */
+```
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, M. *Algoritmos de Programação: Estruturas de Seleção*. Porto Alegre: SAGAH.

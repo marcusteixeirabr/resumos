@@ -1,0 +1,169 @@
+---
+title: "UE5 — Comandos Básicos: Entrada, Saída e Atribuição"
+subtitle: "Todo algoritmo sequencial se reduz a três operações essenciais: receber dados do mundo externo (entrada), processar e armazenar resultados (atribuição) e comunicar o resultado ao usuário (saída). Dominar esses três blocos é o ponto de partida da programação."
+ua: 5
+group: "Algoritmos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/rpc_06.webp" alt="As Ações Fundamentais: Entrada, Saída e Atribuição em pseudocódigo" caption="Os três pilares de todo algoritmo sequencial: entrada, saída e atribuição" />
+</SlidesGrid>
+
+### O esquema básico de um algoritmo sequencial
+
+Todo algoritmo que processa informações segue, em essência, este esquema:
+
+```
+[Entrada] → [Processamento] → [Saída]
+```
+
+- **Entrada:** os dados fornecidos pelo usuário ou por outro sistema (notas, nome, temperatura).
+- **Processamento:** cálculos, comparações e atribuições realizadas sobre os dados.
+- **Saída:** os resultados apresentados ao usuário (média calculada, mensagem de aprovação).
+
+Em alguns algoritmos, a entrada pode estar pré-definida como constante (ex: calcular a área de um círculo com raio fixo). O processamento e a saída são sempre obrigatórios.
+
+### Comando de entrada (ler)
+
+O comando de entrada solicita que um dado seja **lido de um dispositivo externo** (geralmente o teclado) e armazenado em uma variável.
+
+```pseudocode
+algoritmo "entrada-basica"
+var
+  nome     : caractere
+  idade    : inteiro
+  salario  : real
+início
+  ler(nome)
+  ler(idade)
+  ler(salario)
+fimalgoritmo
+```
+
+É possível ler múltiplas variáveis com um único comando:
+
+```pseudocode
+ler(nota1, nota2, nota3)
+```
+
+**Importante:** o comando de entrada pausa a execução do programa e aguarda o usuário fornecer um valor. O valor lido é armazenado na variável indicada, substituindo qualquer valor anterior.
+
+### Comando de saída (escrever / escreval)
+
+O comando de saída exibe dados na tela.
+
+- `escrever` — exibe e permanece na mesma linha.
+- `escreval` — exibe e passa para a próxima linha (equivale a `escrever` + `\n`).
+
+```pseudocode
+escrever("Nome: ", nome)
+escreval("Idade: ", idade)
+escreval("Aprovado!")
+```
+
+É possível combinar texto fixo (entre aspas) com variáveis na mesma instrução de saída.
+
+### Comando de atribuição (←)
+
+A atribuição **armazena o resultado de uma expressão em uma variável**. O símbolo `←` significa "recebe":
+
+```pseudocode
+media ← (nota1 + nota2 + nota3) / 3
+```
+
+O computador:
+1. Avalia a expressão do lado direito: `(nota1 + nota2 + nota3) / 3`.
+2. Armazena o resultado na variável do lado esquerdo: `media`.
+3. O valor anterior de `media` é descartado.
+
+**Atenção:** a atribuição não é uma equação matemática. `x ← x + 1` é perfeitamente válido em programação — significa "aumente x em 1". Em matemática, isso seria uma contradição.
+
+### Exemplos completos
+
+#### Calcular a média de três notas
+
+```pseudocode
+algoritmo "media-tres-notas"
+var
+  nota1, nota2, nota3, media : real
+início
+  escrever("Digite a nota 1: ")
+  ler(nota1)
+  escrever("Digite a nota 2: ")
+  ler(nota2)
+  escrever("Digite a nota 3: ")
+  ler(nota3)
+  media ← (nota1 + nota2 + nota3) / 3
+  escreval("Média final: ", media)
+fimalgoritmo
+```
+
+#### Calcular área de um retângulo
+
+```pseudocode
+algoritmo "area-retangulo"
+var
+  base, altura, area : real
+início
+  ler(base, altura)
+  area ← base * altura
+  escreval("Área: ", area, " m²")
+fimalgoritmo
+```
+
+### Fluxograma dos comandos básicos
+
+Os símbolos padronizados para fluxogramas são:
+
+| Operação | Símbolo | Forma |
+|---|---|---|
+| Início / Fim | Terminal | Oval/elipse |
+| Entrada de dados | Entrada/Saída | Paralelogramo |
+| Processamento / Atribuição | Processo | Retângulo |
+| Saída de dados | Entrada/Saída | Paralelogramo |
+| Decisão (if) | Decisão | Losango |
+| Fluxo | Conector | Seta |
+
+Um fluxograma para calcular a média de duas notas:
+
+```
+     [INÍCIO]
+        ↓
+  [ler nota1, nota2]   ← paralelogramo
+        ↓
+  [media ← (nota1+nota2)/2]  ← retângulo
+        ↓
+  [escrever media]     ← paralelogramo
+        ↓
+      [FIM]
+```
+
+<Callout type="warning">
+**Pseudolinguagem vs. C**
+
+Nesta UE, os exemplos usam pseudolinguagem (português estruturado). Em C, os equivalentes são:
+
+| Pseudolinguagem | C |
+|---|---|
+| `ler(variavel)` | `scanf("%d", &variavel);` |
+| `escrever("texto")` | `printf("texto");` |
+| `escreval("texto")` | `printf("texto\n");` |
+| `variavel ← expressão` | `variavel = expressão;` |
+
+Note que em C, a atribuição usa `=` (não `←`) e o `scanf` exige o operador `&` antes da variável.
+</Callout>
+
+### Práticas Modernas
+
+- **REPL (Read-Eval-Print Loop):** ambientes como o terminal do Python executam exatamente o ciclo entrada→processamento→saída de forma interativa. `input()` = entrada, expressão = processamento, `print()` = saída.
+- **Pipelines no terminal:** `cat arquivo.txt | grep "erro" | wc -l` — cada programa é um algoritmo; a saída de um vira a entrada do próximo. É o esquema básico de algoritmo em composição.
+- **F-strings (Python):** `f"Média: {media:.2f}"` — saída formatada de forma legível, sem os códigos `%d`/`%f` do C.
+- **Template literals (JavaScript):** `` `Olá, ${nome}! Você tem ${idade} anos.` `` — mesma ideia.
+- **stdin/stdout em programação competitiva:** desafios no LeetCode, Codeforces e HackerRank leem de stdin e escrevem em stdout — exatamente o modelo ensinado nesta UE.
+
+#### Referências bibliográficas desta UA
+
+- EDELWEISS, N.; LIVI, M.A.C. *Algoritmos e Programação com Exemplos em Pascal e C*. Porto Alegre: Bookman, 2014. Cap. 3.
