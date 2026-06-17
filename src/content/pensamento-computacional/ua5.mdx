@@ -1,11 +1,12 @@
 ---
-title: "UE5 — Comandos Básicos: Entrada, Saída e Atribuição"
+title: "UA5 — Comandos Básicos: Entrada, Saída e Atribuição"
 subtitle: "Todo algoritmo sequencial se reduz a três operações essenciais: receber dados do mundo externo (entrada), processar e armazenar resultados (atribuição) e comunicar o resultado ao usuário (saída). Dominar esses três blocos é o ponto de partida da programação."
 ua: 5
 group: "Algoritmos"
 ---
 import Callout from "../../components/Callout.astro";
 import SlidesGrid from "../../components/SlidesGrid.astro";
+import InlineImage from "../../components/InlineImage.astro";
 import SlideItem from "../../components/SlideItem.astro";
 
 <SlidesGrid>
@@ -129,17 +130,7 @@ Os símbolos padronizados para fluxogramas são:
 
 Um fluxograma para calcular a média de duas notas:
 
-```
-     [INÍCIO]
-        ↓
-  [ler nota1, nota2]   ← paralelogramo
-        ↓
-  [media ← (nota1+nota2)/2]  ← retângulo
-        ↓
-  [escrever media]     ← paralelogramo
-        ↓
-      [FIM]
-```
+<InlineImage src="/assets/img/slides/fpc_01.webp" alt="Fluxograma: INÍCIO → ler nota1 e nota2 (paralelogramo) → media recebe nota1 mais nota2 dividido por 2 (retângulo) → escrever media (paralelogramo) → FIM" />
 
 <Callout type="warning">
 **Pseudolinguagem vs. C**
