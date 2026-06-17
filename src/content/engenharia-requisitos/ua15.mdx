@@ -1,5 +1,5 @@
 ---
-title: "UE15 — Diagrama de Atividades"
+title: "UA15 — Diagrama de Atividades"
 subtitle: "O Diagrama de Atividades modela o fluxo de execução — as atividades realizadas, as decisões tomadas, os caminhos paralelos e quem é responsável por cada passo. É o diagrama que responde 'como o sistema funciona por dentro' com clareza visual suficiente para qualquer stakeholder."
 ua: 15
 group: "Modelagem"
@@ -7,6 +7,7 @@ group: "Modelagem"
 import Callout from "../../components/Callout.astro";
 import SlidesGrid from "../../components/SlidesGrid.astro";
 import SlideItem from "../../components/SlideItem.astro";
+import InlineImage from "../../components/InlineImage.astro";
 
 ### O que é o Diagrama de Atividades
 
@@ -61,28 +62,7 @@ Verificar prazo ◇
 
 Swimlanes particionam o diagrama para indicar quem é responsável por cada atividade:
 
-```
-┌──────────────────┬──────────────────┬──────────────────┐
-│     Cliente      │     Sistema      │   Banco/Gateway  │
-├──────────────────┼──────────────────┼──────────────────┤
-│ Selecionar       │                  │                  │
-│ produtos         │                  │                  │
-│        ↓         │                  │                  │
-│ Confirmar        │                  │                  │
-│ carrinho    ─────→ Calcular total   │                  │
-│                  │        ↓         │                  │
-│                  │ Exibir resumo    │                  │
-│                  │        ↓         │                  │
-│ Inserir dados ←──┤ Solicitar dados  │                  │
-│ pagamento   ─────→                  │                  │
-│                  │ Processar ───────→ Autorizar        │
-│                  │ pagamento        │ pagamento        │
-│                  │        ↓         │       ↓          │
-│                  │ [autorizado]  ←──────────────────── │
-│ Exibir ←─────────┤ Confirmar pedido │                  │
-│ confirmação      │                  │                  │
-└──────────────────┴──────────────────┴──────────────────┘
-```
+<InlineImage src="/assets/img/slides/sqp_01.webp" alt="Diagrama de sequência do fluxo de pagamento: Cliente seleciona produtos e confirma carrinho; Sistema calcula total, exibe resumo e solicita dados de pagamento; Cliente insere dados; Sistema processa pagamento junto ao Banco/Gateway; Banco autoriza; Sistema confirma pedido e exibe confirmação ao Cliente." />
 
 ### Fork e Join — paralelismo
 
