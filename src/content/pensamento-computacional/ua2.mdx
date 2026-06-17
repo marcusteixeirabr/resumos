@@ -1,5 +1,5 @@
 ---
-title: "UE2 — Modelagem de Soluções"
+title: "UA2 — Modelagem de Soluções"
 subtitle: "Modelos são abstrações da realidade que permitem estudar, projetar e comunicar sistemas antes de construí-los. Do ciclo de vida do software à UML, passando por Design Thinking e requisitos, a modelagem é a ponte entre o problema e o código."
 ua: 2
 group: "Pensamento Computacional"
@@ -7,6 +7,7 @@ group: "Pensamento Computacional"
 import Callout from "../../components/Callout.astro";
 import SlidesGrid from "../../components/SlidesGrid.astro";
 import SlideItem from "../../components/SlideItem.astro";
+import InlineImage from "../../components/InlineImage.astro";
 
 <SlidesGrid>
   <SlideItem src="/assets/img/slides/rpc_11.webp" alt="A Obra em Ação: Da Teoria à Prática" caption="Da teoria à prática: aplicar fundamentos para construir soluções robustas" />
@@ -69,18 +70,7 @@ Os principais diagramas UML se dividem em:
 
 **Exemplo de diagrama de classes simplificado:**
 
-```
-┌─────────────────┐         ┌──────────────────┐
-│     Aluno       │  1    * │    Disciplina    │
-├─────────────────┤─────────├──────────────────┤
-│ - nome: string  │         │ - codigo: string │
-│ - matricula: int│         │ - cargaHoraria:  │
-├─────────────────┤         │   int            │
-│ + matricular()  │         ├──────────────────┤
-│ + consultarNotas│         │ + oferecer()     │
-└─────────────────┘         │ + cancelar()     │
-                            └──────────────────┘
-```
+<InlineImage src="/assets/img/slides/dcp_01.webp" alt="Diagrama de classes UML: classe Aluno com atributos nome e matricula e métodos matricular() e consultarNotas(), associada 1 para muitos com classe Disciplina com atributos codigo e cargaHoraria e métodos oferecer() e cancelar()" />
 
 ### Requisitos: RF e RNF
 

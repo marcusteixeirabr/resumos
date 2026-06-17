@@ -416,6 +416,18 @@ tr:hover td { background: rgba(255,255,255,.015); }
 .audio-summary figcaption svg { flex-shrink: 0; color: var(--accent); }
 .audio-summary audio { width: 100%; height: 36px; }
 
+/* ── Inline diagram image (sem lightbox, sem crop) ── */
+.inline-diagram {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 1.25rem auto;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  padding: 1rem;
+}
+
 /* ── Diagram ASCII ── */
 .diagram {
   background: rgba(5, 5, 15, 0.6);
