@@ -13,17 +13,17 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
-| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
-| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM | ✅ Resumos prontos (16/16 UAs) |
-| **Database Design for Apps** | Conceitos de banco de dados, tipos (relacional, hierárquico, em rede, objeto-relacional), modelagem e linguagens SQL, arquitetura de BD, SGBDs | ✅ Resumos prontos (16/16 UAs) |
+| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM, SQL, JDBC, JPA/Hibernate | ✅ Resumos prontos (16/16 UAs) |
+| **Database Design for Apps** | Conceitos de BD, modelagem (ER, relacional), SQL (DDL/DML/DCL/DQL), transações, NoSQL, migrações | ✅ Resumos prontos (16/16 UAs) |
 
 ### Trimestres anteriores
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Engenharia de Requisitos** | RF / RNF, regras de negócio, casos de uso, rastreabilidade | 🔜 Em breve |
-| **Pensamento Computacional** | Algoritmos, lógica, linguagem C, vetores, matrizes | 🔜 Em breve |
+| **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
+| **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
+| **Engenharia de Requisitos** | BPM/BPMN, RF/RNF, regras de negócio, casos de uso, diagramas de atividades, rastreabilidade, testes | ✅ Resumos prontos (16/16 UAs) |
+| **Pensamento Computacional** | Fundamentos de PC, algoritmos, lógica, linguagem C, estruturas de controle, vetores, matrizes | ✅ Resumos prontos (16/16 UAs) |
 
 ---
 
@@ -45,13 +45,17 @@ O site foi migrado de arquivos HTML monolíticos (~2 000 linhas cada) para uma a
 resumos/
 ├── src/
 │   ├── content/
-│   │   ├── software-design/     # ua1.mdx … ua16.mdx
-│   │   └── responsive-web/      # ua1.mdx … ua16.mdx
-│   ├── components/              # Callout, Sidebar, SlidesGrid, SlideItem…
+│   │   ├── software-design/              # ua1.mdx … ua16.mdx
+│   │   ├── responsive-web/               # ua1.mdx … ua16.mdx
+│   │   ├── programming-data-persistence/ # ua1.mdx … ua16.mdx
+│   │   ├── database-design-for-apps/     # ua1.mdx … ua16.mdx
+│   │   ├── engenharia-requisitos/        # ua1.mdx … ua16.mdx
+│   │   └── pensamento-computacional/     # ua1.mdx … ua16.mdx
+│   ├── components/              # Callout, Sidebar, SlidesGrid, SlideItem, InlineImage…
 │   ├── layouts/                 # BaseLayout, DisciplineLayout
 │   └── pages/                   # rotas dinâmicas por disciplina
 ├── public/
-│   ├── assets/img/slides/       # imagens dos slides
+│   ├── assets/img/slides/       # imagens dos slides (.webp)
 │   └── styles/                  # CSS global
 └── .github/workflows/deploy.yml
 ```
