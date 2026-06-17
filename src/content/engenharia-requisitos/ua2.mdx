@@ -1,0 +1,104 @@
+---
+title: "UE2 — Fundamentos da Engenharia de Requisitos"
+subtitle: "Requisitos mal compreendidos são a principal causa de fracasso em projetos de software — não a tecnologia. A Engenharia de Requisitos existe para transformar necessidades nebulosas em especificações claras, verificáveis e gerenciáveis."
+ua: 2
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_01.webp" alt="O Blueprint do Software de Qualidade: da Regra de Negócio à Manutenção Sustentável" caption="A jornada estruturada pela Engenharia de Software" />
+  <SlideItem src="/assets/img/slides/erp_15.webp" alt="O Blueprint Não é um Documento, é uma Disciplina — quatro camadas: Fundação, Projeto, Construção e Evolução" caption="Cada artefato da ER é uma camada do blueprint que guia a construção e evolução do produto" />
+</SlidesGrid>
+
+### Por que os requisitos importam tanto
+
+O software está em toda parte — semáforos, aeronaves, equipamentos médicos, bancos, entregas por app. Quando funciona bem, é invisível. Quando falha, as consequências vão de transtorno a tragédia.
+
+Dois casos históricos ilustram o custo de requisitos mal tratados:
+
+**Aeroporto de Denver (1994)** — o sistema automatizado de bagagens deveria rotear malas em até 30 minutos. A complexidade do algoritmo de roteamento foi subestimada. Resultado: 16 meses de atraso na inauguração e US$ 1,1 milhão de prejuízo por dia. O requisito existia — a análise de sua viabilidade técnica não foi feita.
+
+**Foguete Ariane 5 (1996)** — explodiu 37 segundos após o lançamento. Causa: o software de navegação reutilizado do Ariane 4 tentou converter um número de ponto flutuante de 64 bits em um inteiro de 16 bits. O Ariane 5 era mais rápido — o valor estorou a capacidade do inteiro. Um requisito de reaproveitamento de software não considerou as diferenças de contexto.
+
+### O que é um requisito
+
+O padrão IEEE define requisito como:
+
+1. Uma condição ou capacidade necessária para um usuário **resolver um problema** ou alcançar um objetivo.
+2. Uma condição ou capacidade que deve ser atendida por um sistema para **satisfazer um contrato**, padrão ou especificação.
+3. Uma **representação documentada** de uma das condições acima.
+
+O ponto central: requisito é sobre **o quê**, não sobre **como**. Descreve o problema a ser resolvido, não a solução técnica.
+
+### O que é Engenharia de Requisitos
+
+Engenharia de Requisitos (ER) é o conjunto de práticas e atividades sistemáticas para **identificar, analisar, especificar, verificar, validar e gerenciar requisitos** ao longo de todo o ciclo de vida de um produto de software.
+
+Não é uma fase. É uma disciplina que percorre todo o desenvolvimento — do levantamento inicial até a manutenção do produto em produção.
+
+### As cinco atividades da ER
+
+As atividades da ER formam um ciclo iterativo, não uma cascata:
+
+```
+Elicitação ──→ Análise ──→ Especificação ──→ Verificação/Validação
+     ↑                                               │
+     └───────────── Gerenciamento ←──────────────────┘
+```
+
+**1. Elicitação** — descobrir o que o sistema deve fazer. Envolve identificar stakeholders, entender o contexto de negócio e coletar necessidades por meio de entrevistas, workshops, observação, análise de documentos e prototipagem.
+
+**2. Análise** — processar o que foi coletado: identificar conflitos entre requisitos de diferentes stakeholders, detectar ambiguidades, avaliar viabilidade técnica e de negócio, negociar prioridades.
+
+**3. Especificação** — documentar os requisitos de forma estruturada, clara e verificável. O resultado é um artefato (documento, histórias de usuário, casos de uso) que serve de contrato entre negócio e desenvolvimento.
+
+**4. Verificação e Validação** — certificar que os requisitos estão corretos (verificação: "estamos construindo o produto certo?") e que o produto resultante atende às necessidades reais (validação: "estamos construindo corretamente?").
+
+**5. Gerenciamento** — controlar versões, rastrear mudanças, acompanhar status e medir o impacto de alterações ao longo de toda a vida do produto.
+
+### Problemas comuns e seus custos
+
+| Problema | Causa típica | Consequência |
+|---|---|---|
+| Requisito ambíguo | Termos subjetivos como "rápido" ou "amigável" | Implementações diferentes da esperada |
+| Requisito incompleto | Stakeholder assumiu que "era óbvio" | Funcionalidade faltando em produção |
+| Requisito conflitante | Dois stakeholders com visões opostas | Retrabalho e negociação tardia |
+| Requisito não rastreável | Sem vínculo com necessidade real | Funcionalidades que ninguém usa |
+| Requisito instável | Mudanças sem controle de impacto | Efeito dominó no projeto |
+
+A regra dos custos de correção: detectar um erro na fase de especificação custa **1x**; no desenvolvimento, **10x**; em produção, **100x**. Investir em ER reduz drasticamente o custo total do projeto.
+
+<Callout type="warning">
+**ER em métodos ágeis — mudança de vocabulário, não de essência**
+
+Alguns times ágeis eliminam documentação de requisitos achando que "o código é a especificação". Isso é um mal entendido. Em Scrum, as atividades de ER continuam existindo — só mudam de forma: elicitação vira refinamento do backlog, especificação vira critérios de aceitação de histórias, verificação/validação viram Definition of Ready e Definition of Done. A disciplina permanece; a burocracia diminui.
+</Callout>
+
+### Stakeholders
+
+Stakeholder é qualquer pessoa ou grupo que tem interesse ou é afetado pelo sistema:
+
+- **Usuários finais** — quem opera o sistema diariamente; conhece o processo melhor que ninguém
+- **Clientes/patrocinadores** — quem paga e aprova; foco em ROI e prazo
+- **Equipe de desenvolvimento** — quem constrói; precisa de clareza técnica
+- **Operações/suporte** — quem mantém; precisa de monitoramento e manutenibilidade
+- **Reguladores/auditores** — requisitos legais e de conformidade (LGPD, PCI-DSS)
+
+Diferentes stakeholders têm perspectivas diferentes e frequentemente conflitantes. O analista de requisitos é o mediador.
+
+### Práticas Modernas
+
+**ER em ambientes ágeis** — histórias de usuário ("Como [papel], quero [ação] para [benefício]") com critérios de aceitação no formato Given/When/Then (BDD). Backlog refinement substitui sessões formais de elicitação em cascata.
+
+**Ferramentas de ALM** — Jira + Confluence, Azure DevOps, Linear. Permitem rastrear requisitos (histórias) diretamente até o código, testes e deploy, criando rastreabilidade automática.
+
+**AI-assisted requirements** — ferramentas como GitHub Copilot e modelos de linguagem auxiliam na geração de histórias a partir de descrições de negócio, detecção de ambiguidades e sugestão de critérios de aceitação. O analista ainda valida — a IA acelera o rascunho.
+
+**Continuous Requirements** — em produtos de longa vida, requisitos evoluem continuamente. Feature flags, A/B testing e análise de uso (telemetria) retroalimentam o backlog com dados reais de uso, transformando requisitos em hipóteses verificáveis.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

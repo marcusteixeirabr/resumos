@@ -1,0 +1,123 @@
+---
+title: "UE3 — Requisitos de Software"
+subtitle: "Nem todo requisito é igual — alguns descrevem comportamentos do sistema, outros definem como ele deve ser, e outros expressam políticas do negócio. Saber classificar, priorizar e avaliar a qualidade dos requisitos é o que separa uma especificação útil de uma lista de desejos."
+ua: 3
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_05.webp" alt="A Arte da Precisão: Como Evitar a Ambiguidade nos Requisitos — requisitos ruins vs bons, palavras a evitar" caption="Requisitos vagos são a principal fonte de retrabalho. Um bom requisito é completo, correto, não ambíguo e verificável." />
+</SlidesGrid>
+
+### Classificação dos requisitos
+
+Existem múltiplas formas de classificar requisitos. A mais comum na prática combina três dimensões:
+
+#### Por nível de abstração
+
+| Nível | Tipo | Pergunta respondida | Exemplo |
+|---|---|---|---|
+| Estratégico | Requisito de negócio | Por que o sistema existe? | "Reduzir o tempo de atendimento em 40%" |
+| Tático | Requisito de usuário | O que o usuário precisa fazer? | "O atendente deve conseguir abrir um chamado em menos de 2 minutos" |
+| Operacional | Requisito de sistema | Como o sistema deve se comportar? | "O sistema deve registrar o chamado e atribuir ID único em até 3 segundos" |
+
+#### Por natureza
+
+**Requisito Funcional (RF)** — descreve um comportamento ou funcionalidade que o sistema deve prover. Define o que o sistema **faz**.
+
+> "O sistema deve permitir que o usuário filtre produtos por categoria, faixa de preço e avaliação."
+
+**Requisito Não Funcional (RNF)** — descreve como o sistema deve se comportar; são atributos de qualidade. Define como o sistema **é**.
+
+> "O filtro deve retornar resultados em menos de 1 segundo para catálogos de até 100.000 produtos."
+
+**Regra de Negócio (RN)** — política ou restrição do domínio que o sistema deve respeitar. Define o que o sistema **pode ou não pode** fazer.
+
+> "Clientes inadimplentes não podem finalizar compras."
+
+<Callout type="tip">
+**A hierarquia na prática**
+
+RN → RF → RNF formam uma hierarquia natural: a regra de negócio define o que deve acontecer; o RF especifica a funcionalidade que implementa essa regra; o RNF define como essa funcionalidade deve se comportar em termos de qualidade. Toda RN deve gerar ao menos um RF; todo RF deve ter ao menos um RNF associado.
+</Callout>
+
+### Critérios de qualidade de um requisito individual
+
+Um requisito bem escrito deve satisfazer os seguintes atributos:
+
+| Atributo | Definição | Teste rápido |
+|---|---|---|
+| **Correto** | Reflete uma necessidade real do stakeholder | "Alguém validou isso com o usuário?" |
+| **Não ambíguo** | Tem uma única interpretação possível | "Dois desenvolvedores entenderiam o mesmo?" |
+| **Verificável** | É possível testar se foi implementado | "Como saberei que está pronto?" |
+| **Completo** | Não contém TBD, lacunas ou omissões | "Falta alguma informação para implementar?" |
+| **Rastreável** | Tem origem identificada (RN, lei, entrevista) | "De onde veio esse requisito?" |
+| **Determinístico** | Mesmo contexto → mesmo comportamento esperado | "O resultado é previsível?" |
+
+### Palavras que arruínam um requisito
+
+Certas palavras são sinais de alerta imediatos — elas introduzem subjetividade e tornam o requisito não verificável:
+
+| Palavra problemática | Por que é ruim | Como corrigir |
+|---|---|---|
+| "amigável", "fácil de usar" | Subjetivo — o que é fácil para um programador não é para um idoso | Especifique uma métrica: "usuário conclui tarefa X em Y segundos sem treinamento" |
+| "rápido", "eficiente" | Sem referência — rápido para quem? em quais condições? | "Tempo de resposta ≤ 2s para 95% das requisições com até 1.000 usuários simultâneos" |
+| "robusto", "confiável" | Genérico — toda equipe diz que seu sistema é robusto | Especifique: "disponibilidade de 99,9% medida mensalmente" |
+| "suportar", "tratar" | Ambíguo — o sistema exibe erro, ignora ou corrige? | Detalhe o comportamento esperado em cada situação |
+| "geralmente", "normalmente" | Cria exceções implícitas não documentadas | Defina explicitamente os casos excepcionais |
+| "etc.", "e outros" | Lista incompleta | Liste todos os itens ou use critério objetivo de inclusão |
+
+### Critérios de qualidade do conjunto de requisitos
+
+Além da qualidade individual, o conjunto como um todo deve ser:
+
+- **Consistente** — sem requisitos contraditórios entre si
+- **Completo** — todos os cenários relevantes estão cobertos
+- **Priorizado** — há clareza sobre o que é essencial vs. desejável
+
+### Priorização de requisitos
+
+Nem tudo pode ser feito no primeiro sprint. A priorização guia o desenvolvimento incremental.
+
+**MoSCoW:**
+
+| Categoria | Significado |
+|---|---|
+| Must have | Obrigatório — sem isso o produto não pode ser entregue |
+| Should have | Importante — alto valor, mas há alternativa manual |
+| Could have | Desejável — baixo impacto se ausente |
+| Won't have | Fora do escopo atual — pode entrar numa próxima versão |
+
+**Outras técnicas:** Modelo de Kano (satisfação do usuário), $100 test (stakeholders "investem" entre requisitos), comparação par a par.
+
+<Callout type="warning">
+**Requisitos funcionais vs. não funcionais — a separação não é absoluta**
+
+Na prática, muitos requisitos têm aspectos funcionais e não funcionais entrelaçados. "O sistema deve criptografar dados sensíveis em repouso usando AES-256" é simultaneamente um RF (criptografar) e um RNF (segurança com spec técnica). O importante não é a categoria — é que o requisito seja claro e verificável.
+</Callout>
+
+### Práticas Modernas
+
+**Histórias de usuário** — formato ágil para RFs: "Como [papel], quero [ação] para [benefício]". Complementadas por critérios de aceitação no formato Given/When/Then (BDD), que tornam o requisito executável como teste.
+
+```gherkin
+# Critério de aceitação como spec executável (BDD/Gherkin)
+Funcionalidade: Filtro de produtos
+
+  Cenário: Filtrar por faixa de preço
+    Dado que o usuário está na página de catálogo
+    Quando ele define faixa de preço entre R$50 e R$100
+    Então apenas produtos nessa faixa são exibidos
+    E o resultado aparece em menos de 1 segundo
+```
+
+**INVEST** — critério de qualidade para histórias de usuário: **I**ndependente, **N**egociável, **V**aliosa, **E**stimável, **S**mall (pequena), **T**estável.
+
+**Definition of Ready (DoR)** — checklist que uma história deve satisfazer antes de entrar no sprint: critérios de aceitação definidos, dependências identificadas, estimada pela equipe.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

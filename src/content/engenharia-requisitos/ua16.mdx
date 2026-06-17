@@ -1,0 +1,169 @@
+---
+title: "UE16 — Testes"
+subtitle: "Todo Caso de Uso especificado deve ser testado — cada fluxo, cada caminho alternativo, cada exceção. Os Casos de Teste são o artefato que conecta a especificação à verificação, garantindo que o software entregue realmente resolve o problema para o qual foi projetado."
+ua: 16
+group: "Testes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_11.webp" alt="Projetando a Inspeção: A Estrutura de um Caso de Teste — ID, Título, Requisito associado, Pré-requisitos, Passos, Dados e Resultado Esperado" caption="A anatomia de um Caso de Teste: cada campo tem propósito específico para garantir repetibilidade e rastreabilidade" />
+  <SlideItem src="/assets/img/slides/erp_12.webp" alt="Testando Todos os Caminhos: Do Caso de Uso ao Caso de Teste — CT-051 caminho feliz e CT-052 cenário de erro" caption="De um único Caso de Uso emergem múltiplos Casos de Teste — um por fluxo (principal, alternativo, exceção)" />
+</SlidesGrid>
+
+### O que é um Caso de Teste
+
+Um Caso de Teste (CT) é um **roteiro detalhado** que define como testar uma funcionalidade ou caminho específico de um Caso de Uso. Garante que os testes sejam:
+
+- **Repetíveis** — qualquer testador executa e obtém o mesmo resultado
+- **Consistentes** — resultados não dependem de quem executa
+- **Completos** — todos os cenários relevantes são cobertos
+- **Rastreáveis** — cada CT está conectado ao RF e ao CU que valida
+
+### Estrutura de um Caso de Teste
+
+```markdown
+**ID:** CT-051
+**Título:** Criar usuário com dados válidos (caminho feliz)
+
+**Requisito(s) Associado(s):** RF-015 (Cadastrar usuário), RF-016 (Validar dados de cadastro)
+**Caso de Uso:** UC-003 (Registrar Usuário)
+**Fluxo:** Fluxo Principal
+
+**Pré-requisitos:**
+- Usuário logado com perfil de Administrador
+- Banco de dados acessível
+
+**Passos de Teste:**
+1. Navegar para a tela "Criar Usuário" (menu Administração > Usuários > Novo)
+2. Preencher campo "Nome" com "João da Silva"
+3. Preencher campo "CPF" com "123.456.789-09"
+4. Preencher campo "E-mail" com "joao@empresa.com.br"
+5. Preencher campo "Perfil" selecionando "Operador"
+6. Clicar no botão "Salvar"
+
+**Dados de Teste:**
+- CPF válido: 123.456.789-09 (CPF gerado para teste — não real)
+- E-mail: joao@empresa.com.br
+
+**Resultado Esperado:**
+- O sistema exibe a mensagem "Usuário criado com sucesso"
+- O sistema redireciona para a lista de usuários
+- O novo usuário "João da Silva" aparece na lista
+- Um e-mail de boas-vindas é enviado para joao@empresa.com.br
+```
+
+---
+
+```markdown
+**ID:** CT-052
+**Título:** Criar usuário sem CPF (cenário de erro — campo obrigatório)
+
+**Requisito(s) Associado(s):** RF-016 (Validar dados de cadastro)
+**Caso de Uso:** UC-003 (Registrar Usuário)
+**Fluxo:** Fluxo de Exceção FE1
+
+**Pré-requisitos:**
+- Usuário logado com perfil de Administrador
+
+**Passos de Teste:**
+1. Navegar para a tela "Criar Usuário"
+2. Preencher campo "Nome" com "João da Silva"
+3. Deixar campo "CPF" em branco
+4. Preencher campo "E-mail" com "joao@empresa.com.br"
+5. Clicar no botão "Salvar"
+
+**Resultado Esperado:**
+- O sistema NÃO salva o usuário
+- O sistema exibe a mensagem de erro "O campo CPF é obrigatório" abaixo do campo CPF
+- O cursor é posicionado no campo CPF
+- Nenhum e-mail é enviado
+```
+
+### A regra: 1 CU → N Casos de Teste
+
+Cada fluxo do CU gera ao menos um CT:
+
+| Fluxo do CU | Casos de Teste derivados |
+|---|---|
+| Fluxo Principal | CT-051 (caminho feliz com dados válidos típicos) |
+| Fluxo Alternativo FA1 | CT-053 (cenário alternativo específico) |
+| Fluxo de Exceção FE1 | CT-052 (campo obrigatório vazio) |
+| Fluxo de Exceção FE2 | CT-054 (CPF com formato inválido) |
+| Fluxo de Exceção FE3 | CT-055 (CPF já cadastrado — duplicata) |
+| RNF de segurança | CT-056 (tentativa com SQL injection no campo CPF) |
+
+### Tipos de teste e quando aplicar
+
+| Tipo | O que verifica | Executado por |
+|---|---|---|
+| **Unitário** | Função/método isolado | Desenvolvedor (TDD) |
+| **Integração** | Interação entre módulos ou com serviços externos | QA / Desenvolvedor |
+| **Sistema** | Sistema completo conforme requisitos funcionais | QA |
+| **Aceitação (UAT)** | Sistema atende necessidade real do usuário | Usuário final / Product Owner |
+| **Regressão** | Mudanças não quebraram funcionalidades existentes | QA / Automação |
+| **Desempenho** | Sistema atende RNFs de tempo de resposta e carga | QA / Especialista |
+| **Segurança (Pentest)** | Vulnerabilidades e conformidade com RNFs de segurança | Especialista em segurança |
+
+### Verificação de cobertura de testes
+
+Use a Matriz de Rastreabilidade para verificar que tudo foi testado:
+
+| RN | RF | CU | CTs |
+|---|---|---|---|
+| RN-001 | RF-015 | UC-003 | CT-051, CT-052, CT-053, CT-054, CT-055 |
+| RN-002 | RF-020 | UC-005 | CT-060, CT-061 |
+| RN-003 | RF-025 | UC-008 | ❌ (sem CT — lacuna!) |
+
+**RF sem CT** → funcionalidade não testada → risco de entrar em produção com bugs não detectados.
+
+<Callout type="warning">
+**Testes manuais não escalam**
+
+Em projetos que evoluem continuamente, executar todos os casos de teste manualmente a cada release se torna inviável. Sem automação, equipes cortam testes para cumprir prazos — e bugs chegam em produção. A automação de testes de regressão não é luxo em projetos de software modernos; é condição para manter a velocidade de entrega sem sacrificar qualidade.
+</Callout>
+
+### Práticas Modernas
+
+**BDD — Behavior-Driven Development** — especificação de CU e CT em um único artefato. Os critérios de aceitação em Gherkin (Given/When/Then) são ao mesmo tempo especificação legível pelo negócio e teste automatizado executado pelo CI/CD:
+
+```gherkin
+Funcionalidade: Registrar Usuário
+  Como administrador do sistema
+  Quero cadastrar novos usuários
+  Para conceder acesso ao sistema
+
+  Cenário: Cadastro com dados válidos (CT-051)
+    Dado que o administrador está logado
+    Quando preenche todos os campos obrigatórios com dados válidos
+    E clica em "Salvar"
+    Então o sistema exibe "Usuário criado com sucesso"
+    E o novo usuário aparece na listagem
+
+  Cenário: Cadastro sem CPF (CT-052)
+    Dado que o administrador está logado
+    Quando preenche o formulário sem o campo CPF
+    E clica em "Salvar"
+    Então o sistema exibe "O campo CPF é obrigatório"
+    E nenhum usuário é criado
+```
+
+**Pirâmide de testes** — princípio de distribuição de esforço de teste:
+- **Base (muitos):** testes unitários — rápidos, baratos, executados em milissegundos
+- **Meio (alguns):** testes de integração — verificam interações entre componentes
+- **Topo (poucos):** testes E2E/UI — lentos e caros; cobrir apenas os fluxos críticos
+
+**Ferramentas modernas de automação:**
+- Cypress / Playwright — testes E2E para aplicações web
+- Jest / Vitest — testes unitários para JavaScript/TypeScript
+- JUnit 5 + Mockito — testes unitários e de integração para Java
+- k6 / Gatling — testes de carga para RNFs de desempenho
+
+**Shift-left testing** — mover os testes para o início do ciclo: escrever os critérios de aceitação (CTs) antes de implementar a funcionalidade. O desenvolvedor implementa até todos os CTs passarem — equivalente ao TDD em nível de comportamento.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.
+- ZANIN, A. *Engenharia de Software*. Porto Alegre: SAGAH.

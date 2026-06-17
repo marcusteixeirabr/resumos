@@ -1,0 +1,146 @@
+---
+title: "UE10 — Especificação de Requisitos"
+subtitle: "A Especificação de Requisitos de Software é o contrato entre quem pede e quem constrói. Bem elaborada, elimina ambiguidades e serve de base para desenvolvimento, testes e aceitação. O coração da especificação moderna é a rastreabilidade: conectar cada requisito à sua origem e ao seu destino."
+ua: 10
+group: "Qualidade e Gestão"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_14.webp" alt="O Fio de Ouro: Conectando Tudo com a Matriz de Rastreabilidade — RN para RF para Caso de Uso para Caso de Teste" caption="A Matriz de Rastreabilidade conecta RNs, RFs, Casos de Uso e Casos de Teste — permitindo análise de impacto e verificação de cobertura" />
+</SlidesGrid>
+
+### O que é uma Especificação de Requisitos de Software
+
+A Especificação de Requisitos de Software (ERS) é o documento (ou conjunto de artefatos) que descreve **o que o sistema deve fazer e como deve se comportar**, de forma suficientemente clara para que possa ser desenvolvido, testado e aceito.
+
+A ERS é o principal artefato de saída das atividades de elicitação, análise e validação. Ela serve a múltiplos públicos:
+- Desenvolvedores: o que implementar
+- Testadores: o que testar
+- Clientes/patrocinadores: o que foi acordado
+- Equipe de manutenção: por que algo foi feito de certa forma
+
+### Estrutura típica de uma ERS (IEEE 830 / ISO/IEC/IEEE 29148)
+
+```markdown
+1. Introdução
+   1.1 Propósito
+   1.2 Escopo
+   1.3 Definições e abreviações
+   1.4 Referências
+
+2. Descrição geral
+   2.1 Perspectiva do produto (contexto)
+   2.2 Funções do produto (resumo dos RFs)
+   2.3 Características dos usuários
+   2.4 Restrições gerais
+   2.5 Premissas e dependências
+
+3. Requisitos Funcionais
+   3.1 RF-001 — [nome]
+   3.2 RF-002 — [nome]
+   ...
+
+4. Requisitos Não Funcionais
+   4.1 Desempenho
+   4.2 Segurança
+   4.3 Usabilidade
+   ...
+
+5. Rastreabilidade
+   5.1 Matriz RN × RF
+   5.2 Matriz RF × Caso de Uso
+   5.3 Matriz RF × Caso de Teste
+
+Apêndices
+```
+
+### Rastreabilidade bidirecional
+
+Rastreabilidade é a capacidade de seguir a vida de um requisito em qualquer direção:
+
+**Upstream (para trás):** RF-010 → RN-001 → Necessidade do stakeholder → Objetivo de negócio
+**Downstream (para frente):** RF-010 → UC-005 → CT-031 → Código implementado → Deploy
+
+A rastreabilidade responde perguntas críticas:
+- "Se mudarmos a RN-001, o que precisa ser atualizado?" (análise de impacto)
+- "O RF-027 foi testado?" (verificação de cobertura)
+- "Por que o sistema se comporta assim?" (histórico de decisões)
+
+### A Matriz de Rastreabilidade
+
+A Matriz de Rastreabilidade (MR) é a ferramenta central para visualizar e gerenciar a rastreabilidade entre artefatos:
+
+| ID da RN | ID do RF | ID do Caso de Uso | IDs dos Casos de Teste |
+|---|---|---|---|
+| RN-001 | RF-004 | UC-012 | CT-101, CT-102 |
+| RN-001 | RF-005 | UC-013 | CT-103 |
+| RN-002 | RF-008 | UC-015, UC-016 | CT-110, CT-111 |
+| RN-003 | RF-012 | UC-018 | CT-115, CT-116, CT-117 |
+
+**Usos práticos da MR:**
+
+1. **Análise de impacto:** "Se alterarmos RN-001, quais RFs, CUs e CTs são afetados?" → resposta imediata na tabela
+
+2. **Verificação de cobertura:** "Todos os RFs têm ao menos um CT?" → linha sem CT = lacuna de teste
+
+3. **Verificação de completude:** "Todos os RFs derivam de alguma RN?" → RF sem RN = requisito sem justificativa de negócio
+
+4. **Manutenção simplificada:** novo membro da equipe entende o sistema olhando a MR
+
+### Verificação da ERS
+
+Antes de liberar a ERS para desenvolvimento, realize uma revisão formal:
+
+**Walkthrough** — o analista apresenta a ERS para desenvolvedores, testadores e representantes do cliente. Perguntas durante a apresentação revelam ambiguidades.
+
+**Inspeção formal** — processo estruturado com checklist, moderador e lista de defeitos. Mais rigoroso, indicado para projetos críticos.
+
+**Checklist de qualidade da ERS:**
+- [ ] Todos os RFs têm prioridade definida
+- [ ] Todos os RFs são verificáveis (testáveis)
+- [ ] Nenhum RF contém "TBD" ou lacunas
+- [ ] Todos os RFs são rastreáveis a pelo menos uma RN
+- [ ] Os RNFs têm métricas específicas e mensuráveis
+- [ ] A MR está completa e consistente
+- [ ] Termos de domínio estão definidos no glossário
+
+<Callout type="warning">
+**ERS como documento estático é um antipadrão**
+
+Uma ERS criada no início do projeto e nunca atualizada rapidamente se torna obsoleta e inútil. Em projetos de longa duração ou em evolução contínua, a ERS deve ser tratada como um documento vivo — atualizado a cada mudança de requisito aprovada, versionado e com histórico de alterações. "Especificação que não acompanha o produto não especifica nada."
+</Callout>
+
+### Práticas Modernas
+
+**Especificação executável (BDD)** — critérios de aceitação escritos em Gherkin (Given/When/Then) são ao mesmo tempo especificação e teste automatizado. A ERS "vira" a suíte de testes:
+
+```gherkin
+Funcionalidade: Pagamento com PIX
+  Como proprietário de veículo
+  Quero pagar multas via PIX
+  Para ter mais agilidade no pagamento
+
+  Cenário: Pagamento PIX bem-sucedido
+    Dado que o usuário está autenticado no sistema
+    E possui uma multa pendente de R$ 293,47
+    Quando seleciona a opção "Pagar via PIX"
+    Então o sistema gera QR Code válido por 30 minutos
+    E registra a tentativa de pagamento no histórico
+
+  Cenário: QR Code expirado
+    Dado que o usuário gerou um QR Code há 35 minutos
+    Quando tenta realizar o pagamento
+    Então o sistema exibe mensagem de QR Code expirado
+    E oferece a opção de gerar novo QR Code
+```
+
+**OpenAPI para especificar requisitos de API** — para sistemas orientados a serviços, o contrato da API (definido em YAML/JSON OpenAPI 3.0) é a especificação executável dos RFs de integração.
+
+**Diagramas como código** — PlantUML e Mermaid permitem versionar diagramas como texto em Git, mantendo a especificação visual sincronizada com o código.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

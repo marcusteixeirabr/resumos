@@ -1,0 +1,109 @@
+---
+title: "UE7 — Análise da Lista de Requisitos"
+subtitle: "Ter uma lista de requisitos não é suficiente — é preciso verificar se cada requisito é bom individualmente e se o conjunto é consistente, completo e priorizado. Conflitos não resolvidos na especificação viram retrabalho no desenvolvimento."
+ua: 7
+group: "Requisitos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é análise de requisitos
+
+A análise de requisitos é a atividade de **verificar e refinar** a lista coletada na elicitação, garantindo que cada requisito seja de boa qualidade individualmente e que o conjunto seja coerente e completo. É o filtro que impede que problemas se propagam para o desenvolvimento.
+
+A análise acontece em dois níveis:
+
+1. **Análise individual** — avaliar cada requisito isoladamente quanto à sua qualidade
+2. **Análise do conjunto** — avaliar a lista inteira quanto à consistência, completude e priorização
+
+### Critérios de análise individual
+
+Para cada requisito, verifique:
+
+| Critério | Pergunta de verificação | Falha típica |
+|---|---|---|
+| **Correto** | Esse requisito reflete uma necessidade real de um stakeholder? | Requisito inventado pelo analista sem validação |
+| **Não ambíguo** | Duas pessoas diferentes leriam e entenderiam a mesma coisa? | "O sistema deve ser amigável" |
+| **Verificável** | Existe um teste capaz de confirmar que foi implementado? | "O sistema deve responder rapidamente" |
+| **Completo** | Contém todas as informações necessárias para implementar? | Campos obrigatórios como TBD ("a ser definido") |
+| **Rastreável** | É possível identificar de onde esse requisito surgiu? | Requisito sem referência a RN ou stakeholder |
+| **Determinístico** | Dado o mesmo contexto, o sistema sempre se comporta da mesma forma? | "O sistema poderá ou não exibir aviso" |
+| **Consistente** | Não contradiz outros requisitos? | RF-010 diz que prazo é 30 dias; RF-025 diz 45 dias |
+
+### Detecção de ambiguidades
+
+Ambiguidades são a origem mais comum de implementações incorretas. Tipos frequentes:
+
+**Pronomes indefinidos:**
+> ❌ "Quando o cliente fizer login, ele deve ser redirecionado para a tela principal."
+> ✅ "Quando o cliente fizer login com sucesso, o sistema deve redirecioná-lo para a tela principal."
+
+**Comparativos sem base:**
+> ❌ "O novo sistema deve ser mais rápido que o atual."
+> ✅ "O tempo de resposta médio deve ser ≤ 1,5s, comparado aos 4,2s medidos no sistema atual."
+
+**Termos de domínio não definidos:**
+> ❌ "Clientes premium têm acesso a relatórios avançados."
+> ✅ "Clientes premium (definição: contrato ativo com valor mensal ≥ R$500 — ver RN-007) têm acesso aos relatórios definidos em RF-035 a RF-041."
+
+**Condições incompletas:**
+> ❌ "O sistema deve enviar e-mail de confirmação após a compra."
+> ✅ "O sistema deve enviar e-mail de confirmação em até 5 minutos após a compra ser aprovada pelo gateway de pagamento. Se o pagamento for reprovado, nenhum e-mail é enviado."
+
+### Análise do conjunto
+
+Após verificar os requisitos individualmente, analise o conjunto:
+
+**Consistência** — detectar contradições entre requisitos:
+- RF-010: "O sistema deve salvar rascunhos automaticamente a cada 2 minutos."
+- RNF-C03: "O sistema deve usar modo offline; sincronização ocorre apenas quando há conexão."
+> Conflito: salvamento automático implica conexão, mas há RNF de modo offline.
+
+**Completude** — identificar lacunas:
+- Há RF para criar dados, mas não para deletar? (CRUD incompleto)
+- Há RF para o fluxo normal, mas não para erros/exceções?
+- Há atores identificados sem nenhum RF associado?
+- Há relatórios necessários não especificados?
+
+**Priorização** — garantir que:
+- Todos os requisitos têm prioridade definida (Essencial/Importante/Desejável)
+- As prioridades são consistentes entre si (não há conflito de dependências)
+- O escopo do MVP está claramente delimitado
+
+### Resolução de conflitos
+
+Conflitos entre requisitos são inevitáveis — diferentes stakeholders têm interesses diferentes. Abordagens para resolução:
+
+1. **Reunião de confrontação** — colocar os stakeholders conflitantes na mesma sala para negociar
+2. **Escalonamento** — levar a decisão ao patrocinador do projeto ou ao Product Owner
+3. **Análise de impacto** — mostrar o custo de cada alternativa para facilitar a decisão
+4. **Prototipagem** — criar um protótipo das duas opções para que os stakeholders possam comparar visualmente
+
+<Callout type="warning">
+**Conflitos não resolvidos viram dívida técnica**
+
+Quando um conflito de requisitos não é resolvido na fase de especificação, o desenvolvedor toma uma decisão sozinho — frequentemente a errada. O resultado é uma funcionalidade que atende a um stakeholder e frustra outro. Conflitos de requisitos devem ser escalados, não ignorados.
+</Callout>
+
+### Revisão por pares
+
+A técnica mais eficaz para encontrar problemas na lista de requisitos é simplesmente ter outra pessoa lendo-a com olhos críticos. Técnicas formais:
+
+**Walkthrough** — o autor apresenta o requisito enquanto os revisores fazem perguntas. Informal e colaborativo.
+
+**Inspeção formal** — processo estruturado com papéis definidos (moderador, autor, revisor, relator) e checklist. Detecta mais defeitos que o walkthrough, mas consome mais tempo. Indicado para projetos críticos.
+
+**Leitura baseada em perspectivas** — cada revisor lê o documento assumindo um papel específico: desenvolvedor, testador, usuário final, arquiteto. Diferentes perspectivas encontram diferentes tipos de problema.
+
+### Práticas Modernas
+
+**Definition of Ready (DoR)** — checklist que uma história de usuário deve satisfazer antes de entrar no sprint. Equivale à análise de qualidade individual de um RF. Critérios típicos: critérios de aceitação definidos, dependências identificadas, estimada pela equipe, sem ambiguidades pendentes.
+
+**Ferramentas de ALM** — Jira + Confluence, Azure DevOps e Linear permitem criar links bidirecionais entre requisitos, detectar dependências e identificar "órfãos" (RFs sem casos de uso, ou casos de uso sem testes).
+
+**Análise automática de ambiguidade** — ferramentas experimentais baseadas em NLP (Processamento de Linguagem Natural) podem identificar padrões linguísticos problemáticos. Ainda não substituem a revisão humana, mas auxiliam em volumes grandes de requisitos.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

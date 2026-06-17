@@ -29,4 +29,8 @@ export const collections = {
     loader: glob({ pattern: '**/*.mdx', base: './src/content/pensamento-computacional' }),
     schema: disciplineSchema,
   }),
+  'engenharia-requisitos': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/engenharia-requisitos' }),
+    schema: disciplineSchema,
+  }),
 };

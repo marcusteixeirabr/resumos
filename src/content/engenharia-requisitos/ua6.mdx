@@ -1,0 +1,105 @@
+---
+title: "UE6 — Requisitos Não Funcionais"
+subtitle: "RNFs definem como o sistema deve ser — desempenho, segurança, usabilidade, confiabilidade, portabilidade. São frequentemente invisíveis na elicitação inicial e, quando esquecidos, forçam redesenhos arquiteturais custosos em produção."
+ua: 6
+group: "Requisitos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_04.webp" alt="Definindo a Qualidade e as Restrições: Requisitos Não Funcionais — cinco categorias: Desempenho, Usabilidade, Confiabilidade, Segurança, Portabilidade" caption="RNFs impactam diretamente as decisões de arquitetura e são tão críticos quanto os RFs" />
+</SlidesGrid>
+
+### O que são Requisitos Não Funcionais
+
+Requisitos Não Funcionais (RNFs) são atributos de qualidade que descrevem **como o sistema deve se comportar**, não o que ele faz. Enquanto os RFs especificam funcionalidades, os RNFs especificam restrições e qualidades que permeiam todo o sistema.
+
+**RF vs RNF na prática:**
+
+| RF (o quê) | RNF correspondente (como) |
+|---|---|
+| "O sistema deve autenticar o usuário" | "A autenticação deve ser concluída em ≤ 500ms" |
+| "O sistema deve exibir o extrato bancário" | "O extrato deve estar disponível 99,9% do tempo" |
+| "O sistema deve processar pagamentos" | "Dados de pagamento devem ser criptografados com TLS 1.3" |
+
+### As cinco categorias principais
+
+**Desempenho** — tempo de resposta, throughput, capacidade de usuários simultâneos.
+
+> RNF-D01: "95% das consultas devem retornar em ≤ 2s com até 1.000 usuários simultâneos."
+> RNF-D02: "A página inicial deve carregar em ≤ 3s em conexão 3G."
+
+**Usabilidade** — facilidade de aprendizado, acessibilidade, prevenção de erros.
+
+> RNF-U01: "Um usuário sem treinamento deve conseguir realizar uma matrícula em ≤ 5 minutos."
+> RNF-U02: "A interface deve ser compatível com WCAG 2.1 nível AA."
+
+**Confiabilidade** — disponibilidade, tolerância a falhas, recuperação.
+
+> RNF-C01: "O sistema deve ter disponibilidade de 99,9% medida mensalmente (≤ 8,7h de downtime/ano)."
+> RNF-C02: "Em caso de falha do servidor primário, o failover deve ocorrer em ≤ 30 segundos."
+
+**Segurança** — autenticação, autorização, criptografia, proteção de dados.
+
+> RNF-S01: "O sistema deve suportar autenticação multifator (MFA) para perfis administrativos."
+> RNF-S02: "Dados pessoais devem ser armazenados criptografados com AES-256."
+> RNF-S03: "Todas as operações de escrita devem ser auditadas com usuário, timestamp e valor anterior."
+
+**Portabilidade** — capacidade de operar em diferentes ambientes.
+
+> RNF-P01: "O sistema deve rodar em Windows 10+, macOS 12+ e Ubuntu 22.04+."
+> RNF-P02: "O sistema deve ser possível de transportar para outro provedor cloud em ≤ 60 dias."
+
+### Outros RNFs relevantes
+
+| Categoria | Exemplo |
+|---|---|
+| Manutenibilidade | "Cobertura de testes unitários ≥ 80%" |
+| Escalabilidade | "A arquitetura deve suportar escalonamento horizontal sem mudanças no código" |
+| Interoperabilidade | "A API deve seguir o padrão REST com documentação OpenAPI 3.0" |
+| Conformidade | "O sistema deve estar em conformidade com a LGPD (Lei 13.709/2018)" |
+| Internacionalização | "O sistema deve suportar PT-BR e EN-US; adicionar novo idioma deve exigir apenas tradução dos textos" |
+
+### A regra do RNF mensurável
+
+Um RNF não verificável é inútil. O critério de qualidade de um bom RNF é:
+
+**Ruim:** "O sistema deve ser rápido." (O quê significa rápido? Para quantos usuários?)
+
+**Bom:** "95% das buscas de produto devem retornar resultados em ≤ 1,5s, medidos com 500 usuários simultâneos em horário de pico, na infraestrutura de produção."
+
+A estrutura de um RNF mensurável: **métrica** + **valor-limite** + **condição de medição**.
+
+<Callout type="warning">
+**RNFs são frequentemente descobertos tarde**
+
+É comum que stakeholders só percebam RNFs quando o sistema já está em operação. Isso acontece porque RNFs são invisíveis em ambiente de desenvolvimento (máquinas potentes, rede local, dados fictícios). Use sessões dedicadas com perguntas diretas: "Qual o tempo de resposta aceitável?", "Quantos usuários simultâneos você espera?", "Quais navegadores seus usuários usam?", "Há legislação de privacidade aplicável?". RNFs descobertos em produção custam 100x mais para corrigir do que na especificação.
+</Callout>
+
+### RNFs e arquitetura
+
+RNFs direcionam decisões arquiteturais. Exemplos:
+
+| RNF | Decisão arquitetural | Tecnologias possíveis |
+|---|---|---|
+| Disponibilidade 99,9% | Arquitetura com redundância e failover | Load balancer, multi-AZ na AWS |
+| Escalabilidade horizontal | Stateless application servers | Kubernetes, Docker Swarm |
+| Desempenho ≤ 200ms | Cache de dados frequentes | Redis, Memcached |
+| Segurança — LGPD | Segregação de dados pessoais | Banco separado, field-level encryption |
+| Portabilidade cloud | Evitar vendor lock-in | Open standards, containers |
+
+### Práticas Modernas
+
+**ISO/IEC 25010 (SQuaRE)** — modelo de qualidade de produto de software com 8 características: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade, portabilidade. Serve de checklist para elicitar RNFs.
+
+**SLAs e SLOs** — Service Level Agreement (contrato com cliente) e Service Level Objective (meta interna). Definem RNFs de disponibilidade e desempenho de forma mensurável e monitorável (ex: Google SRE usa Error Budget).
+
+**ADRs (Architecture Decision Records)** — documentos que registram decisões arquiteturais motivadas por RNFs. "Escolhemos PostgreSQL em vez de MongoDB pelo RNF de consistência transacional (ACID)."
+
+**Testes de carga** — k6, Gatling, JMeter para validar RNFs de desempenho antes de ir para produção.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

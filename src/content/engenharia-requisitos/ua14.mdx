@@ -1,0 +1,100 @@
+---
+title: "UE14 — Requisito Funcional e Caso de Uso"
+subtitle: "RFs e Casos de Uso são dois lados da mesma moeda: o RF especifica o que o sistema deve fazer; o Caso de Uso descreve como o usuário experimenta essa funcionalidade. A rastreabilidade entre eles garante que nenhum requisito fique sem implementação e nenhuma implementação fique sem justificativa."
+ua: 14
+group: "Modelagem"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### A relação entre RF e Caso de Uso
+
+Requisitos Funcionais e Casos de Uso são complementares, não substitutos. Cada um tem um papel distinto:
+
+| Artefato | Perspectiva | Responde | Nível de detalhe |
+|---|---|---|---|
+| Regra de Negócio (RN) | Domínio do negócio | Por que a funcionalidade existe | Alto nível |
+| Requisito Funcional (RF) | Sistema | O que o sistema deve fazer | Médio nível |
+| Caso de Uso (CU) | Interação usuário-sistema | Como o usuário usa a funcionalidade | Detalhado |
+| Caso de Teste (CT) | Verificação | Como confirmar que está correto | Operacional |
+
+O pipeline completo de rastreabilidade:
+
+```
+Necessidade do negócio → RN → RF ←→ RNF → CU → Especificação → CT → Código → Deploy
+```
+
+### Mapeamento RF ↔ CU
+
+A relação entre RFs e CUs é de muitos para muitos:
+
+- Um **RF pode ser coberto por múltiplos CUs**: RF "Autenticar usuário" é coberto por UC-001 (Login por senha), UC-002 (Login social), UC-003 (Login por biometria)
+- Um **CU pode implementar múltiplos RFs**: UC-005 "Consultar Multas" implementa RF-008 (buscar multas), RF-009 (exibir detalhes), RF-010 (registrar acesso)
+
+```markdown
+## Tabela de cobertura RF × CU
+
+| RF     | Descrição                     | CUs que implementam      |
+|--------|-------------------------------|--------------------------|
+| RF-008 | Consultar multas por CNH      | UC-005                   |
+| RF-009 | Exibir detalhes de multa      | UC-005, UC-006           |
+| RF-010 | Auditoria de acessos          | UC-005, UC-007, UC-008   |
+| RF-011 | Agendar exame                 | UC-010                   |
+| RF-012 | Pagar multas                  | UC-015                   |
+```
+
+### Verificação de completude
+
+Use a relação RF ↔ CU para verificar a integridade do modelo:
+
+**RF sem CU** — requisito que ninguém sabe como usar. Provavelmente RF muito abstrato que precisa ser decomposto, ou RF que deveria ser RNF.
+
+**CU sem RF** — funcionalidade sem justificativa de negócio. Provavelmente CU inventado sem derivação de RN/RF, ou RF correspondente foi cancelado mas o CU não foi removido.
+
+**RF sem teste** — funcionalidade que não pode ser verificada. Indica lacuna no planejamento de testes.
+
+### Identificação e documentação de atores
+
+Para cada CU identificado, documente os atores com precisão:
+
+```markdown
+## Perfil do Ator: Motorista
+
+Descrição: Usuário final que possui CNH ativa.
+Permissões: Consultar e pagar multas próprias, agendar exames, recorrer de multas.
+Restrições: Não pode acessar dados de outros motoristas.
+Contexto de uso: Acessa via web e mobile; conectividade variável.
+Nível técnico: Usuário médio; sem conhecimento técnico de sistemas.
+```
+
+### Conflito RF vs. RNF
+
+Um conflito frequente ocorre quando um RF e um RNF são incompatíveis:
+
+| RF | RNF conflitante | Resolução |
+|---|---|---|
+| "Registrar log detalhado de cada operação" | "Tempo de resposta ≤ 500ms" | Log assíncrono em background sem bloquear o fluxo principal |
+| "Exibir relatório completo dos últimos 5 anos" | "Página carrega em ≤ 2s" | Paginação e carregamento lazy; pré-computação em background |
+| "Manter histórico completo de alterações" | "Banco de dados ≤ 100GB" | Política de retenção: completo por 2 anos, resumido até 7 anos |
+
+Conflitos entre RF e RNF devem ser resolvidos explicitamente, com a solução documentada e aprovada pelo stakeholder.
+
+<Callout type="warning">
+**CUs que não cobrem todos os RFs do sistema**
+
+É comum que analistas criem CUs apenas para os fluxos "felizes" — deixando RFs de auditoria, notificação, integração e relatório sem CU correspondente. Esses RFs "invisíveis" só aparecem no final do projeto, quando a equipe percebe que esqueceu de especificar funcionalidades importantes. Faça uma revisão explícita da cobertura RF ↔ CU antes de iniciar o desenvolvimento.
+</Callout>
+
+### Práticas Modernas
+
+**Story Mapping** — organiza histórias de usuário na jornada do usuário (horizontal) × prioridade (vertical). Equivale a mapear CUs por ator e sequência de uso, facilitando a identificação de lacunas.
+
+**Definition of Done como ponte RF/RNF** — a DoD do Scrum especifica o que significa um RF estar "pronto": funcionalidade implementada conforme CU + cobertura de testes + critérios de RNF verificados (performance, acessibilidade). É a ligação formal entre implementação e qualidade.
+
+**Impact mapping** (Gojko Adzic) — conecta objetivos de negócio a atores, impactos esperados e entregas concretas (RFs/CUs). Garante que todos os CUs implementados servem a um objetivo real do negócio.
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

@@ -1,0 +1,131 @@
+---
+title: "UE13 — Especificar Caso de Uso"
+subtitle: "O Diagrama de Caso de Uso mostra o quê. A Especificação de Caso de Uso detalha o como — o passo a passo de cada cenário, os pré-requisitos, as pós-condições e como o sistema trata erros. É o artefato que transforma a visão de alto nível em instrução de implementação."
+ua: 13
+group: "Modelagem"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_08.webp" alt="O Detalhe que Garante a Implementação: A Especificação de Casos de Uso — estrutura com ID, Atores, Descrição, Pré/Pós-condições, Gatilho e Fluxos" caption="A estrutura essencial de uma especificação de CU: cabeçalho, pré/pós-condições, gatilho e os três tipos de fluxo" />
+  <SlideItem src="/assets/img/slides/erp_09.webp" alt="Especificação em Ação: Caso de Uso Consultar Multas — exemplo completo com fluxo principal, fluxo alternativo e fluxo de exceção" caption="Exemplo completo: UC-005 Consultar Multas com fluxo principal, alternativo (pagamento pendente) e exceção (erro no pagamento)" />
+</SlidesGrid>
+
+### Por que especificar os Casos de Uso
+
+O DCU comunica o escopo funcional em alto nível — essencial para alinhamento com stakeholders. Mas desenvolvedores e testadores precisam de mais: precisam saber exatamente o que o sistema faz em cada passo, o que valida, o que exibe, o que registra e como trata erros.
+
+A Especificação de Caso de Uso (ECU) preenche essa lacuna. É o documento que transforma o CU do diagrama em **instruções suficientemente detalhadas para implementação e teste**.
+
+### Estrutura de uma Especificação de Caso de Uso
+
+```markdown
+**Identificador:** UC-005
+**Nome:** Consultar Multas
+
+**Ator Principal:** Motorista
+**Atores Secundários:** Sistema de Pagamentos (suporte)
+
+**Descrição:** Permite ao motorista consultar a lista de multas
+associadas à sua CNH, com status de pagamento e prazo de vencimento.
+
+**Pré-condições:**
+- O usuário está autenticado no sistema (UC-001 executado com sucesso)
+
+**Pós-condições (sucesso):**
+- A lista de multas do motorista é exibida na tela
+- O acesso é registrado no log de auditoria
+
+**Gatilho:** O motorista seleciona a opção "Consultar Multas" no menu principal
+
+---
+**Fluxo Principal:**
+1. O ator seleciona a opção "Consultar Multas"
+2. O sistema busca as multas associadas à CNH do usuário autenticado
+3. O sistema exibe a lista de multas com: número do auto, data, infração, valor, status e prazo
+4. O ator seleciona uma multa para ver os detalhes
+5. O sistema exibe os detalhes completos da multa selecionada
+6. O sistema retorna ao menu principal
+
+---
+**Fluxo Alternativo FA1 — Multa com pagamento pendente:**
+4.1. Se a multa estiver com pagamento pendente, o sistema exibe botão "Pagar Multa"
+4.2. O ator aciona o caso de uso "Pagar Multas" (<<extend>>)
+
+---
+**Fluxo de Exceção FE1 — Nenhuma multa encontrada:**
+2.1. O sistema não encontra multas para a CNH do usuário
+2.2. O sistema exibe a mensagem: "Nenhuma multa encontrada para sua CNH"
+2.3. O sistema oferece botão "Voltar ao Menu"
+2.4. O fluxo retorna ao passo 1
+
+**Fluxo de Exceção FE2 — Erro de comunicação com o banco de dados:**
+2.1. O sistema não consegue acessar a base de dados de multas
+2.2. O sistema exibe: "Serviço temporariamente indisponível. Tente novamente em alguns minutos."
+2.3. O sistema registra o erro no log técnico
+2.4. O caso de uso é encerrado
+```
+
+### Os três tipos de fluxo
+
+**Fluxo Principal (caminho feliz)** — o cenário mais comum onde tudo funciona como esperado. É o fluxo que o usuário percorre na grande maioria das vezes. Deve ser sequencial, numerado e sem ambiguidades.
+
+**Fluxos Alternativos** — outros caminhos que levam ao sucesso, mas por uma rota diferente. Exemplos: usuário escolhe método de pagamento diferente; produto não está no catálogo mas pode ser solicitado. Cada FA é referenciado pelo número do passo do Fluxo Principal onde diverge.
+
+**Fluxos de Exceção** — como o sistema trata erros, condições inválidas e falhas. Exemplos: campo obrigatório vazio, serviço externo indisponível, timeout, dados inválidos. Cada FE deve definir: o que o sistema exibe, o que registra e como encerra ou retorna ao fluxo.
+
+### Granularidade adequada
+
+A especificação deve estar no nível de detalhe **suficiente para implementar e testar**, mas não excessivamente detalhado a ponto de prescrever a implementação.
+
+| Muito abstrato (insuficiente) | Nível correto | Muito detalhado (desnecessário) |
+|---|---|---|
+| "O sistema processa o pagamento" | "O sistema envia os dados do cartão ao gateway, aguarda confirmação em até 30s e registra o resultado" | "O sistema chama o método `processPayment(CardDTO)` da classe `PaymentService`" |
+
+### Conexão com Requisitos Funcionais
+
+Cada CU especificado deve referenciar os RFs que implementa:
+
+```markdown
+**RFs implementados por UC-005:**
+- RF-008: Consultar multas por CNH
+- RF-009: Exibir detalhes de multa
+- RF-010: Registrar acesso a consultas (auditoria)
+```
+
+Essa rastreabilidade garante que:
+- Todos os RFs têm ao menos um CU que os implementa
+- Desenvolvedor sabe quais RFs está cobrindo ao implementar o CU
+- Testador sabe quais RFs verificar ao testar o CU
+
+<Callout type="warning">
+**Especificações escritas pelo desenvolvedor para si mesmo**
+
+Um erro comum é o analista escrever a especificação do CU de forma tão técnica que só o desenvolvedor atual consegue entender. A especificação deve ser compreensível pelo Product Owner, pelo testador e pelo novo membro da equipe. Se a especificação precisar de "glossário de código" para ser entendida, está no nível de abstração errado.
+</Callout>
+
+### Práticas Modernas
+
+**BDD — Behavior-Driven Development** — os fluxos do CU se transformam em cenários Gherkin. Cada fluxo (principal, alternativo, exceção) vira um cenário `Given/When/Then`:
+
+```gherkin
+Funcionalidade: Consultar Multas
+
+  Cenário: Motorista com multas consulta lista
+    Dado que o motorista está autenticado
+    Quando seleciona "Consultar Multas"
+    Então o sistema exibe lista com número, data, infração e valor
+
+  Cenário: Motorista sem multas consulta lista
+    Dado que o motorista está autenticado e não tem multas
+    Quando seleciona "Consultar Multas"
+    Então o sistema exibe "Nenhuma multa encontrada para sua CNH"
+```
+
+**Especificação evolutiva** — em Scrum, o CU não precisa estar 100% especificado antes de entrar no sprint. Começa com o Fluxo Principal e os critérios de aceitação críticos; os FAs e FEs são detalhados no refinamento do sprint seguinte.
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.

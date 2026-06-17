@@ -1,0 +1,122 @@
+---
+title: "UE4 — Identificar e Documentar Regras de Negócio"
+subtitle: "Regras de negócio existem antes do software e continuam existindo mesmo que o sistema seja trocado. Antes de especificar qualquer funcionalidade, é preciso entender as políticas, cálculos e restrições que governam o domínio."
+ua: 4
+group: "Requisitos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_02.webp" alt="A Fundação de Tudo: As Regras de Negócio — tipos RN-Cálculo e RN-Restrição, estrutura de documentação" caption="Regras de Negócio são as políticas que definem como a organização opera, independentemente de qualquer sistema" />
+</SlidesGrid>
+
+### O que é uma Regra de Negócio
+
+Uma Regra de Negócio (RN) define **como a organização opera** — suas políticas, cálculos, restrições e condições que governam o domínio. A RN existe independentemente de qualquer sistema de software e permanece válida mesmo quando o sistema é substituído.
+
+**RN vs RF — a distinção fundamental:**
+
+| | Regra de Negócio (RN) | Requisito Funcional (RF) |
+|---|---|---|
+| O que é | Política ou restrição do negócio | Comportamento que o sistema deve ter |
+| Quem define | Especialista de domínio, legislação, contrato | Analista de requisitos |
+| Existe sem software? | Sim | Não — depende do sistema |
+| Exemplo | "Comissão = 5% × vendas mensais" | "O sistema deve calcular e exibir a comissão do vendedor na tela de relatório" |
+
+A RN é o **"porquê"** e o **"quanto"**; o RF é o **"o quê"** que o sistema faz para implementar essa regra.
+
+### Tipos de Regras de Negócio
+
+**RN-Cálculo** — define fórmulas, taxas e valores utilizados nas operações do negócio.
+
+> RN-001: Se um coordenador gerencia 4 pessoas, ele receberá um acréscimo de 5% em seu salário para cada pessoa pela qual é responsável.
+
+**RN-Restrição** — define limites, permissões e proibições que controlam o que pode ou não ser feito.
+
+> RN-002: Um gestor pode ter no máximo 10 funcionários no total (incluindo coordenadores e estagiários).
+
+**RN-Derivação** — deduz novas informações a partir de dados existentes.
+
+> RN-003: Um cliente é considerado VIP se realizou mais de 10 compras nos últimos 12 meses ou se seu ticket médio supera R$ 500.
+
+**RN-Condição** — define SE...ENTÃO aplicados ao domínio.
+
+> RN-004: Se o estoque de um produto atingir o ponto de reposição, deve ser gerado automaticamente um pedido ao fornecedor padrão.
+
+### Estrutura de documentação de uma RN
+
+Cada regra de negócio deve ser documentada com os seguintes atributos:
+
+```markdown
+| Campo        | Valor                                         |
+|--------------|-----------------------------------------------|
+| Identificador | RN-001                                       |
+| Nome          | Cálculo de comissão por subordinado          |
+| Descrição     | Se um coordenador gerencia N pessoas, recebe |
+|               | acréscimo de 5% × N sobre o salário base     |
+| Tipo          | RN-Cálculo                                   |
+| Fonte         | Política de RH — revisão jan/2024            |
+| Versão        | 1.0                                          |
+| Data          | 2024-01-15                                   |
+```
+
+O **Identificador** deve ser único e estável — nunca reutilize um ID de uma RN cancelada. O campo **Fonte** é essencial para rastreabilidade: indica se a regra vem de legislação, contrato, política interna ou decisão de um stakeholder específico.
+
+### Fontes de Regras de Negócio
+
+| Fonte | Exemplos | Característica |
+|---|---|---|
+| Legislação | CLT, Código do Consumidor, LGPD, Receita Federal | Mandatória — não negociável |
+| Contratos | SLAs, acordos com fornecedores, licenças | Mandatória dentro do contrato |
+| Política interna | Manual do colaborador, política de crédito | Negociável com gestão |
+| Especialista de domínio | Contador, médico, engenheiro de produção | Pode evoluir com o negócio |
+
+<Callout type="tip">
+**Identifique RNs antes dos RFs**
+
+Um erro comum é começar elicitando RFs diretamente. Isso leva a RFs "soltos", sem rastreabilidade para uma necessidade real do negócio. O fluxo correto é: entender o domínio → identificar RNs → derivar RFs a partir das RNs. Cada RF deve ser rastreável a pelo menos uma RN ou requisito de negócio.
+</Callout>
+
+### Mapeamento RN → RF
+
+Uma única RN pode gerar múltiplos RFs. Por exemplo:
+
+**RN-001:** "Comissão = 5% × salário base × número de subordinados diretos"
+
+Gera os seguintes RFs:
+- **RF-010:** O sistema deve calcular a comissão mensal de cada coordenador conforme a RN-001
+- **RF-011:** O sistema deve exibir o detalhamento do cálculo de comissão no holerite
+- **RF-012:** O sistema deve registrar log de alteração sempre que o número de subordinados de um coordenador mudar
+
+Essa rastreabilidade garante que, se a RN mudar, é imediato identificar quais RFs precisam ser revisados.
+
+<Callout type="warning">
+**Regras de negócio enterradas no código**
+
+Um antipadrão comum é implementar RNs diretamente em código hardcoded, sem documentação. Quando a regra muda (ex: a taxa de 5% passa para 7%), a equipe precisa caçar onde no código essa lógica está. O resultado é retrabalho, risco de inconsistências e dificuldade de auditoria. Regras de negócio devem estar documentadas e, idealmente, externalizadas do código.
+</Callout>
+
+### Práticas Modernas
+
+**Business Rules Engine (BRE)** — sistemas como Drools (Java), IBM ODM e Azure Logic Apps permitem definir RNs em linguagem próxima ao negócio (tabelas de decisão, árvores) e executá-las sem recompilar o código. A equipe de negócio pode alterar regras sem envolver desenvolvimento.
+
+**DMN (Decision Model and Notation)** — padrão OMG para modelar e executar decisões de negócio. Complementa o BPMN para a parte de "o que decidir" dentro de um processo.
+
+```yaml
+# Exemplo de RN externalizada em configuração (abordagem moderna)
+regras_comissao:
+  - condicao: subordinados >= 1
+    taxa_adicional_por_subordinado: 0.05
+    limite_subordinados: 10
+  - condicao: subordinados > 10
+    taxa_adicional_por_subordinado: 0.03  # taxa menor para excedentes
+```
+
+**Domain-Driven Design (DDD)** — abordagem que coloca as RNs no centro do modelo de domínio. Entidades, value objects e aggregates do DDD encapsulam RNs, garantindo que a lógica de negócio nunca fique "espalhada" pela aplicação.
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

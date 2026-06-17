@@ -1,0 +1,118 @@
+---
+title: "UE5 — Identificar Requisitos Funcionais"
+subtitle: "Requisitos Funcionais são a materialização das Regras de Negócio em funcionalidades concretas do sistema. Identificá-los com precisão — quem faz o quê, em que ordem, com quais dados — é a base de toda a especificação e do esforço de desenvolvimento."
+ua: 5
+group: "Requisitos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_03.webp" alt="Traduzindo a Lógica em Ação: Requisitos Funcionais — RF como materialização da RN, estrutura de documentação, exemplos do sistema DETRAN" caption="Um RF define o que o sistema faz — é a ponte entre a Regra de Negócio e o código" />
+</SlidesGrid>
+
+### O que é um Requisito Funcional
+
+Um Requisito Funcional (RF) descreve um **comportamento específico que o sistema deve executar** — uma ação, cálculo, transformação ou resposta a um estímulo. É a materialização técnica de uma Regra de Negócio em algo que pode ser implementado, testado e entregue.
+
+**RF define o "o quê" — não o "como":**
+
+| O quê (RF — correto) | Como (não é RF — solução técnica) |
+|---|---|
+| "O sistema deve calcular o desconto de fidelidade" | "O sistema deve usar uma stored procedure no Oracle" |
+| "O usuário deve poder exportar o relatório em PDF" | "O sistema deve usar a biblioteca iText para gerar PDF" |
+
+### Estrutura de documentação de um RF
+
+```markdown
+| Campo            | Valor                                              |
+|------------------|----------------------------------------------------|
+| Identificador    | RF-008                                             |
+| Nome             | Recorrer de multa                                  |
+| Descrição        | O motorista poderá recorrer de uma multa,          |
+|                  | apresentando justificativas documentadas           |
+| Ator             | Motorista                                          |
+| Prioridade       | Essencial                                          |
+| Origem (RN)      | RN-015 — Direito de recurso (CTB, art. 285)        |
+| Fluxo de Eventos | 1. Motorista seleciona multa; 2. Preenche recurso; |
+|                  | 3. Anexa documentos; 4. Submete; 5. Sistema gera   |
+|                  | protocolo                                          |
+```
+
+**Prioridades típicas:**
+
+| Prioridade | Critério |
+|---|---|
+| Essencial | Sem esse RF o sistema não pode ser entregue |
+| Importante | Agrega valor significativo; deve estar no primeiro release |
+| Desejável | Nice-to-have; pode ir para versão futura |
+
+### Técnicas de elicitação de RFs
+
+**Entrevistas** — conversas estruturadas com stakeholders. Vantagem: profundidade e clareza. Desvantagem: consome tempo, sujeito a viés do entrevistado.
+
+**JAD (Joint Application Development)** — workshop com todos os stakeholders-chave ao mesmo tempo. Facilita resolução imediata de conflitos. Eficiente para projetos com múltiplos departamentos envolvidos.
+
+**Observação (shadowing)** — analista acompanha o usuário realizando seu trabalho real. Revela RFs implícitos que o usuário nunca mencionaria em entrevista — ele simplesmente faz sem perceber.
+
+**Análise de documentos** — estudo de formulários, planilhas, relatórios e sistemas existentes. Frequentemente revela RNs e RFs não documentados que estão "escondidos" em planilhas de Excel usadas como workaround.
+
+**Prototipagem** — criar wireframes ou protótipos navegáveis para o usuário validar. Muito mais eficiente do que descrever em texto algo que o usuário nunca viu. Ferramentas: Figma, Balsamiq, Marvel.
+
+### Identificação de atores
+
+Antes de especificar RFs, identifique quem interage com o sistema:
+
+| Tipo de ator | Descrição | Exemplo |
+|---|---|---|
+| Ator primário | Inicia o caso de uso; tem a necessidade principal | Motorista no DETRAN |
+| Ator secundário | Suporta ou participa do caso de uso | Sistema de pagamento externo |
+| Ator de sistema | Sistema externo que interage automaticamente | Receita Federal (consulta CPF) |
+| Ator de tempo | Dispara ações baseadas em calendário | "Todo dia 1º às 00:00" |
+
+<Callout type="tip">
+**Mapeamento RN → RF na prática**
+
+Para cada RN identificada, pergunte: "O que o sistema precisa fazer para implementar essa regra?" Uma RN-Cálculo quase sempre gera dois RFs: um de processamento (calcular) e um de apresentação (exibir). Uma RN-Restrição gera um RF de validação (impedir operação inválida) e possivelmente um RF de auditoria (registrar a tentativa).
+</Callout>
+
+### Exemplos: sistema DETRAN
+
+Demonstrando como RNs do CTB (Código de Trânsito Brasileiro) geram RFs:
+
+| RN | RF derivado | Ator |
+|---|---|---|
+| Art. 285: direito a recurso de multa | RF-008: Recorrer de multa com justificativas | Motorista |
+| Art. 147: obrigatoriedade de exames | RF-011: Agendar exame de habilitação nas clínicas conveniadas | Motorista |
+| Art. 280: poder de autuação do agente | RF-024: Aplicar multa ao veículo | Agente de trânsito |
+| Art. 130: pagamento de taxas | RF-027: Pagar taxas e multas usando cartão de crédito | Proprietário |
+
+### Validando a completude dos RFs
+
+Após identificar os RFs, verifique:
+
+- Todos os atores identificados têm ao menos um RF associado?
+- Todas as RNs têm ao menos um RF que as implementa?
+- Há RFs para criação, consulta, alteração e exclusão dos dados principais (CRUD)?
+- Há RFs para os fluxos de exceção (erros, dados inválidos, indisponibilidade)?
+- Há RFs para relatórios e exportação de dados que os usuários precisam?
+
+<Callout type="warning">
+**O perigo dos RFs implícitos**
+
+Stakeholders frequentemente assumem que "é óbvio" — login, logout, histórico de ações, notificações, recuperação de senha. Esses RFs "invisíveis" causam surpresas no final do projeto. Use uma checklist de RFs comuns a todo sistema (autenticação, autorização, auditoria, internacionalização) para garantir que nada óbvio ficou de fora.
+</Callout>
+
+### Práticas Modernas
+
+**Histórias de usuário** — formato ágil que substitui ou complementa RFs clássicos: "Como [motorista], quero [recorrer de uma multa online] para [evitar deslocamento ao DETRAN]". Mais centradas no usuário e no valor entregue.
+
+**Story Mapping** — técnica de Jeff Patton que organiza histórias em uma matriz de jornada do usuário × prioridade. Facilita visualizar o produto mínimo viável (MVP) e planejar releases incrementais.
+
+**Event Storming** — workshop colaborativo onde os participantes modelam o domínio usando eventos de negócio em post-its. Excelente para descobrir RNs e RFs em sistemas complexos. Identificar um evento de domínio ("Multa aplicada") frequentemente revela tanto a RN que o governa quanto os RFs necessários para implementá-lo.
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.

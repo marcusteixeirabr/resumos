@@ -1,0 +1,122 @@
+---
+title: "UE1 — Mapear Processos de Negócio"
+subtitle: "Todo sistema de software existe para apoiar ou automatizar um processo de negócio. Antes de escrever um único requisito, é preciso entender como a organização funciona hoje — e como ela quer funcionar amanhã."
+ua: 1
+group: "Processos de Negócio"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### O que é um processo de negócio
+
+Um **processo de negócio** é um conjunto de atividades estruturadas e relacionadas que, quando executadas em sequência, produzem um produto ou serviço específico para um cliente interno ou externo. Todo processo tem entradas, atividades, saídas e atores responsáveis.
+
+Processos não existem apenas em grandes corporações. Uma mercearia, um consultório médico ou uma startup têm processos: compra de estoque, atendimento ao paciente, deploy de uma nova feature. Identificar esses processos é o ponto de partida de qualquer projeto de software.
+
+**Entidades envolvidas em um processo:**
+
+| Entidade | Exemplos |
+|---|---|
+| Pessoas | Atendentes, gestores, técnicos, clientes |
+| Sistemas | ERP, CRM, banco de dados legado |
+| Máquinas | Equipamentos de produção, sensores IoT |
+| Departamentos | Financeiro, TI, Logística |
+
+### Categorias de processos
+
+Os processos de negócio se dividem em três grandes categorias:
+
+**Processos primários** — entregam valor diretamente ao cliente. São o "coração" do negócio.
+Exemplos: processar um pedido, realizar uma cirurgia, publicar um artigo.
+
+**Processos de suporte** — apoiam os processos primários sem entregar valor diretamente ao cliente final.
+Exemplos: contratação de pessoal, manutenção de infraestrutura, suporte de TI.
+
+**Processos de gerenciamento** — monitoram e controlam o desempenho dos demais processos.
+Exemplos: planejamento estratégico, gestão de riscos, controle de qualidade.
+
+<Callout type="tip">
+**Por que categorizar os processos?**
+
+Identificar a categoria ajuda a priorizar o escopo do sistema. Um processo primário mal automatizado impacta diretamente o cliente; um processo de suporte com problemas afeta a eficiência interna. Essa distinção orienta quais RFs são essenciais e quais são desejáveis.
+</Callout>
+
+### BPM — Business Process Management
+
+BPM é a disciplina de gestão focada na **melhoria contínua de processos de negócio** por meio de sua identificação, modelagem, análise, execução, monitoramento e otimização.
+
+O ciclo BPM tem seis etapas:
+
+1. **Identificar** — mapear quais processos existem e quais são prioritários para melhoria
+2. **Modelar AS IS** — documentar como o processo funciona hoje
+3. **Analisar** — identificar gargalos, redundâncias, atividades sem valor agregado
+4. **Projetar TO BE** — desenhar o estado futuro ideal do processo
+5. **Implementar** — colocar o processo TO BE em operação (pode incluir novo software)
+6. **Monitorar** — acompanhar indicadores para identificar novos pontos de melhoria
+
+### BPMN — Business Process Model and Notation
+
+BPMN é a notação gráfica padrão para modelar processos de negócio. Funciona como uma linguagem universal entre analistas, desenvolvedores e especialistas de domínio.
+
+**Elementos principais do BPMN:**
+
+| Elemento | Forma | Significado |
+|---|---|---|
+| Evento de início | Círculo fino | Dispara o processo |
+| Evento de fim | Círculo grosso | Encerra o processo |
+| Atividade | Retângulo arredondado | Tarefa a ser executada |
+| Gateway exclusivo | Losango com X | Decisão — apenas um caminho |
+| Gateway paralelo | Losango com + | Todos os caminhos são executados |
+| Fluxo de sequência | Seta sólida | Ordem de execução |
+| Fluxo de mensagem | Seta tracejada | Comunicação entre piscinas |
+| Piscina (Pool) | Retângulo com raia | Participante (empresa, sistema) |
+| Raia (Lane) | Subdivisão da piscina | Responsável (departamento, papel) |
+
+### AS IS vs TO BE
+
+**Modelo AS IS** ("como é") — representa o processo atual, com todas as suas imperfeições. Serve para:
+- Criar entendimento compartilhado sobre como as coisas funcionam hoje
+- Identificar atividades que causam retrabalho, atraso ou custo desnecessário
+- Servir de baseline para comparação com o TO BE
+
+**Modelo TO BE** ("como será") — representa o processo futuro, após as melhorias. Deve:
+- Eliminar ou automatizar atividades sem valor agregado
+- Reduzir tempo de ciclo e custos
+- Ser tecnicamente viável e alinhado com os objetivos do negócio
+
+A diferença entre AS IS e TO BE define o escopo do sistema a ser desenvolvido: o software automatiza ou apoia as atividades que ainda não são informatizadas no TO BE.
+
+```
+AS IS: Cliente liga → Atendente anota pedido no papel → Supervisor digita no sistema → ...
+TO BE: Cliente acessa app → Pedido registrado automaticamente → Sistema roteia para produção → ...
+```
+
+### Da modelagem de processos aos requisitos
+
+O mapeamento de processos é o insumo direto para a elicitação de requisitos:
+
+- Cada **atividade manual** no TO BE que será automatizada gera ao menos um Requisito Funcional
+- Cada **decisão** no processo (gateway) pode gerar uma Regra de Negócio
+- Cada **piscina/raia** identifica um **ator** do sistema
+- Os **eventos** do processo mapeiam para **triggers** dos casos de uso
+
+<Callout type="warning">
+**Material de referência e ferramentas desatualizadas**
+
+O livro-texto utiliza exemplos com ferramentas BPMN da época de publicação. As ferramentas modernas para modelagem BPMN incluem **Camunda** (open source, com motor de execução), **Bizagi Modeler** (gratuito para modelagem), **draw.io** e **Lucidchart**. Para processos mais simples, editores como Miro e FigJam permitem modelagem colaborativa em tempo real.
+</Callout>
+
+### Práticas Modernas
+
+**Process Mining** — análise automática de logs de sistemas existentes para descobrir como os processos realmente acontecem, não como foram documentados. Ferramentas: Celonis, ProM, Disco. Elimina a subjetividade das entrevistas e revela desvios do processo oficial.
+
+**RPA (Robotic Process Automation)** — automação de tarefas repetitivas usando "robôs de software" que imitam ações humanas em interfaces existentes. Ferramentas: UiPath, Automation Anywhere, Power Automate. Útil quando integrar sistemas legados seria muito caro.
+
+**BPM Low-Code** — plataformas como Appian, Pega e Microsoft Power Platform permitem modelar e executar processos diretamente, sem codificação manual. O modelo BPMN vira o sistema.
+
+**Event-Driven Architecture** — processos modelados como cadeias de eventos (Kafka, RabbitMQ) em vez de chamadas sequenciais. Cada etapa do processo publica um evento que dispara a próxima etapa.
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.

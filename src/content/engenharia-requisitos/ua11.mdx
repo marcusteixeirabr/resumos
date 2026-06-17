@@ -1,0 +1,119 @@
+---
+title: "UE11 — Documentar a Visão do Projeto"
+subtitle: "Antes de especificar qualquer requisito, é preciso definir o escopo do problema: por que o sistema existe, quem são os stakeholders, quais são os limites do projeto e o que está fora. O Documento de Visão é o norte que guia todas as decisões subsequentes."
+ua: 11
+group: "Modelagem"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+### Por que documentar a visão
+
+Em qualquer projeto, há um momento em que diferentes pessoas têm expectativas diferentes sobre o que será construído. O gerente quer um sistema de gestão completo; o desenvolvedor acha que é "só uma tela de cadastro"; o usuário espera que substitua três sistemas legados.
+
+O Documento de Visão existe para **alinhar essas expectativas antes** que qualquer linha de código seja escrita. Ele define:
+
+- **Por que** o projeto existe (justificativa e objetivos)
+- **O que** será construído (escopo)
+- **O que não será** construído (out of scope — tão importante quanto o escopo)
+- **Quem** são os stakeholders e suas expectativas
+- **Quais restrições** limitam o projeto (prazo, orçamento, tecnologia)
+- **Quais premissas** o projeto assume como verdadeiras
+
+### Definição de escopo
+
+O escopo delimita o que o sistema fará e o que ficará fora. Uma técnica eficaz para levantar o escopo é o questionamento sistemático:
+
+| Pergunta | Propósito | Exemplo |
+|---|---|---|
+| **Quem?** | Identifica atores | "O usuário escolhe uma aplicação para rodar" |
+| **O quê?** | Identifica funcionalidades | "Seleciona, preenche formulários, navega" |
+| **Quando?** | Identifica contextos de uso | "A qualquer momento, quando o app estiver rodando" |
+| **Como?** | Identifica interfaces e modos | "Por interface de seleção no celular" |
+| **Onde?** | Identifica plataformas e ambientes | "No celular ou outro dispositivo móvel" |
+| **Por quê?** | Identifica a motivação real | "Para utilizar a aplicação disponibilizada" |
+
+**Definir explicitamente o que está FORA do escopo** é tão importante quanto definir o que está dentro. Exemplos de out-of-scope bem documentados evitam a temida "scope creep" — o acúmulo silencioso de requisitos não acordados.
+
+### O Documento de Visão
+
+O Documento de Visão (também chamado de Project Charter em algumas metodologias) contém:
+
+**1. Declaração do problema**
+> "O processo atual de matrícula exige que o aluno compareça fisicamente à secretaria, gerando filas de até 4 horas e alto índice de erros no preenchimento de formulários em papel."
+
+**2. Declaração da visão do produto**
+> "Um sistema web que permita matrícula online, reduzindo o tempo médio de atendimento de 4 horas para 15 minutos e eliminando erros de preenchimento."
+
+**3. Stakeholders identificados**
+> Lista com nome, papel, expectativas e nível de envolvimento de cada parte interessada.
+
+**4. Principais funcionalidades (resumo)**
+> Lista de alto nível dos RFs — não especificação detalhada, apenas identificação.
+
+**5. Premissas**
+> "Todos os alunos têm acesso à internet." "O banco de dados atual pode ser consultado via API."
+
+**6. Restrições**
+> "O sistema deve ser entregue até dezembro/2024." "O orçamento disponível é de R$ 120.000." "A tecnologia backend deve ser Java."
+
+**7. Critérios de sucesso**
+> "O índice de satisfação dos alunos deve superar 85% na pesquisa pós-implantação." "Zero filas presenciais para matrícula após 6 meses."
+
+### Técnicas para coleta de informações
+
+**Sessões JAD (Joint Application Development)** — workshop estruturado com stakeholders-chave. Facilitado por um moderador neutro. Permite resolver conflitos na sala, com todos os envolvidos.
+
+**Análise SWOT** — mapeia Forças (Strengths), Fraquezas (Weaknesses), Oportunidades (Opportunities) e Ameaças (Threats) do contexto do projeto. Ajuda a identificar restrições e riscos.
+
+**Análise GAP** — compara o estado atual (AS IS) com o estado desejado (TO BE) para identificar o que precisa ser construído.
+
+**Entrevistas com stakeholders** — conversas individuais com cada parte interessada. Permite capturar perspectivas que as pessoas não expressariam em grupo.
+
+### Premissas e Restrições
+
+**Premissas** são condições que assumimos como verdadeiras sem comprovação formal. Se uma premissa se mostrar falsa, o projeto pode precisar ser replanejado.
+
+> Premissa: "Os usuários têm acesso à internet de banda larga."
+> Risco associado: se parte dos usuários estiver em regiões com conexão lenta, os RNFs de desempenho precisarão ser revistos.
+
+**Restrições** são limitações impostas ao projeto — não são negociáveis:
+
+| Tipo | Exemplo |
+|---|---|
+| Tecnológica | "Deve integrar com o sistema legado COBOL existente" |
+| Prazo | "Deve estar em produção antes da reforma tributária de jan/2025" |
+| Orçamentária | "Budget total: R$ 250.000" |
+| Legal | "Deve ser compatível com LGPD e Resolução CMN 4.893/2021" |
+| Equipe | "Apenas 3 desenvolvedores disponíveis" |
+
+<Callout type="warning">
+**Escopo mal definido é a raiz do scope creep**
+
+Scope creep é o fenômeno em que o escopo cresce silenciosamente ao longo do projeto, sem aprovação formal e sem ajuste de prazo ou orçamento. A causa mais comum é um Documento de Visão vago que não define explicitamente o que está fora do escopo. "Ah, mas eu pensei que incluía..." é a frase que anuncia scope creep. Documente o out-of-scope com o mesmo cuidado do escopo.
+</Callout>
+
+### Práticas Modernas
+
+**Product Vision Board** (Roman Pichler) — canvas de uma página que define: o grupo-alvo (quem), a necessidade (por quê), o produto (o quê), o diferencial e os objetivos de negócio. Visual e fácil de validar com stakeholders não técnicos.
+
+**Lean Canvas** — adaptação do Business Model Canvas para startups e produtos digitais. Define problema, solução, métricas-chave, proposta de valor única, canais, segmentos de clientes e estrutura de custos/receitas.
+
+**OKRs (Objectives and Key Results)** — framework de definição de objetivos (O que queremos atingir?) e resultados-chave mensuráveis (Como saberemos que chegamos lá?). Conecta o Documento de Visão às métricas de sucesso do produto.
+
+```markdown
+## OKR do Projeto — Sistema de Matrícula
+
+**Objetivo:** Eliminar filas presenciais na secretaria
+
+**Resultados-chave:**
+- KR1: Índice de satisfação dos alunos ≥ 85% em pesquisa pós-implantação
+- KR2: Tempo médio de matrícula ≤ 15 minutos (vs. 4 horas atual)
+- KR3: Zero filas presenciais reportadas 6 meses após go-live
+- KR4: Taxa de erro no preenchimento ≤ 0,5% (vs. 12% atual em papel)
+```
+
+#### Referências bibliográficas desta UA
+
+- LEDUR, C. L. *Análise e Projeto de Sistemas*. Porto Alegre: SAGAH, 2017.

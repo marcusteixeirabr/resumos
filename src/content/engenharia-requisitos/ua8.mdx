@@ -1,0 +1,108 @@
+---
+title: "UE8 — Validação de Requisitos"
+subtitle: "Verificação confirma que você está construindo o produto certo. Validação confirma que você está construindo corretamente. São atividades distintas — e ambas devem acontecer cedo, frequentemente e com os stakeholders certos."
+ua: 8
+group: "Qualidade e Gestão"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/erp_10.webp" alt="Da Planta Baixa à Construção: Desenvolvimento e Inspeção — Verificação vs Validação com exemplos do CMMI-DEV 2.0" caption="Verificação: conformidade com a spec. Validação: atendimento à necessidade real. Ambas são necessárias." />
+</SlidesGrid>
+
+### Verificação vs. Validação
+
+A distinção entre verificação e validação é fundamental e frequentemente confundida:
+
+| | Verificação | Validação |
+|---|---|---|
+| **Pergunta** | "Estamos construindo o produto **certo**?" | "Estamos construindo corretamente?" |
+| **Foco** | Atendimento à necessidade real do usuário | Conformidade com a especificação |
+| **Executores** | Stakeholders, usuários, Product Owner | Equipe de desenvolvimento, QA |
+| **Técnicas** | Prototipagem, walkthrough com usuário, UAT | Code review, testes unitários, testes de integração |
+| **Quando** | Ao longo de todo o ciclo, especialmente antes de implementar | Durante e após o desenvolvimento |
+
+> A validação demonstra que a solução vai atender seu uso pretendido no ambiente alvo. A verificação endereça que a solução reflete adequadamente os requisitos especificados. — CMMI-DEV 2.0
+
+### Por que validar cedo
+
+O custo de corrigir um problema cresce exponencialmente com o tempo:
+
+| Fase de descoberta | Custo relativo |
+|---|---|
+| Especificação | 1× |
+| Desenvolvimento | 10× |
+| Teste de sistema | 40× |
+| Produção | 100× |
+
+Um requisito errado descoberto em produção não só gera retrabalho técnico — gera insatisfação do cliente, possível impacto legal e dano à reputação da equipe.
+
+### Quem são os stakeholders de validação
+
+Validação sem os stakeholders certos é inútil. Os perfis críticos:
+
+- **Usuários finais** — quem opera o sistema no dia a dia. Conhecem o processo, mas raramente sabem articular todos os requisitos implícitos
+- **Representantes de usuários** — em projetos grandes, usuários-chave que falam em nome de um grupo
+- **Patrocinador/cliente** — quem aprova e paga. Foco em ROI e alinhamento estratégico
+- **Especialistas de domínio** — médico, contador, jurídico — validam a correção das RNs
+- **Usuários inacessíveis** — quando os usuários reais não estão disponíveis (ex: sistema público), representantes devem ser cuidadosamente escolhidos
+
+### Planejamento da validação
+
+Não valide tudo ao mesmo tempo — priorize por risco:
+
+1. **Identificar o que validar** — requisitos de alta prioridade, funcionalidades inovadoras (nunca feitas antes), áreas com histórico de mal-entendidos
+2. **Escolher quais stakeholders** — usuários que trabalham com o processo específico, não gerentes que o descrevem de longe
+3. **Selecionar a técnica** — adequada ao tipo de requisito e à disponibilidade dos stakeholders
+4. **Planejar o timing** — antes que o requisito entre em desenvolvimento (não depois)
+5. **Definir os critérios de aprovação** — o que significa "aprovado"? Quem tem autoridade para aprovar?
+
+### Técnicas de validação de requisitos
+
+**Prototipagem** — criar representação visual navegável antes de escrever código. Tipos:
+- Protótipo de baixa fidelidade: papel, post-its, wireframes estáticos
+- Protótipo de alta fidelidade: Figma, Adobe XD — clicável e com aparência próxima ao produto final
+- Protótipo de prova de conceito: código real para validar viabilidade técnica de RNFs
+
+**Walkthrough de requisitos** — o analista apresenta os requisitos ao stakeholder, passando por cada cenário descrito. O stakeholder valida ou sinaliza discordâncias. Simples, rápido e eficaz.
+
+**Cenários e casos de uso** — apresentar os casos de uso especificados ao usuário final e pedir que ele "narre" o que faria em cada situação. Frequentemente revela etapas faltando ou mal descritas.
+
+**Inspeção formal** — técnica estruturada com checklist, moderador e registro formal de defeitos encontrados. Ideal para projetos críticos com alta exigência de rastreabilidade.
+
+**Revisão baseada em perspectivas** — cada revisor lê o documento como se fosse um stakeholder específico: usuário, desenvolvedor, testador, arquiteto.
+
+### Tratamento dos resultados
+
+Após a validação, cada requisito recebe um status:
+
+| Status | Significado | Próxima ação |
+|---|---|---|
+| Aprovado | Requisito correto e completo | Segue para desenvolvimento |
+| Aprovado com ressalvas | Correto, mas com ajuste necessário | Ajustar e revisar novamente |
+| Rejeitado | Incorreto, incompleto ou inviável | Retornar para análise e re-elicitação |
+| Adiado | Não será implementado agora | Registrar para versão futura |
+
+Todos os resultados devem ser registrados com justificativa — especialmente as rejeições e ressalvas, que criam rastreabilidade para futuras discussões.
+
+<Callout type="warning">
+**Validação não é homologação**
+
+Um erro comum é confundir validação de requisitos (que acontece antes do desenvolvimento) com homologação (que acontece depois). Esperar o sistema pronto para "validar" é tarde demais — nesse ponto, a insatisfação é inevitável e o retrabalho é caro. Envolva os stakeholders na validação dos requisitos, não apenas no UAT final.
+</Callout>
+
+### Práticas Modernas
+
+**Demo do sprint (Scrum)** — a cada sprint, a equipe apresenta as funcionalidades desenvolvidas para os stakeholders. É uma validação contínua e incremental — erros são descobertos no máximo 2 semanas depois de serem cometidos, não após meses.
+
+**Definition of Ready (DoR)** — checklist que uma história deve satisfazer antes de entrar no sprint. Inclui validação prévia com o Product Owner e stakeholders relevantes.
+
+**Testes de aceitação automatizados** — critérios de aceitação escritos em Gherkin (Given/When/Then) são executáveis como testes automatizados via Cucumber ou Behave. A validação acontece a cada build.
+
+**A/B Testing para RNFs de usabilidade** — em vez de validar usabilidade em reuniões, lançar duas versões para subconjuntos de usuários reais e medir qual atinge melhor os critérios de usabilidade definidos.
+
+#### Referências bibliográficas desta UA
+
+- REINEHR, S. *Engenharia de Requisitos*. Porto Alegre: SAGAH.
