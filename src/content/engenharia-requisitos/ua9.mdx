@@ -1,5 +1,5 @@
 ---
-title: "UE9 — Gerenciamento de Requisitos"
+title: "UA9 — Gerenciamento de Requisitos"
 subtitle: "Requisitos mudam — essa é a única certeza em qualquer projeto de software. Gerenciar requisitos significa controlar versões, rastrear mudanças, acompanhar status e avaliar impactos de forma que o produto permaneça coerente e rastreável ao longo de toda a sua vida."
 ua: 9
 group: "Qualidade e Gestão"
@@ -7,6 +7,7 @@ group: "Qualidade e Gestão"
 import Callout from "../../components/Callout.astro";
 import SlidesGrid from "../../components/SlidesGrid.astro";
 import SlideItem from "../../components/SlideItem.astro";
+import InlineImage from "../../components/InlineImage.astro";
 
 <SlidesGrid>
   <SlideItem src="/assets/img/slides/erp_13.webp" alt="O Sistema Vivo: A Fase de Manutenção e Evolução — ciclo de manutenção, SCM com Identificação de Objetos, Controle de Versão, Controle de Alterações e Auditoria" caption="Requisitos têm ciclo de vida: nascem, evoluem, são implementados e podem ser cancelados ou substituídos" />
@@ -22,11 +23,7 @@ Enquanto a elicitação, análise e especificação produzem os requisitos, o ge
 
 Todo requisito passa por estados ao longo da sua vida:
 
-```
-Proposto → Em análise → Aprovado → Em desenvolvimento → Implementado → Verificado → Entregue
-                ↓                        ↓                    ↓
-            Rejeitado               Cancelado              Alterado (inicia novo ciclo)
-```
+<InlineImage src="/assets/img/slides/crq_01.webp" alt="Ciclo de vida de um requisito: Proposto → Em análise → Aprovado → Em desenvolvimento → Implementado → Verificado → Entregue. Desvios: Em análise pode ir para Rejeitado; Em desenvolvimento pode ir para Cancelado; Implementado pode ir para Alterado que reinicia o ciclo em Em análise." />
 
 Acompanhar esses estados permite saber, a qualquer momento: quais requisitos já foram entregues, quais estão sendo desenvolvidos, quais foram cancelados e por quê.
 

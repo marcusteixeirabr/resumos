@@ -1,5 +1,5 @@
 ---
-title: "UE2 — Fundamentos da Engenharia de Requisitos"
+title: "UA2 — Fundamentos da Engenharia de Requisitos"
 subtitle: "Requisitos mal compreendidos são a principal causa de fracasso em projetos de software — não a tecnologia. A Engenharia de Requisitos existe para transformar necessidades nebulosas em especificações claras, verificáveis e gerenciáveis."
 ua: 2
 group: "Fundamentos"
@@ -7,6 +7,7 @@ group: "Fundamentos"
 import Callout from "../../components/Callout.astro";
 import SlidesGrid from "../../components/SlidesGrid.astro";
 import SlideItem from "../../components/SlideItem.astro";
+import InlineImage from "../../components/InlineImage.astro";
 
 <SlidesGrid>
   <SlideItem src="/assets/img/slides/erp_01.webp" alt="O Blueprint do Software de Qualidade: da Regra de Negócio à Manutenção Sustentável" caption="A jornada estruturada pela Engenharia de Software" />
@@ -43,11 +44,7 @@ Não é uma fase. É uma disciplina que percorre todo o desenvolvimento — do l
 
 As atividades da ER formam um ciclo iterativo, não uma cascata:
 
-```
-Elicitação ──→ Análise ──→ Especificação ──→ Verificação/Validação
-     ↑                                               │
-     └───────────── Gerenciamento ←──────────────────┘
-```
+<InlineImage src="/assets/img/slides/cer_01.webp" alt="Ciclo iterativo da Engenharia de Requisitos: Elicitação → Análise → Especificação → Verificação/Validação → Gerenciamento → volta para Elicitação" />
 
 **1. Elicitação** — descobrir o que o sistema deve fazer. Envolve identificar stakeholders, entender o contexto de negócio e coletar necessidades por meio de entrevistas, workshops, observação, análise de documentos e prototipagem.
 
