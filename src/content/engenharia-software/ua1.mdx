@@ -1,0 +1,106 @@
+---
+title: "UA1 — Conceitos da Engenharia de Software"
+subtitle: "A crise do software, o nascimento da disciplina em 1967, e como mudanças tecnológicas e de processo — do modelo cascata aos métodos ágeis — moldaram a forma como construímos software com qualidade."
+ua: 1
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+import InlineImage from "../../components/InlineImage.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua1.m4a" title="Da crise da OTAN ao software vivo" />
+
+### A crise do software
+
+Por muito tempo, desenvolver software foi tratado como uma atividade sem método: sem planejamento, sem documentação e sem estrutura organizacional clara sobre tarefas e responsabilidades. O resultado foram sistemas entregues com baixa qualidade, cheios de erros — incluindo problemas de cálculo com impacto financeiro real — além de projetos atrasados e caros. Esse período histórico ficou conhecido como a **crise do software**.
+
+Em **1967**, a Organização do Tratado do Atlântico Norte (OTAN) cunhou o termo **Engenharia de Software**, propondo adequar o processo de desenvolvimento de sistemas às metodologias já consolidadas em outras engenharias. A adoção dessas metodologias reduziu drasticamente os problemas em software, permitindo entregas com mais qualidade, em menos tempo e com custo de manutenção menor.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/esp_01.webp" alt="Infográfico: características e vantagens da Engenharia de Software" caption="Infográfico: principais características e vantagens da Engenharia de Software" />
+</SlidesGrid>
+
+### O que é Engenharia de Software
+
+É a disciplina — dentro da Ciência da Computação — que estuda **todos os processos envolvidos no desenvolvimento de software**: da especificação inicial até a manutenção do sistema já em uso. É uma atividade complexa que exige habilidades multidisciplinares e trabalho colaborativo entre um grupo grande de profissionais (analistas, programadores, testadores, cliente).
+
+Construir software com qualidade não é só escrever código — envolve entender problemas, planejar soluções, coordenar equipes, testar, entregar e cuidar do que foi implantado.
+
+### Evolução do desenvolvimento de software
+
+A evolução se divide em dois grandes grupos de mudanças:
+
+#### Mudanças tecnológicas
+
+- **~1725:** primeiros programas usando cartões perfurados.
+- **1955 em diante:** primeiras linguagens de programação — Fortran, Lisp, Cobol.
+- **Linguagens de alto nível** (mais próximas da linguagem humana): Java, JavaScript, Visual Basic, Object Pascal, PHP.
+- **Paradigmas de desenvolvimento:** surgem junto com as linguagens. Os mais conhecidos são o **estruturado** (programa dividido em sequência, seleção e iteração) e o **orientado a objetos** (tudo é um objeto, pertencente a uma classe, com atributos e métodos) — hoje o mais usado.
+
+#### Mudanças de processo
+
+<table>
+<tr><th>Modelo</th><th>Ano</th><th>Característica central</th></tr>
+<tr><td>Cascata</td><td>1970</td><td>Etapas sequenciais (requisitos → projeto → implementação → integração → operação), sem retorno a etapas anteriores</td></tr>
+<tr><td>Iterativo e Incremental</td><td>—</td><td>Entrega de pequenas partes funcionais do software, com feedback mais rápido do cliente</td></tr>
+<tr><td>Espiral</td><td>—</td><td>Semelhante ao incremental, mas com <strong>análise de riscos explícita</strong> em cada volta da espiral</td></tr>
+<tr><td>Ágil</td><td>2001</td><td>Manifesto Ágil: indivíduos e interações, software funcionando, colaboração com o cliente e resposta a mudanças — todos "mais que" processos rígidos, documentação extensa, negociação de contrato e seguir um plano</td></tr>
+</table>
+
+O Manifesto Ágil deu origem a métodos como **Scrum** e **XP**, hoje os mais difundidos na indústria.
+
+<InlineImage src="/assets/img/slides/mca_01.webp" alt="Modelo Cascata: definição de requisitos, projeto de sistema e software, implementação e teste unitário, integração e teste de sistema, operação e manutenção, em sequência" />
+
+No **modelo cascata**, cada etapa só começa depois que a anterior termina — não há retorno a uma fase já concluída.
+
+<InlineImage src="/assets/img/slides/min_01.webp" alt="Entrega Incremental: definição de esboço de requisitos, atribuir requisitos aos incrementos, projetar arquitetura de sistema, desenvolver incrementos, validar, integrar e implantar incrementos até o sistema completo" />
+
+No **modelo iterativo e incremental**, o ciclo se repete entregando partes funcionais até o sistema estar completo, com validação a cada incremento.
+
+<InlineImage src="/assets/img/slides/mes_01.webp" alt="Modelo Espiral: voltas sucessivas combinando determinação de objetivos, análise de riscos, engenharia e planejamento, evoluindo de protótipos até o produto operacional" />
+
+No **modelo espiral**, cada volta repete determinação de objetivos, análise de riscos, desenvolvimento/verificação e planejamento da próxima fase — a análise de riscos explícita em toda volta é o que o diferencia do incremental puro.
+
+### Por que a Engenharia de Software importa
+
+- **Planejamento:** organiza pessoas (divisão de responsabilidades) e cronograma (estimativa realista de tempo por projeto).
+- **Qualidade:** não é só "funcionar" — é atender de fato às necessidades do cliente. É por isso que a **engenharia de requisitos** tem papel central: é o canal pelo qual a expectativa do cliente chega às equipes de desenvolvimento.
+- **Manutenção:** um sistema bem planejado nasce com código mais limpo e menos defeitos — o que reduz o tempo e o custo das manutenções futuras, a etapa mais longa e cara do ciclo de vida do software.
+
+<Callout type="default">
+**Crise do software ≠ falha pontual**
+
+A crise do software não foi um evento isolado — foi um período estrutural, marcado pela ausência de metodologia. O termo "Engenharia de Software" nasceu especificamente para resolver isso: aplicar controle, planejamento e qualidade emprestados de outras engenharias ao desenvolvimento de sistemas.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Engenharia de Software**
+
+O próprio material da disciplina já aponta uma tendência atual: o **ciclo vivo orientado por telemetria** (Vogel e Luther, 2020) — em vez de desenvolver, entregar e esquecer o produto, equipes hoje coletam dados continuamente do sistema em produção para orientar melhorias e correções em tempo real. Isso reflete um movimento mais amplo além dos modelos clássicos (cascata, espiral, ágil):
+
+- **DevOps e observabilidade** — a fronteira entre desenvolvimento e operação praticamente desapareceu; métricas, logs e traces em produção viraram insumo direto de planejamento, não só de suporte.
+- **CI/CD contínuo** — em vez de "entregas incrementais" programadas, o software é integrado e implantado continuamente, muitas vezes várias vezes ao dia.
+- **Shift-left em qualidade** — testes, segurança e revisão de requisitos migraram para o início do processo, em vez de serem etapas finais isoladas (como no cascata clássico).
+- **Times multidisciplinares e autônomos** — Scrum e XP evoluíram para squads com autonomia de ponta a ponta, reduzindo a dependência de handoffs formais entre analista, programador e testador.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O termo **Engenharia de Software** foi criado pela **OTAN em 1967** — não confundir com o Manifesto Ágil (2001), que é um marco posterior.
+- A crise do software foi causada por **falta de metodologia**, não por questões estéticas/visuais de interface — cuidado com alternativas que mencionam "usabilidade" ou "interfaces gráficas" como causa.
+- No modelo **cascata**, não é possível retornar a uma etapa anterior — é estritamente sequencial.
+- A diferença central entre o modelo **espiral** e o **incremental**: o espiral tem **análise de riscos explícita em toda iteração**; o incremental não.
+- O Manifesto Ágil valoriza **indivíduos e interações, software funcionando, colaboração com o cliente e resposta a mudanças** — sempre "mais que" a alternativa tradicional (processos, documentação, contratos, planos rígidos), nunca a eliminação total dela.
+- Paradigma **estruturado** = sequência, seleção, iteração. Paradigma **orientado a objetos** = classes, atributos, métodos. Não confundir com os modelos de ciclo de vida (cascata, espiral etc.), que são sobre **processo**, não sobre como o código é escrito.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2019.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de Software: Uma Abordagem Profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- BECK, K. et al. *Manifesto for Agile Software Development*. 2001. Disponível em: agilemanifesto.org.
+- ABÍLIO, I. *Programação orientada a objetos versus programação estruturada*. 2017.
