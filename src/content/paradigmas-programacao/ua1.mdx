@@ -1,0 +1,111 @@
+---
+title: "UA1 — Métodos de Programação"
+subtitle: "O que é um paradigma de programação, por que toda linguagem é construída sobre um, e como os quatro grandes tipos — imperativo, declarativo, estruturado e orientado a objetos — evoluíram ao longo das décadas."
+ua: 1
+group: "Fundamentos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua1.m4a" title="Métodos de Programação" />
+
+### O que é um paradigma de programação?
+
+Um **paradigma** representa um padrão de pensamento que guia um conjunto de atividades relacionadas — no caso da programação, um modelo para a resolução de problemas que rege, basicamente, toda e qualquer linguagem existente. Toda linguagem de programação está construída sobre um paradigma; entender qual é ajuda a escolher a linguagem certa para cada necessidade e explica por que profissionais mais novos acham estranho trabalhar com linguagens baseadas em paradigmas de décadas atrás (como Visual Basic 5.0 ou Delphi 6.0, de raiz estruturada).
+
+Os paradigmas se dividem em dois grandes ramos, que depois se especializam:
+
+<table>
+<tr><th>Ramo</th><th>Especializações</th></tr>
+<tr><td>Imperativo</td><td>Procedimental, Orientado a Objetos</td></tr>
+<tr><td>Declarativo</td><td>Funcional, Lógico, Baseado em regras, Orientado a eventos</td></tr>
+</table>
+
+Algumas linguagens suportam mais de um paradigma ao mesmo tempo — C++, por exemplo, foi projetada para ser tanto imperativa quanto orientada a objetos.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/epp_01.webp" alt="Infográfico: evolução dos paradigmas e linguagens de programação" caption="Infográfico: evolução das linguagens e dos paradigmas de programação ao longo das décadas" />
+</SlidesGrid>
+
+### Histórico dos métodos de programação
+
+- **Antes do computador:** códigos eram criados em cartões de papelão perfurados.
+- **Década de 1930–1940:** primeiros computadores elétricos; em 1948, Konrad Zuse publica o Plankalkül, sem uso prático na época.
+- **Década de 1950:** chegada das linguagens de alto nível, independentes de uma arquitetura específica — Fortran, Cobol, Algol e Lisp. Fortran e Cobol seguem com grande legado (sistemas financeiros); Lisp caiu em desuso e Algol praticamente desapareceu.
+- **Década de 1960:** Simula, criada por Nygaard e Dahl, é a primeira linguagem a suportar o conceito de classes.
+- **Década de 1970 — a "década dos paradigmas":** a maioria dos paradigmas modernos surge aqui. C (Ritchie e Thompson) se torna uma das linguagens mais influentes até hoje; Prolog (1972) é a primeira linguagem de paradigma lógico; Pascal ganha relevância (hoje quase em desuso); C++ chega como evolução de C; Perl se destaca em tarefas de alta sobrecarga.
+- **Década de 1990:** a internet muda o rumo da programação. Java e JavaScript nascem ligadas à Web; surgem também Visual Basic e Object Pascal. PHP se torna central para desenvolvimento web.
+
+O maior motor da evolução recente dos paradigmas foi o avanço de áreas como inteligência artificial, World Wide Web, sistemas e redes, e dispositivos móveis — cada uma pressionando por novos modelos de programação.
+
+### Os quatro tipos de paradigma
+
+#### Paradigma imperativo
+
+O primeiro a trazer linguagens de alto nível, com vocabulário mais próximo do natural. Recebe esse nome pela forma como as instruções são passadas ao compilador — "faça isso, depois faça aquilo" — executadas passo a passo até o resultado esperado. Suporta atribuições, declarações, expressões, estruturas de controle e abstração procedural. A linguagem mais popular desse paradigma é **C**.
+
+#### Paradigma declarativo
+
+O foco não está em **como** a execução ocorre, mas no **resultado** desejado. O exemplo clássico é o **SQL**: você diz o que quer do banco de dados, sem se preocupar em como a consulta será executada internamente. O framework Angular (JavaScript) também segue esse paradigma.
+
+#### Paradigma estruturado
+
+Um conjunto de convenções de codificação com três características centrais:
+
+- Eliminação do comando **GOTO**;
+- Apenas três estruturas básicas de controle — **sequência, seleção e iteração**;
+- Convenções de composição modular e documentação aplicadas de forma consistente.
+
+Linguagens como **Pascal** e **C** seguem esse paradigma.
+
+#### Paradigma orientado a objetos
+
+Surge para facilitar reuso de código e manutenção, modelando entidades do mundo real como classes relacionadas entre si. Está apoiado em quatro pilares:
+
+<table>
+<tr><th>Pilar</th><th>O que garante</th></tr>
+<tr><td>Abstração</td><td>Modelar comportamento e características relevantes de um objeto do mundo real, ignorando o que não importa ao sistema</td></tr>
+<tr><td>Encapsulamento</td><td>Quem invoca um método não precisa saber como ele é executado — segurança e isolamento</td></tr>
+<tr><td>Herança</td><td>Uma classe pode herdar métodos e atributos de outra — reuso de código</td></tr>
+<tr><td>Polimorfismo</td><td>Uma classe herdeira pode alterar o comportamento herdado em situações específicas</td></tr>
+</table>
+
+Por lidar com conceitos abstratos, é um paradigma considerado difícil de aprender — é comum ver código que roda em uma linguagem orientada a objetos, mas que não é, de fato, orientado a objetos em sua estrutura.
+
+<Callout type="default">
+**Um paradigma não pertence a uma linguagem**
+
+É importante frisar: o paradigma é independente de linguagem. A orientação a objetos, por exemplo, foi criada para resolver problemas gerais de desenvolvimento — não tem vínculo obrigatório com nenhuma linguagem específica. Diversas linguagens abordam múltiplos paradigmas ao mesmo tempo (caso do próprio JavaScript, que mistura funcional e orientado a objetos).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Paradigmas de Programação**
+
+O material do livro apresenta os quatro paradigmas clássicos de forma isolada, mas o cenário atual é bem mais híbrido:
+
+- **Multi-paradigma é a norma, não a exceção** — linguagens modernas como Python, JavaScript/TypeScript, Kotlin e Rust combinam recursos imperativos, orientados a objetos e funcionais no mesmo código, e o desenvolvedor escolhe o estilo mais adequado a cada trecho.
+- **Programação funcional em ascensão** — conceitos como imutabilidade, funções puras e composição (antes nichados em linguagens como Haskell e Lisp) hoje aparecem em mainstream: hooks do React, streams do Java, LINQ do C#.
+- **Programação reativa** — um paradigma mais recente (não coberto pelo material original), focado em fluxos de dados assíncronos e propagação de mudanças (ex.: RxJS, Reactive Streams). Muito usado em interfaces reativas e sistemas orientados a eventos em larga escala.
+- **Declarativo dominando infraestrutura** — para além de SQL, o paradigma declarativo hoje define como se descreve infraestrutura (Terraform, Kubernetes YAML) e interfaces (React JSX, SwiftUI): você declara o estado desejado, não o passo a passo para chegar nele.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Um **paradigma não é uma linguagem** — é independente dela. Várias linguagens podem implementar o mesmo paradigma, e uma linguagem pode implementar mais de um paradigma (ex.: C++).
+- **Imperativo** = "como fazer" (passo a passo); **Declarativo** = "o que fazer" (resultado desejado). SQL é o exemplo clássico de declarativo.
+- O paradigma **estruturado** elimina o GOTO e usa apenas sequência, seleção e iteração — não trabalha com classes, herança ou polimorfismo (isso é orientado a objetos).
+- Os quatro pilares da orientação a objetos: **abstração, encapsulamento, herança e polimorfismo** — não confundir com conceitos de outros paradigmas.
+- A programação funcional **não é o oposto** de orientada a objetos — são tipos diferentes que podem coexistir na mesma aplicação (ex.: JavaScript).
+- Motores históricos da evolução dos paradigmas: inteligência artificial, World Wide Web, sistemas e redes, dispositivos móveis.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- MILETTO, E. M.; BERTAGNOLLI, S. C. *Desenvolvimento de software II: introdução ao desenvolvimento web com HTML, CSS, JavaScript e PHP*. Porto Alegre: Bookman, 2014.
+- SIMÃO, J. M. *Orientação a objetos: programação em C++*. Curitiba: UTFPR, 2018. (Notas de aula).

@@ -33,4 +33,12 @@ export const collections = {
     loader: glob({ pattern: '**/*.mdx', base: './src/content/engenharia-requisitos' }),
     schema: disciplineSchema,
   }),
+  'paradigmas-programacao': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/paradigmas-programacao' }),
+    schema: disciplineSchema,
+  }),
+  'engenharia-software': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/engenharia-software' }),
+    schema: disciplineSchema,
+  }),
 };

@@ -192,9 +192,16 @@ header nav a:hover { color: var(--text); }
   background: var(--border);
 }
 
+/* ── Current term section ── */
+.current-term {
+  padding: 3.5rem 0 0;
+}
+
+.current-term .section-eyebrow { color: var(--accent2); }
+
 /* ── Disciplines section ── */
 .disciplines {
-  padding: 5rem 0 6rem;
+  padding: 3.5rem 0 6rem;
 }
 
 .container {
@@ -276,6 +283,16 @@ header nav a:hover { color: var(--text); }
 .card:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+
+/* ── Featured card (current term) ── */
+.card-featured {
+  border-color: rgba(63, 185, 80, 0.3);
+  box-shadow: 0 0 0 1px rgba(63, 185, 80, 0.08), 0 16px 40px rgba(63, 185, 80, 0.05);
+}
+
+.card-featured:hover {
+  border-color: rgba(63, 185, 80, 0.5);
 }
 
 /* ── Card top row ── */
