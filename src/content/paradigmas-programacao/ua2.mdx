@@ -1,0 +1,108 @@
+---
+title: "UA2 — Programação Declarativa"
+subtitle: "O paradigma que troca o passo a passo pelo resultado desejado: como funciona, quando surgiu, e por que SQL, Prolog e LISP são seus maiores expoentes."
+ua: 2
+group: "Paradigma Declarativo"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua2.m4a" title="Programação Declarativa" />
+
+### O que é programação declarativa?
+
+Na década de 1970, a programação declarativa surgiu como um paradigma alternativo ao imperativo: em vez de descrever passo a passo **como** um resultado deve ser alcançado, o programador declara apenas **quais objetivos** deseja atingir com a computação. Um programa declarativo é, essencialmente, um conjunto de declarações — afirmações como "verdadeiro", "falso" ou "satisfaz restrição X" — cuja ordem, em geral, não importa. O foco está sempre na declaração em si, nunca na sequência de execução.
+
+Essa inversão de foco (resultado, não procedimento) é o que torna as linguagens declarativas mais próximas da lógica humana e, por isso, costumam ter curva de aprendizado menor do que as imperativas.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ppd_01.webp" alt="Infográfico: paradigma declarativo, foco no o quê vs. imperativo foco no como, tipos lógica e funcional, aplicações SQL, Prolog e LISP" caption="O paradigma declarativo: foco no objetivo final, não nos passos para alcançá-lo" />
+</SlidesGrid>
+
+### As duas grandes aplicações do paradigma
+
+O material do livro classifica as aplicações declarativas em dois domínios principais:
+
+- **Inteligência artificial:** domínio natural para o paradigma, já que lida com objetivos, regras e lógica — a linguagem **Prolog** é o maior destaque aqui.
+- **Acesso a dados em bancos de dados:** o uso mais difundido de linguagens declarativas está em consultas e manipulação de dados em SGBDs — **SQL** é o expoente máximo desse domínio.
+
+### Lógica vs. funcional (e um terceiro tipo: restrições)
+
+As linguagens declarativas se dividem em duas grandes famílias:
+
+- **Programação lógica:** um programa é um conjunto de afirmações sobre as entidades do domínio do problema, expressas em notação lógica formal — hoje, o cálculo de predicados. **Prolog** é o maior representante.
+- **Programação funcional pura:** um programa é formado apenas por definições de funções, cada uma definida em termos de outras funções. **LISP** é o maior representante.
+
+Existe ainda um terceiro tipo, complementar ao lógico: a **programação por restrições** (*constraint programming*), em que o programador especifica restrições e critérios que devem ser satisfeitos sobre determinados domínios de variáveis (por exemplo, domínios booleanos ou finitos), em vez de regras de inferência tradicionais.
+
+#### LISP
+
+Criada por John McCarthy no MIT, no início dos anos 1950, para atender à necessidade de processamento de listas — demanda que vinha da linguística, da psicologia e da matemática, todas interessadas em modelar processamento simbólico. Sua primeira versão, o LISP puro, trabalhava com apenas três tipos de dados:
+
+- **Átomos** — símbolos na forma de identificadores ou literais numéricos;
+- **Listas** — elementos delimitados por parênteses, ex.: `(A B C D)`;
+- **Estruturas de listas aninhadas** — ex.: `(A (B C) D (E (F G)))`.
+
+Como é uma linguagem puramente funcional, toda computação em LISP é feita por aplicação de função a argumentos — código e dados compartilham a mesma forma (listas entre parênteses). A mesma expressão `(A B C D)` pode ser lida como dado (uma lista de quatro elementos) ou como código (a função `A` aplicada aos parâmetros `B`, `C` e `D`).
+
+```lisp
+(DEFUN equal_lists (lis1 lis2)
+  (COND
+    ((ATOM lis1) (EQ lis1 lis2))
+    ((ATOM lis2) NIL)
+    ((equal_lists (CAR lis1) (CAR lis2))
+     (equal_lists (CDR lis1) (CDR lis2)))
+    (T NIL)))
+```
+
+#### Prolog
+
+Criado em 1972 por Alain Colmerauer, Philippe Roussel e Robert Kowalski, o nome vem do francês *programmation en logique*. É baseado em cláusulas de Horn (subconjunto da lógica de primeira ordem) e, ao contrário das linguagens tradicionais baseadas em sequências de comandos, é construído sobre a definição e a solução de fórmulas lógicas — por isso também é chamado de linguagem baseada em regras. Influenciou fortemente o desenvolvimento da linguagem Erlang e é amplamente usado em prova de teoremas, sistemas especialistas e processamento de linguagem natural (caso notável: IBM Watson).
+
+Um programa Prolog é construído sobre três tipos de declaração:
+
+- **Fatos** — afirmações fundamentais sobre o domínio (ex.: "Sócrates é um homem");
+- **Regras** — inferências sobre os fatos (ex.: "Todos os homens são mortais");
+- **Consultas** — perguntas sobre o domínio (ex.: "Sócrates é mortal?").
+
+Fatos e regras ficam armazenados numa base de conhecimento; ao receber uma consulta, o interpretador Prolog faz uma busca exaustiva por essa base usando *backtracking* até encontrar uma resposta. A linguagem combina quatro blocos de construção — **and** lógico, **or** lógico, reescrita de termos e unificação — que juntos permitem executar qualquer computação.
+
+<Callout type="default">
+**Declarativo não é sinônimo de "sem lógica de programação"**
+
+Programar de forma declarativa não elimina a necessidade de raciocínio algorítmico — apenas desloca o foco: em vez de descrever o fluxo de controle, o programador descreve o problema (fatos, regras, restrições) e delega ao interpretador/compilador a tarefa de encontrar a solução.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Programação Declarativa**
+
+O material do livro é de 2019 e usa como exemplo de integração cliente-servidor a troca de arquivos XML via WebService — um cenário típico da era SOAP. O ecossistema mudou bastante desde então:
+
+- **APIs declarativas modernas** — REST com JSON e, principalmente, **GraphQL** (você declara exatamente os dados que quer receber, e o servidor resolve como buscá-los) são hoje o padrão para integração cliente-servidor, substituindo boa parte do uso de SOAP/XML do exemplo do livro.
+- **Infraestrutura como código declarativa** — Terraform, Kubernetes YAML e Ansible (em boa parte) descrevem o **estado desejado** da infraestrutura, não os comandos para chegar lá — a mesma lógica do "o quê, não o como" aplicada a DevOps.
+- **UI declarativa** — React (JSX), SwiftUI e Jetpack Compose declaram *como a interface deve estar* para um dado estado, e o framework cuida de calcular as mudanças necessárias na tela.
+- **Programação funcional em mainstream** — os conceitos de LISP (imutabilidade, funções como cidadãos de primeira classe, composição) hoje aparecem em linguagens mainstream: streams do Java, LINQ do C#, hooks do React, Kotlin, Rust.
+- **Prolog e programação lógica hoje** — o uso direto de Prolog é hoje mais restrito a nicho (sistemas especialistas, prova de teoremas), mas seus conceitos sobrevivem em motores de regras de negócio (ex.: Drools) e em linguagens de consulta baseadas em lógica usadas por ferramentas de IA simbólica.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Declarativo = foco no "o quê"**; imperativo = foco no "como". Não confundir com "modelagem de entidades do mundo real" (isso é orientação a objetos) nem com "comandos e instruções passo a passo" (isso é imperativo).
+- As linguagens declarativas costumam ser **mais fáceis de aprender** por estarem mais próximas da lógica humana — essa é uma característica citada com frequência em provas.
+- Os dois domínios de aplicação mais cobrados: **Inteligência Artificial** e **Banco de Dados** (consultas/manipulação de dados).
+- Subtipos do paradigma declarativo: **lógica** (Prolog), **funcional** (LISP) e **por restrições** (constraint programming, atuando sobre domínios como booleano e finito).
+- Programação lógica: processamento **simbólico**, fatos e regras herdados da base de conhecimento — não confundir com "soluções puramente algorítmicas" (isso é mais próximo do paradigma imperativo).
+- Programação funcional: foco em **funções com objetos de primeira classe** e em coleções de dados — não em ordem de execução, loops ou condições de controle de fluxo.
+- Prolog tem quatro blocos de construção: **and lógico, or lógico, reescrita de termos e unificação**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- NICOLETTI, M. C. *A cartilha Prolog*. São Carlos: Edufscar, 2003.
+- BOTELHO, L. M. *Inteligência artificial: apontamentos para as aulas*. Lisboa: ISCTE-IUL, 2015.

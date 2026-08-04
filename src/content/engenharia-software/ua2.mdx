@@ -1,0 +1,104 @@
+---
+title: "UA2 — Fases do Ciclo de Vida de Software"
+subtitle: "O que acontece entre o levantamento de requisitos e a retirada de um sistema de produção: as atividades fundamentais que todo processo de software compartilha, independentemente do modelo escolhido."
+ua: 2
+group: "Ciclo de Vida"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua2.m4a" title="Por que o software nunca fica pronto" />
+
+### O que é o ciclo de vida de software
+
+O **ciclo de vida de software** é a estrutura de processos, atividades e tarefas envolvidas na criação, operação e manutenção de um sistema — desde o momento em que seus requisitos são definidos até o momento em que ele deixa de ser utilizado. Definir qual ciclo de vida seguir costuma ser a primeira decisão de um projeto, porque impacta diretamente no sucesso ou fracasso do software.
+
+Existe hoje um conjunto amplo de modelos de ciclo de vida — **Cascata, Modelo em V, Incremental, Evolutivo, RAD, Prototipagem, Espiral, e o modelo associado ao RUP**, entre outros. Cada um representa uma forma diferente de organizar as mesmas atividades fundamentais (que você vai ver a seguir), e a escolha do modelo ideal depende do contexto do projeto — não existe um "certo" universal.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cvs_01.webp" alt="Infográfico: ciclo de vida de software da concepção à evolução, com as fases levantamento e análise de requisitos, projeto e implementação, validação e evolução" caption="O ciclo de vida do software: da concepção à evolução contínua" />
+</SlidesGrid>
+
+### As camadas da Engenharia de Software
+
+Um processo de software não existe isolado — ele se apoia em três camadas complementares:
+
+- **Ferramentas** — softwares que automatizam parte da solução dos processos.
+- **Métodos** — as técnicas de desenvolvimento em si.
+- **Processo** — a base organizacional sobre a qual ferramentas e métodos são aplicados, sempre com **foco em qualidade** como critério de eficiência.
+
+Um processo de software pode ser descrito por três elementos: **produtos** (os resultados de cada atividade), **papéis** (as responsabilidades de cada pessoa envolvida) e **pré e pós-condições** (o que precisa ser verdadeiro antes e depois de cada atividade ou entrega).
+
+### As quatro atividades fundamentais (Sommerville)
+
+Independentemente do modelo de ciclo de vida escolhido, todo processo de software inclui quatro atividades fundamentais:
+
+#### 1. Especificação de software
+
+Processo de compreensão e definição dos serviços exigidos do sistema, e identificação das restrições relativas à sua operação e ao seu desenvolvimento. Como é a fase inicial, todas as demais etapas dependem dela. O processo de requisitos segue um fluxo próprio: **estudo de viabilidade → elicitação e análise → especificação → validação**, resultando no documento de requisitos.
+
+#### 2. Projeto e implementação de software
+
+Processo de conversão da especificação do sistema em um sistema executável — sempre envolve projeto e programação e, em abordagens incrementais, pode envolver o refinamento contínuo da própria especificação. A partir da especificação de requisitos, da descrição de dados e de informações de plataforma, o projeto se desdobra em **projeto de arquitetura, projeto de interface, projeto de componentes e projeto de banco de dados** — cada um gerando sua própria especificação de saída.
+
+#### 3. Validação de software
+
+Também chamada de **verificação e validação (V&V)**, tem a intenção de mostrar que o software atende tanto às suas especificações técnicas quanto às expectativas do cliente. Pode envolver inspeções e revisões em qualquer estágio do processo, mas o teste propriamente dito segue três estágios: **teste de componente → teste de sistema → teste de aceitação**.
+
+#### 4. Evolução de software
+
+Historicamente tratada como algo separado do desenvolvimento (a "manutenção"), mas hoje entendida como parte do mesmo processo contínuo — poucos sistemas são completamente novos, e a maioria está sempre passando por atualizações conforme mudam as necessidades do cliente.
+
+### As cinco atividades metodológicas (Pressman)
+
+Uma metodologia de processo genérica também pode ser descrita por cinco atividades: **comunicação, planejamento, modelagem, construção e entrega**, apoiadas por atividades guarda-chuva que atravessam todo o processo — acompanhamento e controle do projeto, gerenciamento de riscos, garantia da qualidade, gerenciamento de configurações e revisões técnicas.
+
+### As fases segundo Schach
+
+Uma outra forma comum de organizar essas mesmas atividades, com mais granularidade, é:
+
+1. **Levantamento de necessidades**
+2. **Análise** (especificação)
+3. **Projeto** — projeto de arquitetura (extração dos módulos) e projeto detalhado
+4. **Implementação** — codificação dos módulos e integração
+5. **Manutenção pós-entrega**
+6. **Retirada do produto**
+
+<Callout type="default">
+**Fases genéricas vs. modelo de ciclo de vida**
+
+As quatro/cinco/seis atividades acima são **o conteúdo** que todo processo de software precisa cobrir. O modelo de ciclo de vida (Cascata, Incremental, Espiral, Ágil — ver UA1) é **a forma** como essas atividades são organizadas no tempo: em sequência estrita e sem retorno (Cascata), em ciclos repetidos que entregam partes funcionais (Incremental), com análise de risco explícita a cada volta (Espiral), ou de forma colaborativa e adaptativa (Ágil). Uma prova costuma testar se você separa bem "o quê" (atividade) de "como está organizado" (modelo).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Ciclo de Vida de Software**
+
+O material trata especificação, projeto, validação e evolução como fases bem delimitadas — reflexo de uma época em que o ciclo cascata ainda era referência implícita. Na prática atual, essas fronteiras são muito mais fluidas:
+
+- **CI/CD colapsa projeto, validação e evolução em um fluxo contínuo** — código é integrado, testado e implantado várias vezes ao dia, em vez de percorrer fases estanques uma única vez por release.
+- **Shift-left testing** — testes de componente, sistema e aceitação (a fase de validação) começam já durante a implementação, com testes automatizados escritos junto com o código, não depois dele.
+- **Descoberta contínua de requisitos** — em vez de um "levantamento de necessidades" concentrado no início do projeto, times de produto hoje validam hipóteses continuamente com dados de uso real, revisando requisitos ao longo de todo o ciclo.
+- **Observabilidade fecha o ciclo de evolução** — telemetria e monitoramento em produção (ver UA1) tornam a "evolução do software" um processo orientado por dados, não apenas por solicitações pontuais de manutenção.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Ciclo de vida de software cobre **da definição de requisitos até a retirada do sistema de uso** — não é só "tempo de implementação" nem apenas "levantamento de requisitos".
+- Questões técnicas como **banco de dados, hardware e linguagens de programação** são decididas na fase de **projeto**, não no levantamento de requisitos.
+- Na etapa de **levantamento de necessidades**, o que se faz é identificar e organizar as necessidades do cliente — a análise de requisitos propriamente dita vem depois, como etapa distinta.
+- As quatro atividades fundamentais de Sommerville: **especificação, projeto e implementação, validação, evolução** — memorize essa ordem.
+- O processo de teste (parte da validação) segue **componente → sistema → aceitação**, nessa ordem.
+- O maior problema associado ao **modelo cascata** é sua **baixa reatividade a mudanças** — por ser sequencial e sem retorno a etapas anteriores.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2019.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássicos e orientado a objetos*. 7. ed. Porto Alegre: AMGH, 2010.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- SLACK, N. et al. *Gerenciamento de operações e de processos: princípios e práticas de impacto estratégico*. 2. ed. Porto Alegre: Bookman, 2013.
+- YOURDON, E.; CONSTANTINE, L. L. *Structured design: fundamentals of a discipline of computer program and systems design*. Englewood Cliffs: Prentice-Hall, 1979.
