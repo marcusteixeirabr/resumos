@@ -15,7 +15,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 |---|---|---|
 | **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM, SQL, JDBC, JPA/Hibernate | ✅ Resumos prontos (16/16 UAs) |
 | **Database Design for Apps** | Conceitos de BD, modelagem (ER, relacional), SQL (DDL/DML/DCL/DQL), transações, NoSQL, migrações | ✅ Resumos prontos (16/16 UAs) |
-| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, evolução histórica das linguagens | 🟡 1/16 UAs em andamento |
+| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, evolução histórica das linguagens | 🟡 2/16 UAs em andamento |
 | **Engenharia de Software** | Crise do software, conceitos fundamentais, evolução tecnológica e de processo (cascata, incremental, espiral, ágil) | 🟡 1/16 UAs em andamento |
 
 ### Trimestres anteriores
