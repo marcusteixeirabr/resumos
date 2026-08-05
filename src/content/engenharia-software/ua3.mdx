@@ -1,0 +1,112 @@
+---
+title: "UA3 — Software Engineering Body of Knowledge (SWEBOK)"
+subtitle: "O guia da IEEE que organiza a engenharia de software em áreas de conhecimento, define suas fronteiras com outras disciplinas e sustenta três níveis de certificação profissional."
+ua: 3
+group: "Corpo de Conhecimento"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua3.m4a" title="SWEBOK: a fundação técnica do software" />
+
+### O que é o SWEBOK
+
+O **Software Engineering Body of Knowledge (SWEBOK)** é um guia mantido pela **IEEE Computer Society** com o objetivo de divulgar as melhores práticas de engenharia de software, reunidas ao longo de décadas e em vários países. Também é conhecido como **Relatório Técnico 19759** da ISO/IEC — o que reforça seu papel como referência reconhecida internacionalmente, e não apenas como material de um fabricante ou empresa específica.
+
+Segundo a IEEE, o guia tem quatro objetivos principais:
+
+- Apresentar e descrever as características do conteúdo da engenharia de software;
+- Promover uma visão consistente de como a engenharia de software é vista e aplicada no âmbito mundial;
+- Esclarecer e delimitar as fronteiras entre a engenharia de software e outras disciplinas relacionadas (ciência da computação, gerência de projetos, engenharia da computação, matemática);
+- Disponibilizar material de apoio para autoaprendizado e certificação individual de engenheiros de software.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/pge_01.webp" alt="Infográfico: SWEBOK — fundamentos e objetivos do guia (padronização global, delimitação de fronteiras, 15 áreas de conhecimento), comparativo SWEBOK versus PMBOK (foco técnico versus foco em gestão), e as três trilhas de certificação profissional (Associate, Professional, Master)" caption="SWEBOK: o padrão global para engenharia de software — fundamentos, comparação com o PMBOK e trilhas de certificação" />
+</SlidesGrid>
+
+### SWEBOK x PMBOK
+
+O infográfico traz uma comparação útil para não confundir os dois guias:
+
+<table>
+<tr><th></th><th>SWEBOK</th><th>PMBOK</th></tr>
+<tr><td>Foco principal</td><td>Engenharia de Software</td><td>Gerenciamento de Projetos</td></tr>
+<tr><td>Organização responsável</td><td>IEEE</td><td>PMI</td></tr>
+<tr><td>Estrutura</td><td>Áreas de conhecimento</td><td>Áreas de conhecimento e processos</td></tr>
+</table>
+
+Ou seja: o SWEBOK é o guia **técnico** de como construir software; o PMBOK é o guia de como **gerenciar** o projeto que constrói qualquer entrega, não só software.
+
+### As 15 áreas de conhecimento (SWEBOK v3, 2014)
+
+A versão 3 do SWEBOK, lançada em 2014, organiza o conhecimento em 15 áreas. As dez primeiras tratam diretamente do produto e do processo de software; as cinco últimas são áreas fundamentais e transversais, relevantes para a prática da engenharia de software como um todo.
+
+<table>
+<tr><th>Área</th><th>O que cobre</th></tr>
+<tr><td>1. Requisitos de software</td><td>Elicitação, análise, especificação e validação de requisitos funcionais e não funcionais</td></tr>
+<tr><td>2. Design de software</td><td>Arquitetura, componentes, interface com o usuário, notações e estratégias de projeto</td></tr>
+<tr><td>3. Construção de software</td><td>Implementação, verificação, testes de unidade e integração, depuração</td></tr>
+<tr><td>4. Teste de software</td><td>Níveis, técnicas e métricas de teste; avaliação da qualidade via identificação de defeitos</td></tr>
+<tr><td>5. Manutenção de software</td><td>Suporte ao ciclo de vida operacional — manutenções corretiva, adaptativa, perfectiva e preventiva</td></tr>
+<tr><td>6. Gerência de configuração de software (GCS)</td><td>Controle de versões, identificação, auditoria e entrega de releases</td></tr>
+<tr><td>7. Gerência da engenharia de software</td><td>Planejamento, coordenação, medição, monitoração e controle do projeto</td></tr>
+<tr><td>8. Processo de engenharia de software</td><td>Definição, ciclo de vida, avaliação e melhoria do processo de software</td></tr>
+<tr><td>9. Modelos e métodos de engenharia de software</td><td>Modelagem, tipos de modelo, métodos heurístico, formal, por protótipo e ágil</td></tr>
+<tr><td>10. Qualidade de software</td><td>Fundamentos, processos de gerência da qualidade, métricas e ferramentas</td></tr>
+<tr><td>11. Prática em engenharia de software profissional</td><td>Profissionalismo, dinâmicas de grupo, habilidades de comunicação</td></tr>
+<tr><td>12. Economia em engenharia de software</td><td>Contexto econômico, ciclo de vida de custos, riscos e métodos de análise econômica</td></tr>
+<tr><td>13. Fundamentos da computação</td><td>Técnicas de resolução de problemas, abstração, fundamentos de programação</td></tr>
+<tr><td>14. Fundamentos matemáticos</td><td>Teoria dos conjuntos, relações e funções, lógica, grafos, teoria dos números</td></tr>
+<tr><td>15. Fundamentos da engenharia</td><td>Métodos empíricos, análise estatística, métricas, modelagem, simulação</td></tr>
+</table>
+
+<Callout type="default">
+**Um bom atalho para memorizar a divisão**
+
+As áreas 1 a 10 respondem "**o que fazer** para construir e manter software com qualidade" (requisitos → design → construção → teste → manutenção → gestão de configuração/projeto/processo/modelos → qualidade). As áreas 11 a 15 respondem "**o que sustenta** o profissional e a disciplina" — prática profissional, economia, e os três fundamentos (computação, matemática, engenharia).
+</Callout>
+
+### Certificações SWEBOK
+
+A IEEE disponibiliza três modalidades de certificação baseadas no guia, em ordem crescente de exigência:
+
+<table>
+<tr><th>Certificação</th><th>Exigências</th><th>Exame</th></tr>
+<tr><td><strong>Associate Software Developer (ASD)</strong></td><td>Sem pré-requisitos formais; conhecimento básico em requisitos, design, construção e teste de software</td><td>Online, 100 minutos, 80 questões</td></tr>
+<tr><td><strong>Professional Software Developer (PSD)</strong></td><td>Sem pré-requisitos formais, mas recomenda-se 2 anos de educação superior em Ciência da Computação (ou equivalente) + 2 anos de experiência na indústria; proficiência nas mesmas 4 áreas básicas</td><td>Online, 3 horas, 160 questões</td></tr>
+<tr><td><strong>Professional Software Engineering Master (PSEM)</strong></td><td>Sem pré-requisitos formais, mas recomenda-se 4 anos de educação superior + 4 anos de experiência; maestria em 11 das 15 áreas de conhecimento</td><td>Online, 3 horas, 160 questões</td></tr>
+</table>
+
+<Callout type="warning">
+**Práticas Modernas — SWEBOK v4 (2024)**
+
+O material do livro é de 2020 e descreve exclusivamente o **SWEBOK v3 (2014)**, com suas 15 áreas de conhecimento. Em outubro de 2024, a IEEE Computer Society lançou o **SWEBOK v4**, que traz mudanças relevantes:
+
+- **De 15 para 18 áreas de conhecimento** — três novas áreas foram adicionadas: **Arquitetura de Software** (antes diluída dentro de Design), **Operações de Engenharia de Software** (cobrindo DevOps, entrega e operação contínuas) e **Segurança de Software** (antes tratada apenas de forma transversal em Qualidade).
+- **Cobertura de práticas modernas** — o v4 incorpora explicitamente Agile, DevOps e temas emergentes como IA e IoT, que praticamente não existiam ou eram irrelevantes na formulação original do v3 (2004) e mantidos no v3 revisado (2014).
+- **Reorganização de conteúdo** — parte do material das áreas antigas foi renomeada e redistribuída entre as novas áreas, refletindo como a prática da engenharia de software mudou desde 2014.
+- **Impacto nas certificações** — como as certificações da IEEE são baseadas no guia, é esperado que as trilhas Associate/Professional/Master sejam atualizadas para refletir as 18 áreas do v4 ao longo do tempo.
+
+Ou seja: o conteúdo desta UA continua válido como fundamento (a lógica de organizar conhecimento em áreas, a distinção SWEBOK x PMBOK, as trilhas de certificação), mas o **número de áreas mudou de 15 para 18** e não deve ser tratado como fixo em provas ou entrevistas sem checar a versão de referência.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O SWEBOK é mantido pela **IEEE** (não pelo PMI — esse é o PMBOK). Não confundir os dois guias nem suas organizações responsáveis.
+- A versão cobrada pelo livro-base é a **v3 (2014)**, com **15 áreas de conhecimento** — se a prova pedir esse número, é esse (mas vale lembrar que o v4/2024 já é 18, ver Práticas Modernas acima).
+- As 4 áreas básicas cobradas em **todas** as certificações (Associate e Professional): **requisitos, design, construção e teste de software**.
+- A certificação **Master (PSEM)** exige maestria em **11 das 15 áreas** — é a mais completa e complexa das três.
+- Os quatro objetivos do guia: **descrever características, promover visão consistente global, delimitar fronteiras com outras disciplinas, apoiar autoaprendizado/certificação** — não confundir com objetivos de gerenciamento de projeto (isso é papel do PMBOK).
+- Área de **qualidade de software** tem tópicos próprios (fundamentos, gerência do processo de qualidade, considerações práticas, ferramentas) — mas qualidade também aparece de forma transversal em várias outras áreas do guia.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- BOURQUE, P.; FAIRLEY, R. E. (ed.). *SWEBOK v3.0: Guide to the software engineering body of knowledge*. Washington: IEEE Computer Society, 2014.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: Bookman, 2016.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- IEEE COMPUTER SOCIETY. *Software Engineering Body of Knowledge (SWEBOK)*. Disponível em: https://www.computer.org/education/bodies-of-knowledge/software-engineering.
