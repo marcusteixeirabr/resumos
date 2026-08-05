@@ -1,0 +1,144 @@
+---
+title: "UA3 — Programação Imperativa"
+subtitle: "O paradigma mais antigo e mais bem-sucedido da computação: por que ele nasceu junto com a arquitetura de von Neumann e como C, Ada e Perl o colocam em prática."
+ua: 3
+group: "Paradigma Imperativo"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua3.m4a" title="Programação Imperativa" />
+
+### O que é o paradigma imperativo?
+
+O imperativo é o mais antigo dos paradigmas de programação e também o mais bem-sucedido: a maioria das linguagens existentes o implementa, mesmo quando também suportam outros paradigmas (como orientação a objetos ou estruturado). O nome vem do latim *imperare* ("comandar") — assim como o modo imperativo das línguas naturais expressa ordens, uma linguagem imperativa é construída a partir de algoritmos que expressam uma **sequência de comandos** a serem executados pelo computador até alcançar um resultado.
+
+O paradigma surgiu na década de 1940, quando John von Neumann e seus colaboradores perceberam que um programa e seus dados poderiam compartilhar a mesma memória principal — até então, os primeiros computadores armazenavam os programas fora da memória. Essa descoberta abriu um novo patamar de versatilidade computacional e se tornou a base da **arquitetura de von Neumann**: a memória da máquina contém tanto as instruções do programa em execução quanto os valores dos dados. No centro dessa arquitetura está outra característica clássica do imperativo: alterar o valor de um local de memória, destruindo o valor anterior — o conceito de **atribuição**.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/oap_01.webp" alt="Infográfico: fundamentos e arquitetura do paradigma imperativo — arquitetura de von Neumann, conceito de estado e atribuição, proximidade com a linguagem de máquina, estruturas de controle e sequência, completude de Turing, linguagens C e Ada, comparativo histórico de linguagens (FORTRAN, C, Ada)" caption="Programação imperativa: fundamentos, arquitetura e principais linguagens" />
+</SlidesGrid>
+
+<Callout type="warning">
+**Atenção: erro no infográfico**
+
+A tabela "Comparativo histórico de linguagens" do infográfico indica que o **FORTRAN foi desenvolvido em 1854** para o IBM 704 — isso é um erro de digitação. O FORTRAN foi criado entre **1954 e 1957**, por John Backus na IBM, justamente para o IBM 704.
+</Callout>
+
+Todas as linguagens imperativas herdam da arquitetura de von Neumann-Eckert a atribuição como elemento central, além de suportar declarações de variáveis, expressões, comandos condicionais, laços e abstração procedural. Nessas linguagens, as expressões são interpretadas recuperando valores correntes de variáveis por meio de nomes que referenciam seus endereços de memória — e os comandos são executados na ordem em que aparecem, embora condicionais e ramificações possam alterar esse fluxo.
+
+Podemos sintetizar a fundamentação da programação imperativa em três conceitos:
+
+- **Estado de uma máquina** — relacionado aos valores de um conjunto de variáveis.
+- **Expressões** — compostas pela relação entre esses valores ou pelo resultado de operações entre eles.
+- **Comandos de atribuição e controle** — que manipulam o estado das variáveis.
+
+Em outras palavras: um programa imperativo é representado por um conjunto de dados que determina seu estado; ao manipular esses dados (leitura, criação de expressões, geração de novos valores), o estado vai sendo alterado até o resultado esperado ser alcançado.
+
+### Completude de Turing
+
+Uma linguagem imperativa é classificada como **completa quanto a Turing** quando possibilita a implementação de qualquer algoritmo que possa ser projetado. É uma característica que mede se a linguagem consegue implementar qualquer situação, incluindo:
+
+- estruturas de controle;
+- entrada e saída de dados;
+- manipulação de exceções e erros;
+- abstração procedural;
+- expressões e atribuição;
+- suporte de bibliotecas para estrutura de dados.
+
+### Linguagens imperativas na prática
+
+#### C
+
+Projetada para o sistema operacional UNIX, nos Laboratórios Bell, por Ken Thompson e Dennis Ritchie — inicialmente baseada na linguagem BCPL (*Basic Combined Programming Language*), que não possuía tipos. A partir daí, C foi amplamente adotada, principalmente em ambientes acadêmicos, e teve impacto direto no surgimento de linguagens como Java, Python e C++.
+
+C possui comandos de atribuição, sequência, condicionais (`if`, `switch`), laços (`while`, `for`, `do`) e chamadas de função. Quanto a estruturas de dados, permite trabalhar com matrizes, ponteiros, estruturas (registros) e tipos de dados de união. Como linguagem imperativa "pura" da época, **C não possui**:
+
+- iteradores;
+- manipulação de exceções;
+- sobrecarga;
+- genéricos.
+
+```c
+typedef struct aluno {
+  char nome[40];
+  int ano;
+  char curso[40];
+  float media;
+} aluno;
+
+aluno* copia_aluno(aluno* a)
+{
+  aluno *t;
+  t = (aluno*) malloc(sizeof(aluno));
+  if (t == NULL)
+    return t;
+  *t = *a;
+  return t;
+}
+```
+
+Esse exemplo define uma estrutura com nome, ano de matrícula, curso e média de um aluno e implementa uma função que recebe um ponteiro para uma estrutura desse tipo, cria dinamicamente uma nova estrutura, copia os dados para ela e retorna o ponteiro correspondente (ou `NULL`, caso não consiga reservar memória).
+
+#### Ada
+
+Desenvolvida no final da década de 1970 pelo departamento de defesa norte-americano, para uso em grandes sistemas de controle e comando e em sistemas embarcados de tempo real. É uma linguagem imperativa de alto nível, baseada em Pascal, projetada principalmente pelo francês Jean Ichbiah. Foi padronizada pela ANSI em 1983 e pela ISO em 1985; em 1995, a ISO padronizou a versão Ada 95, que se tornou a primeira linguagem orientada a objetos padronizada internacionalmente.
+
+Estrutura básica de um programa em Ada:
+
+```ada
+-- Declarações de bibliotecas
+procedure nome_do_programa is
+-- Declarações de variáveis
+begin
+-- Corpo do programa
+end nome_do_programa;
+```
+
+Linguagens imperativas permitem que o valor de variáveis seja trocado ao longo do código — logo após a criação de uma variável é reservado um espaço para sua declaração — e que instruções e comandos sejam repassados ao computador explicando **como fazer** para chegar a um resultado (logo após o `begin`, é necessário especificar o que o programa deve fazer). O material do livro traz como exemplo um algoritmo em Ada que escreve a tabuada usando um comando iterativo (`for`) — evidenciando os recursos de repetição típicos do paradigma imperativo.
+
+Segundo o material, Ada foi fortemente influenciada por Algol e Pascal: herdou o símbolo `:=` para atribuição e o uso de `begin`/`end` para delimitar blocos. Por outro lado, ao contrário de suas predecessoras, usa símbolos de término únicos para estruturas compostas e o ponto e vírgula como terminador de comando (em vez de separador). Isso faz a sintaxe de Ada exigir bem mais comandos do que a de C para tarefas equivalentes.
+
+#### Perl
+
+Linguagem de scripting amplamente usada, interpretada em tempo de execução em vez de compilada para linguagem de máquina. O material cita como exemplo um script Perl que envia por e-mail as notas de alunos — um caso típico de aplicação da linguagem, que reforça, mesmo em estilo de scripting, os princípios do paradigma imperativo (sequência de comandos e manipulação explícita de estado).
+
+<Callout type="default">
+**Todas seguem o mesmo princípio**
+
+Apesar das diferenças de sintaxe e de aplicação entre C, Ada e Perl, todas seguem os mesmos princípios do paradigma imperativo: estado da máquina, expressões e comandos de atribuição/controle executados em sequência até o resultado esperado.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Programação Imperativa**
+
+O material do livro é de 2019 e cita como exemplos apenas C, Ada e Perl — linguagens relevantes historicamente, mas que não refletem o ecossistema imperativo atual:
+
+- **Rust** — leva o imperativo "de baixo nível" de C adiante, mas resolve seu maior ponto fraco (gerenciamento manual de memória com ponteiros) com o *ownership/borrow checker*, eliminando classes inteiras de bugs de memória em tempo de compilação, sem depender de garbage collector.
+- **Go** — pensado como um "C moderno" para sistemas de rede e serviços concorrentes, com sintaxe simples, goroutines/channels nativos e compilação estática — hoje muito usado em infraestrutura de nuvem (Docker, Kubernetes).
+- **Multi-paradigma é a norma** — Python, JavaScript/TypeScript e Kotlin são imperativos no núcleo (laços, atribuição, controle de fluxo), mas incorporam recursos funcionais e orientados a objetos no mesmo código.
+- **Perl perdeu espaço** — scripts de automação e processamento de texto que antes eram domínio do Perl hoje costumam ser escritos em Python ou em linguagens de shell moderna.
+- **Ada sobrevive em nicho crítico** — ainda usada em aviônica, sistemas ferroviários e defesa, onde a segurança e a previsibilidade em tempo real continuam sendo prioridade — hoje concorre com subconjuntos seguros de C++ (MISRA) e, cada vez mais, com Rust.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O imperativo é o paradigma **mais antigo** e o de **maior sucesso** — sua base é a arquitetura de **von Neumann**, onde programa e dados compartilham a mesma memória.
+- A característica central do paradigma é a **mutação de estado**: alterar o valor de variáveis, destruindo o valor anterior (atribuição).
+- Os três conceitos fundamentais são: **estado**, **expressões** e **comandos de atribuição e controle** — não confundir com os pilares de outros paradigmas (ex.: herança e polimorfismo são de orientação a objetos).
+- **Completo quanto a Turing** = a linguagem consegue expressar qualquer algoritmo computável — não é sinônimo de "reuso de código" nem de "sintaxe de baixo nível".
+- **C não possui** (na sua forma clássica): iteradores, manipulação de exceções, sobrecarga e genéricos.
+- **Ada 95** foi a primeira linguagem orientada a objetos padronizada internacionalmente — mas a linguagem em si nasceu imperativa, para sistemas militares e de tempo real.
+- Linguagens imperativas também são chamadas de **procedurais** por permitirem estruturação do código em procedimentos — uma desvantagem citada é a menor flexibilidade, dado o caráter sequencial das instruções.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- OKUYAMA, F. Y.; MILETTO, E. M.; NICOLAO, M. *Desenvolvimento de software I: conceitos básicos*. Porto Alegre: Bookman, 2014.
+- PINHEIRO, F. A. C. *Elementos de programação em C: em conformidade com o padrão ISO/IEC 9899*. Porto Alegre: Bookman, 2012.
+- LEAL, C. *Linguagem de Programação Ada*. Mostre ao Mundo, Campinas, 19 out. 2012.
