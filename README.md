@@ -13,8 +13,6 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM, SQL, JDBC, JPA/Hibernate | ✅ Resumos prontos (16/16 UAs) |
-| **Database Design for Apps** | Conceitos de BD, modelagem (ER, relacional), SQL (DDL/DML/DCL/DQL), transações, NoSQL, migrações | ✅ Resumos prontos (16/16 UAs) |
 | **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, evolução histórica das linguagens | 🟡 3/16 UAs em andamento |
 | **Engenharia de Software** | Crise do software, conceitos fundamentais, evolução tecnológica e de processo (cascata, incremental, espiral, ágil), fases do ciclo de vida, SWEBOK | 🟡 3/16 UAs em andamento |
 
@@ -22,6 +20,8 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
+| **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM, SQL, JDBC, JPA/Hibernate | ✅ Resumos prontos (16/16 UAs) |
+| **Database Design for Apps** | Conceitos de BD, modelagem (ER, relacional), SQL (DDL/DML/DCL/DQL), transações, NoSQL, migrações | ✅ Resumos prontos (16/16 UAs) |
 | **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
 | **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
 | **Engenharia de Requisitos** | BPM/BPMN, RF/RNF, regras de negócio, casos de uso, diagramas de atividades, rastreabilidade, testes | ✅ Resumos prontos (16/16 UAs) |
