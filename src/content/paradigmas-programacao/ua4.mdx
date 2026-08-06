@@ -1,0 +1,172 @@
+---
+title: "UA4 — Programação Estruturada"
+subtitle: "Como a crise do software e a crítica de Dijkstra ao comando GOTO deram origem às três estruturas de controle que ainda sustentam quase toda linguagem imperativa."
+ua: 4
+group: "Paradigma Estruturado"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua4.m4a" title="Programação Estruturada" />
+
+### O que é a programação estruturada?
+
+A programação estruturada é um paradigma cujo princípio central é a construção de códigos legíveis, de fácil entendimento e manutenção. É independente de linguagem de programação — várias linguagens diferentes podem implementar seus conceitos — e fez grande sucesso entre os desenvolvedores justamente por estabelecer uma disciplina rígida de padronização na construção de programas.
+
+### A crise do software e a crítica ao GOTO
+
+Para entender por que a programação estruturada surgiu, é preciso voltar à **crise do software**, que teve seu ápice na década de 1960. Nessa época, os programas eram construídos com uso intenso do comando **GOTO** (desvio incondicional de fluxo), amplamente utilizado em linguagens como o BASIC para resolver saltos de instrução. O problema é que o uso irrestrito de GOTO gerava programas praticamente impossíveis de entender — e, consequentemente, muito difíceis de manter.
+
+Veja um exemplo clássico de uso do GOTO em BASIC, que fica lendo um valor na tela e retornando à instrução de leitura:
+
+```basic
+10 READ R
+20 PRINT "R ="; R;
+30 A = 3.14*R^2
+40 PRINT "AREA ="; A
+50 GOTO 10
+```
+
+Foi nesse contexto que **Edsger W. Dijkstra** publicou o artigo *A Case against the GO TO Statement*, criticando o uso excessivo do comando. A controvérsia ganhou força com uma carta de Dijkstra ao editor da *Communications of the ACM*, intitulada **"Go To Statement Considered Harmful"** ("Declaração Go To considerada prejudicial", 1968) — o marco que lançou a revolução da programação estruturada.
+
+Outro fator que impulsionou o movimento foi econômico: o custo da computação deixou de estar concentrado no hardware e passou a recair sobre o software, o que exigiu maior preocupação com a construção e a manutenção dos programas.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpp_01.webp" alt="Infográfico comparando os paradigmas imperativo e declarativo — foco no fluxo/estado (imperativo, arquitetura de von Neumann, linguagens C/Pascal/Ada) versus foco no objetivo final (declarativo, lógico/funcional, SQL/Prolog/LISP), com tabela comparativa incluindo também o paradigma orientado a objetos" caption="Recapitulando os paradigmas Imperativo e Declarativo — a base sobre a qual a Programação Estruturada se apoia" />
+</SlidesGrid>
+
+<Callout type="default">
+**Sobre este infográfico**
+
+Diferente dos infográficos das UAs anteriores, este material gerado pelo NotebookLM não é específico sobre programação estruturada — ele recapitula a comparação entre os paradigmas Imperativo e Declarativo (temas das UA2 e UA3). Mantivemos aqui por ser um bom resumo visual de contexto, já que a programação estruturada é, na prática, um refinamento disciplinado do paradigma imperativo.
+</Callout>
+
+### As três estruturas de controle
+
+De modo geral, a programação estruturada embasa o projeto de programas com um princípio básico: qualquer algoritmo pode ser construído usando apenas **três estruturas de controle**:
+
+- **Sequência** — implementa os passos de processamento necessários para a descrição de qualquer programa. Por exemplo, um segmento de código em que se executa o comando "faça tarefa 1" e, logo após, "faça tarefa 2" — representável por dois retângulos em sequência em um fluxograma, ou por um pseudocódigo que expressa as duas tarefas uma após a outra.
+- **Seleção** — permite que o fluxo de processamento seja escolhido com base em sentenças lógicas, usando duas formas de condicional: `if-then` (e sua variação `if-then-else`) e `switch`.
+- **Iteração** — permite que segmentos do programa tenham sua execução repetida até que uma determinada cláusula seja satisfeita, implementada por comandos como `while` ou `for`.
+
+Com a adoção dessas três estruturas, os programadores abandonaram progressivamente o uso irrestrito do GOTO, substituindo-o por laços e condicionais. Hoje é raro encontrar esse comando em uso, embora ele ainda sobreviva em algumas linguagens — inclusive o BASIC moderno mantém uma forma restrita de GOTO, usada apenas para retornar ao topo de um loop principal.
+
+O desenvolvimento das linguagens **C**, **Fortran 77** e **Pascal**, no final da década de 1960, estimulou o sucesso do paradigma: diferentemente do Fortran 66, elas já permitiam laços e condicionais completos — incluindo laços com teste no início e no final do bloco, comandos `if-then-else` e `switch/case`. A linguagem C foi além, incorporando formas restritas do próprio GOTO por meio dos comandos `return`, `break` e `continue`.
+
+### Linguagens de programação estruturada
+
+#### Fortran 77
+
+O Fortran surgiu como linguagem de propósito geral, mas foi bastante utilizado em aplicações de engenharia. Sua primeira versão é de 1957, mas a versão 77 — que implementa plenamente os conceitos de programação estruturada — é a mais difundida. Muitos compiladores Fortran 77 aceitam extensões além do padrão ANSI.
+
+A estrutura condicional em Fortran 77 é alcançada pela instrução `if-else`:
+
+```fortran
+if (expressão lógica) then
+  comandos
+elseif (expressão lógica) then
+  comandos
+else
+  comandos
+end if
+```
+
+Para repetição, o Fortran 77 tem apenas uma forma de laço, o **do-loop** (equivalente ao `for` de outras linguagens):
+
+```fortran
+do label var = expr1, expr2, expr3
+  comandos
+label continue
+```
+
+`var` é uma variável inteira (o índice do loop), `expr1` é o valor inicial, `expr2` é o limite terminal e `expr3` é o incremento — a variável do `do-loop` nunca deve ser modificada por outro comando dentro do laço. Muitos compiladores também aceitam encerrar o loop com `enddo`, dispensando o `label`, embora isso não seja parte do padrão ANSI.
+
+#### C
+
+C teve papel fundamental na divulgação da programação estruturada. Foi projetada inicialmente para o sistema operacional UNIX, nos Laboratórios Bell, por **Ken Thompson** e **Dennis Ritchie**, que buscavam uma alternativa mais leve ao PL/I usado nos sistemas operacionais da época. C foi baseada na linguagem BCPL (*Basic Combined Programming Language*), que não possuía tipos — e, a partir daí, teve grande adoção acadêmica, influenciando diretamente o surgimento de linguagens como Java, Python e C++.
+
+#### Pascal
+
+Desenvolvida entre 1968 e 1970 por **Niklaus Wirth**, da Universidade de Zurique, Pascal foi criada com o objetivo declarado de ser "uma linguagem de programação disciplinada de alto nível para ensinar programação estruturada" — daí seu nome, em homenagem ao filósofo e matemático francês Blaise Pascal. Obteve grande adesão acadêmica, sendo usada por décadas como linguagem introdutória em universidades.
+
+Todo programa em Pascal se divide em três partes:
+
+- **Cabeçalho** — identifica o programa, com a instrução `program` seguida de um nome (ex.: `program CALCULA_AREA`).
+- **Área de declarações** — valida identificadores não pré-definidos, subdividida em `uses`, `label`, `const`, `type`, `var`, `procedure` e `function`.
+- **Corpo do programa** — inicia com `begin` e termina com `end.` — esse par delimita o que se chama de **bloco**.
+
+Estruturas condicionais e de repetição em Pascal:
+
+```pascal
+if (x > 10) then
+  writeln("O valor da variável X é 10");
+
+for variavel := <início> to/downto <fim> do
+begin
+  instrução1;
+  instrução2;
+  instrução3;
+end;
+
+while <condição> do
+begin
+  <instruções para condição verdadeira>;
+end;
+
+repeat
+  <comando1>;
+  <comando2>;
+  <comando3>;
+until <condição>;
+```
+
+#### Cobol
+
+O **Cobol** (*Common Business Oriented Language*) foi amplamente utilizado em organizações nas décadas de 1970 e 1980, e permanece em uso até hoje — principalmente em instituições financeiras. Surgiu em 1959, mas só em 1972 passou a suportar plenamente estruturas de controle e repetição, tornando-se uma das linguagens mais importantes da programação estruturada.
+
+### Programação estruturada na prática
+
+O material do livro compara implementações do mesmo problema — ler um número e imprimir sua tabuada de multiplicação — em três linguagens diferentes, evidenciando como cada uma expressa as três estruturas de controle:
+
+- Em **Pascal**, o algoritmo usa comandos sequenciais (`write`/`read`) e estruturas de repetição aninhadas (`repeat` contendo um `while`).
+- Em **C**, o mesmo problema é resolvido com um laço `while`.
+- Em **Cobol**, o trecho de código usa estruturas condicionais para o mesmo fim.
+
+Em todos os casos, o paradigma alcança seu objetivo: estruturar e organizar o código, tornando-o mais legível e sustentável ao longo do tempo — independentemente da sintaxe específica de cada linguagem.
+
+<Callout type="warning">
+**Práticas Modernas — Programação Estruturada**
+
+O material do livro é de 2019 e usa como exemplos Fortran 77, C, Pascal e Cobol — linguagens historicamente centrais, mas com panorama bem diferente hoje:
+
+- **GOTO não desapareceu, mudou de forma** — em vez de saltos incondicionais, o controle de fluxo "não estruturado" hoje aparece disciplinado em exceções (`try/catch`), early return em funções, e operadores de controle de laço (`break`/`continue`/`labeled break`).
+- **Pascal e Fortran 77 são hoje nicho** — Pascal sobrevive em ensino (Free Pascal/Lazarus) e Delphi legado; Fortran moderno (2003+) ainda é relevante em computação científica de alto desempenho, mas com sintaxe bem distante da versão 77.
+- **Cobol resiste em sistemas legados críticos** — bancos e órgãos governamentais ainda rodam bilhões de linhas de Cobol em produção, o que gerou uma escassez de desenvolvedores e salários elevados para quem mantém esses sistemas.
+- **C continua vivo e relevante** — em sistemas embarcados, kernels de sistema operacional e como "linguagem de interoperabilidade" (FFI) entre outras linguagens.
+- **A disciplina de "código estruturado" virou padrão implícito** — hoje quase nenhuma linguagem mainstream oferece GOTO irrestrito; o debate evoluiu para clean code, funções pequenas e complexidade ciclomática, mas a raiz é a mesma preocupação de Dijkstra com legibilidade.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A programação estruturada surgiu como resposta à **crise do software** dos anos 60 e ao uso excessivo do comando **GOTO** — não confundir com "novas linguagens no mercado" ou "normalização pela ANSI".
+- As **três estruturas de controle** são: **Sequência**, **Seleção** e **Iteração** — não confundir com "variáveis e identação" ou "propriedades e métodos" (esses são de outros contextos).
+- O artigo/carta que marcou o início do movimento é **"Go To Statement Considered Harmful"**, de Edsger Dijkstra, publicado na *Communications of the ACM* em 1968.
+- **Seleção** é implementada por `if-then` (e `if-then-else`) e `switch`; **iteração**, por `while` e `for`.
+- As estruturas em sequência facilitam sobretudo a **compreensão do fluxo de execução** do programa — não "alocação de memória" nem "documentação automática".
+- Linguagens-chave na consolidação do paradigma: **Fortran 77**, **Pascal** e **C** — todas, ao contrário do Fortran 66, já suportavam laços e condicionais completos.
+- **Cobol** é um exemplo de linguagem estruturada ainda em uso comercial ativo, especialmente em instituições financeiras.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- FARRER, H. et al. *Fortran estruturado: Fortran 77*. Rio de Janeiro: Guanabara Koogan, 1992.
+- FARRER, H. et al. *Pascal estruturado: Turbo Pascal*. 3. ed. Rio de Janeiro: LTC, 1999.
+- OKUYAMA, F. Y.; MILETTO, E. M.; NICOLAO, M. *Desenvolvimento de software I: conceitos básicos*. Porto Alegre: Bookman, 2014.
+- PINHEIRO, F. A. C. *Elementos de programação em C: em conformidade com o padrão ISO/IEC 9899*. Porto Alegre: Bookman, 2012.
+- DIJKSTRA, E. W. *Go To Statement Considered Harmful*. Communications of the ACM, v. 11, n. 3, p. 147–148, mar. 1968.
