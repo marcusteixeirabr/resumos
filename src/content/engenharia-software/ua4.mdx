@@ -1,0 +1,135 @@
+---
+title: "UA4 — Técnicas para Estimativa de Tamanho e de Custos"
+subtitle: "FPA, UCP e COCOMO: três formas diferentes de responder à mesma pergunta que todo projeto de software enfrenta — quanto vai custar e quanto tempo vai levar?"
+ua: 4
+group: "Estimativas e Métricas"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua4.m4a" title="Técnicas para Estimativa de Tamanho e de Custos" />
+
+### Por que estimar é difícil
+
+Fazer estimativas de software não é tarefa simples. Muitas vezes é preciso estimar com base em uma definição de requisitos ainda em alto nível, antes de o projeto estar totalmente compreendido. Desafios como o uso de novas tecnologias e o desconhecimento das habilidades reais da equipe dificultam ainda mais estimar custos com precisão logo no início de um projeto.
+
+Ainda assim, a estimativa de custo é essencial: ela define o orçamento do projeto, orienta o planejamento e serve de referência para acompanhar desvios ao longo da execução. Para isso, a engenharia de software conta com técnicas consolidadas — as três mais conhecidas são **FPA** (*Function Point Analysis*), **UCP** (*Use Case Points*) e **COCOMO** (*Constructive Cost Model*).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gte_01.webp" alt="Infográfico comparando as três técnicas de estimativa de software — FPA (funcionalidade do usuário, independente de tecnologia), UCP (baseada em atores e casos de uso de sistemas orientados a objetos) e COCOMO (equações matemáticas e dados históricos para calcular esforço e custo), com tabela comparativa por critério: base de medição, fase de aplicação e dependência de tecnologia" caption="FPA, UCP e COCOMO: base de medição, fase de aplicação e quando usar cada técnica" />
+</SlidesGrid>
+
+### FPA — Function Point Analysis
+
+A técnica FPA dimensiona uma aplicação **na perspectiva do usuário final**, e não pelas características técnicas da linguagem utilizada. Na visão do usuário, a aplicação é um conjunto de funções de negócio que o ajudam a realizar suas tarefas — a análise é feita sob a ótica do **que** será entregue, não de **como** é implementado, o que facilita o entendimento do que será fornecido.
+
+Somente componentes **visíveis ao usuário** são considerados no dimensionamento. O objetivo é medir o que o software faz para, a partir daí, calcular esforço, produtividade e custo — o que ajuda a:
+
+- prover uma métrica de medição para apoiar análise de produtividade e qualidade;
+- estimar o tamanho do software;
+- prover um fator de normalização para comparação entre softwares diferentes.
+
+A FPA se baseia em cinco premissas (tipos de função):
+
+- **Entradas Externas (EE)**
+- **Saídas Externas (SE)**
+- **Arquivos Lógicos Internos (ALI)**
+- **Arquivos de Interface Externa (AIE)**
+- **Consultas Externas (CE)**
+
+Cada função levantada recebe uma complexidade — **Simples**, **Média** ou **Complexa** — de acordo com o número de campos (tipos de dados) e de arquivos/registros referenciados, conforme tabelas de classificação específicas para cada um dos cinco tipos. A cada combinação de complexidade corresponde um peso (multiplicador), que é aplicado ao número de ocorrências de cada função para chegar ao resultado ponderado — o processo padroniza os critérios e reduz a subjetividade da estimativa.
+
+O fluxo geral da contagem por pontos de função segue estas etapas: determinar o tipo de contagem → identificar a fronteira da aplicação → contar funções tipo dados → contar funções tipo transação → calcular pontos de função não ajustados → calcular o fator de ajuste → calcular os pontos de função ajustados.
+
+### UCP — Use Case Points
+
+A técnica UCP foi baseada na análise de pontos de função (FPA), mas estima o tamanho do software a partir de **como os usuários utilizarão o sistema** — pela complexidade das ações requeridas por cada usuário e pela análise do fluxo (*workflow*) de realização das tarefas. É aplicada na fase de levantamento de casos de uso, usando os próprios documentos gerados nessa fase como base do cálculo. Tem como alvo específico **software orientado a objetos**, e seu uso é mais simplificado que o da FPA.
+
+Assim como a FPA, a UCP usa tabelas de classificação de complexidade — só que para **atores** e **casos de uso**:
+
+- **Atores** — classificados como Simples (peso 1, acesso via API), Médio (peso 2, acesso via protocolo como TCP/IP) ou Complexo (peso 3, interação via interface gráfica).
+- **Casos de uso** — classificados pelo número de transações e de classes de análise envolvidas: Simples (peso 5, até 3 transações), Médio (peso 10, de 4 a 7 transações) ou Complexo (peso 15, mais de 7 transações).
+
+A partir dessas classificações, a UCP é calculada em três métricas sucessivas:
+
+1. **UUCP** (*Unadjusted Use Case Points*) — soma dos pesos dos atores com os pesos dos casos de uso: `UUCP = Σ pesos dos atores + Σ pesos dos casos de uso`.
+2. **TCF** (*Technical Complexity Factor*) — calculado a partir de 13 fatores técnicos (ex.: sistema distribuído, performance, portabilidade, segurança), cada um pontuado de 0 a 5 pela relevância: `TCF = 0,6 + (0,01 × TFATOR)`.
+3. **EF** (*Environmental Factor*) — calculado a partir de 8 fatores ambientais (ex.: familiaridade com o processo OO, experiência da equipe, estabilidade dos requisitos), também pontuados de 0 a 5: `EF = 1,4 + (-0,03 × EFATOR)`.
+
+Com as três métricas, chega-se ao UCP final: `UCP = UUCP × TCF × EF`. A partir daí, a estimativa de horas costuma aplicar **20 horas por ponto de caso de uso**: `estimativa de horas = UCP × 20`.
+
+<Callout type="default">
+**FPA e UCP olham para o projeto inteiro**
+
+Tanto a FPA quanto a UCP não consideram apenas o esforço de desenvolvimento em si — englobam também análise, projeto, teste e treinamento, ou seja, o projeto como um todo.
+</Callout>
+
+### COCOMO — Constructive Cost Model
+
+O COCOMO tornou-se um dos modelos de estimativa de custo mais usados na indústria, criado a partir da coleta de dados de um grande número de projetos de software reais. Existem duas versões: **COCOMO** (original) e **COCOMO II**. O modelo se divide em três categorias de projeto, de acordo com a complexidade:
+
+- **Simples (Orgânico)** — aplicações bem compreendidas, desenvolvidas por equipes pequenas; modelo estatístico que calcula esforço e custo em função do tamanho de código.
+- **Moderado (Semidestacado)** — projetos mais complexos, com equipe de experiência limitada nos sistemas relacionados; considera também avaliação subjetiva de hardware, pessoas e atributos do projeto.
+- **Incorporado (Embutido)** — projetos complexos em que o software é parte de um conjunto fortemente acoplado de hardware, software, leis e procedimentos operacionais.
+
+#### COCOMO básico
+
+A versão original considerava o desenvolvimento segundo o modelo cascata, usando linguagens como C e Fortran. Suas equações fundamentais são:
+
+```
+E = Ab × (KLOC)^Bb      — esforço aplicado (pessoa-mês)
+D = Cb × (E^Db)         — tempo de desenvolvimento (meses cronológicos)
+P = E / D               — número de pessoas necessário
+```
+
+Onde `KLOC` é o número de milhares de linhas de código estimado para o projeto, e os coeficientes `Ab`, `Bb`, `Cb`, `Db` variam de acordo com a categoria do projeto (Orgânico, Semidestacado, Embutido) — projetos mais complexos usam coeficientes que penalizam mais o esforço por linha de código.
+
+#### COCOMO intermediário
+
+Amplia o modelo básico considerando **15 atributos direcionadores de custo**, agrupados em quatro categorias — atributos do produto (confiabilidade, tamanho do BD, complexidade), do hardware (restrições de desempenho e memória), de pessoal (experiência) e de projeto (uso de ferramentas CASE, metodologias, cronograma). Cada atributo é pontuado de 0 (muito baixo) a 6 (muito alto), gerando um **fator de ajuste de esforço (EAF)** que varia de 0,9 a 1,4:
+
+```
+E = Ai × (LOC)^bi × FAE   — esforço aplicado (pessoa-mês)
+```
+
+#### COCOMO II
+
+O modelo evoluiu para o **COCOMO II**, reconhecendo abordagens de desenvolvimento que não existiam (ou eram irrelevantes) na proposta original — como prototipação, desenvolvimento por composição de componentes e uso de programação orientada a dados. Ele se organiza em três submodelos, aplicáveis a diferentes momentos do projeto:
+
+- **Modelo de composição de aplicação** — usado nos estágios iniciais, quando prototipagem de interface, interação software/sistema e avaliação de maturidade tecnológica são prioridade.
+- **Modelo de estágio do início do projeto** — usado quando requisitos e arquitetura básica já estão estabilizados.
+- **Modelo de estágio pós-arquitetura** — usado durante a própria construção do software.
+
+<Callout type="warning">
+**Práticas Modernas — Técnicas de Estimativa**
+
+O material do livro é de 2018/2020 e trata as três técnicas — FPA, UCP e COCOMO — como abordagens quantitativas e formais, sem contexto ágil. O panorama de estimativa de software mudou bastante desde então:
+
+- **Estimativa relativa em vez de absoluta** — em times ágeis, técnicas como *Planning Poker* e *story points* comparam o tamanho relativo entre tarefas, em vez de calcular horas/custo diretamente como FPA/UCP/COCOMO fazem.
+- **O movimento #NoEstimates** — parte da comunidade ágil questiona o valor de estimativas detalhadas em projetos muito incertos, defendendo entregas pequenas e frequentes como sinal de progresso mais confiável do que a estimativa em si.
+- **COCOMO II ainda é usado, mas raramente "na mão"** — ferramentas como o COCOMO II Calculator automatizam o cálculo; em contextos de contrato público e outsourcing, FPA/UCP continuam relevantes para definir escopo e preço fechado.
+- **Estimativa assistida por IA** — ferramentas atuais usam histórico de commits, complexidade de código e modelos de linguagem para sugerir estimativas, complementando (não substituindo) o julgamento humano.
+- **DORA metrics e fluxo contínuo** — equipes de alta maturidade (DevOps) tendem a acompanhar métricas de fluxo (lead time, cycle time, throughput) em vez de comparar estimativa vs. realizado UA a UA — o foco se desloca de "acertar a estimativa" para "entregar valor com previsibilidade".
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **FPA mede pela perspectiva do usuário final**, independente da tecnologia ou linguagem — não confundir com uma métrica técnica de linhas de código.
+- As cinco premissas da FPA: **Entradas Externas (EE), Saídas Externas (SE), Arquivos Lógicos Internos (ALI), Arquivos de Interface Externa (AIE) e Consultas Externas (CE)**.
+- **UCP é baseada em atores e casos de uso**, sendo específica para sistemas **orientados a objetos** — sua fórmula final é `UCP = UUCP × TCF × EF`, e a estimativa de horas usa **20 horas por ponto**.
+- Os fatores da UCP: **TCF** (13 fatores técnicos, `0,6 + 0,01×TFATOR`) e **EF** (8 fatores ambientais, `1,4 - 0,03×EFATOR`) — não confundir um com o outro.
+- **COCOMO usa equações matemáticas e dados históricos de projetos passados** — as três categorias são **Orgânico, Semidestacado e Embutido** (do mais simples ao mais complexo/acoplado).
+- **COCOMO intermediário** considera **15 atributos direcionadores de custo**, agrupados em produto, hardware, pessoal e projeto — gerando o fator EAF (0,9 a 1,4).
+- As três técnicas respondem perguntas diferentes: FPA/UCP estimam principalmente **tamanho**; COCOMO estima **esforço e custo** a partir do tamanho (LOC/KLOC).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SOUZA, A. de. *Engenharia de software*. Porto Alegre: SAGAH, 2019.
+- PAULA FILHO, W. P. *Engenharia de software: fundamentos, métodos e padrões*. 3. ed. Rio de Janeiro: LTC, 2008.
+- SOMMERVILLE, I. *Engenharia de software*. 8. ed. São Paulo: Pearson, 2007.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de Software: uma abordagem profissional*. 8. ed. Porto Alegre: Penso, 2016.
+- RIBEIRO, G. *Métricas de softwares*. 2013.
