@@ -1,0 +1,131 @@
+---
+title: "UA6 — Classes, Relacionamentos e Encapsulamento"
+subtitle: "Como as classes estruturam o vocabulário de um sistema orientado a objetos, os diferentes tipos de relacionamento entre elas e o papel do encapsulamento na proteção dos dados."
+ua: 6
+group: "Paradigma Orientado a Objetos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua6.m4a" title="Classes, Relacionamentos e Encapsulamento" />
+
+### Classes na orientação a objetos
+
+As classes são as estruturas de código mais importantes de qualquer sistema orientado a objetos. Segundo Booch, Rumbaugh e Jacobson (2006), uma classe é uma descrição de um conjunto de objetos que compartilham os mesmos atributos, operações, relacionamentos e semântica. É praticamente impossível falar em orientação a objetos sem relacioná-la ao conceito de classes — elas são utilizadas para expressar todo o **vocabulário e escopo** do sistema a ser desenvolvido.
+
+O paradigma de POO envolve a identificação e abstração de entidades de acordo com o escopo de um sistema. Por exemplo, em um sistema para um consultório médico, entidades como prontuário, paciente e médico fazem parte do vocabulário e serão implementadas pelas classes. Graficamente, uma classe é representada por um retângulo, conforme a notação da Unified Modeling Language (UML).
+
+Toda classe possui três propriedades principais:
+
+- **Nome** — identifica a classe e sempre começa com letra maiúscula (ex.: `Cliente`, `Parede`, `Sensor de temperatura`). Pode ser simples (uma única sequência de caracteres) ou qualificado (com um prefixo que identifica o pacote ao qual pertence).
+- **Atributos** — propriedades da classe (também chamadas de variáveis ou campos) que definem o estado de um objeto e podem ter seus valores alterados.
+- **Operações (métodos)** — implementam um serviço que pode ser acionado por um objeto da classe, determinando seu comportamento. Uma classe pode ter qualquer quantidade de métodos, ou até mesmo nenhum.
+
+```java
+public class Cachorro {
+    public String nome;
+    public int peso;
+    public String corOlhos;
+    public int quantPatas;
+}
+```
+
+As classes também definem **responsabilidades**: cada classe deve executar uma única responsabilidade no sistema, e essa responsabilidade não deve ser repetida por outra classe. Se ao descrever uma classe você usa a palavra "e" para listar funções diferentes (ex.: "minha classe guarda os dados do cliente **e** salva no banco"), é sinal de que ela está acumulando mais de uma responsabilidade.
+
+### Relacionamentos entre classes
+
+Assim como no mundo real, poucas classes conseguem trabalhar sozinhas em um sistema — a maioria colabora entre si de diferentes formas. Segundo Tucker e Noonan (2009), existem três tipos de relacionamento especialmente importantes:
+
+- **Dependência** — relacionamento de utilização entre classes, no qual a mudança em uma classe pode afetar o comportamento ou estado de outra. Ocorre, por exemplo, quando uma classe usa outra como argumento na assinatura de uma operação. É representada graficamente por uma linha tracejada com uma seta apontando para a classe da qual a outra depende.
+- **Generalização** — relacionamento entre uma superclasse (classe mãe) e suas subclasses (classes filhas), no qual as filhas herdam atributos e métodos da mãe. Os objetos da classe filha podem ser usados em qualquer lugar em que a classe mãe seria usada, mas não o contrário — a filha é substituível pela mãe. É representada por uma seta vazada apontando para a superclasse.
+- **Associação** — relacionamento estrutural que especifica quais objetos de uma classe estão conectados a objetos de outra, permitindo a navegação entre eles. É o tipo mais comum de relacionamento, representado por uma linha conectando duas classes; setas nas extremidades indicam o sentido da navegação, e a ausência delas indica navegação bidirecional.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ppo_01.webp" alt="Infográfico 'Pilares da Programação Orientada a Objetos: Classes, Relacionamentos e Encapsulamento' — a classe como matriz do objeto (atributos/estados e métodos/comportamentos) e responsabilidade única; encapsulamento e segurança com modificadores privados e getters/setters; dependência (utilização temporária); generalização/herança (é um tipo de); agregação (partes sobrevivem sozinhas) e composição (vínculo forte, morre com o pai)" caption="Classe como matriz do objeto, tipos de relacionamento e encapsulamento" />
+</SlidesGrid>
+
+A associação se especializa em dois subtipos, diferenciados pela força do vínculo entre o objeto "todo" e o objeto "parte":
+
+- **Agregação** — tipo de associação em que o objeto dependente pode existir mesmo sem o objeto pai (associação fraca, do tipo "todo/parte" ou "possui um"). É usada sempre que um objeto colabora com a existência de outro, mas essa existência não é obrigatória.
+- **Composição** — tipo de associação mais forte, em que a existência do objeto dependente só faz sentido se o objeto pai também existir. Quando a classe pai é destruída, a classe parte também deve ser apagada.
+
+Um exemplo clássico de generalização: uma classe mãe `Veículo` define atributos comuns (cor, chassi, placa) que são herdados pelas classes filhas `Carro` e `Moto`, evitando repetir esses atributos em cada uma delas.
+
+### Encapsulamento
+
+O encapsulamento é um dos conceitos básicos da POO. Está ligado à técnica de esconder os detalhes internos do funcionamento dos métodos de uma classe dos objetos que a utilizam — estes apenas acionam o método e recebem o retorno, sem precisar saber como o código foi implementado por dentro. O mesmo princípio se aplica aos atributos: um objeto esconde seus dados de outros objetos, permitindo que sejam manipulados e acessados somente pelos próprios métodos daquele objeto (TUCKER; NOONAN, 2009).
+
+O encapsulamento traz os seguintes ganhos:
+
+- Protege os dados de um objeto contra uso arbitrário e não intencional;
+- Oculta do usuário os detalhes da implementação;
+- Separa a forma como um objeto se comporta da forma como ele é implementado;
+- Permite definir o que uma classe faz sem informar como isso é feito.
+
+Uma boa analogia é o controle remoto de uma televisão: o usuário aperta o botão para trocar de canal sem se importar com o modo como o controle se comunica com o aparelho — ele apenas sabe que, ao pressionar o botão, o canal muda.
+
+Em um processo de encapsulamento, os atributos das classes costumam ser do tipo `private`. Para acessá-los de fora, são criados métodos **setters** (alteram o valor de uma propriedade) e **getters** (retornam o valor de uma propriedade). O encapsulamento é dividido em dois níveis:
+
+- **Nível de classe** — define o acesso da classe inteira, que pode ser `public` ou Package-Private (padrão).
+- **Nível de membro** — define o acesso de atributos ou métodos individuais, que podem ser `public`, `private`, `protected` ou Package-Private (padrão).
+
+```java
+public class Pessoa {
+    private String nome;
+    private String sobrenome;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String n) {
+        nome = n;
+    }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String s) {
+        sobrenome = s;
+    }
+}
+```
+
+A boa prática em POO é começar a implementação de uma classe usando o nível `private` por padrão, restringindo o acesso apenas quando necessário — e não o contrário. Isso porque membros públicos tendem a prender o código a uma implementação específica, reduzindo a flexibilidade para mudanças futuras. Uma vantagem direta do encapsulamento é que a parte encapsulada pode ser modificada internamente sem afetar quem usa a classe — como trocar o motor de um liquidificador sem que o usuário perceba qualquer diferença ao apertar o botão.
+
+<Callout type="warning">
+**Práticas Modernas — Classes, Relacionamentos e Encapsulamento**
+
+O material do livro é de 2019 e usa Java como referência para os exemplos de código — a base conceitual segue atual, mas com nuances importantes hoje:
+
+- **Getters/setters manuais perderam espaço** — linguagens modernas reduzem esse boilerplate: Java tem `record` (desde o Java 16) para classes imutáveis, Kotlin gera getters/setters automaticamente para `val`/`var`, e Python usa `@property` em vez de métodos `getX()`/`setX()` explícitos.
+- **Diagramas de classes UML continuam sendo a notação padrão** para representar dependência, generalização, agregação e composição em ferramentas de modelagem (ex.: PlantUML, Mermaid), mas o desenho manual em ferramentas como o Visio caiu em desuso — hoje é mais comum gerar diagramas a partir de código-como-texto.
+- **Composição é hoje preferida à herança (generalização)** na maioria dos casos — hierarquias profundas de herança são frágeis e difíceis de manter; o princípio "favoreça composição em vez de herança" é um dos mais repetidos em design de software moderno.
+- **Encapsulamento estrito nem sempre é a norma** — em Python, por exemplo, a convenção usa um único underscore (`_atributo`) para sinalizar "privado por convenção", já que a linguagem não impõe encapsulamento real como o Java com `private`.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Agregação** é uma associação em que a parte **sobrevive sem o todo** (associação fraca, "possui um") — não confundir com composição.
+- **Composição** é uma associação em que a parte **não sobrevive sem o todo** (vínculo forte) — se o objeto pai é destruído, o objeto parte também é apagado.
+- **Generalização** é o relacionamento de herança entre classe mãe (superclasse) e classe filha (subclasse) — a filha pode substituir a mãe, mas não o contrário.
+- **Dependência** é o relacionamento mais fraco entre classes: ocorre quando uma classe usa outra apenas como argumento ou especificação temporária, sem manter um vínculo estrutural permanente.
+- **Encapsulamento** é o conceito de esconder a implementação interna e os atributos de uma classe, expondo o acesso apenas por métodos próprios (getters/setters) — não confundir com abstração, herança ou associação.
+- Em uma classe, o **nome** sempre começa com letra maiúscula; **atributos** definem o estado (dados); **métodos/operações** definem o comportamento (ações).
+- Uma classe deve ter **responsabilidade única** — se a descrição da classe usa "e" para acumular funções distintas, é sinal de que ela fere esse princípio.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. *UML: guia do usuário*. 2. ed. Rio de Janeiro: Elsevier; Campus, 2006.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- LIMA, A. S. *UML 2.5: do requisito à solução*. São Paulo: Érica, 2014.
+- LEON, P. L. *Associações entre Classes de Objetos – UML*. Pleon's Blog, 2009.
+- NOGUEIRA, A. *UML - Unified Modeling Language - Generalização, agregação, composição e dependência*. Linha de Código, 2006.
+- RICARTE, I. L. M. *O que é uma classe*. Programação Orientada a Objetos – Uma abordagem com Java, 2000.
+- VASCONCELOS, N. *UML: Diagrama de Classes: Generalização*. Tudo que eu gosto e outros assuntos, 2011.
