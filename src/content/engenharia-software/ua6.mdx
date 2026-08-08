@@ -1,0 +1,115 @@
+---
+title: "UA6 — Métricas para Gerenciamento de Projetos e Código-fonte"
+subtitle: "Como o planejamento de software se apoia nos 4 Ps da gestão, nas estimativas baseadas em problema e em processo, e nas ferramentas que acompanham o progresso do projeto."
+ua: 6
+group: "Métricas de Software"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua6.m4a" title="Métricas para Gerenciamento de Projetos e Código-fonte" />
+
+### Gerenciamento de projeto e os 4 Ps
+
+Segundo o PMBOK, "gerenciamento de projetos é a aplicação do conhecimento, habilidades, ferramentas e técnicas às atividades do projeto para atender aos seus requisitos". As métricas de gerenciamento de projeto são métricas quantitativas: com elas é possível ter ideia da eficácia do processo de software, avaliar o estado do projeto em andamento, rastrear riscos em potencial, descobrir áreas que precisam de atenção, ajustar o fluxo de trabalho e avaliar as habilidades dos membros da equipe.
+
+Um gerenciamento de projetos bem-feito tem foco nos **4 Ps**:
+
+- **Pessoas** — exige investimento na formação da equipe, boa comunicação, bom ambiente de trabalho, gerenciamento de desempenho, treinamento, compensação, análise de competências e desenvolvimento de carreira.
+- **Produto** — antes de planejar o projeto, é preciso considerar soluções alternativas e identificar dificuldades técnicas e gerenciais; sem essas informações, fica difícil estimar custo, riscos e cronograma. Os **objetivos** identificam as metas gerais do produto (sem se preocupar em como serão alcançadas); o **escopo** identifica os dados principais, as funções e os comportamentos que descrevem o produto, mostrando suas limitações de forma quantitativa.
+- **Processo** — o processo de software fornece a metodologia com que o plano de projeto é estabelecido, com conjuntos de atividades-tarefas, pontos de controle, artefatos e pontos de garantia de qualidade que podem ser adaptados ao projeto e à equipe.
+- **Projeto** — a única forma de administrar a complexidade de um projeto é por meio de controle e planejamento; gerentes e engenheiros devem conhecer os fatores críticos de sucesso e desenvolver uma abordagem pactuada com toda a equipe.
+
+Trabalhar bem os 4 Ps aumenta a possibilidade de sucesso do projeto, com foco em criar valor do produto/serviço para o cliente final.
+
+### Planejamento de software
+
+O planejamento é o momento de estimar as atividades do projeto, junto com quem vai realizá-las, o período de execução e o custo. Isso exige estimativas quanto ao número e dimensão dos artefatos, ao número de pessoas necessárias, aos prazos e aos custos. O resultado do planejamento deve incluir: as estimativas, a estrutura de divisão do trabalho, a definição da equipe e demais recursos, a alocação pessoa-atividade, o cronograma e o orçamento — além da análise de riscos e do acompanhamento do plano de ação.
+
+Segundo Pressman e Maxim (2016), existem **10 sinais indicadores** de que um projeto de sistemas de informação está em perigo:
+
+1. A necessidade dos clientes não é bem compreendida pelo pessoal de software.
+2. O escopo do projeto não está definido completamente.
+3. As alterações no projeto não são gerenciadas adequadamente.
+4. A tecnologia escolhida muda.
+5. As necessidades do negócio mudam.
+6. As estimativas de prazo estão fora da realidade.
+7. Os usuários se mostram resistentes.
+8. O patrocínio é perdido.
+9. Faltam, na equipe, profissionais com habilidades adequadas ou faltam pessoas.
+10. Gerentes e desenvolvedores evitam práticas e lições aprimoradas e aprendidas.
+
+Ainda segundo Pressman, um bom planejamento de projeto segue estas etapas: estabelecer o escopo do projeto, determinar a viabilidade, analisar os riscos, definir os recursos necessários (pessoas, software reutilizável, recursos ambientais), estimar o custo com a mão de obra (decompor problemas, desenvolver duas ou mais estimativas, reconciliar as estimativas) e desenvolver um cronograma de projeto (estabelecer um conjunto de tarefas, definir uma rede de tarefas, usar ferramentas de cronograma e mecanismos de acompanhamento).
+
+A declaração do escopo deve descrever: funções e características do produto, dados de entrada e saída, conteúdo, desempenho, restrições, interfaces e confiabilidade que limitam o sistema. É importante indicar também o que **não** faz parte do projeto, para evitar cobranças futuras de itens não tratados.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gsm_01.webp" alt="Infográfico 'Métricas e Planejamento: O Coração da Gestão de Software' — os 4 Ps do gerenciamento (Pessoas e Produto, Processo e Projeto), os 10 sinais de perigo de um projeto, o fluxo das estimativas (definição do escopo e viabilidade, técnicas de dimensionamento LOC e FP), recursos essenciais para o planejamento (pessoas, ambiente, software reutilizável) e o ecossistema de ferramentas (Trello, JIRA, MS Project)" caption="Os 4 Ps do gerenciamento, o fluxo de estimativas e o ecossistema de ferramentas" />
+</SlidesGrid>
+
+### Métricas de projeto
+
+Enquanto as métricas do processo de software têm finalidade estratégica, as **métricas de projeto** são métricas táticas, usadas para acompanhar e adaptar o fluxo de trabalho e as atividades técnicas do projeto quando necessário. Sua primeira aplicação ocorre durante as estimativas: métricas coletadas em projetos anteriores são usadas para calcular a estimativa do projeto atual e, à medida que este avança, a produção real é comparada com a estimativa, dando ao gerente dados para monitorar e controlar o progresso.
+
+As métricas de projeto estão ligadas às áreas de custo, tempo, escopo e risco, podendo ser: métricas relacionadas a requisitos, a linhas de código (LOCs), a pontos de função (FPs), a atividades, a tempo, a risco e a custo.
+
+### Estimativas baseadas em problema e em processo
+
+Após a definição do escopo, o software é decomposto em funções do problema a ser desenvolvido, e a partir daí são estimadas as **LOCs** ou os **FPs** — as duas medidas mais usadas para estimativa de projetos de software:
+
+- **Número de LOCs** — técnica que estima o tamanho das funções pela quantidade de linhas de código, geralmente expressa em KLOC (K = 1.000 LOCs).
+- **Número de FPs** — técnica que estima o tamanho da funcionalidade combinando entradas, saídas, arquivos de dados, consultas e interfaces externas, além dos valores de ajuste de complexidade.
+
+Essas medidas servem tanto como variáveis de estimativa para dimensionar elementos do projeto quanto como métricas de referência coletadas de projetos anteriores, usadas para estimar custo e esforço. Após decompor o escopo em funções do problema, as médias de LOC e FP são computadas por domínio de projeto: um novo projeto é alocado a um domínio, e a média de produtividade anterior mais apropriada para aquele domínio é usada para gerar sua estimativa. Pressman ressalta que nenhuma estimativa é 100% segura — qualquer técnica, por mais sofisticada que seja, deve ser comparada com outras abordagens, prevalecendo o bom senso e a experiência.
+
+Já a **estimativa baseada em processo** — uma das técnicas mais usadas — divide o processo em tarefas e estima o trabalho e o tempo necessários para cada uma. Assim como nas técnicas baseadas em problema, o ponto de partida são as funções de software obtidas do escopo do projeto; depois, para cada função, é atribuída uma série de atividades (comunicação com o cliente, planejamento, análise de risco, engenharia e construção/entrega), cujo esforço/custo é estimado a partir de dados históricos da equipe. O tamanho e/ou esforço total do projeto é dado pela soma do esforço de todas as atividades de cada função, somada ao esforço de todas as funções do software.
+
+### Ferramentas para gerenciamento de projetos
+
+O uso de ferramentas permite ao gestor conhecer e controlar melhor os métodos de trabalho, visualizar em tempo real as informações do projeto e disponibilizá-las para toda a equipe. Entre os benefícios estão: maior confiança dos envolvidos, melhor previsão e antecipação de situações desfavoráveis, melhor tomada de decisão, melhor acompanhamento e controle, melhor comunicação com a equipe e mecanismos para medição de desempenho. Uma boa ferramenta de gerenciamento é fácil de usar, é precisa ao apontar problemas ao longo do projeto, respeita as definições das métricas utilizadas e apresenta a evolução fiel do roadmap do projeto.
+
+Algumas ferramentas de gerenciamento de projetos citadas:
+
+- **Trello** — uma das mais utilizadas, fácil de usar, garante o acompanhamento das atividades da equipe; tem versão gratuita bastante completa.
+- **JIRA** — parecida com o Trello, mas oferece uma solução integrada de quase todas as áreas do processo; pode ser usada com metodologias Kanban e Scrum.
+- **MS Project** — bastante utilizada, mas uma das mais complexas devido à grande quantidade de recursos.
+
+Além dessas, existem ferramentas voltadas a aspectos específicos de código-fonte:
+
+- **JDepend** — coleta métricas que validam o uso adequado de princípios básicos da orientação a objetos.
+- **JavaNCSS** — usada para métricas de tamanho, complexidade e documentação do código, fornecendo uma estimativa de custo de manutenção.
+
+O uso de técnicas de estimativa isoladamente não garante precisão — é necessário acompanhamento efetivo por parte da gerência de projetos.
+
+<Callout type="warning">
+**Práticas Modernas — Métricas para Gerenciamento de Projetos e Código-fonte**
+
+O material do livro é de 2020 e cita Trello, JIRA e MS Project como principais ferramentas, além de LOC e FP como técnicas centrais de estimativa. O panorama evoluiu em pontos importantes:
+
+- **Métricas de fluxo (DevOps/DORA)** ganharam mais peso do que estimativas tradicionais baseadas em LOC/FP para medir a saúde de um time — *lead time for changes*, *deployment frequency*, *change failure rate* e *mean time to recovery*.
+- **Estimativa ágil substituiu boa parte da estimativa baseada em processo tradicional** — Planning Poker, story points e a abordagem #NoEstimates (que questiona a própria utilidade de estimar com precisão) são hoje mais comuns em times ágeis do que o detalhamento de atividades por função descrito no material.
+- **Ferramentas evoluíram para plataformas unificadas** — o ecossistema Atlassian (JIRA + Confluence) e alternativas como Linear e ClickUp consolidaram gestão de projeto, documentação e rastreamento de métricas em um único lugar, reduzindo a necessidade de ferramentas isoladas como JDepend/JavaNCSS.
+- **Análise estática automatizada** (SonarQube, CodeClimate) tornou métricas de código-fonte — complexidade ciclomática, duplicação, cobertura de testes — parte do pipeline de CI/CD, em vez de coletas manuais e pontuais.
+- **MS Project perdeu espaço** para ferramentas mais leves e colaborativas em times de desenvolvimento ágil, mantendo relevância principalmente em projetos com gestão tradicional (cascata) ou contratos formais.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Os **4 Ps** do gerenciamento de projeto são: **Pessoas, Produto, Processo e Projeto** — não confundir com as áreas do SWEBOK ou com os pilares da POO.
+- **Objetivos** do produto identificam as metas gerais (sem se preocupar em como alcançá-las); **escopo** identifica dados, funções e comportamentos de forma quantitativa — cuidado com questões que trocam os dois conceitos.
+- A técnica **mais comum para estimativa de projeto** é a **estimativa baseada em processo** (não LOC nem FP isoladamente).
+- **LOC (KLOC)** estima tamanho pela quantidade de linhas de código; **FP** estima tamanho pela combinação de entradas, saídas, arquivos de dados, consultas e interfaces externas.
+- Métricas de projeto (táticas) são diferentes de métricas de processo (estratégicas) — as de projeto acompanham e adaptam o fluxo de trabalho técnico do projeto em andamento.
+- Ferramentas de gerenciamento citadas: **Trello, JIRA e MS Project** (gestão geral) e **JDepend, JavaNCSS** (métricas de código-fonte) — cuidado com alternativas de resposta que misturam ferramentas reais com nomes inventados.
+- Os **10 sinais de perigo** de Pressman e Maxim cobrem principalmente falhas de escopo, estimativa, mudança de tecnologia/negócio e problemas de equipe — memorizar o padrão (escopo mal definido, estimativas irreais, resistência de usuários) ajuda mais do que decorar a lista exata.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de Software: uma abordagem profissional*. 8. ed. Porto Alegre: Bookman, 2016.
+- VAZQUEZ, C. E.; SIMOES, G. S.; ALBERT, R. M. *Análise de pontos por função: medição, estimativas e gerenciamento de software*. 13. ed. São Paulo: Erica, 2013.
+- SOMMERVILLE, I. *Engenharia de Software*. 9. ed. São Paulo: Pearson, 2011.
