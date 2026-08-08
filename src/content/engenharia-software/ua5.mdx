@@ -1,0 +1,165 @@
+---
+title: "UA5 — Métricas de Software"
+subtitle: "Como transformar atributos do software e do processo em números — métricas diretas e indiretas, orientadas a tamanho e orientadas à função — para apoiar a gestão de projetos."
+ua: 5
+group: "Métricas de Software"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua5.m4a" title="Métricas de Software" />
+
+### O que é uma métrica de software
+
+Uma **métrica** é uma medida quantitativa do grau com que um sistema, componente ou processo apresenta determinado atributo — ela atribui números a atributos de entidades do mundo real. Em projetos de desenvolvimento de software, medir é indispensável: é preciso acompanhar custo, prazo, desempenho e qualidade para apoiar a gestão.
+
+Segundo Sommerville, uma métrica de software é qualquer tipo de medição referente a um sistema de software, processo ou documentação relacionada — ela permite ao gestor acompanhar a eficácia do projeto. O engenheiro de software coleta medidas e desenvolve métricas para obter **indicadores**, que fornecem informações que permitem ao gerente ajustar o processo e incluir melhorias.
+
+Existem dois contextos principais para medições de software:
+
+- **Processo** — mede a produtividade.
+- **Produto** — mede a qualidade.
+
+Esses dois contextos se desdobram em cinco usos práticos: controle de projeto, controle de produtividade, controle de qualidade, avaliação da qualidade e realização de estimativas.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gms_01.webp" alt="Infográfico 'Guia Essencial: Métricas de Software' — fundamentos (métrica vs. indicador, os 4 papéis da medição: entender, controlar, avaliar, prever; objetivos do gestor: reduzir frustrações de cronograma, avaliar ROI, indicar qualidade) e classificações (métricas diretas vs. indiretas, propriedades de uma boa métrica, comparação entre métrica orientada a tamanho/LOC e orientada a função/FP)" caption="Métricas de software: fundamentos, papéis da medição e classificações diretas/indiretas, tamanho/função" />
+</SlidesGrid>
+
+Para que uma métrica seja realmente útil, ela precisa ser bem caracterizada e validada. O desafio de definir uma métrica passa por três etapas: estabelecer um objetivo de medição explícito, específico para a atividade do processo ou característica do produto avaliada; definir um conjunto de questões que devem ser respondidas para atingir esse objetivo; e identificar métricas bem formuladas que ajudem a responder a essas questões.
+
+### Classificação das métricas
+
+Quanto à origem, as métricas de software se dividem em:
+
+- **Diretas (fundamentais ou básicas)** — medidas realizadas diretamente sobre atributos observados. Exemplos: custo, esforço, número de linhas de código, capacidade de memória, número de páginas.
+- **Indiretas (derivadas)** — medidas obtidas a partir de outras métricas. Exemplos: complexidade, eficiência, confiabilidade e facilidade de manutenção.
+
+Quanto à orientação, existem três tipos:
+
+- **Métricas orientadas a tamanho** — medem o tamanho dos artefatos de software associados ao processo de desenvolvimento.
+- **Métricas orientadas por função** — medidas feitas do ponto de vista do usuário, determinando de forma consistente o tamanho e a complexidade do software.
+- **Métricas orientadas a fatores humanos** — medem a percepção humana sobre a efetividade das ferramentas e métodos usados no processo e no projeto.
+
+Quanto ao tipo, também podem ser classificadas em:
+
+- **Métricas de produtividade** — concentram-se na velocidade de desenvolvimento do produto (foco na saída do processo).
+- **Métricas de qualidade** — indicam o quanto o software se adequa às exigências implícitas e explícitas do cliente e às ineficiências ocorridas durante o processo.
+- **Métricas técnicas** — concentram-se nas características do software em si (não no processo), como complexidade lógica, grau de modularidade e grau de reusabilidade.
+
+### Propriedades desejáveis de uma métrica
+
+Uma boa métrica deve:
+
+- ser facilmente calculada, entendida e testada;
+- ser expressa em alguma unidade;
+- ser passível de estudos estatísticos;
+- ser passível de automação.
+
+Para Pressman e Maxim (2016), uma métrica também deve ser **válida** (quantifica de fato o que se quer medir) e **confiável** (produz os mesmos resultados em um mesmo cenário), além de ser prática e fácil de computar e interpretar.
+
+### Métricas orientadas a tamanho
+
+Métricas orientadas a tamanho são criadas normalizando-se medidas de qualidade e/ou produtividade em função do tamanho do software produzido. Uma tabela simples — com nome do projeto, linhas de código, esforço e outros dados — vai crescendo conforme os projetos são concluídos, formando um histórico. A partir desses dados é possível calcular médias de qualidade e produtividade para todos os projetos concluídos.
+
+A tabela deve contemplar todo o trabalho e custo das atividades de engenharia de software (análise, projeto, código e testes), não apenas a codificação. A coluna de linhas de código costuma servir como valor de normalização para comparar projetos diferentes; também é possível derivar dados como erros por pessoa, linhas de código por pessoa e valor por página de documentação.
+
+A métrica mais usada nessa categoria é a contagem de **linhas de código (LOC)** ou **milhares de linhas de código (KLOC)** — mas seu uso gera controvérsia:
+
+| Vantagens | Desvantagens |
+|---|---|
+| Fáceis de obter | Dependem da linguagem de programação |
+| Vários modelos de estimativa já usam LOC/KLOC como entrada | Penalizam programas bem projetados, porém pequenos |
+| Grande volume de literatura e dados históricos disponível | Não se adaptam bem a linguagens não procedimentais |
+| — | Difíceis de obter na fase de planejamento |
+
+A contagem de linhas de código deve ser entendida como uma medida do que **já foi feito**, e não como uma medida confiável para previsão.
+
+Além do LOC/KLOC, as métricas orientadas a tamanho também podem considerar:
+
+- **Tamanho do vocabulário** — conta o número de componentes do sistema (classes, interfaces, aspectos); cada nome de componente é contado como parte do vocabulário do sistema.
+- **Número de atributos (NOA)** — mede o vocabulário interno de cada componente, isto é, o número de atributos de cada classe. Atributos herdados de superclasses não são contados.
+
+### Métricas orientadas à função
+
+A métrica **ponto de função (FP — function point)** mede a funcionalidade fornecida pelo sistema, sob a ótica do usuário. É útil para:
+
+- estimar o custo ou o trabalho necessário para projetar, codificar e testar o software;
+- prever o número de erros que serão encontrados durante os testes;
+- prever o número de componentes e/ou de linhas de código-fonte.
+
+O FP é derivado de uma relação empírica baseada em medidas diretas e em avaliações qualitativas da complexidade do software, a partir de cinco tipos de contagem:
+
+- **Entradas externas (EEs)** — originadas de um usuário ou de outra aplicação (via integração), fornecem dados ou informação de controle e são usadas para atualizar arquivos lógicos internos. Devem ser diferenciadas de consultas, sendo contadas separadamente.
+- **Saídas externas (EOs)** — dados derivados da aplicação que fornecem informações ao usuário, como relatórios, telas e mensagens de erro.
+- **Consultas externas (EQs)** — uma entrada on-line que resulta na geração imediata de uma resposta, também on-line.
+- **Arquivos lógicos internos (ILFs)** — agrupamento lógico de dados que reside dentro das fronteiras do aplicativo, mantido por meio de entradas externas.
+- **Arquivos de interface externos (EIFs)** — agrupamento lógico de dados que reside fora da aplicação, mas que fornece informações usadas por ela.
+
+Cada uma dessas contagens recebe uma classificação de complexidade — **Simples**, **Média** ou **Complexa** — com pesos próprios:
+
+| | Simples | Média | Complexa |
+|---|---|---|---|
+| Arquivo lógico interno | 7 | 10 | 15 |
+| Arquivo de interface externa | 5 | 7 | 10 |
+| Entrada externa | 3 | 4 | 6 |
+| Saída externa | 4 | 5 | 7 |
+| Consulta externa | 3 | 4 | 6 |
+
+O cálculo do FP segue a fórmula:
+
+```
+FP = contagem total × [0,65 + 0,01 × Σ(Fi)]
+```
+
+Onde os **Fi** (i = 1 a 14) são **fatores de ajuste**, cada um avaliado em uma escala de 1 a 5 conforme sua influência no projeto. As 14 características gerais do sistema avaliadas são: comunicação de dados, processamento distribuído, desempenho, utilização de equipamento, volume de transações, entrada on-line, facilidade de operação, eficiência do usuário final, complexidade do processamento, reutilização de código, facilidade de implantação, facilidade operacional, múltiplos locais e facilidade de mudanças.
+
+<Callout type="default">
+**FPA e UCP: o mesmo território, técnicas diferentes**
+
+A técnica de ponto de função (FP) apresentada nesta UA é a base sobre a qual foram construídas a **FPA** (*Function Point Analysis*) e a **UCP** (*Use Case Points*), abordadas em detalhe na [UA4 — Técnicas para Estimativa de Tamanho e de Custos](/engenharia-software/ua4) desta mesma disciplina.
+</Callout>
+
+Comparando as duas famílias de métricas:
+
+| Orientada a tamanho (LOC) | Orientada à função (FP) |
+|---|---|
+| Fácil de obter e normalizar dados | Independente da linguagem de programação |
+| Depende da linguagem de programação | Ideal para aplicações com linguagem não procedimental |
+| Penaliza programas bem projetados, porém pequenos | Baseada em dados mais fáceis de conhecer durante a evolução do projeto |
+| Difícil de obter na fase de planejamento | Cálculo baseado em dados subjetivos; o resultado é apenas um número |
+
+<Callout type="warning">
+**Práticas Modernas — Métricas de Software**
+
+O material do livro é de 2016/2018 e trata LOC e FP como as principais famílias de métricas de software. O panorama de medição de software evoluiu bastante desde então:
+
+- **Métricas de fluxo (DevOps/DORA)** — em times de alta maturidade, métricas como *lead time for changes*, *deployment frequency*, *change failure rate* e *mean time to recovery* (as quatro métricas DORA) ganharam mais peso do que LOC ou FP para avaliar a saúde de um time de engenharia.
+- **Complexidade ciclomática e métricas de código estático** — ferramentas de análise estática (SonarQube, CodeClimate) automatizaram métricas técnicas como complexidade ciclomática, duplicação de código e cobertura de testes, que antes exigiam cálculo manual.
+- **LOC caiu ainda mais em desprestígio** — a crítica já presente no material (LOC penaliza código bem projetado e curto) se intensificou com paradigmas que valorizam código conciso e expressivo; hoje é raro ver LOC como métrica isolada de produtividade.
+- **Pontos de função e UCP sobrevivem principalmente em contratos formais** — especialmente em licitações públicas e outsourcing, onde uma métrica "independente de tecnologia" ainda é exigida contratualmente para definir escopo e preço fechado.
+- **Métricas de produto centradas no usuário ganharam espaço** — indicadores como NPS, taxa de erro percebida pelo usuário e métricas de experiência (Core Web Vitals, por exemplo) complementam as métricas internas de processo e produto.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Métrica** é a medida quantitativa de um atributo; **indicador** é a informação derivada da métrica que permite ao gestor fazer ajustes — não confundir os dois papéis.
+- **Métricas diretas** (fundamentais): custo, esforço, linhas de código, tempo de execução, número de defeitos — são quantidades diretamente observadas.
+- **Métricas indiretas** (derivadas): complexidade, eficiência, confiabilidade, facilidade de manutenção — exigem análise para serem calculadas.
+- As métricas orientadas a tamanho usam principalmente **LOC/KLOC**; as orientadas à função usam **pontos de função (FP)**, calculados a partir de EEs, EOs, EQs, ILFs e EIFs.
+- A **análise de pontos de função (FP)** mede a funcionalidade sob o ponto de vista do **usuário**, não do programador nem da tecnologia empregada.
+- A fórmula do FP é `FP = contagem total × [0,65 + 0,01 × Σ(Fi)]`, com **14 fatores de ajuste** avaliados de 1 a 5.
+- Um processo de métricas de software é tipicamente descrito em cinco atividades — entre elas, a atividade responsável por **acumular os dados** é a **coleta**.
+- Vantagem clássica do LOC: fácil de obter. Desvantagem clássica: depende da linguagem e penaliza código bem projetado, porém curto.
+- Vantagem clássica do FP: independente de linguagem. Desvantagem clássica: cálculo baseado em avaliação subjetiva de complexidade.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- SOMMERVILLE, I. *Engenharia de Software*. 8. ed. São Paulo: Pearson, 2007.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de Software: uma abordagem profissional*. 8. ed. Porto Alegre: Bookman, 2016.
+- ABREU, A. *Análise de pontos de função na prática*. 2011.
