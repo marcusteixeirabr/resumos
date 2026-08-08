@@ -1,0 +1,135 @@
+---
+title: "UA5 — Programação Orientada a Objetos"
+subtitle: "Como o paradigma que nasceu com a Simula 67 e a Smalltalk de Alan Kay reorganizou o software em torno de objetos, classes e seus quatro pilares."
+ua: 5
+group: "Paradigma Orientado a Objetos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua5.m4a" title="Programação Orientada a Objetos" />
+
+### O que é a programação orientada a objetos?
+
+A programação orientada a objetos (POO) é o paradigma que trouxe uma nova forma de pensar o desenvolvimento de software, deixando bem definidas as etapas de análise, projeto e codificação. Seu conceito básico está em abstrair que tudo pode ser classificado como um **objeto** — cada objeto implementa atributos e métodos, e se relaciona com outros objetos. É justamente dessa ideia que vem o nome do paradigma.
+
+A primeira linguagem a utilizar conceitos de orientação a objetos foi a **Simula 67**, criada em 1967. A expressão "programação orientada a objetos", porém, só foi cunhada na década de 1970 por **Alan Kay**, um dos criadores da linguagem **Smalltalk** — ele desenvolveu a ideia de que seria possível construir um programa a partir de conceitos e abstrações do mundo real, como objetos que trocam mensagens entre si. O paradigma só ganhou popularidade nas décadas de 1980 e 1990, quando passou a ser adotado por grandes empresas por meio de **C++** e **Java**.
+
+Segundo Sebesta (2018), uma linguagem orientada a objetos deve fornecer suporte a três recursos-chave: **tipos de dados abstratos**, **herança** e **vinculação dinâmica de chamadas a métodos**. A **Smalltalk 80** foi a primeira linguagem a implementar completamente esses conceitos — em 1980, quando ainda persistiam problemas como a ausência de mecanismos automáticos de inicialização e finalização de tipos (abertura de arquivo, alocação de memória, fechamento de arquivo, liberação de memória).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpo_01.webp" alt="Infográfico 'Guia Essencial da Programação Orientada a Objetos (POO)' — a base do objeto (atributos e métodos), classe como matriz de objetos, linguagens Java/C#/Python, os quatro pilares (abstração e encapsulamento, herança, polimorfismo) e tabela comparando o paradigma estruturado com o orientado a objetos" caption="Os pilares da POO e a comparação com o paradigma estruturado" />
+</SlidesGrid>
+
+### Da decomposição funcional aos objetos
+
+A POO surge como um paradigma centrado no desenvolvimento de objetos, em contraste com a decomposição funcional e a abstração de dados típicas da programação estruturada. Na programação estruturada, dados globais são compartilhados por vários procedimentos; na POO, cada objeto encapsula seus próprios dados (atributos) junto com os métodos que operam sobre eles.
+
+Esse encapsulamento é alcançado por meio da implementação de **classes**: uma classe é a declaração de um tipo de objeto, que encapsula seus tipos de dados em atributos e seus comportamentos em métodos. É comum dizer que uma classe funciona como uma **matriz** (ou molde) de objetos, pois, a partir de sua estrutura, diversas instâncias (objetos) podem ser criadas.
+
+Uma consequência prática dessa diferença é o desempenho: um programa estruturado tende a ter desempenho melhor que o mesmo programa em POO, já que a execução estruturada é sequencial, enquanto a POO exige desvios entre objetos. Ainda assim, como o desempenho bruto raramente é a maior preocupação nas aplicações modernas (dado o poder de processamento atual), a POO se popularizou amplamente — os ganhos em organização, manutenção e reutilização de código compensam o custo.
+
+### Os quatro pilares da POO
+
+Para que uma linguagem seja considerada orientada a objetos, ela precisa implementar quatro pilares:
+
+- **Abstração** — foco nos atributos e comportamentos relevantes de um objeto para o contexto do programa, ignorando detalhes desnecessários.
+- **Encapsulamento** — isola a complexidade e protege a implementação interna do objeto, expondo apenas o necessário e garantindo segurança e foco no essencial.
+- **Herança** — permite que uma classe (subclasse) herde atributos e métodos de outra (superclasse), facilitando drasticamente o reuso de código já existente.
+- **Polimorfismo** — capacidade de um objeto apresentar comportamentos diferentes para um mesmo método, dependendo da situação ou da classe que o implementa.
+
+### Linguagens orientadas a objetos
+
+#### Java
+
+Desenvolvida pela Sun Microsystems no início da década de 1990, Java se tornou um símbolo tão forte da POO que muitas pessoas chegam a confundir os dois — como se a POO fosse um paradigma exclusivo de Java, quando na verdade é o contrário (MACHADO; FRANCO; BERTAGNOLLI, 2016). A característica mais marcante de Java é a **portabilidade**: os programas não são compilados para código nativo da plataforma, mas para um **bytecode** executado pela Java Virtual Machine (JVM), o que permite rodar o mesmo programa em qualquer plataforma compatível.
+
+Em Java, todo o programa é organizado em classes e objetos. Segundo Machado, Franco e Bertagnolli (2016), "objetos são pequenos programas que guardam dentro de si os dados — em suma, as variáveis — que precisam para executar suas tarefas". As variáveis de um objeto são os **atributos**; suas sub-rotinas são os **métodos**. Exemplo de uma classe `Cachorro` com atributos `nome`, `peso`, `altura`, `cor` e o método `pular()`:
+
+```java
+public class Cachorro {
+  public String nome;
+  public float peso;
+  public float altura;
+  public String cor;
+
+  void pular() {
+    if (altura >= 80) {
+      System.out.println("Seu Cachorro pula alto");
+    }
+  }
+}
+```
+
+#### C#
+
+O **C#** (lê-se "C Sharp") é definido pela Microsoft como linguagem OO integrante da plataforma **.NET**. Embora criada do zero, foi baseada em C++ e incorpora elementos de Java e Pascal. A plataforma .NET, em suas limitações iniciais, motivou a formação de uma força-tarefa em 1999 para desenvolver uma linguagem própria — o C# foi criado especificamente para o .NET, o que evitou adequar a plataforma ao código de alguma linguagem já existente (LEDUR, 2018). Entre os objetivos de projeto do C# estão: ser simples, moderna e de propósito geral OO; oferecer suporte a princípios de engenharia de software; ser voltada a componentes de software; e permitir portabilidade, como em Java. Sua estrutura de classe é semelhante à de Java, o que se explica pela influência direta desta última.
+
+#### Python
+
+Python é uma linguagem de alto nível, de script, imperativa, OO e interpretada, muito usada por sua facilidade de aprendizado. Permite tanto o desenvolvimento estruturado quanto orientado a objetos, com tipificação dinâmica e gerenciamento automático de memória. Curiosamente, seu nome não vem do animal, mas do grupo de comédia britânico **Monty Python**, referência recorrente em sua documentação e tutoriais (LUTZ; ASCHER, 2007). É usada em back-end web, CRM, simulações de engenharia, efeitos especiais, análise de dados e machine learning. Exemplo de uma classe `Pessoa`:
+
+```python
+class Pessoa:
+    def __init__(self, nome, idade):
+        self.nome = nome
+        self.idade = idade
+
+    def setNome(self, nome):
+        self.nome = nome
+
+    def setIdade(self, idade):
+        self.idade = idade
+
+    def getNome(self):
+        return self.nome
+
+    def getIdade(self):
+        return self.idade
+```
+
+### Aplicando os conceitos: classes, herança e polimorfismo na prática
+
+O livro ilustra os conceitos com um sistema de gestão de impressões de uma escola, que calcula o custo de cópias: R$ 0,07 por cópia para alunos e R$ 0,10 para os demais usuários. A solução parte de uma classe `Pessoa`, com os atributos `nome`, `cpf` e `data_nascimento`, e um método `tirarCopias()` que calcula o valor da cópia para pessoas em geral (não alunas).
+
+Os dados específicos de aluno — como o atributo `matrícula` — ficam em uma classe `Aluno`, que usa a declaração `extends` para **herdar** de `Pessoa`: assim, os atributos comuns não precisam ser repetidos. Além disso, na classe `Aluno` o método `tirarCopias()` é reescrito com a regra de desconto do aluno — um exemplo direto de **polimorfismo**, já que o mesmo método se comporta de forma diferente dependendo da classe que o implementa.
+
+Esse par de classes evidencia o principal ganho prático da POO: a **reutilização de código**. Ao abstrair `Pessoa` como base e derivar `Aluno` por herança, evita-se duplicar atributos e lógica comuns às duas classes.
+
+<Callout type="warning">
+**Práticas Modernas — Programação Orientada a Objetos**
+
+O material do livro é de 2019 e usa Java, C# e Python como exemplos de linguagens OO — um panorama que segue atual, mas com nuances importantes hoje:
+
+- **Composição sobre herança** — a prática moderna tende a evitar hierarquias profundas de herança (frágeis e difíceis de manter), preferindo compor objetos menores e reutilizáveis. A máxima "favoreça composição em vez de herança" é hoje um dos princípios de design mais repetidos.
+- **Interfaces e duck typing ganharam peso** — em vez de herdar comportamento, muitas linguagens modernas (incluindo Java com suas *interfaces* e Python com *protocols*/*duck typing*) preferem contratos de comportamento a hierarquias rígidas de classes.
+- **Java e C# continuam dominantes**, mas com evolução relevante: Java incorporou recursos funcionais (lambdas, streams, desde o Java 8) e C# aproximou-se cada vez mais de paradigmas funcionais (LINQ, expressões lambda) — sinal de que a POO "pura" hoje convive com conceitos de programação funcional.
+- **Python consolidou-se** como uma das linguagens mais usadas do mundo, especialmente em ciência de dados e machine learning — áreas que nem existiam com esse peso em 2019 — mantendo sua identidade multiparadigma (permite tanto POO quanto estilo funcional/procedural).
+- **Frameworks modernos abstraem boa parte da modelagem manual de classes** — ORMs (como Hibernate/JPA em Java ou SQLAlchemy em Python) e frameworks web geram grande parte do código de classes a partir de anotações/decorators, reduzindo a necessidade de escrever manualmente toda a estrutura OO.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O nome do paradigma vem da ideia central de que **tudo pode ser abstraído como um objeto**, e um programa é uma coleção de objetos que se relacionam — os principais componentes de um objeto são **atributos e métodos** (não confundir com "estados e atributos" ou "tabelas e variáveis").
+- **Encapsulamento** é o conceito relacionado a esconder a implementação interna da classe, algo desnecessário do ponto de vista externo do objeto — não confundir com abstração, herança ou classes.
+- O mecanismo que permite selecionar dinamicamente, durante a execução, qual comportamento de um método será usado é o **polimorfismo**.
+- A **reutilização de código** na POO é consequência direta da análise e do projeto orientados a objetos (classes bem definidas, herança) — não apenas do uso de funções ou procedimentos.
+- Em uma classe, **atributos** são as variáveis (dados) e **métodos** são as funções/ações — cuidado com questões que trocam esses papéis (ex.: tratar `cor`, `tamanho` e `cheia` como métodos quando são atributos).
+- **Herança** é indicada, em Java, pela palavra-chave `extends`: a subclasse reaproveita atributos e métodos da superclasse sem precisar redeclará-los.
+- Linguagens orientadas a objetos citadas como exemplo: **Java** (portabilidade via JVM/bytecode), **C#** (.NET, baseada em C++ com influência de Java e Pascal) e **Python** (multiparadigma, tipificação dinâmica).
+- A POO só se consolidou como paradigma "puro" a partir da **Smalltalk 80** (1980) — a Simula 67 (1967) introduziu os primeiros conceitos, mas o termo "programação orientada a objetos" só surgiu na década de 1970, com **Alan Kay**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- MACHADO, R. P.; FRANCO, M. H. I.; BERTAGNOLLI, S. C. *Desenvolvimento de software III: programação de sistemas web orientada a objetos em Java*. Porto Alegre: Bookman, 2016.
+- LEDUR, C. L. *Desenvolvimento de sistemas com C#*. Porto Alegre: SAGAH, 2018.
+- LUTZ, M.; ASCHER, D. *Aprendendo Python*. 2. ed. Porto Alegre: Bookman; O'Reilly, 2007.
+- GASPAROTTO, H. M. *Os 4 pilares da Programação Orientada a Objetos*. DevMedia, 2014.
+- GEOVANE, H. *Entendendo e Aplicando Herança em Java*. DevMedia, 2012.
