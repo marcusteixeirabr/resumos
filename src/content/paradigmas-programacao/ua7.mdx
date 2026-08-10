@@ -1,0 +1,160 @@
+---
+title: "UA7 — Herança e Polimorfismo"
+subtitle: "Como a herança viabiliza o reúso de código entre classes e como o polimorfismo permite que esse comportamento herdado se adapte a necessidades específicas."
+ua: 7
+group: "Paradigma Orientado a Objetos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua7.m4a" title="Herança e Polimorfismo" />
+
+### Herança na orientação a objetos
+
+A reusabilidade de código é uma das grandes vantagens do desenvolvimento de software em linguagens orientadas a objetos, e a herança é o mecanismo que a viabiliza: uma nova classe é criada a partir de uma classe já existente, herdando seus atributos e métodos e reduzindo a necessidade de reescrever código. Segundo Tucker e Noonan (2009, p. 335),
+
+> [...] o paradigma orientado a objetos suporta reutilização de código por intermédio da herança. As classes existem em uma linguagem orientada a objetos em uma hierarquia de classes. Uma classe pode ser declarada como uma subclasse de outra classe, que é chamada de classe mãe ou superclasse.
+
+A relação de herança entre classes é do tipo **"é uma"**, e não do tipo **"tem uma"** — uma confusão recorrente na construção de sistemas orientados a objetos. Por exemplo, `Cachorro` e `Gato` são, por herança, tipos de `Animal` (relação "é uma"). Já entre `Estado` e `Cidade` não faz sentido aplicar herança, pois um estado *possui* cidades — é uma relação "tem uma" (associação), não de generalização.
+
+Na superclasse, geralmente genérica, ficam apenas os atributos e métodos que fazem sentido para **todas** as classes herdeiras. Atributos específicos de uma única subclasse não devem subir para a superclasse, sob risco de as demais subclasses herdarem algo que não usam.
+
+A herança pode assumir duas formas:
+
+- **Herança simples** — a mais comum entre as linguagens de programação; a hierarquia de classes forma uma árvore com raiz na classe genérica. Uma classe `D` é subclasse de `C` quando estende ou especializa o significado de `C`, acrescentando novas variáveis de instância ou métodos, ou modificando as definições de métodos públicos e protegidos de `C`.
+- **Herança múltipla** — permite que uma classe herde atributos e métodos de mais de uma superclasse. Suportada por linguagens como **C++** e **Python**, mas não pela **Java**. Apesar de útil em certos casos, tem semântica mais complexa: se uma classe `E` tem subclasses `B` e `C`, e um método `M` é definido de forma diferente em `B` e `C`, fica ambíguo qual implementação `E` deveria herdar (LIMA, 2014).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/hep_01.webp" alt="Infográfico 'Herança e Polimorfismo: Os Pilares do Reúso em POO' — herança como relação É UM, comparação entre herança simples (uma superclasse) e múltipla (Python/C++, várias superclasses), redução de código ao absorver comportamentos genéricos em classes especializadas; polimorfismo como múltiplas formas de agir e ligação tardia (late binding) — decisão sobre qual implementação executar ocorre em tempo de execução; tabela comparando polimorfismo estático (sobrecarga de método, mesma classe, assinaturas diferentes) e dinâmico (sobrescrita de método, entre superclasse e subclasse, mesma assinatura); exemplo do método desenhar() com comportamentos diferenciados para Círculo, Quadrado e Triângulo" caption="Herança (estrutura do reúso) e polimorfismo (flexibilidade e adaptação) em POO" />
+</SlidesGrid>
+
+### Polimorfismo
+
+Em algumas situações, a subclasse precisa de um comportamento diferente do que herdou da superclasse — é o conceito de **polimorfismo**. Ele permite que uma ou mais classes derivadas de uma mesma superclasse invoquem métodos com a mesma assinatura, mas com comportamentos diferentes para cada classe derivada, usando uma referência ao objeto da superclasse. Segundo Tucker e Noonan (2009, p. 323), "em linguagens orientadas a objetos, polimorfismo refere-se à ligação tardia de uma chamada a uma ou várias diferentes implementações de um método em uma hierarquia de herança".
+
+Um exemplo clássico: em um programa de desenho, as classes `Circulo`, `Quadrado` e `Retangulo` são subclasses de `FormaGeometrica`, que define o método `desenhar()`. Desenhar um círculo é diferente de desenhar um retângulo — por isso cada subclasse implementa `desenhar()` à sua própria maneira, apesar de todas herdarem a necessidade desse método.
+
+Para Lima (2014), existem dois tipos recorrentes de polimorfismo:
+
+- **Polimorfismo estático (sobrecarga de método)** — vários métodos com o **mesmo nome**, mas com **assinaturas diferentes** (parâmetros distintos em quantidade ou tipo), definidos na **mesma classe**. A escolha de qual método chamar depende do tipo de objeto passado e é decidida em tempo de execução, por ligação tardia (BOOCH; RUMBAUGH; JACOBSON, 2006).
+
+```java
+public class Calculadora {
+    public int calcula(int a, int b) {
+        return a+b;
+    }
+    public double calcula(double a, double b) {
+        return a+b;
+    }
+    public String calcula(String a, String b) {
+        return a+b;
+    }
+}
+```
+
+- **Polimorfismo dinâmico (sobrescrita de método)** — a subclasse reescreve um método já definido na superclasse, mantendo **mesmo nome, tipo de retorno e quantidade de parâmetros**, mas alterando a implementação (LIMA, 2014).
+
+```java
+public abstract class Veiculo {
+    public float velocidade;
+    public void setVelocidade(float v) {
+        velocidade = v;
+    }
+}
+
+public abstract class Carro extends Veiculo {
+    public void setVelocidade(float v) {
+        velocidade = v;
+        if (velocidade < 20) {
+            marcha = 1;
+        } else if (velocidade < 40) {
+            marcha = 2;
+        } else if (velocidade < 60) {
+            marcha = 3;
+        } else if (velocidade < 70) {
+            marcha = 4;
+        } else {
+            marcha = 5;
+        }
+    }
+}
+```
+
+### Aplicação prática: herança e polimorfismo combinados
+
+Um exemplo de sistema escolar ilustra os dois conceitos trabalhando juntos: as classes `Professor` e `Aluno` herdam de `Pessoa` (herança), e o método `obterDescontoMensalidade` é sobrescrito para aplicar um percentual diferente a cada uma (polimorfismo dinâmico).
+
+```java
+public class Pessoa {
+    public String nome;
+    public String cpf;
+    public Date data_nascimento;
+
+    public Pessoa(String _nome, String _cpf, Date _data) {
+        this.nome = _nome;
+        this.cpf = _cpf;
+        this.data_nascimento = _data;
+    }
+
+    public double obterDescontoMensalidade(double valor) {
+        // desconto padrão de 10%
+        return 0.10 * valor;
+    }
+}
+
+public class Aluno extends Pessoa {
+    public String matricula;
+
+    public Aluno(String _nome, String _cpf, Date _data) {
+        super(_nome, _cpf, _data);
+    }
+    // não sobrescreve obterDescontoMensalidade — herda o desconto de 10% de Pessoa
+}
+
+public class Professor extends Pessoa {
+    public double salario;
+    public String disciplina;
+
+    public Professor(String _nome, String _cpf, Date _data) {
+        super(_nome, _cpf, _data);
+    }
+
+    public double obterDescontoMensalidade(double valor) {
+        // sobrescreve com desconto de 20%
+        return 0.20 * valor;
+    }
+}
+```
+
+`Aluno` não precisa reescrever `obterDescontoMensalidade` — herda automaticamente os 10% de `Pessoa`. Já `Professor` sobrescreve o método (mesma assinatura, novo comportamento) para aplicar 20%. O exemplo mostra como herança minimiza a reescrita de código, enquanto o polimorfismo permite ajustar apenas o que precisa ser diferente, sem duplicar toda a classe.
+
+<Callout type="warning">
+**Práticas Modernas — Herança e Polimorfismo**
+
+O material do livro é de 2019 e usa Java como referência — a base conceitual permanece atual, mas com nuances importantes hoje:
+
+- **"Favoreça composição em vez de herança"** é um dos princípios mais repetidos em design de software moderno — hierarquias profundas de herança são frágeis e difíceis de manter (o mesmo ponto já levantado na UA6). Herança continua válida para relações "é uma" claras e estáveis, mas deixou de ser a ferramenta padrão de reúso.
+- **Interfaces e composição de comportamento** ganharam espaço sobre herança múltipla: Java não permite herança múltipla de classes, mas permite implementar múltiplas interfaces (com métodos `default` desde o Java 8) — um caminho mais seguro do que a herança múltipla de C++/Python para combinar comportamentos.
+- **Sobrecarga de método (polimorfismo estático) tem limites bem definidos** em linguagens com tipagem estática — já em linguagens dinamicamente tipadas como Python, o mesmo efeito costuma ser obtido com parâmetros padrão ou `*args`/`**kwargs`, já que Python não suporta sobrecarga de método no sentido clássico (a última definição de um nome de método sobrescreve as anteriores).
+- **Anotações explícitas de sobrescrita** — a anotação `@Override` do Java (e equivalentes em outras linguagens) tornou-se prática padrão para deixar explícito quando um método sobrescreve o da superclasse, ajudando o compilador a pegar erros de assinatura incompatível.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Herança é uma relação **"é uma"** (ex.: Cachorro é um Animal) — não confundir com associação, que é uma relação **"tem uma"** (ex.: Estado tem Cidades).
+- **Herança simples** usa uma única superclasse; **herança múltipla** permite herdar de mais de uma superclasse simultaneamente — suportada por **C++** e **Python**, **não suportada por Java**.
+- **Polimorfismo estático (sobrecarga)** = mesmo nome, **assinaturas diferentes**, **mesma classe**, resolvido em tempo de compilação/execução conforme os parâmetros passados.
+- **Polimorfismo dinâmico (sobrescrita)** = mesmo nome, **mesma assinatura**, entre **superclasse e subclasse**, resolvido por ligação tardia (late binding) em tempo de execução.
+- Se a subclasse **não sobrescreve** um método, ela **herda automaticamente** o comportamento da superclasse — não é necessário reescrevê-lo.
+- Um novo atributo específico de uma subclasse (ex.: `matricula` em `Aluno`) deve ser declarado **apenas nela**, e não na superclasse nem nas demais subclasses.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. *UML: guia do usuário*. 2. ed. Rio de Janeiro: Elsevier; Campus, 2006.
+- LIMA, A. S. *UML 2.5: do requisito à solução*. São Paulo: Érica, 2014.
