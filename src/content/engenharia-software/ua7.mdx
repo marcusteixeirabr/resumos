@@ -1,0 +1,80 @@
+---
+title: "UA7 — Modelo Incremental"
+subtitle: "Como o desenvolvimento por incrementos combina características do modelo cascata e da prototipação para entregar valor ao cliente de forma contínua."
+ua: 7
+group: "Ciclo de Vida"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua7.m4a" title="Modelo Incremental" />
+
+### O que é o modelo incremental
+
+No modelo incremental, o sistema é dividido em partes que são desenvolvidas e entregues de forma independente. Quando uma dessas partes é finalizada, ela é **"incrementada"** ao sistema, formando, ao final, o sistema completo. É um modelo bastante utilizado por empresas com pouca mão de obra disponível para implementar um software de uma só vez, pois permite entregar valor ao cliente antes de o produto estar 100% pronto.
+
+### Relação com os modelos cascata e prototipação
+
+O modelo incremental considera diversas **entregas parciais** do produto antes de uma entrega final — essa é sua principal diferença em relação aos modelos cascata (linear) e prototipação. Nesses dois modelos, o ciclo de desenvolvimento é contínuo, e o cliente só recebe o produto quando todas as etapas são percorridas (análise e definição de requisitos, projeto, implementação e teste de unidades, integração e teste de sistemas, operação e manutenção — além da prototipação, no caso do modelo de prototipação).
+
+Já no modelo incremental, as atividades de especificação, desenvolvimento e validação são **intercaladas**. O sistema é desenvolvido como uma série de versões (incrementos), de modo que cada versão adiciona funcionalidade à anterior (SOMMERVILLE, 2011). Cada incremento passa pelo mesmo ciclo completo — comunicação, planejamento, modelagem, construção e implantação — de forma escalonada e repetitiva, entregando uma versão funcional a cada volta.
+
+Pode-se dizer que o modelo incremental **une características do cascata e da prototipação**: assim como no cascata, cada incremento percorre etapas estruturadas de desenvolvimento; assim como na prototipação, o cliente avalia entregas parciais e realimenta o processo com feedback antes da versão final.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpm_01.webp" alt="Infográfico 'Guia Prático do Modelo Incremental: Entregas Ágeis e Valor Contínuo' — ciclo de desenvolvimento com comunicação, planejamento, modelagem, construção e implantação repetidos a cada incremento; evolução do núcleo do produto até a versão final; papel ativo do cliente avaliando cada entrega parcial; comparação de entrega entre modelo cascata (feedback baixo, entrega única no fim) e modelo incremental (feedback alto e constante, múltiplas entregas por versão); vantagens (redução de custos e erros, melhor controle de cronograma) e desafios (complexidade na gestão)" caption="O ciclo de desenvolvimento por incrementos e a comparação com a entrega única do modelo cascata" />
+</SlidesGrid>
+
+### Identificando os incrementos
+
+O princípio fundamental do modelo incremental é a presença de **ciclos de incrementos**. Para identificar um incremento, é preciso analisar em que etapa do processo de desenvolvimento o time está:
+
+- Se for o **início** do processo, o incremento começa pela conversa com o cliente e pelo levantamento de suas necessidades.
+- Se for um incremento que **complementa ou corrige** algo já em desenvolvimento, ele começa analisando o que já foi programado e comparando com o que o cliente solicitou.
+
+Em um processo ideal, o cliente participa ativamente: analisa cada entrega ao final de um incremento e especifica o que espera do próximo. Um exemplo prático: a empresa Xpto desenvolveu primeiro a página principal de um site (primeiro incremento); depois, a pedido do cliente, um segundo incremento ajustou o layout; por fim, um terceiro incremento adicionou uma página "Fale Conosco".
+
+### Vantagens e desvantagens
+
+**Vantagens** (IFSC, 2006), todas ligadas à estrutura de trabalho por ciclos curtos:
+
+- **Redução dos custos com manutenção** — como cada ciclo é curto e completo, problemas técnicos ou de entendimento dos requisitos são identificados rapidamente.
+- **Melhor controle de cronograma** — pequenos ciclos completos dão às equipes mais certeza de que o resultado final atenderá ao cliente, evitando estouros de prazo por mudanças ou correções inesperadas de última hora.
+- **Maior probabilidade de atendimento dos requisitos do cliente** — entregas contínuas dão ao cliente uma visão real do produto em construção, com oportunidade de reportar desvios antes da entrega final.
+
+**Desvantagens** (IFSC, 2006):
+
+- **Dificuldade de gerenciamento**, já que fases de ciclos diferentes podem estar ocorrendo simultaneamente.
+- Exige que o **cliente esteja disposto a dar feedback constante** — sem isso, o modelo perde sua principal vantagem.
+- A **arquitetura do projeto precisa ser bem estruturada** desde o início, para conseguir receber novos incrementos sem retrabalho.
+- O cliente precisa estar ciente de que, nas primeiras entregas, **não vai receber o software completo**.
+
+<Callout type="warning">
+**Práticas Modernas — Modelo Incremental**
+
+O material do livro é de 2017 e trata o modelo incremental como uma evolução planejada do cascata, com ciclos definidos de comunicação/planejamento/modelagem/construção/implantação. O panorama atual reforça a mesma ideia central, mas com nomes e ferramentas diferentes:
+
+- **O modelo incremental é a base conceitual dos frameworks ágeis modernos** — Scrum (sprints) e Kanban (fluxo contínuo) são, na prática, formas estruturadas de aplicar entregas incrementais, com cadências e artefatos próprios que o livro não cobre.
+- **Integração e entrega contínuas (CI/CD)** automatizaram grande parte do que antes era um "incremento manual" — hoje um incremento pode ser entregue em produção várias vezes por dia, não apenas ao fim de um ciclo de semanas.
+- **O "papel ativo do cliente"** descrito no material hoje é operacionalizado por rituais específicos (sprint review, backlog grooming, roadmaps compartilhados em ferramentas como Jira/Linear), em vez de feedback informal entre entregas.
+- **A "dificuldade de gerenciamento"** apontada como desvantagem é hoje endereçada por práticas de arquitetura como *feature flags* e *trunk-based development*, que reduzem o risco de integrar incrementos em paralelo.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- A diferença central entre modelo incremental e cascata/prototipação: o incremental faz **entregas parciais contínuas**; os outros dois entregam o produto **de uma vez, ao final**.
+- O modelo incremental **une características do cascata e da prototipação** — não é um modelo totalmente novo e independente dos dois.
+- Cada incremento percorre o **ciclo completo**: comunicação, planejamento, modelagem, construção, implantação.
+- O **primeiro incremento** normalmente entrega apenas os elementos que permitem a **operação básica** do sistema — não um sistema completo, nem apenas um protótipo de telas.
+- Vantagens giram em torno de **redução de custo/erros** e **melhor controle de cronograma**; desvantagens giram em torno de **complexidade de gestão** e **dependência de feedback constante do cliente**.
+- Cuidado com alternativas que descrevem o modelo incremental como "linear" ou "com entrega única ao final" — isso descreve o modelo **cascata**, não o incremental.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MORAIS, I. S. de; ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2017.
+- SOMMERVILLE, I. *Engenharia de Software*. 9. ed. São Paulo: Pearson, 2011.
+- IFSC. *Ciclo de Vida Iterativo e Incremental*. Wiki Instituto Federal de Santa Catarina, São José, out. 2006.
