@@ -1,0 +1,174 @@
+---
+title: "UA8 — Interfaces e Classes Abstratas"
+subtitle: "Como interfaces e classes abstratas garantem, cada uma à sua maneira, que classes herdeiras implementem um conjunto de métodos — e quando escolher uma ou outra."
+ua: 8
+group: "Paradigma Orientado a Objetos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua8.m4a" title="Interfaces e Classes Abstratas" />
+
+### Interfaces na orientação a objetos
+
+O conceito de herança é fundamento básico da orientação a objetos, mas ele trouxe consigo outras necessidades: como garantir que classes de um mesmo contexto implementem determinados métodos, criando um padrão de comportamento esperado? Interfaces e classes abstratas resolvem esse problema, cada uma à sua maneira.
+
+Uma interface define a linha entre a especificação do que uma abstração realiza e a implementação de como isso será feito. Segundo Booch, Rumbaugh e Jacobson (2006, p. 156), "uma interface é uma coleção de operações empregadas para especificar o serviço de uma classe ou componente". Ao declarar uma interface, o programador estabelece o comportamento esperado de qualquer classe que a implemente — todos os métodos definidos na interface devem, obrigatoriamente, ser implementados pela classe.
+
+Linguagens como C#, Java e Python têm suporte ao conceito de interfaces. Em sistemas maiores, elas também são úteis para especificar a visão externa de um pacote ou subsistema, não apenas de uma única classe.
+
+```
+<<interface>>
+Pessoa
+  adicionar()
+  excluir()
+  pesquisar()
+```
+
+Uma boa analogia: quando uma classe implementa uma interface, ela "assina um contrato" com esta, se comprometendo a implementar seus métodos. Em troca, os objetos instanciados a partir dessa classe podem ser classificados como do tipo definido pela interface.
+
+Uma característica importante das interfaces é que uma classe pode implementar **várias** ao mesmo tempo — em linguagens onde a herança múltipla de classes não existe (como Java), isso permite alcançar, de certa forma, um efeito parecido.
+
+Interfaces **não podem implementar nenhum método** — apenas definem os métodos e suas assinaturas. A implementação é responsabilidade exclusiva das classes que a implementam. Isso ajuda a escrever código pouco acoplado e com alta coesão (DEITEL; DEITEL, 2010). Se uma classe implementa uma interface e deixa de especificar um de seus métodos, um erro de compilação é gerado — a garantia de implementação é o principal benefício do recurso.
+
+### Classes abstratas
+
+Classes abstratas também servem para garantir a implementação de métodos por classes herdeiras, mas funcionam de forma diferente das interfaces. Segundo Deitel e Deitel (2010, p. 309):
+
+> Às vezes é útil declarar classes — chamadas classes abstratas — para as quais você nunca pretende criar objetos. Como elas são usadas somente como superclasses em hierarquias de herança, são chamadas superclasses abstratas. Essas classes não podem ser usadas para instanciar objetos, pois são incompletas. Suas subclasses devem declarar as partes ausentes para se tornarem classes concretas, a partir das quais você pode instanciar objetos.
+
+As classes que herdam de uma classe abstrata e podem ser instanciadas são chamadas de **classes concretas**. Sobre classes abstratas, vale destacar:
+
+- Servem como modelo para uma classe concreta;
+- Não podem ser instanciadas diretamente, por isso devem ser herdadas por classes concretas;
+- Podem, ou não, conter métodos abstratos (sem implementação);
+- Métodos abstratos definidos em uma classe abstrata devem, obrigatoriamente, ser implementados em uma classe concreta;
+- Para ser considerada abstrata, uma classe precisa ter **pelo menos um** método declarado como abstrato — os demais métodos podem ter implementação normal.
+
+Um exemplo clássico: uma classe abstrata `BombaDeSuccao` define o método abstrato `ativa()`, herdado pelas classes `BombaDiesel` e `BombaDAgua`, cada uma redefinindo `ativa()` com sua própria implementação — afinal, a forma de ligar uma bomba a diesel é bem diferente da forma de ligar uma bomba de água.
+
+```
+BombaDeSuccao
+  ativa()  [abstrato]
+    ├── BombaDiesel     — redefine ativa()
+    └── BombaDAgua      — redefine ativa()
+```
+
+Apesar de as classes abstratas se assemelharem às interfaces por também funcionarem como uma espécie de "contrato" com as classes herdeiras, é importante diferenciar os dois conceitos: uma classe abstrata, como o nome sugere, **é uma classe** — participa de uma hierarquia e uma subclasse só pode estender uma única classe abstrata. Já as interfaces são consideradas **entidades**, não participam da hierarquia de classes, e uma mesma classe pode implementar quantas interfaces forem necessárias.
+
+Segundo Lima (2014, p. 334), classes abstratas não podem ser usadas em expressões de instanciação, mas podem definir **construtores** — responsáveis por inicializações necessárias para campos usados nas implementações dos métodos. Ao ser instanciada, uma subclasse direta ou indireta pode acionar a execução de um construtor da classe abstrata.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ivc_01.webp" alt="Infográfico 'Interfaces vs. Classes Abstratas' — interfaces como contrato de métodos sem implementação, implementáveis por múltiplas classes simultaneamente; classes abstratas como modelo parcialmente implementado, herdado por uma única cadeia de subclasses; comparação lado a lado dos dois conceitos e quando usar cada um em POO" caption="Diferenças entre interfaces (contrato, múltipla implementação) e classes abstratas (modelo parcial, herança única)" />
+</SlidesGrid>
+
+Outra diferença relevante: uma classe abstrata pode ter métodos **não** abstratos e atributos não estáticos — algo que uma interface (na forma clássica do conceito) não permite. Isso possibilita concentrar todo o algoritmo comum na classe abstrata e deixar apenas os métodos realmente específicos para as subclasses implementarem (BOOCH; RUMBAUGH; JACOBSON, 2006).
+
+Um exemplo prático: em um sistema bancário, toda `Conta` precisa de uma forma de sacar, mas as regras variam conforme o tipo de conta — uma conta especial pode permitir saque acima do saldo disponível, o que uma conta comum não permite. Nesse cenário, `Conta` define um método abstrato `sacar`, e cada subclasse sobrescreve (polimorfismo dinâmico, visto na UA7) sua própria implementação:
+
+```java
+public abstract boolean sacar(double valor);
+```
+
+```
+Conta
+  sacar(valor)  [abstrato]
+    ├── ContaEspecial    — sacar(valor)
+    └── ContaPoupança    — sacar(valor)
+```
+
+Uma classe abstrata sozinha não tem utilidade prática, já que não é possível instanciar objetos dela — apenas de classes concretas que a estendem. Ela serve para simplificar o sistema, concentrando em um único lugar as características comuns a um grupo de classes. Classes abstratas são um recurso valioso justamente quando **nem todos** os métodos serão implementados da mesma forma por todas as classes herdeiras — os métodos genéricos (comportamento igual em todas) ficam na classe abstrata, e os específicos ficam por conta das classes herdeiras.
+
+### Aplicação prática
+
+Em C#, a criação de uma classe abstrata `Forma`, com um método abstrato `CalcularArea` e um método concreto `Descricao`, ilustra bem a mistura entre parte genérica e parte obrigatória:
+
+```csharp
+public abstract class Forma
+{
+    private double _area;
+    public double Area
+    {
+        get { return _area; }
+        set { _area = value; }
+    }
+    public abstract void CalcularArea();
+    public string Descricao()
+    {
+        return "Sou a classe abstrata Forma.";
+    }
+}
+
+public class Quadrado : Forma
+{
+    private double lado;
+    public double Lado
+    {
+        get { return lado; }
+        set { lado = value; }
+    }
+    public override void CalcularArea()
+    {
+        this.Area = lado * lado;
+    }
+}
+```
+
+Já duas interfaces, `IAcao` e `IAcabamento`, podem ser implementadas **simultaneamente** por uma mesma classe — algo que não seria possível com herança de classes abstratas:
+
+```csharp
+public interface IAcao
+{
+    void Desenhar();
+}
+public interface IAcabamento
+{
+    void Pintar();
+}
+
+public class ExemploInterface : IAcao, IAcabamento
+{
+    public void Desenhar()
+    {
+        Console.WriteLine("Implementação do método Desenhar da interface Acao");
+    }
+    public void Pintar()
+    {
+        Console.WriteLine("Implementação do método Pintar da interface Acabamento");
+    }
+}
+```
+
+A sintaxe muda conforme a linguagem — os exemplos anteriores usaram Java, estes usam C# —, mas as características de cada conceito se mantêm: interfaces definem contratos implementáveis múltiplas vezes; classes abstratas definem modelos parcialmente prontos, herdados por uma única cadeia.
+
+<Callout type="warning">
+**Práticas Modernas — Interfaces e Classes Abstratas**
+
+O material do livro é de 2019 e usa exemplos em Java e C# — a distinção conceitual entre interface e classe abstrata continua válida, mas algumas linguagens modernas turvam essa fronteira:
+
+- **Métodos `default` em interfaces Java (desde o Java 8)** permitem que uma interface forneça uma implementação padrão para um método, algo que o material trata como exclusivo de classes abstratas. Isso reduziu bastante os casos em que só uma classe abstrata resolveria o problema.
+- **Composição sobre herança** continua a orientação dominante em design moderno (mesmo ponto já levantado nas UAs 6 e 7) — interfaces favorecem esse estilo por não amarrarem a classe a uma única hierarquia, enquanto herdar de uma classe abstrata ainda "gasta" a única herança simples disponível em linguagens como Java.
+- **Protocolos estruturais** (ex.: `Protocol` do Python via `typing`, interfaces implícitas do Go) levam a ideia de "contrato" ainda mais longe: uma classe satisfaz o contrato apenas por ter os métodos certos, sem precisar declarar explicitamente que o implementa — uma diferença grande em relação ao modelo explícito de Java/C# descrito no livro.
+- **Registro de decisão:** ao decidir entre os dois recursos hoje, a pergunta prática costuma ser "preciso compartilhar estado ou código de implementação entre as classes?" (classe abstrata) versus "preciso apenas garantir um contrato de métodos, possivelmente entre classes de hierarquias diferentes?" (interface).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Interfaces** nunca implementam métodos (apenas assinaturas) e uma classe pode implementar **várias** ao mesmo tempo.
+- **Classes abstratas** podem ter métodos abstratos **e** métodos concretos, mas uma subclasse só pode estender **uma única** classe abstrata.
+- Para ser considerada abstrata, a classe precisa de **pelo menos um** método abstrato — não é obrigatório que todos sejam abstratos.
+- Nem interfaces, nem classes abstratas podem ser **instanciadas diretamente** — só é possível instanciar objetos de classes concretas que as implementam/herdam.
+- Classes abstratas **podem** ter construtores (executados quando uma subclasse concreta é instanciada); interfaces não têm construtores.
+- Diferença conceitual central: interface é uma **entidade**, não participa da hierarquia de classes; classe abstrata **é uma classe**, participa normalmente da hierarquia de herança.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. *UML: guia do usuário*. 2. ed. Rio de Janeiro: Elsevier; Campus, 2006.
+- DEITEL, P.; DEITEL, H. *Java: como programar*. 8. ed. São Paulo: Pearson, 2010.
+- LIMA, A. S. *UML 2.5: do requisito à solução*. São Paulo: Érica, 2014.
+- DIAS, Z. *Classes Abstratas*. Campinas: Instituto de Computação, Universidade Estadual de Campinas, 2007.
