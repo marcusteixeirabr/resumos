@@ -1,0 +1,125 @@
+---
+title: "UA8 — Processo Unificado"
+subtitle: "Como o PU/RUP organiza o desenvolvimento orientado a objetos em quatro fases, guiado por casos de uso e centrado em arquitetura, combinando iteração e incremento."
+ua: 8
+group: "Ciclo de Vida"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua8.m4a" title="Processo Unificado" />
+
+### O que é o Processo Unificado
+
+O **Processo Unificado (PU)**, também conhecido como UP (*Unified Process*), é um modelo de processo de software voltado à construção de software orientado a objetos, que pode ser personalizado de acordo com as necessidades e recursos disponíveis para cada projeto. É um processo **iterativo e adaptativo** que conduz o projeto de forma organizada e consistente, por meio de um conjunto de atividades que transformam as necessidades do cliente em software.
+
+O PU foi proposto pela Rational e evoluiu para o **RUP (Rational Unified Process)**, com a intenção de apoiar o desenvolvimento orientado a objetos e aproveitar as vantagens da UML (*Unified Modeling Language*). É um framework aplicável a uma ampla classe de sistemas, em diferentes áreas, tipos de organização e tamanhos de projeto — seu objetivo é atender às necessidades dos usuários garantindo um software de qualidade dentro do cronograma e orçamento estipulados.
+
+Segundo Sommerville (2011), o RUP é descrito a partir de três perspectivas complementares:
+
+- **Perspectiva dinâmica** — mostra as fases do modelo ao longo do tempo.
+- **Perspectiva estática** — mostra as atividades (*workflows*) realizadas no processo.
+- **Perspectiva prática** — sugere boas práticas a serem usadas durante o processo.
+
+Quanto antes as etapas (iterações) e os artefatos envolvidos forem definidos, melhor — por isso o PU busca tornar claras as tarefas dos grupos e indivíduos envolvidos no projeto desde o início.
+
+### As quatro fases do PU
+
+O RUP organiza o planejamento, o levantamento de requisitos, a análise, a implementação, o teste e a implantação do sistema em quatro fases sequenciais:
+
+- **Concepção/iniciação** — inclui a comunicação com o cliente e o planejamento do projeto: planos de avaliação de riscos, estimativas de custos e prazos, prioridades e levantamento de requisitos são elaborados para análise prévia. As partes interessadas tomam ciência da complexidade do projeto e opinam sobre a continuidade do desenvolvimento.
+- **Elaboração** — apresenta o modelo genérico do processo de desenvolvimento. Seu principal objetivo é analisar o projeto com mais detalhe, revisando todos os riscos levantados.
+- **Construção** — fase em que os componentes do software são efetivamente desenvolvidos, com foco na construção do sistema e dos recursos que serão utilizados.
+- **Transição** — entrega do software ao usuário, incluindo o início da fase de testes e atividades de treinamento.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpu_01.webp" alt="Infográfico 'Guia do Processo Unificado' — as quatro fases (concepção, elaboração, construção, transição) organizadas ao longo do tempo por iterações; workflows estáticos do RUP (modelagem de negócios, requisitos, análise e projeto, implementação, teste, implantação); processo direcionado por casos de uso e centrado em arquitetura; comparação entre desenvolvimento iterativo e incremental" caption="As quatro fases do PU/RUP e os workflows que as atravessam a cada iteração" />
+</SlidesGrid>
+
+### Características básicas do PU
+
+- **Direcionado por casos de uso** — o processo é iniciado com casos de uso, definindo uma linguagem comum entre usuário e sistema e facilitando a especificação de requisitos.
+- **Centrado na arquitetura** — a arquitetura é modelada por meio de aspectos estáticos e dinâmicos do projeto.
+- **Iterativo e incremental** — os projetos são divididos em projetos menores, cada um com uma iteração que abrange quase todo o fluxo de trabalho. Cada iteração resulta em um incremento para o projeto, e as iterações são planejadas de acordo com os casos de uso.
+
+### Workflows estáticos do RUP
+
+Cada iteração percorre um conjunto de *workflows* (fluxos de trabalho) que descrevem o que é produzido em cada frente do processo:
+
+| Workflow | Descrição |
+|---|---|
+| Modelagem de negócios | Os processos de negócio são modelados usando casos de uso de negócio. |
+| Requisitos | Os agentes que interagem com o sistema são identificados e os casos de uso são desenvolvidos para modelar os requisitos do sistema. |
+| Análise e projeto | Um modelo de projeto é criado e documentado usando modelos de arquitetura, componente, objeto e sequência. |
+| Implementação | Os componentes do sistema são implementados e estruturados em subsistemas — geração automática de código a partir dos modelos de projeto ajuda a acelerar o processo. |
+| Teste | Processo iterativo, realizado em conjunto com a implementação; o teste de sistema segue o término da implementação. |
+| Implantação | Uma versão do produto é criada, distribuída aos usuários e instalada no local de trabalho. |
+| Gerenciamento de configuração e mudanças | Workflow de apoio que gerencia o desenvolvimento do sistema. |
+| Ambiente | Disponibiliza as ferramentas de software apropriadas para a equipe de desenvolvimento. |
+
+*(Fonte: adaptado de Sommerville, 2011.)*
+
+### Vantagens e desvantagens do PU
+
+**Vantagens:**
+
+- É um processo robusto e bem definido, que gera artefatos importantes.
+- É um método evolucionário: o usuário não espera até a conclusão do projeto para ter contato com o software, graças ao modelo incremental.
+- Os maiores riscos são atacados primeiro, reduzindo as chances de fracasso do projeto.
+- Após o término do desenvolvimento, é muito difícil encontrar novos erros.
+
+**Desvantagens:**
+
+- Pode ser considerado complexo e trabalhoso para projetos de pequeno porte.
+- Aumenta os gastos, devido à implantação de uma versão a cada incremento.
+- Pode gerar divergências entre a documentação e o software.
+- Pode entrar em loop devido ao modelo iterativo e incremental, dependendo do cliente para chegar ao fim do projeto.
+- Exige experiência da equipe.
+
+### Desenvolvimento iterativo e incremental
+
+O desenvolvimento iterativo e incremental trouxe agilidade e flexibilidade para as equipes, aumentando a capacidade de atender às demandas do mercado com melhores resultados em menor prazo. Ele se baseia nas metodologias ágeis, com vários ciclos curtos em que são incluídas funcionalidades, coletados feedbacks e revisados requisitos — permitindo maior satisfação do cliente e garantindo que o resultado final esteja dentro do esperado.
+
+O desenvolvimento **iterativo** acaba sendo também **incremental**, e vice-versa: ao desenvolver as partes no processo incremental, uma iteração é realizada a cada ciclo.
+
+**Vantagens de adotar o desenvolvimento iterativo e incremental:**
+
+- Cria um fluxo de entrega de software em que os requisitos são apresentados em partes funcionais menores.
+- Facilita acompanhar a evolução do desenvolvimento e identificar erros e falhas durante o processo.
+- Reduz riscos na etapa do projeto.
+- Aumenta a capacidade de modificar a direção do projeto.
+- Torna o escopo do software mais flexível.
+- Aumenta a agilidade e a produtividade da equipe.
+
+Para adotar esse tipo de processo, a mudança de rotina de criação de software passa por três passos: **definir corretamente as prioridades**, **distribuir responsabilidades entre os times** e **distribuir as entregas**.
+
+<Callout type="warning">
+**Práticas Modernas — Processo Unificado**
+
+O material do livro trata o PU/RUP como um framework formal, fortemente ligado à UML e a artefatos de documentação extensos — reflexo do final dos anos 1990/2000. O panorama atual manteve a essência conceitual (iterativo, incremental, centrado em arquitetura, direcionado por casos de uso), mas trocou boa parte do ferramental:
+
+- **Casos de uso perderam espaço para user stories** — frameworks ágeis modernos (Scrum, Kanban) capturam a mesma ideia de "direcionar pelo que o usuário precisa fazer", mas com artefatos mais leves e menos formais que os diagramas de caso de uso da UML.
+- **As quatro fases do PU (concepção, elaboração, construção, transição) inspiraram diretamente o Scrum** — a lógica de "ciclos que entregam incrementos, com risco atacado cedo" é a mesma lógica das sprints, só que sem a burocracia de artefatos do RUP original.
+- **Ferramentas de CI/CD substituíram boa parte do workflow "Implantação"** do Quadro 1 — hoje uma "versão distribuída aos usuários" pode significar um deploy automatizado disparado a cada merge, não um pacote de instalação preparado manualmente.
+- **A "geração automática de código a partir dos modelos de projeto"**, citada como vantagem do workflow de implementação, é hoje mais associada a *scaffolding* de frameworks (Rails, Spring Boot, Django) do que à geração a partir de diagramas UML, como o RUP originalmente propunha.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- As **quatro fases** do PU, na ordem: **Concepção (iniciação), Elaboração, Construção, Transição** — não confundir com as atividades genéricas de Sommerville/Pressman (ver UA2).
+- O PU é **direcionado por casos de uso**, **centrado na arquitetura** e **iterativo e incremental** — essas são as três características básicas mais cobradas.
+- A fase de **Concepção** verifica a viabilidade do projeto e define os casos de uso mais críticos; a fase de **Transição** garante que os requisitos foram atendidos e entrega o software ao usuário.
+- **Elaboração e Construção** concentram a atividade de desenvolvimento de software mais acentuada.
+- O desenvolvimento **iterativo** e o **incremental** estão sempre associados no PU: uma iteração completa resulta em um incremento para o sistema.
+- O PU foi proposto pela Rational e deu origem ao **RUP (Rational Unified Process)**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- SILVA, V. T. *Processo unificado*. 2010.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: Penso, 2016.
