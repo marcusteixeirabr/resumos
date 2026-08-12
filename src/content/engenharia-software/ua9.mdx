@@ -1,0 +1,100 @@
+---
+title: "UA9 — Modelos Tradicionais"
+subtitle: "Cascata, prototipação e espiral em profundidade: como cada um resolve — e cria — problemas de gerenciamento de requisitos, e por que suas trocas moldaram os modelos usados hoje."
+ua: 9
+group: "Ciclo de Vida"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua9.m4a" title="A evolução do Cascata ao Espiral" />
+
+### Retomando os modelos tradicionais
+
+A UA1 já apresentou, em visão geral, os modelos cascata, iterativo/incremental (aprofundado na UA7) e espiral. Esta UA aprofunda especificamente os **três modelos clássicos de ciclo de vida** — cascata, prototipação e espiral —, criados entre as décadas de 1970 e 1990 para resolver barreiras na criação de sistemas de alta qualidade. Entender essas origens é o que explica por que os modelos atuais têm as características que têm.
+
+### Modelo cascata
+
+Foi oficialmente o **primeiro modelo** de ciclo de vida de desenvolvimento de software, o que o torna o mais conhecido entre profissionais e estudantes da área. O nome vem justamente do fluxo do processo: assim como a água de uma cascata corre em uma única direção, o desenvolvimento avança em sequência — da comunicação (início do projeto, levantamento de requisitos) ao planejamento (estimativas, cronograma, acompanhamento), à modelagem (análise, projeto), à construção (código, teste) e à entrega (implantação, suporte, feedback) — sem retorno a uma etapa já concluída (PRESSMAN, 2011).
+
+Esse modelo funciona bem quando os requisitos do problema já são bem compreendidos e razoavelmente estáveis. Por ser sequencial, tem etapas muito bem definidas, o que facilita o gerenciamento do projeto — cada etapa gera entregáveis que permitem aos gestores acompanhar o progresso com clareza.
+
+<Callout type="warning">
+**Desvantagem central do cascata**
+
+Os requisitos só podem ser alterados **depois da entrega da última etapa** — mudanças de requisitos no meio do processo (por necessidade do cliente, da tecnologia ou do mercado) não são bem recebidas e costumam custar caro. Da mesma forma, se uma falha é identificada, o processo não permite retroceder a uma fase anterior para corrigi-la — é preciso seguir até o final. Some-se a isso que o cliente só vê o produto (e só pode dar feedback) no último ciclo, o que reduz a interação entre cliente e equipe ao longo do projeto.
+</Callout>
+
+### Modelo prototipação
+
+Assemelha-se ao cascata por também ter etapas bem definidas, mas com uma característica central diferente: a criação de um **protótipo logo no início do ciclo**, após o primeiro contato com o cliente. O objetivo é que todos os envolvidos consigam interagir com esse protótipo, tendo uma ideia real de como o software vai funcionar antes de aprovar ou sugerir mudanças.
+
+O ciclo se repete: coleta de requisitos → projeto rápido → construção do protótipo → avaliação pelo cliente → e, conforme necessário, nova rodada com ajustes.
+
+**Vantagem principal:** requisitos mais visuais e intuitivos — o documento de especificação é escrito tendo o protótipo como base, dando ao cliente maior segurança de que suas necessidades foram bem entendidas.
+
+**Desvantagens:** o protótipo pode virar fonte de retrabalho e custo alto — se não atender às necessidades do cliente na primeira rodada, precisa ser reconstruído. Mesmo quando aceito de primeira, sua criação representa uma etapa extra (produção + validação), o que tende a alongar o ciclo de vida completo do software.
+
+<Callout type="default">
+**Protótipo descartável x protótipo evolutivo**
+
+O protótipo **descartável** é criado temporariamente só para validar requisitos e depois é abandonado — o sistema real é construído do zero. Já o protótipo **evolutivo** usa o próprio protótipo como base do sistema, que vai evoluindo gradualmente até se tornar o produto final.
+</Callout>
+
+### Modelo espiral
+
+Criado por **Barry Boehm em 1988** como uma melhoria do modelo incremental, busca reunir características dos demais modelos tradicionais: mantém fases bem definidas (como o cascata) e a criação de protótipos (como a prototipação), mas acrescenta um elemento que os outros dois não têm — uma **análise criteriosa de riscos** ao início de cada etapa.
+
+Segundo Pressman (2011) e Boehm e Hansen (2001), o modelo espiral é um gerador de modelos de processo dirigidos a risco, usado para guiar engenharia de sistemas complexos com múltiplos envolvidos. Duas características o definem:
+
+1. Uma **estratégia cíclica** que amplia, de forma incremental, o grau de definição e implementação do sistema enquanto reduz seu grau de risco.
+2. Uma série de **marcos de pontos-âncora** que garantem o comprometimento dos envolvidos com soluções mutuamente satisfatórias e viáveis.
+
+Cada volta da espiral percorre as mesmas quatro atividades: **determinar objetivos, alternativas e restrições** → **avaliar alternativas e analisar/minimizar riscos** (construindo protótipos quando necessário) → **desenvolver e verificar o produto do próximo nível** (o quadrante que corresponde ao cascata clássico) → **planejar a próxima fase**. Se os riscos não puderem ser minimizados em uma volta, o projeto pode ser interrompido ali mesmo; se forem minimizados com sucesso, a próxima etapa é iniciada. O primeiro circuito costuma resultar em uma especificação de produto; os circuitos seguintes produzem protótipos e, progressivamente, versões mais sofisticadas do sistema.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mtc_01.webp" alt="Infográfico 'Modelos Tradicionais de Ciclo de Vida de Software' — Cascata (fluxo linear e sequencial: requisitos, projeto, implementação, testes, manutenção, sem retorno a fases anteriores), Prototipação (visualização antecipada: coleta de requisitos, projeto rápido, construção do protótipo, avaliação pelo cliente, em ciclo), Espiral (ciclos orientados a riscos: planejamento, análise de risco, engenharia, avaliação, em quadrantes); análise comparativa de flexibilidade de requisitos, impacto em custos/prazos, e tabela com principal vantagem e maior desvantagem de cada modelo" caption="Comparativo visual entre os modelos Cascata, Prototipação e Espiral" />
+</SlidesGrid>
+
+Por unificar características dos demais modelos, o espiral herda vantagens e desvantagens de ambos: tem requisitos e etapas bem definidos, mas também um **alto custo de execução**, já que considera uma prototipação para cada fase percorrida.
+
+### Comparando os três modelos na prática
+
+Um exemplo recorrente: uma empresa desenvolvendo um e-commerce.
+
+- **Cascata:** reúne-se com o cliente uma única vez, documenta os requisitos e os apresenta para validação. Uma vez aceitos, o e-commerce é construído por completo, e o cliente só o vê depois de todos os testes concluídos.
+- **Prototipação:** antes de programar, a equipe cria as telas do e-commerce e as apresenta ao cliente, que interage como se estivesse usando o sistema real, para então aprovar ou sugerir mudanças.
+- **Espiral:** parte-se de um protótipo de uma única tela (ex.: cadastro de produtos), avaliada pelo cliente e só então desenvolvida — repetindo o processo para cada parte do sistema (ex.: tela de compras), sempre analisando riscos previsíveis (troca de tecnologia, saída de um membro da equipe etc.) a cada nova etapa.
+
+<Callout type="warning">
+**Práticas Modernas — Modelos Tradicionais**
+
+O material do livro é de 2019/2020 e trata cascata, prototipação e espiral como os modelos fundacionais da engenharia de software. Eles continuam ensinados por seu valor conceitual, mas raramente são usados em forma pura no mercado atual:
+
+- **Metodologias ágeis (Scrum, Kanban, XP)** — já mencionadas na UA7 sobre o modelo incremental — combinam a ideia de entregas iterativas com feedback muito mais frequente do que qualquer um dos três modelos tradicionais permite.
+- **A análise de risco do espiral** sobrevive hoje em práticas como *spike* (investigação técnica de curto prazo antes de um item do backlog) e em frameworks de gestão de risco de produto, mas raramente como um processo formal de "volta da espiral".
+- **A prototipação** se tornou trivial com ferramentas de design (Figma, prototipagem interativa) — o que antes exigia código funcional hoje é validado com o cliente em minutos, sem custo de implementação.
+- **O cascata puro** é hoje considerado antipadrão para a maioria dos projetos de software, mas continua relevante em contextos regulatórios rígidos (aeroespacial, dispositivos médicos), onde mudanças de requisito no meio do processo têm custo de certificação altíssimo.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Cascata:** maior problema é a **dificuldade de lidar com mudanças de requisitos** — não confundir com "dificuldade de gerenciamento", que na verdade é uma vantagem do cascata (facilidade de gerenciamento por etapas bem definidas).
+- **Prototipação:** surgiu para resolver o **problema de comunicação entre cliente e desenvolvedores**; sua principal desvantagem é o **alto custo e retrabalho** quando o protótipo inicial não agrada.
+- **Espiral:** combina cascata + prototipação e adiciona a **análise de risco** como diferencial — essa é a resposta correta sempre que a questão perguntar "o que o espiral acrescentou aos outros dois modelos".
+- **Protótipo descartável** ≠ **protótipo evolutivo**: o descartável é temporário e substituído pelo sistema real; o evolutivo é a base do sistema final.
+- O modelo espiral foi criado por **Barry Boehm em 1988** — associação recorrente em provas.
+- Cuidado com a diferença entre o modelo espiral aprofundado aqui e o modelo **incremental** (UA7): o incremental faz entregas parciais contínuas sem necessariamente ter análise de risco formal em cada ciclo; o espiral é o incremental **com** análise de risco explícita.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed. Porto Alegre: AMGH, 2011.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássico e orientado a objetos*. Porto Alegre: AMGH, 2009.
+- BOEHM, B. *Spiral development: experience, principles, and refinements spiral development workshop*. 2000.
+- BOEHM, B.; HANSEN, W. J. *The spiral model as a tool for evolutionary software acquisition*. 2001.
+- DIAS, R. P. *O modelo em espiral de Boehm*. 2019.
