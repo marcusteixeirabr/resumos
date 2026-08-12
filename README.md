@@ -13,7 +13,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, evolução histórica das linguagens | 🟡 8/16 UAs em andamento |
+| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, evolução histórica das linguagens | 🟡 9/16 UAs em andamento |
 | **Engenharia de Software** | Crise do software, conceitos fundamentais, evolução tecnológica e de processo (cascata, incremental, espiral, ágil), fases do ciclo de vida, SWEBOK, técnicas de estimativa (FPA, UCP, COCOMO), métricas de software | 🟡 8/16 UAs em andamento |
 
 ### Trimestres anteriores

@@ -1,0 +1,140 @@
+---
+title: "UA9 — Java, C++ e C#"
+subtitle: "Como três das linguagens orientadas a objetos mais usadas do mercado — Java, C++ e C# — implementam os mesmos pilares de POO com filosofias e execução bem diferentes entre si."
+ua: 9
+group: "Paradigma Orientado a Objetos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua9.m4a" title="A mecânica de Java, C++ e C#" />
+
+### Os quatro pilares, revisitados
+
+As UAs anteriores desta trilha construíram, uma a uma, as peças da orientação a objetos: classes e encapsulamento (UA6), herança e polimorfismo (UA7), interfaces e classes abstratas (UA8). Esta UA fecha o bloco de POO mostrando como três linguagens de mercado — Java, C++ e C# — colocam esses mesmos quatro pilares em prática, cada uma com suas próprias regras de execução e tipagem.
+
+Vale reforçar os quatro aspectos que sustentam a OO, agora sob a ótica de linguagens concretas:
+
+- **Abstração** — aproveitamento dos aspectos relevantes de cada "problema" resolvido pelo código; cada módulo representa uma abstração do problema maior.
+- **Encapsulamento** — proteção de propriedades por meio de métodos `get`/`set`, escondendo a implementação por trás de uma interface pública.
+- **Herança** — reúso de propriedades e métodos de uma classe já existente, otimizando tempo de desenvolvimento e linhas de código.
+- **Polimorfismo** — tratar um objeto que herdou características de outro como se fosse esse outro objeto; toda alteração de um método herdado caracteriza polimorfismo.
+
+Uma classe descreve os **atributos** (propriedades: nome, tipo, valor, visibilidade) e os **métodos** (funcionalidades: nome, tipo, argumentos, visibilidade) que um objeto terá.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdpp_01.webp" alt="Infográfico 'Guia Essencial: Programação Orientada a Objetos (Java, C++ e C#)' — os 4 pilares da orientação a objetos (abstração e encapsulamento, herança e polimorfismo, estrutura fundamental de uma classe); panorama comparativo de Java (portabilidade com a JVM), C++ (evolução de baixo nível) e C# (integração e versatilidade); tabela comparativa de paradigma, execução e tipagem das três linguagens" caption="Os 4 pilares da OO e o comparativo técnico entre Java, C++ e C#" />
+</SlidesGrid>
+
+### Java
+
+Criada em **1991** pelos engenheiros da Sun Microsystems, a ideia original era permitir que pequenos equipamentos domésticos (telefones, geladeiras, controles de TV) pudessem se comunicar entre si. Com a chegada da Web, a linguagem ganhou um novo propósito e hoje lidera o ranking das linguagens mais usadas no desenvolvimento. Em 2008 foi adquirida pela Oracle.
+
+Java não é "apenas" uma linguagem — é uma **plataforma**: um ambiente computacional completo para desenvolver aplicações. O programa Java é compilado para uma linguagem intermediária chamada **bytecode**, que roda em qualquer dispositivo equipado com uma **JVM (Java Virtual Machine)**. É a JVM que interpreta o bytecode a cada execução, permitindo que o mesmo programa rode em Windows, macOS ou Android sem recompilação — o princípio de "escreva uma vez, execute em qualquer lugar".
+
+```java
+class OláMundo {
+    public static void main(String args[]) {
+        System.out.println("Olá Mundo!");
+    }
+}
+```
+
+### C++
+
+C++ é uma **evolução da linguagem C**, mantendo grande parte de sua influência sobre linguagens usadas hoje — de JavaScript (executado a cada página no navegador) ao próprio Java (que roda em smartphones). Entender C++ é, de certa forma, um primeiro passo para entender boa parte das linguagens atuais, já que muitas se apoiam nela em sintaxe ou no compilador.
+
+Principais características:
+
+- **Melhoramento da linguagem C** — mantém a base de C, com recursos adicionais.
+- **Estaticamente tipada** — o tipo de cada variável precisa ser declarado explicitamente (`int`, `char`, etc.).
+- **Compilada** — o código passa por checagem de sintaxe, parsing (estrutura gramatical) e só então é compilado para código assembler, traduzido para código de máquina.
+- **Multiparadigma** — permite tanto OO quanto programação funcional; suporta desde programação de alto nível até programação embarcada, próxima do hardware.
+- **OO** — acrescenta à linguagem C os recursos de abstração, herança, encapsulamento e polimorfismo.
+
+Em C++, variáveis podem ser declaradas em qualquer ponto do código. Quanto à visibilidade, existem variáveis **locais** (acessíveis só dentro do bloco `{...}` onde foram declaradas) e **globais** (acessíveis em qualquer parte do arquivo). A entrada e saída de dados depende da biblioteca `iostream`, usando `cin` para entrada e `cout` para saída:
+
+```cpp
+#include <iostream.h>
+int x = 20;
+cout << "x é igual a " << x << endl;
+```
+
+Também é possível declarar **constantes** — valores que, uma vez atribuídos, não podem ser alterados: `const float pi = 3.1415926;`.
+
+### C#
+
+Assim como C++, a linguagem **C#** também é baseada em C, unindo o original a novos conceitos e recursos. É uma linguagem **fortemente tipada**, imperativa, declarativa e orientada a objetos, desenvolvida por Anders Hejlsberg. É a linguagem central da plataforma **.NET**, da Microsoft, usada em desenvolvimento Web, mobile, metodologias ágeis (ITIL) e até machine learning.
+
+Por ser baseada em C, C++ e Java simultaneamente, C# facilita a migração de desenvolvedores vindos dessas linguagens — seus recursos se adaptam ao que já é familiar em cada uma delas, somando capacidades próprias. A plataforma .NET é primariamente pensada para Windows, mas em sistemas Unix também é possível desenvolver via terminal ou ferramentas como o VS Code.
+
+A declaração de variáveis se assemelha a C/C++, mas deve sempre ser inicializada com um valor: `int MinhaVariável = 0;`. O gerenciamento de memória em C# ocorre em duas áreas:
+
+- **Stack** — espaço pequeno, funciona como pilha (último a entrar é o primeiro a sair).
+- **Heap** — espaço grande, de tamanho dinâmico conforme o uso.
+
+#### Laços de repetição em C#
+
+| Laço | Comportamento |
+|---|---|
+| `for` | Repete um número definido de vezes, controlado por um contador |
+| `while` | Repete enquanto a condição não for satisfeita (testada no início) |
+| `do while` | Igual ao `while`, mas testa a condição no **fim** do laço |
+| `for each` | Percorre um array, recebendo um elemento do array por iteração |
+
+```csharp
+for (int i = 0; i <= 100; i++)
+{
+    MessageBox.Show("A variável alcançou o valor " + i.ToString());
+}
+```
+
+<Callout type="default">
+**Cuidado com o loop infinito**
+
+Um erro de sintaxe comum em laços `while` gera o chamado loop infinito: a condição nunca é satisfeita e a repetição continua indefinidamente.
+</Callout>
+
+### Comparativo rápido
+
+| Característica | Java | C++ | C# |
+|---|---|---|---|
+| Paradigma | Orientada a Objetos | Multiparadigma | Orientada a Objetos |
+| Execução | Bytecode (JVM) | Código de máquina | Plataforma .NET |
+| Tipagem | Fortemente tipada | Estaticamente tipada | Fortemente tipada |
+
+### Web Services
+
+Uma aplicação raramente vive sozinha — sistemas precisam se comunicar entre si. É aí que entram os **Web Services**: implementações que permitem que diferentes sistemas de uma organização troquem informações entre si. A **plataforma ASP.NET**, criada pela Microsoft, resolve problemas de compilação e execução de aplicativos Web e permite a criação de Web Services — definidos pela própria Microsoft como uma classe escrita em uma linguagem suportada pela .NET, acessada via **HTTP**.
+
+<Callout type="warning">
+**Práticas Modernas — Java, C++ e C#**
+
+O material do livro é de 2019 e reflete o estado das três linguagens até então — os fundamentos de tipagem e execução seguem válidos, mas o ecossistema de cada uma mudou bastante:
+
+- **Java** evoluiu com ciclos de release mais curtos (a cada 6 meses desde o Java 9) e recursos como `records`, pattern matching e virtual threads (Project Loom), reduzindo boilerplate histórico da linguagem.
+- **C++** ganhou padrões modernos (C++17, C++20, C++23) com smart pointers, `constexpr` mais poderoso e módulos — reduzindo bastante o gerenciamento manual de memória que era a marca registrada da linguagem.
+- **C# e .NET** deixaram de ser exclusivos do Windows: o **.NET Core / .NET 5+** é multiplataforma (Linux, macOS) e open source, ampliando o alcance da linguagem muito além do cenário descrito no material.
+- **Web Services SOAP/XML**, citados no capítulo, foram amplamente substituídos por **APIs REST com JSON** e, mais recentemente, **gRPC** e **GraphQL** — a ideia central de "sistemas conversando entre si" continua, mas o protocolo dominante mudou.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Java** não é só uma linguagem, é uma **plataforma**: código compilado em **bytecode**, executado pela **JVM** — é o que garante portabilidade entre sistemas operacionais.
+- **C++** é **multiparadigma** (OO e funcional) e **estaticamente tipada**; sua saída na tela usa `cout`, entrada usa `cin`, via biblioteca `iostream`.
+- **C#** é **fortemente tipada** e roda sobre a plataforma **.NET** da Microsoft; toda variável precisa ser inicializada no momento da declaração.
+- Não confundir os quatro pilares da OO (abstração, encapsulamento, herança, polimorfismo) com características de linguagem (tipagem, paradigma, modo de execução) — são categorias diferentes de pergunta.
+- **Web Service** é a resposta padrão para "como fazer sistemas diferentes se comunicarem" — associação recorrente em questões de múltipla escolha.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- DEITEL, H. M. et al. *C#: como programar*. São Paulo: Pearson Education; Makron Books, 2007.
+- HORSTMANN, C. *Conceitos de computação com o essencial de C++*. 3. ed. Porto Alegre: Bookman, 2005.
+- MACHADO, R. P.; FRANCO, M. H. I.; BERTAGNOLLI, S. C. *Desenvolvimento de software III: programação de sistemas web orientada a objetos em Java*. Porto Alegre: Bookman, 2016.
+- SANTANA FILHO, O. V.; ZARA, P. M. *Microsoft .NET: uma visão geral para programadores*. São Paulo: Senac, 2002.
+- SHARP, J. *Microsoft Visual C# 2010*. Porto Alegre: Bookman, 2011.
