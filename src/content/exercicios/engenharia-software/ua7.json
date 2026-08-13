@@ -1,0 +1,115 @@
+{
+  "ua": 7,
+  "questions": [
+    {
+      "question": "O que caracteriza o modelo incremental?",
+      "options": [
+        "Uma única entrega do produto completo ao final, sem versões parciais.",
+        "O sistema é dividido em partes desenvolvidas e entregues de forma independente; cada parte “incrementa” o sistema até o completo.",
+        "A proibição de qualquer feedback do cliente.",
+        "Etapas sem retorno, iguais às do cascata puro."
+      ],
+      "correctIndex": 1,
+      "explanation": "Empresas com pouca mão de obra usam incrementos para entregar valor antes de o produto estar 100% pronto."
+    },
+    {
+      "question": "Qual é a diferença central entre incremental e cascata/prototipação?",
+      "options": [
+        "Incremental faz entregas parciais contínuas; os outros dois entregam de uma vez, ao final.",
+        "Incremental é linear e sem feedback.",
+        "Cascata entrega incrementos semanais; incremental não entrega nada até o fim.",
+        "Não há diferença."
+      ],
+      "correctIndex": 0,
+      "explanation": "No incremental, especificação, desenvolvimento e validação se intercalam em versões sucessivas."
+    },
+    {
+      "question": "Por que se diz que o incremental une cascata e prototipação?",
+      "options": [
+        "Porque elimina todas as etapas estruturadas.",
+        "Cada incremento percorre etapas estruturadas (como o cascata) e o cliente avalia entregas parciais (como na prototipação).",
+        "Porque usa só análise de riscos formal, como o espiral.",
+        "Porque proíbe prototipar telas."
+      ],
+      "correctIndex": 1,
+      "explanation": "Não é um modelo “do zero”: combina o ciclo estruturado com feedback parcial."
+    },
+    {
+      "question": "Cada incremento percorre qual ciclo, segundo a UA?",
+      "options": [
+        "Apenas codificação.",
+        "Comunicação, planejamento, modelagem, construção e implantação — de forma escalonada e repetitiva.",
+        "Somente teste de aceitação.",
+        "Concepção, elaboração, construção e transição do PU."
+      ],
+      "correctIndex": 1,
+      "explanation": "É o ciclo de Pressman aplicado a cada versão funcional."
+    },
+    {
+      "question": "O que o primeiro incremento normalmente entrega?",
+      "options": [
+        "O sistema completo.",
+        "Apenas um protótipo de telas, sem operação.",
+        "Os elementos que permitem a operação básica do sistema.",
+        "Somente a documentação de retirada do produto."
+      ],
+      "correctIndex": 2,
+      "explanation": "Não é o produto inteiro nem só mockups: é uma versão que já opera no essencial."
+    },
+    {
+      "question": "Como identificar se um incremento é o inicial ou um complemento/correção?",
+      "options": [
+        "Inicial: começa na conversa com o cliente. Complemento: analisa o que já foi feito frente ao que o cliente pediu.",
+        "Não há como distinguir.",
+        "Todo incremento começa pela retirada do produto.",
+        "Complementos nunca conversam com o cliente."
+      ],
+      "correctIndex": 0,
+      "explanation": "No processo ideal o cliente analisa cada entrega e especifica o próximo incremento."
+    },
+    {
+      "question": "Quais vantagens o material associa aos ciclos curtos?",
+      "options": [
+        "Aumento de custo de manutenção e pior cronograma.",
+        "Redução de custos/erros de manutenção, melhor controle de cronograma e maior chance de atender requisitos.",
+        "Eliminação total da arquitetura.",
+        "Independência absoluta de qualquer feedback."
+      ],
+      "correctIndex": 1,
+      "explanation": "Problemas aparecem cedo; o cliente vê o produto real e reporta desvios antes do fim."
+    },
+    {
+      "question": "Qual NÃO é uma desvantagem citada do incremental?",
+      "options": [
+        "Dificuldade de gerenciamento com fases de ciclos diferentes em paralelo.",
+        "Dependência de feedback constante do cliente.",
+        "Necessidade de arquitetura bem estruturada desde o início.",
+        "Facilidade extrema de gestão, maior que a do cascata."
+      ],
+      "correctIndex": 3,
+      "explanation": "Gestão fica mais difícil, não mais fácil. O cliente precisa aceitar que as primeiras entregas não são o software completo."
+    },
+    {
+      "question": "No exemplo da empresa Xpto, qual foi a sequência de incrementos?",
+      "options": [
+        "Site inteiro de uma vez, depois só manutenção corretiva.",
+        "Página principal → ajuste de layout → página “Fale Conosco”.",
+        "Apenas um protótipo descartável, sem incrementos.",
+        "Somente a retirada do produto."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ilustra incrementos que entregam, corrigem e acrescentam funcionalidade a pedido do cliente."
+    },
+    {
+      "question": "Uma alternativa que descreve o incremental como “linear, com entrega única ao final” está descrevendo…",
+      "options": [
+        "Corretamente o incremental.",
+        "O modelo cascata, não o incremental.",
+        "O SWEBOK v3.",
+        "A técnica FPA."
+      ],
+      "correctIndex": 1,
+      "explanation": "Pegadinha clássica: linear + entrega única = cascata."
+    }
+  ]
+}

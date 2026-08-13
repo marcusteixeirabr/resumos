@@ -1,0 +1,115 @@
+{
+  "ua": 4,
+  "questions": [
+    {
+      "question": "Por que estimar software é difícil no início do projeto?",
+      "options": [
+        "Porque requisitos ainda estão em alto nível e há incerteza de tecnologia e de habilidades da equipe.",
+        "Porque estimativa é proibida em engenharia de software.",
+        "Porque só se estima depois da entrega final.",
+        "Porque FPA, UCP e COCOMO não existem."
+      ],
+      "correctIndex": 0,
+      "explanation": "Ainda assim a estimativa define orçamento, planejamento e a referência para acompanhar desvios."
+    },
+    {
+      "question": "O que a FPA dimensiona e sob qual perspectiva?",
+      "options": [
+        "Linhas de código na perspectiva do compilador.",
+        "O que o software faz, na perspectiva do usuário final — só componentes visíveis ao usuário.",
+        "Apenas o esforço de hardware embarcado.",
+        "Somente o número de classes abstratas."
+      ],
+      "correctIndex": 1,
+      "explanation": "FPA mede o “quê”, independente da linguagem, para daí calcular esforço, produtividade e custo."
+    },
+    {
+      "question": "Quais são as cinco premissas (tipos de função) da FPA?",
+      "options": [
+        "Pessoas, produto, processo, projeto e prazo.",
+        "Entradas Externas, Saídas Externas, Arquivos Lógicos Internos, Arquivos de Interface Externa e Consultas Externas.",
+        "Orgânico, semidestacado, embutido, ágil e cascata.",
+        "Requisitos, design, construção, teste e manutenção."
+      ],
+      "correctIndex": 1,
+      "explanation": "EE, SE, ALI, AIE e CE — cada uma com complexidade simples/média/complexa e peso próprio."
+    },
+    {
+      "question": "A UCP estima tamanho a partir de quê e para qual tipo de software?",
+      "options": [
+        "A partir de KLOC, para qualquer linguagem procedimental.",
+        "A partir de atores e casos de uso (como o usuário usa o sistema), visando software orientado a objetos.",
+        "A partir apenas de fatores ambientais, para sistemas embarcados.",
+        "A partir do número de sprints já concluídos."
+      ],
+      "correctIndex": 1,
+      "explanation": "UCP nasce da FPA, mas usa documentos de casos de uso. É mais simples que a FPA."
+    },
+    {
+      "question": "Qual é a fórmula final da UCP e a regra de horas citada?",
+      "options": [
+        "UCP = KLOC × EAF; 1 hora por ponto.",
+        "UCP = UUCP × TCF × EF; estimativa de horas = UCP × 20.",
+        "UCP = EE + SE apenas; 5 horas por ponto.",
+        "UCP = Ab × (KLOC)^Bb."
+      ],
+      "correctIndex": 1,
+      "explanation": "UUCP soma pesos de atores e casos de uso; TCF e EF ajustam; 20 h por ponto de caso de uso."
+    },
+    {
+      "question": "Como distinguir TCF e EF na UCP?",
+      "options": [
+        "TCF: 13 fatores técnicos, 0,6 + 0,01×TFATOR. EF: 8 fatores ambientais, 1,4 + (−0,03×EFATOR).",
+        "São a mesma métrica com nomes diferentes.",
+        "EF é técnico; TCF é ambiental.",
+        "TCF só existe no COCOMO."
+      ],
+      "correctIndex": 0,
+      "explanation": "Não trocar os dois. Atores: simples (API, peso 1), médio (protocolo, 2), complexo (GUI, 3)."
+    },
+    {
+      "question": "O que FPA e UCP consideram além do esforço de programar?",
+      "options": [
+        "Nada: só linhas de código.",
+        "O projeto como um todo — análise, projeto, teste e treinamento.",
+        "Apenas o hardware do servidor.",
+        "Somente a fase de retirada do produto."
+      ],
+      "correctIndex": 1,
+      "explanation": "As duas olham o projeto inteiro, não só o desenvolvimento."
+    },
+    {
+      "question": "Quais são as três categorias de projeto do COCOMO, da mais simples à mais acoplada?",
+      "options": [
+        "Ágil, incremental e cascata.",
+        "Orgânico (simples), semidestacado (moderado) e embutido/incorporado.",
+        "EE, SE e CE.",
+        "ASD, PSD e PSEM."
+      ],
+      "correctIndex": 1,
+      "explanation": "Orgânico = equipes pequenas e problema conhecido; embutido = software fortemente acoplado a hardware, leis e procedimentos."
+    },
+    {
+      "question": "No COCOMO básico, o que as equações E, D e P representam?",
+      "options": [
+        "Entrada, dado e processo.",
+        "Esforço (pessoa-mês), tempo de desenvolvimento (meses) e número de pessoas (E/D), a partir de KLOC.",
+        "Escopo, débito técnico e prazo em sprints.",
+        "Apenas pontos de função não ajustados."
+      ],
+      "correctIndex": 1,
+      "explanation": "E = Ab×(KLOC)^Bb; D = Cb×(E^Db); P = E/D. Coeficientes mudam com a categoria."
+    },
+    {
+      "question": "O que o COCOMO intermediário acrescenta ao básico?",
+      "options": [
+        "Nada: as fórmulas são idênticas.",
+        "15 atributos direcionadores de custo (produto, hardware, pessoal, projeto) que geram o EAF (0,9 a 1,4).",
+        "Apenas casos de uso e atores.",
+        "A obrigação de usar o modelo cascata para sempre."
+      ],
+      "correctIndex": 1,
+      "explanation": "FPA/UCP estimam principalmente tamanho; COCOMO estima esforço e custo a partir do tamanho (LOC/KLOC)."
+    }
+  ]
+}

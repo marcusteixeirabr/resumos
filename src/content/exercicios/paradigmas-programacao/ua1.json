@@ -1,0 +1,115 @@
+{
+  "ua": 1,
+  "questions": [
+    {
+      "question": "O que é um paradigma de programação, segundo o material da UA?",
+      "options": [
+        "Uma linguagem específica, como C ou Java, escolhida pela equipe.",
+        "Um padrão de pensamento que guia a resolução de problemas e sobre o qual as linguagens são construídas.",
+        "Um conjunto de bibliotecas padrão que toda linguagem deve oferecer.",
+        "Um modelo de ciclo de vida usado para planejar prazos de projeto."
+      ],
+      "correctIndex": 1,
+      "explanation": "Paradigma é um modelo de pensamento independente da linguagem; toda linguagem é construída sobre um (ou mais) paradigmas."
+    },
+    {
+      "question": "Quais são os dois grandes ramos dos paradigmas apresentados na UA, com suas especializações?",
+      "options": [
+        "Estruturado (sequência e seleção) e OO (classes e objetos).",
+        "Compilado (C, Fortran) e interpretado (Python, JavaScript).",
+        "Imperativo (procedimental e OO) e declarativo (funcional, lógico, baseado em regras e orientado a eventos).",
+        "Funcional (LISP) e lógico (Prolog)."
+      ],
+      "correctIndex": 2,
+      "explanation": "O material divide os paradigmas em ramo imperativo (procedimental, OO) e ramo declarativo (funcional, lógico, regras, eventos)."
+    },
+    {
+      "question": "Qual linguagem da década de 1960 foi a primeira a suportar o conceito de classes?",
+      "options": [
+        "Fortran",
+        "Lisp",
+        "Simula, de Nygaard e Dahl",
+        "Prolog"
+      ],
+      "correctIndex": 2,
+      "explanation": "Simula, criada por Nygaard e Dahl na década de 1960, é a primeira linguagem a suportar classes."
+    },
+    {
+      "question": "No paradigma imperativo, o foco está em…",
+      "options": [
+        "Declarar o resultado desejado, sem descrever o passo a passo.",
+        "Passar instruções do tipo “faça isso, depois faça aquilo”, executadas sequencialmente.",
+        "Modelar entidades do mundo real exclusivamente como classes.",
+        "Eliminar atribuições e estruturas de controle."
+      ],
+      "correctIndex": 1,
+      "explanation": "Imperativo = “como fazer”: atribuições, declarações, expressões e controle de fluxo passo a passo. C é o exemplo clássico."
+    },
+    {
+      "question": "Qual é o exemplo clássico de paradigma declarativo citado na UA?",
+      "options": [
+        "C, pelas instruções sequenciais.",
+        "Pascal, pela eliminação do GOTO.",
+        "SQL, em que se declara o resultado desejado sem detalhar a execução interna.",
+        "Simula, pelo conceito de classes."
+      ],
+      "correctIndex": 2,
+      "explanation": "Declarativo = “o que fazer”. SQL é o exemplo clássico; Angular também é citado como declarativo."
+    },
+    {
+      "question": "Quais são as três características centrais do paradigma estruturado?",
+      "options": [
+        "Classes, herança e polimorfismo.",
+        "Eliminação do GOTO; apenas sequência, seleção e iteração; composição modular e documentação consistentes.",
+        "Fatos, regras e consultas sobre uma base de conhecimento.",
+        "Imutabilidade, funções puras e composição."
+      ],
+      "correctIndex": 1,
+      "explanation": "Estruturado não trabalha com classes/herança (isso é OO): elimina GOTO e usa só as três estruturas de controle."
+    },
+    {
+      "question": "Quais são os quatro pilares da orientação a objetos apresentados na UA?",
+      "options": [
+        "Sequência, seleção, iteração e modularidade.",
+        "Estado, expressões, atribuição e controle.",
+        "Abstração, encapsulamento, herança e polimorfismo.",
+        "Fatos, regras, consultas e unificação."
+      ],
+      "correctIndex": 2,
+      "explanation": "Os quatro pilares da OO são abstração, encapsulamento, herança e polimorfismo."
+    },
+    {
+      "question": "Por que se afirma que “um paradigma não pertence a uma linguagem”?",
+      "options": [
+        "Porque cada linguagem implementa exatamente um paradigma, sem exceções.",
+        "Porque o paradigma é independente da linguagem: várias linguagens podem compartilhá-lo, e uma linguagem pode misturar mais de um.",
+        "Porque paradigmas só existem em linguagens de baixo nível.",
+        "Porque o compilador escolhe o paradigma automaticamente em tempo de execução."
+      ],
+      "correctIndex": 1,
+      "explanation": "C++ mistura imperativo e OO; JavaScript mistura funcional e OO. O paradigma não está “preso” a uma linguagem."
+    },
+    {
+      "question": "A década de 1970 é chamada de “década dos paradigmas” porque…",
+      "options": [
+        "Nela surgem Java e JavaScript, ligadas à Web.",
+        "Nela Konrad Zuse publica o Plankalkül.",
+        "Nela surge a maioria dos paradigmas modernos (C, Prolog, Pascal, C++).",
+        "Nela os cartões perfurados substituem as linguagens de alto nível."
+      ],
+      "correctIndex": 2,
+      "explanation": "C, Prolog (1972, paradigma lógico), Pascal e C++ surgem nessa década, considerada a dos paradigmas modernos."
+    },
+    {
+      "question": "Quais áreas o material aponta como maiores motores da evolução recente dos paradigmas?",
+      "options": [
+        "Cartões perfurados, Plankalkül e Algol.",
+        "Inteligência artificial, World Wide Web, sistemas e redes, e dispositivos móveis.",
+        "Apenas a crise do software e o comando GOTO.",
+        "Somente o surgimento do SQL e do Angular."
+      ],
+      "correctIndex": 1,
+      "explanation": "IA, Web, sistemas/redes e móveis pressionaram por novos modelos de programação."
+    }
+  ]
+}

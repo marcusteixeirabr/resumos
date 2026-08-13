@@ -1,0 +1,115 @@
+{
+  "ua": 6,
+  "questions": [
+    {
+      "question": "Quais são os 4 Ps do gerenciamento de projeto nesta UA?",
+      "options": [
+        "Planejamento, programação, publicação e pagamento.",
+        "Pessoas, produto, processo e projeto.",
+        "Abstração, encapsulamento, herança e polimorfismo.",
+        "Requisitos, design, construção e teste."
+      ],
+      "correctIndex": 1,
+      "explanation": "Não confundir com áreas do SWEBOK nem com os pilares da POO."
+    },
+    {
+      "question": "Como a UA distingue objetivos e escopo do produto?",
+      "options": [
+        "São a mesma declaração.",
+        "Objetivos são as metas gerais (sem detalhar o como); escopo identifica dados, funções e comportamentos de forma quantitativa, inclusive o que não faz parte.",
+        "Escopo é só o orçamento; objetivos são as linhas de código.",
+        "Objetivos vêm depois da entrega; escopo não se documenta."
+      ],
+      "correctIndex": 1,
+      "explanation": "Indicar o que NÃO entra no projeto evita cobranças futuras. Questões de prova costumam trocar os dois termos."
+    },
+    {
+      "question": "Métricas de projeto versus métricas de processo: qual a diferença?",
+      "options": [
+        "Projeto = táticas (acompanhar e adaptar o fluxo do projeto atual); processo = estratégicas.",
+        "Não há diferença.",
+        "Processo é só LOC; projeto é só FP.",
+        "Métricas de projeto só existem depois da retirada do produto."
+      ],
+      "correctIndex": 0,
+      "explanation": "Na estimativa, usam-se métricas de projetos anteriores; depois se compara o realizado com o estimado."
+    },
+    {
+      "question": "Qual técnica a UA chama de a mais comum para estimativa de projeto?",
+      "options": [
+        "Somente LOC isolada.",
+        "Estimativa baseada em processo: divide o processo em tarefas e estima trabalho/tempo de cada uma.",
+        "Somente pontos de função, sem decompor atividades.",
+        "Sorteio aleatório de prazos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Parte das funções do escopo; para cada uma, estima atividades (comunicação, planejamento, risco, engenharia, construção/entrega) com dados históricos."
+    },
+    {
+      "question": "O que LOC (KLOC) e FP estimam, respectivamente, nesta UA?",
+      "options": [
+        "LOC: funcionalidade do usuário. FP: linhas de código.",
+        "LOC: tamanho pelas linhas de código (K = 1.000). FP: tamanho pela combinação de entradas, saídas, arquivos, consultas e interfaces + ajuste.",
+        "Ambos medem apenas satisfação do cliente.",
+        "Nenhum dos dois serve para estimar custo ou esforço."
+      ],
+      "correctIndex": 1,
+      "explanation": "Depois da decomposição do escopo, médias de LOC/FP por domínio alimentam a estimativa do projeto novo."
+    },
+    {
+      "question": "O que Pressman ressalta sobre qualquer técnica de estimativa?",
+      "options": [
+        "Que ela é 100% segura se usar COCOMO.",
+        "Que nenhuma é 100% segura: deve-se comparar abordagens e prevalecer bom senso e experiência.",
+        "Que só se deve usar uma técnica, nunca duas.",
+        "Que estimativa só é feita após a entrega."
+      ],
+      "correctIndex": 1,
+      "explanation": "Reconciliar duas ou mais estimativas faz parte do bom planejamento."
+    },
+    {
+      "question": "Qual padrão descreve os 10 sinais de perigo de Pressman e Maxim?",
+      "options": [
+        "Apenas bugs de compilação.",
+        "Falhas de escopo, estimativas irreais, mudanças de tecnologia/negócio, resistência de usuários e problemas de equipe/patrocínio.",
+        "Somente a ausência de UML.",
+        "O uso de Trello em vez de MS Project."
+      ],
+      "correctIndex": 1,
+      "explanation": "Memorizar o padrão (escopo mal definido, prazo fora da realidade, usuários resistentes) vale mais do que a lista literal."
+    },
+    {
+      "question": "Quais ferramentas de gestão geral a UA cita?",
+      "options": [
+        "Apenas SonarQube.",
+        "Trello, JIRA e MS Project.",
+        "Apenas Fortran e Cobol.",
+        "Docker, Kubernetes e Helm."
+      ],
+      "correctIndex": 1,
+      "explanation": "Trello é simples; JIRA integra Kanban/Scrum; MS Project é a mais complexa pela quantidade de recursos."
+    },
+    {
+      "question": "Para que servem JDepend e JavaNCSS no material?",
+      "options": [
+        "Gestão de backlog no lugar do JIRA.",
+        "Métricas de código: JDepend valida princípios OO; JavaNCSS mede tamanho, complexidade e documentação (custo de manutenção).",
+        "Hospedagem de Web Services ASP.NET.",
+        "Geração de bytecode da JVM."
+      ],
+      "correctIndex": 1,
+      "explanation": "São ferramentas de código-fonte, distintas das de gestão de projeto. Cuidado com nomes inventados em alternativas."
+    },
+    {
+      "question": "O que o planejamento deve produzir, além das estimativas?",
+      "options": [
+        "Apenas o código-fonte final.",
+        "WBS, equipe e recursos, alocação pessoa-atividade, cronograma, orçamento, análise de riscos e acompanhamento.",
+        "Somente a certificação PSEM.",
+        "Nenhum artefato formal."
+      ],
+      "correctIndex": 1,
+      "explanation": "Planejar é estimar atividades, quem as faz, período e custo — e acompanhar o plano de ação."
+    }
+  ]
+}

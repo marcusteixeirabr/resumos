@@ -1,0 +1,115 @@
+{
+  "ua": 8,
+  "questions": [
+    {
+      "question": "O que é o Processo Unificado e de onde vem o RUP?",
+      "options": [
+        "Um paradigma de programação criado por Dijkstra.",
+        "Um modelo iterativo e adaptativo para software OO, proposto pela Rational, que evoluiu para o Rational Unified Process.",
+        "Um guia da IEEE com 15 áreas de conhecimento.",
+        "Uma técnica de pontos de função."
+      ],
+      "correctIndex": 1,
+      "explanation": "O PU/RUP apoia OO e UML. É um framework personalizável para diferentes sistemas e tamanhos de projeto."
+    },
+    {
+      "question": "Quais são as três perspectivas do RUP segundo Sommerville?",
+      "options": [
+        "Orgânico, semidestacado e embutido.",
+        "Dinâmica (fases no tempo), estática (workflows) e prática (boas práticas).",
+        "Pessoas, produto e processo apenas.",
+        "Fatos, regras e consultas."
+      ],
+      "correctIndex": 1,
+      "explanation": "As três visões se complementam: quando acontece, o que se faz e como se pratica."
+    },
+    {
+      "question": "Qual é a ordem das quatro fases do PU?",
+      "options": [
+        "Construção, transição, concepção, elaboração.",
+        "Concepção (iniciação), elaboração, construção, transição.",
+        "Especificação, validação, evolução, retirada.",
+        "Comunicação, modelagem, entrega, planejamento."
+      ],
+      "correctIndex": 1,
+      "explanation": "Não confundir com as atividades de Sommerville/Pressman da UA2."
+    },
+    {
+      "question": "O que acontece na concepção e o que acontece na transição?",
+      "options": [
+        "Concepção entrega o software; transição só levanta riscos.",
+        "Concepção verifica viabilidade, riscos, custos, prazos e casos de uso críticos; transição entrega o software, testa e treina o usuário.",
+        "As duas fases são idênticas.",
+        "Nenhuma das duas envolve o cliente."
+      ],
+      "correctIndex": 1,
+      "explanation": "Na concepção as partes interessadas decidem se o projeto continua."
+    },
+    {
+      "question": "Quais fases concentram a atividade de desenvolvimento mais acentuada?",
+      "options": [
+        "Apenas transição.",
+        "Elaboração e construção.",
+        "Somente concepção.",
+        "Nenhuma: o PU não desenvolve software."
+      ],
+      "correctIndex": 1,
+      "explanation": "Elaboração detalha riscos e o modelo; construção de fato implementa os componentes."
+    },
+    {
+      "question": "Quais são as três características básicas mais cobradas do PU?",
+      "options": [
+        "Linear, sem retorno e sem UML.",
+        "Direcionado por casos de uso, centrado na arquitetura, iterativo e incremental.",
+        "Baseado só em LOC, KLOC e EAF.",
+        "Exclusivo para sistemas não orientados a objetos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Casos de uso dão linguagem comum com o usuário; cada iteração quase cobre o fluxo e gera um incremento."
+    },
+    {
+      "question": "Como iterativo e incremental se associam no PU?",
+      "options": [
+        "São opostos e nunca ocorrem juntos.",
+        "Uma iteração completa resulta em um incremento para o sistema.",
+        "Iterativo elimina incrementos.",
+        "Incremental proíbe iterações."
+      ],
+      "correctIndex": 1,
+      "explanation": "No PU os dois andam juntos: ciclo curto + parte funcional adicionada."
+    },
+    {
+      "question": "Qual é uma vantagem e uma desvantagem típicas do PU no material?",
+      "options": [
+        "Vantagem: ataca os maiores riscos primeiro. Desvantagem: pode ser complexo/trabalhoso para projetos pequenos e aumentar gastos por versão a cada incremento.",
+        "Vantagem: zero documentação. Desvantagem: impossível personalizar.",
+        "Vantagem: entrega única no final. Desvantagem: não gera artefatos.",
+        "Não há desvantagens citadas."
+      ],
+      "correctIndex": 0,
+      "explanation": "Também pode divergir documentação × software, entrar em loop dependente do cliente e exigir experiência da equipe."
+    },
+    {
+      "question": "Qual workflow estático identifica agentes e desenvolve casos de uso dos requisitos?",
+      "options": [
+        "Implantação",
+        "Requisitos",
+        "Ambiente",
+        "Gerenciamento de configuração apenas"
+      ],
+      "correctIndex": 1,
+      "explanation": "Modelagem de negócios usa casos de uso de negócio; requisitos modela os casos de uso do sistema."
+    },
+    {
+      "question": "Quais três passos a UA aponta para adotar o processo iterativo e incremental?",
+      "options": [
+        "Eliminar prioridades, centralizar tudo em uma pessoa e entregar só no fim.",
+        "Definir corretamente as prioridades, distribuir responsabilidades entre os times e distribuir as entregas.",
+        "Abandonar a arquitetura, os casos de uso e os testes.",
+        "Trocar o PU pelo cascata puro."
+      ],
+      "correctIndex": 1,
+      "explanation": "Isso viabiliza fluxo em partes funcionais menores, menos risco e mais flexibilidade de escopo."
+    }
+  ]
+}

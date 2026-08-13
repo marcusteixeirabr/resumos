@@ -1,0 +1,115 @@
+{
+  "ua": 8,
+  "questions": [
+    {
+      "question": "O que uma interface garante, segundo a analogia do “contrato”?",
+      "options": [
+        "Que a classe herdeira terá implementação automática de todos os métodos.",
+        "Que toda classe que a implementa deve fornecer os métodos declarados — senão há erro de compilação.",
+        "Que a interface pode ser instanciada diretamente.",
+        "Que só uma classe no sistema pode implementá-la."
+      ],
+      "correctIndex": 1,
+      "explanation": "Interface = contrato de assinaturas. A implementação é da classe; faltar um método quebra a compilação."
+    },
+    {
+      "question": "Na forma clássica do conceito, o que interfaces NÃO podem fazer?",
+      "options": [
+        "Definir assinaturas de métodos.",
+        "Ser implementadas por várias classes.",
+        "Implementar métodos — só declaram assinaturas.",
+        "Servir de visão externa de um pacote ou subsistema."
+      ],
+      "correctIndex": 2,
+      "explanation": "O material clássico: interfaces não implementam métodos. (Java 8 default methods são nota moderna, não o núcleo da UA.)"
+    },
+    {
+      "question": "Por que interfaces ajudam em linguagens sem herança múltipla de classes, como Java?",
+      "options": [
+        "Porque uma classe pode implementar várias interfaces ao mesmo tempo.",
+        "Porque a interface substitui a JVM.",
+        "Porque interfaces têm construtores obrigatórios.",
+        "Porque uma classe só pode implementar uma interface."
+      ],
+      "correctIndex": 0,
+      "explanation": "Múltiplas interfaces dão um efeito parecido com herança múltipla, sem a hierarquia de classes."
+    },
+    {
+      "question": "O que é necessário para uma classe ser considerada abstrata, segundo a UA?",
+      "options": [
+        "Ter todos os métodos abstratos, sem exceção.",
+        "Ter pelo menos um método declarado como abstrato.",
+        "Não ter nenhum método.",
+        "Implementar ao menos duas interfaces."
+      ],
+      "correctIndex": 1,
+      "explanation": "Basta um método abstrato; os demais podem ter implementação normal."
+    },
+    {
+      "question": "Por que classes abstratas não podem ser instanciadas diretamente?",
+      "options": [
+        "Porque são incompletas: faltam partes que as subclasses concretas devem declarar.",
+        "Porque o bytecode da JVM proíbe qualquer superclasse.",
+        "Porque abstrato é sinônimo de interface.",
+        "Porque não podem ter nome."
+      ],
+      "correctIndex": 0,
+      "explanation": "São superclasses incompletas. Só classes concretas (que preenchem as partes ausentes) geram objetos."
+    },
+    {
+      "question": "Qual diferença conceitual central entre interface e classe abstrata?",
+      "options": [
+        "Interface é uma entidade e não participa da hierarquia; classe abstrata é uma classe e a subclasse só estende uma.",
+        "Ambas podem ser instanciadas diretamente.",
+        "Interfaces têm construtores; classes abstratas não.",
+        "Classes abstratas não podem ter métodos concretos."
+      ],
+      "correctIndex": 0,
+      "explanation": "Interface ≠ classe. Abstrata participa da herança simples; interface pode ser combinada em várias."
+    },
+    {
+      "question": "Classes abstratas podem ter construtores?",
+      "options": [
+        "Não, nunca.",
+        "Sim — executados quando uma subclasse concreta é instanciada.",
+        "Sim, e por isso a classe abstrata pode ser instanciada com new.",
+        "Só se a classe não tiver métodos abstratos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Construtores inicializam campos usados nas implementações; quem dá new é a subclasse concreta."
+    },
+    {
+      "question": "No exemplo bancário, por que Conta.sacar é abstrato?",
+      "options": [
+        "Porque nenhuma conta precisa sacar.",
+        "Porque as regras de saque variam (conta especial vs. comum) e cada subclasse implementa a sua.",
+        "Porque interfaces não existem em sistemas bancários.",
+        "Porque sacar é um atributo, não um método."
+      ],
+      "correctIndex": 1,
+      "explanation": "O algoritmo comum fica na abstrata; o que muda (limite, cheque especial) fica nas concretas — polimorfismo dinâmico."
+    },
+    {
+      "question": "No exemplo C# de IAcao e IAcabamento, o que a classe ExemploInterface demonstra?",
+      "options": [
+        "Que uma classe não pode ter dois contratos.",
+        "Que a mesma classe pode implementar várias interfaces simultaneamente — o que não daria com duas classes abstratas.",
+        "Que interfaces possuem construtores.",
+        "Que classes abstratas aceitam herança múltipla em Java."
+      ],
+      "correctIndex": 1,
+      "explanation": "Desenhar() e Pintar() vêm de interfaces distintas na mesma classe concreta."
+    },
+    {
+      "question": "Quando a classe abstrata é especialmente valiosa?",
+      "options": [
+        "Quando todos os métodos serão idênticos em todas as herdeiras e não há o que especializar.",
+        "Quando nem todos os métodos serão implementados da mesma forma: o genérico fica na abstrata e o específico nas herdeiras.",
+        "Quando se deseja instanciar a superclasse diretamente.",
+        "Quando não se quer nenhum contrato entre classes."
+      ],
+      "correctIndex": 1,
+      "explanation": "Concentra o comum e obriga só o que precisa variar (ex.: Forma.CalcularArea abstrato + Descricao concreto)."
+    }
+  ]
+}

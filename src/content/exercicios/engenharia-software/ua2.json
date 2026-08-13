@@ -1,0 +1,115 @@
+{
+  "ua": 2,
+  "questions": [
+    {
+      "question": "O ciclo de vida de software cobre qual intervalo?",
+      "options": [
+        "Somente o tempo de implementação do código.",
+        "Da definição dos requisitos até a retirada do sistema de uso.",
+        "Apenas o levantamento de requisitos.",
+        "Somente os testes de aceitação."
+      ],
+      "correctIndex": 1,
+      "explanation": "É a estrutura de processos da criação à operação e manutenção, até o sistema deixar de ser utilizado."
+    },
+    {
+      "question": "Quais são as três camadas da Engenharia de Software citadas na UA?",
+      "options": [
+        "Requisitos, código e deploy.",
+        "Ferramentas, métodos e processo (com foco em qualidade).",
+        "Cascata, espiral e ágil.",
+        "Pessoas, produto e projeto apenas."
+      ],
+      "correctIndex": 1,
+      "explanation": "O processo é a base organizacional; ferramentas automatizam; métodos são as técnicas. Qualidade é o critério de eficiência."
+    },
+    {
+      "question": "Quais são as quatro atividades fundamentais de Sommerville, nesta ordem?",
+      "options": [
+        "Comunicação, planejamento, modelagem, entrega.",
+        "Especificação, projeto e implementação, validação, evolução.",
+        "Concepção, elaboração, construção, transição.",
+        "Elicitação, análise, especificação, validação apenas de requisitos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Todo processo inclui essas quatro, independentemente do modelo de ciclo de vida."
+    },
+    {
+      "question": "O fluxo próprio do processo de requisitos é…",
+      "options": [
+        "Teste de componente → sistema → aceitação.",
+        "Estudo de viabilidade → elicitação e análise → especificação → validação.",
+        "KLOC → EAF → pessoa-mês.",
+        "Concepção → construção → transição."
+      ],
+      "correctIndex": 1,
+      "explanation": "A especificação de software é a fase inicial da qual as demais dependem; esse é o fluxo interno de requisitos."
+    },
+    {
+      "question": "O projeto de software se desdobra em quais frentes, a partir da especificação?",
+      "options": [
+        "Apenas código-fonte e comentários.",
+        "Projeto de arquitetura, de interface, de componentes e de banco de dados.",
+        "Somente o modelo cascata.",
+        "Apenas casos de uso e atores."
+      ],
+      "correctIndex": 1,
+      "explanation": "Questões como banco, hardware e linguagens são decididas no projeto — não no levantamento de necessidades."
+    },
+    {
+      "question": "Validação (V&V) pretende mostrar o quê, e em que ordem ocorre o teste?",
+      "options": [
+        "Que o software atende às especificações e às expectativas do cliente; teste de componente → sistema → aceitação.",
+        "Apenas que o código compila; teste de aceitação primeiro.",
+        "Somente o desempenho de hardware; sem ordem definida.",
+        "Que não há requisitos; só inspeções finais."
+      ],
+      "correctIndex": 0,
+      "explanation": "V&V cobre especificação técnica e expectativa do cliente. A ordem dos testes é componente, sistema, aceitação."
+    },
+    {
+      "question": "Como a evolução de software é entendida hoje, segundo a UA?",
+      "options": [
+        "Como algo separado e posterior, nunca parte do desenvolvimento.",
+        "Como parte do mesmo processo contínuo: poucos sistemas são totalmente novos e a maioria está sempre sendo atualizada.",
+        "Como sinônimo exclusivo de retirada do produto.",
+        "Como uma etapa que só existe no modelo cascata."
+      ],
+      "correctIndex": 1,
+      "explanation": "Historicamente era “manutenção” isolada; hoje é evolução contínua junto com o desenvolvimento."
+    },
+    {
+      "question": "Quais são as cinco atividades metodológicas de Pressman?",
+      "options": [
+        "Especificação, projeto, validação, evolução e retirada.",
+        "Comunicação, planejamento, modelagem, construção e entrega.",
+        "Concepção, elaboração, construção, transição e encerramento.",
+        "EE, SE, ALI, AIE e CE."
+      ],
+      "correctIndex": 1,
+      "explanation": "Apoiadas por atividades guarda-chuva: controle, riscos, qualidade, configuração e revisões técnicas."
+    },
+    {
+      "question": "Na etapa de levantamento de necessidades (Schach), o que se faz?",
+      "options": [
+        "Decide-se banco de dados, hardware e linguagens.",
+        "Identificam-se e organizam-se as necessidades do cliente; a análise de requisitos propriamente dita vem depois.",
+        "Escreve-se todo o código dos módulos.",
+        "Retira-se o produto de produção."
+      ],
+      "correctIndex": 1,
+      "explanation": "Levantamento ≠ análise. Decisões técnicas ficam no projeto."
+    },
+    {
+      "question": "Como a UA distingue atividades fundamentais e modelo de ciclo de vida?",
+      "options": [
+        "São a mesma coisa.",
+        "Atividades são o “quê” que todo processo precisa cobrir; o modelo é o “como” isso se organiza no tempo.",
+        "O modelo lista as atividades; as atividades listam os modelos.",
+        "Só o cascata possui atividades fundamentais."
+      ],
+      "correctIndex": 1,
+      "explanation": "Cascata, incremental, espiral e ágil organizam as mesmas atividades de formas diferentes."
+    }
+  ]
+}

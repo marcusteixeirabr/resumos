@@ -1,0 +1,115 @@
+{
+  "ua": 2,
+  "questions": [
+    {
+      "question": "O que caracteriza a programação declarativa em relação à imperativa?",
+      "options": [
+        "O programador descreve passo a passo como o resultado deve ser alcançado.",
+        "O programador declara os objetivos/resultado desejado; a ordem das declarações, em geral, não importa.",
+        "O programa é organizado apenas em classes, atributos e métodos.",
+        "Toda computação depende de atribuição destrutiva em memória compartilhada."
+      ],
+      "correctIndex": 1,
+      "explanation": "Declarativo = “o quê”, não o “como”. Um programa é um conjunto de declarações cujo foco não é a sequência de execução."
+    },
+    {
+      "question": "Quais são os dois grandes domínios de aplicação do paradigma declarativo segundo o livro?",
+      "options": [
+        "Sistemas embarcados e kernels de sistema operacional.",
+        "Inteligência artificial (Prolog) e acesso a dados em SGBDs (SQL).",
+        "Interfaces gráficas nativas e jogos em tempo real.",
+        "Compiladores e drivers de dispositivo."
+      ],
+      "correctIndex": 1,
+      "explanation": "IA (Prolog) e consultas/manipulação em bancos (SQL) são os dois domínios mais cobrados."
+    },
+    {
+      "question": "Como o material divide as famílias das linguagens declarativas?",
+      "options": [
+        "Compilada e interpretada.",
+        "Lógica (Prolog), funcional pura (LISP) e, complementarmente, programação por restrições.",
+        "Estruturada, OO e procedural.",
+        "Sequência, seleção e iteração."
+      ],
+      "correctIndex": 1,
+      "explanation": "Famílias: lógica (Prolog), funcional (LISP) e constraint programming sobre domínios (ex.: booleanos ou finitos)."
+    },
+    {
+      "question": "Quais são os três tipos de dados do LISP puro citados na UA?",
+      "options": [
+        "Inteiros, strings e registros.",
+        "Átomos, listas e estruturas de listas aninhadas.",
+        "Fatos, regras e consultas.",
+        "Classes, objetos e interfaces."
+      ],
+      "correctIndex": 1,
+      "explanation": "LISP puro (McCarthy, MIT, anos 1950) trabalha com átomos, listas e listas aninhadas."
+    },
+    {
+      "question": "Por que, em LISP, código e dados compartilham a mesma forma?",
+      "options": [
+        "Porque a linguagem é compilada para bytecode da JVM.",
+        "Porque ambos são listas entre parênteses: a mesma expressão pode ser dado ou chamada de função.",
+        "Porque LISP não possui funções, só tabelas.",
+        "Porque toda variável precisa ser declarada com tipo estático."
+      ],
+      "correctIndex": 1,
+      "explanation": "(A B C D) pode ser uma lista de quatro elementos ou a função A aplicada a B, C e D."
+    },
+    {
+      "question": "Quais são os três tipos de declaração de um programa Prolog?",
+      "options": [
+        "Classes, atributos e métodos.",
+        "Fatos, regras e consultas.",
+        "Sequência, seleção e iteração.",
+        "Stack, heap e registradores."
+      ],
+      "correctIndex": 1,
+      "explanation": "Prolog combina fatos e regras numa base de conhecimento e responde a consultas por busca com backtracking."
+    },
+    {
+      "question": "Quais são os quatro blocos de construção do Prolog citados no material?",
+      "options": [
+        "if, while, for e switch.",
+        "And lógico, or lógico, reescrita de termos e unificação.",
+        "Abstração, encapsulamento, herança e polimorfismo.",
+        "Estado, expressões, atribuição e controle."
+      ],
+      "correctIndex": 1,
+      "explanation": "Esses quatro blocos, juntos, permitem executar qualquer computação em Prolog."
+    },
+    {
+      "question": "Quem criou o Prolog e em que ano, segundo a UA?",
+      "options": [
+        "John McCarthy, início dos anos 1950.",
+        "Alain Colmerauer, Philippe Roussel e Robert Kowalski, em 1972.",
+        "Dennis Ritchie e Ken Thompson, em 1972.",
+        "Alan Kay, na década de 1970."
+      ],
+      "correctIndex": 1,
+      "explanation": "Prolog (programmation en logique) surge em 1972, baseado em cláusulas de Horn."
+    },
+    {
+      "question": "Por que linguagens declarativas costumam ter curva de aprendizado menor que as imperativas?",
+      "options": [
+        "Porque não exigem nenhum raciocínio algorítmico.",
+        "Porque estão mais próximas da lógica humana, com foco no resultado e não no procedimento.",
+        "Porque só existem duas palavras-chave em qualquer linguagem declarativa.",
+        "Porque o compilador gera automaticamente todas as regras de negócio."
+      ],
+      "correctIndex": 1,
+      "explanation": "O foco no resultado aproxima o código da forma como as pessoas descrevem problemas. Ainda assim, há raciocínio algorítmico — só que deslocado."
+    },
+    {
+      "question": "O que distingue a programação por restrições da programação lógica tradicional?",
+      "options": [
+        "Ela descreve o passo a passo da execução com GOTO.",
+        "O programador especifica restrições e critérios a satisfazer sobre domínios de variáveis, em vez de regras de inferência tradicionais.",
+        "Ela só funciona com orientação a objetos.",
+        "Ela elimina completamente o uso de variáveis."
+      ],
+      "correctIndex": 1,
+      "explanation": "Constraint programming é o terceiro tipo declarativo: restrições sobre domínios (booleanos, finitos etc.)."
+    }
+  ]
+}

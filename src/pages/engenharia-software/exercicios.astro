@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import QuizPageLayout from '../../layouts/QuizPageLayout.astro';
+
+const entries = (await getCollection('engenharia-software'))
+  .sort((a, b) => a.data.ua - b.data.ua);
+const banks = (await getCollection('exercicios-engenharia-software'))
+  .sort((a, b) => a.data.ua - b.data.ua);
+const bank = banks.map((item) => ({
+  ua: item.data.ua,
+  questions: item.data.questions,
+}));
+---
+<QuizPageLayout
+  disciplineTitle="Engenharia de Software"
+  base="/engenharia-software"
+  entries={entries}
+  bank={bank}
+/>

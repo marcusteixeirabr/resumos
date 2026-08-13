@@ -1,0 +1,115 @@
+{
+  "ua": 4,
+  "questions": [
+    {
+      "question": "Qual é o princípio central da programação estruturada?",
+      "options": [
+        "Construir códigos legíveis e de fácil manutenção, com disciplina de padronização, independente de linguagem.",
+        "Modelar tudo como objeto que troca mensagens.",
+        "Declarar apenas o resultado desejado, sem estruturas de controle.",
+        "Usar GOTO irrestrito para maximizar o desempenho."
+      ],
+      "correctIndex": 0,
+      "explanation": "Estruturada é um conjunto de convenções para legibilidade/manutenção; várias linguagens podem implementá-la."
+    },
+    {
+      "question": "Por que a programação estruturada surgiu?",
+      "options": [
+        "Como resposta à crise do software dos anos 1960 e ao uso excessivo do GOTO.",
+        "Para padronizar a orientação a objetos na ANSI.",
+        "Para substituir SQL por linguagens imperativas.",
+        "Por exigência da JVM de executar apenas bytecode estruturado."
+      ],
+      "correctIndex": 0,
+      "explanation": "GOTO irrestrito gerava programas ininteligíveis. Dijkstra e o custo crescente do software impulsionaram o movimento."
+    },
+    {
+      "question": "Qual texto de Edsger Dijkstra marca o início da revolução estruturada?",
+      "options": [
+        "The Mythical Man-Month, 1975.",
+        "Go To Statement Considered Harmful, Communications of the ACM, 1968.",
+        "Manifesto for Agile Software Development, 2001.",
+        "No Silver Bullet, 1986."
+      ],
+      "correctIndex": 1,
+      "explanation": "A carta/artigo de 1968 na CACM é o marco citado pela UA."
+    },
+    {
+      "question": "Quais são as três estruturas de controle da programação estruturada?",
+      "options": [
+        "Classes, objetos e mensagens.",
+        "Sequência, seleção e iteração.",
+        "Fatos, regras e consultas.",
+        "Agregação, composição e dependência."
+      ],
+      "correctIndex": 1,
+      "explanation": "Qualquer algoritmo pode ser construído só com sequência, seleção (if/switch) e iteração (while/for)."
+    },
+    {
+      "question": "O que as estruturas em sequência facilitam sobretudo, segundo as dicas da UA?",
+      "options": [
+        "A alocação automática de memória.",
+        "A documentação gerada pelo compilador.",
+        "A compreensão do fluxo de execução do programa.",
+        "A herança múltipla entre módulos."
+      ],
+      "correctIndex": 2,
+      "explanation": "Sequência torna o fluxo legível — não é sobre memória nem documentação automática."
+    },
+    {
+      "question": "Quais linguagens o material destaca na consolidação do paradigma, por já terem laços e condicionais completos?",
+      "options": [
+        "Fortran 66, BASIC e Assembly.",
+        "Fortran 77, Pascal e C.",
+        "Prolog, LISP e SQL.",
+        "Smalltalk, Simula e Java."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ao contrário do Fortran 66, Fortran 77, Pascal e C já suportavam laços e condicionais completos."
+    },
+    {
+      "question": "Quem desenvolveu Pascal e com qual objetivo declarado?",
+      "options": [
+        "Dennis Ritchie, para o UNIX.",
+        "Niklaus Wirth (1968–1970), uma linguagem disciplinada de alto nível para ensinar programação estruturada.",
+        "Alan Kay, para cunhar o termo orientação a objetos.",
+        "John Backus, para o IBM 704."
+      ],
+      "correctIndex": 1,
+      "explanation": "Wirth (Zurique) criou Pascal em homenagem a Blaise Pascal, com foco didático em programação estruturada."
+    },
+    {
+      "question": "Quais são as três partes de um programa em Pascal?",
+      "options": [
+        "Stack, heap e registradores.",
+        "Cabeçalho (program), área de declarações e corpo (begin/end.).",
+        "Fatos, regras e consultas.",
+        "Interface, classe abstrata e classe concreta."
+      ],
+      "correctIndex": 1,
+      "explanation": "Cabeçalho identifica o programa; declarações validam identificadores; o corpo é o bloco begin/end."
+    },
+    {
+      "question": "Sobre o Cobol, o que a UA afirma?",
+      "options": [
+        "Surgiu em 1959 e só em 1972 passou a suportar plenamente controle e repetição; ainda é usado em instituições financeiras.",
+        "Foi criado por Dijkstra para eliminar o GOTO.",
+        "É uma linguagem lógica baseada em cláusulas de Horn.",
+        "Não possui estruturas condicionais."
+      ],
+      "correctIndex": 0,
+      "explanation": "Cobol (1959) só se torna plenamente estruturado em 1972 e permanece em uso, sobretudo em bancos."
+    },
+    {
+      "question": "Como C incorpora formas restritas de desvio, no lugar do GOTO irrestrito?",
+      "options": [
+        "Apenas com herança e polimorfismo.",
+        "Com return, break e continue.",
+        "Com fatos e regras em uma base de conhecimento.",
+        "Com bytecode interpretado pela JVM."
+      ],
+      "correctIndex": 1,
+      "explanation": "C foi além e incorporou formas restritas de GOTO via return, break e continue."
+    }
+  ]
+}

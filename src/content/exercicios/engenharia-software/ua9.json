@@ -1,0 +1,115 @@
+{
+  "ua": 9,
+  "questions": [
+    {
+      "question": "Qual é o maior problema do modelo cascata — e o que NÃO se deve confundir com isso?",
+      "options": [
+        "Dificuldade de gerenciamento; a vantagem seria lidar bem com mudanças.",
+        "Dificuldade de lidar com mudanças de requisitos. O gerenciamento, na verdade, é facilitado pelas etapas bem definidas.",
+        "Ausência total de entregáveis por fase.",
+        "A obrigação de análise de riscos em toda volta."
+      ],
+      "correctIndex": 1,
+      "explanation": "Requisitos só mudam depois da última etapa; o cliente só vê o produto no fim. Gestão clara é vantagem, não o problema."
+    },
+    {
+      "question": "Quando o cascata funciona bem, segundo a UA?",
+      "options": [
+        "Quando os requisitos já são bem compreendidos e razoavelmente estáveis.",
+        "Quando nada do problema é conhecido e tudo muda toda semana.",
+        "Apenas em projetos sem nenhuma documentação.",
+        "Somente se houver prototipação obrigatória em cada fase."
+      ],
+      "correctIndex": 0,
+      "explanation": "Fluxo unidirecional (comunicação → planejamento → modelagem → construção → entrega), sem retorno."
+    },
+    {
+      "question": "Para que surgiu o modelo de prototipação?",
+      "options": [
+        "Para eliminar qualquer contato com o cliente.",
+        "Para resolver o problema de comunicação entre cliente e desenvolvedores, com um protótipo logo no início.",
+        "Para substituir a análise de riscos do espiral.",
+        "Para tornar o cascata ainda mais sequencial e fechado."
+      ],
+      "correctIndex": 1,
+      "explanation": "O ciclo é: requisitos → projeto rápido → protótipo → avaliação → nova rodada. A especificação se apoia no protótipo."
+    },
+    {
+      "question": "Qual é a principal desvantagem da prototipação?",
+      "options": [
+        "O cliente nunca interage com o sistema.",
+        "Alto custo e retrabalho se o protótipo inicial não agradar — e, mesmo quando agrada, é uma etapa extra que alonga o ciclo.",
+        "A impossibilidade de ter etapas definidas.",
+        "A ausência de qualquer documento de requisitos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Vantagem: requisitos visuais e mais confiança do cliente. Custo extra é o preço."
+    },
+    {
+      "question": "Como distinguir protótipo descartável e evolutivo?",
+      "options": [
+        "Não há diferença.",
+        "Descartável: só valida requisitos e é abandonado; o sistema real nasce do zero. Evolutivo: o próprio protótipo vira a base do produto final.",
+        "Evolutivo é sempre jogado fora; descartável vira o sistema.",
+        "Descartável só existe no SWEBOK."
+      ],
+      "correctIndex": 1,
+      "explanation": "Pegadinha clássica de prova: os dois tipos não são intercambiáveis."
+    },
+    {
+      "question": "Quem criou o modelo espiral e em que ano?",
+      "options": [
+        "Edsger Dijkstra, 1968.",
+        "Barry Boehm, 1988, como melhoria do incremental.",
+        "A OTAN, 1967.",
+        "A Rational, com o RUP, em 1998."
+      ],
+      "correctIndex": 1,
+      "explanation": "Associação recorrente em provas: Boehm, 1988."
+    },
+    {
+      "question": "O que o espiral acrescenta em relação a cascata e prototipação?",
+      "options": [
+        "A eliminação de fases definidas.",
+        "A análise criteriosa de riscos no início de cada etapa, além de fases definidas e protótipos.",
+        "A entrega única sem feedback.",
+        "A proibição de interromper o projeto."
+      ],
+      "correctIndex": 1,
+      "explanation": "Se o risco não puder ser minimizado na volta, o projeto pode parar ali. Essa é a resposta padrão da questão “o que o espiral acrescentou”."
+    },
+    {
+      "question": "Quais são as quatro atividades de cada volta da espiral?",
+      "options": [
+        "Concepção, elaboração, construção, transição.",
+        "Determinar objetivos/alternativas/restrições → avaliar e minimizar riscos → desenvolver/verificar o próximo nível → planejar a próxima fase.",
+        "EE, SE, ALI, AIE.",
+        "Comunicação apenas, sem as demais."
+      ],
+      "correctIndex": 1,
+      "explanation": "O terceiro quadrante corresponde ao cascata clássico. O primeiro circuito costuma gerar a especificação."
+    },
+    {
+      "question": "Qual desvantagem o espiral herda por unificar os outros modelos?",
+      "options": [
+        "Inexistência de requisitos.",
+        "Alto custo de execução, pois considera prototipação em cada fase.",
+        "Impossibilidade de definir etapas.",
+        "Proibição de análise de riscos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ganha fases e requisitos bem definidos, mas paga o custo de prototipar em toda volta."
+    },
+    {
+      "question": "No exemplo do e-commerce, como cada modelo se comporta?",
+      "options": [
+        "Cascata: cliente só vê o produto no fim. Prototipação: telas para validar antes de programar. Espiral: incrementos (ex.: uma tela) com análise de risco a cada etapa.",
+        "Os três entregam igual, só muda o nome.",
+        "Espiral entrega tudo de uma vez sem risco; cascata prototipa cada tela.",
+        "Prototipação ignora o cliente."
+      ],
+      "correctIndex": 0,
+      "explanation": "Incremental (UA7) entrega partes sem necessariamente formalizar risco; espiral é incremental COM análise de risco explícita."
+    }
+  ]
+}

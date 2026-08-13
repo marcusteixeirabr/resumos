@@ -1,0 +1,115 @@
+{
+  "ua": 3,
+  "questions": [
+    {
+      "question": "De onde vem o nome “paradigma imperativo”?",
+      "options": [
+        "Do latim imperare (“comandar”): o programa é uma sequência de ordens executadas até o resultado.",
+        "Da ideia de que o programador apenas declara o estado desejado.",
+        "Do fato de que toda linguagem imperativa é orientada a objetos.",
+        "Da eliminação obrigatória do comando GOTO."
+      ],
+      "correctIndex": 0,
+      "explanation": "Imperativo = comandar. É o paradigma mais antigo e o de maior sucesso, baseado em algoritmos como sequência de comandos."
+    },
+    {
+      "question": "Qual descoberta da década de 1940 fundamenta o paradigma imperativo?",
+      "options": [
+        "A publicação do Prolog por Colmerauer.",
+        "A arquitetura de von Neumann: programa e dados compartilham a mesma memória, com atribuição destrutiva.",
+        "A criação da JVM e do bytecode.",
+        "O Manifesto Ágil."
+      ],
+      "correctIndex": 1,
+      "explanation": "Von Neumann mostrou que programa e dados podem ocupar a mesma memória; a atribuição altera um local e destrói o valor anterior."
+    },
+    {
+      "question": "Quais são os três conceitos fundamentais da programação imperativa?",
+      "options": [
+        "Abstração, herança e polimorfismo.",
+        "Fatos, regras e consultas.",
+        "Estado da máquina, expressões e comandos de atribuição/controle.",
+        "Agregação, composição e dependência."
+      ],
+      "correctIndex": 2,
+      "explanation": "O programa tem um estado (variáveis); expressões relacionam valores; comandos alteram esse estado até o resultado."
+    },
+    {
+      "question": "O que significa uma linguagem ser “completa quanto a Turing”?",
+      "options": [
+        "Que ela é de baixo nível e sem tipos.",
+        "Que consegue implementar qualquer algoritmo projetável (controle, E/S, exceções, procedimentos etc.).",
+        "Que garante reúso de código por herança.",
+        "Que só executa em uma máquina de Turing física."
+      ],
+      "correctIndex": 1,
+      "explanation": "Completude de Turing mede se a linguagem expressa qualquer algoritmo computável — não é sinônimo de reúso nem de sintaxe de baixo nível."
+    },
+    {
+      "question": "Na forma clássica descrita na UA, o que C NÃO possui?",
+      "options": [
+        "Atribuição, if/switch, while/for/do e funções.",
+        "Matrizes, ponteiros, estruturas e uniões.",
+        "Iteradores, manipulação de exceções, sobrecarga e genéricos.",
+        "Tipos e alocação dinâmica com malloc."
+      ],
+      "correctIndex": 2,
+      "explanation": "C clássica tem controle de fluxo e estruturas, mas não iteradores, exceções, sobrecarga nem genéricos."
+    },
+    {
+      "question": "Qual afirmação sobre Ada está correta segundo o material?",
+      "options": [
+        "Ada 95 foi a primeira linguagem OO padronizada internacionalmente; nasceu imperativa para sistemas militares e de tempo real.",
+        "Ada foi criada por Dennis Ritchie nos Laboratórios Bell para o UNIX.",
+        "Ada é uma linguagem puramente funcional, sem atribuição.",
+        "Ada não usa begin/end e herdou a sintaxe de C."
+      ],
+      "correctIndex": 0,
+      "explanation": "Ada (Ichbiah, DoD, fim dos 1970) é imperativa baseada em Pascal; Ada 95 foi a primeira OO padronizada internacionalmente."
+    },
+    {
+      "question": "O que C, Ada e Perl têm em comum no recorte desta UA?",
+      "options": [
+        "Todas são exclusivamente orientadas a objetos.",
+        "Todas seguem estado, expressões e comandos de atribuição/controle em sequência.",
+        "Nenhuma delas permite laços.",
+        "Todas são compiladas para bytecode da JVM."
+      ],
+      "correctIndex": 1,
+      "explanation": "Apesar da sintaxe diferente, as três ilustram os mesmos princípios do paradigma imperativo."
+    },
+    {
+      "question": "Qual correção o material faz sobre o FORTRAN no infográfico?",
+      "options": [
+        "FORTRAN nunca existiu; o nome correto é Cobol.",
+        "FORTRAN foi criado entre 1954 e 1957 por John Backus na IBM para o IBM 704 — não em 1854.",
+        "FORTRAN surgiu em 1972 junto com o Prolog.",
+        "FORTRAN é uma linguagem lógica baseada em cláusulas de Horn."
+      ],
+      "correctIndex": 1,
+      "explanation": "O infográfico erra a data (1854). FORTRAN é de 1954–1957, Backus/IBM, para o IBM 704."
+    },
+    {
+      "question": "Por que linguagens imperativas também são chamadas de procedimentais?",
+      "options": [
+        "Porque permitem estruturar o código em procedimentos; uma desvantagem citada é a menor flexibilidade do caráter sequencial.",
+        "Porque eliminam qualquer noção de estado.",
+        "Porque só aceitam herança múltipla.",
+        "Porque não possuem atribuição."
+      ],
+      "correctIndex": 0,
+      "explanation": "Procedimental = código organizado em procedimentos. O caráter sequencial reduz flexibilidade em relação a outros estilos."
+    },
+    {
+      "question": "C foi projetada para qual ambiente e por quem?",
+      "options": [
+        "Para o .NET, por Anders Hejlsberg.",
+        "Para o UNIX, nos Laboratórios Bell, por Ken Thompson e Dennis Ritchie, a partir da BCPL.",
+        "Para o Departamento de Defesa dos EUA, por Jean Ichbiah.",
+        "Para processamento simbólico no MIT, por John McCarthy."
+      ],
+      "correctIndex": 1,
+      "explanation": "C nasce no UNIX (Bell Labs), baseada em BCPL (sem tipos), e influencia Java, Python e C++."
+    }
+  ]
+}

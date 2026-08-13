@@ -1,0 +1,115 @@
+{
+  "ua": 5,
+  "questions": [
+    {
+      "question": "Como a UA distingue métrica e indicador?",
+      "options": [
+        "São sinônimos perfeitos.",
+        "Métrica é a medida quantitativa de um atributo; indicador é a informação derivada que permite ao gestor ajustar o processo.",
+        "Indicador é a medida bruta; métrica é só o gráfico.",
+        "Métrica só existe para hardware."
+      ],
+      "correctIndex": 1,
+      "explanation": "O engenheiro coleta medidas, desenvolve métricas e obtém indicadores para o gerente."
+    },
+    {
+      "question": "Quais são os dois contextos principais das medições de software?",
+      "options": [
+        "Compilação e interpretação.",
+        "Processo (produtividade) e produto (qualidade).",
+        "Cascata e ágil apenas.",
+        "Stack e heap."
+      ],
+      "correctIndex": 1,
+      "explanation": "Desses contextos saem cinco usos: controle de projeto, produtividade, qualidade, avaliação da qualidade e estimativas."
+    },
+    {
+      "question": "Qual grupo é de métricas diretas (fundamentais) e qual é de indiretas (derivadas)?",
+      "options": [
+        "Diretas: complexidade e confiabilidade. Indiretas: custo e LOC.",
+        "Diretas: custo, esforço, LOC, memória, páginas. Indiretas: complexidade, eficiência, confiabilidade, manutenibilidade.",
+        "Todas as métricas são indiretas.",
+        "Diretas só existem no COCOMO."
+      ],
+      "correctIndex": 1,
+      "explanation": "Diretas se observam; indiretas se calculam a partir de outras medidas."
+    },
+    {
+      "question": "Quais propriedades Pressman e Maxim exigem de uma boa métrica?",
+      "options": [
+        "Ser válida (mede o que se quer) e confiável (mesmos resultados no mesmo cenário), além de prática e interpretável.",
+        "Ser secreta e impossível de automatizar.",
+        "Depender sempre da linguagem de programação.",
+        "Não ter unidade de medida."
+      ],
+      "correctIndex": 0,
+      "explanation": "Também deve ser fácil de calcular, expressa em unidade, passível de estatística e de automação."
+    },
+    {
+      "question": "Qual é a desvantagem clássica de LOC/KLOC destacada na UA?",
+      "options": [
+        "É impossível de obter depois do código pronto.",
+        "Depende da linguagem e penaliza programas bem projetados, porém pequenos.",
+        "Não existe literatura histórica sobre ela.",
+        "Nenhum modelo de estimativa a utiliza."
+      ],
+      "correctIndex": 1,
+      "explanation": "Vantagem: fácil de obter e há modelos que a usam. LOC mede o que já foi feito, não é boa para prever no planejamento."
+    },
+    {
+      "question": "A análise de pontos de função mede a funcionalidade sob o ponto de vista de quem?",
+      "options": [
+        "Do compilador.",
+        "Do usuário, não do programador nem da tecnologia.",
+        "Apenas do gerente financeiro.",
+        "Somente da JVM."
+      ],
+      "correctIndex": 1,
+      "explanation": "FP estima custo/trabalho, prevê erros em teste e número de componentes/LOC a partir da visão do usuário."
+    },
+    {
+      "question": "Qual é a fórmula do FP nesta UA?",
+      "options": [
+        "FP = KLOC × EAF",
+        "FP = contagem total × [0,65 + 0,01 × Σ(Fi)], com 14 fatores de ajuste de 1 a 5",
+        "FP = UUCP × TCF × EF",
+        "FP = E / D"
+      ],
+      "correctIndex": 1,
+      "explanation": "Os Fi (i = 1 a 14) são características gerais do sistema (comunicação de dados, desempenho, reúso etc.)."
+    },
+    {
+      "question": "Na tabela de pesos do FP, qual tipo tem o maior peso na complexidade complexa?",
+      "options": [
+        "Consulta externa (6)",
+        "Arquivo lógico interno (15)",
+        "Entrada externa (6)",
+        "Arquivo de interface externa (10)"
+      ],
+      "correctIndex": 1,
+      "explanation": "ILF complexo = 15; EIF = 10; EO = 7; EE/EQ = 6. ILF é o agrupamento lógico interno mantido por entradas externas."
+    },
+    {
+      "question": "O que o NOA (número de atributos) NÃO conta?",
+      "options": [
+        "Atributos declarados na própria classe.",
+        "Atributos herdados de superclasses.",
+        "Nenhum atributo, em qualquer caso.",
+        "Apenas atributos public."
+      ],
+      "correctIndex": 1,
+      "explanation": "NOA mede o vocabulário interno de cada componente; herdados ficam de fora. Vocabulário do sistema conta nomes de componentes."
+    },
+    {
+      "question": "Vantagem clássica do FP versus do LOC?",
+      "options": [
+        "FP depende da linguagem; LOC é independente.",
+        "FP é independente de linguagem (bom para não procedimentais); o cálculo, porém, usa avaliação subjetiva de complexidade.",
+        "LOC é melhor na fase de planejamento; FP é impossível de obter cedo.",
+        "Não há diferença entre as duas famílias."
+      ],
+      "correctIndex": 1,
+      "explanation": "LOC é fácil de obter depois, mas depende da linguagem. FP independe da linguagem, mas o resultado é “apenas um número” subjetivo."
+    }
+  ]
+}

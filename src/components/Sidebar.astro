@@ -8,6 +8,9 @@ interface Props {
 }
 
 const { entries, currentSlug, base } = Astro.props;
+const showFinalQuiz =
+  entries.length === 16 &&
+  (base === '/paradigmas-programacao' || base === '/engenharia-software');
 
 // Group entries by their `group` frontmatter field, preserving order
 const grouped: Record<string, typeof entries> = {};
@@ -36,4 +39,13 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
       })}
     </div>
   ))}
+  {showFinalQuiz && (
+    <div class="sidebar-group">
+      <a href={`${siteBase}${base}/exercicios/`}
+         class:list={['sidebar-exercises', currentSlug === 'exercicios' && 'active']}
+         aria-current={currentSlug === 'exercicios' ? 'page' : undefined}>
+        Exercícios
+      </a>
+    </div>
+  )}
 </aside>

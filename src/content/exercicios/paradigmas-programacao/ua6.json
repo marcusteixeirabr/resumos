@@ -1,0 +1,115 @@
+{
+  "ua": 6,
+  "questions": [
+    {
+      "question": "Como Booch, Rumbaugh e Jacobson definem uma classe?",
+      "options": [
+        "Um arquivo de configuração do compilador.",
+        "A descrição de um conjunto de objetos que compartilham os mesmos atributos, operações, relacionamentos e semântica.",
+        "Um processo do sistema operacional.",
+        "Uma tabela de banco de dados sem comportamento."
+      ],
+      "correctIndex": 1,
+      "explanation": "Classes expressam o vocabulário e o escopo do sistema (ex.: prontuário, paciente, médico num consultório)."
+    },
+    {
+      "question": "Quais são as três propriedades principais de toda classe?",
+      "options": [
+        "Stack, heap e registradores.",
+        "Nome (maiúscula inicial), atributos (estado) e operações/métodos (comportamento).",
+        "Fatos, regras e consultas.",
+        "GOTO, GOSUB e RETURN."
+      ],
+      "correctIndex": 1,
+      "explanation": "Nome identifica; atributos definem estado; métodos definem comportamento. Uma classe pode ter zero ou muitos métodos."
+    },
+    {
+      "question": "O que indica que uma classe fere a responsabilidade única?",
+      "options": [
+        "Ela possui mais de um atributo.",
+        "Ao descrevê-la, usa-se “e” para acumular funções distintas (ex.: guarda dados do cliente e salva no banco).",
+        "Ela tem getters e setters.",
+        "Seu nome começa com letra maiúscula."
+      ],
+      "correctIndex": 1,
+      "explanation": "Cada classe deve ter uma única responsabilidade; o “e” na descrição é o sinal clássico de acúmulo."
+    },
+    {
+      "question": "Qual relacionamento é o mais fraco: uma classe usa outra só como argumento, sem vínculo estrutural permanente?",
+      "options": [
+        "Composição",
+        "Generalização",
+        "Dependência",
+        "Agregação"
+      ],
+      "correctIndex": 2,
+      "explanation": "Dependência é utilização: mudança em uma pode afetar a outra. Graficamente, linha tracejada com seta."
+    },
+    {
+      "question": "O que é generalização na UML desta UA?",
+      "options": [
+        "Relação “tem uma” entre Estado e Cidade.",
+        "Herança entre superclasse e subclasses: a filha pode substituir a mãe, mas não o contrário.",
+        "Um vínculo em que a parte morre com o todo.",
+        "Um comentário no diagrama, sem semântica."
+      ],
+      "correctIndex": 1,
+      "explanation": "Generalização = herança. Seta vazada para a superclasse. Veículo → Carro/Moto é o exemplo clássico."
+    },
+    {
+      "question": "Como diferenciar agregação e composição?",
+      "options": [
+        "Agregação: a parte sobrevive sem o todo (vínculo fraco). Composição: a parte não sobrevive sem o todo (vínculo forte).",
+        "São sinônimos perfeitos.",
+        "Composição é mais fraca que dependência.",
+        "Agregação só existe em programação funcional."
+      ],
+      "correctIndex": 0,
+      "explanation": "Ambas são especializações de associação todo/parte; a força do vínculo as separa."
+    },
+    {
+      "question": "Qual analogia a UA usa para o encapsulamento?",
+      "options": [
+        "Uma cascata que só flui para baixo.",
+        "O controle remoto da TV: aperta-se o botão sem saber como ele se comunica com o aparelho.",
+        "Um cartão perfurado lido em sequência.",
+        "Uma consulta SQL sem índice."
+      ],
+      "correctIndex": 1,
+      "explanation": "Quem usa o objeto só aciona o método e recebe o retorno; detalhes internos ficam escondidos."
+    },
+    {
+      "question": "No encapsulamento em Java, como se acessam atributos private de fora da classe?",
+      "options": [
+        "Diretamente pelo nome do campo, sempre.",
+        "Por setters (alteram) e getters (devolvem o valor).",
+        "Somente via herança múltipla.",
+        "Não há como acessá-los de forma alguma."
+      ],
+      "correctIndex": 1,
+      "explanation": "Atributos costumam ser private; getters/setters controlam o acesso."
+    },
+    {
+      "question": "Quais são os dois níveis de encapsulamento descritos?",
+      "options": [
+        "Nível de rede e nível de disco.",
+        "Nível de classe (public ou package-private) e nível de membro (public, private, protected ou package-private).",
+        "Nível estático e nível dinâmico apenas.",
+        "Nível de stack e nível de heap."
+      ],
+      "correctIndex": 1,
+      "explanation": "Classe inteira vs. cada atributo/método. A boa prática é começar em private e abrir só o necessário."
+    },
+    {
+      "question": "Qual vantagem direta do encapsulamento é destacada com a analogia do liquidificador?",
+      "options": [
+        "A parte encapsulada pode ser modificada internamente sem afetar quem usa a classe.",
+        "Toda classe passa a ter herança múltipla.",
+        "O programa fica automaticamente completo quanto a Turing.",
+        "Elimina a necessidade de métodos."
+      ],
+      "correctIndex": 0,
+      "explanation": "Trocar o “motor” internamente não muda o botão que o usuário aperta. Membros públicos prendem o código a uma implementação."
+    }
+  ]
+}
