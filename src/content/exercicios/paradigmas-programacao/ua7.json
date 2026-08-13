@@ -1,0 +1,115 @@
+{
+  "ua": 7,
+  "questions": [
+    {
+      "question": "Qual é o tipo de relação da herança, e qual o erro comum citado na UA?",
+      "options": [
+        "É “tem uma”; o erro é usar “é uma”.",
+        "É “é uma” (Cachorro é um Animal); o erro é aplicar herança onde cabe “tem uma” (Estado possui Cidade).",
+        "É sempre composição forte.",
+        "É apenas dependência pontilhada."
+      ],
+      "correctIndex": 1,
+      "explanation": "Herança = generalização “é uma”. Associação “tem uma” não deve virar extends."
+    },
+    {
+      "question": "O que deve ficar na superclasse?",
+      "options": [
+        "Todos os atributos de todas as subclasses, inclusive os específicos.",
+        "Só atributos e métodos que façam sentido para todas as herdeiras.",
+        "Nenhum método, apenas constantes globais.",
+        "Apenas construtores privados."
+      ],
+      "correctIndex": 1,
+      "explanation": "Atributos específicos (ex.: matricula em Aluno) ficam só na subclasse; subir demais polui as irmãs."
+    },
+    {
+      "question": "Qual linguagem NÃO suporta herança múltipla de classes, segundo a UA?",
+      "options": [
+        "C++",
+        "Python",
+        "Java",
+        "Todas as três suportam."
+      ],
+      "correctIndex": 2,
+      "explanation": "Herança múltipla existe em C++ e Python. Java não permite herdar de mais de uma classe (ambiguidade de métodos)."
+    },
+    {
+      "question": "Como Tucker e Noonan definem polimorfismo em linguagens OO?",
+      "options": [
+        "Como a simples declaração de atributos private.",
+        "Como a ligação tardia de uma chamada a uma entre várias implementações de um método na hierarquia.",
+        "Como a compilação antecipada de todo o programa para assembly.",
+        "Como a eliminação de métodos na superclasse."
+      ],
+      "correctIndex": 1,
+      "explanation": "Late binding escolhe a implementação correta na hierarquia em tempo de execução."
+    },
+    {
+      "question": "O que caracteriza o polimorfismo estático (sobrecarga)?",
+      "options": [
+        "Mesmo nome e mesma assinatura entre superclasse e subclasse.",
+        "Vários métodos com o mesmo nome e assinaturas diferentes, na mesma classe.",
+        "Uma classe herdar de duas superclasses.",
+        "A ausência total de parâmetros."
+      ],
+      "correctIndex": 1,
+      "explanation": "Sobrecarga: mesmo nome, parâmetros distintos em quantidade ou tipo, na mesma classe (ex.: Calculadora.calcula)."
+    },
+    {
+      "question": "O que caracteriza o polimorfismo dinâmico (sobrescrita)?",
+      "options": [
+        "Mesmo nome, mesma assinatura, nova implementação na subclasse, resolvido por ligação tardia.",
+        "Mesmo nome e assinaturas diferentes na mesma classe.",
+        "A criação de uma interface sem métodos.",
+        "A declaração de variáveis globais."
+      ],
+      "correctIndex": 0,
+      "explanation": "Override: Carro reescreve setVelocidade de Veiculo com a mesma assinatura e comportamento novo."
+    },
+    {
+      "question": "No exemplo escolar, Aluno não reescreve obterDescontoMensalidade. O que acontece?",
+      "options": [
+        "O código não compila.",
+        "Aluno herda automaticamente o desconto de 10% definido em Pessoa.",
+        "Aluno fica sem o método.",
+        "O desconto passa a ser obrigatoriamente 0%."
+      ],
+      "correctIndex": 1,
+      "explanation": "Se a subclasse não sobrescreve, herda o comportamento da superclasse. Professor sobrescreve para 20%."
+    },
+    {
+      "question": "No exemplo de desenho (Círculo, Quadrado, Retângulo herdam FormaGeometrica.desenhar()), o que se ilustra?",
+      "options": [
+        "Apenas encapsulamento de atributos private.",
+        "Polimorfismo: a mesma assinatura desenhar() com implementação diferente em cada forma.",
+        "Herança múltipla de Java.",
+        "Programação por restrições."
+      ],
+      "correctIndex": 1,
+      "explanation": "Desenhar um círculo não é desenhar um retângulo; cada subclasse implementa desenhar() à sua maneira."
+    },
+    {
+      "question": "Qual é o problema clássico da herança múltipla citado com as classes B, C e E?",
+      "options": [
+        "Impossibilidade de ter atributos.",
+        "Se B e C definem M de formas diferentes, fica ambíguo qual implementação E deveria herdar.",
+        "O compilador recusa qualquer superclasse.",
+        "Herança múltipla só existe em linguagens sem tipos."
+      ],
+      "correctIndex": 1,
+      "explanation": "A semântica fica complexa quando o mesmo método chega por dois caminhos distintos."
+    },
+    {
+      "question": "Como se diferencia herança simples de herança múltipla?",
+      "options": [
+        "Simples: uma única superclasse (árvore). Múltipla: mais de uma superclasse ao mesmo tempo.",
+        "Simples só existe em C++; múltipla só em Java.",
+        "Simples é associação; múltipla é dependência.",
+        "Não há diferença prática."
+      ],
+      "correctIndex": 0,
+      "explanation": "Simples forma uma árvore com raiz na classe genérica; múltipla combina várias mães."
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "ua": 9,
+  "questions": [
+    {
+      "question": "Java não é “apenas” uma linguagem. O que mais ela é, segundo a UA?",
+      "options": [
+        "Um sistema operacional.",
+        "Uma plataforma: o código vira bytecode executado pela JVM em qualquer dispositivo compatível.",
+        "Um banco de dados relacional.",
+        "Um modelo de ciclo de vida em cascata."
+      ],
+      "correctIndex": 1,
+      "explanation": "A JVM interpreta o bytecode — “escreva uma vez, execute em qualquer lugar”. Oracle adquiriu a Sun em 2008."
+    },
+    {
+      "question": "Qual era a ideia original de Java em 1991, na Sun Microsystems?",
+      "options": [
+        "Substituir o COBOL nos bancos.",
+        "Permitir que pequenos equipamentos domésticos se comunicassem entre si; a Web depois deu novo propósito à linguagem.",
+        "Ser a única linguagem da plataforma .NET.",
+        "Compilar diretamente para o IBM 704."
+      ],
+      "correctIndex": 1,
+      "explanation": "Nasceu para eletrodomésticos/telefones; a Web redirecionou seu uso."
+    },
+    {
+      "question": "Quais características de C++ o material destaca?",
+      "options": [
+        "Apenas interpretada, dinamicamente tipada e sem OO.",
+        "Evolução de C, estaticamente tipada, compilada, multiparadigma (OO e funcional).",
+        "Execução exclusiva via JVM.",
+        "Obrigatoriedade de herança múltipla em todo programa."
+      ],
+      "correctIndex": 1,
+      "explanation": "C++ acrescenta à C os quatro pilares OO e permite do alto nível ao embarcado."
+    },
+    {
+      "question": "Como se faz entrada e saída em C++ no recorte da UA?",
+      "options": [
+        "System.out.println e Scanner.",
+        "Biblioteca iostream: cin na entrada e cout na saída.",
+        "print() e input() do Python.",
+        "SELECT e INSERT em SQL."
+      ],
+      "correctIndex": 1,
+      "explanation": "cout << ... e cin, via iostream. Constantes usam const (ex.: const float pi = ...)."
+    },
+    {
+      "question": "Quem desenvolveu C# e em qual plataforma ela é central?",
+      "options": [
+        "Dennis Ritchie, no UNIX.",
+        "Anders Hejlsberg, plataforma .NET da Microsoft.",
+        "Alan Kay, no Smalltalk.",
+        "John Backus, no FORTRAN."
+      ],
+      "correctIndex": 1,
+      "explanation": "C# é fortemente tipada, imperativa/declarativa/OO, e facilita a migração de quem vem de C, C++ e Java."
+    },
+    {
+      "question": "O que a UA exige na declaração de variáveis em C#?",
+      "options": [
+        "Que nunca tenham tipo.",
+        "Que sejam sempre inicializadas no momento da declaração (ex.: int MinhaVariável = 0;).",
+        "Que existam apenas no heap.",
+        "Que usem apenas a palavra-chave var sem valor."
+      ],
+      "correctIndex": 1,
+      "explanation": "C# é fortemente tipada e o material pede inicialização na declaração."
+    },
+    {
+      "question": "Quais são as duas áreas de memória do gerenciamento em C#?",
+      "options": [
+        "Registradores e ROM.",
+        "Stack (espaço pequeno, LIFO) e heap (espaço grande e dinâmico).",
+        "Apenas arquivos XML.",
+        "Cartão perfurado e fita magnética."
+      ],
+      "correctIndex": 1,
+      "explanation": "Stack = pilha pequena; heap = região dinâmica maior."
+    },
+    {
+      "question": "Qual laço de C# testa a condição no fim da repetição?",
+      "options": [
+        "for",
+        "while",
+        "do while",
+        "for each"
+      ],
+      "correctIndex": 2,
+      "explanation": "do while é igual ao while, mas o teste fica no fim. for each percorre arrays; for usa contador."
+    },
+    {
+      "question": "No comparativo da UA, como cada linguagem executa?",
+      "options": [
+        "Java: bytecode/JVM; C++: código de máquina; C#: plataforma .NET.",
+        "As três rodam apenas na JVM.",
+        "As três compilam só para .NET.",
+        "C++ é interpretado; Java e C# são código de máquina puro."
+      ],
+      "correctIndex": 0,
+      "explanation": "Tabela da UA: Java OO + bytecode; C++ multiparadigma + nativo; C# OO + .NET. Não misturar pilares OO com modo de execução."
+    },
+    {
+      "question": "O que são Web Services no encerramento desta UA?",
+      "options": [
+        "Um modelo de ciclo de vida sequencial.",
+        "Implementações que permitem a sistemas diferentes de uma organização trocar informações; no ASP.NET, uma classe acessada via HTTP.",
+        "O garbage collector da JVM.",
+        "Um tipo de herança múltipla."
+      ],
+      "correctIndex": 1,
+      "explanation": "Web Service é a resposta padrão para “como sistemas diferentes se comunicam”. ASP.NET cria esses serviços na .NET."
+    }
+  ]
+}

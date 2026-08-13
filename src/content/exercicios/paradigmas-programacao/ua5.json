@@ -1,0 +1,115 @@
+{
+  "ua": 5,
+  "questions": [
+    {
+      "question": "De onde vem o nome do paradigma orientado a objetos?",
+      "options": [
+        "Da ideia de que tudo pode ser classificado como um objeto, com atributos e métodos, relacionando-se com outros objetos.",
+        "Do uso exclusivo de tabelas e variáveis globais.",
+        "Da compilação obrigatória para código de máquina.",
+        "Da eliminação de atribuições e do estado."
+      ],
+      "correctIndex": 0,
+      "explanation": "A ideia central é abstrair o mundo em objetos (atributos + métodos) que se relacionam."
+    },
+    {
+      "question": "Qual linguagem usou primeiro conceitos de OO e quem cunhou a expressão “programação orientada a objetos”?",
+      "options": [
+        "Java (1995) e James Gosling.",
+        "Simula 67 (1967); o termo veio na década de 1970 com Alan Kay / Smalltalk.",
+        "C++ (1980) e Bjarne Stroustrup.",
+        "Python e Guido van Rossum."
+      ],
+      "correctIndex": 1,
+      "explanation": "Simula 67 introduz os conceitos; Alan Kay (Smalltalk) cunhou o termo nos anos 1970. Popularidade veio com C++ e Java."
+    },
+    {
+      "question": "Segundo Sebesta, quais três recursos uma linguagem OO deve oferecer?",
+      "options": [
+        "GOTO, sequências e cartões perfurados.",
+        "Tipos de dados abstratos, herança e vinculação dinâmica de chamadas a métodos.",
+        "Apenas getters, setters e arquivos XML.",
+        "Fatos, regras e unificação."
+      ],
+      "correctIndex": 1,
+      "explanation": "ADT + herança + late binding. Smalltalk 80 foi a primeira a implementar esses conceitos por completo."
+    },
+    {
+      "question": "Qual é a diferença central entre programação estruturada e POO no tratamento dos dados?",
+      "options": [
+        "Na estruturada, dados globais são compartilhados por procedimentos; na POO, cada objeto encapsula seus dados com os métodos que operam sobre eles.",
+        "Na POO não existem métodos, só funções globais.",
+        "Na estruturada é proibido usar variáveis.",
+        "Não há diferença: ambas usam apenas classes."
+      ],
+      "correctIndex": 0,
+      "explanation": "A classe é o molde que junta atributos e métodos; a estruturada espalha dados globais entre procedimentos."
+    },
+    {
+      "question": "Por que um programa estruturado tende a ter desempenho melhor que o equivalente em POO?",
+      "options": [
+        "Porque POO não pode ser compilada.",
+        "Porque a execução estruturada é sequencial, enquanto a POO exige desvios entre objetos.",
+        "Porque a JVM é mais lenta que qualquer outra plataforma por definição.",
+        "Porque POO proíbe o uso de memória."
+      ],
+      "correctIndex": 1,
+      "explanation": "Há custo de desvio entre objetos. Ainda assim, organização, manutenção e reúso costumam compensar."
+    },
+    {
+      "question": "Qual pilar corresponde a esconder a implementação interna, expondo só o necessário?",
+      "options": [
+        "Herança",
+        "Polimorfismo",
+        "Encapsulamento",
+        "Generalização"
+      ],
+      "correctIndex": 2,
+      "explanation": "Encapsulamento isola complexidade e protege a implementação. Não confundir com abstração ou herança."
+    },
+    {
+      "question": "Qual mecanismo permite selecionar dinamicamente, na execução, qual comportamento de um método será usado?",
+      "options": [
+        "Encapsulamento",
+        "Polimorfismo",
+        "Sequência",
+        "Atribuição"
+      ],
+      "correctIndex": 1,
+      "explanation": "Polimorfismo = o mesmo método com comportamentos diferentes conforme a classe/situação (ligação tardia)."
+    },
+    {
+      "question": "Qual característica mais marcante de Java é destacada na UA?",
+      "options": [
+        "Compilação direta para código nativo de cada sistema operacional.",
+        "Portabilidade: o programa vira bytecode executado pela JVM em qualquer plataforma compatível.",
+        "Ausência total de classes.",
+        "Tipagem exclusivamente dinâmica, sem JVM."
+      ],
+      "correctIndex": 1,
+      "explanation": "Java não é compilado para nativo da plataforma: o bytecode roda na JVM (“escreva uma vez, execute em qualquer lugar”)."
+    },
+    {
+      "question": "O C# foi criado especificamente para qual plataforma?",
+      "options": [
+        "UNIX / Laboratórios Bell",
+        "A plataforma .NET da Microsoft",
+        "A JVM da Sun/Oracle",
+        "O IBM 704"
+      ],
+      "correctIndex": 1,
+      "explanation": "C# (baseado em C++ com influência de Java e Pascal) nasceu para o .NET, evitando adaptar a plataforma a uma linguagem já existente."
+    },
+    {
+      "question": "No exemplo da escola (cópias a R$ 0,07 para alunos e R$ 0,10 para os demais), o que ilustram extends e a reescrita de tirarCopias()?",
+      "options": [
+        "Apenas encapsulamento, sem reúso.",
+        "Herança (Aluno reaproveita Pessoa) e polimorfismo (o mesmo método com regra diferente).",
+        "Programação lógica com fatos e regras.",
+        "Completude de Turing."
+      ],
+      "correctIndex": 1,
+      "explanation": "Aluno extends Pessoa evita repetir atributos comuns; tirarCopias() reescrito é polimorfismo e o ganho prático é reúso."
+    }
+  ]
+}

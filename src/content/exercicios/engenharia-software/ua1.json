@@ -1,0 +1,115 @@
+{
+  "ua": 1,
+  "questions": [
+    {
+      "question": "O que caracterizou a crise do software?",
+      "options": [
+        "Problemas estéticos de interface gráfica e usabilidade.",
+        "Ausência de metodologia: sem planejamento, documentação nem estrutura clara, gerando sistemas atrasados, caros e cheios de erros.",
+        "A criação da JVM pela Sun Microsystems.",
+        "O excesso de métodos ágeis nas empresas."
+      ],
+      "correctIndex": 1,
+      "explanation": "A crise foi um período estrutural de falta de método — não uma falha pontual nem um problema de UI."
+    },
+    {
+      "question": "Quem cunhou o termo Engenharia de Software e em que ano?",
+      "options": [
+        "PMI, com o PMBOK, em 1996.",
+        "A OTAN, em 1967, para aplicar metodologias de outras engenharias ao desenvolvimento de sistemas.",
+        "Os signatários do Manifesto Ágil, em 2001.",
+        "Barry Boehm, em 1988, com o modelo espiral."
+      ],
+      "correctIndex": 1,
+      "explanation": "OTAN, 1967. Não confundir com o Manifesto Ágil (2001), marco posterior."
+    },
+    {
+      "question": "Como a UA define Engenharia de Software?",
+      "options": [
+        "Apenas a atividade de escrever código.",
+        "A disciplina da Ciência da Computação que estuda todos os processos do desenvolvimento: da especificação à manutenção.",
+        "Somente o gerenciamento de projetos, sem aspectos técnicos.",
+        "Um paradigma de programação equivalente à orientação a objetos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Qualidade não é só “funcionar”: envolve entender problemas, planejar, coordenar, testar, entregar e manter."
+    },
+    {
+      "question": "No modelo cascata (1970), o que NÃO é permitido?",
+      "options": [
+        "Etapas sequenciais bem definidas.",
+        "Retornar a uma etapa já concluída.",
+        "Gerar entregáveis ao fim de cada fase.",
+        "Começar o projeto pela definição de requisitos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Cascata é estritamente sequencial: cada etapa só começa depois que a anterior termina."
+    },
+    {
+      "question": "Qual é a diferença central entre o modelo espiral e o incremental?",
+      "options": [
+        "O incremental tem análise de riscos explícita; o espiral não.",
+        "O espiral tem análise de riscos explícita em cada volta; o incremental não necessariamente.",
+        "O espiral entrega o produto só no final, como o cascata.",
+        "Não há diferença: são nomes para o mesmo modelo."
+      ],
+      "correctIndex": 1,
+      "explanation": "Espiral = incremental + análise de riscos em toda iteração."
+    },
+    {
+      "question": "O Manifesto Ágil (2001) valoriza, “mais que” as alternativas tradicionais…",
+      "options": [
+        "Processos rígidos, documentação extensa, contratos e seguir um plano — eliminando-os por completo.",
+        "Indivíduos e interações, software funcionando, colaboração com o cliente e resposta a mudanças.",
+        "Apenas documentação formal e assinatura de contrato.",
+        "Somente o modelo cascata com etapas sem retorno."
+      ],
+      "correctIndex": 1,
+      "explanation": "São preferências (“mais que”), não a eliminação total do lado tradicional. Scrum e XP nascem daí."
+    },
+    {
+      "question": "No recorte desta UA, paradigma estruturado e paradigma OO referem-se a quê?",
+      "options": [
+        "A modelos de ciclo de vida (como organizar o processo no tempo).",
+        "A como o código é escrito: estruturado = sequência/seleção/iteração; OO = classes, atributos e métodos.",
+        "A certificações da IEEE.",
+        "A técnicas de estimativa de custo."
+      ],
+      "correctIndex": 1,
+      "explanation": "Não confundir paradigmas de código com modelos de processo (cascata, espiral, ágil)."
+    },
+    {
+      "question": "Por que a engenharia de requisitos tem papel central na qualidade?",
+      "options": [
+        "Porque qualidade é só “o sistema funcionar”.",
+        "Porque é o canal pelo qual a expectativa do cliente chega às equipes de desenvolvimento.",
+        "Porque substitui testes e manutenção.",
+        "Porque define sozinha a linguagem de programação."
+      ],
+      "correctIndex": 1,
+      "explanation": "Qualidade é atender de fato às necessidades do cliente — requisitos são esse canal."
+    },
+    {
+      "question": "Qual etapa o material aponta como a mais longa e cara do ciclo de vida?",
+      "options": [
+        "A especificação inicial.",
+        "A manutenção — reduzida quando o sistema nasce com código limpo e menos defeitos.",
+        "A impressão de cartões perfurados.",
+        "Somente o teste de aceitação."
+      ],
+      "correctIndex": 1,
+      "explanation": "Planejamento e qualidade no início baixam o custo da manutenção, a fase mais longa e cara."
+    },
+    {
+      "question": "Qual afirmação sobre mudanças tecnológicas x de processo está correta?",
+      "options": [
+        "Mudanças tecnológicas incluem cascata, espiral e ágil.",
+        "Mudanças tecnológicas incluem linguagens e paradigmas; mudanças de processo incluem cascata, incremental, espiral e ágil.",
+        "Não houve mudanças de processo após 1970.",
+        "O estruturado e o OO são modelos de ciclo de vida, não paradigmas."
+      ],
+      "correctIndex": 1,
+      "explanation": "A UA separa evolução tecnológica (linguagens/paradigmas) da evolução de processo (modelos de ciclo de vida)."
+    }
+  ]
+}

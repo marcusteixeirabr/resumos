@@ -8,6 +8,18 @@ const disciplineSchema = z.object({
   group:    z.string(),
 });
 
+const questionSchema = z.object({
+  question: z.string(),
+  options: z.array(z.string()).length(4),
+  correctIndex: z.number().int().min(0).max(3),
+  explanation: z.string().optional(),
+});
+
+const exerciseSchema = z.object({
+  ua: z.number(),
+  questions: z.array(questionSchema).length(10),
+});
+
 export const collections = {
   'software-design': defineCollection({
     loader: glob({ pattern: '**/*.mdx', base: './src/content/software-design' }),
@@ -40,5 +52,13 @@ export const collections = {
   'engenharia-software': defineCollection({
     loader: glob({ pattern: '**/*.mdx', base: './src/content/engenharia-software' }),
     schema: disciplineSchema,
+  }),
+  'exercicios-paradigmas-programacao': defineCollection({
+    loader: glob({ pattern: '**/*.json', base: './src/content/exercicios/paradigmas-programacao' }),
+    schema: exerciseSchema,
+  }),
+  'exercicios-engenharia-software': defineCollection({
+    loader: glob({ pattern: '**/*.json', base: './src/content/exercicios/engenharia-software' }),
+    schema: exerciseSchema,
   }),
 };

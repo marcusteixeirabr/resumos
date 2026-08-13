@@ -4,14 +4,22 @@ import Sidebar from '../components/Sidebar.astro';
 import SectionNav from '../components/SectionNav.astro';
 import type { CollectionEntry } from 'astro:content';
 
+interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+}
+
 interface Props {
   entry: CollectionEntry<'software-design'> | CollectionEntry<'responsive-web'>;
   entries: CollectionEntry<'software-design'>[] | CollectionEntry<'responsive-web'>[];
   disciplineTitle: string;
   base: string;
+  exercises?: QuizQuestion[];
 }
 
-const { entry, entries, disciplineTitle, base } = Astro.props;
+const { entry, entries, disciplineTitle, base, exercises } = Astro.props;
 const slug = entry.id.replace(/\.mdx?$/, '');
 const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
@@ -40,6 +48,12 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       <span class="pdf-label">PDF</span>
     </button>
+    {exercises && (
+      <button class="quiz-open" id="quiz-open" type="button" aria-haspopup="dialog" aria-controls="quiz-modal" aria-label="Abrir exercícios desta UA">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        <span class="quiz-open-label">Exercícios</span>
+      </button>
+    )}
   </header>
 
   <div id="nav-overlay"></div>
@@ -127,6 +141,75 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
       });
     })();
   </script>
+
+  {exercises && (
+    <>
+      <div id="quiz-modal" class="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-modal-title" aria-hidden="true">
+        <div class="quiz-modal-backdrop" id="quiz-backdrop"></div>
+        <div class="quiz-modal-inner">
+          <div class="quiz-modal-header">
+            <h2 id="quiz-modal-title" class="quiz-modal-title">Exercícios — {entry.data.title}</h2>
+            <button id="quiz-close" class="quiz-modal-close" type="button" aria-label="Fechar">✕</button>
+          </div>
+          <div id="quiz-root" class="quiz-modal-body"></div>
+        </div>
+      </div>
+      <script is:inline src={`${siteBase}/js/quiz.js`}></script>
+      <script is:inline define:vars={{ exercises, quizTitle: entry.data.title }}>
+        (function () {
+          var modal = document.getElementById('quiz-modal');
+          var root = document.getElementById('quiz-root');
+          var openBtn = document.getElementById('quiz-open');
+          var closeBtn = document.getElementById('quiz-close');
+          var backdrop = document.getElementById('quiz-backdrop');
+          if (!modal || !root || !openBtn || typeof renderQuiz !== 'function') return;
+
+          function shuffle(list) {
+            var arr = list.slice();
+            for (var i = arr.length - 1; i > 0; i--) {
+              var j = Math.floor(Math.random() * (i + 1));
+              var tmp = arr[i];
+              arr[i] = arr[j];
+              arr[j] = tmp;
+            }
+            return arr;
+          }
+
+          function start() {
+            renderQuiz(root, shuffle(exercises.slice()), {
+              title: 'Exercícios — ' + quizTitle,
+              onFinish: start
+            });
+          }
+
+          function open() {
+            start();
+            modal.classList.add('open');
+            modal.removeAttribute('aria-hidden');
+            document.body.style.overflow = 'hidden';
+            if (closeBtn) closeBtn.focus();
+          }
+
+          function close() {
+            modal.classList.remove('open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            root.innerHTML = '';
+          }
+
+          openBtn.addEventListener('click', open);
+          if (closeBtn) closeBtn.addEventListener('click', close);
+          if (backdrop) backdrop.addEventListener('click', close);
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && modal.classList.contains('open')) {
+              e.preventDefault();
+              close();
+            }
+          });
+        })();
+      </script>
+    </>
+  )}
 
   <script is:inline>
     // Hamburger menu

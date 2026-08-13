@@ -1,0 +1,115 @@
+{
+  "ua": 3,
+  "questions": [
+    {
+      "question": "O que é o SWEBOK e quem o mantém?",
+      "options": [
+        "Um guia de gerenciamento de qualquer projeto, mantido pelo PMI.",
+        "O guia da IEEE Computer Society (ISO/IEC TR 19759) com as melhores práticas de engenharia de software.",
+        "Um modelo de ciclo de vida criado por Boehm.",
+        "Uma linguagem de modelagem equivalente à UML."
+      ],
+      "correctIndex": 1,
+      "explanation": "SWEBOK é referência técnica internacional, não material de um fabricante."
+    },
+    {
+      "question": "Qual é a distinção correta entre SWEBOK e PMBOK?",
+      "options": [
+        "SWEBOK = IEEE, foco técnico em construir software; PMBOK = PMI, foco em gerenciar projetos (não só de software).",
+        "Ambos são do PMI e tratam só de software.",
+        "SWEBOK é do PMI; PMBOK é da IEEE.",
+        "Não há diferença prática entre os dois guias."
+      ],
+      "correctIndex": 0,
+      "explanation": "Não confundir organizações nem o recorte: técnico vs. gerenciamento."
+    },
+    {
+      "question": "Quantas áreas de conhecimento tem o SWEBOK v3 (2014), versão cobrada pelo livro?",
+      "options": [
+        "10",
+        "15 (dez do produto/processo e cinco fundamentais/transversais)",
+        "18, obrigatoriamente, em qualquer prova baseada no livro",
+        "4, as mesmas das certificações básicas"
+      ],
+      "correctIndex": 1,
+      "explanation": "O livro cobra v3/2014 com 15 áreas. O v4/2024 já tem 18, mas isso é nota moderna, não o número do material-base."
+    },
+    {
+      "question": "As quatro áreas básicas cobradas em todas as certificações Associate e Professional são…",
+      "options": [
+        "Economia, matemática, computação e engenharia.",
+        "Requisitos, design, construção e teste de software.",
+        "Manutenção, configuração, processo e qualidade apenas.",
+        "Cascata, espiral, incremental e ágil."
+      ],
+      "correctIndex": 1,
+      "explanation": "ASD e PSD cobram essas quatro. PSEM exige maestria em 11 das 15 áreas."
+    },
+    {
+      "question": "Qual certificação SWEBOK é a mais completa e o que exige?",
+      "options": [
+        "ASD: 80 questões, sem recomendação de experiência.",
+        "PSEM (Professional Software Engineering Master): maestria em 11 das 15 áreas; exame de 3 h / 160 questões.",
+        "PSD: apenas 100 minutos e 80 questões.",
+        "PMBOK Master, emitida pela IEEE."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ordem crescente: ASD → PSD → PSEM. PSEM é a mais exigente."
+    },
+    {
+      "question": "Quais são os quatro objetivos do SWEBOK segundo a IEEE?",
+      "options": [
+        "Estimar KLOC, calcular EAF, definir sprints e gerar bytecode.",
+        "Descrever o conteúdo da ES, promover visão consistente mundial, delimitar fronteiras com outras disciplinas e apoiar autoaprendizado/certificação.",
+        "Gerenciar escopo, tempo, custo e qualidade de qualquer projeto.",
+        "Substituir a ciência da computação e a matemática."
+      ],
+      "correctIndex": 1,
+      "explanation": "Fronteiras explícitas com CC, gerência de projetos, engenharia da computação e matemática. Objetivos de GP são do PMBOK."
+    },
+    {
+      "question": "O atalho da UA para memorizar a divisão das 15 áreas é…",
+      "options": [
+        "1–10: o que fazer para construir e manter software; 11–15: o que sustenta o profissional e a disciplina.",
+        "1–5: ágil; 6–15: cascata.",
+        "Todas as 15 tratam só de gerenciamento de projetos.",
+        "1–15 são idênticas às áreas do PMBOK."
+      ],
+      "correctIndex": 0,
+      "explanation": "1–10 vão de requisitos à qualidade; 11–15 cobrem prática profissional, economia e fundamentos (computação, matemática, engenharia)."
+    },
+    {
+      "question": "A área de manutenção de software no SWEBOK cobre quais tipos?",
+      "options": [
+        "Apenas corretiva.",
+        "Corretiva, adaptativa, perfectiva e preventiva.",
+        "Somente preventiva.",
+        "Nenhum: manutenção está fora do SWEBOK."
+      ],
+      "correctIndex": 1,
+      "explanation": "Área 5: suporte ao ciclo operacional com os quatro tipos clássicos de manutenção."
+    },
+    {
+      "question": "Qual área trata de controle de versões, identificação, auditoria e entrega de releases?",
+      "options": [
+        "Qualidade de software",
+        "Gerência de configuração de software (GCS)",
+        "Fundamentos matemáticos",
+        "Economia em engenharia de software"
+      ],
+      "correctIndex": 1,
+      "explanation": "GCS é a área 6 do v3."
+    },
+    {
+      "question": "Sobre qualidade no SWEBOK, o que a UA destaca?",
+      "options": [
+        "Qualidade só existe na área 10 e em nenhum outro lugar.",
+        "A área 10 tem tópicos próprios, mas qualidade também aparece de forma transversal em várias outras áreas.",
+        "Qualidade foi removida do guia em 2014.",
+        "Qualidade é exclusiva do PMBOK."
+      ],
+      "correctIndex": 1,
+      "explanation": "Há área dedicada (fundamentos, gerência, métricas, ferramentas) e um recorte transversal no restante do guia."
+    }
+  ]
+}

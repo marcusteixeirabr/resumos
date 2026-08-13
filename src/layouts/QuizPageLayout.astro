@@ -1,0 +1,111 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  explanation?: string;
+}
+
+interface Props {
+  disciplineTitle: string;
+  base: string;
+  entries: any[];
+  bank: { ua: number; questions: QuizQuestion[] }[];
+}
+
+const { disciplineTitle, base, entries, bank } = Astro.props;
+const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<BaseLayout
+  title={`Exercícios — ${disciplineTitle} — Resumos ADS`}
+  description={`Sorteio de uma questão por UA de ${disciplineTitle}.`}
+  cssFiles={['discipline.css']}
+>
+  <header>
+    <button class="menu-btn" id="menu-btn" aria-label="Abrir menu de navegação" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a class="back" href={`${siteBase}/`}>Início</a>
+    <h1>{disciplineTitle}</h1>
+    <button class="theme-toggle" aria-label="Alternar tema claro/escuro">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <button class="search-btn" id="search-btn" aria-label="Buscar (Ctrl+K)">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <span class="search-btn-label">Buscar</span><kbd>Ctrl K</kbd>
+    </button>
+  </header>
+
+  <div id="nav-overlay"></div>
+
+  <div class="layout">
+    <Sidebar entries={entries} currentSlug="exercicios" base={base} />
+
+    <main id="content">
+      <section class="active">
+        <h2>Exercícios</h2>
+        <p class="subtitle">Uma questão sorteada de cada UA desta disciplina. Use Refazer para um novo conjunto — o estado não é gravado entre visitas.</p>
+        <div id="quiz-root"></div>
+      </section>
+    </main>
+  </div>
+
+  <script is:inline src={`${siteBase}/js/quiz.js`}></script>
+  <script is:inline define:vars={{ bank }}>
+    (function () {
+      var root = document.getElementById('quiz-root');
+      if (!root || typeof renderQuiz !== 'function') return;
+
+      function pickOnePerUa() {
+        return bank.map(function (ua) {
+          var qs = ua.questions || [];
+          if (!qs.length) return null;
+          var q = qs[Math.floor(Math.random() * qs.length)];
+          return {
+            question: q.question,
+            options: q.options,
+            correctIndex: q.correctIndex,
+            explanation: q.explanation,
+            label: 'UA' + ua.ua
+          };
+        }).filter(Boolean);
+      }
+
+      function start() {
+        renderQuiz(root, pickOnePerUa(), {
+          title: 'Sorteio final',
+          onFinish: start
+        });
+      }
+
+      start();
+    })();
+  </script>
+
+  <script is:inline>
+    (function () {
+      var btn     = document.getElementById('menu-btn');
+      var sidebar = document.getElementById('sidebar');
+      var overlay = document.getElementById('nav-overlay');
+      if (!btn || !sidebar) return;
+      function close() {
+        sidebar.classList.remove('open');
+        overlay && overlay.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+      btn.addEventListener('click', function () {
+        var opening = !sidebar.classList.contains('open');
+        sidebar.classList.toggle('open');
+        overlay && overlay.classList.toggle('open');
+        btn.setAttribute('aria-expanded', String(opening));
+      });
+      overlay && overlay.addEventListener('click', close);
+      sidebar.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', close); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    })();
+  </script>
+</BaseLayout>
