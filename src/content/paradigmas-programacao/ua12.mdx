@@ -1,0 +1,180 @@
+---
+title: "UA12 — Programação Funcional: Funções de Primeira Classe e Primeira Ordem"
+subtitle: "Como funções tratadas como qualquer outro valor — atribuídas, passadas, retornadas — sustentam Map, Filter, Reduce e a interoperabilidade entre paradigma funcional e orientado a objetos."
+ua: 12
+group: "Paradigma Funcional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua12.m4a" title="Programação funcional para códigos mais previsíveis" />
+
+### Funcional e orientado a objetos, lado a lado
+
+O paradigma imperativo, defendido pela orientação a objetos, continua sendo o mais utilizado e conhecido — mas desde 1930 Alonzo Church defende o uso de funções matemáticas para resolver problemas computacionais. No escopo funcional, o principal método para estruturar um programa é a **definição e aplicação de funções**. Isso não significa que a programação funcional deva ser vista como oposta à orientação a objetos: as duas podem — e devem — conviver na mesma aplicação, já que o mercado atual está repleto de linguagens **multiparadigma**. Essa combinação "híbrida" potencializa a aplicação, somando performance, economia de código e outras vantagens de cada abordagem.
+
+### Funções de primeira classe (first-class functions)
+
+Sebesta (2018) define um programa funcional como uma coleção de funções que, quando bem definidas, resultam em um programa mais simples. Funções anônimas costumam usar a palavra `lambda` na sintaxe, empregando os conceitos do cálculo de Church:
+
+```python
+(lambda x: x * x)
+```
+
+Isso não impede que o paradigma funcional também seja aplicado a blocos de código nomeados — o que importa são os efeitos: código simplificado, imutável e sem impacto fora da função.
+
+Uma função pode ser executada dentro do próprio escopo, passada como argumento, retornada como valor de outra função, ou armazenada em estruturas de dados (ABELSON; SUSSMAN, 1984). Todas essas possibilidades juntas descrevem uma **função de primeira classe**:
+
+```python
+>>> funcao = lambda x: x
+>>> def segunda_funcao(x):
+...     return x + 10
+>>> lista = [funcao, segunda_funcao]
+>>> print(lista)
+```
+
+<Callout type="default">
+**A analogia do "cidadão de primeira classe"**
+
+Nos Estados Unidos, "cidadão de primeira classe" designa alguém livre para ir e vir e fazer o que quiser. A mesma ideia se aplica às funções de primeira classe: elas podem ser parâmetro, argumento ou resultado — qualquer coisa — dentro de um bloco de instruções.
+</Callout>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gsp_01.webp" alt="Infográfico 'Guia sobre Programação Funcional' — funções de primeira classe e primeira ordem, funções de ordem superior (Map, Filter, Reduce combinadas), interoperabilidade entre paradigma funcional e orientação a objetos" caption="Funções de primeira classe e primeira ordem no paradigma funcional" />
+</SlidesGrid>
+
+### Funções anônimas e listas
+
+**Funções anônimas** podem ser declaradas em qualquer contexto, sem precisar de nome — em linguagens que as suportam, podem ser passadas diretamente como argumento de funções de ordem superior. São também chamadas de expressões lambda (BORGES, 2010):
+
+```python
+minha_lista = [0,1,2,3,4,5,6,7,8,9,10]
+media = lambda valor: sum(valor) / len(valor)
+media(minha_lista)  # 5
+```
+
+Em Python, listas são **iteráveis** — objetos sequenciais que podem ser percorridos (LOTT, 2015). Um `range` é "preguiçoso" e não produz nenhum resultado até ser efetivamente percorrido por uma estrutura (como um `for`); já uma **compreensão de lista** recebe a função `list` para gerar uma nova lista a partir dos elementos iterados.
+
+### Funções de ordem superior (High-order functions / HOFs)
+
+Lott (2015) define de forma prática o que caracteriza uma HOF: é uma função que **recebe** uma função, **retorna** uma função, ou **recebe e retorna** uma função. Python, JavaScript, Haskell e C# possuem diversas funções desse tipo.
+
+**Funções aninhadas** têm acesso ao ambiente onde foram criadas (BURSTALL, 2000):
+
+```python
+def soma(x, y, z, b):
+    def soma_dois(x1, x2):
+        return x1 + x2
+    return x + y + soma_dois(z, b)
+
+>>> soma(1, 2, 3, 4)
+10
+```
+
+**Funções embutidas (*built-in*)** já vêm prontas na linguagem — `print()` em Python é o exemplo mais simples. `map` é o exemplo clássico de HOF embutida: varre uma estrutura de dados e executa a instrução declarada em cada elemento, gerando um novo array com os resultados (TUCKER; NOONAN, 2009).
+
+```python
+>>> Lista_1 = [1, 2, 3, 4, 5, 6, 7, 10, 15, 33, 25, 50, 46, 125, 500, 324]
+>>> multiplos_5 = list(filter(lambda x: x % 5 == 0, Lista_1))
+>>> print(multiplos_5)
+[5, 10, 15, 25, 50, 125, 500]
+```
+
+<Callout type="default">
+**HOF depende de função de primeira classe**
+
+Uma função de ordem superior só é possível porque a linguagem trata funções como objetos de primeira classe. Linguagens sem funções de primeira classe (como C) ainda conseguem simular HOFs usando ponteiros de função.
+</Callout>
+
+**Reduce** agrega os elementos de uma lista até restar um único valor (BORGES, 2014):
+
+```python
+>>> from functools import reduce
+>>> Lista_1 = [1,2,3,4,5,6,7,10,15,25,50,46,125,500,324]
+>>> soma = reduce(lambda x, y: x + y, Lista_1)
+>>> print(soma)
+1123
+```
+
+### Operadores: simplificando expressões lambda
+
+Quando uma expressão lambda fica extensa, **operadores** ajudam a abstrair ainda mais o código:
+
+```python
+from operator import add
+from functools import reduce
+print(reduce(add, [1, 2, 3, 4, 5]))  # 15 — mais legível que reduce(lambda x, y: x + y, ...)
+```
+
+Existem operadores para soma (`add`), subtração (`sub`), multiplicação (`mul`), negação (`not`), entre outros — a escrita fica mais legível ao trocar incógnitas (`x`, `y`, `z`) por comandos intuitivos, embora a sintaxe varie entre linguagens.
+
+### Combinando funções de primeira classe e de ordem superior
+
+A função `soma` é o exemplo mais simples de objeto de primeira classe em Python:
+
+```python
+>>> soma = lambda x, y: x + y
+>>> soma(5, 6)
+11
+
+>>> def pares(numeros):
+...     return list(filter(lambda numero: numero > 0, numeros))
+>>> print(pares([1, -2, -3, soma(5, 6)]))
+[1, 11]
+```
+
+Aqui, `filter` (uma HOF) recebe a função `soma` como parte dos valores a verificar — combinando os dois conceitos da UA em um único exemplo. O mesmo vale ao usar `reduce`, `map` e operadores em conjunto:
+
+```python
+from operator import add, sub, mul
+from functools import reduce
+>>> func = (reduce(add, [30,50,100]), reduce(sub, [30,50,100]), reduce(mul, [30,50,100]))
+>>> print(func)
+(180, -120, 150000)
+```
+
+### Principais funções de ordem superior embutidas em Python
+
+| Função | O que realiza |
+|---|---|
+| `map` | Aplica a instrução em cada elemento da lista |
+| `filter` | Filtra os elementos indicados na instrução |
+| `reduce` | Reduz os elementos a um único valor, conforme a operação declarada |
+| `sorted` | Ordena os elementos de acordo com a instrução declarada |
+| `max` | Busca o maior valor entre os elementos |
+| `min` | Busca o menor valor entre os elementos |
+
+<Callout type="warning">
+**Práticas Modernas — Funções de Primeira Classe e Primeira Ordem**
+
+O material é de 2019, mas os conceitos de primeira classe/ordem superior descritos aqui são hoje ainda mais centrais do que quando o capítulo foi escrito:
+
+- **Funções como cidadãs de primeira classe deixaram de ser exclusividade de linguagens funcionais**: JavaScript (callbacks, Promises, hooks do React), Python, Kotlin e Swift tratam isso como recurso padrão, não como curiosidade acadêmica.
+- **Arrow functions e sintaxe enxuta** (`=>` em JS/C#, expressões lambda mais compactas em Java) reduziram drasticamente o boilerplate necessário para passar funções como argumento, tornando o padrão descrito no capítulo (funções aninhadas, funções anônimas) parte do código do dia a dia.
+- **Programação reativa** (RxJS, Kotlin Flow) constrói pipelines inteiros a partir de composição de HOFs — o encadeamento de `map`/`filter`/`reduce` do capítulo é a base conceitual direta desses frameworks.
+- **Decorators e higher-order components** (Python `@decorator`, HOCs no React clássico) são aplicações diretas do conceito de "função que recebe e retorna função" — o mesmo mecanismo descrito nesta UA, aplicado a um problema de engenharia diferente (adicionar comportamento sem modificar a função original).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Função de primeira classe**: pode ser atribuída a variável, passada como argumento, retornada por outra função ou armazenada em estrutura de dados — qualquer combinação dessas conta.
+- **Função de ordem superior (HOF)**: recebe função como argumento, **ou** retorna função, **ou** ambos — não precisa fazer as duas coisas ao mesmo tempo para ser classificada como HOF.
+- Uma HOF **depende** de a linguagem ter funções de primeira classe (ou um substituto, como ponteiros em C) — essa é a relação de dependência entre os dois conceitos, cobrada com frequência.
+- **Map** transforma todos os elementos preservando o tamanho da lista; **Filter** seleciona um subconjunto (tamanho pode diminuir); **Reduce** sempre retorna um único valor.
+- **Operadores** (`add`, `sub`, `mul`, do módulo `operator`) substituem expressões lambda equivalentes sem mudar o comportamento — só a legibilidade.
+- Programação funcional e orientação a objetos **não são mutuamente exclusivas** — linguagens multiparadigma combinam as duas na mesma aplicação; cuidado com alternativas que as apresentam como escolha binária.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- LEITE, M. C. D. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- ABELSON, H.; SUSSMAN, G. J. *Structure and interpretation of computer programs*. Cambridge: MIT Press, 1985.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- LOTT, S. *Functional Python programming*. Birmingham: Packt Publishing, 2015.
+- BORGES, L. E. *Python para desenvolvedores*. 3. ed. São Paulo: Novatec, 2014.
+- BURSTALL, R. Christopher Strachey — Understanding Programming Languages. *Higher-Order and Symbolic Computation*, v. 13, n. 1–2, p. 51–55, 2000.
+- RAMALHO, L. *Python fluente: programação clara, concisa e eficaz*. São Paulo: Novatec, 2015.

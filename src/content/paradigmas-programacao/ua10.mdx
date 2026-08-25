@@ -1,0 +1,211 @@
+---
+title: "UA10 — Programação Funcional: Cálculo Lambda"
+subtitle: "O paradigma que trata programas como funções matemáticas — origem no cálculo lambda de Alonzo Church, motivado pelo mesmo limite físico do hardware que impulsiona o paralelismo hoje."
+ua: 10
+group: "Paradigma Funcional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua10.m4a" title="Matemática de 1930 salva o hardware moderno" />
+
+### Por que o paradigma funcional está crescendo agora
+
+Em 1964, Gordon Moore observou que a capacidade dos componentes de computador dobrava em ritmo constante — a **Lei de Moore**. Só que essa lei está chegando ao seu limite físico: os microprocessadores não conseguem mais melhorar performance apenas ficando menores e mais rápidos. A resposta do hardware foi o **paralelismo** — processadores com múltiplos núcleos, cada um funcionando como uma CPU independente.
+
+O problema é que décadas de desenvolvimento foram construídas sobre linguagens **imperativas**, fundamentadas na Máquina de Turing, que descrevem programas como sequências de instruções executadas uma após a outra. Esse modelo não tira proveito natural de múltiplos núcleos rodando em paralelo. É aí que entra a **programação funcional**: um paradigma baseado em conceitos matemáticos — imutabilidade e ausência de estado — que permite que blocos de código sejam executados simultaneamente sem interferir uns nos outros.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/pfc_01.webp" alt="Infográfico 'Programação Funcional e Cálculo Lambda: A Revolução da Simplicidade' — os três pilares do paradigma funcional (imutabilidade e ausência de estado, funções como cidadãs de primeira classe, paralelismo e performance); anatomia de uma expressão lambda (parâmetros -> corpo da instrução); comparação de código Java 8 antes/depois de expressões lambda (6 linhas via classe anônima reduzidas a 1 linha); tabela de adoção do paradigma funcional em LISP, Haskell e Java; os operadores de alta ordem Map, Filter e Reduce" caption="Os pilares do paradigma funcional e a anatomia de uma expressão lambda" />
+</SlidesGrid>
+
+### A primeira linguagem funcional
+
+A origem do paradigma remonta à década de 1950, quando matemáticos precisaram processar cálculos complexos de inteligência artificial usando listas encadeadas de símbolos. Em **1959**, o Dr. John McCarthy (MIT) criou o **LISP** (*list process language*), a primeira linguagem funcional pura. O LISP trabalha com apenas duas estruturas: **átomos** (dados primitivos — numéricos ou simbólicos) e **listas** (sequências de átomos ou outras listas, delimitadas por parênteses, com inserções e remoções tratadas como uma pilha).
+
+Em 1984 surgiu o **Common Lisp**, incorporando conceitos de linguagens procedurais — o que o tornou mais completo, mas também alvo de críticas de quem buscava um LISP puramente funcional.
+
+Hoje, linguagens funcionais têm nichos bem definidos: **R** (estatística), **Mathematica** (matemática simbólica), **K** (análise financeira), além de empresas conhecidas usando linguagens funcionais em produção — **ML** (verificação de hardware/software na Intel e Microsoft), **Scala** (filas de mensagens no Twitter), **Erlang** (chat do Facebook) e **Haskell** (fortemente tipada, uma das mais usadas do paradigma puro).
+
+### O que muda em relação à orientação a objetos
+
+Na programação orientada a objetos existe **transição de estados**: variáveis e objetos mudam de valor ao longo da execução, e é essa variação que orienta as decisões do programa. Na programação funcional isso simplesmente não existe — as duas premissas centrais são:
+
+- **Ausência de estado (*stateless*)** — uma função não guarda histórico entre chamadas; cada execução é independente.
+- **Imutabilidade (*immutable*)** — uma vez atribuído, um valor nunca muda; ele permanece o mesmo em todas as partes do código onde é usado.
+
+Além disso, o paradigma funcional é **todo baseado em funções**, que dividem o código em blocos semanticamente coesos. Uma função pode receber outra função como argumento sem afetar o escopo externo — quando isso acontece, ela é chamada de **função de alta ordem**. Algumas linguagens funcionais também são **fortemente tipadas**: erros são detectados em tempo de **compilação**, eliminando a verificação de tipo em tempo de execução e tornando o programa mais rápido.
+
+<Callout type="default">
+**Sem loops, só recursão**
+
+A programação funcional não tem laços de repetição (`for`, `while`). Toda repetição é resolvida por **recursividade** — uma função chamando a si mesma até que uma condição de parada seja satisfeita.
+</Callout>
+
+### O cálculo lambda
+
+Projetado por **Alonzo Church na década de 1930**, o cálculo lambda é a base matemática por trás de linguagens como LISP e Haskell. Sintaticamente é uma linguagem simples que representa problemas matemáticos combinando funções, baseada em **abstração** — o que torna sua semântica natural e a resolução de problemas computacionais mais direta. Uma de suas características centrais é definir funções que recebem **um único parâmetro**, o que permite reutilizá-las livremente.
+
+Uma **expressão lambda** é uma função anônima que pode ser passada como argumento de outra função. Uma **abstração lambda** anuncia essa função:
+
+```
+(ƛ x. + x 1)
+```
+
+Aqui, `ƛ` indica que existe uma função de `x` que incrementa `x` em 1. O **operador lambda**, representado pela seta `->`, divide a expressão em duas partes: tudo à esquerda especifica os parâmetros de entrada (se houver); à direita fica a ação a ser executada.
+
+Regras do cálculo lambda:
+
+- Todas as funções são **anônimas**.
+- É possível combinar operadores e funções básicas para gerar operadores mais complexos.
+- Pode ser tipado ou não.
+- Todas as funções são de **alto nível** — podem ser passadas como argumento e retornadas por outras funções.
+
+O cálculo é realizado com operadores aritméticos (`+`, `-`, `*`, `/`) e lógicos — por exemplo, `AND = λx. λy. x y x` e `IFTHENELSE = λx. λa. λb. x a b` — além das constantes `true` e `false`. Quando um termo lambda é precedido por uma variável, diz-se que houve uma **abstração lambda**: `ƛx.t` — a função anônima recebe `x` e retorna `t`.
+
+### Recursividade na prática
+
+Como não há loops, a recursão é o mecanismo de repetição. O exemplo clássico é o cálculo do fatorial em Python:
+
+```python
+lambda_fatorial = lambda i: 1 if i == 0 else i * lambda_fatorial(i - 1)
+print(lambda_fatorial(4))
+# 4 * 3 * 2 * 1 = 24
+```
+
+Hartel et al. (2001) apontam três vantagens da programação funcional: opera em nível mais alto que as linguagens tradicionais, fica mais próxima da especificação do problema, e suas variáveis não mudam de valor durante a execução — ou seja, não há efeitos colaterais na avaliação.
+
+### Sintaxe do cálculo lambda
+
+Assim como na programação imperativa, uma expressão lambda tem parâmetros e um bloco de instruções — mas, sendo simples, dispensa chaves: `() -> x + y`. A diferença central é que expressões lambda **não têm nome**: não é preciso declarar tipo de retorno nem cláusulas de tratamento de exceção.
+
+**Dados** — valores booleanos podem ser representados puramente em lambda:
+
+```
+True = ƛx y. x
+False = ƛx y. y
+```
+
+A lógica é uma escolha entre dois parâmetros: `True` escolhe e retorna o primeiro; `False` escolhe e retorna o segundo.
+
+**Estruturas de controle** — condicionais também se constroem como composição de funções:
+
+```
+if = ƛx.(ƛa.(ƛb. x a b))
+const If = condition => then => else => condition(then)(else)
+```
+
+Se a condição for verdadeira, o primeiro parâmetro é retornado; caso contrário, o segundo.
+
+### Funções de primeira classe
+
+Quando uma função pode ser tratada como um valor — passada como argumento, armazenada em uma variável ou retornada por outra função — ela é uma **função de primeira classe**:
+
+```python
+func = lambda x: x
+def func_2(x):
+    return x + 2
+
+lista = [func, func_2]
+lista_2 = [lambda x: x, lambda x: x + 1]
+```
+
+### Funções puras: uma primeira definição
+
+A programação funcional trabalha com **funções e variáveis**, não objetos e métodos — por isso é chamada *stateless* (uma função não carrega histórico entre chamadas) e *immutable* (um valor, uma vez atribuído, não muda durante toda a execução). Uma **função pura** não pode ter efeito colateral — não pode alterar o estado de nada observável fora do seu próprio escopo — e deve depender apenas de seus argumentos.
+
+Compare uma função impura e sua versão pura:
+
+```javascript
+// Impura: executa uma ação (chamada HTTP) diretamente
+salva_usuario(usuario) = {
+   http("POST", "/usuario", usuario)
+}
+
+// Pura: apenas descreve o que deve ser feito
+salva_usuario(usuario) = {
+    method: "POST",
+    path: "/usuario",
+    data: usuario
+}
+```
+
+A versão impura executa o passo a passo (estilo imperativo); a versão pura apenas **retorna declarativamente** a descrição do que deve acontecer — quem executa é outra parte do sistema. Este tema — o que exatamente torna uma função pura — é aprofundado na próxima UA.
+
+### Funções de ordem superior: Map, Filter e Reduce
+
+**Map** — mapeia cada elemento de uma lista através de uma função e retorna os resultados:
+
+```python
+lista = range(1, 6)
+nova_lista = map(lambda x: x * 2, lista)
+for i in nova_lista:
+    print(i)
+# 2, 4, 6, 8, 10
+```
+
+**Filter** — retorna apenas os elementos que satisfazem uma condição:
+
+```python
+lista1 = range(1, 20)
+lista2 = filter(lambda x: x % 2 == 0, lista1)
+for i in lista2:
+    print(i)
+# 2, 4, 6, 8, 10, 12, 14, 16, 18
+```
+
+**Reduce** — combina os elementos cumulativamente até restar um único valor:
+
+```python
+listaA = range(1, 5)
+listaB = reduce(lambda x, y: x + y, listaA)
+# 1+2=3, 3+3=6, 6+4=10, 10+5=15
+```
+
+**Funções anônimas** são funções que podem ser declaradas em qualquer contexto do código, sem a obrigação de ter um nome — é o conceito que une todos os exemplos acima.
+
+### Quem suporta expressões lambda
+
+| Linguagem | Suporte a lambda |
+|---|---|
+| C | Não |
+| Pascal | Não |
+| C++ | Sim (a partir da versão 11) |
+| JavaScript | Sim |
+| Python | Sim |
+| Ruby | Sim |
+| C# | Sim (a partir da versão 3.0) |
+| Java | Sim (a partir da versão 8) |
+
+<Callout type="warning">
+**Práticas Modernas — Programação Funcional e Cálculo Lambda**
+
+O material é de 2019 e trata o cálculo lambda como uma novidade em ascensão — hoje ele é parte consolidada do dia a dia:
+
+- **Expressões lambda deixaram de ser exóticas**: praticamente toda linguagem mainstream (Java, C#, Python, JavaScript, Kotlin, Swift, Rust) as suporta nativamente há anos — a pergunta não é mais "a linguagem suporta lambda?", e sim "quão idiomático é seu uso".
+- **Streams e pipelines funcionais** (Java `Stream API`, C# LINQ, `Array.prototype.map/filter/reduce` em JavaScript) tornaram `map`/`filter`/`reduce` parte do vocabulário cotidiano de qualquer desenvolvedor, não só de quem programa em linguagens puramente funcionais.
+- **Multiparadigma é a norma, não a exceção**: a ideia de "escolher entre OO ou funcional" perdeu força — o mercado hoje mistura os dois paradigmas dentro do mesmo projeto, usando cada um onde faz mais sentido.
+- **O paralelismo motivador do capítulo se concretizou**: frameworks como Java Streams (`parallelStream()`), React (imutabilidade de estado) e bibliotecas de data science (Pandas, Spark) usam os princípios de imutabilidade e ausência de estado justamente para paralelizar processamento com segurança — a motivação de hardware descrita nesta UA é hoje prática cotidiana.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O cálculo lambda foi proposto por **Alonzo Church**, na **década de 1930** — a raiz matemática de todo o paradigma funcional.
+- A primeira linguagem funcional pura foi o **LISP** (John McCarthy, MIT, **1959**); o **Common Lisp** (1984) misturou conceitos procedurais.
+- As duas premissas centrais do paradigma: **ausência de estado (*stateless*)** e **imutabilidade (*immutable*)**.
+- Não existem loops no paradigma funcional puro — repetição é sempre por **recursividade**.
+- **Map** transforma cada elemento; **Filter** seleciona elementos por condição; **Reduce** combina tudo em um único valor. Essas três funções são as mais cobradas em exercícios práticos.
+- Uma expressão lambda tem a forma `(parâmetros) -> ação` — não tem nome, não declara tipo de retorno, não trata exceções explicitamente.
+- Cuidado com pegadinhas de leitura de código: em `filter`, o resultado é a lista dos elementos que **satisfazem** a condição — leia a expressão lambda com atenção antes de escolher a alternativa.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- LEITE, M. C. D. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagem de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- ROSSER, J. B. Highlights of the History of the Lambda-Calculus. *Annals of the History of Computing*, v. 6, n. 4, p. 337–349, 1984.
+- MACHADO, R. An introduction to lambda calculus and functional programming. In: WORKSHOP-SCHOOL ON THEORETICAL COMPUTER SCIENCE (WEIT), 2., 2013, Rio Grande.
+- TUCKER, A. B. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.

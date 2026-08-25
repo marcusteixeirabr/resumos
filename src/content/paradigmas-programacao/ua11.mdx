@@ -1,0 +1,163 @@
+---
+title: "UA11 — Programação Funcional: Funções Puras"
+subtitle: "O que realmente torna uma função pura, por que isso importa para paralelismo e teste, e como transparência referencial e imutabilidade se conectam na prática."
+ua: 11
+group: "Paradigma Funcional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua11.m4a" title="Cálculo Lambda salvando o paralelismo moderno" />
+
+### Uma transição de modelos computacionais
+
+As linguagens imperativas, apoiadas em arquiteturas baseadas no modelo de Von Neumann, estão cedendo espaço para o **paralelismo computacional** — primeiro impulsionado pelos processadores multinucleares, e agora reforçado pelo crescimento do próprio paradigma funcional, que traz conceitos matemáticos e uma forma mais "pura" de resolver problemas. O modelo de **Alonzo Church** (visto na UA10) usa funções matemáticas para resolver problemas adotando premissas opostas à programação imperativa: **imutabilidade**, **ausência de estado** e **funções de alta ordem**.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/opd_01.webp" alt="Infográfico 'O Poder das Funções Puras' — comparativo entre programação funcional e programação orientada a objetos; conceitos de pureza, imutabilidade e ausência de estado; exemplos de funções puras vs. impuras" caption="Funções puras: pureza, imutabilidade e ausência de estado no paradigma funcional" />
+</SlidesGrid>
+
+### Por que a programação funcional existe
+
+Tucker e Noonan (2009) explicam que a programação funcional nasceu da necessidade de implementações em **inteligência artificial**, **aprendizado de máquina** e **ciência cognitiva** — áreas em que tratar problemas do ponto de vista matemático, evitando estados e mutação de dados, é uma vantagem natural. Um código funcional não impacta nada fora do escopo da própria função — a mesma entrada sempre produz a mesma saída, não importa quantas vezes a função seja chamada.
+
+Isso traz duas vantagens práticas centrais: **alto nível de abstração** (programas mais concisos, mais fáceis de entender, maior produtividade) e **facilidade de teste e depuração** (sem estados ou mutabilidade, é mais simples isolar e testar cada parte do código).
+
+### Os quatro pilares conceituais
+
+**Funções puras** — não produzem efeitos colaterais dentro do escopo do projeto; não têm estado interno (*stateless*). Para a mesma entrada, sempre existirá a mesma saída — ela não pode depender de estado mutável nem acessar/alterar variáveis globais.
+
+**Transparência referencial** — uma função tem transparência referencial quando seu valor depende apenas dos valores de seus argumentos: ela sempre produz o mesmo resultado a partir dos mesmos parâmetros. É consequência direta de ser pura, e é o que permite substituir uma chamada de função pelo seu resultado sem alterar o comportamento do programa.
+
+**Imutabilidade** — uma vez atribuído um valor, ele permanece inalterado até o fim. Isso simplifica muito a depuração de bugs complexos, já que não é preciso reconstruir toda a sequência de mudanças de estado de um dado. A contrapartida é que a imutabilidade tende a consumir mais memória — trabalha-se com cópias em vez de referências — mas é justamente isso que viabiliza o **paralelismo computacional** com segurança.
+
+**Expressões lambda** — funções anônimas que especificam parâmetros e definição sem nome. Church (1936) definiu formalmente o cálculo lambda puro (TUCKER; NOONAN, 2009, p. 363): qualquer identificador é uma expressão lambda; se `M` e `N` são expressões lambda, a aplicação de `M` a `N` (escrita `(M, N)`) também é; abstrações como `x.M` também são expressões lambda. O cálculo lambda funciona como uma linguagem intermediária que implementa funções matemáticas de forma mais próxima da linguagem de máquina.
+
+<Callout type="default">
+**Paralelismo ≠ concorrência**
+
+Paralelismo significa usar processamentos independentes que não se comunicam nem interferem entre si — o resultado é sempre o mesmo, independentemente da ordem de execução no processador. Isso o torna mais previsível e, em geral, mais rápido do que o processamento por concorrência (MARLOW, 2009).
+</Callout>
+
+### Recursão e funções de primeira classe
+
+Como não existem variáveis mutáveis nem estados, também não existe incremento/decremento — logo, não há laços. A **recursão** resolve isso: divide um problema grande em partes menores, permitindo que uma função chame a si mesma repetidamente até a resolução.
+
+Uma função tem **funções de primeira classe** (*first-class functions*) quando pode ser tratada como valor: atribuída a variáveis, aceita como argumento de outra função, ou retornada como resultado de outra função.
+
+```python
+>>> objetos = ["relógio", "casa", "mala"]
+>>> sorted(objetos)
+["casa", "mala", "relógio"]
+>>> meu_sorteio = sorted
+>>> meu_sorteio(objetos)
+["casa", "mala", "relógio"]
+>>> sorted == meu_sorteio
+True
+```
+
+Duas variações importantes:
+
+- **Funções de primeira-ordem** — recebem ou retornam outras funções.
+- **Currying** — passa argumentos de forma parcial: se uma função precisa de 4 argumentos e você passa apenas 2, o resultado é uma nova função que aceita os 2 restantes. O processo se repete até todos os argumentos serem fornecidos.
+- **Compose** (*function composition*) — cria uma nova função combinando outras: o resultado de uma função vira o argumento da próxima, em cadeia — `func3(func2(func1(argumento)))`.
+
+Apesar de não ter classes nem métodos, o paradigma funcional é **fortemente tipado** em linguagens como Haskell (que adota a teoria das categorias, encaixando tipos matematicamente através de funções) — e oferece outras estruturas em linguagens como Erlang e Elixir.
+
+### Funções puras vs. impuras
+
+O paradigma OO, ao qual a maioria dos desenvolvedores está habituado, tem métodos que costumam retornar resultados diferentes a partir dos mesmos parâmetros — o que caracteriza **impureza**. As linguagens funcionais se dividem em **puras** (funções executadas inteiramente no próprio escopo, sem produzir efeitos em outras partes do código — mesma entrada, sempre mesma saída, sem necessidade de controlar a ordem de execução) e **impuras**.
+
+```python
+>>> func_pura = lambda x: x + 1
+>>> func_pura(300)
+301
+```
+
+Essa função é pura: para qualquer entrada, sempre soma 1 e não afeta nada fora do próprio escopo.
+
+<Callout type="default">
+**Pureza total é inviável na prática**
+
+Exceto em códigos de análise puramente estatística, é praticamente impossível produzir sistemas 100% puros — mudança de estado é necessária para comunicação externa entre partes do código. A meta realista é maximizar a proporção de código funcional/puro no sistema, não eliminar toda mutação.
+</Callout>
+
+### As funções de ordem superior mais usadas
+
+**Map** — varre uma lista de tamanho N executando a instrução em cada elemento, gerando uma nova lista com os resultados. Em Haskell, a função `maphead` cumpre esse papel (TUCKER; NOONAN, 2009).
+
+**Filter** — seleciona da coleção apenas os elementos que satisfazem um critério (DU BOIS, 2008):
+
+```
+Haskell> filter par [2, 4, 5, 6, 10, 11]
+[2, 4, 6, 10]
+```
+
+**Reduce** — combina dois parâmetros cumulativamente, reduzindo o array a um só valor:
+
+```python
+>>> reduce(lambda x, y: x + y, [1, 2, 3])
+6
+```
+
+**Zip** — retorna uma lista de tuplas intercalando os valores de duas listas:
+
+```python
+>>> lista1 = ['laranja', 'banana', 'pêssego']
+>>> lista2 = ['1', '2', '3']
+>>> list(zip(lista1, lista2))
+[('laranja', '1'), ('banana', '2'), ('pêssego', '3')]
+```
+
+### Compreensão de listas e currying
+
+A **compreensão de listas** aplica funções mais complexas a uma lista diretamente na sua construção. Em Haskell:
+
+```
+ghci> [x*2 | x <- [1..10]]
+[2,4,6,8,10,12,14,16,18,20]
+```
+
+O que vem antes do `|` é a instrução a ser seguida; o que vem depois define os parâmetros.
+
+Funções em Haskell (e na maioria das linguagens funcionais) recebem, em geral, apenas um parâmetro por vez — exceções existem, como `max`, que recebe dois e retorna o maior. O **currying** é justamente a técnica que transforma uma função de múltiplos argumentos em uma cadeia de funções de um único parâmetro cada:
+
+```javascript
+const sum2 = (x, y) => x + y;
+const curry = f => a => b => f(a, b);
+const resultado = curry(sum2)(3)(5);
+// resultado = 8
+```
+
+<Callout type="warning">
+**Práticas Modernas — Funções Puras**
+
+O material é de 2019 e trata pureza/imutabilidade como conceitos ainda emergentes fora do universo funcional puro — hoje eles são parte do vocabulário padrão de qualquer desenvolvedor, mesmo em stacks predominantemente OO:
+
+- **Redux e gerenciamento de estado em front-end** (React, Vue) adotaram imutabilidade e funções puras como princípio central — *reducers* em Redux são, por definição, funções puras: mesma entrada (estado + ação), mesma saída (novo estado), sem efeito colateral.
+- **Testes unitários modernos** valorizam explicitamente funções puras justamente pela facilidade de teste citada no capítulo — é um critério de design consciente em revisões de código, não apenas uma curiosidade acadêmica.
+- **Structs imutáveis e "value types"** ganharam força em linguagens mainstream (`record` em Java, `data class` com `val` em Kotlin, `struct` em Swift/Rust) — trazendo o benefício da imutabilidade para código que não é funcional puro.
+- **Currying e composição de funções** são hoje comuns em bibliotecas JavaScript (Ramda, lodash/fp) e em hooks do React, muito além do escopo original de linguagens acadêmicas como Haskell.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Os quatro conceitos centrais desta UA — **função pura**, **transparência referencial**, **imutabilidade** e **expressão lambda** — costumam aparecer em questões que pedem para identificar qual conceito uma situação descreve. Memorize a definição exata de cada um.
+- Função pura: **mesma entrada → mesma saída**, sem efeito colateral, sem depender de nada fora do próprio escopo.
+- Transparência referencial é **consequência** de uma função ser pura — não confundir os dois como sinônimos exatos em questões que pedem a relação entre eles.
+- **Currying**: transforma uma função de N argumentos em uma cadeia de funções de 1 argumento cada, um argumento por vez.
+- Diferença prática: `Map` transforma todos os elementos; `Filter` seleciona alguns; `Reduce` produz um único valor; `Zip` combina duas listas em pares.
+- Pureza **total** é praticamente inviável — cuidado com alternativas que afirmam que "todo código real deve ser 100% puro": o material é explícito ao dizer que mudança de estado é necessária para comunicação externa.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- LEITE, M. C. D. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- TUCKER, A. B.; NOONAN, R. E. *Linguagens de programação: princípios e paradigmas*. 2. ed. Porto Alegre: AMGH, 2009.
+- CHURCH, A. An Unsolvable Problem of Elementary Number Theory. *American Journal of Mathematics*, v. 58, n. 2, p. 345–363, 1936.
+- DU BOIS, A. R. *Programação funcional com a Linguagem Haskell*. Edinburgh: Heriot-Watt University, 2008.
+- MARLOW, S. Parallelism /= concurrency. *GHC Mutterings*, 2009.
+- ANJANA VAKIL. Mary had a little lambda. EuroPython Conference, 2017.

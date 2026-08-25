@@ -1,0 +1,84 @@
+---
+title: "UA11 — Modelos Tradicionais vs. Métodos Ágeis"
+subtitle: "As diferenças estruturais entre desenvolvimento dirigido por planos e desenvolvimento ágil, a aplicabilidade e adaptabilidade dos métodos ágeis, e o paradigma de técnicas de quarta geração (4GT)."
+ua: 11
+group: "Metodologias Ágeis"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua11.m4a" title="Do modelo cascata à revolução ágil" />
+
+### Duas famílias de abordagens
+
+O desenvolvimento de software acompanhou as transformações tecnológicas e organizacionais das últimas décadas, tornando-se atividade estratégica para empresas de todos os setores — o que aumentou a necessidade de métodos capazes de garantir qualidade, confiabilidade e eficiência (PRESSMAN; MAXIM, 2024). Duas famílias de abordagens emergiram desse contexto:
+
+- **Modelos tradicionais** (Cascata, Espiral, Prototipação, Incremental — já vistos nas UAs 1, 7 e 9) estruturam o desenvolvimento em fases sequenciais bem definidas, com forte ênfase em **planejamento detalhado** e **documentação extensa**. Proporcionam maior previsibilidade e controle, mas sua rigidez dificulta incorporar mudanças ao longo do projeto.
+- **Métodos ágeis** propõem ciclos **iterativos e incrementais**, priorizando colaboração entre equipes, feedback contínuo dos usuários e adaptação constante aos requisitos emergentes.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mtv_01.webp" alt="Infográfico 'Modelos Tradicionais versus Métodos Ágeis' — comparativo de foco em cliente, comunicação, documentação, processos e entregas entre os dois paradigmas de desenvolvimento" caption="Modelos tradicionais versus métodos ágeis: comparativo estrutural" />
+</SlidesGrid>
+
+### O Manifesto Ágil e suas quatro diferenças centrais
+
+Os métodos ágeis ganharam popularidade a partir de **2001**, com a assinatura do "Manifesto Ágil para o Desenvolvimento de Sistemas" (BECK et al., 2001) — fruto de um grupo de especialistas buscando uma forma menos burocrática e mais colaborativa de desenvolver sistemas. O documento estabelece **quatro valores fundamentais**: indivíduos e interações mais que processos e ferramentas; software em funcionamento mais que documentação abrangente; colaboração com o cliente mais que negociação de contratos; responder a mudanças mais que seguir um plano.
+
+A partir desses quatro valores, as diferenças centrais entre os dois mundos ficam claras: nos métodos ágeis, o **cliente é o centro do processo** — mudanças de requisitos e negociações contínuas são bem-vindas. Os métodos ágeis seguem a essência do modelo iterativo e incremental, trabalhando com entregas contínuas e frequentes, e tornam o espaço de trabalho **colaborativo**: o produto é responsabilidade de toda a equipe, sem segmentação rígida entre papéis (Figura 1 do capítulo, adaptada de Cole, 2015, contrasta a estrutura de um time tradicional — desenvolvedores, analista de negócios e analista de testes isolados — com a de um time ágil, onde esses papéis colaboram de forma integrada).
+
+Comparado ao **modelo cascata**, a diferença é ainda mais evidente — o cascata constrói todo o produto em um único ciclo. Já os modelos **espiral** e **iterativo** se aproximam mais dos métodos ágeis por considerarem vários ciclos de construção; ainda assim, diferem na **gestão dos projetos**: métodos ágeis buscam um time **autogerenciável**, que toma decisões colaborativamente, em vez do modelo **top-down** tradicional, em que a gestão decide e a equipe executa.
+
+Alguns exemplos de práticas que métodos ágeis específicos acrescentam à base do manifesto: **Test Driven Development (TDD)** — programa-se o teste antes da funcionalidade, garantindo que ela seja desenvolvida corretamente — e **Behavior Driven Development (BDD)** — estrutura o código a partir da descrição de comportamento especificada pelo usuário nos requisitos.
+
+### Aplicabilidade e adaptabilidade dos métodos ágeis
+
+**Aplicabilidade** — em quais projetos os métodos ágeis podem ser usados? A resposta é direta: em **todos** os tipos de projeto, sejam eles de software ou não. Isso porque métodos ágeis não são um guia estático de tarefas obrigatórias, e sim uma **cultura de valores e princípios** que pode ser adaptada a qualquer contexto.
+
+**Adaptabilidade** — cada método ágil implementa o manifesto à sua própria maneira. O **XP** ficou popular por práticas como programação em pares, refatoração, entrega contínua, metáfora e "jogo do planejamento". O **Scrum**, o mais popular de todos, acrescenta práticas próprias: reuniões diárias em pé (*Daily Scrum*), ciclos curtos de entrega (*Sprint*) e o *Planning Poker* para estimativas.
+
+<Callout type="default">
+**Times ágeis são multidisciplinares, não segmentados**
+
+No time tradicional, desenvolvedores, analistas de negócio e analistas de teste trabalham em silos separados. No time ágil, esses papéis colaboram continuamente dentro da mesma equipe — reduzindo o atrito de handoff entre etapas isoladas.
+</Callout>
+
+### Técnicas de quarta geração (4GT)
+
+O paradigma de **técnicas de quarta geração (4GT)** busca aproximar a linguagem humana da linguagem de máquina, tornando possível especificar software para um computador usando uma linguagem próxima da linguagem natural. Para isso, o modelo 4GT precisa ser aplicado em **quatro etapas** do ciclo de vida (TAVARES et al., 2009):
+
+1. **Obtenção dos requisitos** — o cliente especifica, em linguagem natural ou seminatural, os requisitos desejados para o software.
+2. **Estratégia do projeto** — decisões técnicas sobre ferramentas, estrutura e seleção de linguagem.
+3. **Implementação usando 4GL** — o software é programado usando uma linguagem de quarta geração.
+4. **Testes** — validação do software desenvolvido.
+
+Para que o paradigma 4GT funcione na prática, é preciso desenvolver e escolher ferramentas capazes de interpretar linguagem natural ou seminatural com sucesso. O **BDD**, citado acima, é uma iniciativa que pode ser aproximada do conceito de quarta geração, já que também usa linguagem seminatural para especificar requisitos — e é amplamente difundido em métodos ágeis atuais.
+
+<Callout type="warning">
+**Práticas Modernas — Modelos Tradicionais vs. Métodos Ágeis**
+
+O material já é relativamente recente (edições 2021–2024 de Pressman e Maxim), mas vale destacar dois pontos de contexto adicional:
+
+- **A dicotomia "tradicional vs. ágil" é hoje menos binária na prática**: muitas organizações adotam modelos **híbridos** (ex.: fases de planejamento macro no estilo cascata combinadas com execução em sprints ágeis) especialmente em projetos com componentes regulatórios ou contratuais rígidos.
+- **4GT, como descrito no capítulo, não decolou como paradigma dominante** — a promessa de "especificar software em linguagem natural" reapareceu recentemente de forma muito mais poderosa com ferramentas de IA generativa (geração de código a partir de prompts em linguagem natural), um desdobramento que o material — focado em linguagens de quarta geração clássicas (4GL) — não antecipa, mas que retoma exatamente a mesma motivação central do 4GT.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Os **quatro valores do Manifesto Ágil** (2001) são a base de praticamente toda questão desta UA — decore a formulação exata: "X mais que Y", nunca "X em vez de Y".
+- **Aplicabilidade** = em quais projetos pode ser usado (resposta: todos); **Adaptabilidade** = como cada método ágil implementa o manifesto à sua maneira (XP, Scrum etc.) — não confundir os dois termos entre si.
+- **Times ágeis são autogerenciáveis e colaborativos**; times tradicionais seguem estrutura **top-down**, com papéis segmentados.
+- **4GT** tem **quatro etapas**: obtenção de requisitos → estratégia do projeto → implementação via 4GL → testes.
+- **BDD** é citado como uma aproximação prática do conceito de 4GT, por usar linguagem seminatural nos requisitos — associação recorrente em questões sobre o tema.
+- **TDD** ≠ **BDD**: TDD programa o teste antes da funcionalidade; BDD estrutura o código a partir da descrição de comportamento do usuário.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2024.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 9. ed. Porto Alegre: AMGH, 2024.
+- BECK, K. et al. *Manifesto para o Desenvolvimento Ágil de Software*. 2001.
+- COLE, R. Agile Team Structure. 2015.
+- TAVARES, M. C. et al. *Técnicas de quarta geração na engenharia de software*. 2009.

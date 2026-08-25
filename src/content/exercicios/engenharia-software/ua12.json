@@ -1,0 +1,115 @@
+{
+  "ua": 12,
+  "questions": [
+    {
+      "question": "Quais são os cinco valores do XP, segundo a UA?",
+      "options": [
+        "Comunicação, Respeito, Velocidade, Complexidade e Feedback.",
+        "Comunicação, Respeito, Coragem, Feedback e Simplicidade.",
+        "Compartilhamento, Rapidez, Rigidez, Feedback e Simplicidade.",
+        "Respeito, Coragem, Feedback, Ousadia e Simplicidade."
+      ],
+      "correctIndex": 1,
+      "explanation": "Os cinco valores do XP são Comunicação, Simplicidade, Feedback, Coragem e Respeito."
+    },
+    {
+      "question": "Quais são as quatro atividades metodológicas do processo XP?",
+      "options": [
+        "Requisitos, análise, projeto e evolução.",
+        "Planejamento, projeto, codificação e testes.",
+        "Iniciação, elaboração, construção e transição.",
+        "Especificação, projeto, validação e evolução."
+      ],
+      "correctIndex": 1,
+      "explanation": "O processo XP segue quatro atividades: planejamento, projeto, codificação e testes."
+    },
+    {
+      "question": "No Scrum, o que é o backlog?",
+      "options": [
+        "Uma lista de prioridades dos requisitos ou funcionalidades que fornecem valor ao cliente, atualizada pelo gerente de produto.",
+        "Uma reunião diária de 15 minutos.",
+        "Um gráfico que mostra o progresso do trabalho restante.",
+        "Um papel dentro da equipe responsável pela remoção de impedimentos."
+      ],
+      "correctIndex": 0,
+      "explanation": "O backlog é a lista de prioridades de requisitos/funcionalidades, atualizada continuamente pelo gerente de produto."
+    },
+    {
+      "question": "O que é o release burndown chart no Scrum?",
+      "options": [
+        "Um documento formal assinado ao final de cada sprint.",
+        "Um gráfico atualizado ao final de cada sprint mostrando, no eixo vertical, a quantidade de trabalho restante.",
+        "A lista de papéis da equipe Scrum.",
+        "O nome dado à reunião de planejamento inicial."
+      ],
+      "correctIndex": 1,
+      "explanation": "O burndown chart mostra os sprints no eixo horizontal e o trabalho restante no eixo vertical, permitindo à equipe monitorar seu progresso."
+    },
+    {
+      "question": "Quais são as quatro fases do ciclo de vida do OpenUP?",
+      "options": [
+        "Planejamento, projeto, codificação e testes.",
+        "Requisitos, análise, projeto e implementação.",
+        "Iniciação, Elaboração, Construção e Transição.",
+        "Especificação, validação, evolução e integração."
+      ],
+      "correctIndex": 2,
+      "explanation": "O OpenUP segue as mesmas quatro fases do Processo Unificado: Iniciação, Elaboração, Construção e Transição — mas com foco ágil."
+    },
+    {
+      "question": "Qual é o foco principal do ciclo de vida do OpenUP, segundo a UA?",
+      "options": [
+        "Entregar toda a documentação antes de iniciar qualquer desenvolvimento.",
+        "A entrega semanal de um protótipo ao cliente, para detectar erros e requisitos distorcidos cedo.",
+        "Eliminar completamente a necessidade de testes.",
+        "Substituir totalmente o papel do arquiteto por ferramentas automatizadas."
+      ],
+      "correctIndex": 1,
+      "explanation": "O foco do OpenUP é entregar um protótipo semanalmente ao cliente, corrigindo erros e requisitos distorcidos rapidamente, mantendo o cronograma."
+    },
+    {
+      "question": "Quais são os princípios dos métodos ágeis, segundo a questão da UA sobre o tema?",
+      "options": [
+        "Aceitação de mudanças e maior ênfase nos processos em detrimento das pessoas.",
+        "Rejeição de mudanças e envolvimento dos clientes.",
+        "Entrega contínua ao usuário e maior ênfase nas pessoas em detrimento dos processos.",
+        "Maximização da documentação formal e envolvimento dos clientes."
+      ],
+      "correctIndex": 2,
+      "explanation": "Os métodos ágeis priorizam entrega contínua e valorizam pessoas mais que processos rígidos — alinhado aos valores do Manifesto Ágil."
+    },
+    {
+      "question": "O que é um processo de software, segundo a definição usada na UA?",
+      "options": [
+        "Um conjunto de atividades previsíveis que levam à produção de software de acordo com a necessidade do cliente.",
+        "Um passo único e imprevisível para o desenvolvimento do software.",
+        "Um documento técnico que define apenas as tarefas de teste.",
+        "Uma ferramenta de automação que dispensa qualquer intervenção humana."
+      ],
+      "correctIndex": 0,
+      "explanation": "Um processo de software é um conjunto de atividades e resultados associados que levam, de forma previsível, à produção de um software adequado à necessidade do cliente."
+    },
+    {
+      "question": "Quais são as atividades fundamentais comuns a todos os processos de software, segundo a UA?",
+      "options": [
+        "Projeto, implementação, integração e validação de software.",
+        "Especificação, projeto e implementação, validação e evolução de software.",
+        "Especificação, estimativa de custo, projeto, validação e evolução de software.",
+        "Projeto, implementação, validação, evolução e integração de software."
+      ],
+      "correctIndex": 1,
+      "explanation": "As quatro atividades fundamentais comuns a todos os processos de software são: especificação; projeto e implementação; validação; e evolução."
+    },
+    {
+      "question": "Segundo o comparativo entre Scrum e XP apresentado na UA (Quadro 2), qual termo do XP corresponde à \"Daily Scrum\" do Scrum?",
+      "options": [
+        "Reflection.",
+        "Iteraction planning.",
+        "Stand-up meeting.",
+        "Iteraction."
+      ],
+      "correctIndex": 2,
+      "explanation": "No comparativo Scrum × XP, Daily Scrum corresponde a Stand-up meeting; Sprint corresponde a Iteraction; Retrospective corresponde a Reflection."
+    }
+  ]
+}

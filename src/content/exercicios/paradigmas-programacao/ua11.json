@@ -1,0 +1,115 @@
+{
+  "ua": 11,
+  "questions": [
+    {
+      "question": "O que caracteriza uma função pura, segundo a UA?",
+      "options": [
+        "Ela pode alterar variáveis globais, desde que documentado.",
+        "Ela não produz efeitos colaterais e, para a mesma entrada, sempre retorna a mesma saída.",
+        "Ela precisa obrigatoriamente usar recursão.",
+        "Ela só pode ser escrita em Haskell."
+      ],
+      "correctIndex": 1,
+      "explanation": "Função pura é stateless, não depende de estado mutável e não acessa/altera variáveis globais — mesma entrada, sempre mesma saída."
+    },
+    {
+      "question": "O que é transparência referencial?",
+      "options": [
+        "A capacidade de uma função imprimir seu próprio código-fonte.",
+        "Quando o valor de uma função depende apenas dos valores de seus argumentos, permitindo substituir a chamada pelo resultado.",
+        "Um tipo de herança múltipla entre funções.",
+        "A conversão automática de tipos em tempo de execução."
+      ],
+      "correctIndex": 1,
+      "explanation": "É consequência direta de a função ser pura: mesmos parâmetros sempre produzem o mesmo resultado, então a chamada pode ser substituída pelo valor retornado sem alterar o comportamento do programa."
+    },
+    {
+      "question": "Qual é o principal trade-off da imutabilidade, segundo a UA?",
+      "options": [
+        "Ela impede totalmente o uso de listas.",
+        "Ela tende a consumir mais memória (trabalha com cópias, não referências), mas viabiliza o paralelismo com segurança.",
+        "Ela torna o código impossível de testar.",
+        "Ela só funciona em linguagens fracamente tipadas."
+      ],
+      "correctIndex": 1,
+      "explanation": "Por trabalhar com cópias em vez de referências, a imutabilidade consome mais memória — mas é exatamente isso que permite paralelizar processamento com segurança."
+    },
+    {
+      "question": "Segundo Marlow (2009), qual é a diferença entre paralelismo e concorrência citada na UA?",
+      "options": [
+        "São sinônimos e podem ser usados indistintamente.",
+        "Paralelismo usa processamentos independentes que não se comunicam entre si, com resultado sempre igual independente da ordem de execução — diferente da concorrência.",
+        "Concorrência é mais rápida que paralelismo em qualquer cenário.",
+        "Paralelismo só existe em linguagens orientadas a objetos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Paralelismo garante o mesmo resultado independentemente da ordem de execução no processador, tornando-o mais previsível que a concorrência."
+    },
+    {
+      "question": "O que é currying?",
+      "options": [
+        "Uma técnica que combina duas listas em uma lista de tuplas.",
+        "Uma técnica que transforma uma função de múltiplos argumentos em uma cadeia de funções, cada uma recebendo um único parâmetro.",
+        "Um tipo de laço de repetição exclusivo do paradigma funcional.",
+        "Um operador lógico do cálculo lambda."
+      ],
+      "correctIndex": 1,
+      "explanation": "Se uma função precisa de 4 argumentos e você passa 2, o resultado é uma nova função que aceita os 2 restantes — o processo se repete até todos os argumentos serem passados."
+    },
+    {
+      "question": "Por que a programação funcional, segundo Tucker e Noonan (2009), tem origem ligada a IA, machine learning e ciência cognitiva?",
+      "options": [
+        "Porque essas áreas exigem interfaces gráficas complexas.",
+        "Porque tratar problemas do ponto de vista matemático, evitando estados e mutação de dados, é vantajoso nesses contextos.",
+        "Porque essas áreas não usam nenhum tipo de cálculo numérico.",
+        "Porque a programação funcional exige menos poder computacional que qualquer outro paradigma."
+      ],
+      "correctIndex": 1,
+      "explanation": "A abordagem matemática do paradigma funcional, sem estados nem mutação, favorece naturalmente problemas de IA, aprendizado de máquina e ciência cognitiva."
+    },
+    {
+      "question": "O que significa dizer que uma função tem \"funções de primeira classe\"?",
+      "options": [
+        "Que ela só pode ser chamada uma única vez no programa.",
+        "Que ela pode ser tratada como valor: atribuída a variáveis, passada como argumento ou retornada por outra função.",
+        "Que ela precisa ter prioridade máxima de execução no sistema operacional.",
+        "Que ela só existe em linguagens compiladas."
+      ],
+      "correctIndex": 1,
+      "explanation": "Funções de primeira classe podem ser atribuídas, passadas como argumento e retornadas como resultado — exatamente como qualquer outro valor."
+    },
+    {
+      "question": "Dada a função Haskell `filter par [2, 4, 5, 6, 10, 11]`, qual o resultado, segundo o exemplo da UA?",
+      "options": [
+        "[2, 4, 6, 10]",
+        "[5, 11]",
+        "[2, 4, 5, 6, 10, 11]",
+        "[]"
+      ],
+      "correctIndex": 0,
+      "explanation": "Filter seleciona apenas os elementos pares da lista, retornando [2, 4, 6, 10]."
+    },
+    {
+      "question": "Por que a UA afirma que a pureza total de um sistema é praticamente inviável na prática?",
+      "options": [
+        "Porque nenhuma linguagem no mercado suporta funções puras.",
+        "Porque mudança de estado é necessária para a comunicação externa entre partes do código, exceto em códigos puramente estatísticos.",
+        "Porque funções puras não podem receber parâmetros.",
+        "Porque funções puras são proibidas por lei em sistemas comerciais."
+      ],
+      "correctIndex": 1,
+      "explanation": "A meta realista é maximizar a proporção de código funcional/puro, não eliminar toda mutação — que é necessária para a comunicação entre partes do sistema."
+    },
+    {
+      "question": "O que a função Zip faz, segundo o exemplo da UA com `['laranja','banana','pêssego']` e `['1','2','3']`?",
+      "options": [
+        "Soma os elementos numericamente.",
+        "Retorna uma lista de tuplas intercalando os valores das duas listas: [('laranja','1'), ('banana','2'), ('pêssego','3')].",
+        "Filtra apenas os elementos em comum entre as duas listas.",
+        "Compacta as duas listas em um único arquivo."
+      ],
+      "correctIndex": 1,
+      "explanation": "Zip combina elemento a elemento de duas (ou mais) listas em tuplas, preservando a ordem de cada lista original."
+    }
+  ]
+}

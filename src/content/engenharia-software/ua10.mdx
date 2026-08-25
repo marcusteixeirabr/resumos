@@ -1,0 +1,144 @@
+---
+title: "UA10 — Metodologias Ágeis de Desenvolvimento"
+subtitle: "O Manifesto Ágil de 2001, os princípios que unem todas as metodologias ágeis e um panorama comparativo de XP, Scrum, FDD, ASD, Crystal, ICONIX, DSDM e APSO."
+ua: 10
+group: "Metodologias Ágeis"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua10.m4a" title="Como o Manifesto Ágil revolucionou o software" />
+
+### Por que a agilidade se tornou necessária
+
+O que torna um artefato tecnológico bom não é só a robustez de suas funcionalidades — é sua capacidade de ajudar de fato nas atividades cotidianas de quem o usa. Isso empurra a demanda por softwares cada vez mais capazes de resolver problemas complexos, e é justamente essa complexidade crescente que fez a **agilidade** se tornar central no desenvolvimento de software: um produto tecnológico lançado hoje frequentemente ganha uma versão renovada, com novas funcionalidades, poucos meses depois. Vivemos, ao mesmo tempo, na era tecnológica e na **era da agilidade**.
+
+### O Manifesto Ágil (2001)
+
+Segundo Pressman e Maxim (2016, p. 66), em 2001 Kent Beck e outros 16 desenvolvedores, autores e consultores da área — batizados de **Agile Alliance** — assinaram o **Manifesto para o Desenvolvimento Ágil de Software**, declarando:
+
+> Ao desenvolver e ajudar outros a desenvolver software, desvendamos formas melhores de desenvolvimento. Por meio deste trabalho passamos a valorizar:
+> - Indivíduos e interações **acima de** processos e ferramentas
+> - Software operacional **acima de** documentação completa
+> - Colaboração dos clientes **acima de** negociação contratual
+> - Respostas a mudanças **acima de** seguir um plano
+>
+> Ou seja, embora haja valor nos itens à direita, valorizaremos os da esquerda mais ainda.
+
+Paula Filho (2009, p. 102) traduz esses valores como princípios que devem orientar a atitude de uma equipe: satisfazer o cliente com entregas rápidas e frequentes de software útil; medir progresso pela funcionalidade entregue; aceitar bem alterações tardias de requisitos; manter colaboração próxima e diária entre gerentes e desenvolvedores; priorizar comunicação face a face; confiar em pessoas motivadas.
+
+Fowler (2005 apud Pressman, 2016, p. 69) resume por que um processo é considerado ágil a partir de três observações: é difícil prever quais requisitos vão persistir e quais vão mudar; projeto e construção costumam ser intercalados, não sequenciais; análise, projeto, construção e testes raramente são tão previsíveis quanto gostaríamos.
+
+<Callout type="default">
+**A agilidade no Brasil não começou com o Manifesto**
+
+Priklandnicki, Willi e Milani (2015, p. 16) relatam que o "pensamento ágil" já era adotado no desenvolvimento de software no Brasil antes da formalização do Manifesto: por volta de 1999, Klaus Wuestefeld e Vinícius Teles — hoje considerados precursores da agilidade no país — já buscavam alternativas para aumentar as chances de sucesso no desenvolvimento. Com a formalização do Manifesto, o movimento pela agilidade no Brasil ganhou força a partir de 2001.
+</Callout>
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdma_01.webp" alt="Infográfico 'Guia das Metodologias Ágeis' — panorama do desenvolvimento ágil, valores do Manifesto Ágil, críticas mais frequentes às metodologias ágeis, tipos e etapas dos processos ágeis" caption="Panorama das metodologias ágeis: valores do Manifesto e críticas mais frequentes" />
+</SlidesGrid>
+
+### Métodos ágeis vs. métodos dirigidos por planos
+
+Paula Filho (2009, p. 103) compara as duas abordagens em várias dimensões:
+
+| Área | Característica | Métodos ágeis | Métodos dirigidos por planos |
+|---|---|---|---|
+| Desenvolvedores | Cultura | Mais informal | Mais formal |
+| | Tamanho da equipe | Menor | Maior |
+| | Experiência | Maior | Menor |
+| | Localização | Única | Espalhada |
+| Clientes | Relacionamento | Mais cooperativa | Mais formal |
+| | Localização | Próxima | Distante |
+| Requisitos | Natureza | Emergentes | Bem conhecidos |
+| | Variabilidade | Alta | Baixa |
+| Arquitetura | Foco | Solução imediata | Expansibilidade |
+| | Refatoramento | Fácil | Difícil |
+| Projeto | Tamanho | Menor | Maior |
+| | Objetivo | Valor rápido | Alta garantia |
+
+No método ágil, o cliente participa ativamente da priorização dos requisitos, e a equipe é valorizada por suas habilidades — sem depender de métricas rígidas de trabalho, desde que as atividades sejam entregues. A **entrega incremental** — entregar etapas do processo continuamente ao cliente — é central: o cliente acompanha o desenvolvimento e pode especificar requisitos a cada etapa, em vez de só ver o produto no final.
+
+Ivar Jacobson (apud Pressman, 2016, p. 68) resume bem o espírito ágil: *"Uma equipe ágil é aquela rápida e capaz de responder de modo adequado às mudanças [...] Suporte à mudança deve ser incorporado a tudo o que fazemos em software, algo que abraçamos porque é o coração e a alma do software."*
+
+### Panorama das principais metodologias ágeis
+
+Adaptado de Sbrocco e Macedo (2012, p. 185):
+
+| Metodologia | Criada por | Ano | Iterações | Diagramas UML |
+|---|---|---|---|---|
+| **XP** | Kent Beck | 1996 | 1–4 semanas, com participação do cliente | Classes, caso de uso, sequência ou atividades |
+| **Scrum** | Sutherland, Schwaber, Beedle | 1995 | Sprint de 30 dias | — |
+| **FDD** | Jeff De Luca e Peter Coad | 1997 | 2 semanas por prioridade | Classes, caso de uso, sequência e atividades |
+| **ASD** | Sam Bayer e James Highsmith | 1997 | 4–8 semanas por quantidade de requisitos | Classes, caso de uso, sequência e atividades |
+| **Crystal** | Alistair Cockburn | 1998 | 2 semanas | Classes, caso de uso, sequência e atividades |
+| **ICONIX** | Rosenberg, Stephens, Cope | 1999 | 2 semanas por prioridade | Classes, caso de uso, sequência/atividades e robustez |
+| **DSDM** | Consórcio de empresas | 1994 | 2 semanas (MoSCoW) | Classes, caso de uso, sequência e atividades |
+| **APSO** | Sbrocco e Macedo | 2011 | 1 semana | Classes, caso de uso, sequência ou atividades |
+
+Essas metodologias raramente são aplicadas seguindo à risca todos os aspectos descritos — na prática, equipes adaptam iterações e práticas conforme o contexto.
+
+### Extreme Programming (XP)
+
+O XP emprega uma metodologia orientada a objetos, estruturada em quatro atividades: **planejamento, projeto, codificação, testes** (PRESSMAN, 2016). A especificação do sistema se baseia em **histórias de usuário**, que capturam as características a incluir no sistema. O fluxo de planejamento passa por: identificação de história → estimativa inicial → planejamento de release → planejamento de iteração → planejamento de tarefa.
+
+O **planejamento de release** seleciona e refina as histórias que entrarão em um release e define a ordem de implementação — sempre com o cliente envolvido. Já o **planejamento de iteração** escolhe quais histórias entram na iteração atual (normalmente 2–3 semanas), considerando a velocidade da equipe (SOMMERVILLE, 2011). As histórias podem vir acompanhadas de **metáforas** — recursos que trazem clareza sobre o que o cliente pede, evitando dupla interpretação sem depender de muita documentação.
+
+Segundo Prikladnicki, Willi e Milani (2015), o XP se baseia em **14 princípios** que traduzem seus valores abstratos em práticas do dia a dia: humanidade, economia, melhoria, benefício mútuo, semelhança, diversidade, passos pequenos, reflexão, fluxo, oportunidade, redundância, falha, qualidade e aceitação da responsabilidade.
+
+Duas práticas centrais do XP: **programação em pares** (duas pessoas resolvendo o mesmo problema, discutindo a melhor solução, com ou sem refatoração incluída) e **testes de aceitação/cliente**, realizados continuamente durante o desenvolvimento. A documentação do XP é essencialmente o próprio código e os testes — não há um proprietário fixo de cada trecho, já que o código pertence a toda a equipe via repositório compartilhado.
+
+### Scrum
+
+Segundo Prikladnicki, Willi e Milani (2015, p. 22-24), o **Scrum** é um framework ágil que auxilia no gerenciamento de projetos complexos e no desenvolvimento de produtos — leve, simples de entender e "extremamente difícil de dominar". Sua estrutura tem:
+
+- **Três papéis**: **Dono do Produto** (responsável pelo valor de negócio do produto), **ScrumMaster** (serve aos demais papéis com processos e melhorias) e **Equipe de Desenvolvimento** (autoorganizada, entrega valor via software funcional e com qualidade).
+- **Três artefatos**: **Backlog do Produto** (visão atualizada de requisitos desejados), **Incremento do Produto** (funcionalidades já prontas) e **Backlog da Sprint** (planejamento tático da próxima sprint).
+- **Quatro cerimônias**: **reunião de planejamento da sprint**, **Scrum Diária** (reuniões de 15 minutos, respondendo o que foi feito, dificuldades e o que será feito até a próxima reunião), **Revisão da Sprint** (inspeção e adaptação do produto/projeto) e **Retrospectiva da Sprint** (inspeção e adaptação dos processos).
+
+### FDD (Desenvolvimento Dirigido por Funcionalidades)
+
+Nasceu em **Cingapura (1997–1999)**, quando o United Overseas Bank precisava reengenheirar sua plataforma de empréstimos — um projeto complexo que, após quase dois anos de consultoria e 3.500 páginas de casos de uso documentados, tinha pouquíssimo software em execução. **Jeff De Luca** assumiu o desafio com uma equipe pequena e um processo leve e altamente iterativo. O FDD tem uma estrutura de equipe bem definida — gerente de projeto, gerente de desenvolvimento, especialistas no domínio de negócio, arquiteto líder, programadores líderes e proprietários de classes.
+
+### DSDM
+
+A **Metodologia de Desenvolvimento de Sistemas Dinâmicos (DSDM)** oferece uma metodologia para construir e manter sistemas sob restrições de prazo, usando **prototipação incremental** em ambiente controlado (CS3, 2002 apud PRESSMAN; MAXIM, 2016). Baseia-se em uma versão modificada do **princípio de Pareto**: 80% de uma aplicação pode ser entregue em 20% do tempo total. O ciclo de vida DSDM (mantido por um consórcio mundial de empresas) começa com um **estudo de viabilidade** e um **estudo do negócio**, seguidos de três ciclos iterativos:
+
+1. **Iteração de modelos funcionais** — gera protótipos incrementais para coletar requisitos adicionais via feedback dos usuários.
+2. **Iteração de projeto e desenvolvimento** — revisa os protótipos para garantir valor de negócio operacional.
+3. **Implementação** — coloca a última versão do incremento no ambiente operacional; pode não estar 100% completa, retornando à iteração de modelos funcionais se necessário.
+
+<Callout type="warning">
+**Práticas Modernas — Metodologias Ágeis de Desenvolvimento**
+
+O material apresenta o panorama de metodologias ágeis do fim dos anos 2010 — o cenário de adoção mudou bastante desde então:
+
+- **Scrum consolidou-se como padrão de mercado** entre as metodologias listadas — FDD, ASD, Crystal, ICONIX, DSDM e APSO seguem existindo, mas raramente aparecem em vagas ou processos seletivos reais fora de nichos específicos.
+- **Kanban** ganhou tração equivalente (ou maior) ao Scrum em times de manutenção/suporte e em contextos DevOps, por não impor sprints fixos — vale complementar o quadro do material, que não o inclui entre as oito metodologias listadas.
+- **Frameworks de escala** (SAFe, LeSS, Nexus) surgiram para aplicar princípios ágeis a múltiplas equipes trabalhando no mesmo produto — um problema que o material, focado em equipes únicas, não cobre.
+- **XP puro (programação em pares full-time, TDD rígido) é raro isoladamente hoje**, mas suas práticas (pair programming, TDD, integração contínua) foram absorvidas por times Scrum/Kanban como práticas de engenharia complementares, não como metodologia à parte.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- O **Manifesto Ágil** tem **quatro valores** (indivíduos e interações; software funcionando; colaboração com o cliente; responder a mudanças) — sempre "acima de", nunca "em vez de": o outro lado ainda tem valor, só que menos.
+- **XP**: histórias de usuário, programação em pares, quatro atividades (planejamento, projeto, codificação, testes), documentação = código + testes.
+- **Scrum**: 3 papéis (Dono do Produto, ScrumMaster, Equipe), 3 artefatos (Backlog do Produto, Incremento, Backlog da Sprint), 4 cerimônias (planejamento, Scrum diária, revisão, retrospectiva).
+- **DSDM**: associação direta com **prazo apertado + prototipação incremental + princípio de Pareto (80/20)**.
+- **FDD**: origem em Cingapura, banco UOB, liderado por Jeff De Luca — associação recorrente em provas.
+- Não confundir "métodos ágeis" com "ausência total de processo": os métodos ágeis têm estrutura própria (sprints, backlogs, cerimônias) — a diferença para os tradicionais é a **ênfase** (pessoas e adaptação vs. processos e previsibilidade), não a ausência de disciplina.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MORAIS, I. S. de. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH; Bookman, 2016.
+- PAULA FILHO, W. P. *Engenharia de software: fundamentos, métodos e padrões*. 3. ed. Rio de Janeiro: LTC, 2009.
+- PRIKLADNICKI, R.; WILLI, R.; MILANI, F. *Métodos ágeis para desenvolvimento de software*. Porto Alegre: Bookman, 2015.
+- SBROCCO, J. H. T. C.; MACEDO, P. C. *Metodologias ágeis: engenharia de software sob medida*. São Paulo: Érica, 2012.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- COHN, M. *Desenvolvimento de software com Scrum: aplicando métodos ágeis com sucesso*. Porto Alegre: Bookman, 2012.

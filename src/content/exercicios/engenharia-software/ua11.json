@@ -1,0 +1,115 @@
+{
+  "ua": 11,
+  "questions": [
+    {
+      "question": "O que foi o Manifesto Ágil, segundo a UA?",
+      "options": [
+        "Uma manifestação política contra a criação de software.",
+        "Um conjunto de princípios e valores criados para ajudar a desenvolver software de maior qualidade.",
+        "Um método que adota exclusivamente a filosofia sequencial \"serial\" de desenvolvimento.",
+        "Uma ferramenta organizada apenas em planejamento, projeto, codificação e testes."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Manifesto Ágil (2001) reúne princípios e valores para tornar o desenvolvimento de software menos burocrático e mais colaborativo, buscando maior qualidade."
+    },
+    {
+      "question": "Uma equipe decidiu adotar uma ferramenta visual com um quadro dividido em colunas (etapas do trabalho) e cartões que representam tarefas, movimentados conforme a execução. Qual técnica ágil corresponde a essa prática?",
+      "options": [
+        "Kanban.",
+        "Scrum.",
+        "XP (Extreme Programming).",
+        "Cascata."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Kanban usa quadro com colunas e cartões coloridos para visualizar e gerenciar o fluxo de trabalho da equipe."
+    },
+    {
+      "question": "Um cliente identificou novas necessidades após a conclusão de algumas funcionalidades, e a equipe decidiu incorporar as mudanças mesmo revisando o planejamento inicial. Qual valor do Manifesto Ágil está mais diretamente relacionado a essa situação?",
+      "options": [
+        "Indivíduos e interações acima de processos e ferramentas.",
+        "Colaboração com o cliente mais que negociação de contratos.",
+        "Software em funcionamento acima de documentação abrangente.",
+        "Responder a mudanças acima de seguir um plano."
+      ],
+      "correctIndex": 3,
+      "explanation": "Incorporar mudanças de requisitos mesmo exigindo revisão do planejamento é a aplicação direta do valor \"responder a mudanças acima de seguir um plano\"."
+    },
+    {
+      "question": "Qual é o significado de backlog no Scrum, segundo a UA?",
+      "options": [
+        "Conjunto de unidades de trabalho definidas para uma sprint.",
+        "Reuniões diárias de curta duração para acompanhamento do progresso.",
+        "Lista priorizada de requisitos e funcionalidades do produto que geram valor ao cliente.",
+        "Papel responsável por remover impedimentos da equipe."
+      ],
+      "correctIndex": 2,
+      "explanation": "O backlog reúne e organiza os requisitos do produto, servindo de base para a priorização do trabalho da equipe."
+    },
+    {
+      "question": "Qual é a principal diferença estrutural entre o modelo cascata e os métodos ágeis, segundo a UA?",
+      "options": [
+        "O cascata constrói todo o produto em um único ciclo; os métodos ágeis consideram vários ciclos com entregas contínuas.",
+        "O cascata é sempre mais rápido do que qualquer método ágil.",
+        "Os métodos ágeis não permitem qualquer forma de planejamento.",
+        "O cascata é exclusivo de projetos de hardware, não de software."
+      ],
+      "correctIndex": 0,
+      "explanation": "O cascata considera a construção de todo o produto em um único ciclo sequencial; os métodos ágeis trabalham com múltiplos ciclos iterativos e incrementais."
+    },
+    {
+      "question": "Segundo a UA, qual é a diferença entre a gestão de projetos ágeis e a gestão dos modelos espiral/iterativo, mesmo estes últimos também usando múltiplos ciclos?",
+      "options": [
+        "Não há diferença nenhuma entre as duas formas de gestão.",
+        "Projetos ágeis buscam um time autogerenciável e colaborativo; os demais seguem o modelo top-down, em que a gestão decide e a equipe executa.",
+        "O espiral e o iterativo não permitem nenhum tipo de ciclo de feedback.",
+        "Os métodos ágeis são geridos exclusivamente por uma única pessoa, sem equipe."
+      ],
+      "correctIndex": 1,
+      "explanation": "Mesmo o espiral e o iterativo tendo vários ciclos, a diferença central para os métodos ágeis está na gestão: autogerenciável e colaborativa versus top-down."
+    },
+    {
+      "question": "O que caracteriza a técnica Test Driven Development (TDD), citada na UA?",
+      "options": [
+        "Escrever a documentação completa antes de qualquer linha de código.",
+        "Programar primeiro o teste e depois a funcionalidade, garantindo que ela seja desenvolvida corretamente.",
+        "Estruturar o código a partir da descrição de comportamento especificada pelo usuário.",
+        "Substituir totalmente a necessidade de testes manuais."
+      ],
+      "correctIndex": 1,
+      "explanation": "TDD programa o teste antes da funcionalidade em si, para garantir que a funcionalidade seja construída corretamente desde o início."
+    },
+    {
+      "question": "Quais são as quatro etapas do paradigma de técnicas de quarta geração (4GT), segundo Tavares et al. (2009)?",
+      "options": [
+        "Análise, projeto, implementação e manutenção.",
+        "Obtenção dos requisitos, estratégia do projeto, implementação usando 4GL e testes.",
+        "Planejamento, modelagem, construção e implantação.",
+        "Concepção, elaboração, construção e transição."
+      ],
+      "correctIndex": 1,
+      "explanation": "O 4GT percorre obtenção dos requisitos, estratégia do projeto, implementação usando linguagem de quarta geração (4GL) e testes."
+    },
+    {
+      "question": "Qual técnica é citada na UA como uma aproximação prática do conceito de quarta geração (4GT), por usar linguagem seminatural para especificar requisitos?",
+      "options": [
+        "TDD (Test Driven Development).",
+        "BDD (Behavior Driven Development).",
+        "Pair Programming.",
+        "Planning Poker."
+      ],
+      "correctIndex": 1,
+      "explanation": "O BDD usa linguagem seminatural para especificar comportamento, aproximando-se do conceito de 4GT e sendo amplamente difundido em métodos ágeis."
+    },
+    {
+      "question": "Segundo a UA, qual é a resposta correta quando se pergunta \"em quais tipos de projeto os métodos ágeis podem ser aplicados\" (aplicabilidade)?",
+      "options": [
+        "Apenas em projetos de software de pequeno porte.",
+        "Apenas em projetos que já usam metodologias tradicionais.",
+        "Em todos os tipos de projeto, sejam eles de software ou não — pois métodos ágeis são uma cultura de valores e princípios, não um guia estático de tarefas.",
+        "Apenas em projetos com equipes menores que 5 pessoas."
+      ],
+      "correctIndex": 2,
+      "explanation": "A UA é direta: a aplicabilidade dos métodos ágeis é universal, justamente porque eles representam uma cultura adaptável, não uma lista fixa de tarefas obrigatórias."
+    }
+  ]
+}

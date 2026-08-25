@@ -1,0 +1,115 @@
+{
+  "ua": 10,
+  "questions": [
+    {
+      "question": "Segundo a UA, por que o paradigma funcional vem crescendo diante do limite da Lei de Moore?",
+      "options": [
+        "Porque elimina a necessidade de testes de software.",
+        "Porque seus princípios de imutabilidade e ausência de estado favorecem naturalmente a execução em paralelo, aproveitando processadores multinucleares.",
+        "Porque substitui totalmente a necessidade de hardware físico.",
+        "Porque é mais rápido de compilar do que qualquer linguagem imperativa."
+      ],
+      "correctIndex": 1,
+      "explanation": "Com os microprocessadores chegando a limites físicos, o hardware avançou via paralelismo (múltiplos núcleos); imutabilidade e ausência de estado permitem executar blocos de código simultaneamente sem interferência."
+    },
+    {
+      "question": "Quem propôs o cálculo lambda e em que década?",
+      "options": [
+        "John McCarthy, na década de 1950.",
+        "Alonzo Church, na década de 1930.",
+        "Alan Turing, na década de 1940.",
+        "Gordon Moore, na década de 1960."
+      ],
+      "correctIndex": 1,
+      "explanation": "O cálculo lambda foi projetado por Alonzo Church na década de 1930, base matemática de linguagens como LISP e Haskell."
+    },
+    {
+      "question": "Qual foi a primeira linguagem de programação funcional pura, criada em 1959?",
+      "options": [
+        "Haskell.",
+        "Scheme.",
+        "LISP (list process language), criada por John McCarthy no MIT.",
+        "Common Lisp."
+      ],
+      "correctIndex": 2,
+      "explanation": "LISP surgiu em 1959 para manipular símbolos matemáticos; o Common Lisp veio depois, em 1984, misturando conceitos procedurais."
+    },
+    {
+      "question": "Quais são as duas premissas centrais que diferenciam a programação funcional da orientação a objetos, segundo a UA?",
+      "options": [
+        "Herança múltipla e polimorfismo.",
+        "Ausência de estado (stateless) e imutabilidade (immutable).",
+        "Encapsulamento e abstração.",
+        "Tipagem dinâmica e compilação just-in-time."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ao contrário da OO, que tem transição de estados, a programação funcional não tem estado (stateless) e trabalha com valores imutáveis (immutable)."
+    },
+    {
+      "question": "Como a programação funcional resolve a ausência de laços de repetição (for, while)?",
+      "options": [
+        "Usando apenas condicionais aninhadas.",
+        "Por meio de recursividade — uma função chamando a si mesma até uma condição de parada.",
+        "Delegando a repetição para o sistema operacional.",
+        "Usando ponteiros para simular loops."
+      ],
+      "correctIndex": 1,
+      "explanation": "Não há loops no paradigma funcional puro; toda repetição é implementada via recursão, como no exemplo do fatorial usando lambda."
+    },
+    {
+      "question": "O que representa a expressão `(ƛ x. + x 1)` no cálculo lambda?",
+      "options": [
+        "Uma função que sempre retorna zero.",
+        "Uma função de x que incrementa x em 1.",
+        "Uma constante lógica true.",
+        "Um laço infinito."
+      ],
+      "correctIndex": 1,
+      "explanation": "O símbolo ƛ indica uma função; nesse caso, uma função de x que soma 1 ao valor recebido."
+    },
+    {
+      "question": "Dada a lista [1,2,3,5,7] e a expressão `map(lambda x: x*2, lista)`, qual o resultado?",
+      "options": [
+        "[1, 2, 3, 5, 7]",
+        "[2, 4, 6, 10, 14]",
+        "[0, 1, 2, 4, 6]",
+        "[1, 4, 9, 25, 49]"
+      ],
+      "correctIndex": 1,
+      "explanation": "Map aplica a instrução (multiplicar por 2) a cada elemento da lista, gerando uma nova lista com os resultados."
+    },
+    {
+      "question": "O que a função Filter retorna, segundo a UA?",
+      "options": [
+        "Sempre um único valor numérico.",
+        "Uma lista de tuplas intercaladas de duas listas.",
+        "Uma nova lista contendo apenas os elementos que satisfazem a condição verificada pela função.",
+        "A soma de todos os elementos da lista original."
+      ],
+      "correctIndex": 2,
+      "explanation": "Filter percorre a lista e retorna apenas os elementos aprovados pela condição lambda — diferente de Map, que transforma todos os elementos."
+    },
+    {
+      "question": "Quais das linguagens abaixo, segundo o Quadro 2 da UA, NÃO oferecem suporte nativo a expressões lambda?",
+      "options": [
+        "Python e Ruby.",
+        "JavaScript e C# (a partir da versão 3.0).",
+        "C e Pascal.",
+        "Java (a partir da versão 8) e C++ (a partir da versão 11)."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Quadro 2 lista C e Pascal como as únicas linguagens sem suporte a expressões lambda entre as citadas."
+    },
+    {
+      "question": "Segundo o Quadro 1 da UA, qual empresa usa Erlang, e para qual finalidade?",
+      "options": [
+        "Twitter, para filas de mensagens.",
+        "Facebook, para o serviço de chat.",
+        "Intel e Microsoft, para verificação de hardware e software.",
+        "Diversas universidades, para o ensino de programação."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Quadro 1 lista Erlang como a linguagem funcional usada pelo Facebook em seu serviço de chat; ML é usada por Intel/Microsoft, Scala pelo Twitter."
+    }
+  ]
+}

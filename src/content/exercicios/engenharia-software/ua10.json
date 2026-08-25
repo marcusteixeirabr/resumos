@@ -1,0 +1,115 @@
+{
+  "ua": 10,
+  "questions": [
+    {
+      "question": "Segundo Pressman e Maxim (2016), quem assinou o Manifesto para o Desenvolvimento Ágil de Software, em 2001?",
+      "options": [
+        "Barry Boehm e um grupo de arquitetos de software.",
+        "Kent Beck e outros 16 desenvolvedores, autores e consultores, batizados de Agile Alliance.",
+        "Apenas Jeff Sutherland e Ken Schwaber.",
+        "Um consórcio de universidades americanas."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Manifesto Ágil foi assinado por Kent Beck e mais 16 profissionais da área, reunidos como Agile Alliance."
+    },
+    {
+      "question": "Quais são os quatro valores centrais do Manifesto Ágil?",
+      "options": [
+        "Documentação completa; processos e ferramentas; negociação contratual; seguir um plano.",
+        "Indivíduos e interações; software operacional; colaboração dos clientes; respostas a mudanças — cada um valorizado acima de seu contraponto tradicional.",
+        "Testes automatizados; entrega contínua; integração contínua; deploy automatizado.",
+        "Backlog; sprint; scrum diário; retrospectiva."
+      ],
+      "correctIndex": 1,
+      "explanation": "O manifesto valoriza indivíduos e interações, software funcionando, colaboração com o cliente e resposta a mudanças — sempre \"acima de\" seus contrapontos, sem descartá-los."
+    },
+    {
+      "question": "Assinale a alternativa que contém apenas metodologias ágeis.",
+      "options": [
+        "XP, Scrum e APSO.",
+        "Cascata, XP e FDD.",
+        "Prototipação, Scrum e Espiral.",
+        "DSDM, Cascata e Prototipação."
+      ],
+      "correctIndex": 0,
+      "explanation": "XP, Scrum e APSO são metodologias ágeis; Cascata, Prototipação e Espiral são modelos tradicionais."
+    },
+    {
+      "question": "Segundo o Quadro 1 (Paula Filho, 2009), qual é a diferença entre métodos ágeis e métodos dirigidos por planos quanto ao relacionamento com clientes?",
+      "options": [
+        "Ágil: mais formal; dirigidos por planos: mais cooperativo.",
+        "Ágil: mais cooperativo, com clientes próximos; dirigidos por planos: mais formal, com clientes distantes.",
+        "Não há diferença relevante entre as duas abordagens.",
+        "Ágil não permite qualquer contato com o cliente durante o desenvolvimento."
+      ],
+      "correctIndex": 1,
+      "explanation": "No Quadro 1, o relacionamento ágil é mais cooperativo e próximo; nos métodos dirigidos por planos, é mais formal e distante."
+    },
+    {
+      "question": "Assinale a alternativa em que a sprint backlog caracteriza esse fator dentro do processo de desenvolvimento de software.",
+      "options": [
+        "XP.",
+        "Cascata.",
+        "DSDM.",
+        "Scrum."
+      ],
+      "correctIndex": 3,
+      "explanation": "O Sprint Backlog é um dos três artefatos do Scrum, junto com o Backlog do Produto e o Incremento do Produto."
+    },
+    {
+      "question": "No XP, o que são as \"histórias do usuário\" e como se relacionam ao planejamento?",
+      "options": [
+        "Documentos formais de especificação técnica escritos apenas pelos desenvolvedores.",
+        "Refletem as necessidades reais do cliente e alimentam as estimativas de tempo, o planejamento de release, de iteração e de tarefa.",
+        "São diagramas UML obrigatórios em todo projeto XP.",
+        "Substituem completamente qualquer forma de comunicação com o cliente."
+      ],
+      "correctIndex": 1,
+      "explanation": "As histórias de usuário capturam as necessidades reais do cliente e orientam as estimativas e os planejamentos de release, iteração e tarefa."
+    },
+    {
+      "question": "Sistemas com restrições de prazo, desenvolvidos em ambiente controlado, com análise de viabilidade para estabelecer requisitos básicos e restrições de negócio, caracterizam qual metodologia ágil?",
+      "options": [
+        "DSDM.",
+        "Scrum.",
+        "XP.",
+        "Cascata."
+      ],
+      "correctIndex": 0,
+      "explanation": "O DSDM usa prototipação incremental em ambiente controlado e parte de um estudo de viabilidade para estabelecer requisitos e restrições de negócio."
+    },
+    {
+      "question": "Segundo Prikladnicki, Willi e Milani (2015), quais são os três papéis do Scrum?",
+      "options": [
+        "Gerente de Projeto, Arquiteto Líder e Programador Líder.",
+        "Dono do Produto, ScrumMaster e Equipe de Desenvolvimento.",
+        "Analista, Desenvolvedor e Testador.",
+        "Executivo, Designer de Interação e Redator Técnico."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Scrum define três papéis: Dono do Produto (valor de negócio), ScrumMaster (processos e melhoria) e Equipe de Desenvolvimento (entrega com qualidade)."
+    },
+    {
+      "question": "O que caracteriza a origem do FDD (Desenvolvimento Dirigido por Funcionalidades), segundo Prikladnicki, Willi e Milani (2015)?",
+      "options": [
+        "Foi criado dentro da Microsoft para o desenvolvimento do Windows.",
+        "Surgiu em Cingapura (1997-1999), quando Jeff De Luca assumiu a reengenharia da plataforma de empréstimos de um banco após anos de consultoria sem software funcional entregue.",
+        "Foi o primeiro método ágil formalizado, antes mesmo do Manifesto Ágil.",
+        "Surgiu como uma adaptação direta do Scrum feita por Ken Schwaber."
+      ],
+      "correctIndex": 1,
+      "explanation": "O FDD nasceu em um banco de Cingapura (UOB), quando Jeff De Luca assumiu um projeto com muita documentação e pouco software funcionando."
+    },
+    {
+      "question": "Segundo Ivar Jacobson (apud Pressman, 2016), o que caracteriza uma equipe ágil?",
+      "options": [
+        "Uma equipe que segue rigidamente um plano definido no início do projeto, sem alterações.",
+        "Uma equipe rápida e capaz de responder de modo adequado às mudanças, reconhecendo que o sucesso depende das pessoas e da capacidade de colaborar.",
+        "Uma equipe que trabalha exclusivamente de forma remota e assíncrona.",
+        "Uma equipe formada apenas por desenvolvedores seniores."
+      ],
+      "correctIndex": 1,
+      "explanation": "Jacobson descreve a equipe ágil como aquela capaz de responder rapidamente às mudanças, reconhecendo que o sucesso do projeto está no cerne da colaboração entre pessoas."
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+---
+title: "UA12 — Processos de Software (OpenUP, XP, Scrum)"
+subtitle: "Os cinco valores e os papéis do XP, o ciclo e os artefatos do Scrum, e as quatro fases do OpenUP — um comparativo lado a lado de três das metodologias ágeis mais aplicadas no mercado."
+ua: 12
+group: "Metodologias Ágeis"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua12.m4a" title="XP, Scrum e OpenUP na vida real" />
+
+### Processos de software: a base comum
+
+Desenvolver software não é tarefa fácil — é uma atividade complexa e de alto risco, sujeita a problemas de gerenciamento de recursos, conflitos com usuários e até cancelamento por inviabilidade de investimento. Um **processo de software** é um conjunto de atividades de produção de um produto de software; cada vez mais, novos softwares surgem da ampliação ou modificação de sistemas já existentes. Embora existam muitos processos diferentes, quatro atividades fundamentais são comuns a todos: **especificação**, **projeto e implementação**, **validação** e **evolução** do software.
+
+Processos baseados em especificações completas de requisitos, projeto, construção e testes de sistema — o modelo tradicional — não são voltados para desenvolvimento **rápido**. Em um mercado competitivo, as metodologias ágeis (**OpenUP, XP e Scrum**, foco desta UA) priorizam entregas rápidas com foco na satisfação do cliente.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cdm_01.webp" alt="Infográfico 'Comparativo de Metodologias Ágeis' — os 12 princípios da metodologia ágil, características de XP, Scrum e OpenUP lado a lado" caption="Comparativo entre XP, Scrum e OpenUP" />
+</SlidesGrid>
+
+### Princípios da agilidade
+
+Em 2001, Kent Beck e mais 16 desenvolvedores assinaram o "Manifesto para o Desenvolvimento Ágil de Software", dando origem a processos para criar software útil rapidamente — geralmente **iterativos**, com especificação, projeto, desenvolvimento e teste intercalados. O software não é entregue de uma vez, e sim em uma **série de incrementos**, cada um trazendo uma nova funcionalidade. Três características fundamentais unem as diferentes abordagens ágeis: os processos de especificação, projeto e implementação são **concorrentes**; o sistema é desenvolvido em **incrementos**; as interfaces com o usuário são desenvolvidas de forma **iterativa**.
+
+Nem todo modelo de processo ágil aplica todos os princípios listados a seguir, mas juntos eles definem o "espírito ágil": maior prioridade em satisfazer o cliente; acolher pedidos de alteração mesmo com o projeto atrasado; entregas frequentes de software funcionando; equipe comercial e desenvolvedores trabalhando juntos; equipe motivada; conversas abertas e presenciais; software funcionando como principal medida de progresso; desenvolvimento sustentável; excelência técnica; simplicidade; arquiteturas e requisitos emergindo de equipes autoorganizadas; foco constante em eficiência.
+
+Sommerville (2011) resume os princípios mais citados:
+
+| Princípio | Descrição |
+|---|---|
+| Envolvimento do cliente | Clientes devem ser profundamente envolvidos no processo de desenvolvimento |
+| Entrega incremental | O software é desenvolvido em incrementos, com o cliente especificando os requisitos de cada um |
+| Pessoas, não processo | As habilidades da equipe devem ser reconhecidas e exploradas |
+| Aceite as mudanças | Projete o sistema para acomodar mudanças de requisitos |
+| Mantenha a simplicidade | Elimine complexidade sempre que possível |
+
+### XP: os cinco valores
+
+O método ágil mais conhecido, o **XP**, expressa todos os requisitos como **cenários** implementados diretamente como tarefas. Os programadores trabalham em pares e escrevem os testes de cada tarefa **antes** do código. O modelo define **cinco valores** que sustentam todo o trabalho:
+
+1. **Comunicação** — muitas práticas do XP simplesmente não funcionam sem comunicação constante.
+2. **Simplicidade** — é melhor fazer algo simples hoje e investir mais depois, se necessário, do que construir algo complexo que talvez nunca seja usado.
+3. **Feedback** — feedback concreto melhora tanto a comunicação quanto a simplicidade.
+4. **Coragem** — o projeto começa simples e é transformado, aos poucos, em algo mais complexo e ousado.
+5. **Respeito** — sustenta todos os demais valores; sem respeito pela equipe, os outros ficam comprometidos.
+
+O **processo XP** segue quatro práticas centrais: **planejamento, projeto, codificação, testes**. O desenvolvimento incremental é apoiado por releases pequenos e frequentes baseados nos cenários dos clientes; o envolvimento do cliente é apoiado por engajamento em tempo integral; a manutenção da simplicidade é sustentada por *refactoring* constante para melhorar a qualidade do código.
+
+No XP, o cliente participa da especificação e priorização dos requisitos como parte da equipe — em vez de uma lista de funções, desenvolve-se um **"cartão de histórias"** junto com o time, que depois vira um release do software. O cliente prioriza as histórias, escolhendo as que trazem apoio útil aos negócios mais cedo; uma nova versão só é aceita se **todos os testes** forem executados com sucesso. Diferente da engenharia tradicional (que tenta prever e incorporar mudanças futuras desde o início), o XP considera projetar para a mudança um esforço geralmente inútil — as mudanças reais raramente são as que foram previstas.
+
+O XP define papéis específicos dentro da equipe — executivos, gerentes de projeto, gerentes de produto, arquitetos, analistas de teste, designers de interação, programadores, recursos humanos, redatores técnicos e usuários — todos contribuindo com suas habilidades específicas, com foco sempre voltado ao sucesso coletivo da equipe.
+
+### Scrum: sprints, backlog e transparência
+
+**Scrum** é um framework dentro do qual pessoas tratam e resolvem problemas complexos e adaptativos, entregando produtos de alto valor de forma produtiva e criativa — leve, simples de entender, mas "extremamente difícil de dominar". Os projetos são divididos em ciclos (tipicamente mensais) chamados **sprints**, cada um um *time box* dentro do qual se executam: requisitos, análise, projeto, evolução e entrega.
+
+Conceitos-chave do Scrum:
+
+- **Backlog** — lista de prioridades dos requisitos/funcionalidades que trazem valor ao cliente; itens podem ser adicionados a qualquer momento, e o gerente de produto avalia e atualiza as prioridades.
+- **Sprints** — unidades de trabalho para atingir um requisito do backlog dentro do prazo acordado.
+- **Reuniões Scrum** — encontros diários rápidos, respondendo três perguntas: o que foi feito desde a última reunião, quais dificuldades surgiram, e o que será feito até a próxima.
+- **Demos** — demonstração entregue ao cliente para avaliação, com as funções que deveriam ser entregues dentro do prazo.
+
+A equipe monitora o progresso atualizando um **release burndown chart** ao final de cada sprint — um gráfico que mostra, no eixo horizontal, os sprints, e no eixo vertical, o trabalho restante (em story points, dias ideais ou outra unidade da equipe). Um princípio central do Scrum é a **transparência**: todos devem saber o que os demais estão fazendo, o progresso alcançado e onde a equipe quer chegar — o **Quadro Scrum** (do quadro branco com notas adesivas a um software especializado) torna isso visível para todos.
+
+<Callout type="default">
+**Scrum e XP compartilham a mesma essência com nomes diferentes**
+
+| Scrum | XP |
+|---|---|
+| Gestão | Engenharia |
+| Sprint | Iteration |
+| Sprint planning | Iteration planning |
+| Daily scrum | Stand-up meeting |
+| Retrospective | Reflection |
+
+Isso ajuda a perceber que as duas metodologias resolvem problemas equivalentes com vocabulário próprio — mais uma razão pela qual muitas equipes combinam práticas das duas.
+</Callout>
+
+### OpenUP: agilidade com raízes no Processo Unificado
+
+**OpenUP** segue o Processo Unificado (visto na UA8), mas com uma cultura aberta e enxuta, focada na natureza colaborativa do desenvolvimento — foi criado como projeto de exemplo aplicando as melhores práticas do **Eclipse Process Framework (EPF)**. Na prática, é um conjunto de metodologias ágeis (como Scrum e XP) somado a um pouco da arquitetura do processo unificado.
+
+Quatro princípios centrais do OpenUP: **colaborar** para alinhar interesses e compartilhar conhecimento; **balancear prioridades concorrentes** para maximizar o valor dos stakeholders; **focar na arquitetura**, minimizando riscos e planejando o processo; **envolver os stakeholders** para obter feedback contínuo. O OpenUP se baseia em um ciclo iterativo e incremental, mas com foco em um modelo ágil e enxuto — e traz o conceito de **microincremento**: uma pequena unidade de trabalho de uma única pessoa da equipe, dentro das iterações.
+
+O ciclo de vida OpenUP tem **quatro fases** — as mesmas do Processo Unificado clássico, mas com o foco redirecionado para a agilidade:
+
+1. **Iniciação** — ênfase em análise de negócios e de requisitos, com menor foco em arquitetura/implementação; todos precisam concordar com escopo e objetivo, senão o projeto fica em risco.
+2. **Elaboração** — ênfase na análise arquitetural da solução; a arquitetura precisa ficar concreta e funcional, com riscos mitigados.
+3. **Construção** — ênfase na implementação, com testes e integração; entregas incrementais demonstram funcionalidades aos stakeholders.
+4. **Transição** — ênfase na implantação do release, com foco em teste beta, reconfiguração, treinamento do usuário e conversão de dados legados; a aplicação precisa estar totalmente funcional antes de sair desta fase.
+
+O foco do OpenUP é a **entrega semanal de um protótipo ao cliente**, detectando erros e requisitos distorcidos cedo — quando encontrados, o foco passa a ser corrigir e manter o cronograma. Os papéis do OpenUP incluem: **analista** (entende necessidades do usuário e prioriza requisitos), **arquiteto** (define a arquitetura e toma decisões técnicas), **desenvolvedores**, **gerente do projeto**, **stakeholders** e **testador**.
+
+### Por que uma metodologia ágil falha
+
+As principais causas de falha na adoção de uma metodologia ágil: filosofia/cultura da empresa em conflito com os valores ágeis; falta de suporte gerencial às mudanças; falta de experiência ou treinamento insuficiente no novo processo; boicote ou falta de comprometimento da própria equipe; e falta de reconhecimento de que há espaço — e desejo real — para melhorias.
+
+<Callout type="warning">
+**Práticas Modernas — Processos de Software (OpenUP, XP, Scrum)**
+
+O material trata OpenUP como uma alternativa relevante ao lado de XP e Scrum — hoje sua posição no mercado é bem mais nichada:
+
+- **OpenUP praticamente desapareceu do radar do mercado** fora de contextos acadêmicos e de organizações que já usavam RUP/Processo Unificado — Scrum e Kanban dominam largamente a adoção real de metodologias ágeis hoje.
+- **A combinação de práticas se tornou mais comum que a adoção "pura" de uma metodologia**: é comum ver times que usam a estrutura de eventos do Scrum (sprints, dailies, retrospectivas) combinada com práticas de engenharia do XP (TDD, pair programming, integração contínua) — o "Scrumban" (Scrum + Kanban) também ganhou espaço como híbrido popular.
+- **Ferramentas digitais substituíram o quadro físico do Scrum** quase por completo em times remotos/híbridos (Jira, Azure DevOps, Trello, Linear) — o burndown chart e o quadro Scrum descritos no capítulo hoje são gerados automaticamente por essas ferramentas.
+- **DevOps e entrega contínua (CI/CD)** estenderam a lógica de "releases pequenos e frequentes" do XP para a própria infraestrutura de deploy — um desdobramento que nenhuma das três metodologias descritas aqui previa explicitamente.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **XP tem 5 valores**: Comunicação, Simplicidade, Feedback, Coragem, Respeito — fácil de decorar pela sigla mnemônica "CS-FCR" ou simplesmente pela ordem do capítulo.
+- **Scrum**: Backlog (lista priorizada), Sprint (ciclo/*time box*), Reuniões diárias (3 perguntas fixas), Demos (entrega ao cliente), Burndown chart (progresso visual).
+- **OpenUP tem 4 fases**, as mesmas nomes do Processo Unificado (UA8): Iniciação, Elaboração, Construção, Transição — mas com foco ágil e microincrementos.
+- Tabela Scrum × XP: Sprint = Iteration; Daily Scrum = Stand-up meeting; Retrospective = Reflection — questões de correspondência são comuns.
+- **XP**: testes escritos **antes** do código, cliente like parte da equipe, releases só aceitos com todos os testes passando.
+- Não confundir os **4 princípios do OpenUP** (colaborar, balancear prioridades, focar na arquitetura, envolver stakeholders) com as **4 fases** (iniciação, elaboração, construção, transição) — são duas listas diferentes, ambas cobráveis separadamente.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: Penso, 2016.
+- SOMMERVILLE, I. *Engenharia de Software*. 9. ed. São Paulo: Pearson, 2011.
+- KROLL, P.; KRUCHTEN, P. *The Rational Unified Process Made Easy: A Practitioner's Guide to the RUP*. London: Addison-Wesley Professional, 2003.
+- MEIRA, F. L. *Introdução ao processo unificado aberto*. 2010.

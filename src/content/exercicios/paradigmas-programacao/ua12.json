@@ -1,0 +1,115 @@
+{
+  "ua": 12,
+  "questions": [
+    {
+      "question": "Segundo a UA, a programação funcional e a orientação a objetos devem ser vistas como:",
+      "options": [
+        "Paradigmas mutuamente exclusivos — uma aplicação só pode usar um dos dois.",
+        "Abordagens que podem e devem conviver na mesma aplicação, especialmente em linguagens multiparadigma.",
+        "Duas fases diferentes do mesmo ciclo de vida de software.",
+        "Sinônimos, já que ambas usam o conceito de função."
+      ],
+      "correctIndex": 1,
+      "explanation": "O material é explícito: as duas abordagens não são opostas e podem coexistir, potencializando a aplicação com o melhor de cada paradigma."
+    },
+    {
+      "question": "O que caracteriza uma função de primeira classe (first-class function)?",
+      "options": [
+        "Ser executada apenas dentro do próprio escopo, sem poder ser passada como argumento.",
+        "Poder ser executada em seu escopo, passada como argumento, retornada por outra função ou armazenada em estruturas de dados.",
+        "Ter obrigatoriamente um nome definido pelo desenvolvedor.",
+        "Não poder receber nenhum parâmetro."
+      ],
+      "correctIndex": 1,
+      "explanation": "Todas essas possibilidades juntas (ABELSON; SUSSMAN, 1984) descrevem uma função de primeira classe."
+    },
+    {
+      "question": "O que é uma função de ordem superior (High-order function / HOF), segundo Lott (2015)?",
+      "options": [
+        "Uma função que só pode ser chamada por outras funções de ordem superior.",
+        "Uma função que recebe uma função, retorna uma função, ou recebe e retorna uma função.",
+        "Uma função exclusiva de linguagens fortemente tipadas.",
+        "Uma função que nunca pode ser anônima."
+      ],
+      "correctIndex": 1,
+      "explanation": "Lott (2015) define HOF de forma prática: recebe função como argumento, retorna função, ou ambos."
+    },
+    {
+      "question": "Por que uma HOF depende de a linguagem ter funções de primeira classe?",
+      "options": [
+        "Porque HOFs só existem em pseudocódigo.",
+        "Porque tratar funções como valores (primeira classe) é o que possibilita passá-las e retorná-las como argumento/resultado de outras funções.",
+        "Porque HOF e função de primeira classe são a mesma coisa com nomes diferentes.",
+        "Não há relação nenhuma entre os dois conceitos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Uma HOF só é possível porque a linguagem trata funções como objetos de primeira classe — linguagens sem isso (como C) simulam HOFs com ponteiros de função."
+    },
+    {
+      "question": "Dada a função aninhada `def soma(x, y, z, b): def soma_dois(x1, x2): return x1+x2; return x + y + soma_dois(z, b)`, qual o resultado de `soma(1,2,3,4)`?",
+      "options": [
+        "6",
+        "10",
+        "7",
+        "24"
+      ],
+      "correctIndex": 1,
+      "explanation": "soma_dois(3,4) = 7; x + y + 7 = 1 + 2 + 7 = 10."
+    },
+    {
+      "question": "O que os operadores do módulo `operator` (como `add`, `sub`, `mul`) fazem no exemplo da UA?",
+      "options": [
+        "Substituem expressões lambda equivalentes, deixando o código mais legível sem mudar o comportamento.",
+        "Aumentam a complexidade do código para fins didáticos.",
+        "Só funcionam com listas vazias.",
+        "Impedem o uso de reduce."
+      ],
+      "correctIndex": 0,
+      "explanation": "reduce(add, [1,2,3,4,5]) produz o mesmo resultado de reduce(lambda x,y: x+y, ...), mas com sintaxe mais legível."
+    },
+    {
+      "question": "No exemplo `func = reduce(lambda x, y: x * y, [30,50,100])`, qual o valor de `func`?",
+      "options": [
+        "180",
+        "-120",
+        "150000",
+        "80"
+      ],
+      "correctIndex": 2,
+      "explanation": "30*50=1500, 1500*100=150000 — reduce aplica a multiplicação cumulativamente até restar um único valor."
+    },
+    {
+      "question": "Qual função de ordem superior embutida em Python, segundo o Quadro 1 da UA, ordena os elementos de uma lista?",
+      "options": [
+        "map",
+        "filter",
+        "sorted",
+        "reduce"
+      ],
+      "correctIndex": 2,
+      "explanation": "sorted ordena os elementos de acordo com a instrução declarada; map transforma, filter seleciona, reduce agrega em um único valor."
+    },
+    {
+      "question": "O que significa a analogia do \"cidadão de primeira classe\", usada na UA para explicar funções de primeira classe?",
+      "options": [
+        "Que a função tem prioridade de execução sobre as demais.",
+        "Que, assim como um cidadão livre para ir e vir, a função pode ser qualquer coisa — parâmetro, argumento ou resultado — dentro do código.",
+        "Que a função precisa ser declarada em um arquivo separado.",
+        "Que a função não pode ser reutilizada em outro contexto."
+      ],
+      "correctIndex": 1,
+      "explanation": "A analogia dos EUA sobre \"cidadão de primeira classe\" é usada para explicar que a função pode assumir qualquer papel — parâmetro, argumento, resultado — dentro de um bloco de instruções."
+    },
+    {
+      "question": "Qual das alternativas é um exemplo de função embutida (built-in) citado na UA?",
+      "options": [
+        "soma_dois, criada manualmente dentro de outra função.",
+        "print(), que exibe uma string na tela sem exigir instruções adicionais do desenvolvedor.",
+        "func_2, definida pelo programador em um módulo externo.",
+        "lista_2, uma variável que armazena funções lambda."
+      ],
+      "correctIndex": 1,
+      "explanation": "Funções embutidas já vêm prontas na linguagem — print() é o exemplo mais simples citado; map também é uma HOF embutida clássica."
+    }
+  ]
+}
