@@ -1,0 +1,198 @@
+---
+title: "UA13 — Programação Funcional: Funtores, Funtores Aplicativos e Mônadas"
+subtitle: "Como a teoria das categorias vira ferramenta prática — fmap, <*> e >>= encapsulam valores em “caixas” para mapear, aplicar e encadear computações sem perder a pureza."
+ua: 13
+group: "Paradigma Funcional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua13.m4a" title="Como Mônadas e Funtores blindam seu código" />
+
+### Um degrau acima de map, filter e reduce
+
+As UAs anteriores do paradigma funcional cobriram o cálculo lambda, funções puras e funções de primeira classe. Esta UA sobe um nível de abstração: **funtores**, **funtores aplicativos** e **mônadas** — os três termos em inglês no material (*functors*, *applicative functors*, *monads*) e em português no capítulo. A ideia central continua a mesma (funções matemáticas, imutabilidade, ausência de estado), mas agora o foco é **encapsular valores em um contexto** — uma “caixa” — e transformar o que está dentro sem precisar abrir a caixa na mão.
+
+Linguagens como **Haskell**, **Scala**, **Clojure** e **Erlang** implementam o paradigma de forma mais pura. Python, Ruby e Java 8 (em diante) não são funcionais “de verdade” por admitirem mutabilidade, mas expõem funções de ordem superior o suficiente para aplicar os mesmos blocos. O material didático usa Haskell como língua de trabalho.
+
+Os três conceitos vêm da **teoria das categorias**: categorias são estruturas abstratas com **objetos** e **morfismos** (comportamentos). Oliveira (2017) compara isso a um banco de dados — tabelas são objetos, colunas são comportamentos. Em toda categoria existe pelo menos uma **função identidade**, e a partir dela outras funções são compostas. Funtores respeitam identidade e composição: seus componentes podem ser repassados a outras funções desde que a identidade seja preservada.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/fam_01.webp" alt="Infográfico 'Funtores, Aplicativos e Mônadas: A Ciência dos Contêineres' — funtor mapeia um valor na caixa com fmap; funtor aplicativo aplica uma função que também está na caixa com <*>; mônada encadeia computações com bind (>>=) e notação do; mônada Maybe devolve Just em sucesso e Nothing em falha" caption="Funtores, funtores aplicativos e mônadas: três níveis de “caixa” em Haskell" />
+</SlidesGrid>
+
+<Callout type="warning">
+**Erros no infográfico**
+
+O infográfico gerado para esta UA escreve `finap` no lugar de **`fmap`**, “Biod” no lugar de **Bind**, e “calsas” no lugar de **caixas**. A tabela comparativa no centro do infográfico está correta (`fmap`/`<$>`, `<*>`, `>>=`). No texto desta UA e na prova, use sempre `fmap`.
+</Callout>
+
+### Funtores: tipos que podem ser mapeados
+
+Um **funtor** é uma *typeclass* com a função `fmap`, que aplica uma função ao valor **dentro** do contêiner e devolve um contêiner do mesmo tipo:
+
+```haskell
+fmap :: (Functor f) => (a -> b) -> f a -> f b
+```
+
+Lendo a assinatura da esquerda para a direita: `fmap` recebe uma função `a -> b` e um valor `a` já encapsulado em `f`; o resultado é um `b` encapsulado no mesmo `f`. Listas, `Maybe` e `IO` são funtores em Haskell.
+
+O operador infixo `<$>` é só um apelido de `fmap` — o material destaca que essa forma aparece o tempo todo em funtores aplicativos:
+
+```haskell
+(2*) <$> (minha_funcao 50 5)   -- Just 20
+```
+
+#### Funtor Maybe
+
+`Maybe` modela uma computação que **pode ou não** produzir um valor. Os construtores são `Just` (deu certo) e `Nothing` (não há valor — divisão por zero, lista vazia, busca sem resultado):
+
+```haskell
+minha_funcao a 0 = Nothing
+minha_funcao a b = Just (a / b)
+
+fmap (2*) (minha_funcao 2 0)   -- Nothing
+(2*) <$> (minha_funcao 50 5)   -- Just 20
+```
+
+O ganho prático: a falha fica **dentro da caixa**. Em vez de um crash que se propaga, o `Nothing` atravessa o `fmap` sem executar a transformação — erros em cascata diminuem.
+
+<Callout type="default">
+**Desafio da UA — somar feltro só em um item da lista**
+
+A artesã tinha 5 metros de feltro azul e recebeu mais 4. A lista de estoque é `[1,2,3,4,5,6,7]`; só o item de valor `5` deve receber `+4`. Como lista é funtor, `fmap` (ou `<$>`) resolve sem abrir a lista “na mão”:
+
+```haskell
+(\x -> if x == 5 then x + 4 else x) <$> [1,2,3,4,5,6,7]
+-- [1,2,3,4,9,6,7]
+```
+
+`(+4) <$> [1,2,3,4,5,6,7]` **não** serve — somaria 4 em *todos* os itens. O funtor dá o mapeamento; a função passada a `fmap` é que decide *o que* acontece com cada valor.
+</Callout>
+
+### Funtores aplicativos: a função também está na caixa
+
+Um funtor comum aplica uma função “solta” a um valor encapsulado. O **funtor aplicativo** sobe um degrau: a **própria função** também está encapsulada. A *typeclass* `Applicative` (módulo `Control.Applicative`) exige um `Functor` e define dois operadores:
+
+```haskell
+class Functor f => Applicative f where
+  pure  :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+```
+
+- `pure` coloca um valor comum dentro da caixa (`pure x = Just x` no caso de `Maybe`).
+- `<*>` aplica uma função **já encapsulada** a um valor **já encapsulado** e devolve outro valor encapsulado.
+
+Por isso o material resume: funtores mapeiam uma função; funtores aplicativos mapeiam funções **usando funções**. A hierarquia usual é **funtor ⊂ aplicativo ⊂ mônada** — o aplicativo tem mais recursos que o funtor e menos que a mônada.
+
+Instância de `Maybe` como aplicativo (Paterson, 2012; Capriotti e Kaposi, 2014):
+
+```haskell
+instance Applicative Maybe where
+  pure x                    = Just x
+  Nothing <*> _             = Nothing
+  (Just f) <*> something    = fmap f something
+```
+
+Se qualquer um dos lados for `Nothing`, o resultado é `Nothing`. Se ambos forem `Just`, a função de dentro é mapeada sobre o valor de dentro. Esse é o mesmo “curto-circuito” do funtor `Maybe`, agora com funções de **mais de um argumento** — o caso que `fmap` sozinho não cobre bem, porque `fmap` espera `a -> b`, não `a -> b -> c`.
+
+O capítulo ilustra entrada de texto com notação `do` e a mônada `IO`. Pedagogicamente isso já é **mônada**, não aplicativo: `do` desaçucara `>>=`. O aplicativo entra quando você precisa combinar **várias caixas independentes** (vários `Maybe`, vários `IO`) sem decidir a próxima ação com base no valor anterior — isso é o que `<*>` faz; `>>=` faz o encadeamento *dependente*.
+
+### Mônadas: encadear computações com contexto
+
+Haskell trata algebricamente o conceito de **monoide**: uma operação de combinação com elemento identidade que **não altera** o resultado — `1 + 0 = 1`, `[] ++ [1,2,3] = [1,2,3]`. A **mônada** também vem da teoria das categorias: um funtor mais pelo menos duas transformações naturais, usado para representar computações com **efeitos colaterais** (ler arquivo, pedir input, falhar) sem “vazar” o efeito para o resto do código puro.
+
+A analogia da **caixinha**: o número `2` fora da caixa é só `2`; dentro da caixa ele pode carregar contexto (deu certo? falhou? veio do teclado?). O valor dentro da caixa é o **valor monádico**; a caixa é a mônada. O acesso ao conteúdo passa por operações da *typeclass* `Monad` (`Control.Monad`):
+
+| Peça | Papel |
+|---|---|
+| `return` | coloca um valor comum na caixa (`return 10 :: [Int]` produz `[10]`) — analogia do livro: o livro entra na caixa |
+| `>>=` (bind) | tira o valor da caixa, aplica uma função que **já devolve outra caixa do mesmo tipo**, e achata o resultado |
+| `do` | açúcar sintático para `>>=`, no estilo imperativo linha a linha |
+
+Bind só devolve o mesmo construtor de origem: um `Maybe Just` encadeado continua `Maybe` (outro `Just` ou `Nothing`) — nunca “salta” para lista ou `IO`.
+
+#### Notação `do`
+
+```haskell
+main :: IO ()
+main = do
+    putStrLn "Hello world"
+    putStrLn "Escrevendo mais de uma linha"
+```
+
+Isso é equivalente a encadear `putStrLn "Hello world" >> putStrLn "..."`. O `do` existe para o programador acostumado ao estilo imperativo não precisar ler `>>=` o tempo todo.
+
+#### Mônada para listas
+
+`map` transforma cada elemento; a mônada de lista **extrai todos os valores** e devolve uma **nova lista** (mesmo tipo), que pode alimentar o próximo passo:
+
+```haskell
+[5,6] >>= \x -> [x + 1]
+-- [6,7]
+
+[10,50,60,100] >>= \x -> [x*x + x]
+-- [110, 2550, 3660, 10100]
+```
+
+O segundo exemplo cai em exercício da UA: `x*x + x` em cada item, resultado único em uma lista nova.
+
+#### Mônada `IO`
+
+`IO` é a mônada de entrada e saída — o “Hello World” de Haskell só existe porque `putStrLn` vive em `IO ()`. Compilar pelo GHC:
+
+```bash
+ghc index.hs -o index
+./index
+```
+
+Além de `putStrLn` e `print` (saída), `getLine` e `readLn` (entrada) também são ações `IO`. A função `main` é o ponto de partida que o compilador procura.
+
+### Os três operadores lado a lado
+
+| Conceito | Operador principal | O que faz |
+|---|---|---|
+| Funtor | `fmap` ou `<$>` | aplica uma função *solta* a um valor encapsulado |
+| Funtor aplicativo | `<*>` (e `pure`) | aplica uma função *já encapsulada* a um valor encapsulado |
+| Mônada | `>>=` (bind), `return`, `do` | encadeia computações que **devolvem** novas caixas do mesmo tipo |
+
+`Maybe` aparece nos três papéis: como funtor (`fmap` sobre `Just`/`Nothing`), como aplicativo (`<*>` curto-circuitando `Nothing`) e como mônada (encadear buscas/divisões que podem falhar). `IO` é o caso clássico de mônada com efeito; listas são o caso clássico de mônada que “ramifica” valores.
+
+<Callout type="warning">
+**Práticas Modernas — Funtores, aplicativos e mônadas**
+
+O capítulo é de 2019 e ensina o vocabulário certo (Haskell, teoria das categorias), mas o dia a dia de 2026 usa os mesmos conceitos com outros nomes:
+
+- **Você já usa mônadas sem chamar de mônada.** `Optional` em Java, `Option`/`Result` em Rust, `Maybe`/`Either` em Haskell, `Promise`/`async` em JavaScript e `Task`/`async` em C# são caixas que encadeiam sucesso e falha. `async/await` é açúcar de `>>=`, do mesmo jeito que `do` é açúcar de `>>=`.
+- **A hierarquia Functor ⊂ Applicative ⊂ Monad é o mapa mental útil** — o capítulo chega nela, mas ilustra aplicativo com um exemplo de `do`/`IO` (que já é mônada). Na prática: use `fmap`/`map` para transformar; `<*>` / `liftA2` / `zip` quando várias caixas são **independentes**; `>>=` / `flatMap` / `and_then` quando o próximo passo **depende** do valor anterior.
+- **Bibliotecas, não só Haskell.** `fp-ts` e Effect em TypeScript, Arrow em Kotlin, Cats/ZIO em Scala e o próprio `itertools`/`functools` em Python reexportam esse vocabulário. OCaml (citado no “Saiba mais” da UA) continua sendo a outra linguagem acadêmica clássica com funtores de módulo — diferente do funtor de *typeclass* do Haskell, mas a mesma origem categorial.
+- **O infográfico desta UA tem erros de grafia** (`finap`, “Biod”) — a tabela central está certa; ignore os rótulos quebrados nas ilustrações.
+- A apresentação da UA escreve “Scalla” e “Closure”: os nomes corretos são **Scala** e **Clojure**.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Funtor** = tipo mapeável via `fmap` / `<$>`. Assinatura cobrada: `(a -> b) -> f a -> f b`.
+- **Aplicativo** = `pure` + `<*>`. A função **e** o valor estão encapsulados. Hierarquia: funtor ⊂ aplicativo ⊂ mônada.
+- **Mônada** = `return` (entra na caixa) + `>>=` (bind: sai, transforma, volta para uma caixa do **mesmo** tipo). `do` é só `>>=` com cara de código imperativo.
+- **`Maybe`**: `Just` = deu certo, `Nothing` = falha; `fmap` sobre `Nothing` continua `Nothing` (não crasha). Serve para os três níveis.
+- **Monoide** (exercício 1 da UA): `0` na soma e `[]` na concatenação — operação com identidade que não altera o resultado. Não confundir monoide com mônada.
+- **Lista como mônada:** `[10,50,60,100] >>= \x -> [x*x + x]` = `[110, 2550, 3660, 10100]`.
+- **`pure` encapsula; `fmap` mapeia.** Questão da UA que fala em “função responsável pelo encapsulamento” aponta para `pure`, não para `fmap`.
+- Encadeamento `IO`: `getLine >>= putStrLn` (bind), não seta `->` nem `print` no lugar de `putStrLn` se o enunciado pede ecoar a string lida.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- LEITE, M. C. D. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- OLIVEIRA, A. G. *Haskell: uma introdução à programação funcional*. São Paulo: Casa do Código, 2017.
+- CHURCH, A. *The calculi of lambda conversion*. Princeton: Princeton University Press, 1941.
+- PATERSON, R. Constructing Applicative Functors. *Mathematics of Program Construction*, 2012.
+- CAPRIOTTI, P.; KAPOSI, A. Free Applicative Functors. *MSFP*, 2014.
+- SNOYMAN, M. *Developing web applications with Haskell and Yesod*. Sebastopol: O’Reilly, 2012.
+- SPIVAK, D. I. *Category theory for the sciences*. Cambridge: MIT Press, 2014.
+- ARAÚJO, S. L.; ACIÓLY, B. M. *Introdução ao Haskell*. Vitória da Conquista: UESB, 2008.
+- DU BOIS, A. R. *Programação funcional com a linguagem Haskell*. Heriot-Watt University, 2008.

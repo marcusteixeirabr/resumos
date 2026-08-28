@@ -1,0 +1,115 @@
+{
+  "ua": 13,
+  "questions": [
+    {
+      "question": "O que caracteriza um funtor (functor) no material desta UA?",
+      "options": [
+        "Um tipo que só pode armazenar números inteiros.",
+        "Um tipo que pode ser mapeado — em Haskell, uma typeclass com fmap, que aplica uma função ao valor dentro do contêiner.",
+        "Um sinônimo de mônada; os dois termos descrevem a mesma typeclass.",
+        "Uma função que obrigatoriamente produz efeitos colaterais."
+      ],
+      "correctIndex": 1,
+      "explanation": "Funtores são tipos mapeáveis. A typeclass Functor oferece fmap :: (a -> b) -> f a -> f b, aplicando uma função ao conteúdo da 'caixa' e devolvendo uma caixa do mesmo tipo."
+    },
+    {
+      "question": "Qual é a assinatura de fmap em Haskell, segundo a UA?",
+      "options": [
+        "fmap :: a -> b",
+        "fmap :: (Monad m) => m a -> (a -> m b) -> m b",
+        "fmap :: (Functor f) => (a -> b) -> f a -> f b",
+        "fmap :: IO () -> String"
+      ],
+      "correctIndex": 2,
+      "explanation": "fmap recebe uma função a -> b e um valor a já encapsulado em f, e devolve um b encapsulado no mesmo f."
+    },
+    {
+      "question": "No funtor Maybe, o que acontece ao aplicar fmap (2*) sobre uma divisão por zero modelada como Nothing?",
+      "options": [
+        "O programa lança uma exceção e encerra.",
+        "O resultado é Just 0.",
+        "O resultado continua Nothing — a falha permanece na caixa e não se propaga como crash.",
+        "fmap converte automaticamente Nothing em Just 2."
+      ],
+      "correctIndex": 2,
+      "explanation": "fmap sobre Nothing devolve Nothing. Esse é o ganho prático do Maybe: a falha fica encapsulada e evita erros em cascata."
+    },
+    {
+      "question": "Qual operador infixo é apelido de fmap e aparece com frequência em funtores aplicativos?",
+      "options": [
+        ">>=",
+        "<*>",
+        "<$>",
+        ">>"
+      ],
+      "correctIndex": 2,
+      "explanation": "<$> é fmap em forma infixa. <*> é o operador do aplicativo; >>= é o bind da mônada."
+    },
+    {
+      "question": "O que distingue um funtor aplicativo de um funtor comum?",
+      "options": [
+        "O aplicativo aplica uma função já encapsulada a um valor também encapsulado (pure + <*>); o funtor aplica uma função 'solta' via fmap.",
+        "O aplicativo não pode ser usado com Maybe.",
+        "Não há diferença — são dois nomes para fmap.",
+        "O aplicativo só existe em linguagens imperativas."
+      ],
+      "correctIndex": 0,
+      "explanation": "Applicative exige Functor e acrescenta pure (colocar na caixa) e <*> (função encapsulada aplicada a valor encapsulado). É o degrau intermediário entre funtor e mônada."
+    },
+    {
+      "question": "Qual hierarquia o material adota entre os três conceitos?",
+      "options": [
+        "Mônada ⊂ aplicativo ⊂ funtor (a mônada é a mais pobre).",
+        "Funtor ⊂ aplicativo ⊂ mônada — o aplicativo tem mais recursos que o funtor e menos que a mônada.",
+        "Os três são independentes e nunca se combinam.",
+        "Aplicativo ⊂ funtor ⊂ mônada."
+      ],
+      "correctIndex": 1,
+      "explanation": "O capítulo descreve o funtor aplicativo como intermediário: mais recursos que um funtor, menos que uma mônada. Em Haskell, Monad exige Applicative, que exige Functor."
+    },
+    {
+      "question": "O que o operador bind (>>=) faz em uma mônada?",
+      "options": [
+        "Apenas imprime o valor na tela, como putStrLn.",
+        "Recebe um valor monádico, aplica uma função que já devolve outra caixa do mesmo tipo e achata o resultado.",
+        "Converte qualquer mônada em uma lista.",
+        "É um apelido de fmap e não altera o tipo do contêiner além de mapear o valor."
+      ],
+      "correctIndex": 1,
+      "explanation": "Bind extrai o valor, aplica uma função a -> m b e devolve uma mônada do mesmo tipo (Just continua Maybe; lista continua lista). É o que permite encadear computações com contexto."
+    },
+    {
+      "question": "Qual o resultado de [10,50,60,100] >>= \\x -> [x*x + x] ?",
+      "options": [
+        "[100, 2500, 3600, 10000]",
+        "[20, 100, 120, 200]",
+        "[110, 2550, 3660, 10100]",
+        "[10, 50, 60, 100]"
+      ],
+      "correctIndex": 2,
+      "explanation": "Para cada x a função devolve [x² + x]: 10*10+10=110, 50*50+50=2550, 60*60+60=3660, 100*100+100=10100. A mônada de lista concatena essas listas em uma só."
+    },
+    {
+      "question": "As expressões 0+10 == 10+0 == 10 e [] ++ [1,2,3] == [1,2,3] ++ [] ilustram qual conceito da teoria das categorias usado no capítulo?",
+      "options": [
+        "Bind",
+        "Funtor aplicativo",
+        "Monoide — operação com elemento identidade que não altera o resultado",
+        "Mônada IO"
+      ],
+      "correctIndex": 2,
+      "explanation": "O capítulo introduz a mônada a partir do monoide: soma com 0 e concatenação com lista vazia não mudam o valor. Monoide ≠ mônada — a questão da UA cobra exatamente essa distinção."
+    },
+    {
+      "question": "Qual linha implementa corretamente o encadeamento monádico que lê uma string e a imprime, dado main :: IO () ?",
+      "options": [
+        "main = getLine -> putStrLn",
+        "main = getLine >>= putStrLn",
+        "main = bind >>= putStrLn",
+        "main = print >>= putStrLn"
+      ],
+      "correctIndex": 1,
+      "explanation": "getLine devolve IO String; putStrLn espera String e devolve IO (). O bind (>>=) encadeia as duas ações IO. A seta -> não é o operador monádico; 'bind' não é uma ação; print não é o que o enunciado pede para ecoar a linha lida."
+    }
+  ]
+}

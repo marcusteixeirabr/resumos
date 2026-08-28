@@ -1,0 +1,126 @@
+---
+title: "UA13 — Manutenção de Software"
+subtitle: "Por que manter custa mais do que construir: os tipos de manutenção, a gravidade dos defeitos, o legado sem dono e a manutenibilidade como atributo de qualidade — não como etapa residual."
+ua: 13
+group: "Manutenção"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua13.m4a" title="Por que manter software custa tão caro" />
+
+### Manutenção não é o “depois” — é o resto da vida do sistema
+
+A palavra vem do latim *mantenus tenere*: **manter aquilo que se tem**. Na engenharia de software, a manutenção é a fase que começa quando o sistema já está operacional e precisa de reparos e modificações para continuar atendendo requisitos novos. Um software entregue e abandonado tende a ser pouco usado ou simplesmente inutilizado — atualizações constantes é o que o mantém “vivo”.
+
+O desenvolvimento **não termina na entrega**. Organizações investem fortunas em sistemas que viram ativos críticos de negócio; deixar de mudar esses sistemas é deixar o ativo perder valor. Sommerville (2011) registra o fato clássico: a maioria das grandes empresas **gasta mais mantendo sistemas existentes do que desenvolvendo sistemas novos**. Pressman e Maxim (2016) traduzem isso em número: **60% a 70%** de todos os recursos de software podem ir para manutenção.
+
+Toda mudança tem custo. Em alguns casos é mais barato **escrever outro sistema** do que empilhar alterações no atual — a equipe de manutenção é quem avalia o custo-benefício, caso a caso. Historicamente havia uma parede entre “desenvolvimento” e “manutenção”; Sommerville trata essa distinção como irrelevante: poucos sistemas são realmente novos, e os dois processos são **contínuos**. O ciclo que ele desenha (Figura 1 do capítulo) é simples: sistema em operação → processo de identificação de mudanças → propostas de mudança → processo de evolução (aceito ou não, à luz do custo-benefício).
+
+O ciclo de vida genérico termina em **operação e manutenção**, depois de requisitos, projeto, implementação/teste de unidades e integração/teste de sistema. Independente da finalidade do produto, em algum momento ele pede atualização de funções ou adaptação de configuração.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdms_01.webp" alt="Infográfico 'Guia Essencial: Manutenção de Software' — quatro tipos (corretiva, adaptativa, evolutiva, preventiva), 60 a 70% dos recursos em manutenção, manutenibilidade, gravidade de defeitos (crítico/importante, normal/secundário, trivial) e o desafio do legado" caption="Manutenção de software: tipos, custo, gravidade de defeitos e legado" />
+</SlidesGrid>
+
+### Quatro tipos de manutenção (e a lista de três do livro)
+
+O infográfico e os exercícios da UA trabalham **quatro tipos**. Schach (2010), no capítulo, lista **três razões** para modificar um produto. As duas listas se encaixam — a quarta categoria (preventiva) aparece no material de aula e na norma ISO/IEC 14764, não no recorte de Schach.
+
+| Tipo | O que faz | De onde vem o pedido |
+|---|---|---|
+| **Corretiva** | Corrige uma falha (análise, projeto, código, documentação). Sommerville: o defeito em geral é grave o bastante para impedir o funcionamento normal. | Relatório de defeito do usuário |
+| **Adaptativa** | Responde a mudança no **ambiente** — novo SO, hardware, compilador, legislação tributária, CEP de 9 dígitos (exemplo clássico de 1981). | Imposta por um **agente externo**, não escolhida pelo cliente |
+| **Evolutiva** (Schach: **aperfeiçoamento**) | Funcionalidade extra, mais desempenho, mais facilidade de manutenção. | Cliente / negócio |
+| **Preventiva** | Antecipa problemas futuros antes que virem incidente. | Equipe / qualidade |
+
+No infográfico, corretiva e adaptativa aparecem juntas (“conserta ou se adequa ao ambiente”); evolutiva e preventiva, juntas (“cresce ou se antecipa”). Para a prova, saiba nomear os **quatro** e também reconhecer o vocabulário de Schach: *manutenção de aperfeiçoamento* = evolutiva.
+
+<Callout type="default">
+**Adaptativa não é “o cliente pediu um extra”**
+
+Se o governo muda a alíquota e o sistema de imposto precisa acompanhar, isso é **adaptativa** — o cliente não escolheu a mudança, o ambiente impôs. Se o cliente pede um relatório novo ou que a tela abra mais rápido, isso é **evolutiva/aperfeiçoamento**. Se o cálculo do relatório já entregue está errado, é **corretiva**.
+</Callout>
+
+### O trabalho ingrato da manutenção pós-entrega
+
+Schach (2010) e Sommerville (2011) descrevem o lado humano, que cai em questão discursiva com facilidade:
+
+- O usuário **já está insatisfeito** — se estivesse contente, não haveria chamado.
+- A falha muitas vezes foi causada por quem **desenvolveu**, não por quem está consertando.
+- O código pode estar malfeito, o que acumula frustração.
+- Muitos desenvolvedores tratam desenvolvimento como trabalho “glamouroso” e manutenção como trabalho escravo, coisa de novato — a analogia do capítulo é o **atendimento pós-venda**.
+
+Na prática o mantenedor precisa de **quase todas as habilidades técnicas** de um profissional de software, com ênfase em depuração acima da média: o defeito pode estar em qualquer ponto, inclusive nos artefatos de análise ou de projeto, não só no código.
+
+### Problemas que explodem o custo
+
+Pressman e Maxim (2016) descrevem a fila que não para de crescer: correções, adaptações e melhorias competindo pelos mesmos recursos, até a empresa gastar mais mantendo do que criando. Osborne e Chikofsky (1990, *apud* Pressman) apontam a causa estrutural: sistemas de **10 a 15 anos**, escritos quando tamanho do programa e espaço em disco eram a preocupação principal, depois **migrados** de plataforma em plataforma **sem atenção à arquitetura**. O resultado é estrutura mal projetada, mal codificada, mal documentada — e ainda em produção.
+
+Outras causas que o capítulo empilha:
+
+- **Rotatividade**: a equipe original saiu; gerações seguintes modificaram o sistema e também saíram; ninguém na casa tem conhecimento direto do legado.
+- **Documentação** ruim ou inexistente — na hora de manter, ela é a base; se não descreve o mínimo, o mantenedor trabalha no escuro.
+- **Métricas e escolhas de projeto** feitas na construção voltam como dívida: o sistema final é fruto dessas escolhas, e a manutenção herda todas.
+
+A lição de fechamento do capítulo: a preparação **antes** do ciclo de vida (métodos, ferramentas, equipe, documentação) determina a usabilidade **depois**. Manutenção exige a mesma atenção das demais etapas — é ela que garante o tempo de vida útil.
+
+### Relatório de defeitos e gravidade
+
+Se o usuário acha que o produto não se comporta como o **manual** promete, preenche um **relatório de defeitos**. Nem sempre o código está errado:
+
+1. o usuário interpretou mal o manual ou está usando o produto incorretamente;
+2. o manual é que está mal escrito — o código está certo;
+3. há imperfeição no código (o caso mais comum).
+
+Antes de mudar qualquer coisa, o programador de manutenção localiza a imperfeição usando **o relatório + o código-fonte, nada mais**. O relatório precisa ter informação suficiente para reproduzir o problema, e o mantenedor classifica a **gravidade**. Schach lista cinco categorias; o infográfico agrupa as duas primeiras e as duas do meio:
+
+| Gravidade (Schach) | No infográfico | Impacto |
+|---|---|---|
+| Crítico | Crítico / Importante | Impede o funcionamento normal; reparo imediato |
+| Importante | Crítico / Importante | (agrupado com crítico no infográfico) |
+| Normal | Normal / Secundário | Afeta funções específicas, uso parcial |
+| Secundário | Normal / Secundário | (agrupado com normal no infográfico) |
+| Trivial | Trivial | Estético ou de menor importância funcional |
+
+Para a prova, as cinco categorias de Schach e o agrupamento do infográfico são as duas formas em que a tabela pode aparecer.
+
+### Manutenibilidade
+
+**Manutenibilidade** é a facilidade com que o software pode ser **entendido, corrigido, adaptado e/ou melhorado**. Não é um tipo de manutenção — é o atributo de qualidade que torna qualquer um dos quatro tipos mais barato. O infográfico resume: “manutenibilidade é a chave”. Documentação, arquitetura e código legível são o que a produzem; legado sem dono e sem desenho é o que a destrói.
+
+<Callout type="warning">
+**Práticas Modernas — Manutenção de Software**
+
+O capítulo (Morais / SAGAH, citando Sommerville 2011, Pressman 2016 e Schach 2010) ainda trata manutenção como fase *pós-entrega* separada do desenvolvimento. O mercado moveu esse muro:
+
+- **ISO/IEC 14764** (revisão 2022) é a norma de manutenção: as quatro categorias corretiva, adaptativa, perfective (evolutiva) e preventiva. O infográfico da UA já usa essa lista de quatro; o recorte de Schach no capítulo usa três (aperfeiçoamento no lugar de evolutiva, sem preventiva).
+- **DevOps, SRE e “you build it, you run it”** diluíram a parede desenvolvimento × manutenção. Quem entrega o serviço também opera: observabilidade, SLOs, *on-call* e *incident response* são manutenção contínua, não um time “de legado” no porão.
+- **Os 60–70%** de Pressman continuam sendo o número cobrado em prova e ainda aparecem em estudos de TCO, mas o desenho moderno empurra parte dessa conta para *platform engineering*, automação de deploy e pagamento de **dívida técnica** (termo de Ward Cunningham, ausente no capítulo) em sprints regulares — não só em projetos de “manutenção”.
+- **Legado** hoje se ataca com padrão *strangler fig* (substituir de dentro para fora), testes de caracterização, feature flags e migração incremental — não com um *big bang* de reescrita, que o próprio capítulo já alerta ser às vezes mais barato, às vezes suicida.
+- Manutenibilidade entrou como característica de qualidade em **ISO/IEC 25010** (analisabilidade, modificabilidade, testabilidade, modularidade). Escrever documentação como código (`README`, ADRs, *runbooks*) é o antídoto concreto para o cenário de rotatividade que Pressman descreve.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Definição cobrada: manutenção = **melhorar/otimizar** um sistema já desenvolvido **e** reparar defeitos — não é a fase de testes, nem a de implementação, nem o levantamento de requisitos.
+- Número: **60% a 70%** dos recursos em manutenção (Pressman e Maxim). Motivo de planejar manutenção desde o início: ela costuma **custar mais** que o desenvolvimento original.
+- Quatro tipos no infográfico/exercícios: corretiva, adaptativa, evolutiva, preventiva. Schach no capítulo: corretiva, aperfeiçoamento, adaptativa. Aperfeiçoamento ≈ evolutiva.
+- Cálculo errado depois da entrega = **corretiva**. Mudança de SO/lei = **adaptativa**. Feature nova = **evolutiva**. Antecipar falha = **preventiva**.
+- **Manutenibilidade** ≠ tipo de manutenção. É a facilidade de entender, corrigir, adaptar e melhorar.
+- Causa raiz dos problemas de manutenção, no exercício da UA: **deficiências no planejamento e no desenvolvimento** originais (não “falta de testes unitários”, não “documentação vasta”).
+- Relatório de defeitos: preenchido pelo usuário; o mantenedor trabalha com relatório + código-fonte; a falha pode estar no **manual**, não no código.
+- Gravidade Schach: crítico, importante, normal, secundário, trivial.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MORAIS, I. S. de. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássicos e orientado a objetos*. 7. ed. Porto Alegre: AMGH, 2010.
+- OSBORNE, W. M.; CHIKOFSKY, E. J. Fitting pieces to the maintenance puzzle. *IEEE Software*, jan. 1990.
+- PFLEEGER, S. L. *Engenharia de software: teoria e prática*. 2. ed. São Paulo: Prentice Hall, 2004.

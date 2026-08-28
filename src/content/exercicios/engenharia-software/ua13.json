@@ -1,0 +1,115 @@
+{
+  "ua": 13,
+  "questions": [
+    {
+      "question": "Qual descrição define melhor a manutenção de software, segundo a UA?",
+      "options": [
+        "É o processo de melhoria e otimização de um sistema já desenvolvido, e também o reparo dos seus defeitos.",
+        "É a etapa em que o software é desenvolvido pelos programadores.",
+        "É o processo em que o software é testado em busca de falhas, exclusivo da fase de testes.",
+        "É a fase de planejamento do projeto realizada pelo gerente."
+      ],
+      "correctIndex": 0,
+      "explanation": "Manutenção cobre aperfeiçoar/otimizar o sistema já entregue e reparar defeitos. Não se confunde com implementação, testes ou planejamento."
+    },
+    {
+      "question": "Segundo Pressman e Maxim, que fração dos recursos de software grandes empresas costumam gastar com manutenção?",
+      "options": [
+        "Menos de 10%, porque manter é mais barato do que construir.",
+        "Exatamente 50%, dividido igualmente com o desenvolvimento de sistemas novos.",
+        "De 60% a 70% de todos os recursos.",
+        "100% — depois da entrega não se desenvolve mais nada."
+      ],
+      "correctIndex": 2,
+      "explanation": "O número clássico cobrado na UA é 60% a 70%. Por isso a manutenção precisa ser prevista no planejamento: em geral custa mais do que o desenvolvimento original."
+    },
+    {
+      "question": "Um cálculo do relatório de vendas, já em produção há dois meses, está errado e o cliente pede o ajuste. Que tipo de manutenção é esse?",
+      "options": [
+        "Evolutiva",
+        "Corretiva",
+        "Adaptativa",
+        "Preventiva"
+      ],
+      "correctIndex": 1,
+      "explanation": "Há uma falha residual no produto entregue: manutenção corretiva. Evolutiva seria feature nova; adaptativa seria mudança de ambiente; preventiva anteciparia uma falha ainda não ocorrida."
+    },
+    {
+      "question": "A legislação tributária muda e o sistema de imposto de renda precisa acompanhar. Segundo Schach, isso é manutenção de que tipo?",
+      "options": [
+        "Corretiva — o código original estava errado.",
+        "Evolutiva — o cliente pediu uma funcionalidade extra.",
+        "Adaptativa — a mudança é imposta por um agente externo (o ambiente/legislação), não escolhida pelo cliente.",
+        "Preventiva — o time decidiu refatorar por conta própria."
+      ],
+      "correctIndex": 2,
+      "explanation": "Adaptativa responde a mudança no ambiente (SO, hardware, lei, CEP). O cliente não solicita: um agente externo impõe."
+    },
+    {
+      "question": "Schach lista três razões para modificar um produto; o infográfico da UA trabalha quatro tipos. Qual mapeamento está correto?",
+      "options": [
+        "Aperfeiçoamento (Schach) corresponde à evolutiva do infográfico; a preventiva é a quarta categoria, ausente no recorte de Schach.",
+        "Corretiva, adaptativa e evolutiva são sinônimos.",
+        "Preventiva é o nome que Schach dá à corretiva.",
+        "Schach já lista os quatro tipos com os mesmos nomes do infográfico."
+      ],
+      "correctIndex": 0,
+      "explanation": "Schach: corretiva, aperfeiçoamento, adaptativa. Infográfico/exercícios (e ISO 14764): corretiva, adaptativa, evolutiva, preventiva. Aperfeiçoamento ≈ evolutiva."
+    },
+    {
+      "question": "O que é manutenibilidade?",
+      "options": [
+        "Um dos quatro tipos de manutenção, sinônimo de corretiva.",
+        "O conjunto de técnicas de implementação de software.",
+        "A facilidade com que o software pode ser entendido, corrigido, adaptado e/ou melhorado.",
+        "A possibilidade teórica de um software receber manutenção, independente de documentação ou código."
+      ],
+      "correctIndex": 2,
+      "explanation": "Manutenibilidade é atributo de qualidade, não um tipo de manutenção. O infográfico resume: é a chave para qualquer um dos quatro tipos sair mais barato."
+    },
+    {
+      "question": "Qual é a principal causa dos problemas de manutenção, segundo o exercício da UA?",
+      "options": [
+        "O uso de testes unitários.",
+        "Implementações bem estruturadas, com padrões de projeto.",
+        "A existência de documentação vasta e bem elaborada.",
+        "Deficiências na maneira como o software foi planejado e desenvolvido."
+      ],
+      "correctIndex": 3,
+      "explanation": "A UA aponta o planejamento/desenvolvimento originais deficientes (legado mal arquitetado, mal documentado, migrado sem desenho) como causa raiz — não o excesso de testes ou de documentação."
+    },
+    {
+      "question": "Por que a manutenção deve ser prevista já no planejamento da criação do software?",
+      "options": [
+        "Porque a manutenção é sempre mais rápida do que a implementação.",
+        "Para que o software seja inutilizado antes do previsto.",
+        "Porque a manutenção de software geralmente tem custo mais elevado do que o próprio desenvolvimento.",
+        "Para garantir que defeitos e falhas nunca sejam encontrados."
+      ],
+      "correctIndex": 2,
+      "explanation": "Sommerville e Pressman: o custo de manter supera o de construir. Planejar manutenibilidade (documentação, arquitetura, equipe) desde o início é o que segura essa conta."
+    },
+    {
+      "question": "No relatório de defeitos, o programador de manutenção deve determinar a falha usando:",
+      "options": [
+        "Apenas a memória da equipe original, sem olhar o código.",
+        "O relatório preenchido pelo usuário e o código-fonte — nada mais; a falha pode estar no manual, não no código.",
+        "Somente os artefatos de marketing do produto.",
+        "Uma reescrita completa do sistema, sempre, antes de inspecionar o defeito."
+      ],
+      "correctIndex": 1,
+      "explanation": "Schach: relatório + código-fonte. O usuário pode ter lido o manual errado, o manual pode estar mal escrito, ou o código realmente falha. Classificar gravidade (crítico a trivial) vem em seguida."
+    },
+    {
+      "question": "Qual combinação descreve o 'desafio do legado' apresentado na UA?",
+      "options": [
+        "Sistemas novos, com a equipe original ainda na empresa e documentação completa.",
+        "Sistemas de 10 a 15 anos, migrados de plataforma sem atenção à arquitetura, com rotatividade de profissionais e documentação deficiente.",
+        "Apenas a ausência de testes de unidade em projetos ágeis.",
+        "O fato de a manutenção ser mais glamourosa do que o desenvolvimento."
+      ],
+      "correctIndex": 1,
+      "explanation": "Osborne/Chikofsky apud Pressman: idade, migrações sem arquitetura, código e documentação ruins. Pressman acrescenta a rotatividade: ninguém na casa conhece o sistema. O infográfico chama isso de desafio do legado."
+    }
+  ]
+}
