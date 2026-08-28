@@ -1,0 +1,115 @@
+{
+  "ua": 14,
+  "questions": [
+    {
+      "question": "O que caracteriza fundamentalmente a técnica de currying na programação funcional?",
+      "options": [
+        "A transformação de uma função de n parâmetros em uma cadeia de n funções que aceitam apenas um único parâmetro cada.",
+        "A execução paralela de funções assíncronas utilizando múltiplas threads do sistema operacional.",
+        "A conversão obrigatória de todos os tipos primitivos em tipos genéricos dentro de uma classe.",
+        "A unificação de várias funções de aridade 1 em uma única função que recebe todos os parâmetros em uma tupla."
+      ],
+      "correctIndex": 0,
+      "explanation": "Currying consiste em decompor uma função com múltiplos parâmetros (aridade n) em uma cadeia de n funções unárias (aridade 1), onde cada função intermediária recebe um parâmetro e retorna a próxima."
+    },
+    {
+      "question": "Ao aplicar currying a uma função binária originalmente representada pelo tipo 'int, int -> int', qual passa a ser sua representação de tipo?",
+      "options": [
+        "int, int, int -> void",
+        "int -> int -> int",
+        "(int, int) -> int",
+        "int[] -> int"
+      ],
+      "correctIndex": 1,
+      "explanation": "Ao aplicar currying, uma função binária passa a ser expressa como int -> int -> int (associativa à direita: int -> (int -> int)), indicando uma função que recebe um inteiro e retorna outra função que aguarda o próximo inteiro."
+    },
+    {
+      "question": "Segundo Oliveira (2017), qual é a característica marcante da linguagem Haskell em relação à aridade de suas funções?",
+      "options": [
+        "Haskell não suporta funções unárias, exigindo sempre pelo menos dois argumentos.",
+        "Em Haskell, toda função recebe apenas uma única entrada, sendo considerada unária por definição através do currying nativo.",
+        "Haskell exige anotações explícitas de tipos dinâmicos para funções de mais de um parâmetro.",
+        "As funções em Haskell têm aridade variável por padrão, similar às funções variádicas em C."
+      ],
+      "correctIndex": 1,
+      "explanation": "No modelo de cálculo lambda adotado por Haskell, todas as funções são unárias. Funções com múltiplos argumentos aparentes são tratadas internamente como cadeias de funções unárias currificadas."
+    },
+    {
+      "question": "Qual mecanismo de linguagens como JavaScript é essencial para implementar currying e manter a ligação entre variáveis de escopos aninhados?",
+      "options": [
+        "Ponteiros de memória globais.",
+        "Closures (fechamentos lexicais).",
+        "Classes abstratas estáticas.",
+        "Herança múltipla de protótipos."
+      ],
+      "correctIndex": 1,
+      "explanation": "As closures permitem que as funções internas mantenham acesso aos parâmetros e variáveis de seus escopos pais envolventes, mesmo após a função externa já ter retornado."
+    },
+    {
+      "question": "Qual é a principal diferença conceitual entre Currying e Aplicação Parcial?",
+      "options": [
+        "Não existe diferença, ambos são sinônimos exatos em todas as linguagens.",
+        "Currying só pode ser aplicado em linguagens orientadas a objetos, enquanto aplicação parcial é exclusiva de Haskell.",
+        "O currying transforma estruturalmente uma função em funções unárias (aridade 1); a aplicação parcial apenas fixa alguns argumentos, podendo retornar uma função de qualquer aridade restante.",
+        "A aplicação parcial sempre retorna um valor numérico final, enquanto o currying sempre lança uma exceção se faltar algum parâmetro."
+      ],
+      "correctIndex": 2,
+      "explanation": "Currying é a decomposição estrita em funções de 1 único argumento. Aplicação parcial é o ato prático de pré-preencher alguns argumentos de uma função, cujo retorno pode ainda esperar 2, 3 ou mais argumentos."
+    },
+    {
+      "question": "A quem a técnica de currying deve seu nome, e quais matemáticos e lógicos foram seus precursores?",
+      "options": [
+        "Homenagem a Haskell Curry, sendo idealizada anteriormente por Gottlob Frege e Moses Schönfinkel.",
+        "Homenagem a Alan Turing, com base nos trabalhos de Alonzo Church e John von Neumann.",
+        "Homenagem a Dennis Ritchie, criada inicialmente por Ken Thompson e Niklaus Wirth.",
+        "Homenagem a Edsger Dijkstra, inspirada nas pesquisas de George Boole."
+      ],
+      "correctIndex": 0,
+      "explanation": "A técnica leva o nome do matemático Haskell Brooks Curry, mas tem suas raízes originais nas publicações de Gottlob Frege (1893) e Moses Schönfinkel (1924)."
+    },
+    {
+      "question": "Considere a função currificada em JavaScript: var greetCurried = g => n => g + ', ' + n;. Como ela deve ser invocada para cumprimentar o usuário 'Marcus' com 'Olá'?",
+      "options": [
+        "greetCurried('Olá', 'Marcus')",
+        "greetCurried('Olá')('Marcus')",
+        "greetCurried['Olá', 'Marcus']",
+        "greetCurried.call('Olá', 'Marcus')"
+      ],
+      "correctIndex": 1,
+      "explanation": "Em funções com currying, cada parâmetro é passado em um conjunto independente de parênteses consecutivos: greetCurried('Olá')('Marcus')."
+    },
+    {
+      "question": "Em Haskell, qual é o resultado da expressão map (+7) [1, 2, 3, 4, 5] ?",
+      "options": [
+        "[7, 14, 21, 28, 35]",
+        "[1, 2, 3, 4, 5, 7]",
+        "[8, 9, 10, 11, 12]",
+        "[35]"
+      ],
+      "correctIndex": 2,
+      "explanation": "A função (+7) é uma função parcialmente aplicada que soma 7 a cada elemento da lista, gerando [1+7, 2+7, 3+7, 4+7, 5+7] = [8, 9, 10, 11, 12]."
+    },
+    {
+      "question": "Por que o currying favorece amplamente a composição de funções no paradigma funcional?",
+      "options": [
+        "Porque ao transformar funções em estruturas unárias (que aceitam 1 argumento), seus tipos de entrada e saída tornam-se imediatamente compatíveis com pipelines de composição.",
+        "Porque ele elimina a necessidade de compilar o código-fonte.",
+        "Porque impede o uso de funções puras em todo o sistema.",
+        "Porque força todas as funções a retornarem strings."
+      ],
+      "correctIndex": 0,
+      "explanation": "Funções com múltiplos parâmetros não podem ser compostas diretamente de forma matemática simples. O currying converte tudo em funções unárias, facilitando o encadeamento via operadores de composição (como o operador '.' em Haskell)."
+    },
+    {
+      "question": "Se uma função de 3 parâmetros não currificada for chamada em JavaScript recebendo apenas 2 parâmetros sem tratamento, o que normalmente ocorre?",
+      "options": [
+        "A linguagem gera automaticamente uma função currificada aguardando o terceiro parâmetro.",
+        "O terceiro parâmetro assume o valor undefined, o que frequentemente resulta em cálculo inválido (NaN) ou erro de execução.",
+        "O programa pausa a execução até que o usuário digite o terceiro parâmetro no terminal.",
+        "A função ignora a operação e retorna null imediatamente sem executar nada."
+      ],
+      "correctIndex": 1,
+      "explanation": "Em linguagens convencionais sem currying nativo, omitir parâmetros faz com que eles fiquem undefined, gerando erros ou resultados incorretos (como NaN em operações matemáticas). O currying resolve isso retornando formalmente uma nova função intermediária."
+    }
+  ]
+}

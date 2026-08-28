@@ -1,0 +1,115 @@
+{
+  "ua": 14,
+  "questions": [
+    {
+      "question": "Segundo a clássica distinção de Barry Boehm (1979) citada na UA, qual é a diferença fundamental entre Verificação e Validação?",
+      "options": [
+        "A verificação pergunta se estamos construindo o produto corretamente (processo e especificações técnicas); a validação pergunta se estamos construindo o produto certo (atendimento aos requisitos do cliente).",
+        "A verificação é realizada exclusivamente pelo cliente final; a validação é executada apenas pelos compiladores.",
+        "A validação avalia as fases intermediárias da codificação; a verificação ocorre apenas após o encerramento do contrato.",
+        "A verificação avalia os requisitos não funcionais; a validação foca exclusivamente na sintaxe das linguagens de programação."
+      ],
+      "correctIndex": 0,
+      "explanation": "Boehm resume: Verificação = 'Are we building the product right?' (produto construído da maneira correta segundo o processo); Validação = 'Are we building the right product?' (construindo o produto certo para as reais necessidades do cliente)."
+    },
+    {
+      "question": "Como a norma IEEE Std. 610.12 define a Garantia da Qualidade de Software (SQA)?",
+      "options": [
+        "A prática de reescrever todo o código-fonte periodicamente a cada seis meses.",
+        "Conjunto planejado e sistemático de ações necessárias para estabelecer um nível adequado de confiança de que um item ou produto está em conformidade com seus requisitos técnicos.",
+        "A ausência total de defeitos em qualquer etapa do ciclo de vida de desenvolvimento.",
+        "A contratação obrigatória de uma equipe externa de auditoria financeira para o projeto."
+      ],
+      "correctIndex": 1,
+      "explanation": "O glossário do IEEE define garantia da qualidade como o conjunto planejado e sistemático de ações para garantir confiança na conformidade do produto com seus requisitos técnicos."
+    },
+    {
+      "question": "Qual é a principal diferença operacional entre os Testes Estáticos e os Testes Dinâmicos de software?",
+      "options": [
+        "Testes estáticos são executados apenas em hardware descontinuado; testes dinâmicos utilizam nuvem.",
+        "Testes estáticos compreendem revisões, inspeções e análise de código sem executar o software; testes dinâmicos exigem que o software seja efetivamente executado.",
+        "Testes dinâmicos só podem ser realizados após a entrega do produto ao cliente final.",
+        "Testes estáticos exigem automação completa por ferramentas CASE; testes dinâmicos são sempre manuais."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste estático analisa documentos, modelos e código-fonte sem executá-lo (inspeções e revisões). O teste dinâmico requer a execução do software com casos de teste."
+    },
+    {
+      "question": "O que caracteriza o Teste Caixa-Preta (funcional ou comportamental) na engenharia de software?",
+      "options": [
+        "Examina a lógica interna, todos os caminhos de branches e as estruturas de dados no código.",
+        "Focaliza os requisitos funcionais e as entradas e saídas do software, avaliando seu comportamento sem conhecer a estrutura lógica interna do código.",
+        "É realizado exclusivamente sem auxílio de computadores através de leitura de manuais impressos.",
+        "Tem como foco a auditoria contábil dos custos de desenvolvimento do sistema."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste caixa-preta trata o sistema como um bloco opaco, derivando casos de teste a partir dos requisitos funcionais e avaliando se as saídas correspondem às entradas esperadas."
+    },
+    {
+      "question": "Qual é o foco primordial do Teste Caixa-Branca (estrutural ou caixa-de-vidro)?",
+      "options": [
+        "Verificar apenas os aspectos de usabilidade da interface gráfica com o usuário final.",
+        "Utilizar a estrutura de controle interna do projeto para exercitar caminhos independentes, decisões lógicas verdadeiro/falso e condições limites de laços.",
+        "Substituir completamente a necessidade de testes de unidade e de integração.",
+        "Avaliar a viabilidade mercadológica do produto antes do início da programação."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste caixa-branca examina o código interno para garantir que caminhos lógicos, decisões condicionais (true/false) e laços operem corretamente dentro de seus limites."
+    },
+    {
+      "question": "No Quadro de testes funcionais (Sbrocco e Macedo, 2012), qual teste verifica se o sistema valida todas as transações e fornece mensagens de feedback adequadas diante de dados incorretos?",
+      "options": [
+        "Teste de regressão",
+        "Teste de requisitos",
+        "Tratamento de erros",
+        "Teste em paralelo"
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de Tratamento de Erros verifica a validação de todas as transações de entrada e o retorno correto de mensagens de erro amigáveis ao usuário."
+    },
+    {
+      "question": "Qual tipo de teste estrutural analisa o desempenho do software com dados e volumetria reais, avaliando o comportamento sob múltiplos acessos simultâneos?",
+      "options": [
+        "Teste de unidade",
+        "Teste de execução",
+        "Teste de conformidade",
+        "Teste de operação"
+      ],
+      "correctIndex": 1,
+      "explanation": "O Teste de Execução avalia a performance com dados reais e concorrência de múltiplos usuários acessando o sistema simultaneamente."
+    },
+    {
+      "question": "Qual nível da estratégia de testes tem como objetivo principal construir a arquitetura do software e descobrir erros associados à comunicação e interação entre interfaces de módulos?",
+      "options": [
+        "Teste de unidade",
+        "Teste de integração",
+        "Teste de aceitação",
+        "Teste de mutação"
+      ],
+      "correctIndex": 1,
+      "explanation": "O Teste de Integração reúne componentes testados isoladamente para verificar a integridade da comunicação entre suas interfaces e a arquitetura geral."
+    },
+    {
+      "question": "Em testes de recuperação, quando o restabelecimento do sistema exige intervenção humana, qual métrica clássica é avaliada para determinar se o tempo está dentro dos limites aceitáveis?",
+      "options": [
+        "KLOC (milhares de linhas de código)",
+        "MTTR (Mean-Time-To-Repair — tempo médio para reparo)",
+        "FP (Pontos de Função)",
+        "COCOMO (Constructive Cost Model)"
+      ],
+      "correctIndex": 1,
+      "explanation": "Pressman e Maxim destacam que o teste de recuperação avalia o MTTR (Mean-Time-To-Repair) para verificar se o tempo de resposta e restabelecimento com intervenção humana atende aos requisitos operacionais."
+    },
+    {
+      "question": "Qual é a finalidade do Teste de Aceitação (Acceptance Testing) na fase final de homologação do software?",
+      "options": [
+        "Submeter o código a linters automatizados para medir a complexidade ciclomática.",
+        "Avaliar formalmente se o sistema atende aos critérios de aceitação contratados, capacitando o cliente ou usuário a aprovar e aceitar o produto final para uso.",
+        "Verificar a alocação de memória RAM nos servidores locais da equipe de desenvolvimento.",
+        "Refatorar todos os componentes legados sem conhecimento do usuário."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de aceitação é o teste formal de qualificação realizado para validar se os critérios acordados com o cliente foram satisfeitos, autorizando a entrega definitiva do software."
+    }
+  ]
+}

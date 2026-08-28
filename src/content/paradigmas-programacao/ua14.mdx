@@ -1,0 +1,253 @@
+---
+title: "UA14 — Programação Funcional: Currying"
+subtitle: "A técnica de transformar funções de múltiplos parâmetros em cadeias de funções unárias: encadeamento via closures, aridade, Haskell vs. JavaScript, aplicação parcial e composição de funções."
+ua: 14
+group: "Paradigma Funcional"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua14.m4a" title="Currying organiza o código em etapas seguras" />
+
+### Decompor funções em etapas unárias
+
+Nas UAs anteriores do paradigma funcional, exploramos o cálculo lambda, a pureza das funções, o tratamento de funções como cidadãos de primeira classe e as estruturas categorialmente ricas de funtores, aplicativos e mônadas. Esta UA detalha um dos mecanismos operacionais mais elegantes do paradigma funcional: o **currying**.
+
+Em muitas linguagens imperativas, uma função que necessita de três argumentos espera receber todos os três simultaneamente na invocação. Se apenas dois estiverem disponíveis em determinado momento do fluxo, a chamada resultará em erro. O currying resolve esse impasse estrutural ao transformar uma função que originalmente aceitaria uma lista de $n$ parâmetros em uma **cadeia de $n$ funções**, onde cada função aceita **exatamente um único parâmetro** e retorna a próxima função da cadeia, até que o último argumento seja fornecido e o cálculo seja efetuado.
+
+A técnica é baseada no conceito matemático de funções de uma variável e deve seu nome a uma homenagem ao lógico e matemático americano **Haskell Brooks Curry** (1900–1982). No entanto, o método foi originalmente idealizado por **Gottlob Frege** (1893) e desenvolvido de forma independente por **Moses Schönfinkel** (1924), sendo posteriormente aprofundado por Curry.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cad_01.webp" alt="Infográfico 'Currying: A Arte de Decompor Funções' — mecanismo do currying (aridade, closures, int -> int -> int) e vantagens práticas (aplicação parcial, reutilização e composição de funções)" caption="Currying: transformação de aridade, encadeamento via closures e vantagens práticas" />
+</SlidesGrid>
+
+### O Mecanismo do Currying: Aridade e Tipagem
+
+Para compreender o funcionamento interno do currying, é fundamental dominar o conceito de **aridade** (Oliveira, 2017):
+- **Aridade** é o número de argumentos ou operandos que uma função aceita.
+- Uma função com aridade 1 é chamada de **unária**.
+- Uma função com aridade 2 é chamada de **binária**.
+- Uma função com aridade 3 é chamada de **ternária**, e com $n$ argumentos é dita **$n$-ária**.
+
+No cálculo lambda de Alonzo Church — alicerce matemático da programação funcional —, existem **apenas abstrações de uma única variável** (Ayala-Rincón e Moura, 2014). Todas as funções teóricas são unárias. As linguagens puramente funcionais, como **Haskell**, preservam essa propriedade de forma estrita: **em Haskell, toda função é unária por definição** (Oliveira, 2017). Quando declaramos uma função que aparenta receber três inteiros e retornar um inteiro, Haskell a trata internamente como uma composição encadeada de funções unárias.
+
+#### Transformação de Tipos
+
+A representação de tipo ilustra a mudança fundamental provocada pelo currying (Flanagan, 2013):
+
+```text
+Função tradicional (binária):  int, int -> int
+Função com currying (unária):   int -> int -> int
+```
+
+Na representação com currying, o operador `->` é associativo à direita: `int -> (int -> int)`. Isso significa que a função recebe o primeiro `int` e **retorna uma nova função** do tipo `int -> int`, a qual aguardará o segundo inteiro para finalmente produzir o resultado numérico final.
+
+```text
+Função tradicional de 3 argumentos:   int, int, int -> int
+Função currificada de 3 argumentos:    int -> int -> int -> int
+                                       (int -> (int -> (int -> int)))
+```
+
+---
+
+### Encadeamento via Closures
+
+Em linguagens que não realizam currying automático por padrão (como JavaScript, Python, TypeScript ou Scala), o currying manual é implementado por meio de **closures** (fechamentos lexicais).
+
+Uma **closure** é uma função que retém o acesso às variáveis do seu escopo léxico de criação, mesmo após a função externa ter concluído sua execução. No currying, a closure implementa a ligação de escopo através de três cadeias:
+1. **Seu próprio escopo** (variáveis locais e parâmetros da função interna atual).
+2. **Escopo externo envolvente** (parâmetros capturados pelas funções que a antecederam na cadeia).
+3. **Escopo global** (símbolos e funções disponíveis em todo o ambiente).
+
+Cada função intermediária "lembra" do argumento que recebeu e guarda esse valor na closure enquanto retorna a próxima função da cadeia.
+
+---
+
+### Currying na Prática: JavaScript e Haskell
+
+#### Exemplo em JavaScript: Soma
+
+Em JavaScript tradicional, uma função de soma binária exige que ambos os valores sejam passados no mesmo parêntese:
+
+```javascript
+// Função tradicional (sem currying)
+var add = function(x, y) {
+  return x + y;
+};
+
+add(1, 2); // 3
+add(1);    // NaN (y é undefined no cálculo x + y)
+```
+
+Aplicando currying com funções aninhadas:
+
+```javascript
+// Função com currying (usando closures)
+var addCurried = function(x) {
+  return function(y) {
+    return x + y;
+  };
+};
+
+// Invocação direta com múltiplos parênteses
+addCurried(1)(2); // 3
+
+// Aplicação em etapas (especialização de função)
+var soma10 = addCurried(10); // Retorna uma função que espera 'y'
+soma10(5);  // 15
+soma10(20); // 30
+```
+
+Com a sintaxe moderna de arrow functions do ES6+, o currying em JavaScript torna-se extremamente conciso:
+
+```javascript
+const add = x => y => x + y;
+add(10)(5); // 15
+```
+
+#### Exemplo em JavaScript: Saudações Configuráveis
+
+O currying permite criar geradores de funções descritivas que eliminam repetições de parâmetros em todo o sistema:
+
+```javascript
+var greetCurried = function(greeting) {
+  return function(name) {
+    return greeting + ", " + name;
+  };
+};
+
+// Criando funções especializadas com o primeiro argumento pré-fixado
+var greetHello = greetCurried("Olá");
+var greetWelcome = greetCurried("Seja bem-vindo");
+
+console.log(greetHello("Marcus"));     // "Olá, Marcus"
+console.log(greetHello("Estudante"));  // "Olá, Estudante"
+console.log(greetWelcome("Visitante")); // "Seja bem-vindo, Visitante"
+```
+
+Para cadeias mais longas, o aninhamento pode ser estendido conforme a necessidade de parametrização:
+
+```javascript
+var greetDeeplyCurried = function(cumprimento) {
+  return function(separador) {
+    return function(enfase) {
+      return function(nome) {
+        return cumprimento + separador + nome + enfase;
+      };
+    };
+  };
+};
+
+greetDeeplyCurried("Olá")(" - ")("!")("Marcus"); 
+// "Olá - Marcus!"
+
+const formatarAviso = greetDeeplyCurried("ATENÇÃO")(" :: ")(" [URGENTE]");
+formatarAviso("Servidor Offline");
+// "ATENÇÃO :: Servidor Offline [URGENTE]"
+```
+
+#### Exemplo em Haskell: `map` e Operadores Currificados
+
+Em Haskell, todas as funções já são currificadas por padrão pelo compilador (GHC). A definição canônica da função `map` expressa essa propriedade:
+
+```haskell
+map :: (a -> b) -> [a] -> [b]
+map _ []     = []
+map f (x:xs) = f x : map f xs
+```
+
+Quando escrevemos `map (+7) [1, 2, 3, 4, 5]`, estamos passando a função parcialmente aplicada `(+7)` como primeiro argumento. O compilador gera a lista resultante aplicando a transformação elemento a elemento:
+
+```haskell
+map (+7) [1, 2, 3, 4, 5]
+-- Resultado: [8, 9, 10, 11, 12]
+```
+
+Se declaramos uma função de soma em Haskell:
+
+```haskell
+plus :: Int -> Int -> Int
+plus x y = x + y
+
+-- Criando uma função especializada (plusFive) passando apenas o primeiro argumento:
+plusFive :: Int -> Int
+plusFive = plus 5
+
+plusFive 10  -- 15
+plusFive 20  -- 25
+```
+
+---
+
+### Currying vs. Aplicação Parcial
+
+É muito comum encontrar confusão entre os termos **Currying** e **Aplicação Parcial** (*Partial Application*). Embora estejam intimamente relacionados, tratam-se de conceitos distintos:
+
+| Aspecto | Currying | Aplicação Parcial |
+|---|---|---|
+| **Definição** | **Transformação estrutural** de uma função de $n$ parâmetros em uma sequência de $n$ funções de **1 único parâmetro** cada (aridade 1). | O ato de **fornecer um subconjunto de argumentos** a uma função de múltiplos parâmetros, fixando-os e retornando uma nova função com os argumentos restantes. |
+| **Aridade do resultado** | **Sempre gera funções unárias** (aridade 1 em cada passo da cadeia). | A função resultante pode ter **qualquer aridade** (ex: função de 4 parâmetros recebe 1 e retorna uma função de aridade 3). |
+| **Escopo** | Processo formal de decomposição teórica de aridade. | Técnica prática de fixação antecipada de argumentos. |
+| **Exemplo conceitual** | `f(a, b, c)` $\rightarrow$ `f(a)(b)(c)` | `f(a, b, c)` com `a=1` fixado $\rightarrow$ `g(b, c)` |
+
+> Toda linguagem com currying suporta aplicação parcial naturalmente, mas uma linguagem pode implementar aplicação parcial sem que suas funções sejam estritamente currificadas.
+
+---
+
+### Vantagens Práticas do Currying
+
+1. **Reutilização de Código e Especialização**: Permite criar bibliotecas de funções pequenas, modulares e especializadas a partir de funções genéricas pré-configuradas, sem duplicar lógica ou parâmetros repetitivos.
+2. **Composição de Funções Facilitada**: No paradigma funcional, a composição ($f \circ g$) exige que a saída de uma função seja compatível com a entrada da próxima. Como o currying transforma todas as funções em unárias, compor fluxos de dados complexos através de pipelines torna-se direto e natural.
+3. **Tratamento de Argumentos Assíncronos / Parciais**: Quando parâmetros dependem de fontes distintas (como dados vindos de requisições HTTP, configurações do sistema e inputs do usuário que chegam em momentos temporais diferentes), o currying permite reter os dados já conhecidos em closures sem disparar erros de execução.
+4. **Legibilidade e Código Declarativo**: Remove a necessidade de passar parâmetros redundantes em chamadas sucessivas, tornando o código mais conciso e legível.
+
+<Callout type="default">
+**Desafio da UA — Resolvendo Chamadas com Parâmetros Parciais**
+
+O desafio proposto nesta UA aborda uma situação onde uma função de cálculo ou formatação precisa de múltiplos parâmetros, mas estes chegam de forma fragmentada na aplicação. Se invocada com parâmetros faltantes de maneira tradicional, a função falha com erro de execução.
+
+**Solução**: Reescrever a função utilizando currying (ou uma função de ordem superior com closures). Cada etapa do fluxo injeta o parâmetro disponível e repassa a função resultante para a etapa seguinte do ciclo de vida, até que o último dado permita consolidar a resposta sem risco de exceções por parâmetros ausentes.
+</Callout>
+
+---
+
+<Callout type="warning">
+**Práticas Modernas — Currying no Desenvolvimento Contemporâneo**
+
+Embora a teoria clássica de currying tenha raízes no cálculo lambda e em Haskell, o ecossistema moderno de desenvolvimento em 2026 aplica esse conceito diariamente:
+
+- **Bibliotecas Funcionais em JavaScript/TypeScript**: Utilitários como `Ramda` e `lodash/fp` fornecem funções "auto-curried", onde qualquer função pode ser chamada como `f(a, b, c)`, `f(a)(b)(c)` ou `f(a, b)(c)` de forma intercambiável.
+- **React e Gerenciamento de Estado**: Manipuladores de eventos com parâmetros currificados são comuns para evitar criação inline de arrow functions no JSX:
+  ```typescript
+  const handleChange = (campo: string) => (evento: React.ChangeEvent<HTMLInputElement>) => {
+    setForm(prev => ({ ...prev, [campo]: evento.target.value }));
+  };
+  ```
+- **Middlewares em Redux / Express / Koa**: A assinatura canônica de middlewares Redux `store => next => action => ...` é um exemplo puro de currying encadeado via closures para injeção progressiva de dependências.
+- **Python e C++**: Em Python, o módulo `functools.partial` realiza aplicação parcial nativa, enquanto bibliotecas como `toolz` ou `fn.py` implementam decorators `@curry`.
+</Callout>
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Definição exata de Currying**: Técnica que transforma uma função de $n$ parâmetros em uma cadeia de $n$ funções, cada uma recebendo **apenas um único parâmetro** (aridade 1 / função unária).
+- **Notação de tipo**: Uma função binária `int, int -> int` passa a ser representada como `int -> int -> int`.
+- **Origem histórica**: Idealizado por **Moses Schönfinkel** e **Gottlob Frege**, formalizado e popularizado por **Haskell Curry**.
+- **Haskell e Aridade 1**: Em Haskell, **toda função é unária por padrão**.
+- **Mecanismo em linguagens imperativas**: Depende de **closures** para ligar os escopos aninhados e guardar os argumentos intermediários.
+- **Currying vs. Aplicação Parcial**: Currying *sempre* devolve funções unárias em sequência; Aplicação Parcial apenas fixa alguns argumentos de uma função (a função resultante pode ter qualquer número de argumentos restantes).
+- **Composição**: Currying permite compor funções que originalmente exigiriam múltiplos parâmetros simultâneos.
+- **Exemplo clássico `map`**: `map (+7) [1, 2, 3, 4, 5]` aplica a função parcialmente preenchida `(+7)` aos elementos, resultando em `[8, 9, 10, 11, 12]`.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- OLIVEIRA, A. G. *Haskell: uma introdução à programação funcional*. São Paulo: Casa do Código, 2017.
+- FLANAGAN, D. *JavaScript: o guia definitivo*. 6. ed. Porto Alegre: Bookman, 2013.
+- AYALA-RINCÓN, M.; MOURA, F. L. C. *Fundamentos da programação lógica e funcional: o princípio de resolução e a teoria de reescrita*. Brasília: Finatec; UnB, 2014.
+- LIMA, M. *Entendendo Programação Funcional em JavaScript de uma vez*. Medium: Tableless, 2016.

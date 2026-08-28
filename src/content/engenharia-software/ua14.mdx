@@ -1,0 +1,231 @@
+---
+title: "UA14 — Verificação, Validação e Testes de Software"
+subtitle: "Construindo o produto corretamente vs. construindo o produto certo: V&V estática e dinâmica, técnicas de caixa-branca e caixa-preta, e os níveis da estratégia de testes de software."
+ua: 14
+group: "Qualidade e Testes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua14.m4a" title="Verificação e validação de software na prática" />
+
+### A Busca pela Qualidade em Sistemas Complexos
+
+Qualquer produto manufaturado passa por rigorosos controles de qualidade antes de ser disponibilizado ao mercado consumidor. Na engenharia de software, onde os produtos são intangíveis e dotados de altíssima complexidade lógica, as etapas de verificação, validação e teste desempenham papel ainda mais crucial.
+
+Historicamente, descobrir erros após longas jornadas de desenvolvimento gerava frustração nas equipes. No entanto, a perspectiva da engenharia contemporânea inverte essa lógica: **um teste que revela um defeito não é uma falha, mas sim uma oportunidade bem-sucedida de impedir que um erro alcance o ambiente de produção** (Pressman e Maxim, 2016).
+
+A garantia da qualidade de software (SQA — *Software Quality Assurance*) é formalmente definida por órgãos e modelos de maturidade internacionais:
+- **IEEE (Glossário Std. 610.12)**: *"Conjunto planejado e sistemático de ações necessárias para estabelecer um nível adequado de confiança de que um item ou produto está em conformidade com seus requisitos técnicos"* (Paula Filho, 2009).
+- **CMMI (*Capability Maturity Model Integration*)**: *"Conjunto planejado e sistemático de meios para garantir à gerência que os padrões, métodos, práticas e procedimentos definidos por um processo são aplicados"* (Paula Filho, 2009).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gqs_01.webp" alt="Infográfico 'Garantia de Qualidade de Software: O Guia de V&V e Testes' — Verificação vs. Validação (Boehm), Teste Estático vs. Dinâmico, Caixa-Preta vs. Caixa-Branca e a Pirâmide de Testes (Unidade, Integração, Sistema, Aceitação)" caption="Garantia de qualidade de software: V&V, abordagens estática/dinâmica e níveis de teste" />
+</SlidesGrid>
+
+---
+
+### Verificação vs. Validação (V&V): A Distinção Clássica
+
+A literatura de engenharia de software frequentemente consolida as atividades sob a sigla **V&V**. A distinção canônica formulada por Barry Boehm (1979, *apud* Sommerville, 2011) estabelece as duas perguntas centrais:
+
+| Dimensão | Pergunta Fundamental (Boehm) | Foco Principal | Definição IEEE / CMMI |
+|---|---|---|---|
+| **Verificação** | *"Estamos construindo o produto **corretamente**?"* (*Are we building the product right?*) | **Processo e Especificações Técnicas** | Avaliação intermediária em cada passo do ciclo de vida para determinar se os artefatos satisfazem às condições e normas impostas no início daquele passo. |
+| **Validação** | *"Estamos construindo o produto **certo**?"* (*Are we building the right product?*) | **Cliente e Necessidades de Negócio** | Avaliação final do produto como um todo para confirmar se ele atende ao uso pretendido e às expectativas reais do cliente no ambiente operacional. |
+
+Em termos práticos (Pressman e Maxim, 2016):
+- A **Verificação** garante que o software implementa corretamente cada função especificada (aderência ao projeto).
+- A **Validação** garante que o software executável atende aos requisitos e às regras de negócio do usuário final (rastreabilidade dos requisitos).
+
+---
+
+### Verificação e Validação Estáticas vs. Dinâmicas
+
+As atividades de V&V dividem-se em duas abordagens complementares ao longo do ciclo de desenvolvimento:
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                    Atividades de SQA / V&V                  │
+├──────────────────────────────┬──────────────────────────────┤
+│      V&V ESTÁTICA            │      V&V DINÂMICA            │
+│   (Sem executar o código)    │   (Executando o software)    │
+│                              │                              │
+│ • Revisões de requisitos     │ • Testes de unidade          │
+│ • Inspeções de código        │ • Testes de integração       │
+│ • Análise estática           │ • Testes de sistema          │
+│ • Auditorias de arquitetura  │ • Testes de aceitação        │
+└──────────────────────────────┴──────────────────────────────┘
+```
+
+1. **V&V Estática (*Static Testing*)**:
+   - **Não exige a execução do código-fonte**.
+   - Inclui revisões técnicas por pares, inspeções formais, *walkthroughs*, auditorias de configuração e análise estática de código (linters, verificadores de conformidade).
+   - Pode ser aplicada sobre qualquer artefato: especificação de requisitos, modelos UML, diagramas de banco de dados e arquivos de código.
+   - **Vantagem**: identifica ambiguidades e defeitos na raiz antes que se propaguem para a fase de compilação/execução, com custo de correção substancialmente menor.
+
+2. **V&V Dinâmica (*Dynamic Testing*)**:
+   - **Exige que o software seja compilado e executado** com casos de teste.
+   - Envolve o planejamento formal, execução de baterias de teste, registro de métricas e controle de defeitos.
+   - É a abordagem mais intensamente adotada pelas organizações para medir o comportamento em tempo de execução.
+
+---
+
+### Filosofias de Teste: Caixa-Preta vs. Caixa-Branca
+
+Os métodos de teste de software apoiam-se em duas filosofias complementares para a concepção dos casos de teste:
+
+#### 1. Teste Caixa-Preta (Funcional / Comportamental)
+
+O **teste caixa-preta** concebe o software como uma caixa opaca, focando exclusivamente nas **entradas e saídas**, sem considerar a estrutura lógica interna ou os caminhos de código (Pressman e Maxim, 2016). Os casos de teste são derivados diretamente dos requisitos funcionais do sistema.
+
+Categorias de erros identificadas pelo teste caixa-preta:
+1. Funções incorretas ou ausentes.
+2. Erros de interface de comunicação com o usuário ou subsistemas.
+3. Erros em estruturas de dados ou acesso a bases de dados externas.
+4. Erros de comportamento ou de desempenho.
+5. Erros de inicialização e término de rotinas.
+
+##### Principais Tipos de Testes Funcionais (Sbrocco e Macedo, 2012):
+- **Tratamento de erros**: Verifica se o sistema valida todas as transações de entrada e retorna mensagens claras e corretas (feedback) diante de informações inválidas. Executado em todo o ciclo.
+- **Requisitos**: Verifica se o sistema executa todas as funcionalidades descritas na especificação de requisitos. Executado a cada iteração.
+- **Regressão**: Testa se a introdução de novos recursos ou correções provocou efeitos colaterais indesejados nas funcionalidades pré-existentes. Executado a cada iteração.
+- **Suporte manual**: Avalia o sistema de ajuda (*help*) sensível ao contexto e a integridade da documentação de apoio ao usuário. Executado na homologação.
+- **Controle**: Avalia se procedimentos operacionais alheios à aplicação (como rotinas de backup e restauração de dados) funcionam conforme previsto.
+- **Interconexão**: Garante a comunicação e o intercâmbio de dados entre os módulos desenvolvidos e sistemas legados/externos.
+- **Paralelo**: Executa o novo software em paralelo com o sistema legado anterior para comparar se ambos produzem os mesmos resultados perante as mesmas entradas.
+
+---
+
+#### 2. Teste Caixa-Branca (Estrutural / Caixa-de-Vidro)
+
+O **teste caixa-branca** baseia-se no conhecimento profundo da **estrutura de controle, do código-fonte e do projeto de componentes** para derivar os casos de teste (Pressman e Maxim, 2016).
+
+Metas do engenheiro com testes caixa-branca:
+1. Garantir que todos os caminhos independentes do módulo sejam executados pelo menos uma vez.
+2. Exercitar todas as decisões lógicas nos seus ramos verdadeiro (`true`) e falso (`false`).
+3. Executar todos os laços de repetição (*loops*) em suas fronteiras operacionais (limite inferior, médio e superior).
+4. Exercitar estruturas de dados internas para assegurar sua validade e integridade.
+
+##### Principais Tipos de Testes Estruturais (Sbrocco e Macedo, 2012):
+- **Unidade**: Testa funções, classes, métodos e objetos isoladamente, analisando a lógica e a performance interna. Executado em todo o ciclo.
+- **Execução**: Analisa o desempenho do sistema com dados e volumetria reais, avaliando tempos de resposta com múltiplos acessos simultâneos (concorrência).
+- **Estresse**: Submete o sistema a limites extremos de carga e recursos (memória, CPU, conexões) para avaliar o comportamento sob condições adversas de saturação.
+- **Recuperação**: Força o sistema a falhar de várias maneiras (quedas de energia, falhas de rede, exceções de hardware) para verificar se a recuperação ocorre de forma segura e dentro de um tempo médio de reparo aceitável (**MTTR** — *Mean-Time-To-Repair*).
+- **Operação**: Compara a operação do sistema digital com os processos manuais da organização.
+- **Conformidade**: Verifica se o código atende a padrões de codificação, guias de estilo e normas de arquitetura previamente estabelecidos.
+- **Segurança**: Assegura que os mecanismos de autenticação, autorização e criptografia protegem o sistema e seus dados contra invasões e acessos não autorizados.
+
+---
+
+### Estratégia de Teste: A Pirâmide de Níveis
+
+A estratégia de testes organiza o esforço em etapas progressivas de escopo e abstração (Pressman e Maxim, 2016; Schach, 2011):
+
+```text
+               /\
+              /  \      4. Teste de Aceitação (Homologação / Cliente)
+             /────\
+            /      \    3. Teste de Sistema / Validação (SRS / Caixa-Preta)
+           /────────\
+          /          \  2. Teste de Integração (Interfaces e Módulos / CASE)
+         /────────────\
+        /              \ 1. Teste de Unidade (Classes e Componentes / Caixa-Branca)
+       /────────────────\
+```
+
+1. **Teste de Unidade (*Unit Testing*)**:
+   - Focaliza a menor unidade de projeto do software (módulos, classes, funções).
+   - Realizado predominantemente pelos próprios desenvolvedores com base em técnicas de caixa-branca.
+2. **Teste de Integração (*Integration Testing*)**:
+   - Constrói a arquitetura integrando os módulos testados em unidade e verifica se as interfaces e o tráfego de dados entre eles funcionam perfeitamente.
+   - O uso de ferramentas CASE (como ambientes automatizados de execução) permite rodar suites de regressão a cada novo módulo integrado.
+3. **Teste de Sistema e Validação (*System / Validation Testing*)**:
+   - Testa o produto completo montado contra os **Critérios de Validação** descritos na Especificação de Requisitos de Software (SRS).
+   - Supera o problema clássico da "procura do culpado" (*blame game*): a equipe planeja testes de interface que simulam entradas corrompidas e registram evidências detalhadas de logs.
+4. **Teste de Aceitação (*Acceptance Testing*)**:
+   - Conduzido na fase de homologação, frequentemente com a presença ou execução direta do cliente final.
+   - Decide formalmente se o sistema é aceito e aprovado para entrada em produção.
+
+---
+
+### Classificação IEEE dos Testes de Software
+
+O Quadro 3 (Paula Filho, 2009, adaptado do padrão IEEE Std 610.12) consolida os papéis dos testes nos processos de software:
+
+| Termo | Nome em Inglês | Definição Formal IEEE |
+|---|---|---|
+| **Teste de Aceitação** | *Acceptance testing* | Teste formal realizado para determinar se um sistema satisfaz a seus critérios de aceitação e capacitar o cliente a decidir se aceita o produto. |
+| **Teste de Desenvolvimento** | *Development testing* | Testes formais ou informais conduzidos durante a construção, geralmente pelo próprio desenvolvedor. |
+| **Teste de Integração** | *Integration testing* | Teste no qual componentes são combinados para avaliar a interação entre suas interfaces. |
+| **Teste de Qualificação** | *Qualification testing* | Teste realizado para determinar se um componente ou sistema é adequado para uso operacional. |
+| **Teste de Regresso** | *Regression testing* | Teste seletivamente repetido para verificar se alterações recentes não introduziram efeitos indesejáveis em código estável. |
+| **Teste de Sistema** | *System testing* | Teste conduzido no sistema completo integrado para avaliar a conformidade com os requisitos especificados. |
+| **Teste de Unidade** | *Unit testing* | Teste individual de unidades, classes ou funções isoladas. |
+| **Teste Funcional** | *Functional testing* | Teste que avalia a conformidade do comportamento do software com os requisitos funcionais. |
+| **Teste Operacional** | *Operational testing* | Avaliação do sistema executando em seu ambiente operacional real de produção. |
+
+Normas fundamentais de teste destacadas pelo IEEE:
+- **IEEE Std. 610.12**: Glossário de terminologia de Engenharia de Software.
+- **IEEE Std. 829**: Padrão para Documentação de Testes de Software.
+- **ANSI/IEEE Std. 1008**: Padrão para Testes de Unidade de Software.
+
+<Callout type="default">
+**Desafio da UA — Validação com o Cliente**
+
+**Cenário**: O software foi finalizado pela equipe de engenharia e precisa passar pela aprovação formal do cliente para verificar se todos os requisitos foram devidamente contemplados antes do *deploy*.
+
+**Pergunta**: Qual tipo de teste é o mais adequado para ser analisado em conjunto com o cliente nesta etapa final, e qual outro tipo contribui decisivamente para o sucesso dessa transição?
+
+**Resposta**: O teste mais adequado é o **Teste de Aceitação** (*Acceptance Testing*), realizado no ambiente de homologação com base nos critérios de aceitação da especificação de requisitos. Para contribuir com essa etapa, o **Teste de Sistema** (com ênfase em testes funcionais caixa-preta e testes de usabilidade/operação) garante previamente que todos os fluxos de ponta a ponta estejam integrados e estáveis.
+</Callout>
+
+---
+
+<Callout type="warning">
+**Práticas Modernas — Testes e QA no Desenvolvimento Contemporâneo**
+
+A literatura clássica (Pressman 2016, Sommerville 2011, Paula Filho 2009) estrutura testes em fases sequenciais pós-codificação. No cenário de 2026, a disciplina de testes evoluiu expressivamente:
+
+- **Evolução das Normas — ISO/IEC/IEEE 29119**: As clássicas normas IEEE 829 e IEEE 1008 foram integradas e sucedidas pela família internacional **ISO/IEC/IEEE 29119**, que estabelece vocabulário, processos, documentação e técnicas de teste ágeis e tradicionais.
+- **Pirâmide de Testes Automatizada (Mike Cohn)**: A base da pirâmide é composta por milhares de testes de unidade rápidos e baratos (JUnit, pytest, Jest, Vitest), o meio por testes de integração de APIs/serviços, e o topo por um número enxuto de testes ponta a ponta (E2E via Playwright / Cypress).
+- ***Shift-Left Testing***: A garantia de qualidade desloca-se para a extrema esquerda do ciclo: análise estática contínua (SonarQube, ESLint), linters de segurança e práticas de TDD (*Test-Driven Development*) e BDD (*Behavior-Driven Development*).
+- **Testes Não-Funcionais Modernos**: Testes de carga com ferramentas modernas (k6, Locust), testes de segurança dinâmicos (DAST / SAST) e *Chaos Engineering* (injeção controlada de falhas em produção) complementam os clássicos testes de recuperação e estresse.
+</Callout>
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Diferença de Boehm (clássico de prova)**:
+  - **Verificação** = *"Estamos construindo o produto **corretamente**?"* (foco no processo, normas e especificações técnicas de cada etapa).
+  - **Validação** = *"Estamos construindo o produto **certo**?"* (foco no cliente, no produto final e no atendimento às necessidades de negócio).
+- **Estático vs. Dinâmico**:
+  - **Estático**: inspeções, revisões e análise de código **sem executar** o software.
+  - **Dinâmico**: **execução do software** com dados de teste.
+- **Caixa-Preta vs. Caixa-Branca**:
+  - **Caixa-Preta (Funcional)**: foca em requisitos funcionais, entradas/saídas, dados externos e erros de interface. A estrutura interna do código é ignorada.
+  - **Caixa-Branca (Estrutural)**: foca na lógica interna, garantindo execução de caminhos independentes, decisões verdadeiro/falso, limites de loops e estruturas internas.
+- **Tipos Funcionais Chave**:
+  - *Tratamento de erros*: valida mensagens de retorno ao usuário perante dados inválidos.
+  - *Regressão*: verifica se alterações recentes não quebraram funcionalidades antigas.
+  - *Paralelo*: compara o novo sistema com a versão anterior.
+- **Tipos Estruturais Chave**:
+  - *Execução*: performance com dados reais e acessos simultâneos (concorrência).
+  - *Estresse*: comportamento nos limites máximos e condições adversas.
+  - *Recuperação*: falhas forçadas e medição do **MTTR** (*Mean-Time-To-Repair*).
+- **Estratégia de Teste**: Unidade $\rightarrow$ Integração $\rightarrow$ Sistema / Validação $\rightarrow$ Aceitação.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MORAIS, I. S. de. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- SOMMERVILLE, I. *Engenharia de software*. 8. ed. e 9. ed. São Paulo: Pearson, 2007/2011.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH; Bookman, 2016.
+- PAULA FILHO, W. P. *Engenharia de software: fundamentos, métodos e padrões*. 3. ed. Rio de Janeiro: LTC, 2009.
+- SBROCCO, J. H. T. C.; MACEDO, P. C. *Metodologias ágeis: engenharia de software sob medida*. São Paulo: Érica, 2012.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássico e orientado a objetos*. 7. ed. Porto Alegre: AMGH; Bookman, 2011.
+- IEEE. *IEEE Software Engineering Collection on CD-ROM*. New York: IEEE, 2003.
