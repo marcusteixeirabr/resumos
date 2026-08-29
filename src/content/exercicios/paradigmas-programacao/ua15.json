@@ -1,0 +1,115 @@
+{
+  "ua": 15,
+  "questions": [
+    {
+      "question": "As linguagens de programação multiparadigma suportam o desenvolvimento combinando múltiplos paradigmas, como orientação a objetos, imperativo e funcional. Segundo Schade (2017) e Sebesta (2018), qual das alternativas a seguir apresenta uma característica marcante da linguagem F#?",
+      "options": [
+        "Sintaxe carregada e verbosa, herdada diretamente do Assembly.",
+        "Variáveis mutáveis por padrão e ausência de tipagem genérica.",
+        "Incompatibilidade estrutural com bibliotecas da plataforma .NET.",
+        "Programação assíncrona, imutabilidade por padrão e inferência avançada de tipos."
+      ],
+      "correctIndex": 3,
+      "explanation": "F# destaca-se por sua sintaxe concisa e leve, imutabilidade por padrão, inferência de tipos com generalização automática, suporte a funções de primeira classe e recursos avançados para programação paralela e assíncrona na plataforma .NET."
+    },
+    {
+      "question": "Em relação à linguagem JavaScript, seus fundamentos dinâmicos e seu papel no desenvolvimento web (Miletto e Bertagnolli, 2014), qual afirmação está correta?",
+      "options": [
+        "É uma linguagem predominantemente compilada de forma estática antes do envio ao cliente.",
+        "Opera exclusivamente no servidor (server-side), sem qualquer suporte nativo à manipulação de navegadores.",
+        "Proporciona recursos interativos como janelas de diálogo (dialog), validação de formulários no client-side e manipulação do DOM.",
+        "Exige a declaração rígida de tipos estáticos em todas as variáveis no momento da codificação."
+      ],
+      "correctIndex": 2,
+      "explanation": "JavaScript é uma linguagem interpretada/JIT, dinâmica, multiparadigma e baseada em protótipos, cujo principal uso histórico é client-side em páginas HTML para validação de formulários, janelas modais/diálogos e manipulação dinâmica do DOM."
+    },
+    {
+      "question": "Qual linguagem multiparadigma, primariamente funcional e originada em 2005 por Don Syme na Microsoft Research, integra o Visual Studio desde a versão 2010 e permite resolver rotinas de alta complexidade integrando-se nativamente a C# e VB.NET?",
+      "options": [
+        "JavaScript",
+        "Python",
+        "C++",
+        "F#"
+      ],
+      "correctIndex": 3,
+      "explanation": "F# foi desenvolvida na Microsoft Research por Don Syme, passou a integrar o Visual Studio 2010 e executa sobre a plataforma .NET, permitindo integração transparente com C# e reaproveitamento de todo o ecossistema .NET."
+    },
+    {
+      "question": "Qual linguagem de programação multiparadigma é utilizada de forma predominante integrada a documentos HTML, executando no lado do cliente (client-side) para fornecer interatividade, respostas a eventos e processos assíncronos?",
+      "options": [
+        "JavaScript",
+        "C++",
+        "Python",
+        "C#"
+      ],
+      "correctIndex": 0,
+      "explanation": "JavaScript é o padrão universal para scripts em navegadores web, permitindo controlar o comportamento de páginas a partir de eventos do usuário de maneira leve e dinâmica."
+    },
+    {
+      "question": "A linguagem Python é amplamente utilizada em múltiplos domínios e mantida pela Python Software Foundation. Em relação ao seu sistema de tipos (Menezes, 2019), qual é a sua correta classificação?",
+      "options": [
+        "Possui tipagem estática e fraca, realizando coerções automáticas em todos os operadores.",
+        "Possui tipagem estática e forte, exigindo declaração de tipo para cada variável.",
+        "Possui tipagem dinâmica e fraca, convertendo strings para inteiros implicitamente.",
+        "Possui tipagem dinâmica e forte, onde o interpretador infere os tipos e rejeita operações entre tipos incompatíveis com TypeError."
+      ],
+      "correctIndex": 3,
+      "explanation": "Python é de tipagem dinâmica (o tipo é associado ao valor em tempo de execução) e forte (o interpretador não faz coerções implícitas incompatíveis, levantando TypeError em operações como 'texto' + 10)."
+    },
+    {
+      "question": "Por que surgiram as linguagens de programação multiparadigma e qual é a principal vantagem de sua utilização no desenvolvimento de software?",
+      "options": [
+        "Surgiram para substituir todos os compiladores existentes por um único interpretador universal em Assembly.",
+        "Surgiram porque nenhum paradigma isolado é capaz de solucionar todos os problemas de forma computacionalmente eficiente, permitindo mesclar estilos para obter a solução mais adequada e legível.",
+        "Surgiram com o objetivo de eliminar a programação orientada a objetos de todas as aplicações modernas.",
+        "Surgiram exclusivamente para permitir que programas antigos em COBOL fossem executados em navegadores web."
+      ],
+      "correctIndex": 1,
+      "explanation": "Linguagens multiparadigma fornecem flexibilidade ao desenvolvedor para escolher e combinar os paradigmas (imperativo, funcional, OO) mais eficientes e expressivos para cada subproblema da aplicação."
+    },
+    {
+      "question": "Como a linguagem JavaScript implementa a orientação a objetos em comparação com linguagens baseadas em classes clássicas, como C++ e Java?",
+      "options": [
+        "Não suporta orientação a objetos de nenhuma forma, admitindo apenas funções puras.",
+        "Utiliza um modelo baseado em protótipos, onde métodos e propriedades podem ser anexados ou clonados a objetos em tempo de execução.",
+        "Exige que todas as classes sejam compiladas estaticamente para arquivos binários em tempo de compilação.",
+        "Exige herança múltipla estrita de interfaces declaradas em arquivos de cabeçalho separados."
+      ],
+      "correctIndex": 1,
+      "explanation": "O modelo de objetos do JavaScript é dinâmico e baseado em protótipos (prototypal inheritance), permitindo estender e modificar a estrutura de objetos em tempo de execução sem depender de esquemas fixos de compilação."
+    },
+    {
+      "question": "O que é a generalização automática presente no compilador da linguagem F# (Schade, 2017)?",
+      "options": [
+        "A conversão compulsória de todas as funções do programa para métodos estáticos em C#.",
+        "A técnica pela qual o compilador analisa os parâmetros de uma função e, caso não identifique dependência de um tipo específico, infere automaticamente que a função é genérica.",
+        "A exclusão automática de classes que contenham mais de dez métodos.",
+        "A tradução automática de código F# para código JavaScript sem necessidade de ferramentas adicionais."
+      ],
+      "correctIndex": 1,
+      "explanation": "Na generalização automática do F#, o compilador analisa o corpo da função e infere os tipos; se nenhum tipo específico for exigido pelas operações realizadas, a função é tipada como genérica ('a -> 'a) de forma transparente."
+    },
+    {
+      "question": "Qual é a implementação do Python escrita inteiramente em Python (RPython) que inclui um compilador Just-In-Time (JIT) e suporte à execução sem pilha (stackless) para alto desempenho e experimentação da linguagem?",
+      "options": [
+        "CPython",
+        "Jython",
+        "PyPy",
+        "IronPython"
+      ],
+      "correctIndex": 2,
+      "explanation": "PyPy é a implementação alternativa de Python escrita em RPython, notória por conter um compilador JIT integrado de alta performance e incentivar a experimentação no ecossistema Python."
+    },
+    {
+      "question": "Como se dá a cadeia de execução de um programa na implementação padrão do Python (CPython) a partir do código-fonte `.py`?",
+      "options": [
+        "O código-fonte é diretamente gravado no silício da CPU sem nenhuma camada de software intermediária.",
+        "O código-fonte é convertido em código assembly do sistema operacional e linkado estaticamente em um executável nativo.",
+        "O código-fonte é traduzido pelo compilador para bytecode intermediário (.pyc), o qual é então interpretado pela Máquina Virtual do Python (PVM).",
+        "O código-fonte é executado pelo motor JavaScript do navegador através da função eval()."
+      ],
+      "correctIndex": 2,
+      "explanation": "CPython compila o código-fonte Python em instruções de bytecode (.pyc), que são então executadas de maneira portável e otimizada pela Python Virtual Machine (PVM)."
+    }
+  ]
+}

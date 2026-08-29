@@ -1,0 +1,115 @@
+{
+  "ua": 15,
+  "questions": [
+    {
+      "question": "A garantia da qualidade de software envolve a aplicação de processos, técnicas e práticas que contribuem para a entrega de produtos confiáveis e aderentes aos requisitos. Assinale a alternativa que apresenta corretamente um método e atividade essencial utilizado para garantir a qualidade de software ao longo do ciclo de vida:",
+      "options": [
+        "A garantia da qualidade concentra-se exclusivamente na execução de testes funcionais manuais ao final do projeto.",
+        "O gerenciamento de configuração é um método de garantia da qualidade, pois permite controlar versões, componentes e alterações realizadas no software ao longo do tempo.",
+        "Os testes de unidade são suficientes por si sós para garantir o atendimento completo aos requisitos de negócio do sistema.",
+        "A identificação de defeitos exclusivamente pelos usuários finais em produção é o método recomendado para medir a qualidade."
+      ],
+      "correctIndex": 1,
+      "explanation": "O gerenciamento de configuração é uma disciplina fundamental de garantia de qualidade (processo), assegurando rastreabilidade, controle de versões, integridade dos artefatos e controle sistemático de mudanças."
+    },
+    {
+      "question": "O Capability Maturity Model Integration (CMMI) é amplamente utilizado por organizações para avaliar e aprimorar seus processos. Em relação à sua representação por estágios (staged representation), qual afirmação está correta?",
+      "options": [
+        "Possui três níveis de maturidade baseados apenas em ferramentas CASE.",
+        "É organizado em seis níveis contínuos que não exigem avaliação institucional.",
+        "É um modelo de maturidade cuja representação por estágios possui cinco níveis de maturidade (Inicial, Gerenciado, Definido, Gerenciado Quantitativamente e Otimizado), organizados de forma gradual e evolutiva.",
+        "Avalia unicamente a velocidade de digitação dos programadores sem considerar requisitos ou métricas."
+      ],
+      "correctIndex": 2,
+      "explanation": "A representação por estágios do CMMI estrutura a evolução organizacional em 5 níveis hierárquicos: 1-Inicial, 2-Gerenciado, 3-Definido, 4-Gerenciado Quantitativamente e 5-Otimizado."
+    },
+    {
+      "question": "Em relação à qualidade de produto e às atividades de teste de software (Bartié, 2002; Graham et al., 2008), analise as afirmações:\nI. O teste de aceitação pode ser realizado com a participação do cliente para verificar se o software atende aos requisitos solicitados.\nII. Garantir que a equipe siga a metodologia Scrum é a principal responsabilidade do analista de qualidade de produto.\nIII. Os testes de software devem ocorrer somente após a conclusão integral do desenvolvimento.\nIV. Testes unitários são executados diretamente no código-fonte e são classificados como testes de caixa-branca.\nV. A qualidade de produto contribui para aumentar a confiança dos clientes ao reduzir a ocorrência de defeitos em produção.\n\nAssinale a alternativa correta:",
+      "options": [
+        "Apenas I, IV e V estão corretas.",
+        "Apenas III, IV e V estão corretas.",
+        "Apenas II e V estão corretas.",
+        "Apenas I, II e III estão corretas."
+      ],
+      "correctIndex": 0,
+      "explanation": "As afirmativas I, IV e V são verdadeiras. A afirmativa II descreve qualidade de processo (não de produto) e a afirmativa III é incorreta, pois os testes devem ocorrer de forma contínua durante o desenvolvimento."
+    },
+    {
+      "question": "A medição da qualidade é essencial para acompanhar o progresso e a eficiência de projetos de software. Qual alternativa melhor descreve as métricas de qualidade de processo e produto utilizadas na engenharia de software (Pressman e Maxim, 2016)?",
+      "options": [
+        "As métricas de qualidade são utilizadas exclusivamente após o encerramento do contrato com o cliente.",
+        "As métricas de controle, o acompanhamento do projeto, o monitoramento de desempenho e as métricas de previsão são utilizados para apoiar tanto a gestão do processo quanto estimativas futuras.",
+        "As métricas de qualidade dispensam totalmente dados quantitativos, baseando-se unicamente em intuições individuais.",
+        "As métricas de produto servem apenas para medir o consumo de energia elétrica dos servidores de desenvolvimento."
+      ],
+      "correctIndex": 1,
+      "explanation": "Métricas de controle e acompanhamento permitem monitorar o desempenho em tempo real durante o ciclo de vida, enquanto métricas de previsão alimentam modelos de estimativa e tomadas de decisão estratégicas."
+    },
+    {
+      "question": "Em um cenário onde um sistema sob medida é entregue com meses de atraso decorrente de subestimação de esforço, escopo volátil, falhas de entendimento com o cliente e alocação inadequada de recursos, qual é a interpretação mais consistente sobre a causa raiz do problema?",
+      "options": [
+        "O problema foi unicamente causado pela linguagem de programação escolhida pela equipe técnica.",
+        "A culpa do atraso deve ser atribuída exclusivamente ao hardware do cliente que era incompatível.",
+        "Diversos fatores organizacionais e técnicos influenciaram o andamento do projeto, afetando prazos, previsibilidade e a execução sistemática das atividades.",
+        "A causa decorreu unicamente da falta de testes unitários automatizados no último mês de projeto."
+      ],
+      "correctIndex": 2,
+      "explanation": "O atraso e a degradação da qualidade em projetos de software resultam de uma combinação sistêmica de fatores organizacionais, gerenciais e técnicos, como falhas de comunicação, processos imaturos e estimativas deficientes."
+    },
+    {
+      "question": "Na terminologia formal de qualidade de software (Koscianski e Soares, 2007), qual é a distinção correta e sequencial entre os conceitos de Erro, Defeito e Falha?",
+      "options": [
+        "Defeito é o engano humano; Falha é o código estático; Erro é o resultado apresentado na tela.",
+        "Erro é a ação ou engano cometido pelo ser humano; Defeito é a anomalia incorporada no código ou projeto; Falha é a manifestação incorreta ou interrupção durante a execução do sistema.",
+        "Falha, Erro e Defeito são sinônimos exatos e intercambiáveis para qualquer problema de hardware.",
+        "Erro ocorre apenas no banco de dados; Defeito ocorre na rede; Falha ocorre nos requisitos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Um Erro (engano humano do desenvolvedor/analista) introduz um Defeito (bug no código/artefato) que, ao ser executado sob certas condições, produz uma Falha (comportamento visível incorreto para o usuário)."
+    },
+    {
+      "question": "Qual é o princípio fundamental enunciado pela clássica Regra 10 de Myers (Glenford Myers, 1979) na garantia de qualidade de software?",
+      "options": [
+        "Cada programador deve escrever no máximo dez linhas de código por dia.",
+        "Um software deve passar obrigatoriamente por dez rodadas de testes antes do deploy.",
+        "O custo financeiro de identificar e corrigir um defeito aumenta aproximadamente dez vezes a cada fase subsequente em que ele avança no ciclo de desenvolvimento.",
+        "A cada dez usuários no sistema, a equipe precisa adicionar um novo servidor de banco de dados."
+      ],
+      "correctIndex": 2,
+      "explanation": "A Regra 10 de Myers demonstra a importância econômica da detecção precoce: corrigir um defeito em produção pode custar 100 a 1000 vezes mais do que corrigi-lo durante a fase de requisitos ou arquitetura."
+    },
+    {
+      "question": "O Modelo de Melhoria de Processo do Software Brasileiro (MPS.BR) foi criado pela Softex para atender à realidade de empresas de software no Brasil. Como estão estruturados seus níveis de maturidade de processos?",
+      "options": [
+        "Possui 3 níveis alfabéticos: X, Y e Z.",
+        "Possui 5 níveis numéricos de 1 a 5, idênticos em nomenclatura ao CMMI.",
+        "Possui 7 níveis graduais de maturidade, iniciando no nível G (Parcialmente Gerenciado) até o nível A (Em Otimização).",
+        "Possui apenas 1 nível único de certificação binária (Aprovado ou Reprovado)."
+      ],
+      "correctIndex": 2,
+      "explanation": "O modelo MR-MPS-SW define 7 níveis de maturidade: G (Parcialmente Gerenciado), F (Gerenciado), E (Parcialmente Definido), D (Largamente Definido), C (Definido), B (Gerenciado Quantitativamente) e A (Em Otimização)."
+    },
+    {
+      "question": "O que caracteriza o Teste Exploratório e como os checklists são utilizados para apoiar essa abordagem prática (Gomes, 2015)?",
+      "options": [
+        "É um teste totalmente automatizado por robôs que dispensa qualquer intervenção humana.",
+        "O testador explora o sistema com base em sua experiência e intuição de negócio para encontrar falhas atípicas, utilizando checklists para assegurar a cobertura dos pontos críticos das telas.",
+        "Consiste na leitura passiva do manual de usuário sem interagir com o software.",
+        "É uma técnica exclusiva de testes de estresse em hardware de redes locais."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste exploratório apoia-se na criatividade e conhecimento de domínio do testador para simular caminhos não triviais de uso, guiando-se por checklists estruturados para não deixar telas essenciais sem validação."
+    },
+    {
+      "question": "A qualidade de software é classicamente dividida em duas áreas complementares: Qualidade de Processos e Qualidade de Produtos. Qual alternativa sintetiza corretamente essa divisão?",
+      "options": [
+        "A qualidade de processos avalia apenas o hardware da empresa; a qualidade de produtos avalia o preço de venda nas lojas.",
+        "A qualidade de processos foca em metodologias, maturidade organizacional e prevenção sistemática de falhas; a qualidade de produtos foca na verificação e validação do artefato gerado por meio de testes funcionais e estruturais.",
+        "Não existe diferença, ambas tratam apenas da execução de testes unitários.",
+        "A qualidade de processos é realizada exclusivamente pelos clientes; a qualidade de produtos é responsabilidade apenas do setor de compras."
+      ],
+      "correctIndex": 1,
+      "explanation": "A qualidade de processos estabelece métodos, procedimentos e padrões organizacionais (CMMI, MPS.BR, processos ágeis/tradicionais) para prevenir erros; a qualidade de produtos avalia o software construído através de testes (unitários, funcionais, exploratórios, aceitação)."
+    }
+  ]
+}

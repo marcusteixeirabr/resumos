@@ -1,0 +1,227 @@
+---
+title: "UA15 — Qualidade de Software"
+subtitle: "Adequação ao propósito, modelos de processo (CMMI e MPS.BR), a cadeia Erro-Defeito-Falha, a Regra 10 de Myers e as estratégias de teste de produto e testes exploratórios."
+ua: 15
+group: "Qualidade e Testes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua15.m4a" title="Por que software bom também falha" />
+
+### O Conceito e a Relatividade da Qualidade
+
+Na engenharia de software, a qualidade é formalmente definida pela capacidade de um sistema em **atender plenamente às necessidades explícitas e implícitas dos usuários e aos objetivos estratégicos do negócio** (Bartié, 2002; Basu, 2015). Sob a ótica clássica da engenharia, a qualidade envolve duas dimensões complementares: a **qualidade do projeto** (como os requisitos e a arquitetura foram concebidos) e a **qualidade de conformidade** (o grau em que a implementação final adere estritamente a esse projeto), sintetizadas no consagrado conceito de **"adequação ao propósito"** (*fitness for purpose*) (Pressman e Maxim, 2021).
+
+Embora o termo pareça intuitivo, a qualidade é um atributo complexo, subjetivo e de difícil mensuração quantitativa direta, pois assume valores distintos conforme a perspectiva de quem a avalia:
+
+> **A Analogia do Chocolate**: Se alguém prefere chocolate meio amargo e seu irmão prefere chocolate ao leite, ao receber uma barra ao leite, o irmão considerará o produto de altíssima qualidade, enquanto a outra pessoa julgará como insatisfatório, pois não atende ao seu gosto e à sua expectativa (Zanin, 2021).
+
+Na tecnologia da informação, o princípio é idêntico: se um software executa com rapidez e sem falhas, mas não resolve o problema real para o qual o cliente o contratou, ele carece de qualidade. Quando um software falha ou desaponta o usuário, ocorre uma **quebra de confiança** irreparável que compromete a viabilidade comercial do produto e da organização desenvolvedora.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/qds_01.webp" alt="Infográfico 'Guia Essencial da Qualidade de Software: Processos, Produtos e Resultados' — Os dois pilares da qualidade (processos via CMMI/MPS.BR e produtos via testes), regra 10 de Myers e testes exploratórios com checklists" caption="Qualidade de software: dimensões de processo e produto, níveis CMMI/MPS.BR e a Regra 10 de Myers" />
+</SlidesGrid>
+
+---
+
+### A Origem Histórica e a Complexidade do Software
+
+A busca pela padronização e pela qualidade é uma preocupação milenar da humanidade. Há mais de 4.000 anos, os antigos egípcios já haviam instituído um padrão formal de medida para obras de engenharia monumental: o **cúbito**, equivalente à distância entre o cotovelo e a ponta do dedo médio do faraó reinante (Koscianski e Soares, 2007).
+
+Contudo, construir software é incomparavelmente mais desafiador do que erguer estruturas físicas manufaturadas:
+- O software é **intangível**, altamente flexível e dotado de densidade lógica extrema.
+- O desenvolvimento é uma atividade **multidisciplinar**, exigindo refinadas habilidades de comunicação humana, interpretação de requisitos de negócio, modelagem lógica, programação e garantia sistemática da qualidade.
+- Para gerenciar essa complexidade, a engenharia de software subdivide a qualidade em dois pilares fundamentais: **Qualidade de Processos** e **Qualidade de Produtos** (Bartié, 2002).
+
+---
+
+### Os Dois Pilares: Qualidade de Processos vs. Qualidade de Produtos
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    Grandes Áreas da Qualidade de Software                   │
+├──────────────────────────────────────┬──────────────────────────────────────┤
+│        QUALIDADE DE PROCESSOS        │        QUALIDADE DE PRODUTOS         │
+├──────────────────────────────────────┼──────────────────────────────────────┤
+│ • Organização das atividades e etapas│ • Verificação do artefato construído │
+│ • Foco em prevenção e repetibilidade │ • Execução de testes de software     │
+│ • Modelos de maturidade e normas     │ • Análise de código e vulnerabilidades│
+│ • CMMI e MPS.BR                      │ • Caixa-Branca, Caixa-Preta e Cinza  │
+│ • Previsibilidade de custo e prazos  │ • Testes Unitários, Funcionais, etc. │
+└──────────────────────────────────────┴──────────────────────────────────────┘
+```
+
+#### 1. Qualidade de Processos
+
+A **Qualidade de Processos** concentra-se na organização sistemática dos métodos, procedimentos, ciclos de vida e padrões de trabalho adotados pela organização de desenvolvimento (Bartié, 2002). O objetivo central é estabelecer uma **cultura de prevenção e não tolerância a erros**, tornando os processos previsíveis, repetíveis e controlados.
+
+Para comprovar a maturidade e a conformidade de seus processos, as organizações utilizam modelos formais de avaliação e certificação:
+
+##### CMMI (*Capability Maturity Model Integration*)
+Modelo internacional de referência desenvolvido pelo SEI (*Software Engineering Institute*), estruturado em **cinco níveis de maturidade** na sua representação por estágios (Koscianski e Soares, 2007):
+1. **Nível 1 — Inicial**: Processos caóticos e imprevisíveis. O sucesso do projeto depende exclusivamente do heroísmo individual dos programadores.
+2. **Nível 2 — Gerenciado**: Requisitos são gerenciados e os processos de projetos individuais são planejados, executados, medidos e controlados.
+3. **Nível 3 — Definido**: Os processos organizacionais são formalmente padronizados, descritos em procedimentos claros, compreendidos por toda a equipe e integrados à cultura corporativa.
+4. **Nível 4 — Gerenciado Quantitativamente**: Os processos e a qualidade dos produtos são controlados por meio de métricas estatísticas e técnicas quantitativas rigorosas.
+5. **Nível 5 — Otimizado**: Foco na melhoria contínua e institucional dos processos a partir da análise sistemática de dados e inovação tecnológica.
+
+##### MPS.BR (*Melhoria do Processo de Software Brasileiro*)
+Criado pela **Softex** com apoio do Ministério da Ciência e Tecnologia (MCTI) e do BID, o MPS.BR (modelo MR-MPS-SW) foi desenvolvido para ser acessível às micro, pequenas e médias empresas brasileiras, distribuído em **sete níveis graduais de maturidade**:
+- **Nível G**: Processo Parcialmente Gerenciado
+- **Nível F**: Processo Gerenciado
+- **Nível E**: Processo Parcialmente Definido
+- **Nível D**: Processo Largamente Definido
+- **Nível C**: Processo Definido
+- **Nível B**: Processo Gerenciado Quantitativamente
+- **Nível A**: Processo em Otimização
+
+#### 2. Qualidade de Produtos
+
+A **Qualidade de Produtos** tem por objetivo avaliar o comportamento, a confiabilidade, a conformidade funcional e o desempenho do artefato de software executável gerado durante o desenvolvimento (Bartié, 2002; Graham et al., 2008). 
+
+Essa garantia é exercida através de **testes de software**, estruturados de acordo com o nível de visibilidade do código:
+- **Caixa-Branca (Estrutural)**: Testes realizados diretamente no código-fonte, examinando métodos, caminhos de decisão lógicos, branches e estruturas internas.
+- **Caixa-Preta (Funcional/Comportamental)**: Testes baseados nas especificações e requisitos, avaliando entradas e saídas sem examinar o código interno.
+- **Caixa-Cinza**: Combinação onde o testador possui conhecimento parcial da arquitetura ou do banco de dados, desenhando testes funcionais mais precisos.
+
+---
+
+### A Cadeia Terminológica: Erro $\rightarrow$ Defeito $\rightarrow$ Falha
+
+Um dos tópicos conceituais mais cobrados na engenharia de software é a distinção precisa entre a cadeia causal de falhas (Koscianski e Soares, 2007; Bartié, 2002):
+
+```text
+┌─────────────────┐       gera       ┌─────────────────┐       provoca      ┌─────────────────┐
+│      ERRO       │ ───────────────> │     DEFEITO     │ ─────────────────> │      FALHA      │
+│  (Ação Humana)  │                  │  (Bug no Código)│  (em execução)     │  (Comportamento │
+│                 │                  │                 │                    │    Incorreto)   │
+└─────────────────┘                  └─────────────────┘                    └─────────────────┘
+```
+
+1. **Erro (*Error / Mistake*)**: É o equívoco ou engano cognitivo cometido por um ser humano (programador, analista ou arquiteto). Por exemplo: um programador esquece de verificar se o divisor é igual a zero antes de executar uma operação de divisão.
+2. **Defeito (*Defect / Fault / Bug*)**: É a anomalia estática presente no código-fonte, no modelo ou na documentação decorrente de um erro humano. Exemplo: a linha `c = b / a;` sem tratamento de exceção no código compilado.
+3. **Falha (*Failure*)**: É a manifestação dinâmica incorreta percebida durante a execução do programa quando o código defeituoso é executado sob determinadas condições (ex: o sistema trava, encerra abruptamente com exceção de divisão por zero ou retorna um valor numérico incorreto para o usuário).
+
+> **Atenção**: Nem todo defeito gera falha imediatamente (um defeito em um trecho de código raramente executado pode permanecer dormente por anos). Por outro lado, falhas também podem ser causadas por **fatores externos**, como queda de rede, corrupção de banco de dados ou hardware defeituoso.
+
+---
+
+### O Impacto Financeiro da Prevenção: A Regra 10 de Myers
+
+Formulada por Glenford Myers (1979), a clássica **Regra 10 de Myers** postula que **o custo de identificar e corrigir um defeito aumenta aproximadamente 10 vezes a cada etapa subsequente em que ele avança no ciclo de vida de desenvolvimento**:
+
+| Fase de Detecção e Correção | Multiplicador de Custo | Exemplo Numérico Estimado |
+|---|---|---|
+| **Engenharia de Requisitos** | $1\times$ (Base) | US$ 10 |
+| **Projeto Arquitetural / Design** | $10\times$ | US$ 100 |
+| **Construção / Codificação** | $100\times$ | US$ 1.000 |
+| **Testes Formais / Homologação** | $1.000\times$ | US$ 10.000 |
+| **Produção / Operação Pós-Entrega** | $10.000\times+$ | US$ 100.000+ |
+
+```text
+Custo de Correção ($)
+  ▲
+  │                                                     ● Produção (10.000x)
+  │                                                    /
+  │                                                   /
+  │                                                  /
+  │                                       ● Testes (1.000x)
+  │                                      /
+  │                           ● Codificação (100x)
+  │                          /
+  │               ● Design (10x)
+  │              /
+  │  ● Requisitos (1x)
+  └─────────────────────────────────────────────────────────────► Fases do Ciclo
+```
+
+Essa curva exponencial fundamenta o conceito moderno de **Shift-Left Testing**: quanto mais cedo as atividades de garantia de qualidade, revisões e testes forem iniciadas, menor será o custo financeiro e o estresse operacional do projeto.
+
+---
+
+### Os Sete Benefícios Estratégicos da Qualidade de Software
+
+De acordo com Basu (2015), o investimento contínuo em qualidade proporciona benefícios estratégicos que extrapolam a economia financeira direta:
+
+1. **Economia Expressiva de Dinheiro e Prazos**: Previne retrabalhos onerosos em fases avançadas e minimiza despesas emergenciais de manutenção pós-deploy.
+2. **Prevenção de Emergências Corporativas Catastróficas**: Em sistemas críticos — como controle de semáforos urbanos, gestão hospitalar de UTI ou liquidação financeira —, um software livre de defeitos graves preserva patrimônios e vidas humanas.
+3. **Inspiração e Conquista da Confiança do Cliente**: Transmite profissionalismo e compromisso com o sucesso do cliente, construindo contratos e parcerias sustentáveis a longo prazo.
+4. **Elevação Contínua da Experiência do Usuário (UX)**: Softwares rápidos, estáveis e sem travamentos proporcionam alta satisfação ao usuário, estimulando a adoção espontânea e recomendações orgânicas.
+5. **Aumento da Margem de Lucro e Valor de Mercado**: Produtos de alta qualidade e confiabilidade podem ser comercializados a patamares superiores de preço, reduzindo drasticamente custos com atendimento e suporte técnico (SAC).
+6. **Fortalecimento da Reputação e Marca Corporativa**: Protege a reputação da empresa em um mercado competitivo onde qualquer falha pública viraliza instantaneamente nas redes.
+7. **Promoção de Organização Interna, Eficiência e Produtividade**: Elimina a rotina caótica de "apagar incêndios", reduz o estresse da equipe de engenharia e fomenta um ambiente de trabalho motivador e de alta performance.
+
+---
+
+### Aplicação Prática dos Testes de Produto
+
+Para viabilizar a qualidade de produto no dia a dia, a engenharia aplica diferentes modalidades de teste (Graham et al., 2008):
+
+- **Teste Unitário (Caixa-Branca)**: Testes automatizados escritos no próprio código para validar unidades lógicas individuais (funções, métodos e classes). Destaca-se a técnica **TDD** (*Test-Driven Development*), onde o teste unitário é escrito antes da implementação da funcionalidade.
+- **Teste Funcional (Caixa-Preta)**: Avalia o comportamento de fluxos completos de negócio do sistema. Pode ser executado manualmente via **Casos de Teste** (documentos estruturados contendo ação, dados de entrada e resultado esperado) ou por meio de **Scripts Automatizados** (robôs de teste que simulam a navegação do usuário).
+- **Teste de Aceitação**: Conduzido com a participação do cliente e dos usuários-chave no ambiente de homologação para validar se o software atende plenamente ao contrato e às necessidades operacionais.
+- **Teste Exploratório**: Modalidade dinâmica em que o analista de testes explora livremente o sistema baseando-se em sua intuição, criatividade e conhecimento de domínio. Sua principal virtude é revelar defeitos inesperados que fogem dos roteiros padronizados (ex: duplo clique rápido em botões de pagamento). Para evitar que telas importantes sejam negligenciadas, os testes exploratórios são estruturados com **Checklists**.
+- **Gerenciamento de Configuração de Software (SCM)**: Disciplina de apoio à qualidade que controla versões, gerencia branches, baseline de código e rastreabilidade de alterações ao longo do tempo.
+
+---
+
+<Callout type="default">
+**Desafio da UA — Elaboração de Checklists de Teste Exploratório**
+
+O desafio proposto nesta UA exige a elaboração de um modelo estruturado de checklist para garantir a cobertura abrangente em sessões de teste exploratório:
+
+1. **Checklist Genérico (Padrão para Qualquer Tela do Aplicativo)**:
+   - Validação de campos obrigatórios e caracteres especiais / injeção de dados inválidos.
+   - Responsividade visual em diferentes resoluções de tela e orientação (retrato/paisagem).
+   - Comportamento de botões sob múltiplos cliques rápidos consecutivos.
+   - Navegação por teclado (tabulação e foco acessível).
+   - Clareza e consistência das mensagens de feedback de erro e sucesso.
+   - Tempo de resposta e indicadores visuais de carregamento (*loading spinners*).
+
+2. **Checklist Específico de Negócio**:
+   - Validação de cálculos de juros, descontos, limites e regras de transação financeira.
+   - Teste de persistência e integridade das informações no banco de dados após operações críticas.
+   - Verificação de logs de auditoria e consistência de permissões por perfil de usuário.
+</Callout>
+
+---
+
+<Callout type="warning">
+**Práticas Modernas — QA em Ambientes Ágeis e DevOps**
+
+Na engenharia de software atual (2026), o antigo modelo onde a equipe de desenvolvimento "jogava o software por cima do muro" para uma equipe de testes isolada foi totalmente superado:
+- **Testes Contínuos em Pipelines CI/CD**: A cada *pull request*, suites de testes unitários, testes de integração e análise estática de código (*SonarQube*, linters) são disparados automaticamente.
+- **Qualidade como Responsabilidade Compartilhada**: Todos os membros do time ágil (desenvolvedores, PO, Scrum Master e QA) são corresponsáveis pela qualidade intrínseca do software desde o refinamento da User Story.
+</Callout>
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Definição de Qualidade**: Adequação ao propósito (*fitness for purpose*) e conformidade com os requisitos explícitos (funcionais e não funcionais).
+- **Duas Áreas da Qualidade**:
+  - **Qualidade de Processos**: Organização sistemática, métodos, ciclo de vida e prevenção. Modelos: **CMMI** (5 níveis por estágios: Inicial, Gerenciado, Definido, Gerenciado Quantitativamente, Otimizado) e **MPS.BR** (7 níveis: G ao A).
+  - **Qualidade de Produtos**: Avaliação do software em si através de testes estáticos (inspeções) e dinâmicos (caixa-branca, preta, unitários, funcionais, exploratórios).
+- **A Tríade Fundamental**:
+  - **Erro**: Engano cognitivo humano (cometido pelo desenvolvedor).
+  - **Defeito (Bug)**: Incorreção física no código ou no documento.
+  - **Falha**: Comportamento incorreto manifestado dinamicamente durante a execução.
+- **Regra 10 de Myers**: O custo de correção de um defeito cresce **10 vezes** a cada fase em que avança no ciclo de desenvolvimento.
+- **Teste Exploratório**: Focado na experiência do testador para achar erros fora do padrão; utiliza **checklists** para orientar a cobertura.
+- **Gerenciamento de Configuração**: Prática vital de qualidade de processo para controlar versões, componentes e histórico de alterações.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZANIN, A. *Engenharia de software*. Porto Alegre: SAGAH, 2021.
+- BARTIÉ, A. *Garantia da qualidade de software*. Rio de Janeiro: Elsevier, 2002.
+- BASU, A. *Software quality assurance, testing and metrics*. Nova Déli: PHI Learning, 2015.
+- KOSCIANSKI, A.; SOARES, M. *Qualidade de software: aprenda as metodologias e técnicas mais modernas para o desenvolvimento de software*. 2. ed. São Paulo: Novatec, 2007.
+- MYERS, G. J. *The art of software testing*. Nova York: John Wiley & Sons, 1979.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 9. ed. Porto Alegre: AMGH, 2021.
+- GRAHAM, D. et al. *Foundations of software testing: ISTQB certification*. Londres: Cengage Learning EMEA, 2008.
+- GOMES, A. C. *Testes de software na prática*. São Paulo: Novatec, 2015.
