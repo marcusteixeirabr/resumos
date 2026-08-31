@@ -41,51 +41,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         <div class="hero-meta">
           <div class="meta-item"><span class="meta-value">8</span><span class="meta-label">Disciplinas</span></div>
           <div class="meta-divider"></div>
-          <div class="meta-item"><span class="meta-value">6</span><span class="meta-label">Resumos prontos</span></div>
+          <div class="meta-item"><span class="meta-value">8</span><span class="meta-label">Resumos prontos</span></div>
           <div class="meta-divider"></div>
           <div class="meta-item"><span class="meta-value">100%</span><span class="meta-label">Open Source</span></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="current-term">
-      <div class="container">
-        <div class="section-header">
-          <span class="section-eyebrow">Trimestre atual · 3T 2026</span>
-          <h2>Em andamento</h2>
-        </div>
-        <div class="grid">
-
-          <a class="card card-featured" href={`${base}/paradigmas-programacao/ua1/`} aria-label="Acessar resumos de Paradigmas de Programação">
-            <div class="card-top">
-              <div class="card-icon icon-blue" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </div>
-              <div class="card-status status-progress">Em andamento</div>
-            </div>
-            <h3>Paradigmas de Programação</h3>
-            <p>Métodos e paradigmas de programação: imperativo, declarativo, estruturado e orientado a objetos, e sua evolução histórica.</p>
-            <div class="card-footer">
-              <div class="chip-list"><span class="chip">Paradigmas</span><span class="chip">POO</span><span class="chip">Histórico</span></div>
-              <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </div>
-          </a>
-
-          <a class="card card-featured" href={`${base}/engenharia-software/ua1/`} aria-label="Acessar resumos de Engenharia de Software">
-            <div class="card-top">
-              <div class="card-icon icon-orange" aria-hidden="true">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
-              </div>
-              <div class="card-status status-progress">Em andamento</div>
-            </div>
-            <h3>Engenharia de Software</h3>
-            <p>Conceitos fundamentais, a crise do software, evolução tecnológica e de processo — do modelo cascata aos métodos ágeis.</p>
-            <div class="card-footer">
-              <div class="chip-list"><span class="chip">Processos</span><span class="chip">Ágil</span><span class="chip">Ciclo de Vida</span></div>
-              <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-            </div>
-          </a>
-
         </div>
       </div>
     </section>
@@ -97,6 +55,36 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
           <h2>Explore o conteúdo</h2>
         </div>
         <div class="grid">
+
+          <a class="card" href={`${base}/paradigmas-programacao/ua1/`} aria-label="Acessar resumos de Paradigmas de Programação">
+            <div class="card-top">
+              <div class="card-icon icon-blue" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </div>
+              <div class="card-status status-done">Resumos prontos</div>
+            </div>
+            <h3>Paradigmas de Programação</h3>
+            <p>Métodos e paradigmas de programação: imperativo, declarativo, estruturado e orientado a objetos, programação funcional e linguagens multiparadigma.</p>
+            <div class="card-footer">
+              <div class="chip-list"><span class="chip">Paradigmas</span><span class="chip">Funcional</span><span class="chip">Multiparadigma</span></div>
+              <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+          </a>
+
+          <a class="card" href={`${base}/engenharia-software/ua1/`} aria-label="Acessar resumos de Engenharia de Software">
+            <div class="card-top">
+              <div class="card-icon icon-orange" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+              </div>
+              <div class="card-status status-done">Resumos prontos</div>
+            </div>
+            <h3>Engenharia de Software</h3>
+            <p>Ciclo de vida de software, processos cascata e ágeis (XP, Scrum, OpenUP), estimativas, métricas, manutenção, testes e qualidade (CMMI, MPS.BR).</p>
+            <div class="card-footer">
+              <div class="chip-list"><span class="chip">Processos</span><span class="chip">Testes</span><span class="chip">Qualidade</span></div>
+              <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+            </div>
+          </a>
 
           <a class="card" href={`${base}/programming-data-persistence/ua1/`} aria-label="Acessar resumos de Programming and Data Persistence">
             <div class="card-top">

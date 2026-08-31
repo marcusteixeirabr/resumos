@@ -9,17 +9,10 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 
 ## Disciplinas
 
-### Trimestre atual
-
 | Disciplina | Tópicos principais | Resumos |
 |---|---|---|
-| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, programação funcional (cálculo lambda, funções puras, funções de primeira classe, funtores/mônadas, currying), linguagens multiparadigma (F#, JavaScript, Python), evolução histórica das linguagens | 🟡 15/16 UAs em andamento |
-| **Engenharia de Software** | Crise do software, conceitos fundamentais, evolução tecnológica e de processo (cascata, incremental, espiral, ágil), fases do ciclo de vida, SWEBOK, técnicas de estimativa (FPA, UCP, COCOMO), métricas de software, metodologias ágeis (XP, Scrum, OpenUP), manutenção de software, verificação, validação e testes, qualidade de software (CMMI, MPS.BR, Regra 10 de Myers) | 🟡 15/16 UAs em andamento |
-
-### Trimestres anteriores
-
-| Disciplina | Tópicos principais | Resumos |
-|---|---|---|
+| **Paradigmas de Programação** | Métodos de programação, paradigmas imperativo/declarativo/estruturado/orientado a objetos, programação funcional (cálculo lambda, funções puras, funções de primeira classe, funtores/mônadas, currying), linguagens multiparadigma (F#, JavaScript, Python), evolução histórica das linguagens | ✅ Resumos prontos (16/16 UAs) |
+| **Engenharia de Software** | Crise do software, conceitos fundamentais, evolução tecnológica e de processo (cascata, incremental, espiral, ágil), fases do ciclo de vida, SWEBOK, técnicas de estimativa (FPA, UCP, COCOMO), métricas de software, metodologias ágeis (XP, Scrum, OpenUP), manutenção de software, verificação, validação e testes, qualidade de software (CMMI, MPS.BR, Regra 10 de Myers) | ✅ Resumos prontos (16/16 UAs) |
 | **Programming and Data Persistence** | Manipulação de arquivos, tipos de arquivos, operações I/O, acesso sequencial e direto, DOM, SQL, JDBC, JPA/Hibernate | ✅ Resumos prontos (16/16 UAs) |
 | **Database Design for Apps** | Conceitos de BD, modelagem (ER, relacional), SQL (DDL/DML/DCL/DQL), transações, NoSQL, migrações | ✅ Resumos prontos (16/16 UAs) |
 | **Software Design** | Arquitetura de software, UML (classes, sequência, componentes, estados), DER/MER, padrões de projeto | ✅ Resumos prontos (16/16 UAs) |
@@ -53,8 +46,8 @@ resumos/
 │   │   ├── database-design-for-apps/     # ua1.mdx … ua16.mdx
 │   │   ├── engenharia-requisitos/        # ua1.mdx … ua16.mdx
 │   │   ├── pensamento-computacional/     # ua1.mdx … ua16.mdx
-│   │   ├── paradigmas-programacao/       # ua1.mdx … ua16.mdx (em andamento)
-│   │   └── engenharia-software/          # ua1.mdx … ua16.mdx (em andamento)
+│   │   ├── paradigmas-programacao/       # ua1.mdx … ua16.mdx
+│   │   └── engenharia-software/          # ua1.mdx … ua16.mdx
 │   ├── components/              # Callout, Sidebar, SlidesGrid, SlideItem, InlineImage…
 │   ├── layouts/                 # BaseLayout, DisciplineLayout
 │   └── pages/                   # rotas dinâmicas por disciplina

@@ -1,0 +1,251 @@
+---
+title: "UA16 — Modelos e Normas de Qualidade de Software: CMMI e MPS.BR"
+subtitle: "Governança e maturidade de processos de software: gerenciamento e planejamento da qualidade, atributos sistêmicos, normas ISO/IEC (9126, 12207, 14598, 15504/SPICE, 90003) e os modelos de maturidade CMMI e MPS.BR."
+ua: 16
+group: "Qualidade e Testes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/engenharia-software/ua16.m4a" title="Modelos de qualidade evitam desastres milionários" />
+
+### O Gerenciamento da Qualidade de Software
+
+Na engenharia de software contemporânea, a qualidade transcende a simples verificação pós-construção do código: ela é uma disciplina estruturada de governança que acompanha todo o ciclo de vida do desenvolvimento. Segundo Sommerville (2011), o gerenciamento da qualidade de software é composto por **três atividades principais**:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 Três Atividades do Gerenciamento da Qualidade               │
+├──────────────────────┬──────────────────────┬───────────────────────────────┤
+│ GARANTIA DA          │ PLANEJAMENTO DA      │ CONTROLE DA                   │
+│ QUALIDADE (QA)       │ QUALIDADE            │ QUALIDADE (QC)                │
+├──────────────────────┼──────────────────────┼───────────────────────────────┤
+│ • Estabelece o       │ • Desenvolve o plano │ • Monitora a execução         │
+│   quadro de normas e │   de qualidade para o│   para assegurar que os       │
+│   padrões do processo│   projeto específico │   processos definidos         │
+│ • Foco organizacional│ • Metas e atributos  │   sejam estritamente seguidos │
+└──────────────────────┴──────────────────────┴───────────────────────────────┘
+```
+
+#### Níveis de Preocupação e Independência da Equipe
+Para que a qualidade seja alcançada de forma sustentável, a organização deve atuar em **três níveis de preocupação** (Sommerville, 2011):
+1. **Nível Organizacional**: Estabelecer um quadro estruturado de processos e padrões que sirvam de base para todos os projetos da empresa.
+2. **Nível do Projeto (Aplicação e Verificação)**: Selecionar processos de qualidade específicos para o projeto e verificar continuamente se estão sendo seguidos conforme o planejado.
+3. **Nível do Projeto (Plano de Qualidade)**: Desenvolver formalmente o documento de plano de qualidade com as metas acordadas com os clientes e patrocinadores.
+
+> **Independência da Qualidade**: Em sistemas de grande porte, a equipe de garantia da qualidade deve ser organizacionalmente **independente da equipe de desenvolvimento**. Essa separação garante uma visão isenta e objetiva sobre o software, gerando relatórios de conformidade sem o viés ou a pressão de prazos da equipe de programação.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cmq_01.webp" alt="Infográfico 'Comparação de Modelos de Qualidade' — Diferenças fundamentais entre CMMI (5 níveis de maturidade) e MPS.BR (7 níveis de maturidade, adaptado ao Brasil)" caption="Modelos de maturidade: CMMI (5 níveis) vs. MPS.BR (7 níveis do G ao A) e normas ISO/IEC" />
+</SlidesGrid>
+
+---
+
+### Planejamento da Qualidade de Software
+
+Planejar a qualidade significa definir com antecedência quais padrões, métodos e métricas serão adotados em um projeto de software. O resultado dessa atividade é o **Plano de Qualidade**, um documento que deve ser conciso e objetivo para facilitar a consulta pela equipe de desenvolvimento.
+
+#### Estrutura Essencial do Plano de Qualidade
+1. **Introdução ao Produto**: Descrição sucinta do sistema, seus objetivos de negócio e expectativas dos usuários.
+2. **Planos de Produto**: Especificação das entregas, marcos (*milestones*) e cronograma de liberação dos artefatos.
+3. **Descrições de Processo**: Definição clara dos processos de desenvolvimento, fluxos de trabalho e técnicas de verificação a serem seguidos.
+4. **Metas de Qualidade**: Seleção dos atributos de qualidade prioritários para o sistema (ex.: desempenho, disponibilidade de 99,9%, segurança) e como eles serão mensurados.
+5. **Riscos e Gerenciamento de Riscos**: Identificação dos riscos técnicos e organizacionais que podem comprometer a qualidade e as estratégias de mitigação.
+
+---
+
+### Atributos e Fatores de Qualidade de Software
+
+Para orientar a avaliação da qualidade, a engenharia de software apoia-se em modelos conceituais como os fatores clássicos de McCall (1977) — divididos em Operação, Revisão e Transição do Produto — e na taxonomia de Sommerville (2011), que agrupa os atributos em **três grandes categorias sistêmicas**:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    Grandes Categorias de Atributos de Qualidade             │
+├──────────────────────┬──────────────────────┬───────────────────────────────┤
+│      SEGURANÇA       │  COMPREENSIBILIDADE  │         PORTABILIDADE         │
+├──────────────────────┼──────────────────────┼───────────────────────────────┤
+│ • Proteção           │ • Usabilidade        │ • Adaptabilidade              │
+│ • Confiabilidade     │ • Facilidade de      │ • Reusabilidade               │
+│ • Resiliência        │   aprendizado        │ • Modularidade                │
+│ • Robustez           │ • Interface atraente │ • Eficiência de ambiente      │
+└──────────────────────┴──────────────────────┴───────────────────────────────┘
+```
+
+1. **Segurança (*Security / Dependability*)**: Capacidade do sistema em resistir a tentativas não autorizadas de invasão ou negação de serviço, garantindo a integridade dos dados e prestando serviços contínuos aos usuários legítimos através de resiliência e robustez.
+2. **Compreensibilidade (*Understandability / Usability*)**: Grau em que o software pode ser facilmente compreendido, aprendido, operado e navegado pelos usuários finais, apresentando interface intuitiva e consistente.
+3. **Portabilidade (*Portability / Adaptability*)**: Facilidade com que o software pode ser adaptado, transferido e executado em diferentes plataformas, sistemas operacionais e ambientes de nuvem sem exigir refatorações estruturais.
+
+> **Trade-offs de Qualidade**: Nenhum software pode maximizar todos os atributos simultaneamente (por exemplo, segurança extrema pode gerar atrito na usabilidade). O plano de qualidade deve definir quais atributos são críticos para o sucesso do produto.
+
+---
+
+### Padrões de Produto vs. Padrões de Processo
+
+Os padrões exercem papel fundamental para padronizar o vocabulário técnico e garantir a repetibilidade no ciclo de vida (Sommerville, 2011):
+
+| Dimensão | Definição | Exemplos Práticos |
+|---|---|---|
+| **Padrões de Produto** | Definem as características e a formatação que os artefatos de saída (código e documentos) devem exibir. | • Guia de estilo de código (Java/Python)<br />• Estrutura do documento de requisitos<br />• Formato de cabeçalho de métodos e classes<br />• Formulário de revisão de arquitetura<br />• Formulário de solicitação de mudança |
+| **Padrões de Processo** | Definem como as atividades e procedimentos do ciclo de desenvolvimento devem ser executados. | • Condução de reuniões de revisão de projeto<br />• Processo de versão, empacotamento e release<br />• Processo de aprovação do plano de projeto<br />• Processo formal de controle de mudanças<br />• Procedimento de registro e triagem de testes |
+
+Para evitar que os padrões se tornem burocráticos ou sejam abandonados pela equipe, recomenda-se:
+1. Envolver os próprios desenvolvedores na escolha e definição dos padrões.
+2. Revisar os padrões regularmente para acompanhar a evolução tecnológica.
+3. Utilizar ferramentas automatizadas (linters, formatadores e pipelines de CI) que apliquem os padrões de forma transparente.
+
+---
+
+### Normas Internacionais ISO/IEC de Qualidade
+
+A Organização Internacional de Normalização (ISO) e a Comissão Eletrotécnica Internacional (IEC) consolidaram normas técnicas de referência global para a engenharia de software:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                 Normas Internacionais de Qualidade de Software              │
+├──────────────────────────────────────┬──────────────────────────────────────┤
+│         FOCO NO PRODUTO              │          FOCO NO PROCESSO            │
+├──────────────────────────────────────┼──────────────────────────────────────┤
+│ • ISO/IEC 9126: Qualidade e atributos│ • ISO/IEC 12207: Processos do ciclo  │
+│   de produtos de software            │   de vida do software                │
+│ • ISO/IEC 14598: Guias para processo │ • ISO/IEC 15504 (SPICE): Avaliação e │
+│   de avaliação de produto de software│   melhoria de processos de software  │
+│                                      │ • ISO/IEC 90003: Diretrizes para     │
+│                                      │   aplicação da ISO 9001 a software   │
+└──────────────────────────────────────┴──────────────────────────────────────┘
+```
+
+---
+
+### Modelo CMMI (*Capability Maturity Model Integration*)
+
+Desenvolvido pelo **SEI** (*Software Engineering Institute*) da Carnegie Mellon University, o **CMMI** é um modelo de referência global para avaliação e melhoria contínua da capacidade e maturidade dos processos de software.
+
+Na sua consagrada **Representação por Estágios** (*Staged Representation*), o CMMI estrutura a evolução organizacional em **cinco níveis de maturidade**:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     Níveis de Maturidade do CMMI                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ 5. OTIMIZADO                 Melhoria contínua orientada a metas de negócio │
+│    ▲                                                                        │
+│ 4. GERENCIADO QUANTITATIVAMENTE Processos controlados estatisticamente      │
+│    ▲                                                                        │
+│ 3. DEFINIDO                  Processos padronizados em nível organizacional │
+│    ▲                                                                        │
+│ 2. GERENCIADO                Projetos planejados e controlados pontualmente │
+│    ▲                                                                        │
+│ 1. INICIAL                   Caótico, ad-hoc, dependente de heróis          │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Nível 1 — Inicial**: Processos caóticos, reativos e imprevisíveis. Não há ambiente de desenvolvimento estável; se existem padrões, não são seguidos. O sucesso dos projetos depende exclusivamente de esforço e heroísmo individual.
+2. **Nível 2 — Gerenciado**: Os projetos possuem requisitos gerenciados, custos e prazos planejados e controlados em nível de projeto. Há disciplina para cumprir o que foi planejado.
+3. **Nível 3 — Definido**: Os processos são padronizados, bem documentados e compreendidos em **nível organizacional**. Procedimentos consistentes são reutilizados em todos os projetos da empresa.
+4. **Nível 4 — Gerenciado Quantitativamente**: O desempenho dos processos é controlado por meio de **métricas estatísticas e técnicas quantitativas**, proporcionando alta previsibilidade de qualidade e produtividade.
+5. **Nível 5 — Otimizado**: Foco em **melhoria contínua de processos**, inovação tecnológica e prevenção proativa de defeitos com base na análise estatística de causas-raiz.
+
+---
+
+### Modelo MPS.BR (Melhoria do Processo de Software Brasileiro)
+
+Criado pela **SOFTEX** (Associação para Promoção da Excelência do Software Brasileiro) com apoio do MCTI, FINEP e Banco Interamericano de Desenvolvimento (BID), o **MPS.BR** é um modelo de qualidade desenvolvido para a realidade de micro, pequenas e médias empresas brasileiras.
+
+O modelo é fundamentado nas normas **ISO/IEC 12207**, **ISO/IEC 15504 (SPICE)** e mantém total compatibilidade com o **CMMI**, mas organiza sua maturidade em **sete níveis graduais** (do G ao A), permitindo uma transição mais suave e acessível:
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     Níveis de Maturidade do MPS.BR                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ Nível A — Em Otimização                 (Equivalente ao CMMI 5)             │
+│ Nível B — Gerenciado Quantitativamente  (Equivalente ao CMMI 4)             │
+│ Nível C — Definido (ADR, DRU, GRI)      (Equivalente ao CMMI 3)             │
+│ Nível D — Largamente Definido (5 proc.) (Equivalente ao CMMI 3)             │
+│ Nível E — Parcialmente Definido         (Equivalente ao CMMI 3)             │
+│ Nível F — Gerenciado (QA e Medição)     (Equivalente ao CMMI 2)             │
+│ Nível G — Parcialmente Gerenciado       (Equivalente ao CMMI 2)             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Processos Específicos dos Níveis MPS.BR
+- **Nível G (Parcialmente Gerenciado)**: Foco na gestão inicial de projetos e requisitos.
+- **Nível F (Gerenciado)**: Adiciona garantia da qualidade, medição e gerência de configuração de software.
+- **Nível E (Parcialmente Definido)**: Foco na padronização e definição dos processos organizacionais.
+- **Nível D (Largamente Definido)**: Implementa 5 processos essenciais com a mesma maturidade:
+  1. *DRE* — Desenvolvimento de Requisitos
+  2. *ITP* — Integração do Produto
+  3. *PCP* — Projeto e Construção do Produto
+  4. *VAL* — Validação
+  5. *VER* — Verificação
+- **Nível C (Definido)**: Implementa 3 processos organizacionais avançados:
+  1. *ADR* — Análise de Decisão e Resolução
+  2. *DRU* — Desenvolvimento para Reutilização
+  3. *GRI* — Gerência de Riscos
+- **Nível B (Gerenciado Quantitativamente)**: Implementação de medições estatísticas e modelos preditivos de processos.
+- **Nível A (Em Otimização)**: Processos continuamente otimizados para atender aos objetivos estratégicos de negócio.
+
+> **Periodicidade de Avaliação**: No MPS.BR, as empresas certificadas passam por reavaliação oficial a cada **2 anos** para manter seu selo de maturidade ou avançar para um nível superior.
+
+---
+
+### Comparativo: CMMI vs. MPS.BR
+
+| Critério | CMMI (*SEI / ISACA*) | MPS.BR (*Softex / MCTI*) |
+|---|---|---|
+| **Origem e Escopo** | Global (EUA) — grandes corporações e multinacionais | Nacional (Brasil) — adaptado a micro, pequenas e médias empresas |
+| **Níveis de Maturidade** | 5 níveis numéricos (1 a 5) | 7 níveis alfabéticos graduais (G a A) |
+| **Custo de Certificação** | Muito elevado (avaliadores internacionais) | Acessível (instituições avaliadoras credenciadas no Brasil) |
+| **Base Normativa** | CMM e práticas consolidadas do SEI | ISO/IEC 12207, ISO/IEC 15504 e CMMI |
+| **Periodicidade de Avaliação** | Validade recomendada de 3 anos | Avaliação obrigatória a cada 2 anos |
+| **Gradualismo de Implantação** | Saltos de nível mais amplos e complexos | Passos graduais e menores (permite evolução contínua) |
+
+---
+
+<Callout type="default">
+**Desafio da UA — Seleção de Modelo de Qualidade para Empresas Nacionais**
+
+No desafio desta unidade, uma empresa de desenvolvimento de software de médio porte no Brasil busca certificar seus processos para melhorar a previsibilidade de entregas e disputar licitações públicas e privadas:
+
+1. **Escolha Recomendada**: O modelo **MPS.BR**.
+2. **Justificativa Técnica**: O MPS.BR foi desenhado especificamente para a realidade orçamentária e operacional brasileira. Sua divisão em 7 níveis graduais (iniciando no Nível G) permite que a organização alcance resultados rápidos de conformidade sem o investimento proibitivo exigido pelo CMMI, mantendo compatibilidade direta caso decida buscar o CMMI no futuro.
+</Callout>
+
+---
+
+<Callout type="warning">
+**Atenção às Normas ISO: Transição da ISO 9126 para a ISO 25010**
+
+Em provas acadêmicas e concursos públicos, a **ISO/IEC 9126** e a **ISO/IEC 14598** ainda são amplamente cobradas para descrever qualidade de produto e métricas de avaliação. No entanto, na indústria moderna, essas duas normas foram formalmente consolidadas e substituídas pela família **ISO/IEC 25010 (SQuaRE — *System and Software Quality Requirements and Evaluation*)**, que expandiu os atributos clássicos incorporando segurança da informação, compatibilidade e conformidade em ambientes de nuvem.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+A garantia de qualidade de processos e produtos na engenharia atual integra maturidade e agilidade:
+- **CMMI V2.0 / V3.0 e Métodos Ágeis**: As versões recentes do CMMI incorporaram guias específicos para adoção conjunta com Scrum, Kanban e SAFe (*Scaled Agile Framework*), demonstrando que disciplina de processos e agilidade não são excludentes.
+- **Qualidade Contínua e DevOps (*Shift-Left Testing*)**: A qualidade migrou do final do ciclo para a esteira contínua de CI/CD, onde linters estáticos (SonarQube), suítes de testes automatizados e verificações de segurança (SAST/DAST) bloqueiam código não conforme antes mesmo do deploy.
+- **Métricas Orientadas ao Fluxo (*DORA Metrics*)**: Além das métricas tradicionais de CMMI Nível 4, organizações de alta performance utilizam métricas DORA (*Deployment Frequency*, *Lead Time for Changes*, *Change Failure Rate*, *Time to Restore Service*) para medir maturidade operacional.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Atividades do Gerenciamento da Qualidade**: **Garantia da Qualidade** (procedimentos e padrões organizacionais), **Planejamento da Qualidade** (plano de qualidade com metas e seleção de padrões do projeto) e **Controle da Qualidade** (garantir que os processos sejam seguidos).
+- **Atributos de Sommerville**: Agrupados em **Segurança** (proteção, confiabilidade, resiliência, robustez), **Compreensibilidade** (usabilidade, facilidade de aprendizado) e **Portabilidade** (adaptabilidade, reusabilidade, modularidade).
+- **Padrões**: Padrões de **produto** aplicam-se à saída/artefatos (código, documentos, formulários); padrões de **processo** aplicam-se às atividades (revisões, releases, controle de mudanças).
+- **Normas ISO**: **ISO 9126** (qualidade de produto), **ISO 12207** (ciclo de vida), **ISO 14598** (avaliação de produto), **ISO 15504/SPICE** (avaliação de processos) e **ISO 90003** (ISO 9001 aplicada a software).
+- **CMMI (5 Níveis)**: 1-Inicial, 2-Gerenciado, 3-Definido, 4-Gerenciado Quantitativamente, 5-Otimizado.
+- **MPS.BR (7 Níveis)**: G (Parcialmente Gerenciado), F (Gerenciado), E (Parcialmente Definido), D (Largamente Definido — DRE, ITP, PCP, VAL, VER), C (Definido — ADR, DRU, GRI), B (Gerenciado Quantitativamente) e A (Em Otimização). Criado pela Softex, avaliado a cada 2 anos.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- VETTORAZZO, A. de S. *Engenharia de software*. Porto Alegre: SAGAH, 2020.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: Bookman, 2016.
+- FRANCISCANI, J. F.; PESTILI, L. C. *CMMI e MPS.BR: um estudo comparativo*. 2012.
+- GROFFE, R. J. *Maturidade no desenvolvimento de software: CMMI e MPS-BR*. DevMedia, 2013.
+- SOFTEX. *MPS.BR — Guia Geral de Software*. Associação para Promoção da Excelência do Software Brasileiro, 2021.

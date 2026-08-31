@@ -1,0 +1,296 @@
+---
+title: "UA16 — Linguagens Multiparadigma: Aplicações Práticas em F#, JavaScript e Python"
+subtitle: "Aplicações reais dos paradigmas imperativo, funcional e orientado a objetos em F#, JavaScript e Python: mutabilidade explícita, funções de alta ordem, modelos de classes e protótipos, e arquitetura de execução."
+ua: 16
+group: "Linguagens Multiparadigma"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/paradigmas-programacao/ua16.m4a" title="F#, JavaScript e Python resolvem sistemas complexos" />
+
+### A Resolução de Problemas Complexos com Múltiplos Paradigmas
+
+Conforme explorado na unidade anterior, o desenvolvimento moderno de software raramente se restringe a um único paradigma. Sistemas corporativos contemporâneos demandam soluções que combinem a clareza e previsibilidade matemática do paradigma funcional, o poder de modelagem do domínio proporcionado pela orientação a objetos e a eficiência pragmática do controle imperativo de hardware e fluxo.
+
+As linguagens multiparadigma **F#**, **JavaScript** e **Python** destacam-se no mercado justamente por oferecerem sintaxes flexíveis e bibliotecas robustas que viabilizam o trânsito harmônico entre esses três estilos de programação, permitindo que o desenvolvedor escolha o paradigma mais adequado para cada subcomponente da aplicação (Oliveira, 2019; Sebesta, 2018).
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/lme_01.webp" alt="Infográfico 'Linguagens Multiparadigma e Eficiência' — Aplicação dos paradigmas imperativo, funcional e orientado a objetos nas linguagens F#, JavaScript e Python" caption="Linguagens multiparadigma: implementação prática de imperativo, funcional e OO em F#, JavaScript e Python" />
+</SlidesGrid>
+
+---
+
+### Linguagem F#: Da Teoria Funcional à Prática Multiparadigma
+
+A linguagem **F#** integra a plataforma .NET e combina primariamente os fundamentos funcionais da família ML com suporte nativo e expressivo aos paradigmas imperativo e orientado a objetos (Schade, 2017).
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    Paradigmas Implementados no F#                           │
+├──────────────────────┬──────────────────────┬───────────────────────────────┤
+│      IMPERATIVO      │      FUNCIONAL       │      ORIENTADO A OBJETOS      │
+├──────────────────────┼──────────────────────┼───────────────────────────────┤
+│ • let mutable x = 1  │ • let x = 10         │ • type NomeClasse(params)     │
+│ • x <- x + 1         │ • Imutabilidade pura │ • abstract member Metodo      │
+│ • for i = 1 to n do  │ • Funções puras      │ • default this.Metodo = ...   │
+│ • Laços while e if   │ • Pipelines (|>)     │ • inherit ClasseBase()        │
+└──────────────────────┴──────────────────────┴───────────────────────────────┘
+```
+
+#### 1. Paradigma Imperativo em F#
+Embora seja uma linguagem primariamente funcional, F# fornece suporte completo a comandos imperativos baseados em instrução passo a passo, laços de repetição e estados mutáveis:
+- **Mutabilidade Explícita**: Por padrão, toda vinculação `let` em F# é estritamente imutável. Para permitir alteração de estado em tempo de execução, é obrigatório declarar a palavra-chave `mutable` (`let mutable x = 1`). A atribuição subsequente utiliza o operador de seta para a esquerda (`<-`).
+- **Controle de Fluxo**: Suporta estruturas de repetição clássicas como `for i = 1 to limite do` e `while condicao do`, permitindo implementar algoritmos iterativos de alta performance quando o controle de baixo nível for necessário.
+
+```fsharp
+// Exemplo imperativo em F#: variável mutável e laço for
+let mutable x = 1
+x <- 3
+
+for i = 1 to x do
+    printfn "Conteúdo de i: %d" i
+// Saída:
+// Conteúdo de i: 1
+// Conteúdo de i: 2
+// Conteúdo de i: 3
+```
+
+#### 2. Paradigma Funcional em F#
+O paradigma funcional em F# apoia-se em dois pilares essenciais: **funções puras** (funções sem efeitos colaterais que operam apenas sobre seus parâmetros de entrada) e **estruturas imutáveis**:
+
+```fsharp
+// Exemplo funcional em F#: funções puras e imutabilidade
+let soma a b = a + b
+let subtrai a b = a - b
+
+let imprimirTresNumeros n1 n2 n3 =
+    printfn "Número 1: %d" n1
+    printfn "Número 2: %d" n2
+    printfn "Número 3: %d" n3
+
+let numero1 = 5
+let numero2 = soma 10 7
+let numero3 = subtrai 20 8
+
+imprimirTresNumeros numero1 numero2 numero3
+```
+
+#### 3. Paradigma Orientado a Objetos em F#
+Em F#, a orientação a objetos é implementada por meio de tipos complexos de dados definidos pela palavra-chave `type`. A linguagem suporta encapsulamento de membros, construtores primários, membros abstratos (`abstract member`) e herança direta através da diretiva `inherit`:
+
+```fsharp
+// Exemplo de POO em F#: classe base abstrata e herança
+type ClasseBase() =
+    let mutable z = 0
+    abstract member Funcao1: int -> int
+    default this.Funcao1(a: int) =
+        z <- z + a
+        z
+
+type ClasseDerivada() =
+    inherit ClasseBase()
+    override this.Funcao1(a: int) =
+        a + 1
+```
+
+---
+
+### Linguagem JavaScript: Dinamismo, Protótipos e Alta Ordem
+
+O JavaScript possui uma sintaxe propositalmente familiar (influenciada pela família C/Java), facilitando a curva de aprendizado e tornando-se a linguagem padrão da web em navegadores (*client-side*) e no ecossistema de servidores (Miletto e Bertagnolli, 2014).
+
+#### Tipos de Dados Fundamentais e Regras de Sintaxe
+A linguagem organiza suas variáveis em tipos primitivos e estruturas de dados de referência:
+- **String**: Cadeia de caracteres delimitada por aspas (`'texto'` ou `"texto"`).
+- **Number**: Valores numéricos inteiros ou de ponto flutuante (`10`, `3.14`).
+- **Boolean**: Valores lógicos (`true` ou `false`).
+- **Array**: Coleção indexada para múltiplos valores (`[1, 'Ana', true]`).
+- **Object**: Estrutura chave-valor e elementos do DOM capturados via métodos como `document.querySelector('h1')`.
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                   Regras Sintáticas Essenciais do JavaScript                │
+├─────────────────────────────────────────────────────────────────────────────┤
+│ • Case Sensitive: minhaVariavel ≠ minhavariavel ≠ MinhaVariavel             │
+│ • Ponto e Vírgula: Opcional por linha (ASI), obrigatório para separar       │
+│   múltiplas instruções em uma mesma linha física                            │
+│ • Palavras Reservadas: Termos como class, function, return, if, else,       │
+│   let, const, var, while não podem ser utilizados como nomes de variáveis   │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+#### 1. Paradigma Imperativo em JavaScript
+Herdado diretamente do padrão C, utiliza estruturas condicionais (`if`, `else`, `switch`), laços de repetição (`for`, `while`, `do...while`) e operadores lógicos e aritméticos:
+
+```javascript
+// Exemplo imperativo: controle de fluxo e desvio condicional
+let input; // valor indefinido (falsy)
+
+if (!input) {
+  executarAcaoPadrao();
+} else {
+  processarEntrada(input);
+}
+```
+
+#### 2. Paradigma Orientado a Objetos em JavaScript
+O JavaScript possui objetos embutidos em seu núcleo nativo (`Math`, `Object`, `Array`, `String`, `Date`). No modelo clássico por protótipos, métodos e atributos são compartilhados através da propriedade `.prototype`:
+
+```javascript
+// Orientação a objetos clássica via função construtora e prototype
+function Pessoa(nome) {
+  this.nome = nome;
+}
+
+Pessoa.prototype.dizerOla = function() {
+  console.log(`Olá, meu nome é ${this.nome}!`);
+};
+
+const aluno1 = new Pessoa("Marcus");
+const aluno2 = new Pessoa("Beatriz");
+
+aluno1.dizerOla(); // Olá, meu nome é Marcus!
+aluno2.dizerOla(); // Olá, meu nome é Beatriz!
+```
+
+#### 3. Paradigma Funcional em JavaScript: Funções de Alta Ordem
+No paradigma funcional em JavaScript, as funções são **cidadãos de primeira classe** (*first-class citizens*). O mecanismo de maior destaque são as **funções de alta ordem** (*Higher-Order Functions*), que possuem a capacidade de:
+1. Receber uma ou mais funções como parâmetro.
+2. Retornar uma nova função como resultado.
+
+```javascript
+// Funções de alta ordem: calculate recebe operações como parâmetros
+const sum = (a, b) => a + b;
+const mult = (a, b) => a * b;
+
+function calculate(fnOperacao, valorA, valorB) {
+  return fnOperacao(valorA, valorB);
+}
+
+console.log(calculate(sum, 10, 20));  // 30
+console.log(calculate(mult, 5, 4));   // 20
+```
+
+---
+
+### Linguagem Python: Expressividade, Tipos e Modularidade
+
+Python destaca-se por sua sintaxe limpa, orientada pela legibilidade do código (*Zen of Python* / PEP 20), tipagem dinâmica e forte, e ampla aplicação em ciência de dados, inteligência artificial e automação (Menezes, 2019).
+
+#### Categorias Estruturais de Tipos em Python
+Além dos tipos primitivos (`int`, `float`, `bool`, `str`, `complex`), Python classifica suas informações em quatro grandes famílias estruturais:
+
+| Categoria de Tipo | Descrição | Exemplos |
+|---|---|---|
+| **Tipos Simples** | Blocos elementares atômicos de dados | `int()`, `float()`, `bool()`, `str()` |
+| **Tipos de Contêiner** | Objetos capazes de armazenar e organizar outros objetos | Listas (`list`), Tuplas (`tuple`), Dicionários (`dict`), Conjuntos (`set`) |
+| **Tipos de Código** | Elementos que encapsulam rotinas executáveis e blocos de código | Funções (`function`), Métodos (`method`), Módulos (`module`) |
+| **Tipos Internos** | Objetos utilizados pela PVM durante o ciclo de execução | *Frames*, *Tracebacks*, *Generators*, *Code Objects* |
+
+#### 1. Paradigma Imperativo vs. Paradigma Funcional em Python
+Python permite resolver o mesmo problema por meio de mutação explícita de estado (imperativo) ou por meio de expressões declarativas concisas (funcional):
+
+```python
+# Abordagem Imperativa: mutação de estado com laço for
+texto = "ADS"
+caracteres = []
+for char in texto:
+    caracteres.append(char)
+print(caracteres) # ['A', 'D', 'S']
+
+# Abordagem Funcional: transformação concisa em linha única
+caracteres_funcional = list(map(lambda c: c, texto))
+# ou via list comprehension: [c for c in texto]
+print(caracteres_funcional) # ['A', 'D', 'S']
+```
+
+Recursos funcionais nativos do Python incluem **funções de primeira classe**, **funções de alta ordem** (`map`, `filter`, `reduce`), **funções puras** e **recursão**.
+
+#### 2. Paradigma Orientado a Objetos em Python
+A criação de classes em Python utiliza a palavra-chave `class`, o método construtor especial `__init__` e a referência explícita da instância através do parâmetro `self` (Menezes, 2019):
+
+```python
+class Conta:
+    def __init__(self, numero: str, saldo_inicial: float = 0.0):
+        self.numero = numero
+        self.saldo = saldo_inicial
+
+    def resumo(self):
+        print(f"CC Número: {self.numero} Saldo: {self.saldo:.2f}")
+
+    def deposito(self, valor: float):
+        self.saldo += valor
+
+    def saque(self, valor: float):
+        if valor <= self.saldo:
+            self.saldo -= valor
+        else:
+            print("Saldo insuficiente")
+
+# Utilização da classe
+minha_conta = Conta(numero="1000-3", saldo_inicial=9.0)
+minha_conta.deposito(100.0)
+minha_conta.saque(24.0)
+minha_conta.resumo() # CC Número: 1000-3 Saldo: 85.00
+```
+
+---
+
+<Callout type="default">
+**Desafio da UA — Identificação de Paradigmas em Bibliotecas Web**
+
+O desafio prático desta unidade analisa uma biblioteca JavaScript de manipulação do DOM que responde a eventos do usuário (como cliques e digitação).
+
+1. **Paradigma Predominante**: Orientado a Objetos e Funcional. A biblioteca encapsula o estado dos elementos em objetos e utiliza funções de alta ordem (funções *callback*) passadas como argumento para o tratador de eventos (`addEventListener('click', callback)`).
+2. **Justificativa Técnica**: O JavaScript trata as funções de manipulação de evento como cidadãos de primeira classe, permitindo que rotinas funcionais sejam associadas dinamicamente aos elementos do navegador.
+</Callout>
+
+---
+
+<Callout type="warning">
+**Atenção aos Materiais Didáticos e Questões de Concurso**
+
+1. **Evolução do JavaScript (`var` vs `const`/`let`)**: Livros mais antigos (2014–2019) apresentam declarações com `var` e funções construtoras manuais com `.prototype`. No JavaScript moderno (ES6+), recomenda-se priorizar `const` e `let` (escopo de bloco) e a sintaxe de classes (`class`), embora o mecanismo interno continue sendo baseado na cadeia de protótipos.
+2. **Operador `<>` em Python**: Materiais didáticos clássicos por vezes listam `<>` como operador de comparação para desigualdade. **Atenção**: o operador `<>` era aceito no Python 2 e foi **completamente removido no Python 3**, sendo obrigatório o uso exclusivo de `!=`.
+3. **Ponto e Vírgula no JavaScript**: O interpretador JavaScript possui o mecanismo ASI (*Automatic Semicolon Insertion*), tornando o ponto e vírgula opcional ao final de cada linha; no entanto, o ponto e vírgula é estritamente obrigatório caso duas instruções sejam escritas na mesma linha física de código.
+</Callout>
+
+---
+
+### Práticas Modernas
+
+No cenário atual de engenharia de software, as linguagens multiparadigma continuam evoluindo para oferecer maior segurança e produtividade:
+- **F# 8+ e .NET 8/9**: Recursos avançados de *discriminated unions*, *pattern matching* exaustivo verificado pelo compilador, redução drástica de alocação de memória com `ValueTask` e interoperabilidade bidirecional fluente com C# e ASP.NET Core.
+- **TypeScript no Ecossistema Web**: Adiciona tipagem estática e interfaces fortes ao dinamismo do JavaScript, unindo orientação a objetos moderna, métodos funcionais de array (`.map()`, `.filter()`, `.reduce()`, `.flatMap()`) e tratamento assíncrono nativo com `async/await`.
+- **Python 3.12 / 3.13**: Introdução de Type Hints formais (`typing`, `mypy`), classes de dados declarativas (`@dataclass`), correspondência de padrões estrutural (`match/case` a partir do Python 3.10) e melhorias contínuas no compilador JIT experimental.
+
+---
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Linguagem F#**:
+  - Dados mutáveis exigem a palavra-chave **`mutable`** (`let mutable x = 10`), enquanto dados imutáveis usam apenas `let` (`let x = 10`).
+  - A definição de tipos e classes utiliza a palavra-chave **`type`** (`type NomeClasse`).
+  - Herança de classes em F# é expressa pela instrução **`inherit`**, e membros abstratos por **`abstract member`**.
+- **Linguagem JavaScript**:
+  - **Funções de Alta Ordem**: São funções que possuem a capacidade de receber funções como parâmetros ou retornar outras funções como resultado da execução.
+  - No modelo prototípico tradicional, novos métodos são adicionados aos objetos através da propriedade **`.prototype`** (ex.: `Banco.prototype.boasVindas = function() { ... }`).
+  - A linguagem é **case sensitive** (diferencia maiúsculas de minúsculas) e possui palavras reservadas que não podem nomear variáveis.
+- **Linguagem Python**:
+  - A expressão **`self`** nos métodos de classe disponibiliza o acesso explícito aos atributos e métodos da própria instância do objeto.
+  - O método construtor padrão da classe é definido pela expressão **`__init__`**.
+  - Classificação das 4 categorias de tipos de dados: **simples** (int, float), **contêiner** (listas, tuplas, dicionários), **código** (funções, métodos, módulos) e **internos** (usados no runtime pela PVM).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- OLIVEIRA, D. B. de. *Paradigmas de programação*. Porto Alegre: SAGAH, 2019.
+- SEBESTA, R. W. *Conceitos de linguagens de programação*. 11. ed. Porto Alegre: Bookman, 2018.
+- SCHADE, G. *Programação funcional em .NET: explore um novo universo*. São Paulo: Casa do Código, 2017.
+- MILETTO, E. M.; BERTAGNOLLI, S. C. *Desenvolvimento de software II: introdução ao desenvolvimento web com HTML, CSS, JavaScript e PHP*. Porto Alegre: Bookman, 2014.
+- MENEZES, N. N. C. *Introdução à programação com Python: algoritmos e lógica de programação para iniciantes*. 3. ed. São Paulo: Novatec, 2019.
+- FLANAGAN, D. *JavaScript: o guia definitivo*. 6. ed. Porto Alegre: Bookman, 2013.

@@ -1,0 +1,115 @@
+{
+  "ua": 16,
+  "questions": [
+    {
+      "question": "Na engenharia de software, o gerenciamento da qualidade em nível organizacional e de projetos é estruturado em três atividades essenciais (Sommerville, 2011). Quais são essas três atividades?",
+      "options": [
+        "Codificação, compilação de código e deploy automatizado em produção.",
+        "Garantia da qualidade (QA), planejamento da qualidade e controle da qualidade (QC).",
+        "Análise de concorrentes, precificação de licenças e suporte pós-venda.",
+        "Dimensionamento de servidores, cabeamento estruturado e manutenção física."
+      ],
+      "correctIndex": 1,
+      "explanation": "O gerenciamento da qualidade é composto por: Garantia da Qualidade (definição de procedimentos e padrões organizacionais), Planejamento da Qualidade (criação do plano de qualidade e metas do projeto) e Controle da Qualidade (monitoramento contínuo para garantir conformidade aos processos definidos)."
+    },
+    {
+      "question": "Em relação aos atributos de qualidade de software segundo a classificação sistêmica de Sommerville (2011), quais são os três grandes grupos em que os atributos se dividem?",
+      "options": [
+        "Hardware, Software e Redes de Comunicação.",
+        "Segurança, Compreensibilidade e Portabilidade.",
+        "Front-end, Back-end e Persistência de Dados.",
+        "Custo, Prazo e Alocação de Pessoal."
+      ],
+      "correctIndex": 1,
+      "explanation": "Sommerville divide os atributos de qualidade em três grandes grupos: Segurança (proteção, confiabilidade, resiliência e robustez), Compreensibilidade (usabilidade, capacidade de aprendizado e interface) e Portabilidade (adaptabilidade, reusabilidade e modularidade)."
+    },
+    {
+      "question": "Qual é a distinção conceitual entre Padrões de Produto e Padrões de Processo no contexto do gerenciamento da qualidade de software (Sommerville, 2011)?",
+      "options": [
+        "Padrões de produto aplicam-se exclusivamente a equipamentos físicos de hardware; padrões de processo aplicam-se a links de rede.",
+        "Padrões de produto definem os atributos e formatos exigidos nos artefatos de saída (código-fonte, guias de estilo, documentos de requisitos); padrões de processo definem como as atividades devem ser conduzidas (revisões de projeto, controle de versão e mudanças).",
+        "Padrões de processo são mandatórios apenas em contratos governamentais; padrões de produto são opcionais.",
+        "Padrões de produto e padrões de processo são sinônimos para ferramentas automatizadas de compilação."
+      ],
+      "correctIndex": 1,
+      "explanation": "Padrões de produto especificam como os artefatos de trabalho devem se parecer (ex.: estrutura de documentos, convenções de código), enquanto padrões de processo determinam a sequência e a forma como as atividades da engenharia devem ser executadas."
+    },
+    {
+      "question": "O Capability Maturity Model Integration (CMMI), em sua consagrada representação por estágios (staged representation), organiza a maturidade em cinco níveis. Qual é a sequência hierárquica e ascendente correta desses níveis?",
+      "options": [
+        "Nível 1 - Básico, Nível 2 - Padronizado, Nível 3 - Automatizado, Nível 4 - Quantitativo, Nível 5 - Excelente.",
+        "Nível 1 - Inicial, Nível 2 - Gerenciado, Nível 3 - Definido, Nível 4 - Gerenciado Quantitativamente, Nível 5 - Otimizado.",
+        "Nível 1 - Planejado, Nível 2 - Executado, Nível 3 - Verificado, Nível 4 - Homologado, Nível 5 - Entregue.",
+        "Nível 1 - Caótico, Nível 2 - Estruturado, Nível 3 - Estatístico, Nível 4 - Integrado, Nível 5 - Global."
+      ],
+      "correctIndex": 1,
+      "explanation": "A representação por estágios do CMMI define exatamente 5 níveis de maturidade: 1-Inicial (caótico), 2-Gerenciado (disciplina por projeto), 3-Definido (padronização organizacional), 4-Gerenciado Quantitativamente (controle estatístico) e 5-Otimizado (melhoria contínua)."
+    },
+    {
+      "question": "O modelo MPS.BR (Melhoria do Processo de Software Brasileiro) foi concebido pela Softex para adaptar modelos internacionais à realidade nacional. Como estão estruturados os seus níveis de maturidade?",
+      "options": [
+        "Possui 5 níveis numéricos (1 a 5), com nomenclaturas e custos idênticos aos do CMMI internacional.",
+        "Possui 7 níveis alfabéticos graduais do G ao A, sendo o Nível G (Parcialmente Gerenciado) o nível inicial e o Nível A (Em Otimização) o nível mais avançado.",
+        "Possui 3 níveis alfabéticos (C, B e A), restritos a empresas com mais de mil desenvolvedores.",
+        "Possui um único nível de certificação genérica auditado exclusivamente pelo SEI."
+      ],
+      "correctIndex": 1,
+      "explanation": "O MR-MPS-SW divide a maturidade em 7 níveis graduais (G, F, E, D, C, B, A), permitindo que empresas de pequeno e médio porte realizem implantações graduais e com investimentos proporcionais à sua realidade."
+    },
+    {
+      "question": "No modelo MPS.BR, quais são os cinco processos da engenharia de software implementados especificamente no Nível D (Largamente Definido)?",
+      "options": [
+        "ADR (Análise de Decisão), DRU (Reutilização), GRI (Riscos), SCM (Configuração) e QA (Garantia).",
+        "DRE (Desenvolvimento de Requisitos), ITP (Integração do Produto), PCP (Projeto e Construção do Produto), VAL (Validação) e VER (Verificação).",
+        "HTML, CSS, JavaScript, Banco de Dados e Testes Unitários.",
+        "Planejamento de Sprint, Daily Meeting, Sprint Review, Sprint Retrospective e Backlog Refinement."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Nível D do MPS.BR exige a implementação dos cinco processos centrais do ciclo de desenvolvimento técnico: DRE (Desenvolvimento de Requisitos), ITP (Integração do Produto), PCP (Projeto e Construção do Produto), VAL (Validação) e VER (Verificação)."
+    },
+    {
+      "question": "Entre as principais normas internacionais da ISO/IEC aplicadas ao software, qual norma é dedicada especificamente à definição e padronização dos Processos de Ciclo de Vida do Software?",
+      "options": [
+        "ISO/IEC 9126",
+        "ISO/IEC 12207",
+        "ISO/IEC 14598",
+        "ISO/IEC 90003"
+      ],
+      "correctIndex": 1,
+      "explanation": "A norma ISO/IEC 12207 estabelece uma arquitetura comum para os processos do ciclo de vida do software, abrangendo desde a concepção, aquisição e fornecimento até o desenvolvimento, operação e manutenção."
+    },
+    {
+      "question": "Por que em sistemas de grande porte a equipe responsável pela garantia da qualidade deve ser independente da equipe de desenvolvimento de software (Sommerville, 2011)?",
+      "options": [
+        "Para impedir que os analistas de qualidade tenham acesso à documentação de requisitos do projeto.",
+        "Para fornecer uma visão objetiva e independente a respeito do produto, gerando relatórios consistentes sobre a qualidade sem a influência direta e pressões de cronograma da equipe de desenvolvimento.",
+        "Porque profissionais de qualidade não possuem formação em ciência da computação.",
+        "Para reduzir o número total de reuniões semanais da diretoria da empresa."
+      ],
+      "correctIndex": 1,
+      "explanation": "A independência da equipe de qualidade assegura neutralidade, evitando que avaliações de conformidade e testes sejam comprometidos por pressões de entrega ou viés de quem escreveu o código."
+    },
+    {
+      "question": "No que diz respeito à avaliação de qualidade de software segundo os fatores clássicos de McCall (Pressman e Maxim, 2016), qual é a definição formal do fator 'Corretude' (Correctness)?",
+      "options": [
+        "O esforço despendido pelo usuário final para aprender a navegar na interface do sistema.",
+        "O tempo médio entre falhas consecutivas de hardware em servidores de banco de dados.",
+        "A medida com que um programa satisfaz plenamente sua especificação de requisitos e cumpre os objetivos visados pelo cliente.",
+        "A facilidade de recompilar o software em diferentes sistemas operacionais sem alterar linhas de código."
+      ],
+      "correctIndex": 2,
+      "explanation": "Corretude mede o grau em que o software atende rigorosamente a todas as especificações funcionais e atinge os objetivos operacionais esperados pelos usuários e clientes."
+    },
+    {
+      "question": "Com qual periodicidade as organizações certificadas no modelo MPS.BR devem realizar avaliações oficiais para manter o selo de maturidade obtido ou evoluir para um nível superior?",
+      "options": [
+        "A cada 6 meses.",
+        "A cada 1 ano.",
+        "A cada 2 anos.",
+        "A cada 5 anos."
+      ],
+      "correctIndex": 2,
+      "explanation": "No modelo MPS.BR, as avaliações têm validade máxima de 2 anos (avaliação bienal), exigindo que a empresa renove sua auditoria para confirmar que as práticas e processos continuam sendo seguidos ativamente."
+    }
+  ]
+}

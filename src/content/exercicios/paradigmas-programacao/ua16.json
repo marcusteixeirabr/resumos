@@ -1,0 +1,115 @@
+{
+  "ua": 16,
+  "questions": [
+    {
+      "question": "Em linguagens de programação funcionais e multiparadigma, como a linguagem F# trata a mutabilidade e a imutabilidade de dados (Schade, 2017; Sebesta, 2018)?",
+      "options": [
+        "Todos os dados são mutáveis por padrão e exigem a palavra-chave immutable para proteção contra efeitos colaterais.",
+        "Os dados vinculados via let são imutáveis por padrão; a criação de variáveis mutáveis exige a declaração explícita da palavra-chave mutable (ex.: let mutable x = 10).",
+        "F# não oferece suporte a variáveis mutáveis sob nenhuma circunstância, sendo uma linguagem funcional 100% pura.",
+        "A mutabilidade é controlada exclusivamente por meio de ponteiros de memória em blocos não gerenciados."
+      ],
+      "correctIndex": 1,
+      "explanation": "Em F#, a imutabilidade é a regra padrão para qualquer vinculação com let. Para permitir que um valor seja alterado posteriormente (via operador <-), é obrigatório declarar explicitamente a palavra-chave mutable."
+    },
+    {
+      "question": "Qual palavra-chave é utilizada na linguagem F# para a declaração de tipos complexos de dados e classes no paradigma orientado a objetos?",
+      "options": [
+        "class",
+        "struct",
+        "type",
+        "interface"
+      ],
+      "correctIndex": 2,
+      "explanation": "Em F#, a definição de novos tipos de dados, classes, interfaces e uniões discriminadas utiliza a palavra-chave 'type' (ex.: type MinhaClasse() = ...)."
+    },
+    {
+      "question": "No contexto do paradigma funcional em JavaScript (Miletto e Bertagnolli, 2014), qual é a definição e característica central de uma Função de Alta Ordem (Higher-Order Function)?",
+      "options": [
+        "É uma função compilada estaticamente para execução com privilégios de administrador no sistema operacional.",
+        "É uma função restrita a operações matemáticas de números inteiros de precisão arbitrária.",
+        "É uma função capaz de receber uma ou mais funções como argumento e/ou retornar uma nova função como resultado da execução.",
+        "É uma função que só pode ser declarada e executada no escopo global de um documento HTML."
+      ],
+      "correctIndex": 2,
+      "explanation": "Funções de alta ordem são funções que operam sobre outras funções, podendo recebê-las como argumentos (callbacks) ou produzi-las como retorno, aproveitando o fato de as funções serem cidadãos de primeira classe no JavaScript."
+    },
+    {
+      "question": "No modelo de orientação a objetos clássico baseado em protótipos do JavaScript, como um método é compartilhado entre todas as instâncias originadas de uma função construtora?",
+      "options": [
+        "Anexando o método diretamente à propriedade .prototype da função construtora (ex.: Pessoa.prototype.dizerOla = function() { ... }).",
+        "Declarando o método dentro de uma tag HTML <script type=\"method\">.",
+        "Utilizando o modificador virtual public no cabeçalho do arquivo .js.",
+        "Invocando a função eval() com código compilado em C++."
+      ],
+      "correctIndex": 0,
+      "explanation": "No modelo prototípico do JavaScript, métodos anexados ao objeto .prototype de uma função construtora são herdados dinamicamente por todas as instâncias criadas com o operador new através da cadeia de protótipos (prototype chain)."
+    },
+    {
+      "question": "Na linguagem Python (Menezes, 2019), qual é a finalidade da expressão/parâmetro especial 'self' nos métodos de uma classe?",
+      "options": [
+        "Atuar como uma variável estática global compartilhada igualmente entre todos os módulos do sistema.",
+        "Disponibilizar o acesso explícito aos atributos e métodos da própria instância do objeto que está sendo manipulado.",
+        "Definir a lista de pacotes externos que devem ser baixados via PyPI antes da execução do método.",
+        "Indicar que a classe deve ser interpretada exclusivamente pelo compilador JIT do PyPy."
+      ],
+      "correctIndex": 1,
+      "explanation": "O primeiro parâmetro de qualquer método de instância em Python é convencionado como 'self' e representa a própria instância do objeto, permitindo acessar e modificar seus atributos e invocar seus métodos internos."
+    },
+    {
+      "question": "Além dos tipos primitivos, a linguagem Python classifica as informações em quatro grandes categorias estruturais de tipos (Menezes, 2019). Quais são elas?",
+      "options": [
+        "Tipos primitivos, tipos derivados, tipos abstratos e tipos concretos.",
+        "Tipos simples, tipos de contêiner, tipos de código e tipos internos.",
+        "Tipos numéricos, tipos alfanuméricos, tipos gráficos e tipos relacionais.",
+        "Tipos estáticos, tipos dinâmicos, tipos voláteis e tipos persistentes."
+      ],
+      "correctIndex": 1,
+      "explanation": "Python divide seus tipos estruturalmente em: tipos simples (int, float, bool), tipos de contêiner (list, tuple, dict, set), tipos de código (funções, métodos, módulos) e tipos internos (usados na infraestrutura do runtime pela PVM)."
+    },
+    {
+      "question": "Ao contrastar a abordagem imperativa com a abordagem funcional em linguagens multiparadigma como Python e JavaScript, qual é a principal distinção observada na manipulação de dados?",
+      "options": [
+        "A abordagem imperativa não suporta comandos condicionais como if/else.",
+        "A abordagem imperativa foca nas instruções passo a passo com mutação explícita de estado e variáveis de controle; a abordagem funcional foca em transformações declarativas, expressões concisas e funções puras sem efeitos colaterais.",
+        "A abordagem funcional exige obrigatoriamente compilação estática em arquivos binários .exe.",
+        "A abordagem imperativa é incapaz de manipular listas ou arrays na memória."
+      ],
+      "correctIndex": 1,
+      "explanation": "O estilo imperativo guia a máquina passo a passo alterando estados de variáveis (ex.: loops for com append), enquanto o estilo funcional descreve transformações de dados de forma declarativa e expressiva (ex.: map, filter, list comprehensions)."
+    },
+    {
+      "question": "Em F#, ao implementar o paradigma orientado a objetos com herança e polimorfismo, quais declarações são utilizadas para herdar uma classe base e para definir um membro abstrato, respectivamente?",
+      "options": [
+        "extends e abstract",
+        "implements e virtual",
+        "inherit e abstract member",
+        "derives e override"
+      ],
+      "correctIndex": 2,
+      "explanation": "Em F#, a declaração de herança entre classes é feita através da diretiva 'inherit' e a definição de métodos abstratos que devem ser implementados pelas subclasses utiliza 'abstract member'."
+    },
+    {
+      "question": "Em relação às regras de sintaxe da linguagem JavaScript (Miletto e Bertagnolli, 2014), assinale a afirmativa correta sobre a sensibilidade a maiúsculas/minúsculas e o uso do ponto e vírgula:",
+      "options": [
+        "JavaScript não é case sensitive e o ponto e vírgula é estritamente obrigatório em todas as linhas sem exceção.",
+        "JavaScript é case sensitive (diferenciando identificadores como minhaVar de MinhaVar) e o ponto e vírgula é opcional ao final da linha, sendo mandatório apenas para separar múltiplas instruções na mesma linha.",
+        "JavaScript proíbe qualquer uso de ponto e vírgula no código-fonte, gerando erro de sintaxe imediato.",
+        "JavaScript trata todas as variáveis como palavras reservadas do compilador nativo."
+      ],
+      "correctIndex": 1,
+      "explanation": "JavaScript é uma linguagem case sensitive. A inserção automática de ponto e vírgula (ASI) torna o ';' opcional no fim de linhas isoladas, mas ele permanece obrigatório quando duas instruções são inseridas em uma mesma linha de código."
+    },
+    {
+      "question": "Qual método especial é utilizado como construtor padrão na inicialização de instâncias de classes na linguagem Python?",
+      "options": [
+        "__construct__",
+        "__init__",
+        "__new__",
+        "__create__"
+      ],
+      "correctIndex": 1,
+      "explanation": "Em Python, o método especial '__init__' é o inicializador padrão de objetos, executado automaticamente quando uma nova instância da classe é instanciada para inicializar seus atributos."
+    }
+  ]
+}
