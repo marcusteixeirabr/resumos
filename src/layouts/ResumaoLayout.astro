@@ -1,27 +1,26 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import Sidebar from '../components/Sidebar.astro';
-
-interface QuizQuestion {
-  question: string;
-  options: string[];
-  correctIndex: number;
-  explanation?: string;
-}
+import { getCollection } from 'astro:content';
 
 interface Props {
-  disciplineTitle: string;
-  base: string;
-  entries: any[];
-  bank: { ua: number; questions: QuizQuestion[] }[];
+  frontmatter: {
+    title: string;
+    subtitle: string;
+    disciplineTitle: string;
+    base: string;
+    collection: string;
+  };
 }
 
-const { disciplineTitle, base, entries, bank } = Astro.props;
+const { frontmatter } = Astro.props;
+const { title, subtitle, disciplineTitle, base, collection } = frontmatter;
+const entries = (await getCollection(collection as any)).sort((a: any, b: any) => a.data.ua - b.data.ua);
 const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <BaseLayout
-  title={`Exercícios — ${disciplineTitle} — Resumos ADS`}
-  description={`Sorteio de uma questão por UA de ${disciplineTitle}.`}
+  title={`${title} — ${disciplineTitle} — Resumos ADS`}
+  description={subtitle}
   cssFiles={['discipline.css']}
 >
   <header>
@@ -38,53 +37,25 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       <span class="search-btn-label">Buscar</span><kbd>Ctrl K</kbd>
     </button>
+    <button class="pdf-download" onclick="window.print()" aria-label="Baixar este Resumão em PDF">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="pdf-label">PDF</span>
+    </button>
   </header>
 
   <div id="nav-overlay"></div>
 
   <div class="layout">
-    <Sidebar entries={entries} currentSlug="exercicios" base={base} disciplineTitle={disciplineTitle} />
+    <Sidebar entries={entries} currentSlug="resumao" base={base} disciplineTitle={disciplineTitle} />
 
-    <main id="content">
+    <main id="content" data-pagefind-body>
       <section class="active">
-        <h2>Exercícios</h2>
-        <p class="subtitle">Uma questão sorteada de cada UA desta disciplina. Use Refazer para um novo conjunto — o estado não é gravado entre visitas.</p>
-        <div id="quiz-root"></div>
+        <h2>{title}</h2>
+        <p class="subtitle">{subtitle}</p>
+        <slot />
       </section>
     </main>
   </div>
-
-  <script is:inline src={`${siteBase}/js/quiz.js`}></script>
-  <script is:inline define:vars={{ bank }}>
-    (function () {
-      var root = document.getElementById('quiz-root');
-      if (!root || typeof renderQuiz !== 'function') return;
-
-      function pickOnePerUa() {
-        return bank.map(function (ua) {
-          var qs = ua.questions || [];
-          if (!qs.length) return null;
-          var q = qs[Math.floor(Math.random() * qs.length)];
-          return {
-            question: q.question,
-            options: q.options,
-            correctIndex: q.correctIndex,
-            explanation: q.explanation,
-            label: 'UA' + ua.ua
-          };
-        }).filter(Boolean);
-      }
-
-      function start() {
-        renderQuiz(root, pickOnePerUa(), {
-          title: 'Sorteio final',
-          onFinish: start
-        });
-      }
-
-      start();
-    })();
-  </script>
 
   <script is:inline>
     (function () {

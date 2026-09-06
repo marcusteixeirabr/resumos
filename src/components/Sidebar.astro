@@ -5,10 +5,11 @@ interface Props {
   entries: CollectionEntry<'software-design'>[] | CollectionEntry<'responsive-web'>[];
   currentSlug: string;
   base: string; // e.g. '/software-design'
+  disciplineTitle?: string;
 }
 
-const { entries, currentSlug, base } = Astro.props;
-const showFinalQuiz =
+const { entries, currentSlug, base, disciplineTitle } = Astro.props;
+const showExtras =
   entries.length === 16 &&
   (base === '/paradigmas-programacao' || base === '/engenharia-software');
 
@@ -39,12 +40,17 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
       })}
     </div>
   ))}
-  {showFinalQuiz && (
+  {showExtras && (
     <div class="sidebar-group">
       <a href={`${siteBase}${base}/exercicios/`}
          class:list={['sidebar-exercises', currentSlug === 'exercicios' && 'active']}
          aria-current={currentSlug === 'exercicios' ? 'page' : undefined}>
-        Exercícios
+        Exercícios{disciplineTitle ? ` — ${disciplineTitle}` : ''}
+      </a>
+      <a href={`${siteBase}${base}/resumao/`}
+         class:list={['sidebar-exercises', currentSlug === 'resumao' && 'active']}
+         aria-current={currentSlug === 'resumao' ? 'page' : undefined}>
+        Resumão
       </a>
     </div>
   )}

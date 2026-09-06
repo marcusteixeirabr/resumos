@@ -1,0 +1,204 @@
+---
+layout: ../../layouts/ResumaoLayout.astro
+title: "Resumão"
+subtitle: "Todos os tópicos da disciplina, em tópicos, sem redundância. Cada subtópico linka para a(s) UA(s) de origem."
+disciplineTitle: "Paradigmas de Programação"
+base: "/paradigmas-programacao"
+collection: "paradigmas-programacao"
+---
+
+### Fundamentos
+
+#### O que é um paradigma
+
+- Um **paradigma** é um padrão de pensamento que guia a resolução de problemas — toda linguagem de programação é construída sobre pelo menos um.
+- **Paradigma ≠ linguagem**: são independentes entre si. Uma linguagem pode suportar vários paradigmas (ex.: C++ é imperativo, OO e um pouco funcional; Python é imperativo, OO e funcional).
+- Motores históricos da evolução dos paradigmas: Inteligência Artificial, World Wide Web, sistemas e redes, dispositivos móveis.
+
+*Fonte: [UA1](/resumos/paradigmas-programacao/ua1/)*
+
+#### Os quatro tipos de paradigma
+
+- **Imperativo**: foco no "como" — instruções passo a passo que alteram o estado do programa.
+- **Declarativo**: foco no "o quê" — o programador declara o resultado desejado, não os passos. Exemplo clássico: **SQL**. O framework **Angular** (JavaScript) também segue essa lógica.
+- **Estruturado**: conjunto de convenções de codificação baseado em três estruturas de controle (sequência, seleção, iteração), eliminando o GOTO.
+- **Orientado a Objetos**: modela entidades do mundo real como classes relacionadas, apoiado em quatro pilares — abstração, encapsulamento, herança e polimorfismo.
+
+*Fonte: [UA1](/resumos/paradigmas-programacao/ua1/)*
+
+### Paradigma Declarativo
+
+#### Origem e domínios de aplicação
+
+- Surgiu na década de 1970 como alternativa ao imperativo: o programador declara **quais objetivos** deseja atingir, não os passos para chegar lá.
+- Dois domínios de aplicação mais cobrados: **Inteligência Artificial** e **Banco de Dados** (consultas/manipulação de dados).
+- Linguagens declarativas tendem a ser mais fáceis de aprender por estarem mais próximas da lógica humana.
+
+#### Subtipos
+
+- **Lógico** (Prolog): processamento simbólico baseado em fatos e regras herdados de uma base de conhecimento.
+- **Funcional** (LISP): funções como objetos de primeira classe, foco em coleções de dados.
+- **Por restrições** (*constraint programming*): atua sobre domínios como booleano e finito.
+
+#### LISP e Prolog
+
+- **LISP**: criada por **John McCarthy** no MIT, início dos anos 1950, para processamento de listas — demanda vinda da linguística, psicologia e matemática. O LISP puro original trabalhava com apenas três tipos de dados.
+- **Prolog**: criado em **1972** por Alain Colmerauer, Philippe Roussel e Robert Kowalski (nome vem do francês *programmation en logique*). Baseado em cláusulas de Horn (subconjunto da lógica de primeira ordem). Quatro blocos de construção: *and* lógico, *or* lógico, reescrita de termos e unificação.
+
+*Fonte: [UA2](/resumos/paradigmas-programacao/ua2/)*
+
+### Paradigma Imperativo
+
+#### Fundamentos
+
+- O paradigma mais antigo e de maior sucesso — a maioria das linguagens o implementa, mesmo quando também suportam outros paradigmas. Nome vem do latim *imperare* ("comandar"). Base na arquitetura de **von Neumann** (programa e dados compartilham a mesma memória).
+- Conceito central: **mutação de estado** — a atribuição destrói o valor anterior de uma variável.
+- Três conceitos fundamentais: **estado, expressões e comandos de atribuição e controle**.
+- **Completo quanto a Turing**: a linguagem consegue expressar qualquer algoritmo computável.
+- Também chamado de **procedural**, por permitir estruturar o código em procedimentos — desvantagem citada: menor flexibilidade, dado o caráter sequencial das instruções.
+
+#### Linguagens imperativas
+
+- **C**: não possui, na forma clássica, iteradores, tratamento de exceções, sobrecarga nem genéricos.
+- **Ada**: desenvolvida no fim dos anos 1970 pelo departamento de defesa dos EUA, baseada em Pascal, projetada principalmente por **Jean Ichbiah**. **Ada 95** foi a 1ª linguagem OO padronizada internacionalmente — mas a linguagem nasceu imperativa, para sistemas militares e de tempo real.
+- **Perl**: linguagem de *scripting* interpretada em tempo de execução (não compilada para linguagem de máquina) — exemplo clássico citado no material: script que envia por e-mail as notas de alunos.
+
+*Fonte: [UA3](/resumos/paradigmas-programacao/ua3/)*
+
+### Paradigma Estruturado
+
+#### Origem
+
+- Resposta à **crise do software** dos anos 1960, quando o uso intenso do comando **GOTO** (desvio incondicional de fluxo) tornava programas difíceis de entender e manter — comum em linguagens como o BASIC da época.
+- Marco histórico: *"Go To Statement Considered Harmful"*, carta de **Edsger Dijkstra** publicada na *Communications of the ACM* em 1968.
+- Independente de linguagem — várias linguagens diferentes podem implementar seus conceitos.
+
+#### As três estruturas de controle
+
+- **Sequência**: instruções executadas em ordem — facilita a compreensão do fluxo de execução do programa.
+- **Seleção**: `if-then`/`if-then-else` e `switch`.
+- **Iteração**: `while` e `for`.
+
+#### Linguagens estruturadas
+
+- **Fortran 77**: junto com Pascal e C, consolidou o paradigma — diferente do Fortran 66, já suportava laços e condicionais completos.
+- **C**: papel fundamental na divulgação do paradigma; criada por **Ken Thompson** e **Dennis Ritchie** nos Laboratórios Bell, para o UNIX, como alternativa mais leve ao PL/I.
+- **Pascal**: criada entre 1968-1970 por **Niklaus Wirth** (Universidade de Zurique), com o objetivo declarado de ser "uma linguagem disciplinada de alto nível para ensinar programação estruturada".
+- **Cobol**: surgiu em 1959, mas só em 1972 passou a suportar plenamente estruturas de controle e repetição. Ainda em uso comercial ativo, especialmente em instituições financeiras.
+
+*Fonte: [UA4](/resumos/paradigmas-programacao/ua4/)*
+
+### Paradigma Orientado a Objetos
+
+#### Conceitos centrais
+
+- Ideia central: tudo pode ser abstraído como **objeto** — cada objeto tem **atributos** (dados) e **métodos** (ações). Um programa é uma coleção de objetos que se relacionam.
+- Diferente da programação estruturada (dados globais compartilhados por vários procedimentos): na POO, cada objeto encapsula seu próprio estado.
+- Quatro pilares: **abstração, encapsulamento, herança, polimorfismo**.
+- Consolidada como paradigma "puro" a partir da **Smalltalk 80** (1980) — a Simula 67 (1967) introduziu os primeiros conceitos, mas o termo "programação orientada a objetos" só surgiu na década de 1970, com **Alan Kay**.
+
+#### Relacionamentos entre classes
+
+- **Agregação**: associação fraca ("possui um") — a parte sobrevive sem o todo.
+- **Composição**: vínculo forte — a parte não sobrevive sem o todo (se o objeto pai é destruído, a parte também é apagada).
+- **Generalização**: relacionamento de herança entre superclasse (classe mãe) e subclasse (classe filha) — a filha pode substituir a mãe, não o contrário.
+- **Dependência**: relacionamento mais fraco entre classes — uma classe usa outra só como argumento ou especificação temporária, sem vínculo estrutural permanente.
+- Toda classe deve ter **responsabilidade única** — se a descrição de uma classe usa "e" para acumular funções distintas, é sinal de que ela fere esse princípio.
+
+#### Encapsulamento
+
+- Esconder a implementação interna de uma classe, expondo o acesso só por métodos próprios (getters/setters) — quem usa a classe aciona o método e recebe o retorno, sem precisar saber como foi implementado por dentro.
+
+#### Herança e polimorfismo
+
+- **Herança** = relação "é uma" (Cachorro é um Animal); **Associação** = relação "tem uma" (Estado tem Cidades).
+- Herança **simples** (uma superclasse) vs. **múltipla** (várias superclasses) — suportada por C++ e Python, **não suportada por Java**.
+- **Polimorfismo estático (sobrecarga)**: mesmo nome, assinaturas diferentes, mesma classe, resolvido conforme os parâmetros passados.
+- **Polimorfismo dinâmico (sobrescrita)**: mesmo nome, mesma assinatura, entre superclasse e subclasse, resolvido por ligação tardia (*late binding*) em tempo de execução.
+- Se a subclasse **não sobrescreve** um método, ela herda automaticamente o comportamento da superclasse.
+- Um atributo novo, específico de uma subclasse (ex.: `matricula` em `Aluno`), deve ser declarado só nela.
+
+#### Interfaces e classes abstratas
+
+- **Interfaces**: nunca implementam métodos, só assinaturas — uma classe pode implementar **várias** ao mesmo tempo. É uma entidade, não participa da hierarquia de classes.
+- **Classes abstratas**: podem ter métodos abstratos **e** concretos; uma subclasse só pode estender **uma única** classe abstrata. Participam normalmente da hierarquia de herança. Podem ter construtores (executados quando uma subclasse concreta é instanciada) — interfaces não têm construtores.
+- Para ser considerada abstrata, a classe precisa de **pelo menos um** método abstrato, não todos.
+- Nenhuma das duas pode ser instanciada diretamente — só é possível instanciar objetos de classes concretas que as implementam/herdam.
+
+#### Java, C++ e C#
+
+- **Java**: mais que uma linguagem, é uma **plataforma** — código compilado em **bytecode**, executado pela **JVM**, o que garante portabilidade entre sistemas operacionais. Criada em **1991** pela Sun Microsystems, originalmente para eletrodomésticos; ganhou novo propósito com a chegada da Web e hoje lidera rankings de linguagens mais usadas.
+- **C++**: evolução da linguagem C, multiparadigma (OO e funcional) e estaticamente tipada. Saída via `cout`, entrada via `cin` (biblioteca `iostream`). Influenciou linguagens como JavaScript e o próprio Java.
+- **C#**: fortemente tipada, criada por **Anders Hejlsberg**, roda sobre a plataforma **.NET** da Microsoft — baseada em C++, com elementos de Java e Pascal. Toda variável precisa ser inicializada no momento da declaração.
+- **Web Service**: resposta padrão de como sistemas diferentes se comunicam entre si — a plataforma **ASP.NET** (Microsoft) resolve isso na prática.
+
+*Fonte: [UA5](/resumos/paradigmas-programacao/ua5/) · [UA6](/resumos/paradigmas-programacao/ua6/) · [UA7](/resumos/paradigmas-programacao/ua7/) · [UA8](/resumos/paradigmas-programacao/ua8/) · [UA9](/resumos/paradigmas-programacao/ua9/)*
+
+### Paradigma Funcional
+
+#### Bases do paradigma
+
+- Duas premissas centrais: **ausência de estado** (*stateless* — uma função não carrega histórico entre chamadas) e **imutabilidade** (*immutable* — um valor, uma vez atribuído, não muda durante a execução). Sem loops — repetição é sempre via **recursividade**.
+- Crescimento atual impulsionado pelo esgotamento da Lei de Moore (processadores não melhoram mais só ficando menores/rápidos) e pela demanda por paralelismo, para o qual a ausência de estado mutável é uma vantagem natural.
+- Cálculo lambda: criado por **Alonzo Church** na década de 1930 — base matemática do paradigma. Uma expressão lambda tem a forma `(parâmetros) -> ação`: não tem nome, não declara tipo de retorno, não trata exceções explicitamente.
+- Primeira linguagem funcional pura: **LISP** (John McCarthy, MIT, 1959); o **Common Lisp** (1984) misturou conceitos procedurais.
+
+#### Funções puras e transparência referencial
+
+- **Função pura**: mesma entrada → mesma saída, sem efeito colateral, sem depender de nada fora do próprio escopo (não acessa nem altera variáveis globais).
+- **Transparência referencial** é **consequência** de uma função ser pura — não é sinônimo exato dos dois conceitos.
+- Pureza **total** é praticamente inviável na prática: mudança de estado é necessária para comunicação externa (I/O, rede etc.).
+- Funções **puras** vs. **impuras**: no paradigma OO, ao qual a maioria dos devs está habituada, métodos costumam retornar resultados diferentes a partir dos mesmos parâmetros (dependem de estado) — isso caracteriza impureza.
+
+#### Funções de primeira classe e de ordem superior
+
+- **Função de primeira classe**: pode ser atribuída a uma variável, passada como argumento, retornada por outra função ou armazenada em estrutura de dados — qualquer combinação conta.
+- **Função de ordem superior (HOF)**: recebe função como argumento, **ou** retorna função, **ou** ambos — não precisa fazer as duas coisas para ser classificada como HOF. Depende de a linguagem ter funções de primeira classe (ou um substituto, como ponteiros em C).
+- **Map** transforma todos os elementos preservando o tamanho da lista; **Filter** seleciona um subconjunto (tamanho pode diminuir); **Reduce** sempre retorna um único valor; **Zip** combina duas listas em pares.
+- **Operadores** (`add`, `sub`, `mul`, do módulo `operator` em Python) substituem expressões lambda equivalentes sem mudar o comportamento — só a legibilidade.
+- Funcional e orientação a objetos **não são mutuamente exclusivas** — linguagens multiparadigma combinam as duas na mesma aplicação.
+
+#### Currying
+
+- Transforma uma função de N parâmetros em uma cadeia de N funções unárias (1 parâmetro cada). Notação de tipo: `int, int -> int` vira `int -> int -> int`.
+- Origem: idealizado por **Gottlob Frege** (1893) e **Moses Schönfinkel** (1924), formalizado e popularizado por **Haskell Curry**.
+- Em Haskell, toda função é unária por padrão. Em linguagens imperativas (JavaScript, Python), o currying manual depende de **closures**.
+- **Currying vs. Aplicação Parcial**: currying sempre devolve funções unárias em sequência; aplicação parcial só fixa alguns argumentos (o resultado pode ter qualquer aridade restante).
+- Exemplo clássico: `map (+7) [1, 2, 3, 4, 5]` aplica a função parcialmente aplicada `(+7)`, resultando em `[8, 9, 10, 11, 12]`.
+
+#### Funtores, aplicativos e mônadas
+
+- **Funtor**: tipo mapeável via `fmap`/`<$>`. Assinatura: `(a -> b) -> f a -> f b`.
+- **Aplicativo**: `pure` + `<*>` — tanto a função quanto o valor estão encapsulados. Hierarquia: funtor ⊂ aplicativo ⊂ mônada.
+- **Mônada**: `return` (entra na caixa) + `>>=`/bind (sai, transforma, volta para uma caixa do mesmo tipo). `do` é açúcar sintático de `>>=`.
+- **Maybe**: `Just` (sucesso) / `Nothing` (falha) — `fmap` sobre `Nothing` continua `Nothing`, sem crashar. Atravessa os três níveis (funtor, aplicativo, mônada).
+- **Monoide**: operação com elemento identidade que não altera o resultado (`0` na soma, `[]` na concatenação) — não confundir com mônada.
+
+*Fonte: [UA10](/resumos/paradigmas-programacao/ua10/) · [UA11](/resumos/paradigmas-programacao/ua11/) · [UA12](/resumos/paradigmas-programacao/ua12/) · [UA13](/resumos/paradigmas-programacao/ua13/) · [UA14](/resumos/paradigmas-programacao/ua14/)*
+
+### Linguagens Multiparadigma
+
+#### F#
+
+- Criada por **Don Syme** na Microsoft Research (2005), integrada ao Visual Studio desde 2010. Herança conceitual da família **ML** e do **OCaml**.
+- Primariamente funcional, mas com suporte de primeira classe a OO e imperativo, totalmente integrada à plataforma **.NET**.
+- Imutável por padrão (`let`); `mutable` para exceção (`let mutable x = 10`, `x <- x + 1`).
+- Inferência de tipos com **generalização automática**: se o compilador não encontra dependência em um tipo concreto, infere a função como genérica.
+- `type` define classes e tipos; `inherit`/`abstract member` para herança e membros abstratos.
+
+#### JavaScript
+
+- Criada por **Brendan Eich** na Netscape (1994), em 10 dias — nomes anteriores: *Mocha*, *LiveScript*. Padronizada pela ECMA International como **ECMAScript** em 1996.
+- OO baseada em **protótipos** (`.prototype`), não em classes compiladas estáticas — mesmo a sintaxe `class` do ES6 é açúcar sintático sobre o modelo prototípico.
+- Case sensitive; funções de alta ordem nativas; capacidades dinâmicas: introspecção (`for...in`, `Object.keys`), criação de código em tempo real (`eval`), descompilação (`.toString()` retorna o próprio código-fonte da função).
+- Executa prioritariamente no lado do cliente, manipulando o **DOM** em resposta a eventos (cliques, digitação).
+
+#### Python
+
+- Criada por **Guido van Rossum** no CWI (Holanda), fim dos anos 1980, sucessora da linguagem **ABC** — integrada ao SO Amoeba originalmente.
+- Tipagem **dinâmica e forte**: tipos vinculados em tempo de execução, mas sem conversão automática imprópria — `"Idade: " + 25` lança `TypeError`, não converte silenciosamente.
+- Execução: interpretador compila `.py` para **bytecode** (`.pyc`), executado pela **PVM** (*Python Virtual Machine*).
+- `self` dá acesso explícito à própria instância; `__init__` é o método construtor padrão.
+- Implementações: **CPython** (em C, canônica), **Jython** (em Java, roda na JVM), **PyPy** (em Python, com compilador JIT e execução *stackless*).
+
+*Fonte: [UA15](/resumos/paradigmas-programacao/ua15/) · [UA16](/resumos/paradigmas-programacao/ua16/)*

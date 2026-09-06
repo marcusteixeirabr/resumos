@@ -1,0 +1,247 @@
+---
+layout: ../../layouts/ResumaoLayout.astro
+title: "Resumão"
+subtitle: "Todos os tópicos da disciplina, em tópicos, sem redundância. Cada subtópico linka para a(s) UA(s) de origem."
+disciplineTitle: "Engenharia de Software"
+base: "/engenharia-software"
+collection: "engenharia-software"
+---
+
+### Fundamentos
+
+#### A crise do software
+
+- Por muito tempo, desenvolver software foi uma atividade sem método: sem planejamento, sem documentação, sem estrutura organizacional clara sobre tarefas e responsabilidades. Resultado: sistemas entregues com baixa qualidade e cheios de erros.
+- O termo **Engenharia de Software** foi criado pela **OTAN em 1967**, buscando profissionalizar processos e evitar falhas históricas — não confundir com o Manifesto Ágil (2001), marco bem posterior.
+- Causa da crise: **falta de metodologia** — não questões estéticas ou de interface/usabilidade.
+
+#### O que é Engenharia de Software
+
+- Disciplina da Ciência da Computação que estuda **todos os processos do desenvolvimento de software** — da especificação inicial até a manutenção do sistema em uso. Atividade multidisciplinar e colaborativa.
+- Paradigma **estruturado** (sequência, seleção, iteração) e **orientado a objetos** (classes, atributos, métodos) são sobre **como o código é escrito** — diferente dos modelos de ciclo de vida (cascata, espiral etc.), que são sobre **processo**.
+
+#### Por que a Engenharia de Software importa
+
+- **Planejamento** organiza pessoas (divisão de responsabilidades) e cronograma (estimativa realista de tempo por projeto).
+- O **Manifesto Ágil** valoriza indivíduos e interações, software funcionando, colaboração com o cliente e resposta a mudanças — sempre "mais que" a alternativa tradicional (processos, documentação, contratos, planos rígidos), nunca a eliminação total dela.
+
+*Fonte: [UA1](/resumos/engenharia-software/ua1/)*
+
+### Ciclo de Vida
+
+#### O que é o ciclo de vida de software
+
+- Estrutura de processos, atividades e tarefas envolvidas na criação, operação e manutenção de um sistema — **da definição de requisitos até a retirada de uso**, não só o "tempo de implementação".
+- Questões técnicas (banco de dados, hardware, linguagens) são decididas na fase de **projeto**, não no levantamento de requisitos.
+
+#### As quatro atividades fundamentais (Sommerville) e as cinco de Pressman
+
+- **Especificação**: compreensão e definição dos serviços exigidos e das restrições de operação/desenvolvimento — todas as demais etapas dependem dela.
+- **Projeto e implementação**: conversão da especificação em sistema executável.
+- **Validação (V&V)**: mostra que o software atende às especificações técnicas e às expectativas do cliente — o teste em si segue **componente → sistema → aceitação**.
+- **Evolução**: hoje entendida como parte contínua do mesmo processo, não mais uma "manutenção" separada.
+- Pressman descreve 5 atividades equivalentes: **comunicação, planejamento, modelagem, construção, entrega**, com atividades guarda-chuva (gerenciamento de risco, garantia de qualidade) atravessando todo o processo. Schach organiza as mesmas atividades com mais granularidade.
+
+#### Modelo Cascata
+
+- O **primeiro modelo** formal de ciclo de vida — o mais conhecido entre profissionais e estudantes. Fluxo estritamente sequencial, sem retorno a etapas anteriores (nome vem da metáfora da água que só corre num sentido).
+- Maior problema: **dificuldade de lidar com mudanças de requisitos** — a facilidade de gerenciamento por etapas bem definidas é, na verdade, uma **vantagem** do modelo, não confundir os dois.
+
+#### Modelo Prototipação
+
+- Cria um **protótipo logo no início do ciclo**, após o primeiro contato com o cliente, para que todos os envolvidos interajam com ele antes da implementação completa.
+- Resolve o problema de **comunicação entre cliente e desenvolvedores**; desvantagem principal: alto custo e retrabalho se o protótipo inicial não agradar.
+- Protótipo **descartável** (temporário, substituído pelo sistema real) ≠ **evolutivo** (vira a base do sistema final).
+
+#### Modelo Espiral
+
+- Criado por **Barry Boehm em 1988**, como melhoria do modelo incremental. Combina fases bem definidas (como o cascata) e criação de protótipos (como a prototipação), acrescentando um elemento que os outros dois não têm: **análise de risco explícita em cada iteração**.
+
+#### Modelo Incremental
+
+- O sistema é dividido em partes desenvolvidas e entregues de forma independente — cada parte é "incrementada" ao sistema, formando o todo ao final.
+- Diferença central em relação a cascata/prototipação: faz **entregas parciais contínuas**, em vez de entrega única ao final.
+- Une características do cascata e da prototipação — mas **sem** a análise de risco formal do espiral. Cada incremento percorre o ciclo completo: comunicação, planejamento, modelagem, construção, implantação.
+- O primeiro incremento normalmente entrega só os elementos que permitem a **operação básica** do sistema, não um sistema completo nem apenas telas.
+
+#### Processo Unificado (PU / UP)
+
+- Modelo de processo voltado à construção de software **orientado a objetos**, personalizável conforme as necessidades e recursos de cada projeto.
+- Quatro fases, nesta ordem: **Concepção, Elaboração, Construção, Transição**.
+- Três características básicas: **dirigido por casos de uso**, **centrado na arquitetura**, **iterativo e incremental** — uma iteração completa resulta em um incremento do sistema.
+- **Concepção** verifica a viabilidade do projeto e define os casos de uso mais críticos; **Elaboração e Construção** concentram o grosso do desenvolvimento; **Transição** garante que os requisitos foram atendidos e entrega o software ao usuário.
+- Proposto pela Rational — deu origem ao **RUP** (*Rational Unified Process*).
+
+*Fonte: [UA2](/resumos/engenharia-software/ua2/) · [UA7](/resumos/engenharia-software/ua7/) · [UA8](/resumos/engenharia-software/ua8/) · [UA9](/resumos/engenharia-software/ua9/)*
+
+### Corpo de Conhecimento
+
+#### O que é o SWEBOK
+
+- **Software Engineering Body of Knowledge**, guia mantido pela **IEEE Computer Society** — não confundir com o **PMBOK**, mantido pelo PMI (gerenciamento de projetos em geral, não específico de software). Também conhecido como Relatório Técnico 19759 da ISO/IEC.
+- Versão cobrada pelo livro-base: **v3 (2014)**, com **15 áreas de conhecimento** — as 10 primeiras tratam do produto/processo de software, as 5 últimas são transversais. A v4 (2024) já tem 18 áreas.
+
+#### Certificações
+
+- 4 áreas básicas exigidas em **todas** as certificações (Associate e Professional): **requisitos, design, construção e teste de software**.
+- Três modalidades, em ordem crescente de exigência — a certificação **Master (PSEM)** exige domínio de **11 das 15 áreas**.
+- Objetivos do guia: descrever características da engenharia de software, promover visão global consistente, delimitar fronteiras com outras disciplinas, apoiar autoaprendizado/certificação.
+
+*Fonte: [UA3](/resumos/engenharia-software/ua3/)*
+
+### Estimativas e Métricas
+
+#### Por que estimar é difícil
+
+- Muitas vezes é preciso estimar com base em requisitos ainda em alto nível, antes de o projeto estar totalmente compreendido — novas tecnologias e o desconhecimento real das habilidades da equipe dificultam ainda mais.
+
+#### FPA — Function Point Analysis
+
+- Dimensiona a aplicação na perspectiva do **usuário final**, não pelas características técnicas da linguagem.
+- 5 premissas: **Entradas Externas (EE), Saídas Externas (SE), Arquivos Lógicos Internos (ALI), Arquivos de Interface Externa (AIE), Consultas Externas (CE)**.
+- Fórmula: `FP = contagem total × [0,65 + 0,01 × Σ(Fi)]`, com **14 fatores de ajuste** avaliados de 1 a 5.
+
+#### UCP — Use Case Points
+
+- Baseada na FPA, mas estima o tamanho a partir de **como os usuários utilizam o sistema** — pela complexidade das ações e pelo fluxo de trabalho (*workflow*). Específica para sistemas **orientados a objetos**.
+- Fórmula: `UCP = UUCP × TCF × EF`; a estimativa de horas usa **20 horas por ponto**.
+- **TCF** (13 fatores técnicos, `0,6 + 0,01×TFATOR`) e **EF** (8 fatores ambientais, `1,4 - 0,03×EFATOR`) — não confundir um com o outro.
+
+#### COCOMO — Constructive Cost Model
+
+- Criado a partir da coleta de dados de um grande número de projetos reais. Duas versões: **COCOMO** (original) e **COCOMO II**.
+- Três categorias de projeto: **Orgânico, Semidestacado, Embutido** (do mais simples ao mais complexo/acoplado).
+- **COCOMO básico**: pensado para o modelo cascata, usando linguagens como C e Fortran.
+- **COCOMO intermediário**: 15 atributos direcionadores de custo, agrupados em produto (confiabilidade, tamanho do BD, complexidade), hardware (desempenho, memória), pessoal (experiência) e projeto (ferramentas CASE) — gera o fator **EAF** (0,9 a 1,4).
+- **COCOMO II**: reconhece abordagens que não existiam na proposta original — prototipação, composição de componentes, programação orientada a dados. Organizado em três submodelos.
+- As três técnicas respondem perguntas diferentes: FPA/UCP estimam principalmente **tamanho**; COCOMO estima **esforço e custo** a partir do tamanho (LOC/KLOC).
+
+#### Métricas de software
+
+- **Métrica**: medida quantitativa de um atributo. **Indicador**: informação derivada da métrica, que orienta ajustes de gestão — não confundir os dois papéis.
+- **Métricas diretas** (fundamentais): custo, esforço, linhas de código, tempo de execução, número de defeitos.
+- **Métricas indiretas** (derivadas): complexidade, eficiência, confiabilidade, facilidade de manutenção.
+- Orientadas a **tamanho**: usam LOC/KLOC. Orientadas à **função**: usam pontos de função (FP), calculados a partir de EEs, EOs, EQs, ILFs e EIFs.
+- Vantagem do LOC: fácil de obter. Desvantagem: depende da linguagem e penaliza código bem projetado, porém curto. Vantagem do FP: independente de linguagem. Desvantagem: cálculo baseado em avaliação subjetiva de complexidade.
+- Um processo de métricas é tipicamente descrito em cinco atividades — a responsável por **acumular os dados** é a **coleta**.
+
+#### Gerenciamento de projeto
+
+- Os **4 Ps**: **Pessoas, Produto, Processo, Projeto**.
+- **Objetivos** do produto identificam metas gerais (sem se preocupar em como alcançá-las); **escopo** identifica dados, funções e comportamentos de forma quantitativa — cuidado com questões que trocam os dois conceitos.
+- Técnica mais comum para estimativa de projeto: **estimativa baseada em processo** (não LOC nem FP isoladamente).
+- Métricas de **projeto** (táticas) acompanham e adaptam o fluxo de trabalho técnico em andamento; métricas de **processo** (estratégicas) têm horizonte mais longo, organizacional.
+- Ferramentas de gestão citadas: **Trello, JIRA, MS Project** (gestão geral) e **JDepend, JavaNCSS** (métricas de código-fonte).
+- Os **10 sinais de perigo** de Pressman e Maxim cobrem principalmente falhas de escopo, estimativa, mudança de tecnologia/negócio e problemas de equipe.
+
+*Fonte: [UA4](/resumos/engenharia-software/ua4/) · [UA5](/resumos/engenharia-software/ua5/) · [UA6](/resumos/engenharia-software/ua6/)*
+
+### Metodologias Ágeis
+
+#### O Manifesto Ágil (2001)
+
+- Assinado por **Kent Beck** e mais 16 desenvolvedores, autores e consultores da área, batizados de **Agile Alliance**.
+- 4 valores, sempre "X **mais que** Y", nunca "em vez de" — o lado tradicional continua tendo valor, só que menos: indivíduos e interações; software funcionando; colaboração com o cliente; responder a mudanças.
+- **Aplicabilidade** = em quais projetos os métodos ágeis podem ser usados (resposta: em **todos**, não só software). **Adaptabilidade** = como cada método ágil implementa o manifesto à sua maneira (XP, Scrum etc.) — não confundir os dois termos.
+- Times ágeis são **autogerenciáveis e colaborativos**; times tradicionais seguem estrutura **top-down**, com papéis segmentados.
+
+#### XP (Extreme Programming)
+
+- Estruturado em 4 atividades: **planejamento, projeto, codificação, testes**. Requisitos capturados como **histórias de usuário**.
+- 5 valores: **Comunicação, Simplicidade, Feedback, Coragem, Respeito**.
+- Programação em **pares**; testes escritos **antes** do código; documentação = código + testes; releases só aceitos com todos os testes passando.
+
+#### Scrum
+
+- Framework leve para gerenciar projetos complexos e adaptativos — "simples de entender, extremamente difícil de dominar".
+- 3 papéis: **Dono do Produto, ScrumMaster, Equipe**. 3 artefatos: **Backlog do Produto, Sprint Backlog, Incremento**. 4 cerimônias: **planejamento, Scrum diária, revisão, retrospectiva**. Progresso visualizado no **burndown chart**.
+- Correspondências úteis com XP: Sprint = *Iteration*; Daily Scrum = *Stand-up meeting*; Retrospective = *Reflection*.
+
+#### FDD e DSDM
+
+- **FDD** (Desenvolvimento Dirigido por Funcionalidades): nasceu em **Cingapura (1997-1999)**, quando o **United Overseas Bank** precisava reengenheirar sua plataforma de empréstimos — após quase 2 anos de consultoria e 3.500 páginas de casos de uso, havia pouquíssimo software em execução. Liderado por **Jeff De Luca**.
+- **DSDM**: constrói e mantém sistemas sob **restrições de prazo apertado**, usando **prototipação incremental** em ambiente controlado; baseada em uma versão modificada do **princípio de Pareto (80/20)**.
+
+#### OpenUP e 4GT
+
+- **OpenUP**: segue o Processo Unificado (UA8), mas com cultura aberta e enxuta, focada na colaboração — criado a partir do **Eclipse Process Framework (EPF)**. Mesmas 4 fases do PU (**Iniciação, Elaboração, Construção, Transição**), com foco ágil/microincrementos; e 4 princípios próprios (colaborar, balancear prioridades, focar na arquitetura, envolver stakeholders) — lista separada das 4 fases, ambas cobráveis.
+- **4GT** (técnicas de quarta geração): aproxima a linguagem humana da linguagem de máquina. 4 etapas: obtenção de requisitos → estratégia do projeto → implementação via 4GL → testes. **BDD** é citado como uma aproximação prática do 4GT.
+- **TDD** ≠ **BDD**: TDD escreve o teste **antes** da funcionalidade; BDD estrutura o código a partir da descrição de comportamento do usuário.
+
+#### Por que uma metodologia ágil falha
+
+- Causas mais citadas: filosofia/cultura da empresa em conflito com os valores ágeis; falta de suporte gerencial às mudanças; falta de experiência ou treinamento insuficiente; boicote ou falta de comprometimento da própria equipe.
+
+*Fonte: [UA10](/resumos/engenharia-software/ua10/) · [UA11](/resumos/engenharia-software/ua11/) · [UA12](/resumos/engenharia-software/ua12/)*
+
+### Manutenção
+
+#### O que é manutenção de software
+
+- Melhorar/otimizar um sistema já desenvolvido **e** reparar seus defeitos — não é a fase de testes, nem de implementação, nem o levantamento de requisitos.
+- Consome **60% a 70%** dos recursos de um projeto (Pressman e Maxim) — por isso deve ser planejada desde o início: costuma **custar mais** que o desenvolvimento original.
+
+#### Tipos de manutenção
+
+- **Corretiva**: bug/cálculo errado identificado depois da entrega.
+- **Adaptativa**: mudança de sistema operacional ou legislação.
+- **Evolutiva** (ou "aperfeiçoamento", na nomenclatura de Schach): uma feature nova.
+- **Preventiva**: antecipa uma falha futura, antes que ela ocorra.
+
+#### Manutenibilidade e relatórios de defeito
+
+- **Manutenibilidade** ≠ tipo de manutenção — é a facilidade de entender, corrigir, adaptar e melhorar o sistema.
+- Causa raiz mais comum dos problemas de manutenção: **deficiências no planejamento e no desenvolvimento originais** (não "falta de testes unitários", não "documentação vasta").
+- O relatório de defeitos é preenchido pelo usuário; o mantenedor trabalha com o relatório + o código-fonte — a falha pode estar no **manual**, não necessariamente no código.
+- Gravidade, segundo Schach: **crítico, importante, normal, secundário, trivial**.
+
+*Fonte: [UA13](/resumos/engenharia-software/ua13/)*
+
+### Qualidade e Testes
+
+#### Verificação vs. Validação (V&V)
+
+- Distinção clássica de **Barry Boehm** (1979): **Verificação** = *"estamos construindo o produto corretamente?"* (foco no processo, normas e especificações técnicas de cada etapa). **Validação** = *"estamos construindo o produto certo?"* (foco no cliente e nas necessidades de negócio).
+- **V&V Estática**: sem executar o código — revisões técnicas, inspeções formais, *walkthroughs*, auditorias, análise estática. **V&V Dinâmica**: exige compilar e executar o software com casos de teste.
+
+#### Caixa-Preta vs. Caixa-Branca
+
+- **Caixa-Preta (funcional)**: entradas e saídas, sem considerar a estrutura interna — casos de teste derivados dos requisitos funcionais. Tipos-chave: tratamento de erros, requisitos, regressão, suporte manual, controle, interconexão, paralelo.
+- **Caixa-Branca (estrutural)**: baseada no código-fonte e nos caminhos de decisão internos — garante execução de caminhos independentes, ramos verdadeiro/falso e limites de loop. Tipos-chave: unidade, execução, estresse, recuperação (mede o **MTTR** — *Mean-Time-To-Repair*), operação, conformidade, segurança.
+
+#### Estratégia de teste — a pirâmide de níveis
+
+- **Unidade**: menor unidade do sistema (módulos, classes, funções), feito pelos próprios desenvolvedores com técnicas de caixa-branca.
+- **Integração**: verifica interfaces e tráfego de dados entre módulos já testados em unidade — ferramentas CASE ajudam a rodar suítes de regressão a cada módulo integrado.
+- **Sistema/Validação**: testa o produto completo contra os critérios da especificação de requisitos (SRS).
+- **Aceitação**: conduzido na fase de homologação, com presença do cliente — decide formalmente se o sistema é aceito para produção.
+
+#### Qualidade de Processos vs. Qualidade de Produtos
+
+- Qualidade = **adequação ao propósito** (*fitness for purpose*) e conformidade com os requisitos explícitos e implícitos.
+- **Qualidade de Processos**: organização sistemática, métodos, ciclo de vida, prevenção e repetibilidade — avaliada pelos modelos **CMMI** e **MPS.BR**.
+- **Qualidade de Produtos**: avaliação do software em si, via testes estáticos (inspeções) e dinâmicos (caixa-branca, caixa-preta, unitários, funcionais, exploratórios).
+
+#### Erro, Defeito e Falha
+
+- **Erro**: engano cognitivo humano — ex.: um programador esquece de verificar se o divisor é zero antes de uma divisão.
+- **Defeito/Bug**: anomalia estática presente no código, no modelo ou na documentação, decorrente do erro humano.
+- **Falha**: manifestação dinâmica incorreta percebida durante a execução (ex.: o sistema trava ou retorna valor incorreto). Nem todo defeito gera falha imediatamente; falhas também podem ter causas externas (queda de rede, hardware defeituoso).
+
+#### Regra 10 de Myers
+
+- Formulada por **Glenford Myers** (1979): o custo de identificar e corrigir um defeito cresce **~10× a cada fase** subsequente em que ele avança no ciclo de vida — de requisitos (1×) até produção (10.000×+).
+- Fundamenta o conceito de ***Shift-Left Testing***: quanto mais cedo a garantia de qualidade começa, menor o custo financeiro.
+
+#### CMMI e MPS.BR
+
+- **CMMI**: do **SEI** (Carnegie Mellon University), 5 níveis de maturidade por estágios — **Inicial, Gerenciado, Definido, Gerenciado Quantitativamente, Otimizado**.
+- **MPS.BR**: da **Softex**, com apoio do MCTI, FINEP e BID — 7 níveis graduais (**G a A**), compatível com o CMMI, com reavaliação obrigatória a cada **2 anos**. Mais acessível a micro/pequenas/médias empresas brasileiras.
+- Atividades do Gerenciamento da Qualidade: **Garantia** (procedimentos e padrões organizacionais), **Planejamento** (plano de qualidade com metas e padrões do projeto), **Controle** (monitorar se os processos definidos são seguidos).
+
+#### Normas ISO/IEC
+
+- **ISO/IEC 9126**: qualidade de produto e seus atributos (sucedida hoje pela família **ISO/IEC 25010 — SQuaRE**, que incorpora segurança da informação e conformidade em nuvem).
+- **ISO/IEC 12207**: processos do ciclo de vida do software. **ISO/IEC 14598**: guias para avaliação de produto. **ISO/IEC 15504 (SPICE)**: avaliação de processos. **ISO/IEC 90003**: diretrizes para aplicar a ISO 9001 a software.
+
+*Fonte: [UA14](/resumos/engenharia-software/ua14/) · [UA15](/resumos/engenharia-software/ua15/) · [UA16](/resumos/engenharia-software/ua16/)*

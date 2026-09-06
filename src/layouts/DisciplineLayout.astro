@@ -59,7 +59,7 @@ const siteBase = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div id="nav-overlay"></div>
 
   <div class="layout">
-    <Sidebar entries={entries} currentSlug={slug} base={base} />
+    <Sidebar entries={entries} currentSlug={slug} base={base} disciplineTitle={disciplineTitle} />
 
     <main id="content" data-pagefind-body>
       <section class="active">
