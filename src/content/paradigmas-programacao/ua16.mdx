@@ -27,18 +27,12 @@ As linguagens multiparadigma **F#**, **JavaScript** e **Python** destacam-se no 
 
 A linguagem **F#** integra a plataforma .NET e combina primariamente os fundamentos funcionais da família ML com suporte nativo e expressivo aos paradigmas imperativo e orientado a objetos (Schade, 2017).
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    Paradigmas Implementados no F#                           │
-├──────────────────────┬──────────────────────┬───────────────────────────────┤
-│      IMPERATIVO      │      FUNCIONAL       │      ORIENTADO A OBJETOS      │
-├──────────────────────┼──────────────────────┼───────────────────────────────┤
-│ • let mutable x = 1  │ • let x = 10         │ • type NomeClasse(params)     │
-│ • x <- x + 1         │ • Imutabilidade pura │ • abstract member Metodo      │
-│ • for i = 1 to n do  │ • Funções puras      │ • default this.Metodo = ...   │
-│ • Laços while e if   │ • Pipelines (|>)     │ • inherit ClasseBase()        │
-└──────────────────────┴──────────────────────┴───────────────────────────────┘
-```
+| Imperativo | Funcional | Orientado a Objetos |
+|---|---|---|
+| `let mutable x = 1` | `let x = 10` | `type NomeClasse(params)` |
+| `x <- x + 1` | Imutabilidade pura | `abstract member Metodo` |
+| `for i = 1 to n do` | Funções puras | `default this.Metodo = ...` |
+| Laços `while` e `if` | Pipelines (`\|>`) | `inherit ClasseBase()` |
 
 #### 1. Paradigma Imperativo em F#
 Embora seja uma linguagem primariamente funcional, F# fornece suporte completo a comandos imperativos baseados em instrução passo a passo, laços de repetição e estados mutáveis:
@@ -110,17 +104,9 @@ A linguagem organiza suas variáveis em tipos primitivos e estruturas de dados d
 - **Array**: Coleção indexada para múltiplos valores (`[1, 'Ana', true]`).
 - **Object**: Estrutura chave-valor e elementos do DOM capturados via métodos como `document.querySelector('h1')`.
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                   Regras Sintáticas Essenciais do JavaScript                │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ • Case Sensitive: minhaVariavel ≠ minhavariavel ≠ MinhaVariavel             │
-│ • Ponto e Vírgula: Opcional por linha (ASI), obrigatório para separar       │
-│   múltiplas instruções em uma mesma linha física                            │
-│ • Palavras Reservadas: Termos como class, function, return, if, else,       │
-│   let, const, var, while não podem ser utilizados como nomes de variáveis   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+- **Case Sensitive**: `minhaVariavel` ≠ `minhavariavel` ≠ `MinhaVariavel`.
+- **Ponto e Vírgula**: opcional por linha (ASI), obrigatório para separar múltiplas instruções em uma mesma linha física.
+- **Palavras Reservadas**: termos como `class`, `function`, `return`, `if`, `else`, `let`, `const`, `var`, `while` não podem ser utilizados como nomes de variáveis.
 
 #### 1. Paradigma Imperativo em JavaScript
 Herdado diretamente do padrão C, utiliza estruturas condicionais (`if`, `else`, `switch`), laços de repetição (`for`, `while`, `do...while`) e operadores lógicos e aritméticos:
@@ -260,12 +246,14 @@ O desafio prático desta unidade analisa uma biblioteca JavaScript de manipulaç
 
 ---
 
-### Práticas Modernas
+<Callout type="warning">
+**Práticas Modernas**
 
 No cenário atual de engenharia de software, as linguagens multiparadigma continuam evoluindo para oferecer maior segurança e produtividade:
 - **F# 8+ e .NET 8/9**: Recursos avançados de *discriminated unions*, *pattern matching* exaustivo verificado pelo compilador, redução drástica de alocação de memória com `ValueTask` e interoperabilidade bidirecional fluente com C# e ASP.NET Core.
 - **TypeScript no Ecossistema Web**: Adiciona tipagem estática e interfaces fortes ao dinamismo do JavaScript, unindo orientação a objetos moderna, métodos funcionais de array (`.map()`, `.filter()`, `.reduce()`, `.flatMap()`) e tratamento assíncrono nativo com `async/await`.
 - **Python 3.12 / 3.13**: Introdução de Type Hints formais (`typing`, `mypy`), classes de dados declarativas (`@dataclass`), correspondência de padrões estrutural (`match/case` a partir do Python 3.10) e melhorias contínuas no compilador JIT experimental.
+</Callout>
 
 ---
 

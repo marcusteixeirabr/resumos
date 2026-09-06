@@ -29,18 +29,11 @@ Nesse contexto consolidam-se as **linguagens multiparadigma**: linguagens de pro
 
 As linguagens multiparadigma modernas apoiam-se na combinação harmoniosa de três abordagens fundamentais:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    Pilares do Modelo Multiparadigma                        │
-├──────────────────────┬──────────────────────┬───────────────────────────────┤
-│ ORIENTADO A OBJETOS  │      IMPERATIVO      │          FUNCIONAL            │
-├──────────────────────┼──────────────────────┼───────────────────────────────┤
-│ • Estruturas e dados │ • Foco no "como"     │ • Foco no "o que"             │
-│ • Modelagem de       │ • Instruções passo   │ • Expressões e imutabilidade  │
-│   entidades reais    │   a passo de fluxo   │ • Cidadãos de 1ª classe       │
-│ • Encapsulamento     │ • Controle de estado │ • Paralelismo e previsibilidade│
-└──────────────────────┴──────────────────────┴───────────────────────────────┘
-```
+| Orientado a Objetos | Imperativo | Funcional |
+|---|---|---|
+| Estruturas e dados | Foco no "como" | Foco no "o que" |
+| Modelagem de entidades reais | Instruções passo a passo de fluxo | Expressões e imutabilidade |
+| Encapsulamento | Controle de estado | Cidadãos de 1ª classe, paralelismo e previsibilidade |
 
 A seguir, analisamos em profundidade três das linguagens multiparadigma mais influentes da indústria: **F#**, **JavaScript** e **Python**.
 
@@ -153,12 +146,7 @@ Uma das distinções mais importantes em provas e concursos de TI refere-se à t
 
 Python é uma linguagem interpretada baseada em máquina virtual:
 
-```text
-┌────────────────┐      Compilador       ┌─────────────────┐      Execução       ┌────────────────┐
-│  Código-Fonte   │ ───────────────────> │    Bytecode     │ ─────────────────> │ Máquina Virtual │
-│     (.py)      │     de Python         │     (.pyc)      │      da PVM       │  Python (PVM)  │
-└────────────────┘                       └─────────────────┘                     └────────────────┘
-```
+**Código-fonte (.py) → [compilador Python] → Bytecode (.pyc) → [execução na PVM] → Máquina Virtual Python**
 
 1. O interpretador lê o arquivo `.py` e compila suas instruções para uma representação intermediária em **bytecode** (armazenada em cache no diretório `__pycache__` com extensão `.pyc`).
 2. A **PVM** (*Python Virtual Machine*) carrega esse bytecode e o executa instrução por instrução de forma portável e isolada do hardware subjacente.

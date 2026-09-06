@@ -46,19 +46,12 @@ Em termos práticos (Pressman e Maxim, 2016):
 
 As atividades de V&V dividem-se em duas abordagens complementares ao longo do ciclo de desenvolvimento:
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│                    Atividades de SQA / V&V                  │
-├──────────────────────────────┬──────────────────────────────┤
-│      V&V ESTÁTICA            │      V&V DINÂMICA            │
-│   (Sem executar o código)    │   (Executando o software)    │
-│                              │                              │
-│ • Revisões de requisitos     │ • Testes de unidade          │
-│ • Inspeções de código        │ • Testes de integração       │
-│ • Análise estática           │ • Testes de sistema          │
-│ • Auditorias de arquitetura  │ • Testes de aceitação        │
-└──────────────────────────────┴──────────────────────────────┘
-```
+| V&V Estática (sem executar o código) | V&V Dinâmica (executando o software) |
+|---|---|
+| Revisões de requisitos | Testes de unidade |
+| Inspeções de código | Testes de integração |
+| Análise estática | Testes de sistema |
+| Auditorias de arquitetura | Testes de aceitação |
 
 1. **V&V Estática (*Static Testing*)**:
    - **Não exige a execução do código-fonte**.
@@ -124,17 +117,7 @@ Metas do engenheiro com testes caixa-branca:
 
 A estratégia de testes organiza o esforço em etapas progressivas de escopo e abstração (Pressman e Maxim, 2016; Schach, 2011):
 
-```text
-               /\
-              /  \      4. Teste de Aceitação (Homologação / Cliente)
-             /────\
-            /      \    3. Teste de Sistema / Validação (SRS / Caixa-Preta)
-           /────────\
-          /          \  2. Teste de Integração (Interfaces e Módulos / CASE)
-         /────────────\
-        /              \ 1. Teste de Unidade (Classes e Componentes / Caixa-Branca)
-       /────────────────\
-```
+**Unidade → Integração → Sistema/Validação → Aceitação**
 
 1. **Teste de Unidade (*Unit Testing*)**:
    - Focaliza a menor unidade de projeto do software (módulos, classes, funções).

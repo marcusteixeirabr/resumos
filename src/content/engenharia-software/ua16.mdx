@@ -15,19 +15,10 @@ import AudioSummary from "../../components/AudioSummary.astro";
 
 Na engenharia de software contemporânea, a qualidade transcende a simples verificação pós-construção do código: ela é uma disciplina estruturada de governança que acompanha todo o ciclo de vida do desenvolvimento. Segundo Sommerville (2011), o gerenciamento da qualidade de software é composto por **três atividades principais**:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                 Três Atividades do Gerenciamento da Qualidade               │
-├──────────────────────┬──────────────────────┬───────────────────────────────┤
-│ GARANTIA DA          │ PLANEJAMENTO DA      │ CONTROLE DA                   │
-│ QUALIDADE (QA)       │ QUALIDADE            │ QUALIDADE (QC)                │
-├──────────────────────┼──────────────────────┼───────────────────────────────┤
-│ • Estabelece o       │ • Desenvolve o plano │ • Monitora a execução         │
-│   quadro de normas e │   de qualidade para o│   para assegurar que os       │
-│   padrões do processo│   projeto específico │   processos definidos         │
-│ • Foco organizacional│ • Metas e atributos  │   sejam estritamente seguidos │
-└──────────────────────┴──────────────────────┴───────────────────────────────┘
-```
+| Garantia da Qualidade (QA) | Planejamento da Qualidade | Controle da Qualidade (QC) |
+|---|---|---|
+| Estabelece o quadro de normas e padrões do processo | Desenvolve o plano de qualidade para o projeto específico | Monitora a execução para assegurar que os processos definidos sejam estritamente seguidos |
+| Foco organizacional | Metas e atributos | — |
 
 #### Níveis de Preocupação e Independência da Equipe
 Para que a qualidade seja alcançada de forma sustentável, a organização deve atuar em **três níveis de preocupação** (Sommerville, 2011):
@@ -60,18 +51,12 @@ Planejar a qualidade significa definir com antecedência quais padrões, método
 
 Para orientar a avaliação da qualidade, a engenharia de software apoia-se em modelos conceituais como os fatores clássicos de McCall (1977) — divididos em Operação, Revisão e Transição do Produto — e na taxonomia de Sommerville (2011), que agrupa os atributos em **três grandes categorias sistêmicas**:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    Grandes Categorias de Atributos de Qualidade             │
-├──────────────────────┬──────────────────────┬───────────────────────────────┤
-│      SEGURANÇA       │  COMPREENSIBILIDADE  │         PORTABILIDADE         │
-├──────────────────────┼──────────────────────┼───────────────────────────────┤
-│ • Proteção           │ • Usabilidade        │ • Adaptabilidade              │
-│ • Confiabilidade     │ • Facilidade de      │ • Reusabilidade               │
-│ • Resiliência        │   aprendizado        │ • Modularidade                │
-│ • Robustez           │ • Interface atraente │ • Eficiência de ambiente      │
-└──────────────────────┴──────────────────────┴───────────────────────────────┘
-```
+| Segurança | Compreensibilidade | Portabilidade |
+|---|---|---|
+| Proteção | Usabilidade | Adaptabilidade |
+| Confiabilidade | Facilidade de aprendizado | Reusabilidade |
+| Resiliência | Interface atraente | Modularidade |
+| Robustez | — | Eficiência de ambiente |
 
 1. **Segurança (*Security / Dependability*)**: Capacidade do sistema em resistir a tentativas não autorizadas de invasão ou negação de serviço, garantindo a integridade dos dados e prestando serviços contínuos aos usuários legítimos através de resiliência e robustez.
 2. **Compreensibilidade (*Understandability / Usability*)**: Grau em que o software pode ser facilmente compreendido, aprendido, operado e navegado pelos usuários finais, apresentando interface intuitiva e consistente.
@@ -101,20 +86,11 @@ Para evitar que os padrões se tornem burocráticos ou sejam abandonados pela eq
 
 A Organização Internacional de Normalização (ISO) e a Comissão Eletrotécnica Internacional (IEC) consolidaram normas técnicas de referência global para a engenharia de software:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                 Normas Internacionais de Qualidade de Software              │
-├──────────────────────────────────────┬──────────────────────────────────────┤
-│         FOCO NO PRODUTO              │          FOCO NO PROCESSO            │
-├──────────────────────────────────────┼──────────────────────────────────────┤
-│ • ISO/IEC 9126: Qualidade e atributos│ • ISO/IEC 12207: Processos do ciclo  │
-│   de produtos de software            │   de vida do software                │
-│ • ISO/IEC 14598: Guias para processo │ • ISO/IEC 15504 (SPICE): Avaliação e │
-│   de avaliação de produto de software│   melhoria de processos de software  │
-│                                      │ • ISO/IEC 90003: Diretrizes para     │
-│                                      │   aplicação da ISO 9001 a software   │
-└──────────────────────────────────────┴──────────────────────────────────────┘
-```
+| Foco no Produto | Foco no Processo |
+|---|---|
+| ISO/IEC 9126: qualidade e atributos de produtos de software | ISO/IEC 12207: processos do ciclo de vida do software |
+| ISO/IEC 14598: guias para processo de avaliação de produto de software | ISO/IEC 15504 (SPICE): avaliação e melhoria de processos de software |
+| — | ISO/IEC 90003: diretrizes para aplicação da ISO 9001 a software |
 
 ---
 
@@ -124,21 +100,13 @@ Desenvolvido pelo **SEI** (*Software Engineering Institute*) da Carnegie Mellon 
 
 Na sua consagrada **Representação por Estágios** (*Staged Representation*), o CMMI estrutura a evolução organizacional em **cinco níveis de maturidade**:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                     Níveis de Maturidade do CMMI                            │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ 5. OTIMIZADO                 Melhoria contínua orientada a metas de negócio │
-│    ▲                                                                        │
-│ 4. GERENCIADO QUANTITATIVAMENTE Processos controlados estatisticamente      │
-│    ▲                                                                        │
-│ 3. DEFINIDO                  Processos padronizados em nível organizacional │
-│    ▲                                                                        │
-│ 2. GERENCIADO                Projetos planejados e controlados pontualmente │
-│    ▲                                                                        │
-│ 1. INICIAL                   Caótico, ad-hoc, dependente de heróis          │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Nível | Descrição |
+|---|---|
+| 5. Otimizado | Melhoria contínua orientada a metas de negócio |
+| 4. Gerenciado Quantitativamente | Processos controlados estatisticamente |
+| 3. Definido | Processos padronizados em nível organizacional |
+| 2. Gerenciado | Projetos planejados e controlados pontualmente |
+| 1. Inicial | Caótico, ad-hoc, dependente de heróis |
 
 1. **Nível 1 — Inicial**: Processos caóticos, reativos e imprevisíveis. Não há ambiente de desenvolvimento estável; se existem padrões, não são seguidos. O sucesso dos projetos depende exclusivamente de esforço e heroísmo individual.
 2. **Nível 2 — Gerenciado**: Os projetos possuem requisitos gerenciados, custos e prazos planejados e controlados em nível de projeto. Há disciplina para cumprir o que foi planejado.
@@ -154,19 +122,15 @@ Criado pela **SOFTEX** (Associação para Promoção da Excelência do Software 
 
 O modelo é fundamentado nas normas **ISO/IEC 12207**, **ISO/IEC 15504 (SPICE)** e mantém total compatibilidade com o **CMMI**, mas organiza sua maturidade em **sete níveis graduais** (do G ao A), permitindo uma transição mais suave e acessível:
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                     Níveis de Maturidade do MPS.BR                          │
-├─────────────────────────────────────────────────────────────────────────────┤
-│ Nível A — Em Otimização                 (Equivalente ao CMMI 5)             │
-│ Nível B — Gerenciado Quantitativamente  (Equivalente ao CMMI 4)             │
-│ Nível C — Definido (ADR, DRU, GRI)      (Equivalente ao CMMI 3)             │
-│ Nível D — Largamente Definido (5 proc.) (Equivalente ao CMMI 3)             │
-│ Nível E — Parcialmente Definido         (Equivalente ao CMMI 3)             │
-│ Nível F — Gerenciado (QA e Medição)     (Equivalente ao CMMI 2)             │
-│ Nível G — Parcialmente Gerenciado       (Equivalente ao CMMI 2)             │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+| Nível | Descrição | Equivalência CMMI |
+|---|---|---|
+| A — Em Otimização | — | CMMI 5 |
+| B — Gerenciado Quantitativamente | — | CMMI 4 |
+| C — Definido | ADR, DRU, GRI | CMMI 3 |
+| D — Largamente Definido | 5 processos | CMMI 3 |
+| E — Parcialmente Definido | — | CMMI 3 |
+| F — Gerenciado | QA e Medição | CMMI 2 |
+| G — Parcialmente Gerenciado | — | CMMI 2 |
 
 #### Processos Específicos dos Níveis MPS.BR
 - **Nível G (Parcialmente Gerenciado)**: Foco na gestão inicial de projetos e requisitos.
@@ -221,12 +185,14 @@ Em provas acadêmicas e concursos públicos, a **ISO/IEC 9126** e a **ISO/IEC 14
 
 ---
 
-### Práticas Modernas
+<Callout type="warning">
+**Práticas Modernas**
 
 A garantia de qualidade de processos e produtos na engenharia atual integra maturidade e agilidade:
 - **CMMI V2.0 / V3.0 e Métodos Ágeis**: As versões recentes do CMMI incorporaram guias específicos para adoção conjunta com Scrum, Kanban e SAFe (*Scaled Agile Framework*), demonstrando que disciplina de processos e agilidade não são excludentes.
 - **Qualidade Contínua e DevOps (*Shift-Left Testing*)**: A qualidade migrou do final do ciclo para a esteira contínua de CI/CD, onde linters estáticos (SonarQube), suítes de testes automatizados e verificações de segurança (SAST/DAST) bloqueiam código não conforme antes mesmo do deploy.
 - **Métricas Orientadas ao Fluxo (*DORA Metrics*)**: Além das métricas tradicionais de CMMI Nível 4, organizações de alta performance utilizam métricas DORA (*Deployment Frequency*, *Lead Time for Changes*, *Change Failure Rate*, *Time to Restore Service*) para medir maturidade operacional.
+</Callout>
 
 ---
 

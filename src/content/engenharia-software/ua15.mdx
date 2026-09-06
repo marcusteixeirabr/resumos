@@ -40,19 +40,13 @@ Contudo, construir software é incomparavelmente mais desafiador do que erguer e
 
 ### Os Dois Pilares: Qualidade de Processos vs. Qualidade de Produtos
 
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
-│                    Grandes Áreas da Qualidade de Software                   │
-├──────────────────────────────────────┬──────────────────────────────────────┤
-│        QUALIDADE DE PROCESSOS        │        QUALIDADE DE PRODUTOS         │
-├──────────────────────────────────────┼──────────────────────────────────────┤
-│ • Organização das atividades e etapas│ • Verificação do artefato construído │
-│ • Foco em prevenção e repetibilidade │ • Execução de testes de software     │
-│ • Modelos de maturidade e normas     │ • Análise de código e vulnerabilidades│
-│ • CMMI e MPS.BR                      │ • Caixa-Branca, Caixa-Preta e Cinza  │
-│ • Previsibilidade de custo e prazos  │ • Testes Unitários, Funcionais, etc. │
-└──────────────────────────────────────┴──────────────────────────────────────┘
-```
+| Qualidade de Processos | Qualidade de Produtos |
+|---|---|
+| Organização das atividades e etapas | Verificação do artefato construído |
+| Foco em prevenção e repetibilidade | Execução de testes de software |
+| Modelos de maturidade e normas | Análise de código e vulnerabilidades |
+| CMMI e MPS.BR | Caixa-Branca, Caixa-Preta e Cinza |
+| Previsibilidade de custo e prazos | Testes Unitários, Funcionais, etc. |
 
 #### 1. Qualidade de Processos
 
@@ -93,13 +87,7 @@ Essa garantia é exercida através de **testes de software**, estruturados de ac
 
 Um dos tópicos conceituais mais cobrados na engenharia de software é a distinção precisa entre a cadeia causal de falhas (Koscianski e Soares, 2007; Bartié, 2002):
 
-```text
-┌─────────────────┐       gera       ┌─────────────────┐       provoca      ┌─────────────────┐
-│      ERRO       │ ───────────────> │     DEFEITO     │ ─────────────────> │      FALHA      │
-│  (Ação Humana)  │                  │  (Bug no Código)│  (em execução)     │  (Comportamento │
-│                 │                  │                 │                    │    Incorreto)   │
-└─────────────────┘                  └─────────────────┘                    └─────────────────┘
-```
+**Erro (ação humana) → Defeito (bug no código) → Falha (comportamento incorreto em execução)**
 
 1. **Erro (*Error / Mistake*)**: É o equívoco ou engano cognitivo cometido por um ser humano (programador, analista ou arquiteto). Por exemplo: um programador esquece de verificar se o divisor é igual a zero antes de executar uma operação de divisão.
 2. **Defeito (*Defect / Fault / Bug*)**: É a anomalia estática presente no código-fonte, no modelo ou na documentação decorrente de um erro humano. Exemplo: a linha `c = b / a;` sem tratamento de exceção no código compilado.
@@ -120,23 +108,6 @@ Formulada por Glenford Myers (1979), a clássica **Regra 10 de Myers** postula q
 | **Construção / Codificação** | $100\times$ | US$ 1.000 |
 | **Testes Formais / Homologação** | $1.000\times$ | US$ 10.000 |
 | **Produção / Operação Pós-Entrega** | $10.000\times+$ | US$ 100.000+ |
-
-```text
-Custo de Correção ($)
-  ▲
-  │                                                     ● Produção (10.000x)
-  │                                                    /
-  │                                                   /
-  │                                                  /
-  │                                       ● Testes (1.000x)
-  │                                      /
-  │                           ● Codificação (100x)
-  │                          /
-  │               ● Design (10x)
-  │              /
-  │  ● Requisitos (1x)
-  └─────────────────────────────────────────────────────────────► Fases do Ciclo
-```
 
 Essa curva exponencial fundamenta o conceito moderno de **Shift-Left Testing**: quanto mais cedo as atividades de garantia de qualidade, revisões e testes forem iniciadas, menor será o custo financeiro e o estresse operacional do projeto.
 
