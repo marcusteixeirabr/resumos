@@ -1,0 +1,115 @@
+{
+  "ua": 1,
+  "questions": [
+    {
+      "question": "Na história da computação móvel, qual aparelho lançado em 1993 reuniu pela primeira vez os recursos de um PDA (assistente pessoal digital) com telefonia celular, sendo considerado o pioneiro conceitual dos smartphones?",
+      "options": [
+        "BlackBerry 850.",
+        "Apple iPhone.",
+        "IBM Simon.",
+        "Nokia N95 com Symbian OS."
+      ],
+      "correctIndex": 2,
+      "explanation": "O IBM Simon, apresentado em 1993, combinava telefone celular e funções de assistente pessoal com tela sensível ao toque, sendo historicamente reconhecido como o primeiro dispositivo a integrar o conceito de smartphone."
+    },
+    {
+      "question": "Em relação à evolução das telecomunicações celulares, qual geração de rede móvel foi o marco fundamental para a popularização do acesso a conteúdos multimídia e a explosão do uso de conexões de dados em aparelhos móveis?",
+      "options": [
+        "As redes de terceira geração (3G).",
+        "As redes de primeira geração analógica (1G).",
+        "As redes GSM (2G) com taxa teórica de até 110 kbps.",
+        "As redes 5G mmWave inauguradas na década de 1990."
+      ],
+      "correctIndex": 0,
+      "explanation": "Embora o GSM (2G) tenha viabilizado a troca inicial de dados digitais, foi a introdução da rede 3G, com maior capacidade de tráfego e pacotes acessíveis, que permitiu o consumo fluido de arquivos de áudio, vídeo e internet móvel em larga escala."
+    },
+    {
+      "question": "O conceito de computação ubíqua (ou pervasiva), formulado por Mark Weiser em 1991, baseia-se na ideia de que a tecnologia computacional deve:",
+      "options": [
+        "Estar presente de forma distribuída e interconectada no cotidiano, permitindo que as pessoas interajam com aparelhos e sensores de maneira imperceptível e natural.",
+        "Centralizar todo o processamento em supercomputadores corporativos acessados exclusivamente via terminais físicos de texto.",
+        "Eliminar o uso de conexões sem fio em favor de cabos de fibra óptica de alta fidelidade para todos os aparelhos.",
+        "Restringir a inteligência computacional aos servidores em nuvem, mantendo os dispositivos locais totalmente desprovidos de capacidade de cálculo."
+      ],
+      "correctIndex": 0,
+      "explanation": "A computação ubíqua prevê que processadores e dispositivos inteligentes integrem-se de forma tão orgânica ao ambiente cotidiano que as pessoas utilizam seus recursos sem perceber a presença explícita de um computador."
+    },
+    {
+      "question": "No desenvolvimento móvel nativo, a incompatibilidade entre as plataformas dominantes (Android e iOS) decorre de diferenças estruturais em APIs, bibliotecas e ambientes de execução. Qual é a principal consequência dessa fragmentação para um projeto de aplicativo estritamente nativo?",
+      "options": [
+        "O aplicativo desenvolvido para Android é automaticamente convertido em binário iOS durante a publicação na App Store.",
+        "O projeto precisa manter duas bases de código distintas com equipes especializadas (Kotlin/Java para Android e Swift/Objective-C para iOS).",
+        "Os aparelhos com Android deixam de executar código compilado e dependem exclusivamente da máquina virtual Java no servidor.",
+        "O consumo de bateria e memória torna-se idêntico em qualquer fabricante de hardware independentemente do sistema operacional."
+      ],
+      "correctIndex": 1,
+      "explanation": "Como Android e iOS possuem pilhas tecnológicas, APIs e formatos binários proprietários diferentes, aplicativos nativos demandam implementação e manutenção separadas para cada ecossistema."
+    },
+    {
+      "question": "O que caracteriza a arquitetura de um aplicativo móvel do tipo híbrido?",
+      "options": [
+        "É um software que funciona apenas conectado à rede elétrica para economizar o ciclo de vida da bateria.",
+        "É uma aplicação escrita exclusivamente em linguagem Assembly voltada para microcontroladores embarcados.",
+        "É uma aplicação construída com tecnologias Web (HTML, CSS e JavaScript) e empacotada em uma estrutura nativa com acesso a recursos do dispositivo.",
+        "É um executável que exige a instalação prévia de um emulador completo de desktop dentro do smartphone."
+      ],
+      "correctIndex": 2,
+      "explanation": "A abordagem híbrida utiliza tecnologias Web tradicionais dentro de uma camada ou contêiner nativo que encapsula a aplicação e fornece pontes de comunicação para acesso aos recursos de hardware do celular."
+    },
+    {
+      "question": "Os Progressive Web Apps (PWAs) destacam-se como uma alternativa viável para distribuição de soluções móveis. Qual é uma das vantagens centrais de um PWA em relação aos aplicativos tradicionais de lojas de apps?",
+      "options": [
+        "Exige download de grandes instaladores binários de centenas de megabytes via lojas de aplicativos oficiais.",
+        "Opera a partir da Web com capacidade de funcionamento offline, cache local e adição de ícone à tela inicial sem dependência direta de lojas de aplicativos.",
+        "Possui acesso irrestrito e direto a todas as instruções privilegiadas do kernel do sistema operacional sem permissão do usuário.",
+        "Elimina a necessidade do protocolo HTTPS para transferências de dados seguras."
+      ],
+      "correctIndex": 1,
+      "explanation": "PWAs combinam o alcance da Web com a experiência de aplicativos móveis, permitindo instalação simplificada via navegador, cache de conteúdos estáticos e suporte a uso desconectado."
+    },
+    {
+      "question": "Frameworks modernos de desenvolvimento multiplataforma, como React Native e Ionic, conseguem desempenho muito superior aos primeiros apps híbridos porque:",
+      "options": [
+        "Desativam todos os sensores e conexões de rede do aparelho para acelerar o clock da CPU.",
+        "Executam todo o processamento de telas diretamente no servidor remoto e transmitem apenas capturas de imagem estáticas.",
+        "Utilizam aceleração por hardware (GPU) e compilam ou conectam componentes diretamente às APIs nativas da plataforma em vez de depender apenas de renderização básica por software em webviews lentas.",
+        "Convertem o código JavaScript em instruções binárias exclusivas para BIOS de computadores x86."
+      ],
+      "correctIndex": 2,
+      "explanation": "As tecnologias multiplataforma atuais utilizam aceleração gráfica e bridges de integração direta com as APIs do sistema operacional, reduzindo o overhead das antigas webviews puras e oferecendo resposta visual próxima à nativa."
+    },
+    {
+      "question": "Ao projetar um aplicativo para dispositivos móveis, quais fatores de hardware exigem cuidados especiais por parte dos desenvolvedores quando comparados ao desenvolvimento tradicional para desktop?",
+      "options": [
+        "Excesso de ventilação mecânica ativa e ausência de restrições de armazenamento em disco.",
+        "Necessidade de suporte exclusivo a mouses com múltiplos botões e monitores CRT de alta voltagem.",
+        "Estabilidade garantida de conexão via cabo Ethernet em todas as circunstâncias de uso.",
+        "Autonomia de bateria finita, oscilação de conectividade de rede, limitações térmicas e recursos de memória mais restritos."
+      ],
+      "correctIndex": 3,
+      "explanation": "Dispositivos móveis enfrentam restrições operacionais severas como fornecimento de energia por bateria limitada, memória RAM reduzida e conectividade instável, exigindo código otimizado e tratamento de estados offline."
+    },
+    {
+      "question": "Qual característica diferencia profundamente a experiência de interação do usuário em smartphones em comparação às interfaces convencionais de computadores desktop?",
+      "options": [
+        "A utilização primária de toque capacitivo direto na tela com gestos e teclados virtuais, exigindo layouts otimizados para áreas de toque adequadas.",
+        "A dependência obrigatória de dispositivos apontadores externos e teclados mecânicos físicos.",
+        "A exibição contínua de múltiplas janelas sobrepostas de forma desordenada para preencher as laterais da tela.",
+        "A impossibilidade técnica de renderizar elementos visuais coloridos ou fontes tipográficas escaláveis."
+      ],
+      "correctIndex": 0,
+      "explanation": "Em telas sensíveis ao toque, a interação ocorre diretamente com os dedos, tornando imprescindível o planejamento ergonômico de botões, gestos de navegação e foco em conteúdos prioritários."
+    },
+    {
+      "question": "Quais capacidades integradas de hardware tornam os dispositivos móveis ferramentas singulares para aplicações contextuais que seriam inviáveis em computadores de mesa tradicionais?",
+      "options": [
+        "Interfaces de disco flexível magnético de 3,5 polegadas e barramentos PCI convencionais.",
+        "Placas de captura analógicas de rádio AM e portas seriais RS-232 embutidas.",
+        "Ausência de módulos de transmissão por radiofrequência ou criptografia.",
+        "Presença de sensores contextuais como GPS para geolocalização, acelerômetro, giroscópio, câmeras integradas e leitor de luminosidade."
+      ],
+      "correctIndex": 3,
+      "explanation": "A integração de sensores de localização, orientação, movimento e câmeras permite que os aplicativos móveis compreendam o contexto físico do usuário e ofereçam soluções dinâmicas de navegação e realidade aumentada."
+    }
+  ]
+}

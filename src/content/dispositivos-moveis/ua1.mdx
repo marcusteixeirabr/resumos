@@ -1,0 +1,147 @@
+---
+title: "UA1 — Introdução ao Desenvolvimento para Dispositivos Móveis"
+subtitle: "Da evolução do smartphone e das redes móveis à computação ubíqua, passando por Android, iOS, apps híbridos, PWAs e as limitações que moldam um aplicativo."
+ua: 1
+group: "Fundamentos do Desenvolvimento Mobile"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua1.m4a" title="Introdução ao desenvolvimento para dispositivos móveis" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ged_01.webp" alt="Infográfico 'Guia Essencial do Desenvolvimento Mobile' — evolução dos smartphones e das redes móveis, computação ubíqua, Android e iOS, apps nativos, híbridos e PWA e limitações da plataforma" caption="Guia essencial do desenvolvimento mobile: do smartphone ao app nativo, híbrido e PWA" />
+</SlidesGrid>
+
+### Por que o mobile importa
+
+Muitos serviços que antes só existiam como páginas Web (entretenimento, controle financeiro, investimentos) hoje chegam por **aplicativos**. Desenvolver para dispositivos móveis é diferente de desenvolver para desktop: muda o ambiente de execução, a forma de interação, as limitações de hardware e a maneira de pensar o projeto. A premissa que o material repete é: **entender o público-alvo é o primeiro passo**, e na maior parte dos casos o usuário estará em um celular, não diante de um computador.
+
+### Evolução dos dispositivos
+
+| Ano | Marco |
+|---|---|
+| **1993** | A IBM lança o que é considerado o primeiro smartphone, juntando as funções de um **PDA** (pequeno computador de mão, bastante limitado) com as de um telefone celular. Não fez sucesso e o projeto foi encerrado |
+| **2003–2007** | A maioria dos celulares já acessa a internet (rede móvel ou Wi-Fi), mas nem todo aparelho que acessa a internet é de fato um smartphone. Destaques de venda: **Nokia com Symbian OS** e **BlackBerry**, fortes no meio empresarial |
+| **2007** | A Apple lança o **iPhone** (projeto iniciado em 2005, em parceria com a operadora AT&T): *handheld* + *media player* + telefone digital, controlado por **tela de toque capacitiva**, sem teclado físico |
+| **2008** | A T-Mobile lança o **HTC G1**, primeiro smartphone com **Android**, sistema do Google para concorrer com o iPhone |
+
+O iPhone não foi o primeiro nem o único smartphone da época, mas foi o mais próximo dos modelos atuais e mudou o mercado de vez. Curiosidade do material: em 2008, a Nokia se tornou a **maior fabricante de câmeras digitais do mundo**, porque a câmera embutida fez muita gente deixar de carregar uma câmera dedicada.
+
+### Mobilidade da internet
+
+Em paralelo aos aparelhos, evoluíram as conexões móveis, das primeiras redes **GSM** até o **5G**:
+
+- **GSM (2G):** teoricamente pouco mais de **110 kbps**, na prática bem menos; lenta e cara, inviável para navegar com fluidez ou ouvir áudio/vídeo sob demanda.
+- **3G:** com planos mais baratos e franquias maiores, aconteceu a **explosão do uso** das conexões móveis, e o acesso a conteúdo multimídia passou a ser viável.
+- **5G:** o material cita um teste da BBC que alcançou **980 Mbps**, interrompido porque o pacote de dados acabou.
+
+No Brasil, o celular tornou-se a **principal forma de acesso à internet** em 2017, usado como único meio por 49% dos internautas (47% usam celular e computador). O uso principal é acessar redes sociais, mensagens (exceto e-mail) e *streaming* de áudio e vídeo. Conclusão de projeto: ao criar qualquer serviço on-line, **considere que o usuário provavelmente está no celular**.
+
+### Computação ubíqua (ou pervasiva)
+
+Parte da ideia de **onipresença de computadores no cotidiano**, com os quais se interage **sem perceber**. Para isso, a interação precisa ser natural, de preferência pela linguagem humana (voz, toque, gestos).
+
+Exemplos do material: **smartphones** (interfaces por toque e gesto tornam o computador “transparente”), **alto-falantes inteligentes** (Google Home, Amazon Alexa), **multimídia e GPS dos carros**, **domótica** (automação residencial), **Internet das Coisas** e **wearables** (smartwatches, pulseiras, tênis inteligentes) que medem parâmetros do corpo e ajudam em treino, sono e ritmo cardíaco.
+
+O termo *ubiquitous computing* foi criado por **Mark Weiser**, cientista da Xerox, em **1991**: a ideia de incontáveis pequenos computadores embarcados em objetos e interconectados.
+
+### Como nasce um aplicativo
+
+Um app é um programa de computador e precisa de ambiente de execução: nos aparelhos atuais, um **sistema operacional completo**. Dois dominam o mercado:
+
+| Sistema | Quem está por trás | Linguagens padrão |
+|---|---|---|
+| **Android** | Projeto coordenado pelo Google; usado por Samsung, Motorola, LG, Xiaomi etc. | Java e, mais recentemente, **Kotlin** |
+| **iOS** | Apple; equipa exclusivamente os iPhones | **Objective-C** e **Swift** |
+
+Cada sistema tem **API, bibliotecas e um formato próprio de binário**, e a empresa dona da plataforma precisa fornecer ferramentas para os desenvolvedores, formando o **ecossistema** em torno dela: um bom sistema operacional precisa de bons aplicativos.
+
+O problema é a **fragmentação**: um app nativo de iOS precisa ser **totalmente reescrito** para rodar no Android, assim como um programa para Windows não roda em Linux ou macOS. Isso significa duas equipes especializadas e **duas bases de código** para manter.
+
+### Desenvolvimento híbrido
+
+O app híbrido é uma fusão entre aplicação Web e aplicativo nativo: escreve-se em **HTML, CSS e JavaScript** (ou linguagens que resultam nessa tríade) e a aplicação é **empacotada em um executável para cada sistema**. Só muda a compilação e a publicação.
+
+- **Como funciona:** o app roda em um **navegador oculto**; o usuário vê um aplicativo comum.
+- **Vantagem:** mais simples e barato, pois basta um time Web com noção geral de mobile, sem especialistas em cada SO.
+- **Desvantagem (na abordagem original):** as limitações de uma página Web, **sem acesso direto aos recursos nativos** do aparelho e com renderização por software, o que reduz o desempenho e aumenta a chance de falhas.
+
+Hoje há *frameworks* que geram aplicações realmente nativas a partir de tecnologia Web:
+
+- **Ionic Framework:** baseado em Angular (Web), usa bibliotecas do **Projeto Cordova** para acessar recursos nativos;
+- **React Native:** baseado na biblioteca **React**.
+
+Ambos usam as bibliotecas de compilação originais de cada SO e recursos avançados como renderização por **GPU**. O material cita um estudo em que o desempenho fica muito próximo ao dos apps nativos.
+
+### Progressive Web App (PWA)
+
+Um **PWA** é uma aplicação Web que segue certas especificações técnicas e se comporta como aplicativo: tem **ícone de acesso**, **armazena localmente** imagens, fontes e conteúdo estático para funcionar **off-line** e mantém em cache dados dinâmicos. Em versões recentes (sobretudo no Android) roda em um navegador oculto.
+
+É uma rota ágil e barata: a versão Web quase sem alterações atua como app. O *framework* citado é o **Quasar**, baseado em Vue.js, com curva de aprendizado suave, adequado a apps que não exigem muitos recursos.
+
+| Abordagem | Código | Acesso a recursos nativos | Custo/esforço |
+|---|---|---|---|
+| **Nativa** | Um por plataforma (Java/Kotlin; Swift/Objective-C) | Total | Alto: duas equipes e duas bases |
+| **Híbrida** | Web (HTML/CSS/JS), empacotada | Via bibliotecas/*frameworks* (Cordova, React Native) | Menor |
+| **PWA** | Aplicação Web | Limitado | Mais baixo |
+
+### Conceitos fundamentais do projeto mobile
+
+O cenário não é o do desktop. Mesmo com memória e processadores razoáveis, os recursos são **limitados** perante um computador. Pontos a considerar já na **modelagem**:
+
+- **Fragmentação de telas:** monitores de desktop ficam entre 1280×800, Full HD (1920×1080) e 4K; nos móveis há variação muito maior de **resolução e tamanho**.
+- **Bateria:** quanto mais pesada a aplicação e mais recursos ela acessa, maior o gasto.
+- **Interação:** toque direto na interface e **teclado virtual** (às vezes reduzido), no lugar de mouse e teclado físico. A **usabilidade** passa a ser essencial.
+- **Espaço de tela:** sem as “sobras” do desktop, o foco vai para **o conteúdo útil**, o que costuma melhorar a experiência.
+- **Conexão instável:** não é tão estável quanto cabo ou fibra; trate a oscilação com **cache** e **otimização do consumo de banda**.
+- **Recursos exclusivos:** câmera, **localização geográfica** e sensores (acelerômetro, barômetro, luminosidade etc.), que permitem aplicações impossíveis na computação convencional.
+
+<Callout type="warning">
+**Inconsistências e pontos desatualizados no material**
+
+- **Exercício 2 e as gerações de rede:** o texto afirma que o GSM chegava a ~110 kbps e que a explosão do uso veio com o 3G. Uma alternativa distorce isso dizendo que “as redes de **terceira** geração tinham velocidade máxima em torno de 110 Kbps”: o valor é do início (GSM), não do 3G.
+- **“Ubíqua” não é só voz:** o texto fala em linguagem humana, mas a ubiquidade vale para qualquer interação que passe despercebida (toque, gestos, sensores), inclusive dispositivos sem interface de voz.
+- **Dados de 2017–2019:** estatísticas (CGI.br 2017, teste de 5G da BBC em 2019, “Nokia maior fabricante de câmeras”) são retratos de época, não valores atuais.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Desenvolvimento mobile hoje**
+
+O capítulo é de 2019. O vocabulário (nativo × híbrido × PWA) continua certo, mas o cenário de 2026 mudou:
+
+- **Kotlin virou a linguagem preferencial do Android** (Google adota *Kotlin-first*) e **Swift** é a linguagem corrente do iOS; Objective-C é legado. UI declarativa: **Jetpack Compose** (Android) e **SwiftUI** (iOS).
+- **Multiplataforma moderna:** além de React Native e Ionic, há **Flutter** (Dart, renderização própria) e **Kotlin Multiplatform**, que compartilha lógica entre Android e iOS. O **Cordova** está em declínio; o **Capacitor** (Ionic) é o sucessor comum para empacotar apps Web.
+- **PWA hoje:** funcionam bem no Android e no desktop, com suporte a *service workers*, instalação e notificações push; no iOS o suporte melhorou, mas ainda tem limitações em comparação ao Android.
+- **Distribuição:** apps nativos e híbridos vão para **Google Play** e **App Store**, cada uma com suas regras, revisão e taxas; PWAs se instalam direto do navegador.
+- **Responsividade e mobile-first:** em vez de tratar mobile como exceção, o padrão é projetar primeiro para a tela pequena e escalar. **Acessibilidade** (leitores de tela, contraste, tamanho de toque) e **privacidade/permissões** (LGPD, permissão de câmera, localização) entram no projeto desde o início.
+- **5G/redes:** a rede mais rápida não elimina a necessidade de pensar em **offline-first**, cache e economia de dados.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Primeiro smartphone: IBM, 1993.** O sucesso de massa veio com o **iPhone (2007)**. O primeiro com **Android** foi o **HTC G1 (2008)**. O padrão atual de smartphone não foi criado pela Nokia/Android.
+- **Redes:** o **3G** foi o que aumentou o interesse por conteúdo **multimídia**; a 2G/GSM era lenta e cara. Não confunda as velocidades.
+- **Computação ubíqua:** **onipresença** de computadores **dos mais variados tipos** interagindo de modo **imperceptível**. Smartphones **fazem parte** do conceito; foi cunhada por **Mark Weiser (Xerox, 1991)**.
+- **Android e iOS:** são incompatíveis; app de um precisa ser **reescrito** no outro, não apenas recompilado. Linguagens: Java/Kotlin (Android) e Objective-C/Swift (iOS).
+- **Híbrido:** feito com **HTML, CSS e JavaScript**, usa a Web como plataforma comum e é transformado em app nativo empacotado, com desempenho que já se aproxima do nativo nos *frameworks* atuais. **Não** é “só um site no navegador”.
+- **PWA:** ícone, cache local, uso off-line; exemplo de *framework*: Quasar (Vue.js).
+- **Limitações do mobile:** telas variadas, bateria, toque/teclado virtual, conexão instável. **Vantagens:** câmera, GPS e sensores.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SIMAS, V. L. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- MAJCHRZAK, T. A.; BIØRN-HANSEN, A.; GRØNLI, T. M. Progressive Web Apps: the Definite Approach to Cross-Platform Development? In: HAWAII INTERNATIONAL CONFERENCE ON SYSTEM SCIENCES, 51., 2018. *Proceedings*. p. 5735–5744.
+- FRIEDEWALD, M.; RAABE, O. Ubiquitous computing: an overview of technology impacts. *Telematics and Informatics*, v. 28, n. 2, p. 55–65, 2011.
+- ASP, F. *A comparison of Ionic 2 versus React Native and Android in terms of performance*. Dissertação (Mestrado) — Linköping University, 2017.
+- HIGA, P. Celular se torna principal meio de acesso à internet no Brasil. *Tecnoblog*, 24 jul. 2018.
+- LISZEWSKI, A. BBC goes to conduct its first broadcast over 5G, immediately hits data cap. *Gizmodo*, 30 maio 2019.
+- BIØRN-HANSEN, A.; MAJCHRZAK, T. A.; GRØNLI, T. M. Progressive Web Apps: the possible web-native unifier for mobile development. In: INTERNATIONAL CONFERENCE ON WEB INFORMATION SYSTEMS AND TECHNOLOGIES, 13., 2017. *Proceedings*. p. 344–351.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- TIC Domicílios 2017. São Paulo: CETIC.br, 2018.
+- INSTITUTO BRASILEIRO DE GEOGRAFIA E ESTATÍSTICA. *Pesquisa Nacional por Amostra de Domicílios — PNAD*. Rio de Janeiro: IBGE.
