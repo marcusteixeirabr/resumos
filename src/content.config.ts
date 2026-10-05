@@ -61,4 +61,20 @@ export const collections = {
     loader: glob({ pattern: '**/*.json', base: './src/content/exercicios/engenharia-software' }),
     schema: exerciseSchema,
   }),
+  'teste-software': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/teste-software' }),
+    schema: disciplineSchema,
+  }),
+  'exercicios-teste-software': defineCollection({
+    loader: glob({ pattern: '**/*.json', base: './src/content/exercicios/teste-software' }),
+    schema: exerciseSchema,
+  }),
+  'dispositivos-moveis': defineCollection({
+    loader: glob({ pattern: '**/*.mdx', base: './src/content/dispositivos-moveis' }),
+    schema: disciplineSchema,
+  }),
+  'exercicios-dispositivos-moveis': defineCollection({
+    loader: glob({ pattern: '**/*.json', base: './src/content/exercicios/dispositivos-moveis' }),
+    schema: exerciseSchema,
+  }),
 };

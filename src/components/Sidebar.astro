@@ -11,7 +11,10 @@ interface Props {
 const { entries, currentSlug, base, disciplineTitle } = Astro.props;
 const showExtras =
   entries.length === 16 &&
-  (base === '/paradigmas-programacao' || base === '/engenharia-software');
+  (base === '/paradigmas-programacao' ||
+    base === '/engenharia-software' ||
+    base === '/teste-software' ||
+    base === '/dispositivos-moveis');
 
 // Group entries by their `group` frontmatter field, preserving order
 const grouped: Record<string, typeof entries> = {};
