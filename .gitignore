@@ -9,6 +9,7 @@
 .claude/
 .agents/
 .superpowers/
+.maestri/
 
 # ── Skills CLI ──────────────────────────────────────────
 skills-lock.json
