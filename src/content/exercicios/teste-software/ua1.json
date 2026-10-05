@@ -1,0 +1,115 @@
+{
+  "ua": 1,
+  "questions": [
+    {
+      "question": "No contexto da engenharia de teste de software, qual é a distinção conceitual correta entre erro, defeito (bug) e falha?",
+      "options": [
+        "Erro é a falha do hardware; defeito é a execução incorreta da aplicação; falha é a percepção estética do usuário.",
+        "Erro é a ação humana equivocada; defeito é a imperfeição gravada no artefato ou código-fonte; falha é o comportamento incorreto observado durante a execução.",
+        "Erro é o resultado observado pelo cliente em produção; defeito é a anomalia humana na especificação; falha é a instrução defeituosa salva no repositório.",
+        "Erro, defeito e falha são termos sinônimos utilizados de forma intercambiável para representar qualquer travamento no sistema operacional."
+      ],
+      "correctIndex": 1,
+      "explanation": "O erro decorre de uma ação humana (equívoco de projeto ou codificação), o defeito (bug) é a anomalia estática presente no código ou artefato, e a falha é o comportamento incorreto visível quando a instrução com defeito é executada."
+    },
+    {
+      "question": "No processo de Garantia da Qualidade de Software (V&V), qual é a diferença fundamental entre as atividades de verificação e validação?",
+      "options": [
+        "A verificação avalia se o software atende aos requisitos e normas especificados ('estamos construindo o produto corretamente?'), enquanto a validação avalia se o software satisfaz as necessidades reais do usuário ('estamos construindo o produto certo?').",
+        "A verificação ocorre exclusivamente em produção com usuários reais, enquanto a validação é restrita aos testes de unidade executados pelo desenvolvedor.",
+        "A verificação foca na análise de métricas financeiras do projeto, enquanto a validação analisa exclusivamente o desempenho de hardware e consumo de memória.",
+        "A verificação é a checagem manual do código-fonte, enquanto a validação corresponde à execução automatizada de testes de estresse."
+      ],
+      "correctIndex": 0,
+      "explanation": "A verificação confirma se os produtos intermediários satisfazem as condições e especificações técnicas impostas, enquanto a validação avalia o produto final em relação às expectativas e necessidades do cliente no ambiente operacional."
+    },
+    {
+      "question": "Ao planejar a elaboração de casos de teste, as abordagens de caixa-branca, caixa-preta e caixa-cinza diferenciam-se pelo grau de conhecimento da estrutura interna do sistema. Nesse sentido, o teste de caixa-branca:",
+      "options": [
+        "Baseia-se unicamente nas entradas e saídas da interface do usuário, sem qualquer acesso ao código-fonte ou à arquitetura interna.",
+        "É realizado exclusivamente por usuários finais em versões de demonstração para avaliar a aceitação comercial do produto.",
+        "Utiliza o conhecimento da estrutura interna, do fluxo de controle e da implementação do código-fonte para projetar os casos de teste.",
+        "Ignora a lógica interna e foca apenas em testes de usabilidade e ergonomia das telas da aplicação."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de caixa-branca (estrutural) utiliza a perspectiva interna e a estrutura lógica do código para modelar os casos de teste e garantir a cobertura adequada de caminhos de execução."
+    },
+    {
+      "question": "Em relação ao ciclo de vida do desenvolvimento de software e aos custos de qualidade, por que a identificação precoce de defeitos é recomendada?",
+      "options": [
+        "Porque os testes em fases iniciais eliminam a necessidade de qualquer teste posterior de integração ou de sistema.",
+        "Porque identificar falhas precocemente reduz a velocidade de entrega sem trazer benefícios mensuráveis para o orçamento.",
+        "Porque o custo de correção de um defeito cresce significativamente à medida que o projeto avança para as fases finais ou entra em produção.",
+        "Porque a detecção de defeitos antes da codificação torna o processo de compilação totalmente imune a erros de sintaxe."
+      ],
+      "correctIndex": 2,
+      "explanation": "Defeitos identificados precocemente (como no levantamento de requisitos) exigem correções simples, ao passo que problemas encontrados em produção demandam retrabalho de desenvolvimento, testes adicionais, reimplantação e potenciais prejuízos à imagem do produto."
+    },
+    {
+      "question": "Em projetos de desenvolvimento contínuo ou manutenção evolutiva, qual é o objetivo primordial da realização de testes de regressão?",
+      "options": [
+        "Determinar o consumo máximo de memória e processador sob cargas extremas de acesso concorrente.",
+        "Validar se as telas da interface gráfica seguem os padrões de identidade visual e ergonomia estabelecidos pelo cliente.",
+        "Avaliar se os operadores do sistema conseguem utilizar a ferramenta sem treinamento prévio.",
+        "Assegurar que alterações no código, correções de defeitos ou novas funcionalidades não introduziram novas falhas em recursos que já funcionavam."
+      ],
+      "correctIndex": 3,
+      "explanation": "Os testes de regressão visam comprovar que modificações recentes no código não provocaram efeitos colaterais indesejados nem quebraram funcionalidades anteriormente validadas."
+    },
+    {
+      "question": "Qual é a principal característica que distingue o teste de estresse dos demais testes de desempenho de um software?",
+      "options": [
+        "O teste de estresse avalia a facilidade de navegação do usuário em dispositivos móveis sob baixa luminosidade.",
+        "O teste de estresse monitora exclusivamente o tráfego normal de rede em períodos de baixo fluxo de transações.",
+        "O teste de estresse submete o sistema a cargas de trabalho que excedem seus limites operacionais para avaliar o comportamento no ponto de ruptura e na recuperação.",
+        "O teste de estresse valida a correção sintática das consultas enviadas ao banco de dados relacional."
+      ],
+      "correctIndex": 2,
+      "explanation": "Enquanto testes de desempenho comuns medem o tempo de resposta em condições nominais de carga, o teste de estresse força intencionalmente o sistema além de sua capacidade máxima para observar seu modo de falha e sua capacidade de recuperação."
+    },
+    {
+      "question": "Dentre as características de qualidade de software, a robustez é definida como a capacidade do sistema de:",
+      "options": [
+        "Ser facilmente transferido e executado em múltiplos sistemas operacionais e arquiteturas de processador distintas.",
+        "Reutilizar classes e componentes de software em novos projetos com o mínimo de adaptação.",
+        "Reduzir a quantidade de memória RAM utilizada para valores próximos de zero durante o processamento.",
+        "Continuar funcionando de forma aceitável mesmo diante de condições anormais, dados inesperados ou entradas não previstas na especificação."
+      ],
+      "correctIndex": 3,
+      "explanation": "A robustez reflete a resiliência do sistema perante cenários não previstos, entradas inválidas ou falhas de componentes externos, evitando interrupções abruptas ou perda de integridade."
+    },
+    {
+      "question": "No contexto dos testes de aceitação conduzidos com usuários, qual é a diferença típica entre os testes alfa e beta?",
+      "options": [
+        "O teste alfa é conduzido no ambiente controlado da equipe de desenvolvimento antes do lançamento, enquanto o teste beta é realizado por usuários reais em seus próprios ambientes operacionais.",
+        "O teste alfa é automatizado por meio de scripts de integração contínua, enquanto o teste beta é executado exclusivamente por analistas de suporte técnico.",
+        "O teste alfa é realizado exclusivamente após o lançamento comercial do produto, enquanto o teste beta ocorre apenas na fase de levantamento de requisitos.",
+        "O teste alfa destina-se a avaliar a performance do banco de dados, enquanto o teste beta avalia a segurança de criptografia de rede."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste alfa ocorre internamente nas instalações da organização desenvolvedora com foco em triagem de problemas, enquanto o teste beta expõe uma versão quase final a usuários externos em condições reais de uso."
+    },
+    {
+      "question": "No planejamento de testes de software, qual é a definição e finalidade de um caso de teste elaborado pelo analista de testes?",
+      "options": [
+        "É o contrato financeiro firmado entre a empresa desenvolvedora e o cliente que estipula o valor por defeito encontrado.",
+        "É um conjunto estruturado de pré-condições, dados de entrada, procedimentos de execução e resultados esperados, desenhado para verificar uma condição ou funcionalidade específica.",
+        "É o diagrama de banco de dados que define a modelagem física e a criação das tabelas no SGBD.",
+        "É o código-fonte executável que substitui a necessidade de documentação de requisitos em métodos ágeis."
+      ],
+      "correctIndex": 1,
+      "explanation": "O caso de teste especifica detalhadamente as entradas, o estado inicial exigido e as saídas esperadas, permitindo verificar de maneira objetiva e reproduzível se o software cumpre o requisito planejado."
+    },
+    {
+      "question": "Qual é a relação conceitual entre a Garantia da Qualidade de Software (SQA - Software Quality Assurance) e as atividades de teste de software?",
+      "options": [
+        "O teste de software é uma das atividades técnicas e práticas que integram o escopo mais abrangente da garantia da qualidade, a qual envolve também processos, normas, revisões e auditorias.",
+        "Teste de software e SQA são expressões idênticas que se referem exclusivamente à execução de scripts automatizados de interface.",
+        "A garantia da qualidade restringe-se à correção de bugs em produção, enquanto os testes cuidam apenas da instalação inicial do hardware.",
+        "A SQA substitui completamente a necessidade de testes funcionais e estruturais, tornando obsoleta a criação de casos de teste."
+      ],
+      "correctIndex": 0,
+      "explanation": "A garantia da qualidade engloba processos preventivos, auditorias, métodos organizacionais e padrões que governam todo o ciclo de vida, sendo o teste uma disciplina fundamental de verificação dinâmica do produto."
+    }
+  ]
+}

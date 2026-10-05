@@ -1,0 +1,217 @@
+---
+title: "UA1 — Introdução aos Testes de Software"
+subtitle: "O que é testar, por que o software falha (erro → defeito → falha), o que faz o analista de testes e como o teste sustenta a qualidade do produto."
+ua: 1
+group: "Fundamentos de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua1.m4a" title="Como um pequeno bug derruba um sistema" />
+
+### Por que testar
+
+Software está em todo lugar, e a expectativa é que ele **execute suas funções sem produzir erros**. O teste é a atividade que verifica isso antes da entrega ao cliente: ele **mostra as falhas do sistema enquanto o desenvolvimento ainda está em curso**, garante que as funcionalidades pedidas existem e se comportam como o esperado e busca entregar um produto seguro e confiável.
+
+Há também um argumento econômico: **quanto mais tarde a falha é corrigida, mais cara ela fica**. Corrigir um requisito mal entendido durante a análise custa uma conversa; corrigi-lo com o sistema em produção custa retrabalho, reimplantação e, às vezes, reputação. Por isso muitas equipes adotam um desenvolvimento **orientado a testes**, em que o teste nasce junto com o código (ou antes dele).
+
+Um erro simples pode ter consequências graves. O caso clássico é o do **míssil Patriot** na Guerra do Golfo: um erro de arredondamento no cálculo do tempo fez o sistema ignorar um míssil Scud que se aproximava, com a morte de 28 soldados e mais de 100 feridos.
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gts_01.webp" alt="Infográfico 'Guia de Testes de Software' — tipos de teste, diferença entre erro, defeito e falha, verificação e validação, papel do analista de testes e fatores de qualidade" caption="Guia de testes de software: tipos de teste, erro → defeito → falha, V&V e qualidade" />
+</SlidesGrid>
+
+### Plano de teste, verificação e validação
+
+O teste é organizado por um **plano de teste**: documento de planejamento do projeto de testes que reúne todas as etapas de **verificação** e **validação** a observar.
+
+| Conceito | Pergunta que responde | Foco |
+|---|---|---|
+| **Verificação** | “Estamos construindo o produto **corretamente**?” | O software satisfaz os requisitos especificados |
+| **Validação** | “Estamos construindo o **produto certo**?” | O software satisfaz a necessidade real do usuário |
+
+O livro define validação como examinar se o software atende à necessidade do usuário (é validado o software compatível com os requisitos solicitados) e verificação como confirmar que o programa cumpre todos os requisitos. Na prática, o par costuma aparecer abreviado como **V&V** (ou **VV&T**, com “Teste” no fim).
+
+### Tipos de teste
+
+Os módulos são testados individualmente para localizar e eliminar erros, e depois em conjunto. Quando o produto roda em ambientes diferentes, entra ainda o **teste de configuração/instalação** (um programa feito para Windows pode se comportar de outro modo em um sistema da Apple). O material lista os principais tipos:
+
+| Tipo | O que verifica |
+|---|---|
+| **Unidade** | Um componente, isoladamente |
+| **Componentes** | Componentes do software, isolados |
+| **Montagem** | Componentes testados em conjunto |
+| **Integração** | Se dois ou mais componentes combinados funcionam de forma satisfatória |
+| **Funcional** | Requisitos funcionais, funções e casos de uso — se a aplicação faz o que deveria fazer |
+| **Produto** | Confirma que os requisitos funcionais estão presentes |
+| **Integridade de sistema** | Robustez: resistência a falhas |
+| **Aceitação do usuário** | Usuários finais usam casos e cenários para provar que o sistema serve à finalidade |
+| **Desempenho** | Velocidade/eficácia conforme os requisitos não funcionais |
+| **Performance** | Capacidade de resposta, disponibilidade, confiabilidade e robustez sob determinada carga, em condições e tempo definidos |
+| **Estresse** | O sistema é levado até o ponto de ruptura para observar como ele falha |
+| **Volume** | Comportamento com volume “normal” de dados e transações (inclusive banco de dados) por longo período |
+| **Usabilidade** | Experiência do usuário: consistência da interface, leiaute, acesso às funções, facilidade de uso |
+| **Configuração/instalação** | Comportamento em diferentes configurações de software e hardware |
+| **Segurança** | Se sistema e dados só são acessados por quem tem permissão |
+| **Regressão** | Se mudanças ou novas versões não quebraram o que já funcionava |
+
+#### Caixa-branca, caixa-preta e caixa-cinza
+
+Os tipos acima dizem **o que** testar; estas três abordagens dizem **com que visibilidade do interior** do sistema o teste é desenhado:
+
+| Abordagem | O testador conhece o código? | Como funciona |
+|---|---|---|
+| **Caixa-branca** | Sim | Usa a perspectiva interna (código-fonte) para modelar os casos de teste; verifica se o código foi implementado corretamente |
+| **Caixa-preta** | Não | Só interfaces e comportamento externo são testados; verifica se as funções batem com os requisitos do cliente |
+| **Caixa-cinza** | Parcialmente | Modela os testes conhecendo a estrutura interna, mas executa ignorando-a, como na caixa-preta |
+
+#### Testes alfa e beta
+
+A Dica do Professor da UA contrasta **teste alfa** e **teste beta**, ambos de aceitação por usuários. Em geral: o **alfa** acontece nas instalações do desenvolvedor, em ambiente controlado e ainda antes do lançamento; o **beta** é feito por usuários reais, no ambiente deles, com uma versão quase final.
+
+#### Ferramentas citadas no material
+
+- **qTest** — teste de desempenho (segundo o material);
+- **TestLink** — ferramenta *open source* de gerenciamento de testes, que sincroniza o trabalho da equipe;
+- **LoadRunner** — da Micro Focus; testa aplicações medindo comportamento e desempenho sob carga.
+
+O desafio é escolher a combinação certa de técnicas **sem estourar o custo previsto** para o projeto.
+
+### Bug, erro e falha
+
+Defeitos (*bugs*) são imperfeições encontradas no software ou nos processos de levantamento de requisitos, análise e projeto — nem todo bug é erro de programação. O material, apoiado no ISTQB, separa três termos:
+
+| Termo | Definição no material |
+|---|---|
+| **Erro** | Decorre de **ação humana**: um resultado incorreto, como uma falha de escrita no código-fonte |
+| **Bug (defeito)** | Resultado de um erro no código: uma instrução ou comando errado que gera uma anomalia no funcionamento |
+| **Falha** | Resultado da **execução** do defeito: o comportamento errado que o usuário observa |
+
+**Erro → Defeito → Falha**
+
+A pessoa comete o erro, o erro fica gravado no código como defeito e a falha só aparece quando aquele trecho é executado. Por isso um defeito pode existir muito tempo sem ser notado.
+
+#### Causas mais comuns
+
+Erros e defeitos surgem em qualquer fase (análise de requisitos, especificação, desenho, codificação), geralmente por:
+
+- especificações de requisitos feitas de maneira errada;
+- requisitos interpretados incorretamente pelos analistas;
+- especificações funcionais e técnicas mal formuladas;
+- código-fonte implementado de forma incorreta;
+- dados de entrada ou saída errados ou inconsistentes;
+- bugs corrigidos da maneira errada.
+
+O Quadro 1 do livro relaciona categorias de defeito às suas causas:
+
+| Defeito | Causa típica |
+|---|---|
+| **Não tratamento de erros** | Falta de precaução contra travamentos e comportamentos inesperados; falhas não antecipadas |
+| **Erro de cálculo** | Cálculos incorretos, estouro de tamanho de campos, algoritmos errados (ex.: campo do formulário com tamanho diferente do campo do banco, e os dados não são salvos corretamente) |
+| **Manipulação de dados** | Dados tratados de forma errada, como datas e campos nulos |
+| **Código-fonte** | Falta de controle do código; recursos não previstos implementados |
+| **Documentação** | Documentação desatualizada em relação ao solicitado e às mudanças do projeto |
+| **Testes** | Ausência de planejamento, execução e definição de escopo; falta de política de testes |
+| **Usabilidade** | Dificuldade de uso, má disposição das informações na tela, interface pouco agradável |
+
+Entre todas as causas, **o levantamento de requisitos** é a que mais se destaca: um requisito errado contamina projeto, código e testes.
+
+### O papel do analista de testes
+
+O analista de testes **analisa o sistema sob a ótica do teste** para modelar e construir **casos de teste**: conjuntos de condições, valores de entrada, pré-condições de execução e outros elementos criados para um objetivo ou condição específica.
+
+Perfil esperado: ser criterioso, atento a detalhes, entender como os softwares falham, conhecer o sistema sob teste e ter experiência. Técnicas e conhecimentos que ele deve dominar: **UML**, **modelo V** (verificação e validação em paralelo ao desenvolvimento), **normas de qualidade** (ISO 9000, ISO 9126), **estrutura de banco de dados** e **ferramentas de teste**.
+
+Funções típicas:
+
+- estabelecer estratégias, planejar, executar e monitorar os testes;
+- identificar os itens que serão avaliados;
+- definir os tipos de teste conforme os dados de entrada;
+- coletar e gerenciar os dados de teste;
+- avaliar o resultado de cada ciclo de teste.
+
+### Qualidade de software e o papel do teste
+
+Um software de qualidade é o que **satisfaz as necessidades dos usuários**. O material adota a visão de que qualidade é gestão efetiva aplicada para criar um produto útil, que traga valor mensurável a quem o produz e a quem o usa.
+
+A **garantia da qualidade (SQA — *Software Quality Assurance*)** é mais ampla que testar. Reúne: normas e padrões (ISO, IEEE), revisões técnicas, testes, coleta e análise de erros, auditorias, gerenciamento de mudanças, educação continuada dos engenheiros, gerência de fornecedores, segurança e gestão de riscos. **O teste é uma das ferramentas da qualidade, não a qualidade inteira.**
+
+#### Fatores internos e externos
+
+- **Externos:** percebidos pelo usuário, como velocidade e facilidade de uso.
+- **Internos:** estrutura, vistos pelo desenvolvedor/mantenedor, como modularidade e legibilidade.
+
+A chave é que **os fatores externos dependem dos internos**: o usuário só desfruta de rapidez e confiabilidade se projetistas e implementadores aplicaram boas técnicas internas.
+
+#### Atributos da ISO 9126
+
+O material cita os seis atributos fundamentais:
+
+| Atributo | Significado |
+|---|---|
+| **Funcionalidade** | Satisfação das necessidades declaradas: adequação, exatidão, conformidade, segurança |
+| **Confiabilidade** | Medida pela probabilidade de ocorrência de falhas |
+| **Usabilidade** | Medida por fatores não quantificáveis, como a interface |
+| **Eficiência** | Uso racional de recursos como memória e processador |
+| **Extensibilidade** | Possibilidade de adaptação a novas inclusões |
+| **Facilidade de manutenção** | Correção viável, via análise, mudança, estabilidade e testabilidade |
+
+E uma segunda lista de fatores de qualidade desejáveis:
+
+| Fator | Ideia |
+|---|---|
+| **Correção** | Realizar as tarefas com precisão, conforme os requisitos |
+| **Extensibilidade** | Receber modificações com facilidade |
+| **Reusabilidade** | Reaproveitar o software (ou partes) em novas aplicações, reduzindo esforço e risco |
+| **Robustez** | Funcionar mesmo em condições não previstas na especificação |
+| **Compatibilidade** | Combinar-se com outros componentes sem interferir em outras aplicações |
+| **Portabilidade** | Ser transposto de um ambiente para outro (adaptabilidade, instalação, conformidade, substituição); difícil de obter |
+| **Eficiência** | Uso racional dos recursos de hardware e sistema operacional |
+
+<Callout type="warning">
+**Inconsistências no material**
+
+- **A lista “ISO 9126” do livro está trocada.** Na norma, os seis atributos são *funcionalidade, confiabilidade, usabilidade, eficiência, manutenibilidade e **portabilidade***. O texto lista “extensibilidade” no lugar de portabilidade (que só aparece depois, na outra lista). Em prova da disciplina, use o que o livro apresenta, mas saiba a versão da norma.
+- **“Fatores externos: modularidade, portabilidade, correção”** mistura categorias: na visão de Meyer, modularidade é um fator **interno**, enquanto correção e portabilidade são externos.
+- Os “testes de desempenho” e “testes de performance” aparecem como itens separados e se sobrepõem bastante; trate ambos como testes de **requisitos não funcionais** de velocidade e carga.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Teste de software hoje**
+
+O capítulo é de 2019 e o vocabulário continua certo, mas a prática de 2026 é diferente em alguns pontos:
+
+- **“Teste é a última etapa” está ultrapassado.** O consenso é o ***shift left***: testar cedo e continuamente — TDD, testes de unidade no *commit*, integração contínua (CI) que roda a suíte a cada alteração. É o mesmo argumento de custo do livro, levado a sério.
+- **Pirâmide de testes:** muitos testes de unidade (rápidos), alguns de integração e poucos de ponta a ponta (E2E, lentos). Ferramentas comuns: JUnit/pytest/Jest (unidade), Selenium/Cypress/Playwright (E2E/UI), k6/JMeter (carga). LoadRunner e TestLink existem, mas são só uma parte do mercado.
+- **ISO 9126 foi substituída pela ISO/IEC 25010**, que traz oito características de qualidade do produto: adequação funcional, eficiência de desempenho, compatibilidade, usabilidade, confiabilidade, segurança, manutenibilidade e portabilidade. Segurança virou característica própria.
+- **Vocabulário ISTQB atual:** *error* (erro humano) → *defect/bug* (defeito no artefato) → *failure* (falha observada). É a mesma cadeia do livro; use “erro” para a ação humana, “defeito/bug” para o que fica no código e “falha” para o que o usuário vê.
+- **Acessibilidade e segurança** entram no checklist de teste desde o início (o “Na Prática” da UA trata de acessibilidade segundo a NBR 9050 e ferramentas on-line de avaliação, e a referência atual para web é a WCAG).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Erro → Defeito → Falha:** o erro é humano; o defeito mora no código; a falha aparece na execução.
+- **Verificação ≠ validação:** verificação = “o produto cumpre a especificação?”; validação = “o produto atende a necessidade do usuário?”. Não confunda com estática/dinâmica nas alternativas.
+- **Caixa-branca** conhece o código; **caixa-preta** só interfaces; **caixa-cinza** modela conhecendo a estrutura, mas executa como caixa-preta.
+- **Robustez** = funcionar mesmo em condições não previstas na especificação (não é compatibilidade, nem portabilidade, nem eficiência).
+- **Teste de usabilidade** = observar um usuário realizando tarefas e registrar erros, dificuldades e eficiência — não é questionário nem robô.
+- Depois dos testes funcionais e estruturais, vem o que cuida do restante do processo de qualidade: **revisões técnicas, especificações corretas e plano de teste**.
+- Os fatores ISO **não levam necessariamente a medição direta**: dão base para medidas indiretas e uma lista de verificação.
+- A **causa mais destacada** de defeitos é o levantamento de requisitos.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- GONÇALVES, P. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PRESSMAN, R.; MAXIM, B. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- MEYER, B. *Object-oriented software construction*. New Jersey: Prentice Hall, 1997.
+- INTERNATIONAL SOFTWARE TESTING QUALIFICATIONS BOARD. *Home*, 2016. Disponível em: https://www.istqb.org/.
+- ISO. *ISO/IEC 9126-1: Software engineering — Product quality*. Rio de Janeiro: ISO, 2001.
+- KOSCIANSKI, A.; SOARES, M. *Qualidade de software*. 2. ed. São Paulo: Novatec, 2007.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássicos & orientado a objetos*. Porto Alegre: AMGH, 2010.
+- DEVMEDIA. *Testes de software: entendendo defeitos, erros e falhas*. Rio de Janeiro: DEVMEDIA, 2019.
+- TARGETTRUST. *Os principais tipos de testes de software*, 2015.
