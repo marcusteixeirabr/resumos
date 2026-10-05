@@ -27,7 +27,7 @@
       "question": "O conceito de computação ubíqua (ou pervasiva), formulado por Mark Weiser em 1991, baseia-se na ideia de que a tecnologia computacional deve:",
       "options": [
         "Estar presente de forma distribuída e interconectada no cotidiano, permitindo que as pessoas interajam com aparelhos e sensores de maneira imperceptível e natural.",
-        "Centralizar todo o processamento em supercomputadores corporativos acessados exclusivamente via terminais físicos de texto.",
+        "Centralizar todo o processamento em supercomputadores corporativos acessados exclusivamente via terminais físicos de linha de comando.",
         "Eliminar o uso de conexões sem fio em favor de cabos de fibra óptica de alta fidelidade para todos os aparelhos.",
         "Restringir a inteligência computacional aos servidores em nuvem, mantendo os dispositivos locais totalmente desprovidos de capacidade de cálculo."
       ],
