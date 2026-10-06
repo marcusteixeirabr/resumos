@@ -1,0 +1,115 @@
+{
+  "ua": 2,
+  "questions": [
+    {
+      "question": "No processo formal de teste de software, qual atividade é executada inicialmente para definir os objetivos, estimar recursos, identificar riscos e estabelecer a estratégia geral de garantia da qualidade?",
+      "options": [
+        "Execução e registro de defeitos.",
+        "Planejamento e controle de testes.",
+        "Homologação e aceite pelo cliente.",
+        "Refatoração de código-fonte em produção."
+      ],
+      "correctIndex": 1,
+      "explanation": "O planejamento de testes estabelece o escopo, as metas e as abordagens a serem adotadas, enquanto a atividade contínua de controle monitora se a execução está em conformidade com o plano elaborado."
+    },
+    {
+      "question": "Durante a atividade de análise e modelagem do processo de testes, quais artefatos fundamentais são elaborados e estruturados com base na especificação de requisitos?",
+      "options": [
+        "Diagramas de arquitetura física de hardware e topologia de cabeamento de rede.",
+        "Contratos comerciais de licenciamento e termos de rescisão de fornecedores.",
+        "Casos de teste, scripts de teste e matrizes de rastreabilidade bidirecional.",
+        "Drivers de dispositivos e instaladores binários de compiladores de linguagem de máquina."
+      ],
+      "correctIndex": 2,
+      "explanation": "Na análise e modelagem, os requisitos e a base de teste são transformados em condições de teste, casos de teste e procedimentos/scripts concretos, assegurando a rastreabilidade entre requisitos e testes."
+    },
+    {
+      "question": "No contexto dos níveis estruturados de teste de software, o teste unitário caracteriza-se por:",
+      "options": [
+        "Ser executado diretamente pelo programador durante o desenvolvimento, focando na verificação isolada de pequenas partes ou módulos de código.",
+        "Ser conduzido exclusivamente pelo cliente final no ambiente de produção para validar contratos de serviço.",
+        "Avaliar a infraestrutura de servidores em nuvem sob tráfego global de milhões de conexões simultâneas.",
+        "Submeter a aplicação completa a testes de penetração e invasão de segurança externa."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste unitário (ou de componentes) isola cada unidade mínima de código (como funções, métodos ou classes) para certificar que sua lógica interna executa corretamente as tarefas previstas."
+    },
+    {
+      "question": "Mesmo quando todas as unidades individuais de um sistema são aprovadas em testes unitários, falhas críticas ainda podem ocorrer. Qual nível de teste tem como objetivo específico verificar o fluxo de dados, a comunicação e o acoplamento entre dois ou mais componentes combinados?",
+      "options": [
+        "Teste de estresse físico de hardware.",
+        "Teste de conformidade de acessibilidade visual.",
+        "Teste de aceitação operacional do usuário.",
+        "Teste de integração."
+      ],
+      "correctIndex": 3,
+      "explanation": "O teste de integração verifica se módulos que funcionam perfeitamente de forma isolada conseguem trocar mensagens, invocar interfaces e compartilhar dados de forma consistente quando interconectados."
+    },
+    {
+      "question": "O nível de teste de sistema diferencia-se dos níveis anteriores principalmente porque:",
+      "options": [
+        "Restringe-se à inspeção manual de comentários nas linhas de código-fonte.",
+        "Avalia o comportamento do software integrado como um todo em relação aos requisitos funcionais e não funcionais especificados.",
+        "É realizado unicamente pelo departamento financeiro da empresa contratante.",
+        "Dispensa o uso de dados de entrada, atuando apenas no desligamento do sistema operacional."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de sistema valida a aplicação completa e integrada em um ambiente representativo, assegurando que todas as funcionalidades e requisitos de desempenho atendem às especificações do projeto."
+    },
+    {
+      "question": "No encerramento do ciclo de desenvolvimento de software, qual é a finalidade principal do nível de teste de aceitação realizado em conjunto com o cliente ou usuários finais?",
+      "options": [
+        "Reduzir os salários da equipe de desenvolvimento em função de defeitos de digitação.",
+        "Encontrar falhas de sintaxe e erros de alocação de memória no compilador da linguagem.",
+        "Confirmar se o sistema atende aos critérios de negócio e requisitos acordados, fornecendo subsídios para a homologação formal e entrega do produto.",
+        "Reescrever completamente a arquitetura de banco de dados do zero."
+      ],
+      "correctIndex": 2,
+      "explanation": "O objetivo central do teste de aceitação não é primordialmente encontrar novos defeitos técnicos de código, mas demonstrar a prontidão do software para entrar em operação comercial e obter a aprovação formal do cliente."
+    },
+    {
+      "question": "No contexto da engenharia de software, o TDD (Test-Driven Development) é uma prática de desenvolvimento em que os testes são elaborados antes da escrita do código funcional. Qual é a sequência correta das fases que compõem o ciclo iterativo do TDD?",
+      "options": [
+        "Red (escrever um teste que falha) → Green (implementar o código mínimo para o teste passar) → Refactor (melhorar a estrutura do código mantendo os testes aprovados).",
+        "Refactor (reescrever o sistema) → Green (desativar validações) → Red (interromper a compilação por erro).",
+        "Green (publicar em produção) → Red (aguardar reclamações do usuário) → Refactor (corrigir os servidores).",
+        "Red (desinstalar a IDE) → Refactor (formatar o banco de dados) → Green (iniciar a especificação)."
+      ],
+      "correctIndex": 0,
+      "explanation": "O ciclo clássico do TDD (Red-Green-Refactor) orienta o design: inicia-se com um teste automatizado que falha, implementa-se apenas o suficiente para que ele seja aprovado e, em seguida, aprimora-se a arquitetura e a legibilidade do código sem quebrar os testes."
+    },
+    {
+      "question": "Na automação de testes de sistema e aceitação, quais ferramentas são amplamente empregadas para controlar interfaces web por meio de navegadores e para automatizar sistemas desktop através de reconhecimento visual na tela, respectivamente?",
+      "options": [
+        "Flask e JUnit.",
+        "Selenium WebDriver e Sikuli.",
+        "Docker e Kubernetes.",
+        "Git e Apache Subversion."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Selenium WebDriver é um padrão para automação de testes em navegadores web, enquanto ferramentas baseadas em visão computacional como o Sikuli interagem com interfaces gráficas identificando elementos visuais na tela do sistema operacional."
+    },
+    {
+      "question": "Em diferentes linguagens de programação, a execução automatizada de testes unitários apoia-se em frameworks especializados da família xUnit. Quais são dois exemplos legítimos de frameworks voltados para testes unitários nas linguagens Java e PHP?",
+      "options": [
+        "Spring Boot e Laravel.",
+        "Django e Express.",
+        "JUnit e PHPUnit.",
+        "React e Angular."
+      ],
+      "correctIndex": 2,
+      "explanation": "JUnit (para Java) e PHPUnit (para PHP) são bibliotecas dedicadas à criação, organização em suítes e execução automatizada de asserções e testes unitários."
+    },
+    {
+      "question": "Na fase de implementação e execução do processo de testes, como os casos de teste costumam ser agrupados para viabilizar execuções eficientes, e como se define o momento em que a etapa pode ser concluída?",
+      "options": [
+        "São agrupados aleatoriamente sem identificação, concluindo-se o teste quando o servidor sofre desligamento abrupto.",
+        "São convertidos em relatórios fiscais impressos, concluindo-se o processo quando todas as páginas forem assinadas em cartório.",
+        "São distribuídos para clientes anônimos na internet, concluindo-se apenas após dez anos de coleta ininterrupta de dados.",
+        "São organizados em suítes de teste (por prioridade, módulo ou funcionalidade), avaliando-se a conclusão com base em critérios de saída predefinidos, como cobertura de requisitos e estabilidade do sistema."
+      ],
+      "correctIndex": 3,
+      "explanation": "A estruturação em suítes de teste permite rodar baterias focadas (como regressão ou fumaça) e os critérios de saída estipulam métricas objetivas (ex.: percentual de aprovação, defeitos críticos resolvidos) para determinar o fim dos testes."
+    }
+  ]
+}

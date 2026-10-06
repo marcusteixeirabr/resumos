@@ -1,0 +1,116 @@
+---
+title: "UA2 — Planejamento, Níveis de Teste e Recursos Técnicos"
+subtitle: "As cinco atividades do processo de testes, os quatro níveis (unitário, integração, sistema e aceitação), o ciclo red-green-refactor do TDD e as ferramentas de cada nível."
+ua: 2
+group: "Processo e Níveis de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua2.m4a" title="Do plano de teste ao aceite: níveis e ferramentas" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdts_01.webp" alt="Infográfico 'Guia de Teste de Software' — o processo de testes em cinco atividades, os quatro níveis (unitário, integração, sistema e aceitação), o ciclo red-green-refactor do TDD e as ferramentas de cada nível" caption="Guia de teste de software: processo, quatro níveis, TDD e ferramentas por nível" />
+</SlidesGrid>
+
+### Teste como processo
+
+Teste de software é uma atividade **inserida no desenvolvimento**, mas com uma diferença: todas as ações dela se preocupam **exclusivamente com a qualidade**. O objetivo é encontrar falhas e problemas para que sejam corrigidos até o produto atingir a qualidade desejada. Aqui, “qualidade” é o encontro entre o que é entregue e os **requisitos levantados no início** do projeto: software de qualidade é o que atende aos requisitos e às necessidades do cliente.
+
+Quem trabalha com isso faz mais do que testes funcionais: avalia a **especificação de requisitos**, o **projeto técnico**, outros documentos, **performance e capacidade** e a **interface**. A estratégia de teste funciona como um roteiro: define as etapas, **quando** são planejadas e executadas e o montante de trabalho, tempo e recursos envolvidos. Em geral ela inclui planejamento dos testes, projeto de casos de teste, execução e coleta e avaliação dos dados.
+
+### As cinco atividades do processo de testes
+
+**Planejamento e controle → Análise e modelagem → Implementação e execução → Avaliação dos critérios de saída e relatórios → Encerramento**
+
+| Atividade | O que acontece |
+|---|---|
+| **Planejamento e controle** | Primeira a ser executada e base de todo o processo: define objetivos, especifica as atividades e a forma de alcançá-los. Gera o **plano de teste** (pessoas, tipos de teste, técnicas, riscos, artefatos). O **controle** acompanha, durante todo o processo, se o planejado está sendo cumprido |
+| **Análise e modelagem** | Criam-se os artefatos para cumprir o plano: **casos de teste** e **scripts de teste**. Verifica-se o ambiente de testes e faz-se os ajustes. Casos são priorizados e cria-se **rastreabilidade bidirecional** entre requisitos e casos de teste |
+| **Implementação e execução** | Os artefatos são organizados em **suítes** (por prioridade ou funcionalidade) e executados |
+| **Avaliação dos critérios de saída e relatórios** | A execução é avaliada em relação aos objetivos definidos no planejamento |
+| **Encerramento** | Coleta de dados de todas as atividades para registrar experiência, *testware*, fatos e números. Acontece quando o software é lançado, o projeto de teste é concluído ou cancelado, um marco é alcançado ou uma manutenção é concluída |
+
+<Callout type="warning">
+**Dois “ciclos” diferentes no material**
+
+O livro descreve cinco atividades do processo (planejamento e controle, análise e modelagem, implementação e execução, avaliação dos critérios de saída, encerramento). O exercício 5 da UA fala em outro ciclo de cinco fases (**planejamento, preparação, especificação, execução e entrega**), em que a **especificação** elabora e revisa casos e roteiros de teste. Ao responder, identifique qual modelo a questão usa.
+</Callout>
+
+### Os quatro níveis de teste
+
+| Nível | Quem / quando | O que testa | Observações |
+|---|---|---|---|
+| **Unitário** | Em geral o **programador**, durante o desenvolvimento | Pequenas partes do sistema | Técnica típica: **TDD** |
+| **Integração** | Após as unidades prontas | Se uma ou mais unidades “se encaixam perfeitamente” e se comunicam quando unificadas | Peças que funcionam separadas podem falhar juntas |
+| **Sistema** | Equipe de testes | O sistema ou uma funcionalidade **como um todo** | O mais comum nas empresas; manual ou automatizado, com várias ferramentas |
+| **Aceitação** | Com o **cliente** ou um representante | Confirma que tudo foi implementado como solicitado | **Último nível**; o objetivo **não é achar falhas**, é aceitar a entrega |
+
+### TDD: Desenvolvimento Guiado por Testes
+
+No **TDD** (*Test Driven Development*), **o teste é escrito antes da funcionalidade**. Como o teste nasce dos requisitos, a funcionalidade implementada tende a estar de acordo com eles. O ciclo tem três passos:
+
+**Red → Green → Refactor**
+
+- **Red (vermelho):** escreve-se um teste que **vai falhar**, porque a funcionalidade ainda não existe;
+- **Green (verde):** implementa-se a funcionalidade que **faz o teste passar**;
+- **Refactor (refatore):** o código é aprimorado, mantendo os testes verdes.
+
+<Callout type="warning">
+**TDD descrito como “técnica de testes”**
+
+O livro chama o TDD de “técnica de testes”, o que é uma simplificação: o exercício 4 da UA o define corretamente como técnica de **desenvolvimento** que cria os testes antes do código.
+</Callout>
+
+### Recursos técnicos por nível
+
+| Nível | Recurso | Para quê |
+|---|---|---|
+| **Unitário (TDD)** | **JUnit** | *Framework* de testes em **Java** |
+| | **PHPUnit** | *Framework* de testes em **PHP** |
+| **Sistema e aceitação** | **Sikuli** | Automação de qualquer sistema com **interface gráfica**, inclusive desktop |
+| | **Selenium WebDriver** | Automação de testes de sistemas **web** |
+| | **Robotium** | Automação de testes de aplicativos **móveis** |
+
+Sistema e aceitação têm funcionamento parecido (ambos testam a ferramenta já pronta), por isso concentram a **maior variedade de ferramentas**.
+
+<Callout type="warning">
+**Erros na lista de recursos**
+
+- **Flask não é framework de testes.** O livro lista “Flask: framework utilizado para TDD em Python”, mas Flask é um *framework web*. Em Python, os recursos de teste unitário são o **unittest** (padrão da linguagem) e o **pytest**.
+- A enumeração do livro **pula de 1 para 4**: os itens 2 e 3 (integração e outro nível) não aparecem.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Níveis de teste e automação hoje**
+
+O capítulo é de 2017 e a divisão em quatro níveis continua válida. O que mudou está nas ferramentas e na forma de organizar os testes:
+
+- **Pirâmide de testes:** muitos testes unitários (rápidos e baratos), alguns de integração, poucos de sistema ponta a ponta (lentos e frágeis). É a justificativa prática para o TDD e para o unitário ser feito pelo programador.
+- **Ferramentas atuais:** JUnit 5, pytest, Jest/Vitest (JavaScript), xUnit/NUnit (.NET). Para web, **Playwright** e **Cypress** ocupam o espaço do Selenium em muitos projetos (o Selenium continua amplamente usado). **SikuliX** é o nome atual do Sikuli; para mobile, **Espresso** (Android), **XCUITest** (iOS) e **Appium** (multiplataforma) substituíram o Robotium, hoje sem manutenção ativa.
+- **Integração contínua (CI):** os testes unitários e de integração rodam **automaticamente a cada *commit*** (GitHub Actions, GitLab CI, Jenkins); o teste não é mais uma fase no fim, é parte do fluxo diário.
+- **Teste de contrato e mocks:** em arquiteturas de microsserviços, o teste de integração costuma usar **dublês** (*mocks*, *stubs*) e testes de contrato (Pact), além de ambientes efêmeros com contêineres (Testcontainers).
+- **Aceitação como código:** o teste de aceitação virou especificação executável com **BDD** (Cucumber, formato *Given-When-Then*), aproximando cliente, testador e desenvolvedor.
+- **TDD ≠ obrigatório:** é uma prática valiosa, mas muitos times adotam testes “logo depois” do código; o essencial é que haja a rede de segurança dos testes automatizados.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Primeira atividade do processo de testes:** **planejamento** (gera o plano de teste). **Controle** acontece durante todo o processo.
+- **Casos e scripts de teste** são criados em **análise e modelagem**; as **suítes** são organizadas e executadas em **implementação e execução**.
+- **Nível unitário** = menores unidades do software, feito pelo programador. **Integração** = unidades juntas. **Sistema** = o todo, o mais comum. **Aceitação** = último, com o cliente, **não busca falhas, busca o aceite**.
+- **TDD:** o teste vem **antes** do código. Ciclo: **red** (teste falha) → **green** (implementa para passar) → **refactor**.
+- **Ferramentas:** JUnit (Java), PHPUnit (PHP); **Selenium** (web), **Sikuli** (qualquer interface gráfica), **Robotium** (mobile).
+- **Caixa-branca** (código-fonte: condição, fluxo de dados, ciclos, caminhos lógicos, código nunca executado), **caixa-preta** (só interface) e **caixa-cinza** (parcial) estão na [UA1](/resumos/teste-software/ua1/).
+- **Teste de software** = investigar o software para fornecer informações sobre sua **qualidade no contexto em que ele deve operar** (inclui usá-lo para encontrar defeitos).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- MORAIS, I. S.; ZANIN, A. *Engenharia de software*. Revisão técnica: Jeferson Faleiro Leon. Porto Alegre: SAGAH, 2017.
+- BRAZILIAN SOFTWARE TESTING QUALIFICATIONS BOARD (BSTQB). *Certified Tester Foundation Level Syllabus*. BSTQB, 2011.
+- DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. (Ed.). *Introdução ao teste de software*. Rio de Janeiro: Elsevier, 2007.
+- RIOS, E.; MOREIRA, T. *Teste de software*. Rio de Janeiro: Alta Books, 2006.
