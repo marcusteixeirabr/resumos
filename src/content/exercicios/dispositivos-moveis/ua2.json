@@ -1,0 +1,115 @@
+{
+  "ua": 2,
+  "questions": [
+    {
+      "question": "No desenvolvimento de aplicativos para Android, qual ambiente de desenvolvimento integrado (IDE) foi lançado em 2013 baseado no IntelliJ IDEA e consolidou-se como a ferramenta oficial indicada para a plataforma?",
+      "options": [
+        "Android Studio.",
+        "Visual Studio Code.",
+        "Xcode.",
+        "Adobe Dreamweaver."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Android Studio, baseado na plataforma JetBrains IntelliJ IDEA, foi lançado pelo Google em 2013 e tornou-se a IDE oficial para construção, empacotamento e depuração de aplicativos Android."
+    },
+    {
+      "question": "Antes do lançamento da IDE oficial própria do Android, qual ambiente amplamente utilizado pela comunidade Java foi pioneiro no suporte ao desenvolvimento da plataforma através do plugin ADT (Android Development Tools)?",
+      "options": [
+        "Delphi RAD Studio.",
+        "Eclipse.",
+        "Sublime Text.",
+        "Vim."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Eclipse foi o primeiro ambiente amplamente adotado para desenvolvimento de apps Android, operando em conjunto com o plugin oficial ADT (Android Development Tools) disponibilizado pelo Google."
+    },
+    {
+      "question": "Qual é o papel desempenhado pelo Gradle no ecossistema de desenvolvimento Android?",
+      "options": [
+        "Atua como motor de banco de dados relacional embutido nos smartphones.",
+        "Funciona exclusivamente como emulador de tela sensível ao toque para desktops sem placa aceleradora.",
+        "É o sistema de automação de compilação (build) que gerencia dependências, tarefas e geração de pacotes, podendo ser executado inclusive por linha de comando sem a IDE aberta.",
+        "É o sistema operacional de código aberto utilizado nos servidores da Google Play Store."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Gradle gerencia todo o ciclo de vida do build, baixando dependências externas, compilando fontes e gerando os arquivos de distribuição (APKs/AABs), funcionando de maneira autônoma via linha de comando ou integrado à IDE."
+    },
+    {
+      "question": "No Android Emulator fornecido pelo SDK oficial, o que representa um AVD (Android Virtual Device)?",
+      "options": [
+        "Um cabo físico proprietário utilizado para transferir dados entre o computador e o celular.",
+        "Uma configuração que define as características de hardware e software do dispositivo virtual emulado (como tamanho de tela, memória RAM e versão do sistema operacional).",
+        "Uma licença governamental obrigatória para publicação de jogos comerciais.",
+        "Um formato de arquivo compactado exclusivo para envio de mensagens SMS na rede celular."
+      ],
+      "correctIndex": 1,
+      "explanation": "O AVD (Android Virtual Device) é a especificação que define o perfil de hardware, resolução de tela, recursos de sensores e imagem de sistema que o Android Emulator utilizará para simular um aparelho específico."
+    },
+    {
+      "question": "Além de executar o código da aplicação, quais eventos e condições reais de uso de um aparelho celular podem ser simulados de forma controlada através do emulador oficial do Android?",
+      "options": [
+        "Recebimento de chamadas telefônicas, mensagens SMS, alteração de coordenadas de GPS e variações nos níveis de carga de bateria.",
+        "Quebra física do vidro da tela por impacto mecânico externo.",
+        "Degradação química permanente dos íons de lítio no interior do processador.",
+        "Emissão de fumaça e curto-circuito real na placa-mãe do computador host."
+      ],
+      "correctIndex": 0,
+      "explanation": "O emulador oferece controles estendidos que possibilitam simular eventos do cotidiano mobile, como a chegada de uma ligação, tráfego de SMS, rotas de geolocalização e transições de status da bateria."
+    },
+    {
+      "question": "Dentre as opções de emuladores para desenvolvimento e execução de aplicativos Android, o Genymotion destaca-se por sua agilidade e recursos avançados. Em sua arquitetura clássica para computadores desktop, o Genymotion depende de qual tecnologia de virtualização para executar as imagens de sistema?",
+      "options": [
+        "Do emulador de terminais DOSBox.",
+        "Do interpretador puro de JavaScript em navegadores legados.",
+        "Do hypervisor Oracle VM VirtualBox.",
+        "De microcontroladores físicos conectados à porta paralela."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Genymotion tradicional executa máquinas virtuais x86 gerenciadas pelo Oracle VM VirtualBox, aproveitando a virtualização por hardware do processador para atingir alto desempenho gráfico e de execução."
+    },
+    {
+      "question": "Por que a realização de testes em um dispositivo móvel físico real continua sendo uma etapa indispensável no ciclo de desenvolvimento, mesmo quando a equipe dispõe de emuladores avançados?",
+      "options": [
+        "Porque o hardware real apresenta particularidades de temperatura, consumo energético, latência de toques na tela e comportamento de sensores que emuladores não conseguem reproduzir com perfeita fidelidade.",
+        "Porque os emuladores são incapazes de renderizar cores ou exibir imagens em resolução superior a preto e branco.",
+        "Porque as lojas de aplicativos bloqueiam sumariamente desenvolvedores que utilizam emuladores durante a etapa de programação.",
+        "Porque o código-fonte de um aplicativo não pode ser compilado sem a presença física de um cabo USB conectado à máquina."
+      ],
+      "correctIndex": 0,
+      "explanation": "O emulador é excelente para o desenvolvimento ágil diário, mas não substitui a validação no aparelho físico real, onde fatores como aquecimento, limites de memória sob concorrência e respostas táteis reais afetam diretamente a experiência do usuário."
+    },
+    {
+      "question": "Durante a etapa de depuração (debugging) de um aplicativo mobile em uma IDE, qual é o efeito prático da definição de um ponto de interrupção (breakpoint) em uma determinada linha de código?",
+      "options": [
+        "O compilador remove permanentemente aquela linha de código do repositório para evitar que ela seja executada.",
+        "O aparelho host sofre reinicialização forçada imediata para limpar a memória do sistema operacional.",
+        "A linha selecionada é automaticamente traduzida para código HTML e publicada como página web pública.",
+        "O aplicativo tem sua execução pausada ao atingir a instrução selecionada, permitindo ao desenvolvedor inspecionar os valores atuais das variáveis e avançar passo a passo."
+      ],
+      "correctIndex": 3,
+      "explanation": "O breakpoint suspende momentaneamente a execução do programa no momento exato em que a linha é atingida, viabilizando o exame do estado de objetos na memória e o rastreamento lógico linha por linha."
+    },
+    {
+      "question": "Ao depurar e otimizar um aplicativo mobile, qual é a principal finalidade de utilizar as ferramentas de monitoramento de recursos (como o Profiler de memória e processamento) da IDE?",
+      "options": [
+        "Aumentar automaticamente a velocidade nominal da conexão de internet contratada pelo usuário.",
+        "Alterar a voltagem da rede elétrica residencial através do sinal de Wi-Fi.",
+        "Desinstalar os aplicativos de empresas concorrentes instalados no computador host.",
+        "Identificar gargalos de desempenho, picos anormais de consumo de CPU e vazamentos de memória (memory leaks) que comprometem a estabilidade do sistema."
+      ],
+      "correctIndex": 3,
+      "explanation": "Os monitores de recursos acompanham em tempo real o uso de processamento e alocação de memória RAM, permitindo detectar operações custosas e desalocações pendentes que degradam a experiência ou causam fechamentos inesperados (crashes)."
+    },
+    {
+      "question": "No desenvolvimento voltado a dispositivos móveis, por que a bateria é considerada o recurso de hardware mais crítico a ser gerido pelas aplicações?",
+      "options": [
+        "Porque os sistemas operacionais modernos bloqueiam o carregamento da bateria sempre que um novo aplicativo é instalado.",
+        "Porque o uso excessivo de bateria altera o endereço MAC do dispositivo de forma irreversível.",
+        "Porque o processador móvel é capaz de funcionar continuamente sem suprimento elétrico, tornando a bateria um componente meramente opcional.",
+        "Porque o esgotamento precoce da bateria interrompe a disponibilidade de todo o aparelho, tornando o consumo energético excessivo um dos principais motivos de desinstalação de apps por parte dos usuários."
+      ],
+      "correctIndex": 3,
+      "explanation": "A bateria é finita e vital; quando descarrega, o celular inteiro desliga. Aplicativos com alto consumo de bateria por uso ineficiente de CPU, rádio ou GPS geram frustração direta e são rapidamente descartados pelos usuários."
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+---
+title: "UA2 — Plataformas de Desenvolvimento: IDE e Emulador Android"
+subtitle: "Android Studio e as outras IDEs, o Android Emulator (AVD) e seus concorrentes, ponto de interrupção, monitor de recursos e por que o dispositivo real continua indispensável."
+ua: 2
+group: "Ambiente de Desenvolvimento"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua2.m4a" title="IDE e emulador Android" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cit_01.webp" alt="Infográfico 'Comparativo de IDEs e Testes' — comparação entre as IDEs de desenvolvimento Android (Android Studio, Eclipse, NetBeans, Visual Studio, RAD Studio) e as abordagens de teste em emulador e em dispositivo real" caption="Comparativo de IDEs Android e de testes: emulador × dispositivo real" />
+</SlidesGrid>
+
+### Por que a ferramenta importa
+
+Um sistema operacional móvel só se populariza se tiver **aplicativos**: ninguém compra um aparelho sem as redes sociais. Por isso a plataforma precisa oferecer uma **IDE** robusta, atualizada e com recursos para desenvolvimento ágil, além de um **ambiente de simulação e depuração**, essencial num ecossistema com dispositivos de recursos muito diferentes.
+
+**IDE** (*Integrated Development Environment*) é o software com todas as funções necessárias para desenvolver programas e apps, incluindo recursos que reduzem a incidência de erros. Antes bastavam um editor de texto e um navegador; hoje a IDE traz até **emuladores** para testar com poucos cliques. Para atrair desenvolvedores, o Android disponibiliza gratuitamente um **SDK** (*software development kit*) multiplataforma, que inclui o **Android Studio** e o **emulador**.
+
+### IDEs para Android
+
+| IDE | Características no material |
+|---|---|
+| **Android Studio** | A **indicada pelo próprio Android** e a de maior destaque. Lançada em **2013**, baseada na **JetBrains IntelliJ IDEA** (feita para Java, a linguagem nativa do Android) |
+| **Eclipse** | **Primeira** IDE a permitir desenvolvimento Android, criada para várias linguagens (PHP, C++, Java). O Android criou o plugin **ADT** (*Android Development Tools*) para isso |
+| **NetBeans** | Desktop, móvel e Web (Java, JavaScript, HTML5, PHP, C/C++). Também usa o plugin **ADT** |
+| **Visual Studio** | Com o SDK **Xamarin.Android**, permite apps Android em **C#**; o app pode ser adaptado para iOS |
+| **RAD Studio** | **Delphi** ou **C++**; mira várias plataformas (Android, iOS, Windows Phone) |
+
+A maioria usa o **SDK do Android como base** (criação, gerenciamento e depuração). Entre Eclipse e NetBeans não há melhor “absoluto”: depende da experiência do desenvolvedor (quem já usa NetBeans com Java tem curva de aprendizado menor). No Visual Studio e no RAD Studio a ideia é aproveitar quem já programa em **C#** ou **Delphi**: o projeto é escrito na linguagem nativa da IDE e **convertido para Java**, para o SDK gerar o aplicativo compatível. A prova disso é que o gerenciador de SDK padrão do Android aparece nessas ferramentas.
+
+#### Recursos do Android Studio
+
+| Recurso | Função |
+|---|---|
+| **Gradle** | Automatiza e gerencia a **compilação** (e teste) do app. Funciona **independente do Android Studio**: dá para compilar por linha de comando em máquina sem a IDE |
+| **Layout** | Arrastar componentes para montar a tela, editar o código gerado e simular o layout em vários tamanhos e formatos de tela |
+| **Renderização de layouts** | Identifica erros de layout e **sugere soluções** |
+| **Análise de código** | Verifica o código linha a linha e sugere correções |
+| **Repositórios de versionamento** | Integração com os principais sistemas, para grandes equipes trabalharem simultaneamente |
+| **Plugins** | Suporte potente: até o emulador nativo pode ser substituído por plugin |
+
+A interface do Android Studio tem barra de ferramentas, barra de navegação (estrutura de pastas), **janela do editor**, barra e janelas de ferramentas (projeto, tarefas, controle de versão) e barra de status (estado do projeto, mensagens e advertências).
+
+O **SDK** separa as plataformas (versões do Android) do pacote básico, para manter os downloads pequenos e permitir trabalhar com várias versões da plataforma e atualizar sem baixar tudo de novo (completo, passaria de 30 GB). Requisitos mínimos citados para Windows: **3 GB de RAM (8 GB recomendado)**, **2 GB de disco (4 GB recomendado)** e tela de **1280 × 800**.
+
+<Callout type="warning">
+**RAD Studio e o código compartilhado**
+
+O livro diz que o app roda em qualquer sistema “sem necessidade de qualquer modificação no código”. É exagero: o código compartilhado funciona, mas ajustes por plataforma (interface, recursos nativos) costumam ser necessários. Além disso, **Windows Phone** foi descontinuado em 2017.
+</Callout>
+
+### Emuladores do Android
+
+Um **emulador** é um software que roda numa plataforma (Windows, macOS, Linux) e fornece um **ambiente emulado** de outro sistema, usado como ambiente de testes.
+
+O emulador oficial é o **Android Emulator**, multiplataforma e incluído no SDK, que exibe uma janela com interface realista do Android. Nele cria-se um **AVD** (*Android Virtual Device*): uma **configuração** que define as características do dispositivo emulado.
+
+- **Tipos de dispositivo:** smartphones, tablets, relógios (Wear OS) e Android TV; há imagens de todas as versões do sistema.
+- **Hardware personalizável:** poder de processamento, memória RAM, dimensões e resolução da tela, botões e teclado, **sensores** (GPS, proximidade, giroscópio, acelerômetro) e câmeras.
+- **Operações simuláveis:** receber ligação, receber SMS, níveis de bateria e localização GPS.
+
+Exemplo do livro: ao receber uma ligação, nenhum app deve se impor sobre ela. Se o usuário está em ligação e recebe chamada de um app de comunicação (como o Skype), o ideal é o app perceber que o usuário está ocupado e não gerar alertas.
+
+| Emulador | Descrição |
+|---|---|
+| **Android Emulator** | Oficial, no SDK; o mais completo |
+| **BlueStacks** | Usa apps Android no computador (Windows e Mac) |
+| **Android x86** | Avançado, muito usado para **jogos** e popular entre desenvolvedores |
+| **Genymotion** | Roda via **VirtualBox**; bom desempenho, muita personalização, plugin para o Android Studio; **pago** |
+
+Alguns desenvolvedores relatam dificuldades de simular apps **mais complexos** no emulador oficial e recorrem ao Genymotion.
+
+<Callout type="warning">
+**Erros e contradições sobre emuladores**
+
+- **Genymotion “roda em um navegador” × “via VirtualBox”.** O texto diz as duas coisas em trechos diferentes; o Genymotion clássico é executado sobre o VirtualBox (há também uma versão em nuvem acessível pelo navegador).
+- **“Android X84” no exercício 3** é erro de digitação para **Android x86**.
+</Callout>
+
+### Dispositivo real × emulador
+
+Outra técnica é usar um **celular físico** integrado à IDE: o app é instalado e iniciado de forma automatizada, como num AVD. É **muito recomendada**, porque **o emulador não é um dispositivo real**, por mais recursos que tenha; no aparelho real o app pode apresentar comportamentos indesejáveis que a simulação não detecta. Configurar o aparelho com a IDE pode ser trabalhoso. A Dica do Professor reforça que os dois se **complementam**: o emulador é a plataforma de testes durante o desenvolvimento e o dispositivo real é um teste adicional **indispensável**.
+
+<Callout type="warning">
+**Requisitos de 2019**
+
+Os requisitos citados (Windows 7/8/10, 3 GB de RAM) são retratos da época; veja Práticas Modernas. Também há referências repetidas no livro: as 2019b e 2019c apontam para a mesma URL do emulador, e o conteúdo de depuração está na página “Depure seu aplicativo”.
+</Callout>
+
+### Depuração e monitoramento
+
+- **Ponto de interrupção (*break point*):** o programa roda normalmente e **pausa** ao encontrar o ponto. Dali é possível ver os **valores atuais de cada variável** e executar o código **linha a linha** para conferir se o comportamento é o esperado. Funciona também com **dispositivo real** integrado, em tempo real.
+- **Monitor de recursos:** mostra o uso de **memória RAM** e **processamento** enquanto o app roda (emulado ou real). Fica ainda mais útil combinado ao *break point*, para ver a evolução do consumo passo a passo.
+
+Por que monitorar? Em dispositivos móveis os recursos são limitados:
+
+| Recurso | Por quê |
+|---|---|
+| **Processamento** | Gera calor; o alto desempenho deve ser controlado |
+| **Memória RAM** | Compartilhada com outros apps; o uso deve ser controlado (pode haver até 8 GB, mas nem sempre) |
+| **Bateria** | O recurso **mais crítico**: acabou, o aparelho para. O uso consciente de CPU e RAM influencia diretamente o consumo |
+
+Dá para ajustar o app para consumir recursos **só pelo tempo necessário** e liberá-los em seguida. O “Na Prática” da UA mostra um desenvolvedor resolvendo um problema de *overload* com o monitor de recursos.
+
+<Callout type="warning">
+**Práticas Modernas — IDE e emulador Android hoje**
+
+O capítulo é de 2019. A espinha dorsal (Android Studio + SDK + AVD + depuração) continua valendo, mas há mudanças importantes:
+
+- **Eclipse + ADT e NetBeans saíram do jogo:** o suporte do Google ao plugin **ADT foi encerrado em 2015**. **Android Studio é a única IDE oficial**. Qualquer questão que trate Eclipse/NetBeans como opção atual está olhando para o passado.
+- **Kotlin é a linguagem preferencial:** o Android é *Kotlin-first* desde 2019; Java continua suportado. A UI moderna é declarativa, com **Jetpack Compose**, e o Android Studio oferece *preview* de Compose no lugar de arrastar componentes.
+- **Xamarin foi descontinuado** (suporte encerrado em 2024). O equivalente da Microsoft é **.NET MAUI**; para Delphi, o RAD Studio atual usa **FireMonkey**. Alternativas: **Flutter** e **Kotlin Multiplatform**.
+- **Gradle** hoje é configurado com **Kotlin DSL** (`build.gradle.kts`) e catálogos de versão; segue podendo rodar por linha de comando, útil em CI.
+- **Ferramentas de depuração atuais:** **Logcat**, **Layout Inspector** e o **Profiler** (CPU, memória, rede, energia) substituíram o antigo *Android Monitor*; o monitor de recursos do livro corresponde ao Profiler. O Android Studio também tem **Device Manager** (para AVDs), emulador com *snapshots*, **Firebase Test Lab** (aparelhos reais na nuvem) e testes instrumentados com **Espresso**.
+- **Requisitos de máquina:** o guia atual pede bem mais memória (8 GB mínimo, 16 GB recomendado) e roda em Windows 10/11, macOS e Linux. O emulador usa aceleração de hardware (Hyper-V/HAXM/KVM).
+- **Dispositivo real × emulador:** continua valendo. Depuração por **USB** ou **Wi-Fi (ADB sem fio)** facilita; o Genymotion tem versões pagas e em nuvem, e serviços como o Firebase Test Lab cobrem a diversidade de aparelhos.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Linguagem nativa do Android (segundo o material): Java.** **Swift** é de iOS; C# e Delphi são das IDEs de terceiros.
+- **IDE indicada pelo Android: Android Studio** (2013, baseada na IntelliJ IDEA). **Eclipse foi a primeira** com suporte, via plugin **ADT**; NetBeans também usa ADT.
+- **Emulador oficial: Android Emulator**, com **AVD** (configuração do dispositivo virtual). Alternativos: BlueStacks, Android x86, Genymotion.
+- **Gradle** automatiza a **compilação** e roda sem o Android Studio.
+- **Ponto de interrupção (*break point*)** pausa a execução e permite ver variáveis e avançar linha a linha. Não confunda com verificador de sintaxe, plugins ou renderização de layouts.
+- **Monitor de recursos:** acompanha memória RAM e processamento para evitar que o app consuma recursos de forma desmedida (e frustre o usuário).
+- **Recurso mais crítico do dispositivo móvel: bateria.**
+- **Dispositivo real é indispensável**, mesmo com emulador: o app pode ter comportamentos que só aparecem no aparelho físico.
+- **AVD** permite simular: ligação, SMS, bateria, GPS, sensores e câmeras.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- OLIVEIRA, D. B. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- ANDROID DEVELOPERS. *Conheça o Android Studio*. 2019. Disponível em: https://developer.android.com/studio/intro.
+- ANDROID DEVELOPERS. *Executar aplicativos no Android Emulator*. 2019. Disponível em: https://developer.android.com/studio/run/emulator.
+- ANDROID DEVELOPERS. *Depure seu aplicativo*. 2019.
+- ANDROID DEVELOPERS. *Configurar sua compilação*. 2019. Disponível em: https://developer.android.com/studio/build.
+- ANDROID DEVELOPERS. *Criar e gerenciar dispositivos virtuais*. 2019. Disponível em: https://developer.android.com/studio/run/managing-avds.
+- ANDROID DEVELOPERS. *Executar aplicativos em um dispositivo de hardware*. 2019.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- LEE, V.; SCHNEIDER, H.; SCHELL, R. *Aplicações móveis: arquitetura, projeto e desenvolvimento*. São Paulo: Pearson, 2005.
+- SIMON, J. *Head first Android development*. Farnham: O'Reilly, 2011.
