@@ -1,0 +1,115 @@
+{
+  "ua": 3,
+  "questions": [
+    {
+      "question": "No contexto da engenharia de software, qual é a principal finalidade da atividade de testes e sua limitação fundamental perante a qualidade do produto?",
+      "options": [
+        "Comprovar que o software é matematicamente imune a falhas e eliminar 100% de qualquer possibilidade de defeito residual.",
+        "Identificar defeitos antes da entrega para mitigar riscos e custos de correção, ciente de que o teste demonstra a presença de falhas, mas não pode provar sua ausência total.",
+        "Substituir por completo o levantamento de requisitos de negócio e a modelagem arquitetural.",
+        "Reduzir os prazos de entrega transferindo toda a responsabilidade de testes para os usuários finais após a venda."
+      ],
+      "correctIndex": 1,
+      "explanation": "Os testes buscam revelar defeitos precocemente para reduzir custos de manutenção e assegurar o cumprimento dos requisitos, mas, por limitações de tempo e combinações infinitas de entradas, não podem garantir que um sistema esteja 100% livre de defeitos."
+    },
+    {
+      "question": "No planejamento estruturado das etapas de um projeto de testes, em qual estágio ocorre a elaboração e detalhamento formal dos casos de teste manuais (roteiros) e automatizados (scripts)?",
+      "options": [
+        "No estágio de Especificação.",
+        "No estágio de Encerramento e Entrega.",
+        "No estágio de Procedimentos Iniciais.",
+        "No estágio de Estudo de Viabilidade Financeira."
+      ],
+      "correctIndex": 0,
+      "explanation": "No estágio de especificação, os analistas projetam os roteiros manuais e scripts de automação, definindo pré-condições, passos de execução e resultados esperados antes da execução efetiva."
+    },
+    {
+      "question": "De acordo com as normas internacionais de engenharia de software (como ISTQB e IEEE), qual é o critério fundamental que diferencia o teste estático do teste dinâmico?",
+      "options": [
+        "O teste estático é executado exclusivamente por ferramentas automatizadas de interface, enquanto o teste dinâmico é estritamente manual.",
+        "O teste estático avalia apenas a documentação contratual, enquanto o teste dinâmico monitora o consumo elétrico dos servidores.",
+        "O teste estático analisa artefatos de software (como requisitos, modelos e código-fonte) sem executar o programa, enquanto o teste dinâmico avalia o comportamento do software mediante sua efetiva execução.",
+        "O teste estático avalia sistemas legados descontinuados, enquanto o teste dinâmico aplica-se exclusivamente a novas aplicações em nuvem."
+      ],
+      "correctIndex": 2,
+      "explanation": "Pelo padrão internacional de testes, o teste estático baseia-se no exame e revisão de documentos e código sem execução (como revisões por pares e análise estática), enquanto o teste dinâmico requer a execução do software com dados de entrada reais."
+    },
+    {
+      "question": "No processo de garantia de qualidade (V&V), quais perguntas norteiam as atividades de verificação e de validação, respectivamente?",
+      "options": [
+        "Verificação: 'Quanto custará a infraestrutura?'; Validação: 'Qual linguagem de programação será adotada?'.",
+        "Verificação: 'O código compila sem warnings?'; Validação: 'Os testes de estresse romperam os servidores?'.",
+        "Verificação: 'O software está sendo construído corretamente segundo os requisitos especificados?'; Validação: 'O produto construído atende às reais necessidades e expectativas do usuário final?'.",
+        "Verificação: 'Quem assinará o termo de homologação?'; Validação: 'Quantos defeitos foram encontrados pela equipe de suporte?'."
+      ],
+      "correctIndex": 2,
+      "explanation": "A verificação checa se o sistema cumpre fielmente as especificações técnicas e requisitos documentados, enquanto a validação atesta se o produto entrega o valor e as funcionalidades que o usuário de fato necessita."
+    },
+    {
+      "question": "Ao avaliar a viabilidade de um projeto e a capacidade da equipe de testes, a competência profissional é tradicionalmente decomposta em três pilares: Conhecimento, Habilidade e Atitude. O pilar da Atitude representa:",
+      "options": [
+        "A quantidade de diplomas e certificados formais acumulados pelo profissional.",
+        "O domínio prático de ferramentas de automação adquirido através de treinamentos repetitivos.",
+        "O acervo teórico sobre metodologias e padrões de engenharia de software.",
+        "O querer fazer, traduzido no comportamento proativo e na iniciativa de colocar em prática os conhecimentos e habilidades para atingir os objetivos."
+      ],
+      "correctIndex": 3,
+      "explanation": "Conhecimento é o saber (teoria e conceitos), Habilidade é o saber fazer (prática técnica) e Atitude é o querer fazer (postura profissional, iniciativa e engajamento prático)."
+    },
+    {
+      "question": "Ao adotar a abordagem de teste de caixa-branca (estrutural), em qual perspectiva o testador se apoia para modelar os casos de teste?",
+      "options": [
+        "Na arquitetura interna, fluxo de controle, caminhos lógicos, laços de repetição e código-fonte do sistema.",
+        "Exclusivamente nas telas de formulário do usuário, sem conhecimento algum das rotinas internas.",
+        "Na velocidade da conexão de rede contratada pelo cliente final.",
+        "Em questionários subjetivos de satisfação estética de cores da interface."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste de caixa-branca fundamenta-se no conhecimento e na inspeção da estrutura lógica interna do código-fonte, garantindo que desvios condicionais, laços e fluxos de dados sejam devidamente exercitados."
+    },
+    {
+      "question": "Em projetos de software sujeitos a manutenções corretivas ou entregas incrementais, qual é o principal objetivo do teste de regressão?",
+      "options": [
+        "Rever os custos de licenciamento de software do sistema operacional.",
+        "Excluir do banco de dados registros de usuários inativos há mais de cinco anos.",
+        "Modificar a identidade visual da interface a cada nova versão liberada.",
+        "Reexecutar casos de teste para certificar que novas alterações ou correções de defeitos não provocaram o reaparecimento de erros antigos nem comprometeram recursos que já funcionavam."
+      ],
+      "correctIndex": 3,
+      "explanation": "O teste de regressão assegura a integridade de componentes previamente validados, detectando efeitos colaterais indesejados originados por alterações no código ou no ambiente."
+    },
+    {
+      "question": "Dentre as modalidades de teste de desempenho, qual é a distinção entre o teste de carga e o teste de estresse?",
+      "options": [
+        "O teste de carga avalia o volume máximo de arquivos no disco rígido; o teste de estresse mede o tempo de compilação da aplicação.",
+        "O teste de carga submete a aplicação às condições operacionais e volumes de usuários normais ou esperados; o teste de estresse força a aplicação além dos limites previstos para observar seu comportamento no ponto de ruptura e sua recuperação.",
+        "O teste de carga é conduzido exclusivamente com baterias de celulares; o teste de estresse é realizado apenas em redes cabeadas.",
+        "O teste de carga avalia a ergonomia dos botões na tela; o teste de estresse analisa a tipografia dos relatórios impressos."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de carga valida se o sistema opera dentro dos tempos de resposta aceitáveis sob demanda típica de tráfego, enquanto o teste de estresse intencionalmente sobrecarrega o ambiente para verificar como o sistema falha e como se restabelece."
+    },
+    {
+      "question": "No contexto da avaliação de qualidade de software, como o teste de usabilidade deve ser conduzido preferencialmente para produzir resultados efetivos?",
+      "options": [
+        "Por meio de scripts de estresse automatizados que disparam milhares de requisições por segundo.",
+        "Por robôs de inteligência artificial que calculam o tempo de resposta do banco de dados.",
+        "Com a participação de usuários finais representativos realizando tarefas típicas, enquanto analistas observam e documentam facilidades, dificuldades e inconsistências de interação.",
+        "Exclusivamente pelos desenvolvedores que implementaram os algoritmos de criptografia."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de usabilidade foca na experiência do usuário e na facilidade de navegação, sendo conduzido por usuários representativos do público-alvo executando cenários reais para mapear pontos de atrito na interface."
+    },
+    {
+      "question": "Qual é a finalidade precípua do teste de segurança em uma aplicação corporativa?",
+      "options": [
+        "Verificar se a aplicação consome menos de 10 megabytes de memória RAM em modo ocioso.",
+        "Medir a quantidade de linhas de código escritas por cada desenvolvedor durante o sprint.",
+        "Validar se as telas exibem o logotipo da empresa com resolução de 4K.",
+        "Certificar que dados e funcionalidades do sistema são protegidos contra invasões e acessíveis unicamente por usuários e perfis devidamente autenticados e autorizados."
+      ],
+      "correctIndex": 3,
+      "explanation": "O teste de segurança avalia a vulnerabilidade da aplicação contra ataques externos e garante que o controle de acesso e sigilo das informações respeitem as políticas de autorização e privilégios estabelecidas."
+    }
+  ]
+}

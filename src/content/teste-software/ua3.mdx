@@ -1,0 +1,157 @@
+---
+title: "UA3 — Tipos de Teste"
+subtitle: "Verificação e validação, estágios do teste e o catálogo de tipos: unitário, caixa-branca/preta/cinza, regressão, integração, carga, estresse, segurança, usabilidade, aceitação e mais."
+ua: 3
+group: "Tipos e Categorias de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua3.m4a" title="Como os testes evitam falhas no software" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdtds_01.webp" alt="Infográfico 'Guia Essencial de Testes de Software: Verificação, Validação e Tipos' — verificação (requisitos internos) contra validação (satisfação do usuário), modalidades estática e dinâmica, testes de caixa branca, preta e cinza, testes unitários e de integração e teste de regressão entre versões" caption="Verificação × validação e os principais tipos de teste: caixa branca/preta/cinza, unitário, integração e regressão" />
+</SlidesGrid>
+
+### Por que o software falha e por que testar
+
+Mesmo com projeto cuidadoso, é praticamente impossível produzir software livre de falhas, defeitos e erros. A causa principal é humana: as pessoas da equipe têm formações, lógicas e jeitos de trabalhar diferentes, tendem a fazer a tarefa da forma mais fácil e a **comunicação falha**. As atividades de verificação, que na prática são as atividades de teste, existem para identificar, reduzir e até eliminar esses problemas.
+
+Os motivos para testar listados no material:
+
+- descobrir defeitos, falhas e erros **antes** da entrega;
+- demonstrar que o software atende aos requisitos e às necessidades dos usuários;
+- dar mais segurança ao usuário e aumentar a continuidade do negócio do cliente;
+- melhorar a qualidade dos produtos futuros, pela experiência adquirida;
+- melhorar a imagem do software e da fábrica de software;
+- diminuir o tempo e as despesas com correção de problemas.
+
+Dois pontos de projeto merecem atenção. Primeiro, em produção industrial repetitiva é comum testar **por amostragem**; no software, cada produto atende a um cliente e precisa ser testado **de forma individualizada**. Segundo, o custo de análise, verificação e testes costuma passar de **mais da metade** do custo total de desenvolvimento e manutenção. E há um paradoxo útil: tentar “destruir” a confiabilidade do software, encontrando defeitos, é o que **aumenta** sua confiabilidade.
+
+Quanto mais cedo os testes começam, menores o custo e o prazo da correção. Antigamente havia um “testador” que só executava casos de teste no produto pronto; hoje o teste **acompanha todo o ciclo de vida**.
+
+### Estágios do teste
+
+**Planejamento → Preparação → Procedimentos iniciais → Especificação → Execução → Entrega**
+
+| Estágio | O que acontece |
+|---|---|
+| **Planejamento** | Elaboração e revisão da estratégia e do plano de teste |
+| **Preparação** | Ambiente de testes: equipamentos, software, rede, pessoal e ferramentas |
+| **Procedimentos iniciais** | Documento de acordo entre as partes (objetivo, pessoal, responsabilidades) |
+| **Especificação** | Elaboração e revisão dos casos de teste manuais (roteiros) e automáticos (*scripts*) |
+| **Execução** | Execução dos casos e registro dos resultados (relatórios de teste) |
+| **Entrega** | Conclusão do processo, com a entrega de parte ou do todo do sistema |
+
+Não existe uma forma única de definir as atividades de teste: é preciso analisar o projeto para encontrar a melhor aplicação.
+
+### Verificação e validação
+
+| | **Verificação** | **Validação** |
+|---|---|---|
+| **Pergunta** | O software atende aos requisitos funcionais e não funcionais definidos? | O software atende às expectativas e necessidades do usuário final? |
+| **Foco** | Coerência com requisitos e qualidade esperada, em cada entrega e no produto final | Coerência entre produtos intermediários e final apresentados ao usuário |
+
+As duas **não são independentes nem sequenciais**: começam até antes do projeto, com o **estudo de viabilidade**, e vão até a liberação do produto ao cliente. Como os produtos hoje são entregues em etapas, com reavaliação de requisitos, V&V precisa ser pensada de antemão para cumprir custos e prazos.
+
+#### Estudo de viabilidade e competência
+
+O estudo de viabilidade verifica se a equipe tem a **competência** necessária, definida por três elementos:
+
+| Elemento | Significado |
+|---|---|
+| **Conhecimento** | O **saber**: o que se adquire com cursos, livros, experiência |
+| **Habilidade** | O **saber fazer**: depende de prática e treino |
+| **Atitude** | O **querer fazer**: a ação que põe conhecimento e habilidade em prática |
+
+#### Escolha e combinação de técnicas
+
+Nenhuma técnica serve sozinha a todos os objetivos. Combinam-se por quatro razões:
+
+- **Eficácia para diferentes classes de erro:** condições de corrida são difíceis de achar com teste convencional, mas podem ser detectadas por análise estática.
+- **Aplicabilidade em diferentes etapas:** inspeções servem para requisitos e projeto, onde análise automática não se aplica.
+- **Objetivos diferentes:** o teste sistemático maximiza a detecção de falhas, mas não mede confiabilidade; para isso é preciso o teste **estatístico**.
+- **Custo × garantia:** uma técnica cara pode valer para componentes centrais (como um *kernel* de segurança), mas ser inviável no projeto inteiro.
+
+Ao longo do projeto, o que acontece é:
+
+1. **Requisitos** escritos de modo que possam ser verificados (automática ou manualmente), com lista de verificação baseada em erros de projetos anteriores;
+2. **Inspeção de código** por outro desenvolvedor, que tem mais chance de enxergar o problema;
+3. **Testes unitários** feitos pelos desenvolvedores, documentando diferenças entre esperado e obtido;
+4. **Casos de teste** para verificar as interfaces com o usuário;
+5. **Testes de integração**, elaborados pela equipe de qualidade, que percorrem os caminhos possíveis e testam o sistema de forma global.
+
+<Callout type="warning">
+**Validação “estática” e “dinâmica” definidas de forma incomum**
+
+O livro diz que a validação é **estática** quando usa padrões e ferramentas automatizadas, e **dinâmica** quando é feita de maneira diferente para cada funcionalidade, normalmente **manual**. Essa é a definição que a prova da disciplina cobra (exercício 3: estática = automatizada, dinâmica = manual).
+
+Na literatura de testes (ISTQB, IEEE), a distinção é outra: **estática** é a análise **sem executar** o código (revisões, inspeções, análise estática de código); **dinâmica** é a que **executa** o software. Memorize as duas versões e identifique qual a questão usa.
+</Callout>
+
+### Erro, defeito e falha
+
+O capítulo repete a cadeia de causa e efeito vista na [UA1](/resumos/teste-software/ua1/):
+
+| Termo | Definição no material |
+|---|---|
+| **Erro** | Erro humano que resulta em algo incorreto, como diferença entre o valor obtido e o esperado em uma operação |
+| **Defeito** | Inconsistência no software, algo implementado de forma incorreta (ex.: linha de código errada). Todo defeito é **causa** de erros, mas se a linha incorreta nunca for executada, o erro não ocorre |
+| **Falha** | Comportamento inesperado do software. Pode ser gerada por vários erros, mas alguns erros nunca geram falha (ex.: operação programada e nunca usada) |
+
+### Tipos de teste
+
+| Tipo | O que avalia |
+|---|---|
+| **Unitário** | Porções menores, individualmente, normalmente pelos próprios desenvolvedores; funcionam isoladas do resto? |
+| **Caixa-branca** | Parte **interna** (código-fonte): lógica, estrutura, condições, laços e fluxo de dados; também se o nível de segurança exigido está implementado |
+| **Caixa-preta** | Parte **externa**: se os dados informados resultam nas informações pretendidas e o sistema faz o que deveria |
+| **Caixa-cinza** | Combinação das duas: aspectos internos e externos, entradas, fluxo de dados e saídas |
+| **Regressão** | Reexecuta o que já estava pronto a cada nova versão/mudança, para ver se **erros já corrigidos voltaram** ou se algo novo quebrou |
+| **Integração** | Se as porções testadas no teste unitário **funcionam em conjunto** (ex.: fluxo de dados entre partes) |
+| **Volume** | **Até que limite** o software suporta informações ou tráfego sem problema |
+| **Performance — carga** | Software em condições **normais** de uso: tempo de resposta, operações por período, usuários simultâneos gravando dados |
+| **Performance — estresse** | Leva o software **aos limites** (identificados no teste de volume) para ver em que ponto para de funcionar |
+| **Performance — estabilidade** | Se continua funcionando bem depois de **longo tempo de uso** |
+| **Funcional** | Se o software e cada parte dele fazem exatamente o que deveriam; casos de uso corretamente descritos e desenvolvidos |
+| **Segurança** | Se os dados só são acessados pelos **perfis** determinados para cada parte ou funcionalidade |
+| **Usabilidade** | Feito por **usuários**, não por analistas; aponta onde há dificuldade de interação. Analistas acompanham e documentam comentários, sugestões e reclamações |
+| **Aceitação** | Se o produto está **pronto para entrar em produção**; feito por alguém indicado pelo cliente ou por testador especializado que não participou do projeto |
+| **Instalação** | Se o software instala corretamente em diferentes hardwares, sistemas operacionais, memória e rede |
+| **Configuração** | Se funciona bem no hardware para o qual foi planejado |
+| **Manutenção** | Se uma mudança em algum aspecto causou falhas no funcionamento geral |
+
+<Callout type="warning">
+**Práticas Modernas — Tipos de teste hoje**
+
+O capítulo é de 2019 (com base em Pressman, 2011) e o catálogo continua válido. O que muda é a organização:
+
+- **Dois eixos, não um:** “tipo” (o que se mede: funcional, desempenho, segurança, usabilidade…) é distinto de “nível” (onde se testa: unitário, integração, sistema, aceitação). O livro mistura os dois na mesma lista (unitário, integração e aceitação aparecem ao lado de carga e segurança); ao estudar, separe os eixos.
+- **Regressão automatizada:** rodar a suíte inteira “na mão” a cada versão é inviável; hoje a regressão roda em **CI/CD** a cada *commit* (GitHub Actions, GitLab CI, Jenkins), priorizando os testes mais importantes.
+- **Ferramentas atuais:** JUnit, pytest e Jest (unitário); Playwright e Cypress (UI); **JMeter, k6 e Gatling** (carga, estresse e estabilidade); **OWASP ZAP** e análise estática (SAST) para segurança.
+- **Segurança vira prática contínua** (*DevSecOps*): análise de dependências, SAST/DAST e testes de invasão (*pentest*) no pipeline.
+- **Usabilidade e acessibilidade:** além de observar usuários, usam-se critérios como **WCAG** e ferramentas automáticas de acessibilidade.
+- **Shift-left e shift-right:** testar cedo (revisões, testes unitários, TDD) **e** monitorar em produção (testes A/B, *canary release*, observabilidade), sem esperar a “fase de testes”.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Testes importam porque** melhoram a qualidade e reduzem tempo e custo de correção. **Não** “garantem a eliminação completa” de falhas.
+- **Verificação** = atende aos **requisitos**? **Validação** = atende às **expectativas do cliente**? (Exercício 2: nessa ordem.)
+- **Validação estática × dinâmica (pelo livro):** estática = **automatizada**; dinâmica = **manual**.
+- **Caixa-branca** avalia o **código-fonte** (escrita e lógica do programa); **caixa-preta**, o funcionamento externo; **caixa-cinza**, os dois.
+- **Regressão:** testar de novo para ver se **problemas já resolvidos voltaram** após modificação ou novas funcionalidades.
+- **Carga** = condições normais; **estresse** = além do limite; **estabilidade** = longo período; **volume** = limite de dados/tráfego.
+- **Usabilidade** é feita por **usuários**; **aceitação** decide a entrada em produção.
+- **Competência = conhecimento + habilidade + atitude** (saber, saber fazer, querer fazer).
+- **Estágios do teste** têm seis passos: planejamento, preparação, procedimentos iniciais, especificação, execução e entrega. A questão da [UA2](/resumos/teste-software/ua2/) cita cinco, sem “procedimentos iniciais”.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed. Porto Alegre: AMGH, 2011.
