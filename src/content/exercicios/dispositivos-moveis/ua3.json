@@ -1,0 +1,115 @@
+{
+  "ua": 3,
+  "questions": [
+    {
+      "question": "Em Java, a tipagem estática exige que toda variável tenha seu tipo explicitamente declarado. Dentre os tipos primitivos da linguagem, qual valor é incompatível e gerará erro de compilação por ultrapassar a capacidade de armazenamento de uma variável do tipo byte?",
+      "options": [
+        "O valor 300, pois o tipo byte armazena inteiros com sinal no intervalo restrito de -128 a 127 (8 bits).",
+        "O valor 0, pois variáveis numéricas só aceitam números estritamente positivos.",
+        "O valor -10, pois tipos primitivos rejeitam números negativos.",
+        "O valor 100, pois qualquer número de três dígitos exige uma variável do tipo long."
+      ],
+      "correctIndex": 0,
+      "explanation": "O tipo primitivo byte ocupa 8 bits com sinal, cobrindo a faixa de -128 a 127. O valor 300 excede esse limite e requer tipos com maior capacidade, como short ou int."
+    },
+    {
+      "question": "Na linguagem Java, qual é a diferença fundamental entre tipos primitivos e tipos por referência?",
+      "options": [
+        "Os tipos primitivos armazenam valores escalares simples diretamente na memória, enquanto os tipos por referência são instâncias de classes (como String e objetos) que apontam para endereços de memória.",
+        "Tipos primitivos são compatíveis apenas com servidores desktop, enquanto tipos por referência funcionam unicamente em smartphones.",
+        "Tipos por referência não podem ser manipulados em métodos nem atribuídos a variáveis.",
+        "Tipos primitivos sempre iniciam seu nome com letra maiúscula por convenção obrigatória da linguagem."
+      ],
+      "correctIndex": 0,
+      "explanation": "Tipos primitivos (como int, float, boolean) guardam valores literais diretos na memória, ao passo que tipos por referência (como String e classes personalizadas) referenciam objetos criados no heap."
+    },
+    {
+      "question": "A respeito da declaração de construtores em uma classe Java, qual regra sintática é obrigatória segundo a especificação da linguagem?",
+      "options": [
+        "Todo construtor deve ter o tipo de retorno explicitamente declarado como void.",
+        "O construtor deve ter exatamente o mesmo nome da classe e não possui nenhum tipo de retorno declarado (nem mesmo void).",
+        "Construtores só podem ser chamados através de instruções SQL em tempo de execução.",
+        "Uma classe Java é proibida de conter parâmetros em seu método construtor."
+      ],
+      "correctIndex": 1,
+      "explanation": "Em Java, o construtor compartilha o mesmo nome da classe à qual pertence e não admite nenhum tipo de retorno (a presença de void o transformaria em um método comum)."
+    },
+    {
+      "question": "Em relação ao controle de encapsulamento em Java, qual modificador de acesso restringe a visibilidade de um atributo ou método exclusivamente ao escopo da própria classe na qual foi declarado?",
+      "options": [
+        "public.",
+        "private.",
+        "protected.",
+        "abstract."
+      ],
+      "correctIndex": 1,
+      "explanation": "O modificador private impõe o nível mais estrito de proteção, permitindo que atributos e métodos sejam acessados e alterados somente pelo código contido no corpo da própria classe declarante."
+    },
+    {
+      "question": "Em Java, os modificadores static e final exercem papéis fundamentais na definição de membros de classes. Qual afirmativa descreve corretamente o comportamento desses modificadores?",
+      "options": [
+        "Um método static pode ser invocado diretamente a partir do nome da classe sem necessidade de instanciá-la, enquanto o modificador final aplicado a um método impede que ele seja sobrescrito por subclasses.",
+        "Um método static exige a instanciação de dezenas de objetos na memória antes de poder ser chamado pelo programa.",
+        "O modificador final obriga qualquer subclasse a implementar o método do zero sem aproveitar nada da superclasse.",
+        "Membros static são apagados da memória a cada execução de um laço de repetição condicional."
+      ],
+      "correctIndex": 0,
+      "explanation": "Métodos static pertencem à classe em si e não a uma instância individual, podendo ser acessados diretamente (ex.: Classe.metodo()). O modificador final protege o método contra modificação por sobrescrita em classes derivadas."
+    },
+    {
+      "question": "Qual é o objetivo primordial do princípio de encapsulamento no paradigma orientado a objetos aplicado ao desenvolvimento de aplicações Java?",
+      "options": [
+        "Tornar todas as variáveis públicas para acelerar a leitura direta de memória por qualquer thread.",
+        "Proibir a criação de mais de uma classe por arquivo de projeto.",
+        "Ocultar os detalhes internos de implementação e o estado de uma classe, expondo apenas métodos públicos controlados para acesso e manipulação dos dados.",
+        "Eliminar a necessidade de compilação de código Java para binários DEX."
+      ],
+      "correctIndex": 2,
+      "explanation": "O encapsulamento isola a estrutura interna de dados (geralmente mantendo atributos privados), fornecendo métodos getters e setters para garantir consistência, validação e independência entre os módulos do sistema."
+    },
+    {
+      "question": "Na linguagem Java, como o mecanismo de herança contribui para a organização arquitetural de um aplicativo móvel?",
+      "options": [
+        "Impedindo que classes filhas utilizem qualquer método previamente desenvolvido na superclasse.",
+        "Permitindo que uma classe estenda outra (via palavra-chave extends), herdando atributos e métodos comuns e especializando comportamentos específicos sem duplicação de código.",
+        "Convertendo dinamicamente classes Java em bibliotecas binárias de C++ no momento do download.",
+        "Exigindo que o sistema operacional execute cada subclasse em um núcleo de processador diferente."
+      ],
+      "correctIndex": 1,
+      "explanation": "A herança permite criar hierarquias de classes onde subclasses reutilizam a lógica e os atributos da classe pai (extends), evitando redundâncias e facilitando a manutenção e extensibilidade da aplicação."
+    },
+    {
+      "question": "O que caracteriza a técnica de sobrecarga de métodos (overloading) dentro de uma mesma classe Java?",
+      "options": [
+        "A criação de classes anônimas que realizam consultas lentas ao banco de dados relacional.",
+        "A redefinição de um método herdado de uma interface com parâmetros idênticos e novo retorno.",
+        "A presença de dois ou mais métodos com o mesmo nome na mesma classe, mas que diferem na quantidade, tipo ou ordem dos parâmetros recebidos.",
+        "A execução concorrente de dez laços de repetição na mesma thread de interface gráfica."
+      ],
+      "correctIndex": 2,
+      "explanation": "Sobrecarga ocorre quando uma classe possui múltiplos métodos com o mesmo identificador, diferenciando-se pelas suas assinaturas de parâmetros (número ou tipos de argumentos), resolvida pelo compilador em tempo de compilação."
+    },
+    {
+      "question": "Em relação às estruturas de controle de repetição em Java, qual é a diferença fundamental entre as instruções while e do...while?",
+      "options": [
+        "O laço while aceita apenas variáveis do tipo boolean, enquanto do...while aceita apenas valores numéricos inteiros.",
+        "O laço while só pode ser interrompido com o desligamento do computador, enquanto do...while finaliza automaticamente na primeira linha.",
+        "O laço do...while não suporta o comando break para interrupções forçadas.",
+        "O laço while testa a condição no início e pode nunca executar seu bloco de instruções se a condição for inicialmente falsa; já o laço do...while avalia a condição no final, garantindo que seu bloco seja executado pelo menos uma vez."
+      ],
+      "correctIndex": 3,
+      "explanation": "Em Java, a estrutura while verifica a expressão condicional antes de entrar no corpo do loop (podendo iterar zero vezes). Já a estrutura do...while garante uma primeira execução antes da checagem da condição ao final."
+    },
+    {
+      "question": "Ao programar rotinas sujeitas a falhas em tempo de execução (como operações de divisão matemática ou conversão de dados), qual é a importância da utilização de blocos try...catch em aplicativos móveis?",
+      "options": [
+        "Substituir a necessidade de memória RAM através da gravação contínua em cartões de memória flash.",
+        "Aumentar a velocidade do clock do processador do smartphone durante a execução da rotina.",
+        "Forçar o encerramento imediato do aplicativo pelo sistema operacional sempre que uma inconsistência numérica surgir.",
+        "Capturar e tratar exceções em tempo de execução de forma controlada, impedindo o fechamento abrupto (crash) do aplicativo e preservando a experiência do usuário."
+      ],
+      "correctIndex": 3,
+      "explanation": "O bloco try-catch intercepta erros em tempo de execução (como ArithmeticException ou NumberFormatException), permitindo que o aplicativo trate a anomalia graciosamente em vez de ser finalizado abruptamente pelo sistema."
+    }
+  ]
+}

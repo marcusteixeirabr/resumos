@@ -1,0 +1,288 @@
+---
+title: "UA3 — Linguagem Java: Conceitos Essenciais para Dispositivos Móveis"
+subtitle: "Tipos de dados, classes e métodos, modificadores de acesso, encapsulamento, herança, polimorfismo, operadores, condicionais e laços: a base de Java para escrever aplicativos Android."
+ua: 3
+group: "Linguagem Java"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua3.m4a" title="Como o Java economiza bateria no Android" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpd_01.webp" alt="Infográfico 'Guia Essencial de Java para Desenvolvimento Android' — pilares da orientação a objetos (encapsulamento e controle de acesso, herança, polimorfismo e sobrecarga) e boas práticas de otimização para Android: preferir tipos primitivos a objetos, usar métodos estáticos e tratar exceções com try-catch, com conexões em segundo plano" caption="Java para Android: pilares da orientação a objetos e boas práticas de otimização" />
+</SlidesGrid>
+
+### Por que Java no Android
+
+O Android adotou Java como linguagem nativa por ser uma das mais usadas do mundo, **gratuita, de código aberto, poderosa** e já dominada por milhões de desenvolvedores. Quando o Android surgiu, Java já era madura, tinha versões para várias áreas (inclusive dispositivos móveis), uma **ampla biblioteca de classes** e era **orientada a objetos**: o desenvolvedor monta aplicações complexas em menos tempo com recursos prontos. Quem já programa em Java aprende Android com facilidade, embora o Java de apps Android seja “semelhante e, ao mesmo tempo, muito diferente” do Java de outras aplicações.
+
+### Objetos e tipos de dados
+
+A programação orientada a objetos modela **objetos** e a comunicação entre eles. Uma caneca tem propriedades (cor, capacidade, quantidade de café) e responde a mensagens (“quanto café você tem?”). No Android, o objeto **câmera** representa a câmera física: configuram-se propriedades e chamam-se métodos para tirar a foto.
+
+Como programar é trabalhar com dados, Java tem dois grupos de tipos:
+
+| Grupo | O que são | Exemplos |
+|---|---|---|
+| **Primitivos** | Dados simples (escalares) | `byte`, `short`, `int`, `long`, `float`, `double`, `char`, `boolean` |
+| **Por referência** | Representados por **classes** (todos os não primitivos); por convenção, nome começa com **maiúscula** | `String` (lista de `char`), `Integer` |
+
+Cada primitivo tem **limites**: um `byte`, por exemplo, guarda de −128 a 127, então não aceita 400.
+
+| Tipo | Tamanho | Uso |
+|---|---|---|
+| `byte` | 8 bits | Inteiro pequeno (−128 a 127) |
+| `short` | 16 bits | Inteiro curto |
+| `int` | 32 bits | Inteiro padrão |
+| `long` | 64 bits | Inteiro grande |
+| `float` | 32 bits | Decimal (valor com sufixo `f`, ex.: `3.14f`) |
+| `double` | 64 bits | Decimal de maior precisão |
+| `char` | 16 bits | Um caractere |
+| `boolean` | — | `true` ou `false` |
+
+Java é **estaticamente tipada**: é preciso declarar o tipo da variável. Comentários não afetam o fluxo do programa:
+
+```java
+String cliente = "Alberto Ribeiro";   // uma linha
+/* várias
+   linhas */
+```
+
+### Classes e métodos
+
+Uma classe tem **atributos**, **construtor** e **métodos**. O construtor é chamado ao instanciar a classe e tem o mesmo nome dela; `this` indica que o atributo é o da classe, não o parâmetro:
+
+```java
+class Pessoa {
+    String nome;
+
+    Pessoa(String nome) {
+        this.nome = nome;
+    }
+}
+```
+
+O modelo geral de uma classe é `[class | abstract | interface] NomeDaClasse { construtor, atributos, métodos }`. O nome deve ser único no pacote.
+
+Um método tem **tipo de retorno** (ou `void`, se nada é devolvido), nome, parâmetros separados por vírgula (com tipo e nome) e, se não for `void`, o comando `return`:
+
+```java
+class Area {
+    float lado;
+    float area;
+
+    void calcula() {
+        this.area = this.lado * this.lado;
+    }
+}
+
+class Valores {
+    float valorPI() {
+        return 3.14f;
+    }
+}
+
+class Produto {
+    float total(int qtd, float preco) {
+        return qtd * preco;
+    }
+}
+```
+
+### Modificadores de acesso e outros modificadores
+
+Os **modificadores de acesso** restringem o acesso a atributo, método ou classe. Dentro da própria classe tudo é sempre acessível.
+
+| Modificador | Quem acessa (segundo o material) |
+|---|---|
+| `public` | **Qualquer** outra classe; é o de menor restrição |
+| `protected` | Todas as classes do **pacote** da classe |
+| `private` | **Somente** a própria classe |
+
+Iniciantes devem usar `public` e `private` e deixar os mais complexos para depois.
+
+Outros modificadores:
+
+- **`static`:** o método (ou atributo) é usado **sem instanciar** a classe. Um método `static` só acessa atributos também `static`; o contrário é permitido.
+- **`final`:** nenhuma classe derivada pode redefinir o método ou atributo.
+- **`abstract`:** declara um método **sem implementação**; alguma classe derivada deve implementá-lo.
+
+```java
+public class Area {
+    public static float getPI() {
+        return 3.14f;
+    }
+}
+
+float pi = Area.getPI();
+```
+
+```java
+public class Area {
+    public final float getPI() {
+        return 3.14f;
+    }
+}
+```
+
+### Os pilares da orientação a objetos
+
+| Conceito | Ideia |
+|---|---|
+| **Encapsulamento** | **Isola** informações do resto do programa. Quem usa a classe só chama os métodos, sem se preocupar com os detalhes internos; mudou o método, todos os pontos que o usam recebem a mudança, e a informação não é corrompida por acidente |
+| **Herança** | Uma classe que **estende** outra herda seus métodos e atributos (ex.: `Animal` → `Mamifero` → `Cachorro`: o cachorro herda `nascer`, `morrer` e `mamar`) |
+| **Polimorfismo** | Algo assume **várias formas**: um método ou classe pode agir de modos diferentes e ser usado por outras classes |
+| **Sobrecarga** | Vários métodos com o **mesmo nome** e **parâmetros diferentes** na mesma classe |
+
+**Classe abstrata** pode misturar métodos implementados e não implementados. **Interface** define ações que **devem** ser implementadas, mas que cada classe executa de forma diferente (contém constantes e assinaturas de métodos):
+
+```java
+interface InterfacePessoa {
+    int getIdade();
+    void setIdade(int idade);
+    String getSexo();
+}
+
+abstract class Pessoa implements InterfacePessoa {
+    private int idade;
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+}
+
+class Mulher extends Pessoa {
+    public String getSexo() {
+        return "F";
+    }
+}
+
+class Homem extends Pessoa {
+    public String getSexo() {
+        return "M";
+    }
+}
+```
+
+Aqui `getIdade` e `setIdade` são idênticos para `Mulher` e `Homem` e ficam em `Pessoa`; `getSexo` muda e é implementado em cada subclasse. O **polimorfismo** aparece quando um método recebe um parâmetro `Pessoa` e aceita tanto `Mulher` quanto `Homem`. A **sobrecarga** aparece em vários `imprime`, aceitos porque têm parâmetros diferentes:
+
+```java
+class Auxiliar {
+    void imprime(int idade) { }
+    void imprime(String sexo) { }
+    void imprime(String sexo, int idade) { }
+}
+```
+
+### Operadores, condicionais e laços
+
+| Grupo | Operadores | Observação |
+|---|---|---|
+| **Atribuição** | `=`, `+=`, `-=`, `*=`, `/=` | `x += 10` equivale a `x = x + 10` |
+| **Aritméticos** | `+`, `-`, `*`, `/`, `%` | `%` é o resto: `5 % 2` resulta em `1` |
+| **Incremento/decremento** | `++`, `--` | `x++` soma 1 a `x` |
+| **Sinais unários** | `+`, `-` | `byte z = -10;`; sem sinal, é positivo |
+| **Comparação** | `>`, `<`, `>=`, `<=`, `==`, `!=` | Dão ao código poder de decisão |
+
+Palavras reservadas (`int`, `class`, `if`, `for`…) não podem ser nomes de variáveis ou classes.
+
+**Condicional:** só o `if` é obrigatório; `else if` e `else` são opcionais. O `switch` simplifica várias comparações de uma variável.
+
+```java
+float produto = 12f;
+float carteira = 10f;
+
+if (carteira >= produto) {
+    // dinheiro suficiente
+} else {
+    // dinheiro insuficiente
+}
+```
+
+**Laços:** `while` repete **enquanto** a condição for verdadeira (se começa falsa, nunca executa); `do…while` executa **pelo menos uma vez**; `for` tem inicialização (uma só vez), condição e incremento. `break;` interrompe `while` e `for` a qualquer momento.
+
+```java
+int k = 0;
+while (k < 10) {
+    k++;
+}
+
+int i = 10;
+do {
+    i--;
+} while (i > 5);
+
+for (int x = 0; x <= 10; x++) {
+    if (x == 5) break;
+}
+```
+
+### Por que isso importa para a bateria
+
+Recursos em celular são limitados e a **bateria é o mais crítico**: alto processamento e muita RAM consomem muita carga. O infográfico da UA liga isso a escolhas em Java: **preferir tipos primitivos a objetos** (um *array* de `int` é muito mais eficiente que um de `Integer`), usar `static` quando o método não precisa de campos do objeto (as dicas oficiais da época falavam em **15% a 20%** mais rápido) e **tratar exceções**, movendo rotinas de rede para *threads* secundárias. No “Na Prática”, uma divisão por zero (`ArithmeticException`) basta para encerrar o app, e o `try…catch` evita isso:
+
+```java
+int resultado;
+try {
+    resultado = a / b;
+} catch (ArithmeticException e) {
+    resultado = 0;
+}
+```
+
+<Callout type="warning">
+**Erros e imprecisões no material**
+
+- **Construtor “obrigatório” e `void Pessoa(...)`.** O livro escreve o construtor como `void Pessoa(String nome)` e diz que sua existência é obrigatória. Em Java, o construtor **não tem tipo de retorno** (nem `void`), e se você não declarar nenhum, o compilador fornece um construtor padrão.
+- **Quadro 1 com erros de digitação.** O exemplo 1 usa `this.Area` e `this.Lado`, mas os atributos são `area` e `lado`: em Java, maiúsculas e minúsculas **diferem**. Também há `flota` no lugar de `float`. Os trechos de código desta página já estão corrigidos.
+- **`protected`.** O livro diz que o atributo `protected` é acessível por todas as classes do pacote. Isso é parcialmente certo: ele também é acessível por **subclasses**, mesmo em outros pacotes.
+- **“Moderadores de acesso”** é erro de termo: o nome é **modificadores de acesso**. No exercício 2 aparece ainda `protect`, que não existe: é `protected`.
+- **`static class`.** O livro diz que uma classe `static` obriga seus métodos e atributos a serem `static`. Não é assim: só classes **aninhadas** podem ser `static`, e seus membros continuam livres.
+- **`final` “deve ser implementado”.** O ponto do `final` é impedir que a subclasse **redefina** o método.
+- **“`elseif`”** é escrito `else if` (duas palavras) em Java.
+- **Polimorfismo.** O livro chama a **sobrecarga** de forma de polimorfismo. É aceito em provas de graduação, mas, com mais rigor, a sobrecarga é resolvida na compilação e o polimorfismo clássico é a **sobrescrita** (método da subclasse que substitui o da superclasse).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Java e Android hoje**
+
+O capítulo é de 2019. Os conceitos de Java continuam valendo, mas o desenvolvimento Android mudou:
+
+- **Kotlin é a linguagem preferencial do Android** desde 2019 (*Kotlin-first*); novos recursos e a documentação do Google priorizam Kotlin. Java continua suportado, e muito código existente é Java. Kotlin é totalmente interoperável: conhecer Java ajuda a ler e migrar código.
+- **Recursos modernos de Java** (lambdas, `var`, `record`, `switch` com expressões) estão disponíveis no Android com limitações: o Android não roda a JVM da Oracle (usa o **ART**, com bytecode DEX) e aplica *desugaring* para trazer APIs mais novas a versões antigas do sistema.
+- **Comparação de `String`:** use `equals`, não `==`, que compara referências. É armadilha clássica de prova e de produção.
+- **Otimizações do infográfico são dicas de época.** Hoje, o compilador e o ART otimizam bastante; a regra de “`static` é 15–20% mais rápido” vem de guias antigos do Android e raramente é o gargalo real. Meça com o **Profiler** do Android Studio antes de otimizar.
+- **Tratamento de erros e rede:** operações de rede não podem rodar na *thread* principal (a UI trava e o sistema lança `NetworkOnMainThreadException`). Hoje usam-se **coroutines** (Kotlin), **ExecutorService** ou **WorkManager**, no lugar de `AsyncTask`, que foi descontinuado.
+- **Câmera e hardware:** a API de câmera atual recomendada é a **CameraX**, em vez da antiga `Camera`.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Tipos primitivos têm limites:** `int` 645 é válido; `byte` 40000, `boolean` 10 e `char` −88 **não** são.
+- **`private`** = acessado **apenas pela própria classe**. `public` = qualquer classe. `float` e `byte` não são modificadores.
+- **Encapsulamento** = ocultar os detalhes internos de funcionamento dos métodos. Não confunda com polimorfismo, herança ou `private` (que é a ferramenta, não a técnica).
+- **Sobrecarga** = mesmo método com **vários parâmetros diferentes** na mesma classe.
+- **Operadores unários e de incremento/decremento:** `++` e `--` (e sinais `+` e `-`). `==` e `!=`, `>=` e `<=` são de comparação; `=` e `+=` são de atribuição.
+- **`static`** = usar sem instanciar; **`final`** = não pode ser redefinido; **`abstract`** = sem implementação.
+- **`do…while`** executa **ao menos uma vez**; `while` pode não executar nenhuma.
+- **Estaticamente tipada:** o tipo da variável deve ser declarado.
+- **Classe com a primeira letra maiúscula** é convenção; `String` é tipo **por referência**.
+- **Android escolheu Java** por ser popular, madura, orientada a objetos e com ampla biblioteca.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- OLIVEIRA, D. B. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- GOODRICH, M. T.; TAMASSIA, R. *Estruturas de dados e algoritmos em Java*. 5. ed. Porto Alegre: Bookman, 2013.
+- SCHILDT, H. *Java para iniciantes: crie, compile e execute programas Java rapidamente*. 6. ed. Porto Alegre: Bookman, 2015.
+- SCHÜTZER, W.; MASSAGO, S. Tipos de dados. In: *Tutorial de programação Java*. São Carlos: UFSCar, 2008.
