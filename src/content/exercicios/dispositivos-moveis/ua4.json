@@ -1,0 +1,115 @@
+{
+  "ua": 4,
+  "questions": [
+    {
+      "question": "No processo de design e engenharia de software para dispositivos móveis, qual é a principal finalidade da elaboração de um mockup de interface?",
+      "options": [
+        "Esboçar e alinhar a interface e o fluxo de interação com as partes interessadas antes do início da codificação das funcionalidades.",
+        "Gerar o código executável dos algoritmos de criptografia de ponta a ponta.",
+        "Compilar os binários DEX para distribuição na Google Play Store.",
+        "Configurar a voltagem das baterias dos dispositivos que executarão o software."
+      ],
+      "correctIndex": 0,
+      "explanation": "O mockup atua como um modelo visual que alinha expectativas de requisitos, fluxos e leiautes entre designers, desenvolvedores e clientes antes que qualquer linha de código de produção seja escrita."
+    },
+    {
+      "question": "Por que a prática de prototipação nas etapas iniciais de um projeto de aplicativo móvel é economicamente vantajosa?",
+      "options": [
+        "Porque dispensa para sempre a necessidade de contratação de programadores.",
+        "Porque alterar rascunhos de telas e fluxos de navegação no início custa uma fração mínima do retrabalho exigido para refazer código já implementado e em produção.",
+        "Porque obriga os fornecedores de hardware a subsidiarem o custo dos servidores em nuvem.",
+        "Porque elimina o pagamento de taxas de licenciamento de redes de telefonia móvel."
+      ],
+      "correctIndex": 1,
+      "explanation": "Quanto mais cedo uma inconsistência ou alteração de requisito é identificada, menor é o custo de correção; modificar um protótipo visual é exponencialmente mais barato e rápido do que alterar software já codificado e testado."
+    },
+    {
+      "question": "A fidelidade de um protótipo em relação ao produto final pode ser mensurada através de quatro dimensões fundamentais. A dimensão da 'Similaridade de Interação' refere-se especificamente a:",
+      "options": [
+        "Ao grau em que a sensação, respostas e ações de uso do protótipo se assemelham à interação real proporcionada pelo aplicativo final.",
+        "Ao tipo de cabo de carregamento utilizado para fornecer energia ao aparelho.",
+        "À quantidade de transistores contidos na placa de circuito impresso do smartphone.",
+        "À velocidade de download do instalador binário na loja de aplicativos."
+      ],
+      "correctIndex": 0,
+      "explanation": "A similaridade de interação avalia o quão parecida é a experiência de manipulação do usuário com o protótipo quando comparada à experiência no aplicativo concluído (gestos, navegação e respostas táteis)."
+    },
+    {
+      "question": "Em projetos ágeis de desenvolvimento mobile, quais são as características marcantes dos protótipos de baixa fidelidade produzidos nas fases iniciais de ideação?",
+      "options": [
+        "São modelos extremamente caros que demandam semanas de renderização 3D em computadores dedicados.",
+        "São rascunhos rápidos, descartáveis e de baixo custo (frequentemente criados em papel ou quadro branco), ideais para validar ideias centrais sem compromisso com detalhes visuais estéticos.",
+        "Possuem integração direta e obrigatória com bancos de dados relacionais corporativos em produção.",
+        "Exigem código compilado em linguagem binária para funcionarem em telas de toque."
+      ],
+      "correctIndex": 1,
+      "explanation": "Protótipos de baixa fidelidade (paper prototypes ou wireframes simples) priorizam agilidade, colaboração e baixo custo de descarte, facilitando o debate de ideias essenciais antes do refinamento estético."
+    },
+    {
+      "question": "Ao evoluir da baixa fidelidade para a média fidelidade, qual aspecto estrutural da aplicação passa a ser formalizado e visualizado com clareza nos modelos digitais?",
+      "options": [
+        "A dissipação térmica dos semicondutores durante chamadas telefônicas de voz.",
+        "A hierarquia da informação, o leiaute posicional dos componentes na tela e o fluxo de navegação entre as diferentes seções do aplicativo.",
+        "A frequência de clock dos núcleos de processamento em modo de economia de energia.",
+        "A instalação física de cabos submarinos para tráfego transatlântico de dados."
+      ],
+      "correctIndex": 1,
+      "explanation": "A média fidelidade organiza a arquitetura de informação e mapeia as transições e hierarquias entre telas (qual tela abre ao acionar um determinado botão), sem ainda requerer polimento visual definitivo de alta fidelidade."
+    },
+    {
+      "question": "Qual é a característica que distingue os protótipos de alta fidelidade nas fases que antecedem o desenvolvimento do aplicativo?",
+      "options": [
+        "O uso exclusivo de materiais físicos de papelão e tinta guache para testes de laboratório.",
+        "A ausência de suporte a qualquer tipo de botão ou elemento interativo na interface.",
+        "O elevado refinamento visual (cores, tipografia, ícones e componentes específicos do sistema operacional) aliado a interações realistas que podem ser simuladas inclusive diretamente em dispositivos móveis.",
+        "A substituição do protocolo TCP/IP por linhas telegráficas analógicas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Protótipos de alta fidelidade oferecem acabamento visual idêntico ao produto pretendido e navegação clicável com suporte a preview no próprio celular, permitindo testes de usabilidade muito próximos do cenário real."
+    },
+    {
+      "question": "Em projetos de software de maior porte, qual é o fluxo recomendado pela abordagem de prototipação evolutiva (ou mista)?",
+      "options": [
+        "Iniciar em baixa fidelidade para explorar conceitos, evoluir colaborativamente para média fidelidade estruturando fluxos e refinar em alta fidelidade até atingir a especificação final para implementação.",
+        "Iniciar diretamente pelo código em produção e desenhar o protótipo somente após o lançamento comercial do produto.",
+        "Manter protótipos estáticos sem alteração durante dez anos consecutivos sem consultar clientes.",
+        "Proibir qualquer evolução visual de interfaces após a assinatura da proposta comercial."
+      ],
+      "correctIndex": 0,
+      "explanation": "A progressão gradual (baixa → média → alta) permite amadurecer os conceitos de negócio de forma barata no início e aumentar o detalhamento conforme as decisões se consolidam, garantindo precisão no handoff para os desenvolvedores."
+    },
+    {
+      "question": "De que forma o uso de mockups e protótipos auxilia no relacionamento entre a equipe de desenvolvimento e o cliente solicitante?",
+      "options": [
+        "Impondo decisões técnicas unilaterais sem abrir espaço para opiniões dos usuários.",
+        "Aumentando deliberadamente os prazos de entrega para justificar orçamentos maiores.",
+        "Fornecendo uma representação visual concreta e acessível que permite a pessoas sem formação técnica entender, avaliar e sugerir ajustes no produto antes da construção do software.",
+        "Substituindo a entrega do software funcional pela simples exibição de ilustrações estáticas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Por serem visuais e intuitivos, mockups servem como ponte de comunicação entre áreas técnicas e de negócios, nivelando o entendimento mútuo e permitindo ajustes precoces com participação ativa do cliente."
+    },
+    {
+      "question": "Ao prototipar um aplicativo com recursos e prazos limitados, qual estratégia de priorização de telas é mais recomendada pela engenharia de software?",
+      "options": [
+        "Dedicar todo o tempo do projeto desenhando dezenas de variações estéticas de telas de login e termos de uso genéricos, deixando as telas de regras de negócio sem prototipação.",
+        "Prototipar apenas janelas de erro do sistema operacional host.",
+        "Desenhar telas exclusivamente em resolução 8K para painéis industriais de alta voltagem.",
+        "Focar prioritariamente nos fluxos centrais que entregam o valor principal de negócio e o diferencial da solução para o usuário, prototipando telas comuns e padronizadas em momento posterior."
+      ],
+      "correctIndex": 3,
+      "explanation": "Deve-se concentrar esforço nos fluxos críticos de valor (as tarefas que resolvem a dor real do cliente), evitando desperdiçar tempo excessivo refinando telas genéricas de entrada (como login/cadastro) que seguem padrões bem estabelecidos."
+    },
+    {
+      "question": "Na fase de transição (handoff) entre a equipe de design de interface e os desenvolvedores de software, qual é a principal utilidade do protótipo final?",
+      "options": [
+        "Permitir que o compilador da linguagem crie o banco de dados sem intervenção humana.",
+        "Substituir o código Java/Kotlin por capturas estáticas de tela em formato JPEG dentro do pacote do aplicativo.",
+        "Desativar todos os sensores de geolocalização e câmeras do smartphone do programador.",
+        "Fornecer referências visuais, especificações de componentes, fluxos de navegação e medidas precisas que orientam a codificação fiel da interface da aplicação."
+      ],
+      "correctIndex": 3,
+      "explanation": "O protótipo serve como guia visual e funcional para o time técnico, detalhando comportamentos de tela, dimensões, espaçamentos e estados de componentes a serem reproduzidos com exatidão no código da interface."
+    }
+  ]
+}

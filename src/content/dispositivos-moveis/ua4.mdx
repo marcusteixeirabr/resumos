@@ -1,0 +1,130 @@
+---
+title: "UA4 — Projeto de Aplicativo via Mockups"
+subtitle: "Mockups, wireframes e protótipos: dimensões e níveis de fidelidade, ferramentas (Balsamiq, Draw.io, Mockflow, Figma, Adobe XD, Sketch) e um exemplo aplicado a um app de voluntariado."
+ua: 4
+group: "Projeto de Interface e Prototipação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua4.m4a" title="Mockups e prototipação de aplicativos" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gmp_01.webp" alt="Infográfico 'Guia de Mockups e Prototipação' — mockups como rascunhos de interface, níveis de fidelidade (baixa, média e alta), ferramentas de criação e o processo cíclico de prototipação em engenharia de software" caption="Guia de mockups e prototipação: fidelidade, ferramentas e processo cíclico" />
+</SlidesGrid>
+
+### O que é um mockup e por que fazer
+
+Em engenharia de software, **mockup** é um **rascunho da interface de usuário** de um sistema. Também é chamado de **wireframe** ou **protótipo**, e o material usa os três termos como sinônimos (a prototipação é o processo; o mockup, seu produto). Serve para discutir a ideia inicial, esboçar rapidamente como o sistema será **sem escrever o código** das funcionalidades.
+
+Vantagens principais:
+
+- **Alinha expectativas** entre quem desenvolve e quem demanda o software, dando uma visão macro **antes** de desenvolver;
+- **Esclarece requisitos** e tira dúvidas logo no levantamento;
+- **Reduz custo e retrabalho**: quanto mais cedo a mudança é pedida, mais barata ela é;
+- Facilita a **discussão e a modelagem em conjunto** entre os envolvidos.
+
+### Fidelidade: as quatro dimensões
+
+A forma de criar o mockup (de papel e caneta a ambientes de desenvolvimento) está ligada à sua **fidelidade** em relação ao software final. São quatro dimensões para medi-la:
+
+| Dimensão | O que mede |
+|---|---|
+| **Detalhamento** | Os detalhes de interface suportados pelo modelo escolhido |
+| **Grau de funcionalidade** | O quanto o modelo é funcional |
+| **Similaridade de interação** | Quão parecida é a interação do usuário com o modelo e com o produto final |
+| **Refinamento estético** | Quão parecido o modelo é com o resultado visual esperado |
+
+### Os três níveis de fidelidade
+
+| Nível | Quando e como | Características | Ferramentas citadas |
+|---|---|---|---|
+| **Baixa** | Fases **bem iniciais**; preferencialmente em **meios físicos** (papel e caneta, quadro) | **Descartável**, rápido, **baixo custo**; ótimo para troca de ideias e desenvolvimento ágil e colaborativo; sem muito detalhe, mas facilita a **vagueza**. Deve conter os elementos das funcionalidades essenciais | **Balsamiq** |
+| **Média** | Criada em **computador**, com informação mais refinada | Mostra a **hierarquia da informação** e o **fluxo de navegação** (qual tela abre após clicar em certo botão) | **Draw.io**, **Mockflow** |
+| **Alta** | Fase mais avançada | Tem **alguma funcionalidade** e permite **simular o uso**, às vezes com dados de exemplo; foca nos aspectos visuais, com **temas** e visualizações específicas do sistema operacional | **Figma**, **Adobe XD**, **Sketch** |
+
+Em projetos maiores é aconselhável a **abordagem evolutiva** ou a **prototipação de fidelidade mista**: começa-se em **baixa**, evolui-se em conjunto passando pela **média** até a **alta**, cujo fluxo se aproxima do aplicativo final.
+
+**Baixa fidelidade → Média fidelidade → Alta fidelidade → Aplicativo final**
+
+Figma e Adobe XD oferecem um app de **preview** do mockup no próprio celular (Android e iOS).
+
+### Funcionalidades das ferramentas e requisitos
+
+As ferramentas são oferecidas em três formatos de apresentação:
+
+- **Desktop:** precisa ser instalada no computador, com instaladores para Windows, Linux ou macOS;
+- **Web:** roda no **navegador**, sem instalação, com login e senha;
+- **Plugin:** integra-se a outras aplicações, como Google Drive, Microsoft Office, Jira, Slack.
+
+Quanto à licença, a maioria é **comercial**, com período de avaliação, mas algumas têm **versão gratuita**, às vezes reduzida.
+
+| Ferramenta | Fidelidade | Licença | Tipo | SO (desktop) | Plugin |
+|---|---|---|---|---|---|
+| **Balsamiq** | Baixa | Comercial | Desktop, Web e plugin | Windows e Mac | Google Drive, Confluence, Jira |
+| **Draw.io** | Média | Gratuita (Google Drive) ou comercial (Confluence e Jira) | Plugin | — | Google Drive, Confluence, Jira |
+| **Mockflow** | Média | Gratuita ou comercial | Desktop, Web e plugin | Windows e Mac | Microsoft Office, Slack, Trello, Google Drive, Jira |
+| **Figma** | Alta | Gratuita ou comercial | Desktop e Web | Windows e Mac | — |
+| **Adobe XD** | Alta | Gratuita ou comercial | Desktop | Windows e Mac | — |
+| **Sketch** | Alta | Comercial | Desktop | **Somente Mac** | — |
+
+<Callout type="warning">
+**Quadro de ferramentas desatualizado**
+
+O quadro é de 2019 e hoje está defasado em pontos que podem confundir:
+
+- **Adobe XD** não recebe mais novos recursos: a Adobe o colocou em **modo de manutenção** em 2023, e hoje ele não é mais recomendado para novos projetos. O mercado migrou majoritariamente para o **Figma**.
+- **Draw.io** passou a se chamar **diagrams.net**, e é uma ferramenta de diagramas, não especializada em protótipos de app.
+- **Mac OS X** é hoje **macOS**.
+- Licenças e planos gratuitos mudam com frequência; confira nos sites oficiais antes de escolher.
+</Callout>
+
+### Exemplo: app de voluntariado
+
+O material propõe o caso de uma **ONG** que cadastra, em **planilhas**, instituições carentes que precisam de voluntários e pessoas disponíveis. Com dezenas de instituições e centenas de voluntários, o pareamento manual é difícil: voluntários ficam ociosos e instituições sem ajuda. Um app móvel resolveria isso.
+
+Decisões do exemplo:
+
+1. Foca-se em uma funcionalidade de grande valor: as **telas de candidatura do voluntário**;
+2. **Login e cadastro** de usuários e instituições são considerados comuns a outros apps e **não são prototipados**;
+3. Em **baixa fidelidade com Balsamiq**, desenham-se: uma tela para o usuário informar **disponibilidade e interesses**, outra com as **oportunidades de trabalho** disponíveis, e uma **mensagem** com as instituições para as quais ele se candidatou.
+
+**Informar disponibilidade e interesses → Ver oportunidades → Candidatar-se → Mensagem de confirmação**
+
+A recomendação final é testar várias ferramentas, ver qual se adapta melhor e **sempre usar a técnica**, especialmente em grandes projetos: mockups poupam tempo e dinheiro e permitem pedir alterações no início.
+
+<Callout type="warning">
+**Práticas Modernas — Do mockup ao handoff**
+
+Os conceitos do capítulo continuam valendo, mas o fluxo de trabalho mudou:
+
+- **Wireframe, mockup e protótipo são coisas diferentes na prática atual:** o **wireframe** mostra estrutura e hierarquia (baixa fidelidade); o **mockup** é a aparência visual estática (cores, tipografia, imagens); o **protótipo** é **clicável**, simula a navegação e a interação. O capítulo trata como sinônimos; em provas, siga o material.
+- **Figma é o padrão:** roda no navegador, permite edição colaborativa em tempo real, **prototipação interativa** e preview no celular. **Penpot** é a alternativa de código aberto.
+- **Design system e componentes:** em vez de desenhar tela a tela, usam-se bibliotecas de componentes que seguem **Material Design 3** (Android) e as **Human Interface Guidelines** (iOS), aproveitando o que o desenvolvedor já tem pronto (por exemplo, no Jetpack Compose).
+- **Handoff:** o desenvolvedor inspeciona o protótipo (medidas, cores, espaçamentos e *assets*), reduzindo a distância entre desenho e código. Plugins geram também *tokens* de design.
+- **Teste de usabilidade com protótipo:** antes de programar, observam-se usuários executando tarefas no protótipo, validando a navegação ao custo de uma alteração de desenho, não de código.
+- **Papel e caneta continuam úteis:** *sketches* de baixa fidelidade ainda são o jeito mais rápido de alinhar uma ideia numa reunião.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Função principal do mockup:** **validar as ideias iniciais antes de desenvolver** o software (não validar a versão final, não escolher tecnologias).
+- **Mockup = wireframe = protótipo** (rascunho de interface), feito **sem o código** das funcionalidades.
+- **Dimensões da fidelidade:** detalhamento (**particularidades que a interface suporta**), grau de funcionalidade, **similaridade de interação** (a sensação de uso se parece com a do produto), refinamento estético (**semelhança visual** com o resultado).
+- **Baixa fidelidade:** papel e caneta ou quadro, rápida, descartável, barata; Balsamiq. **Média:** computador, mostra fluxo de navegação; Draw.io e Mockflow. **Alta:** tem alguma funcionalidade e permite simular o uso; Figma, Adobe XD, Sketch.
+- **Mockups facilitam a ideação e o desenvolvimento colaborativo**; não aumentam sempre o custo, não exigem pessoal altamente especializado e **devem ser discutidos com o demandante**.
+- Mockups de baixa fidelidade **não precisam** de software nem de funcionalidade; podem ser feitos em papel.
+- **Sketch** só roda em **Mac**. **Figma** e **Mockflow** têm versão **Web**. **Draw.io** é plugin.
+- **Quanto antes a mudança é pedida, menor o custo.**
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- COUTO, J. M. C. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- MAYHEW, D. J. *The usability engineering lifecycle: a practitioner's handbook for user interface design*. Burlington: Morgan Kaufmann, 1999.
+- PETRIE, J. N.; SCHNEIDER, K. A. Mixed-fidelity prototyping of user interfaces. In: International Workshop on Design, Specification, and Verification of Interactive Systems, 13., 2006, Dublin. *Proceedings*. Dublin, 2006. p. 199–212.
+- PRIKLADNICKI, R.; WILLI, R.; MILANI, F. *Métodos ágeis para desenvolvimento de software*. Porto Alegre: Bookman, 2014.
+- VIANNA, M. et al. Prototipação. In: *Design thinking: inovação em negócios*. Rio de Janeiro: MJV Press, 2012. p. 121–157.
