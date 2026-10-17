@@ -1,0 +1,158 @@
+---
+title: "UA4 — Abordagens de Teste"
+subtitle: "Caixa-branca, caixa-preta e caixa-cinza: quem testa, o que conhece do sistema, quais problemas cada abordagem encontra e quais técnicas a compõem."
+ua: 4
+group: "Abordagens e Técnicas de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua4.m4a" title="Caixa-branca, caixa-preta e caixa-cinza" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ats_01.webp" alt="Infográfico 'Abordagens de Teste de Software' — as três abordagens (caixa-branca, caixa-preta e caixa-cinza) e, em destaque, como é feito e o que compõe o teste de caixa-cinza" caption="Abordagens de teste de software, com destaque para a caixa-cinza" />
+</SlidesGrid>
+
+### O que diferencia as abordagens
+
+É praticamente impossível entregar software sem nenhum defeito, erro ou falha. O teste não pretende achar **todos** os problemas, mas garante que o produto chegue ao cliente com muito mais qualidade, confiabilidade e segurança. Ao planejar os testes, é preciso escolher as **abordagens**, e as três principais diferem em um ponto: **o que o testador enxerga do sistema**: a estrutura interna ou apenas as entradas e saídas.
+
+| Abordagem | Outros nomes | Acesso ao interior | Base do teste |
+|---|---|---|---|
+| **Caixa-branca** | Teste estrutural, de estrutura, de caixa de vidro | **Total** (código-fonte) | Como o software foi **implementado** |
+| **Caixa-preta** | Teste funcional | **Nenhum** | **Requisitos funcionais**, via interface |
+| **Caixa-cinza** | Híbrida | **Parcial** (em geral o banco de dados) | Entradas e saídas, conferidas por dentro |
+
+### Teste de caixa-branca
+
+O testador é, normalmente, o **engenheiro de software ou analista que programou o código**. Ele testa **diretamente o código-fonte**, avaliando o comportamento interno de cada componente. São escolhidos dados de entrada, a **massa de dados**, para exercitar a lógica da programação.
+
+O teste serve para verificar se o código está bem escrito e se os **caminhos lógicos** são adequados. Colocam-se à prova condições, **laços de repetição**, chamadas de função, decisões verdadeiro/falso, cálculos, acesso a dados, acesso à interface e chamadas de relatórios.
+
+- **Vantagem:** como parte da estrutura interna, é mais fácil identificar valores úteis para a massa de dados.
+- **Desvantagens:** exige conhecimento de linguagem de programação (testadores mais experientes e caros) e **depende da implementação**: se ela muda, o teste deve ser refeito, com impacto em prazo e custo.
+- **Acesso total** ao código-fonte é necessário para escolher as partes a analisar.
+
+#### Técnicas da caixa-branca
+
+| Técnica | O que faz |
+|---|---|
+| **Teste de unidade** | Verifica o fluxo de dados: dados que entram e saem corretamente (interface ↔ banco), dados temporários íntegros, **todo trecho de código usado ao menos uma vez**, entradas que excedem os limites de condicionais e laços, caminhos de tratamento de erro que não derrubam o sistema |
+| **Teste do caminho básico** | Verifica a **complexidade lógica** dos procedimentos e percorre os conjuntos básicos de caminhos de execução até avaliar todos os caminhos possíveis |
+| **Teste de estrutura de controle** | Analisa todas as estruturas de controle do código: condicionais, fluxos de dados, laços, chamadas de função |
+| **Teste de contexto em orientação a objetos** | Analisa chamadas a classes e métodos e sua implementação, **em todos os níveis da hierarquia**: um método correto na classe-mãe pode falhar na herdeira |
+
+O teste de unidade encontra, por exemplo: comparação incorreta de tipos de dados, término inadequado de laço, estruturas lógicas incorretas, cálculos mal elaborados, estruturas **não utilizadas ou duplicadas**, erros não tratados, falta de mensagem de retorno e mensagens de erro incompreensíveis, insuficientes ou divergentes do que realmente ocorreu. O **tratamento de erros** é um dos aspectos mais importantes: um bom software sai da situação sozinho, sem parar a operação do usuário.
+
+<Callout type="warning">
+**Afirmações do material sobre a caixa-branca**
+
+- **“Sozinho, identifica se o software foi feito de maneira 100% correta.”** É exagero. Testar **todos** os caminhos lógicos de forma exaustiva é inviável em programas reais (o número de caminhos explode com laços e condições), e a caixa-branca não encontra **requisito esquecido** nem função faltante, porque só olha o que foi escrito. Por isso as abordagens se complementam.
+- **“O testador não deve saber qual é o comportamento esperado.”** O texto defende que ele conheça o código, mas não o comportamento correto, para fugir do “caminho feliz”. Na prática, sem saber o **resultado esperado** (o chamado oráculo de teste) não há como julgar se o resultado obtido está certo. O ponto útil é outro: quem escreveu o código tende a testar só o que imagina que funciona, e por isso vale ter **outra pessoa** testando.
+- **Exemplo do caminho básico:** incluir, alterar, listar e excluir um registro “sem usar a interface” descreve mais um teste de **fluxo de dados** do que a técnica. Na literatura, o caminho básico se baseia na **complexidade ciclomática** (número de caminhos independentes do grafo de fluxo do código).
+</Callout>
+
+### Teste de caixa-preta
+
+Também chamado de **teste funcional**, porque se baseia nos **requisitos funcionais**: tudo o que se pode fazer com o software. O interior é tratado como uma caixa fechada: o testador **não tem acesso ao código** nem conhece a estrutura interna.
+
+O funcionamento é: o testador **insere dados na interface** e **compara o resultado obtido com o esperado**, que consta na **especificação de requisitos**. Se forem iguais, o teste foi bem-sucedido. Um bom teste de caixa-preta envolve duas atividades:
+
+**Identificar as atividades do software (pela especificação) → Criar casos de teste que provem se elas funcionam pela interface**
+
+Detecta funções inexistentes ou incorretas, erros de interface, erros de acesso ao banco, problemas de desempenho e problemas de início e fim de execução. Exemplos de falhas que acusa:
+
+- aceitar **data de nascimento futura**;
+- deixar **campos obrigatórios em branco**;
+- botões que **não executam a ação** a que se destinam;
+- aceitar um período em que a **data final é menor que a inicial**.
+
+#### Técnicas da caixa-preta
+
+| Técnica | O que faz |
+|---|---|
+| **Particionamento de equivalência** | Divide os dados de entrada em **categorias** (em geral **válidos** e **inválidos**), de onde se derivam os casos de teste. Cada categoria cobre um tipo de erro, como a falta de mensagem de confirmação ao excluir |
+| **Análise do valor limite** | Testa as **extremidades** do que o sistema aceita. Exemplos do livro: intervalo de 01/01 a 31/01 com data final 31/03; ou valor negativo quando se espera de 0 a 5 |
+
+- **Vantagem:** a equipe **não precisa conhecer** a estrutura interna, a linguagem nem a tecnologia; só os requisitos. É o que determina se **todos os requisitos** funcionam como levantados.
+- **Desvantagens:** (1) o material diz que é de **difícil automatização** e preferível que seja **manual**, por um testador que conheça os requisitos; (2) é **difícil garantir** que as partes críticas foram todas testadas, pois a escolha depende da interpretação do testador, que nem sempre coincide com o que o usuário considera principal.
+- Não se preocupa em saber se o código foi bem escrito: só se, para cada entrada, a **saída é adequada**.
+
+<Callout type="warning">
+**Caixa-preta “difícil de automatizar”**
+
+O material afirma que o teste de caixa-preta é difícil de automatizar e deve ser feito manualmente. Isso está **desatualizado e contradiz a [UA2](/resumos/teste-software/ua2/)**, em que ferramentas como Selenium e Sikuli automatizam justamente testes de sistema pela interface (caixa-preta). Hoje a automação é comum; o que continua dependendo de pessoas é o **teste exploratório** e a definição do que testar.
+
+Também vale notar a grafia: o nome correto da técnica é **particionamento em classes de equivalência**.
+</Callout>
+
+### Teste de caixa-cinza
+
+Há autores que acham que a caixa-cinza **precisa ser mais discutida** para ser aceita como abordagem, por considerá-la apenas o **teste de integração** (combinar módulos para testá-los em conjunto, depois dos testes unitários, verificando requisitos funcionais, de segurança, confiabilidade e desempenho). Quem a define como abordagem a vê como **mistura de caixa-branca e caixa-preta**, e ela é bem mais recente que as outras duas.
+
+No material, o testador tem acesso a **algumas partes da estrutura interna**, em geral ao **banco de dados** por **consultas SQL**, e não ao código-fonte. O objetivo é analisar o que acontece **por trás das funcionalidades** durante o teste.
+
+| É híbrida da caixa-branca porque… | É híbrida da caixa-preta porque… |
+|---|---|
+| Acessa **parte** da estrutura interna (a caixa-branca acessa tudo) | **Não usa a interface**, mas confere se as saídas são as requeridas, por meio de comandos SQL |
+| Mas o acesso é aos **dados armazenados**, não ao código | Precisa saber **o que esperar** como resultado |
+
+Não é necessário conhecer o código-fonte, mas sim a **estrutura da aplicação** (onde ficam e onde se aplicam as consultas SQL que enviam e retornam dados), além dos **algoritmos** implementados e de **quando** são chamados. O testador pode até **alterar os parâmetros das consultas SQL** para localizar o que foi implementado de forma incorreta.
+
+Problemas mais comuns que identifica:
+
+1. O trecho testado **falha e paralisa** o sistema todo (a interface deveria informar o problema e o que fazer para seguir);
+2. O fluxo roda **sem paradas**, mas o **resultado não é o esperado** (saídas incorretas, cálculo errado). Os comandos SQL ajudam a confirmar se as entradas geram as saídas corretas.
+
+**Aplicação principal:** teste de **webservices**, aplicações que integram sistemas diferentes (inclusive de plataformas incompatíveis) e trocam dados entre si. Nesse caso é preciso acessar as consultas SQL, a manipulação de dados e saber quais resultados esperar.
+
+<Callout type="warning">
+**Duas definições de caixa-cinza**
+
+A [UA1](/resumos/teste-software/ua1/) define a caixa-cinza como a abordagem em que se **conhece a estrutura interna para modelar os testes, mas se executa ignorando-a**, como na caixa-preta. Esta UA a restringe ao **acesso ao banco de dados via SQL**. As duas ideias são compatíveis (conhecimento parcial do interior), mas a prova costuma cobrir uma delas: leia o enunciado.
+
+O exercício 5 diz que o testador “tem acesso às **estruturas SQL do código-fonte**”, o que contradiz o texto, onde a caixa-cinza **não** acessa o código-fonte, e sim o banco.
+</Callout>
+
+### Comparação final
+
+| Critério | Caixa-branca | Caixa-preta | Caixa-cinza |
+|---|---|---|---|
+| **Conhece o código-fonte?** | Sim, acesso total | Não | Não (conhece a estrutura e o banco) |
+| **Conhece os requisitos?** | Não é o foco | Sim, é a base | Sim, para saber o resultado esperado |
+| **Usa a interface?** | Não é o foco | **Sim** | Não necessariamente (consulta o banco) |
+| **Quem costuma testar** | Programador / analista que codificou | Testador que conhece os requisitos | Testador com noção da estrutura e do SQL |
+| **Técnicas** | Unidade, caminho básico, estrutura de controle, contexto OO | Particionamento de equivalência, valor limite | Consultas SQL; testes de webservices |
+| **Encontra** | Lógica errada, laços, cálculos, código não usado, erros não tratados | Requisito não atendido, campo obrigatório vazio, limites | Dados incorretos, saídas erradas, falhas que param o sistema |
+
+<Callout type="warning">
+**Práticas Modernas — Abordagens de teste hoje**
+
+As três abordagens continuam sendo o vocabulário básico do teste, mas a prática atual traz ajustes:
+
+- **Caixa-branca virou cobertura medida por ferramenta:** em vez de “checar à mão”, usam-se métricas de **cobertura** (de instrução, de ramo/decisão, de condição) com JaCoCo, Istanbul/nyc, coverage.py e SonarQube, rodando no pipeline de **CI**. Cobertura alta não prova ausência de defeitos, mas cobertura baixa mostra o que nunca foi executado. **Teste de mutação** (PIT, Stryker) avalia a qualidade dos próprios testes.
+- **Caixa-preta é fortemente automatizada:** Playwright, Cypress, Selenium e Appium executam os fluxos pela interface; técnicas como **partição de equivalência** e **valor limite** viram testes parametrizados. O que se mantém manual é o **teste exploratório**.
+- **Caixa-cinza no dia a dia:** testes de **API** (Postman, REST Assured, contratos com Pact) e testes que **conferem o estado do banco** após uma ação pela interface são o uso típico, coerente com o foco em webservices do material.
+- **Fuzzing e teste baseado em propriedades** (Hypothesis, jqwik) geram entradas automaticamente, combinando a ideia de caixa-preta com a análise de código.
+- **Teste de segurança** tem nomes equivalentes: **SAST** (análise estática do código, estilo caixa-branca), **DAST** (ataque à aplicação em execução, estilo caixa-preta) e **IAST** (instrumentação por dentro durante a execução, estilo caixa-cinza).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Caixa-branca** (estrutura / estrutural / **caixa de vidro** / transparente): testa o **código-fonte** por dentro: laços de repetição, chamadas de função, decisões lógicas. Quem programou costuma testar. O **teste unitário** faz parte dela.
+- **Problemas da caixa-branca:** **cálculos com resposta errada** e **término errado de laços**. Falta de segurança, prazos e tamanho da equipe **não** são problemas que o teste de caixa-branca encontra.
+- **Caixa-preta** (funcional): só a **interface**, sem acesso ao código; compara **saída obtida × esperada** pela especificação de requisitos. O testador precisa estudar os **requisitos**.
+- **Problemas da caixa-preta:** aceitar valor fora do intervalo dos requisitos e deixar **campos obrigatórios em branco**.
+- **Caixa-cinza:** acesso **parcial**; testador manipula **consultas SQL** e confere as saídas do banco. Híbrida de branca e preta. Aplicação típica: **webservices**.
+- **Técnicas da caixa-preta:** particionamento de equivalência e análise do valor limite. **Técnicas da caixa-branca:** unidade, caminho básico, estrutura de controle, contexto OO.
+- A caixa-branca **depende da implementação**: se o código muda, o teste deve ser refeito. A caixa-preta **independe** da linguagem e da tecnologia.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- PRESSMAN, R. S. *Engenharia de software*. São Paulo: McGraw-Hill, 2011.

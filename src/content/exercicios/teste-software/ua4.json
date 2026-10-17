@@ -1,0 +1,115 @@
+{
+  "ua": 4,
+  "questions": [
+    {
+      "question": "No planejamento de testes de software, qual critério fundamental distingue as abordagens de teste de caixa-branca, caixa-preta e caixa-cinza?",
+      "options": [
+        "O modelo de licenciamento comercial das ferramentas adotadas pela organização.",
+        "O nível de visibilidade e acesso que o testador possui em relação à estrutura interna e ao código-fonte do sistema.",
+        "A quantidade de memória RAM disponível nos servidores de homologação.",
+        "O sistema operacional utilizado pelos usuários finais da aplicação."
+      ],
+      "correctIndex": 1,
+      "explanation": "As três abordagens diferenciam-se pelo grau de acesso à estrutura interna: total na caixa-branca (código-fonte), nulo na caixa-preta (apenas entradas, saídas e interface) e parcial na caixa-cinza."
+    },
+    {
+      "question": "Embora o teste de caixa-branca (estrutural) permita verificar caminhos lógicos, laços e fluxos de dados diretamente no código-fonte, por que ele não é suficiente, isoladamente, para garantir a ausência total de defeitos em um software?",
+      "options": [
+        "Porque ele não analisa requisitos omitidos ou funcionalidades faltantes não implementadas e o teste exaustivo de todos os caminhos possíveis é computacionalmente inviável.",
+        "Porque a caixa-branca só pode ser executada manualmente sem auxílio de computadores.",
+        "Porque ele é aplicável apenas a linguagens de programação interpretadas da década de 1970.",
+        "Porque o código-fonte sofre alteração automática de sintaxe sempre que é inspecionado por um testador."
+      ],
+      "correctIndex": 0,
+      "explanation": "A caixa-branca avalia apenas o código que foi efetivamente escrito, sendo incapaz de apontar requisitos de negócio esquecidos. Além disso, a explosão combinatória de caminhos torna o teste 100% exaustivo inviável na prática."
+    },
+    {
+      "question": "No contexto do teste de caixa-branca, qual é o princípio que rege a técnica do teste de caminho básico?",
+      "options": [
+        "Desenhar telas em baixa fidelidade para validar botões com o cliente final.",
+        "Desativar os laços de repetição do código para evitar que o processador consuma energia excessiva.",
+        "Basear-se na complexidade ciclomática do grafo de fluxo de controle para derivar um conjunto independente de caminhos lineares de execução a serem exercitados.",
+        "Enviar requisições HTTP aleatórias para derrubar o firewall da rede corporativa."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de caminho básico utiliza a complexidade ciclomática (proposta por Thomas McCabe) para mensurar a complexidade lógica e definir o número de caminhos independentes que devem ser executados ao menos uma vez."
+    },
+    {
+      "question": "Quais das seguintes falhas e anomalias são alvos típicos de detecção durante a aplicação de testes de caixa-branca?",
+      "options": [
+        "Má diagramação de cores na embalagem física do produto e atrasos de transporte rodoviário.",
+        "Condições de término incorreto em laços de repetição, divisões por zero não tratadas, código morto (inatingível) e erros em cálculos aritméticos internos.",
+        "Incompatibilidade de navegadores web com monitores monocromáticos legados.",
+        "Falta de sinal de conexão Wi-Fi na residência do cliente."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste estrutural examina a lógica interna, sendo ideal para identificar desvios condicionais defeituosos, laços infinitos, branches inalcançáveis e cálculos matemáticos implementados incorretamente."
+    },
+    {
+      "question": "No teste de caixa-preta (funcional), como o testador determina se o comportamento observado da aplicação diante de uma determinada entrada foi aprovado ou reprovado?",
+      "options": [
+        "Inspecionando as instruções de montagem Assembly na memória cache do processador.",
+        "Aguardando que a inteligência artificial decida aleatoriamente se a tela é visualmente atraente.",
+        "Comparando o resultado obtido na execução com o resultado previamente esperado documentado na especificação de requisitos (oráculo de teste).",
+        "Concluindo que qualquer resposta emitida pelo sistema é automaticamente válida desde que não ocorra reinicialização do hardware."
+      ],
+      "correctIndex": 2,
+      "explanation": "No teste de caixa-preta, a validação depende de um oráculo de teste — a especificação clara do resultado esperado para cada conjunto de entradas —, permitindo confrontar a saída real com o comportamento prescrito."
+    },
+    {
+      "question": "Qual é a premissa central da técnica de particionamento em classes de equivalência empregada no teste de caixa-preta?",
+      "options": [
+        "Dividir o domínio de dados de entrada em partições válidas e inválidas, assumindo que qualquer valor representativo de uma mesma classe produzirá um comportamento equivalente pelo sistema.",
+        "Dividir o banco de dados em dez servidores físicos distintos para aumentar o tempo de resposta das transações.",
+        "Forçar a equipe a programar em linguagem binária pura sem o uso de variáveis declaradas.",
+        "Executar a mesma suíte de testes dezenas de vezes com valores exatamente idênticos para medir o desgaste do teclado."
+      ],
+      "correctIndex": 0,
+      "explanation": "O particionamento em classes de equivalência reduz o número de casos de teste ao agrupar entradas que devem ser tratadas de forma semelhante pela lógica do software, bastando testar um elemento representativo de cada partição (válida ou inválida)."
+    },
+    {
+      "question": "Ao aplicar a técnica de análise do valor limite como complemento ao particionamento de equivalência, em quais valores os casos de teste devem se concentrar preferencialmente?",
+      "options": [
+        "Apenas em valores situados exatamente no centro geométrico das partições válidas.",
+        "Em números primos gerados aleatoriamente por algoritmos criptográficos.",
+        "Em valores arbitrários que não guardem nenhuma relação com as regras de negócio especificadas.",
+        "Nas fronteiras e bordas das classes de equivalência (imediatamente nos limites, logo abaixo e logo acima), onde historicamente há maior probabilidade de ocorrência de erros de programação."
+      ],
+      "correctIndex": 3,
+      "explanation": "Erros de codificação (como confusão entre operadores '>' e '>=') costumam se manifestar nas extremidades dos intervalos válidos e inválidos, tornando os testes nas fronteiras indispensáveis."
+    },
+    {
+      "question": "Dentre os cenários a seguir, qual representa uma falha funcional típica revelada por meio de testes de caixa-preta na interface com o usuário?",
+      "options": [
+        "Uma variável local com nome em desacordo com as diretrizes de estilo do código-fonte.",
+        "Uma função interna privada que não possui comentários no cabeçalho do arquivo Java.",
+        "Um algoritmo de ordenação que utiliza mais iterações do que a notação assintótica teórica.",
+        "Um formulário de cadastro que aceita submissão com campos obrigatórios vazios ou permite a seleção de data de nascimento posterior à data atual."
+      ],
+      "correctIndex": 3,
+      "explanation": "A caixa-preta foca nas regras de negócio e validações visíveis externamente na interface, como permissão de dados fora da faixa especificada ou ausência de validação de campos mandatórios."
+    },
+    {
+      "question": "Na literatura de engenharia de software, a abordagem de teste de caixa-cinza é amplamente caracterizada como:",
+      "options": [
+        "Uma técnica obsoleta que se aplica unicamente a cartões perfurados mecânicos.",
+        "Um teste realizado por usuários que não sabem ler nem escrever em nenhuma língua natural.",
+        "A reescrita manual de todos os requisitos de software em linguagem de máquina.",
+        "Uma abordagem híbrida na qual o testador possui conhecimento parcial da estrutura interna da aplicação (como arquitetura de dados ou APIs), utilizando essa visão para modelar testes mais assertivos executados a partir de suas interfaces ou integrações."
+      ],
+      "correctIndex": 3,
+      "explanation": "O consenso sobre a caixa-cinza é sua natureza híbrida: o testador combina a perspectiva externa da caixa-preta com conhecimentos arquiteturais parciais (como modelos de banco de dados, fluxos de integração ou contratos de webservices) para otimizar os testes."
+    },
+    {
+      "question": "Em relação à automação de testes de caixa-preta no desenvolvimento de software contemporâneo, qual afirmativa é tecnicamente correta?",
+      "options": [
+        "Testes funcionais de caixa-preta são de automação inviável e devem ser conduzidos estritamente de maneira manual em qualquer circunstância.",
+        "Ferramentas modernas de automação de testes funcionais e de ponta a ponta (como Selenium, Cypress e Playwright) exercitam a interface da aplicação de forma automatizada sem demandar conhecimento prévio do código-fonte da aplicação.",
+        "A automação de testes de interface só pode ser realizada se o desenvolvedor excluir todo o código de regras de negócio do sistema.",
+        "Os testes automatizados de interface eliminam a necessidade de qualquer teste de unidade ou integração."
+      ],
+      "correctIndex": 1,
+      "explanation": "Diferente de visões antigas que consideravam a automação funcional impraticável, ferramentas modernas permitem automatizar fluxos completos de caixa-preta diretamente na interface web ou mobile de maneira ágil e repetível em pipelines de integração contínua."
+    }
+  ]
+}
