@@ -1,0 +1,145 @@
+---
+title: "UA5 — Planejamento de Testes"
+subtitle: "Por que e quando planejar os testes, os três documentos básicos, os oito documentos da IEEE 829 (hoje substituída pela ISO/IEC/IEEE 29119-3) e o plano de testes visto como projeto, segundo o PMBOK."
+ua: 5
+group: "Planejamento e Níveis de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua5.m4a" title="Planejamento de testes: IEEE 829 e PMBOK" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/pts_01.webp" alt="Infográfico 'Planejamento de Testes de Software' — como o PMBOK organiza o plano de testes em cinco etapas (iniciação, planejamento, execução, monitoramento e encerramento)" caption="Planejamento de testes de software: as cinco etapas do PMBOK" />
+</SlidesGrid>
+
+### Por que planejar os testes
+
+Testar sem planejar costuma se resumir a alguns testes unitários soltos durante a codificação, sem estrutura nem registro. O **planejamento de testes** define, antes da execução: o que será testado (e o que não será), por quem, em que prazo, com quais recursos e quais riscos. Além de orientar o projeto atual, os documentos gerados servem para **embasar projetos futuros**, evitando repetir os mesmos erros.
+
+O planejamento deve ser feito **antes mesmo da codificação**, quando já se sabe o que o software deve fazer, e depois que os **requisitos foram levantados**, pois eles são o fundamento de toda atividade de teste. Os testes acontecem do início ao fim do projeto, e nunca se espera encontrar **todos** os problemas: se nenhum for encontrado, desconfie dos testes antes de acreditar que o software está 100% correto.
+
+**Planejar → Projetar casos de teste → Executar → Relatar os problemas encontrados**
+
+#### Objetivos do planejamento
+
+- Identificar quais **funcionalidades e componentes** serão testados em cada momento;
+- Apontar os **recursos necessários** (humanos, tecnológicos e de ambiente);
+- Recomendar e descrever as **técnicas e estratégias** de teste;
+- Descrever **como** os testes serão feitos, para que os testadores sigam o procedimento;
+- Definir o **relatório** que o ciclo de testes deve produzir: atividades realizadas, data e hora de início e fim, testador responsável, resultados e problemas identificados.
+
+O plano precisa documentar os **requisitos funcionais** (o que o sistema faz: consultar saldo, emitir relatório, incluir/alterar/excluir clientes) e os **não funcionais** (como o sistema faz: facilidade de uso, portabilidade, linguagem utilizada, tempo, segurança).
+
+Quando a empresa não adota um padrão internacional, bastam **três documentos fundamentais**:
+
+| Documento | Conteúdo |
+|---|---|
+| **Plano de teste** | Base do início das atividades: escopo, cobertura, o que será e **o que não será testado (com o motivo)**, restrições, requisitos de ambiente, critérios de validação e responsáveis |
+| **Caso de teste** | Descreve **um teste específico**: valores de entrada, restrições, resultado obtido e comportamento esperado |
+| **Roteiro de teste** | O **passo a passo** para executar um caso de teste ou um conjunto deles |
+
+### O plano de testes segundo a norma IEEE 829
+
+A **IEEE 829** é o *Padrão para Documentação de Teste de Software*. Ela padroniza apenas o **formato** dos documentos: não diz quais documentos a empresa é obrigada a produzir, nem o que escrever em cada um. A padronização simplifica a leitura (as seções são iguais em todos os projetos) e **facilita a comunicação** entre a equipe. A norma separa o teste em **preparação, execução e registro**. Não precisa ser usada por inteiro, mas, ao usar um documento, convém seguir o formato.
+
+Os oito documentos listados pelo material (os nomes correspondem à **versão de 1998** da norma, embora o texto cite 2008; veja o aviso abaixo):
+
+| Grupo | Documento | Função |
+|---|---|---|
+| **Plano** | **Plano de testes** | O **mais importante**: norte para os demais. Escopo, recursos humanos e tecnológicos, abordagem (atividades, técnicas, ferramentas), prazos, itens testados e não testados, riscos, responsáveis, versão testada, **critérios de aceitação e de suspensão**, artefatos finais, ambiente, datas e aprovações |
+| **Especificação** | Especificação do **projeto** de teste | Identifica as funcionalidades e características a testar em cada momento |
+| | Especificação de **casos** de teste | Para cada caso: dados de entrada, saídas desejadas, ações e condições necessárias |
+| | Especificação dos **procedimentos** de teste | Passo a passo para executar um conjunto de casos |
+| **Relatórios** | **Diário** de teste (*test log*) | Registro **cronológico** dos detalhes importantes; guarda o histórico de falhas para aprendizado posterior |
+| | **Relatório de incidentes** de teste | Documenta com detalhe **todo evento** que exija avaliação posterior, para que os desenvolvedores consigam **reproduzir** o erro |
+| | **Relatório de resumo** de testes | Resumo dos resultados, vinculado à funcionalidade ou especificação a que se refere |
+| | Relatório de **encaminhamento de itens** de teste | Usado quando há **equipes diferentes** testando partes diferentes: indica os itens enviados e a equipe designada |
+
+O material cita ainda dois documentos “de implantação” (um **guia de elaboração** de documentos de teste e um **processo de elaboração**), que descrevem como preparar, executar e registrar os testes.
+
+<Callout type="warning">
+**IEEE 829 está superada: use a ISO/IEC/IEEE 29119-3**
+
+**Qual versão?** O material cita a **IEEE 829 de 2008**, mas os oito documentos que lista (plano, três especificações, diário, incidentes, resumo e encaminhamento de itens) são os da **versão de 1998**. A edição de 2008 reorganizou a norma por **níveis de integridade** e passou a prever, entre outros, plano mestre e plano por nível, relatório de anomalias e relatórios de status e final. Em qualquer caso, a norma foi **substituída** pela família **ISO/IEC/IEEE 29119** (Teste de Software), cuja **parte 3 (2013, revisada depois) trata da documentação de teste** e é a referência atual. A IEEE 829-2008 foi retirada. Os documentos são equivalentes em espírito (política e estratégia de testes, plano, especificações, relatórios de status, de incidentes e de conclusão), mas com nomes e organização diferentes. Para a prova da disciplina, siga os nomes da IEEE 829 do material; no mercado, a referência é a 29119.
+
+Outros pontos em que o texto confunde:
+
+- **Oito documentos + dois “outros”:** os oito são os da tabela acima (1 plano, 3 especificações, 4 relatórios). O “guia” e o “processo de elaboração” **não** fazem parte desse conjunto de oito, apesar de o texto os apresentar como “outros documentos” da norma.
+- **“Não diz quais documentos elaborar”:** o texto afirma isso e, em seguida, lista os oito documentos que a norma define. Entenda assim: a norma define **o conjunto e o formato**, mas não obriga a empresa a produzi-los todos.
+- **Três documentos básicos × oito:** são dois níveis de detalhe. Plano, caso e roteiro correspondem, em grandes linhas, ao plano, às especificações de casos e de procedimentos.
+</Callout>
+
+### O plano de testes conforme o PMBOK
+
+O **PMBOK**, guia do **PMI** (*Project Management Institute*), não define um padrão de documentação de testes. Segundo o material, ele trata os testes como um **projeto independente** do projeto de desenvolvimento, com atividades e etapas próprias, o que pode dar mais credibilidade ao resultado.
+
+#### Áreas de conhecimento aplicadas aos testes
+
+| Área | O que define no projeto de testes |
+|---|---|
+| **Escopo** | A extensão do projeto: **o que será e o que não será testado**, com os motivos, e as interfaces com outros softwares |
+| **Custos** | Dimensionamento e despesas (contratar testadores, deslocamento) |
+| **Tempo** | Cronograma vinculado ao tamanho do desenvolvimento, realista |
+| **Qualidade** | Indicadores de que os testes seguem o planejado e de que o software tem a qualidade desejada |
+| **Integração** | Ligação com o projeto de desenvolvimento e outros projetos de teste; se andam no mesmo ritmo |
+| **Recursos humanos** | Quem participa, em quais testes e com quais funções e responsabilidades |
+| **Comunicação** | Quem recebe qual informação, quando e como (frequência, reuniões, relatórios, e-mails) |
+| **Riscos** | Eventos que podem ou não ocorrer, como **ameaças** (impacto negativo) ou **oportunidades** (impacto positivo) |
+| **Aquisições** | Como adquirir softwares e ferramentas de teste |
+| **Partes interessadas** | Quem tem interesse nos testes e como engajá-lo (desenvolvedores, usuários nos testes) |
+
+#### As cinco fases
+
+**Iniciação → Planejamento → Execução → Monitoramento e controle → Encerramento**
+
+| Fase | O que faz |
+|---|---|
+| **Iniciação** | Define e **autoriza** o projeto de testes (ou uma fase dele) |
+| **Planejamento** | Define as **estratégias** para atingir os objetivos e o **escopo** |
+| **Execução** | Recruta pessoas e recursos e realiza as tarefas de teste |
+| **Monitoramento e controle** | **Avalia os processos** e identifica desvios do planejado, para decidir antes que um problema afete os testes (e o desenvolvimento) |
+| **Encerramento** | **Formaliza a aceitação** dos resultados, do software todo ou das partes testadas |
+
+Como o projeto de testes documenta tudo, essa documentação é reaproveitada em futuras **manutenções**.
+
+<Callout type="warning">
+**Ajustes sobre o PMBOK**
+
+- **O PMBOK não trata “testes” como projeto independente:** ele é um guia **genérico** de gerenciamento de projetos. Tratar o teste como projeto próprio é uma **escolha de organização** que o material atribui a ele; o guia não prescreve isso.
+- **Fases × grupos de processos:** as cinco “fases” (iniciação, planejamento, execução, monitoramento e controle, encerramento) são, no guia, os **cinco grupos de processos**, que se repetem dentro de cada fase do projeto, e não um ciclo de vida sequencial. Para a prova, use a nomenclatura do material.
+- **Versões:** o texto cita o PMBOK de 2016 (cinco grupos e dez áreas; a área “recursos humanos” passou a se chamar **recursos** na 6ª edição). A **7ª edição (2021)** reorganizou o guia em **princípios e domínios de desempenho**, e não mais em áreas e grupos de processos.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Planejamento de testes hoje**
+
+- **Documentação enxuta:** em equipes ágeis, o plano de testes vira uma página viva, uma **estratégia de testes** curta ou parte do *Definition of Done* e dos critérios de aceite das histórias, em vez de um documento de dezenas de páginas assinado por aprovadores.
+- **Planejamento contínuo e baseado em riscos:** testa-se **primeiro o que mais pode dar errado ou custar caro** (análise de risco). O plano é revisado a cada iteração, e não congelado antes da codificação.
+- **Testes como parte do time:** testadores participam do refinamento das histórias (*shift-left*), e muitos testes são escritos antes ou junto do código (TDD e BDD). O “projeto independente de testes” do PMBOK é raro fora de ambientes muito regulados.
+- **Rastreabilidade em ferramentas:** casos, execuções e incidentes ficam em ferramentas como Jira (com Xray ou Zephyr), TestRail e Azure DevOps Test Plans, no lugar de documentos soltos. O **relatório de incidentes** virou o *bug report* do sistema de chamados.
+- **Critérios de entrada e saída:** além de “critérios de aceitação e suspensão”, o plano define **quando começar** e **quando parar** de testar (metas de cobertura, defeitos críticos em aberto, desempenho).
+- **Padrão atual:** a ISO/IEC/IEEE 29119 é a referência de documentação; certificações como o **CTFL** (ISTQB; no Brasil, BSTQB) adotam a mesma terminologia de plano, estratégia e critérios.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Maior propósito do planejamento de testes:** estabelecer uma **referência estruturada** que oriente os responsáveis pela verificação da qualidade, com metodologias, critérios e procedimentos. Não define padrões de código, linguagem nem coleta de requisitos.
+- **Documento da IEEE 829 que registra problemas e eventos que exigirão avaliação posterior:** **relatório de incidentes de teste**. O **diário de teste** é o registro **cronológico**; o **plano** é o mais importante; o **encaminhamento de itens** é para equipes distintas.
+- **Relatório de encaminhamento de itens de teste:** indica os itens enviados para teste e a **equipe designada**. Definir escopo e papéis de cada testador é função do **plano de testes** (a asserção I do exercício é verdadeira e a II é falsa).
+- **Gerenciamento do escopo (PMBOK):** define o que **será e o que não será** incluído (afirmar que ignora o que fica de fora é falso); evita atividades não planejadas; depende da integração com outras áreas, e uma falha nele **impacta cronograma, orçamento e critérios de aceitação**. Resposta do exercício: **II e IV**.
+- **Fase do PMBOK que avalia se as atividades seguem o planejado:** **monitoramento e controle**.
+- **Três documentos básicos:** plano de teste, caso de teste, roteiro de teste. **Oito da IEEE 829:** 1 plano + 3 especificações + 4 relatórios.
+- **Planejar antes de executar**, depois dos requisitos levantados; o PMBOK vê o teste como **projeto independente**, com **dez áreas** e **cinco fases**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- INSTITUTE OF ELECTRICAL AND ELECTRONICS ENGINEERS. *IEEE 829-2008: standard for software and system test documentation*. 2008.
+- ISO/IEC/IEEE 29119-3. *Software and systems engineering: software testing, part 3: test documentation*.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed. Porto Alegre: AMGH, 2011.
+- PROJECT MANAGEMENT INSTITUTE. *Um guia do conhecimento em gerenciamento de projetos: guia PMBOK*. Pennsylvania: PMI, 2016.

@@ -1,0 +1,115 @@
+{
+  "ua": 5,
+  "questions": [
+    {
+      "question": "Qual é o objetivo principal do planejamento de testes no ciclo de vida de desenvolvimento de software?",
+      "options": [
+        "Estabelecer uma referência estruturada com escopo, recursos, cronograma, estratégias e critérios que orientem as atividades de verificação da qualidade.",
+        "Garantir formalmente que o software seja entregue com zero defeitos e ausência total de falhas em produção.",
+        "Definir a arquitetura técnica de microsserviços e a linguagem de programação a ser adotada no desenvolvimento.",
+        "Substituir a etapa de levantamento de requisitos de negócio por especificações de casos de uso operacionais."
+      ],
+      "correctIndex": 0,
+      "explanation": "O planejamento de testes tem como finalidade estruturar as atividades de verificação da qualidade, definindo o que será testado (e o que ficará de fora), prazos, recursos, riscos, abordagens e critérios de aceite e suspensão, antes da fase de execução."
+    },
+    {
+      "question": "Em uma gestão simplificada de testes de software, quais são os três documentos essenciais para orientar o processo?",
+      "options": [
+        "Diário de bordo, diagrama de classes e especificação de requisitos de sistema.",
+        "Plano de teste, especificação de caso de teste e roteiro de teste.",
+        "Matriz SWOT de qualidade, relatório de incidentes e termo de encerramento contratual.",
+        "Manual do usuário final, guia de instalação e relatório de análise estática de código."
+      ],
+      "correctIndex": 1,
+      "explanation": "Na organização básica de testes, os três artefatos fundamentais são o plano de teste (escopo e estratégia geral), o caso de teste (entradas, condições e resultados esperados) e o roteiro de teste (passo a passo para a execução operacional)."
+    },
+    {
+      "question": "Na documentação de testes padronizada pela norma IEEE 829, qual documento tem a função específica de registrar detalhadamente qualquer evento inesperado ocorrido durante a execução para permitir sua posterior reprodução e correção?",
+      "options": [
+        "Plano mestre de testes.",
+        "Relatório de encaminhamento de itens de teste.",
+        "Relatório de incidentes de teste.",
+        "Especificação de projeto de teste."
+      ],
+      "correctIndex": 2,
+      "explanation": "O relatório de incidentes de teste documenta detalhadamente qualquer evento anômalo ou falha observada durante a execução, fornecendo informações como passos de reprodução, entradas fornecidas e saídas obtidas para apoiar os desenvolvedores na depuração."
+    },
+    {
+      "question": "Na documentação de testes padronizada pela norma IEEE 829, qual documento é responsável pelo registro estritamente cronológico das atividades de teste realizadas, contendo data, hora e observações de execução?",
+      "options": [
+        "Diário de teste (test log).",
+        "Especificação de procedimentos de teste.",
+        "Relatório-resumo de testes.",
+        "Especificação de casos de teste."
+      ],
+      "correctIndex": 0,
+      "explanation": "O diário de teste (test log) mantém um registro cronológico detalhado sobre a execução dos testes, anotando datas, horários, responsáveis, versões executadas e ocorrências relevantes para histórico e auditoria."
+    },
+    {
+      "question": "Quando um projeto de software possui equipes distintas responsáveis por testar diferentes módulos ou subsistemas, qual documento da norma IEEE 829 é utilizado para formalizar a entrega dos artefatos à equipe designada?",
+      "options": [
+        "Especificação de casos de teste.",
+        "Termo de encerramento do projeto.",
+        "Relatório de encaminhamento de itens de teste.",
+        "Diário de teste."
+      ],
+      "correctIndex": 2,
+      "explanation": "O relatório de encaminhamento de itens de teste é empregado para listar os componentes ou módulos liberados e identificar a equipe responsável por conduzir as verificações sobre esses artefatos."
+    },
+    {
+      "question": "Dentro da estrutura de documentação de testes da norma IEEE 829, como se diferenciam a especificação de projeto de teste, a de casos de teste e a de procedimentos de teste?",
+      "options": [
+        "A de projeto define o cronograma financeiro; a de casos define as ferramentas de automação; a de procedimentos lista os bugs encontrados.",
+        "A de projeto é voltada apenas para testes de usabilidade; a de casos é exclusiva para testes unitários; a de procedimentos detalha testes de segurança.",
+        "A de projeto lista as permissões de acesso ao banco de dados; a de casos define regras de negócio; a de procedimentos contém o código-fonte dos testes.",
+        "A de projeto identifica as funcionalidades e recursos a serem testados; a de casos detalha dados de entrada e saídas esperadas; a de procedimentos prescreve os passos operacionais de execução."
+      ],
+      "correctIndex": 3,
+      "explanation": "A especificação de projeto de teste detalha os itens e características a testar; a especificação de caso de teste define entradas, pré-condições e saídas esperadas para cada cenário; e a especificação de procedimentos de teste descreve o passo a passo sequencial para executar os testes."
+    },
+    {
+      "question": "Ao aplicar conceitos de gerenciamento de projetos do Guia PMBOK ao planejamento de testes de software, como deve ser conduzida a definição do escopo de testes?",
+      "options": [
+        "Deve-se listar exclusivamente as funcionalidades que serão testadas, omitindo as não testadas para evitar questionamentos.",
+        "Deve-se delimitar explicitamente tanto as funcionalidades que serão testadas quanto as que não serão testadas, justificando as exclusões.",
+        "Deve-se delegar a definição de cobertura integralmente aos desenvolvedores durante a fase de codificação.",
+        "Deve-se restringir o escopo apenas aos testes não funcionais de desempenho, visto que testes funcionais não requerem planejamento."
+      ],
+      "correctIndex": 1,
+      "explanation": "No gerenciamento do escopo de testes, é fundamental definir com precisão o que está dentro do escopo e o que foi deliberadamente excluído, acompanhado das devidas justificativas técnicas ou operacionais."
+    },
+    {
+      "question": "No modelo de gerenciamento de projetos do Guia PMBOK, qual grupo de processos é responsável por acompanhar a execução das atividades de teste, comparar o progresso real com o planejado e propor ações corretivas diante de desvios?",
+      "options": [
+        "Monitoramento e controle.",
+        "Iniciação.",
+        "Encerramento.",
+        "Planejamento."
+      ],
+      "correctIndex": 0,
+      "explanation": "O grupo de processos de monitoramento e controle acompanha o andamento das tarefas em relação ao plano de testes estabelecido, identificando variações e viabilizando correções tempestivas antes que impactem o cronograma ou a qualidade."
+    },
+    {
+      "question": "No contexto das boas práticas do Guia PMBOK aplicadas ao gerenciamento de processos, como se classificam as etapas de Iniciação, Planejamento, Execução, Monitoramento e Controle, e Encerramento?",
+      "options": [
+        "Metodologias exclusivas de desenvolvimento sequencial em cascata.",
+        "Ferramentas proprietárias de automação de testes funcionais.",
+        "Grupos de processos de gerenciamento de projetos que se articulam ao longo do ciclo de vida.",
+        "Fases obrigatórias e rígidas de arquitetura de software para sistemas embarcados."
+      ],
+      "correctIndex": 2,
+      "explanation": "As cinco etapas citadas pelo PMBOK são grupos de processos de gerenciamento que interagem e podem ser aplicados em diferentes fases de um projeto para garantir governança, planejamento, entrega e encerramento estruturado."
+    },
+    {
+      "question": "Em um plano de testes de software, qual é a finalidade de se definirem critérios de suspensão e critérios de aceitação (critérios de conclusão)?",
+      "options": [
+        "Determinar a remuneração variável da equipe e a contratação de fornecedores externos de nuvem.",
+        "Garantir que a codificação seja suspensa definitivamente sempre que for detectada uma falha cosmética de interface gráfica.",
+        "Substituir a necessidade de executar casos de teste através de aprovação verbal da gerência.",
+        "Estabelecer as condições sob as quais as atividades de teste devem ser temporariamente paralisadas e os parâmetros para considerar a testagem finalizada com êxito."
+      ],
+      "correctIndex": 3,
+      "explanation": "Critérios de suspensão determinam quando os testes devem ser pausados (por exemplo, bloqueio de ambiente ou defeitos críticos bloqueantes), enquanto critérios de aceitação/conclusão estabelecem as metas de qualidade e cobertura necessárias para encerrar o ciclo de testes."
+    }
+  ]
+}
