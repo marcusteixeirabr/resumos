@@ -1,0 +1,228 @@
+---
+title: "UA5 — Componente Activity"
+subtitle: "A Activity como tela do app Android: criação, manifesto e Intents, pilha de retorno, ciclo de vida (onCreate a onDestroy), estados, loops e métodos mais usados."
+ua: 5
+group: "Interface e Componentes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua5.m4a" title="Activity: interface e ciclo de vida" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/eca_01.webp" alt="Infográfico 'Estrutura e Ciclo da Activity' — a Activity como componente de interface do Android, sua estrutura e o ciclo de vida, incluindo iniciar outra Activity e receber um resultado por meio de Intent" caption="Estrutura e ciclo de vida da Activity" />
+</SlidesGrid>
+
+### O que é uma Activity
+
+Em um app Android, a **interface de usuário** é provida pelo componente **Activity**: ela fornece uma **janela** em que o usuário interage para realizar uma operação (discar um número, gravar um vídeo, enviar uma mensagem, ver uma rota no mapa, editar um contato). Em geral ocupa a tela inteira, mas pode ser **menor** e até **flutuar sobre outras janelas**.
+
+Para criar uma, implementa-se uma **subclasse de `Activity`** (ou de uma implementação dela, como `AppCompatActivity`). Nessa subclasse, o sistema chama **métodos de retorno de chamada** (*callbacks*) a cada transição de estado do ciclo de vida. Os dois mais importantes:
+
+- **`onCreate()`:** o **único de implementação obrigatória**; chamado quando a Activity é criada, para inicializar os componentes essenciais. É nele que se chama **`setContentView()`** para definir o *leiaute*;
+- **`onPause()`:** primeiro indício de que o usuário está saindo (sem ser garantia). Aqui se **confirmam alterações** que precisam ser salvas, pois o usuário pode não voltar.
+
+```java
+public class MyFirstApp extends Activity {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+    }
+}
+```
+
+### Manifesto e Activity principal
+
+Ao criar um app, o Android Studio gera a Activity inicial já com um **filtro de intent** no manifesto (`AndroidManifest.xml`): a ação **`MAIN`** diz que ela é o **ponto de entrada principal** e a categoria **`LAUNCHER`** diz que deve aparecer no **inicializador** do sistema, ou seja, é a **primeira a ser chamada** quando o usuário abre o app.
+
+```xml
+<activity android:name=".ExampleActivity"
+    android:icon="@drawable/app_icon">
+    <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+    </intent-filter>
+</activity>
+```
+
+Trocar a tela inicial do app (por exemplo, colocar uma tela de login primeiro) é, portanto, mover esse filtro de uma Activity para outra no manifesto.
+
+### Iniciando outras Activities com Intent
+
+Para abrir outra tela, chama-se **`startActivity()`** com uma **`Intent`**. Ela pode indicar a Activity exata (**intent explícita**) ou descrever o tipo de ação (o sistema escolhe a Activity adequada, até de outro app) e ainda **carrega pequenas quantidades de dados** (*extras*).
+
+```java
+Intent intent = new Intent(this, ProductActivity.class);
+intent.putExtra("productId", varId);
+startActivity(intent);
+```
+
+Quando é preciso **receber um resultado**, usa-se **`startActivityForResult()`**. O resultado volta em uma intent no método **`onActivityResult()`**, onde se verifica se o `resultCode` é **`RESULT_OK`** e qual chamada originou a resposta pelo **`requestCode`** (um código qualquer escolhido pelo desenvolvedor). Todas as chamadas com `startActivityForResult()` retornam no **mesmo** `onActivityResult()`; o `requestCode` as diferencia.
+
+```java
+static final int PICK_CONTACT_REQUEST = 1;
+
+private void pickContact() {
+    Intent pickIntent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+    startActivityForResult(pickIntent, PICK_CONTACT_REQUEST);
+}
+
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (requestCode == PICK_CONTACT_REQUEST && resultCode == RESULT_OK) {
+        Uri contato = data.getData();
+    }
+}
+```
+
+<Callout type="warning">
+**Código do material com problemas**
+
+- **Aspas tipográficas:** no trecho do `putExtra`, o PDF usa aspas curvas (“productId”), que **não compilam** em Java. Use aspas retas, como acima.
+- **`startActivityForResult()` e `onActivityResult()` estão obsoletos** desde o Android 11 (API 30) e a biblioteca AndroidX Activity 1.2. Veja *Práticas Modernas* abaixo.
+- **`android:exported`:** a partir do Android 12 (API 31), toda Activity com `<intent-filter>` precisa declarar `android:exported="true"` (a principal) ou `"false"` no manifesto, ou o app **não compila nem instala**. O trecho do material não tem esse atributo.
+- O trecho do `ExampleActivity` do PDF tem erros de digitação (`app _ icon`, `LAUN-CHER` quebrado).
+</Callout>
+
+### Pilha de retorno (*back stack*)
+
+Um app costuma ter várias Activities pouco vinculadas entre si, e uma delas é a **principal**. Ao iniciar outra, a anterior é **interrompida**, mas o sistema a mantém em uma pilha, a **pilha de retorno**, que segue o mecanismo **LIFO** (*Last In, First Out*: o último a entrar é o primeiro a sair).
+
+**Activity 1 → inicia Activity 2 → inicia Activity 3 → botão Voltar → Activity 3 é destruída, Activity 2 é retomada**
+
+Ao apertar **Voltar**, a Activity do topo sai da pilha (é **destruída**) e a anterior é retomada.
+
+### Ciclo de vida
+
+Cada mudança de estado (criar, interromper, retomar, destruir) dispara um método de retorno, que é uma oportunidade de executar o trabalho adequado. Ao ser interrompida, a Activity deve **liberar objetos grandes** (conexões de rede e de banco); ao retomar, **readquire** os recursos. Ela pode estar em três estados:
+
+| Estado | Significado |
+|---|---|
+| **Resumed** | Em primeiro plano, com o foco do usuário (“em execução”) |
+| **Paused** | Ainda **visível**, mas outra Activity está por cima e tem o foco (transparente ou que não cobre a tela inteira) |
+| **Stopped** | Em segundo plano: o objeto ainda está em memória, mas **não está mais visível** |
+
+Uma Activity *Paused* ou *Stopped* pode ser descartada por **`finish()`** ou **eliminada pelo sistema** para liberar memória; ao reabrir, é **totalmente recriada**.
+
+#### Métodos de retorno
+
+**onCreate() → onStart() → onResume() → (em execução) → onPause() → onStop() → onDestroy()**
+
+| Método | Quando é chamado | Eliminável depois? | Próximo |
+|---|---|---|---|
+| **onCreate()** | Criação pela primeira vez: configuração estática (criar exibições, vincular dados a listas). Recebe um `Bundle` com o estado anterior, se capturado | Não | `onStart()` |
+| **onRestart()** | Depois de interrompida, logo antes de reiniciar | Não | `onStart()` |
+| **onStart()** | Logo antes de se tornar visível | Não | `onResume()` ou `onStop()` |
+| **onResume()** | Logo antes de iniciar a interação com o usuário (topo da pilha, com a entrada dirigida a ela) | Não | `onPause()` |
+| **onPause()** | O sistema está prestes a retomar outra Activity: confirmar dados não salvos, parar animações e o que consome CPU. **Deve ser rápido**, pois a próxima só retoma quando ele retorna | Sim | `onResume()` ou `onStop()` |
+| **onStop()** | Não está mais visível (destruída, ou coberta por outra) | Sim | `onRestart()` ou `onDestroy()` |
+| **onDestroy()** | Última chamada que ela recebe: `finish()` foi chamado ou o sistema destrói a instância para poupar espaço. `isFinishing()` distingue os dois casos | Sim | Nada |
+
+Em cada método sobrescrito, a primeira linha deve ser a chamada ao método da superclasse (`super.onCreate()`, `super.onStart()`, etc.), para que as rotinas internas da classe `Activity` sejam executadas. Fora o `onCreate()`, os demais são **opcionais**: uma Activity que só exibe uma informação nem precisa deles.
+
+#### Os três loops
+
+| Loop | Intervalo | Uso típico |
+|---|---|---|
+| **Tempo de vida total** | `onCreate()` até `onDestroy()` | Definir o leiaute no início e liberar recursos no fim |
+| **Tempo de vida visível** | `onStart()` até `onStop()` | Pode repetir várias vezes, conforme a Activity alterna entre visível e oculta |
+| **Tempo de vida em primeiro plano** | `onResume()` até `onPause()` | Ex.: ao abrir uma caixa de diálogo, `onPause()` roda; ao voltar, `onResume()` |
+
+<Callout type="warning">
+**Quadro do ciclo de vida desatualizado**
+
+O quadro do material diz que a Activity pode ser eliminada (“Sim”) depois de `onPause()`. Isso vale **só para versões anteriores ao Android 3.0 (API 11)**. Nas versões atuais, o processo só pode ser eliminado, com garantia, depois de **`onStop()`** (e `onDestroy()`); **`onPause()` não é mais ponto de eliminação**. Mesmo assim, como o sistema pode matar o processo sem avisar, **não conte com `onDestroy()`** para salvar dados. Em provas baseadas no livro, siga o quadro (`onPause` = “Sim”).
+</Callout>
+
+### Métodos mais usados
+
+- **`setContentView()`:** define o leiaute exibido pela Activity;
+- **`findViewById()`:** encontra um componente do leiaute pelo ID, por exemplo `TextView tvMessage = (TextView) findViewById(R.id.message);`
+- **`finish()`:** **fecha e destrói** a Activity atual;
+- Como `Activity` estende `Context`, ela herda todos os métodos de `Context`.
+
+**Persistir preferências** (`SharedPreferences`): é boa prática de usabilidade guardar os últimos dados usados numa interface (um filtro, uma configuração de visualização). O exemplo do material, uma `CalendarActivity`, lê o modo de visualização (dia ou semana) nas preferências no `onCreate()`, exibe o leiaute correspondente com `setContentView()` e, no **`onPause()`**, grava o modo escolhido (`mCurViewMode`), de modo que, na próxima abertura, a visualização anterior esteja disponível.
+
+```java
+@Override
+protected void onPause() {
+    super.onPause();
+    SharedPreferences.Editor editor = getSharedPreferences("calendario", MODE_PRIVATE).edit();
+    editor.putInt("modo", mCurViewMode);
+    editor.apply();
+}
+```
+
+<Callout type="warning">
+**O que o material não diz: mudança de configuração e morte do processo**
+
+O capítulo trata o ciclo de vida só como “aparece, sai, volta”, mas **omite os dois cenários que mais causam bugs**:
+
+- **Mudança de configuração:** ao **girar a tela**, trocar o idioma, o tema escuro ou o tamanho da janela, o Android **destrói e recria** a Activity (`onPause → onStop → onDestroy → onCreate → onStart → onResume`). Tudo o que estava em variáveis da Activity **se perde**. Dados digitados em campos de texto com ID são restaurados automaticamente, mas o restante, não.
+- **Morte do processo:** com o app em segundo plano, o sistema pode **eliminar o processo** para liberar memória, sem chamar `onDestroy()`. Ao voltar, a Activity é recriada com o `Bundle` salvo.
+- **`onSaveInstanceState(Bundle)`:** guarda pequenas quantidades de **estado de interface** (texto de rascunho, posição de rolagem) e o recebe de volta no `onCreate()` (parâmetro `savedInstanceState`) e em `onRestoreInstanceState()`. É o “estado transiente” a que o texto se refere.
+- **`ViewModel`:** guarda dados de tela que **sobrevivem à rotação** (não à morte do processo), sem sair da Activity. É a solução padrão hoje.
+- **Dados que não podem se perder** (um cadastro preenchido, um pedido) vão para **armazenamento persistente** (Room/SQLite, `DataStore`), e não para o `onPause()` “por segurança”.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Activity hoje**
+
+- **Kotlin e `AppCompatActivity`:** o Android é *Kotlin-first*. O mesmo `onCreate` vira `class MainActivity : AppCompatActivity()`. O material usa Java e a classe `Activity` pura, que quase não se usa mais direto.
+- **Resultado de outra Activity:** em vez de `startActivityForResult()`, usa-se a **Activity Result API**, que dispensa o `requestCode` e o `onActivityResult()`:
+
+```kotlin
+private val escolherContato = registerForActivityResult(ActivityResultContracts.PickContact()) { uri: Uri? ->
+    if (uri != null) {
+        // usar o contato escolhido
+    }
+}
+
+botao.setOnClickListener { escolherContato.launch(null) }
+```
+
+- **Estado de tela com `ViewModel`:**
+
+```kotlin
+class CadastroViewModel : ViewModel() {
+    var nome = ""
+}
+
+class CadastroActivity : AppCompatActivity() {
+    private val viewModel: CadastroViewModel by viewModels()
+}
+```
+
+- **Observadores de ciclo de vida:** a classe `Lifecycle` e o `LifecycleObserver` permitem que componentes reajam ao ciclo de vida sem poluir os métodos da Activity. Em Compose, `LaunchedEffect` e `DisposableEffect` fazem esse papel.
+- **Activity única:** apps modernos usam **uma Activity** com várias telas (*Fragments* com Navigation Component, ou **Jetpack Compose**), em vez de uma Activity por tela; a “pilha de retorno” passa a ser gerida pelo componente de navegação.
+- **Botão Voltar:** o tratamento é feito por `OnBackPressedDispatcher`/`OnBackPressedCallback`, não mais por `onBackPressed()`. Android 13 e 14 trazem o **gesto de voltar preditivo**.
+- **ViewBinding** e **Compose** substituem o `findViewById()` e o *cast*, eliminando erros de ID e de tipo em tempo de execução.
+- **Trabalho em segundo plano:** operações demoradas e conexões de rede não vão na Activity, e sim em **corrotinas** (`lifecycleScope`, `viewModelScope`), WorkManager ou serviços.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Activity** = componente que fornece a **interface de usuário** (janela). Interação típica: informar login e senha. Processar rotinas longas, conexão de rede e notificações **não** são papel da Activity (são de outros componentes e de *threads*).
+- **Pilha de retorno = LIFO** (último a entrar, primeiro a sair).
+- **Primeiro método chamado** ao iniciar: **`onCreate()`**; é o único de implementação obrigatória, e nele se chama `setContentView()`.
+- **Método usado para persistir dados** (salvar alterações antes de sair): **`onPause()`**.
+- **`finish()`** finaliza e destrói a Activity. **`findViewById()`** busca componentes do leiaute. **`setContentView()`** define o leiaute.
+- **Estados:** Resumed (primeiro plano), Paused (visível, sem foco), Stopped (em memória, invisível).
+- **Loops:** total (`onCreate`–`onDestroy`), visível (`onStart`–`onStop`), primeiro plano (`onResume`–`onPause`).
+- **Activity inicial:** `intent-filter` com ação `android.intent.action.MAIN` e categoria `android.intent.category.LAUNCHER` no manifesto.
+- **`startActivity()`** abre outra tela; **`startActivityForResult()`** recebe resultado em **`onActivityResult()`**, e o **`requestCode`** identifica a chamada.
+- **`SharedPreferences`** guarda preferências simples do usuário (último modo de visualização, filtros).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- OLIVEIRA, D. B. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- SIMON, J. *Head first Android development*. Sebastopol: O'Reilly, 2011.
+- ANDROID DEVELOPERS. *Atividades*; *Tarefas e pilha de retorno*; *Activity*. Disponível em: developer.android.com.

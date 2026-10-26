@@ -20,7 +20,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 | **Engenharia de Requisitos** | BPM/BPMN, RF/RNF, regras de negócio, casos de uso, diagramas de atividades, rastreabilidade, testes | ✅ Resumos prontos (16/16 UAs) |
 | **Pensamento Computacional** | Fundamentos de PC, algoritmos, lógica, linguagem C, estruturas de controle, vetores, matrizes | ✅ Resumos prontos (16/16 UAs) |
 | **Teste de Software** | Conceito de teste, defeitos/erros/falhas, caixa-branca/preta/cinza e suas técnicas, planejamento de testes (IEEE 829 e PMBOK), regressão, verificação e validação, papel do analista de testes, qualidade (ISO 9126) | 🟡 5/16 UAs em andamento |
-| **Programação para Dispositivos Móveis** | Evolução dos smartphones e das redes móveis, computação ubíqua, Android e iOS, desenvolvimento nativo, híbrido e PWA, limitações da plataforma móvel, mockups e prototipação | 🟡 4/16 UAs em andamento |
+| **Programação para Dispositivos Móveis** | Evolução dos smartphones e das redes móveis, computação ubíqua, Android e iOS, desenvolvimento nativo, híbrido e PWA, limitações da plataforma móvel, mockups e prototipação, componente Activity | 🟡 5/16 UAs em andamento |
 
 ---
 

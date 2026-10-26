@@ -1,0 +1,115 @@
+{
+  "ua": 5,
+  "questions": [
+    {
+      "question": "Em uma aplicação Android, qual é a responsabilidade central do componente Activity?",
+      "options": [
+        "Gerenciar operações de banco de dados em segundo plano sem qualquer representação visual.",
+        "Fornecer uma janela com interface gráfica por meio da qual o usuário interage diretamente com a aplicação.",
+        "Intermediar a troca de mensagens de rede entre dispositivos remotos através de sockets seguros.",
+        "Executar tarefas agendadas em segundo plano quando o aplicativo está completamente fechado."
+      ],
+      "correctIndex": 1,
+      "explanation": "A Activity é o componente fundamental de interface de usuário no Android, provendo uma janela para interação direta do usuário com elementos visuais (telas)."
+    },
+    {
+      "question": "Ao implementar uma subclasse de Activity no Android, qual método do ciclo de vida possui implementação obrigatória para inicializar os elementos essenciais da tela?",
+      "options": [
+        "onCreate(), no qual comumente se invoca o método setContentView() para carregar o arquivo de layout.",
+        "onResume(), responsável exclusivo por instanciar os componentes de interface antes da exibição.",
+        "onStart(), no qual devem ser declarados todos os ouvintes de eventos de clique e banco de dados.",
+        "onDestroy(), onde se realiza a carga estática dos elementos visuais da janela."
+      ],
+      "correctIndex": 0,
+      "explanation": "O método onCreate() é o único callback de implementação obrigatória na criação de uma Activity, sendo o local onde se realiza a configuração inicial e a vinculação do layout visual por meio de setContentView()."
+    },
+    {
+      "question": "No arquivo de manifesto (AndroidManifest.xml), como uma Activity é configurada para atuar como ponto de entrada inicial exibido no inicializador de aplicativos do sistema operacional Android?",
+      "options": [
+        "Configurando a tag <permission> com o atributo android:name=\"android.permission.START_MAIN\".",
+        "Definindo o atributo android:launchMode=\"singleInstance\" dentro da tag <application>.",
+        "Declarando uma ação do tipo android.intent.action.DEFAULT associada à categoria android.intent.category.HOME.",
+        "Declarando um <intent-filter> contendo a ação android.intent.action.MAIN e a categoria android.intent.category.LAUNCHER."
+      ],
+      "correctIndex": 3,
+      "explanation": "Para que uma Activity seja identificada como a tela inicial aberta pelo lançador de apps do Android, ela deve conter um intent-filter com a ação android.intent.action.MAIN e a categoria android.intent.category.LAUNCHER."
+    },
+    {
+      "question": "Qual mecanismo é utilizado no Android para solicitar a inicialização de uma nova Activity e, simultaneamente, transferir pequenos dados complementares a ela?",
+      "options": [
+        "Chamada direta a um método estático da classe de destino passando variáveis globais da aplicação.",
+        "Utilização de um objeto Intent configurado com pares de chave-valor por meio do método putExtra().",
+        "Gravação obrigatória dos parâmetros em arquivos temporários do sistema de arquivos interno.",
+        "Envio de broadcast assíncrono direcionado exclusivamente a adaptadores de visualização."
+      ],
+      "correctIndex": 1,
+      "explanation": "Intents são utilizadas para solicitar a inicialização de novos componentes no Android, permitindo anexar dados primitivos e serializáveis como informações adicionais através de métodos putExtra()."
+    },
+    {
+      "question": "Como o sistema Android organiza a navegação e a sobreposição de múltiplas Activities durante o uso de uma aplicação?",
+      "options": [
+        "Em uma fila FIFO (First In, First Out), de modo que a primeira tela aberta seja sempre a próxima a ser destruída.",
+        "Em uma árvore hierárquica imutável, na qual o botão Voltar sempre redireciona o usuário à tela de login.",
+        "Em uma pilha de retorno (back stack) que segue a disciplina LIFO (Last In, First Out), onde a Activity do topo é a que possui o foco atual.",
+        "Em uma matriz circular dinâmica, em que o encerramento de qualquer tela encerra imediatamente o processo da aplicação."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Android gerencia as Activities em uma pilha de retorno (back stack) orientada pelo mecanismo LIFO (último a entrar, primeiro a sair). Ao acionar a navegação de retorno, a Activity do topo é destruída e a anterior retoma a execução."
+    },
+    {
+      "question": "Quais são os três estados fundamentais em que uma Activity pode se encontrar durante seu ciclo de vida no Android?",
+      "options": [
+        "Created, Destroyed e Restarted.",
+        "Resumed (em primeiro plano com foco), Paused (visível mas sem foco pleno) e Stopped (em segundo plano e invisível ao usuário).",
+        "Running, Sleeping e Terminated.",
+        "Foreground, Background e Discarded."
+      ],
+      "correctIndex": 1,
+      "explanation": "Os três estados centrais do ciclo de vida são: Resumed (a Activity está visível em primeiro plano com foco de interação), Paused (permanece visível total ou parcialmente, mas perdeu o foco) e Stopped (está completamente oculta em segundo plano)."
+    },
+    {
+      "question": "O que ocorre por padrão com uma Activity no Android quando o dispositivo sofre uma mudança de configuração de ambiente, como a rotação da tela entre os modos retrato e paisagem?",
+      "options": [
+        "A Activity mantém seu estado em memória inalterado, apenas reajustando dinamicamente a largura dos botões.",
+        "O aplicativo é imediatamente finalizado com exceção de encerramento forçado do processo.",
+        "A Activity é suspensa permanentemente até que o usuário reinicie o aparelho celular.",
+        "A instância atual da Activity é destruída e uma nova instância é recriada pelo sistema operacional, provocando a perda de dados não preservados."
+      ],
+      "correctIndex": 3,
+      "explanation": "Por padrão, eventos de mudança de configuração como a rotação de tela causam a destruição e recriação da Activity (percorrendo onPause, onStop, onDestroy, onCreate, onStart, onResume), o que requer o uso de mecanismos adequados (como onSaveInstanceState ou ViewModel) para manter os dados de tela."
+    },
+    {
+      "question": "Para preservar o estado transitório de elementos da interface de usuário antes de uma recriação involuntária da Activity, qual mecanismo do ciclo de vida deve ser implementado?",
+      "options": [
+        "Sobrescrita do método onSaveInstanceState(Bundle), cujos dados persistidos no Bundle são recuperados posteriormente no método onCreate().",
+        "Chamada explícita ao método finish() para armazenar os dados no arquivo de preferências globais.",
+        "Gravação compulsória de todas as variáveis em uma base de dados relacional externa no método onDestroy().",
+        "Configuração do atributo android:keepState=\"true\" na declaração do componente no manifesto."
+      ],
+      "correctIndex": 0,
+      "explanation": "O método onSaveInstanceState(Bundle) permite armazenar estados transientes de interface em uma estrutura Bundle antes que a Activity seja destruída, permitindo sua restauração posterior nos métodos onCreate(Bundle) ou onRestoreInstanceState(Bundle)."
+    },
+    {
+      "question": "Para persistir preferências simples e configurações leves de usuário em um aplicativo Android (como o último modo de visualização selecionado ou um filtro ativo), qual recurso nativo é o mais recomendado?",
+      "options": [
+        "Serialização manual de arquivos binários em diretórios externos do cartão de memória.",
+        "Estruturação de um serviço de mensageria em nuvem com sincronização contínua de sockets.",
+        "Uso de SharedPreferences para armazenar pares de chave-valor de tipos de dados primitivos de forma persistente.",
+        "Armazenamento direto em memória estática de variáveis de classe pública sem sincronização."
+      ],
+      "correctIndex": 2,
+      "explanation": "A API SharedPreferences é a solução nativa indicada para armazenar coleções leves de pares de chave-valor persistentes contendo preferências de usuário e configurações de interface."
+    },
+    {
+      "question": "Em relação ao gerenciamento de recursos e memória do sistema Android, em qual estágio do ciclo de vida uma Activity em segundo plano torna-se elegível para ser eliminada pelo sistema operacional caso haja necessidade crítica de memória?",
+      "options": [
+        "Apenas após a invocação do método onResume() com o usuário interagindo ativamente na tela.",
+        "Exclusivamente antes da execução do método onCreate(), durante a compilação do pacote APK.",
+        "Apenas durante a transição imediata do estado Resumed para Paused enquanto ainda está visível.",
+        "A partir do estado Stopped, quando a Activity já não está mais visível para o usuário."
+      ],
+      "correctIndex": 3,
+      "explanation": "Nas versões modernas do Android, quando o dispositivo necessita liberar memória de forma crítica, o sistema prioriza a eliminação de processos contendo Activities que já se encontram no estado Stopped (completamente ocultas da visão do usuário)."
+    }
+  ]
+}
