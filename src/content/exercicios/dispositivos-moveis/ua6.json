@@ -1,0 +1,115 @@
+{
+  "ua": 6,
+  "questions": [
+    {
+      "question": "Em uma aplicação Android, qual é o principal benefício arquitetural de manter arquivos de interface, imagens e textos dentro do diretório de recursos (res/) em vez de declará-los diretamente no código-fonte?",
+      "options": [
+        "Separar os elementos visuais e de configuração da lógica de programação, facilitando a manutenção e permitindo oferecer alternativas para diferentes dispositivos e idiomas.",
+        "Aumentar a velocidade de compilação eliminando a necessidade de verificação de tipos estáticos pelo compilador.",
+        "Permitir que o banco de dados SQLite armazene automaticamente todos os arquivos de mídia em tabelas relacionais.",
+        "Garantir a execução compulsória de testes unitários a cada alteração em arquivos de texto."
+      ],
+      "correctIndex": 0,
+      "explanation": "A externalização de recursos no diretório res/ isola a apresentação visual e os valores estáticos da lógica do código, proporcionando maior organização, facilidade de manutenção e flexibilidade para fornecer layouts e strings adaptados a diferentes configurações de aparelhos (idioma, orientação, densidade)."
+    },
+    {
+      "question": "No ecossistema Android, como a classe R é estruturada e qual é o seu papel na integração entre os recursos e o código da aplicação?",
+      "options": [
+        "É uma classe abstrata com métodos estáticos que processa o download dinâmico de bibliotecas de terceiros em tempo de execução.",
+        "É uma classe gerada automaticamente na compilação que disponibiliza constantes inteiras estáticas (IDs) para identificar cada recurso da pasta res/.",
+        "É uma interface de rede responsável por conectar a aplicação a serviços web de autenticação OAuth.",
+        "É uma classe de serviço em segundo plano que monitora o consumo de bateria e encerra Activities inativas."
+      ],
+      "correctIndex": 1,
+      "explanation": "A classe R é gerada automaticamente pelo processo de compilação da plataforma Android e contém subclasses correspondentes aos tipos de recursos (R.string, R.layout, R.drawable, etc.), expondo identificadores inteiros estáticos que permitem referenciar os recursos programaticamente."
+    },
+    {
+      "question": "Como se realiza a referência sintática a um recurso de string definido na aplicação, tanto a partir de um arquivo de layout XML quanto a partir do código Java/Kotlin?",
+      "options": [
+        "Usa-se $string/nome no arquivo XML e getString(\"nome\") no código Java/Kotlin.",
+        "Usa-se @string/nome no arquivo XML e R.string.nome no código Java/Kotlin.",
+        "Usa-se &string.nome no arquivo XML e Resources.find(nome) no código Java/Kotlin.",
+        "Usa-se %string:nome no arquivo XML e System.getString(nome) no código Java/Kotlin."
+      ],
+      "correctIndex": 1,
+      "explanation": "Em arquivos XML, os recursos são referenciados pela sintaxe @tipo/nome (como @string/submit_label). Já no código programático, utiliza-se o identificador gerado na classe R com a sintaxe R.tipo.nome (como R.string.submit_label)."
+    },
+    {
+      "question": "Qual é a diferença fundamental entre armazenar um arquivo no subdiretório res/raw/ e armazená-lo na pasta assets/ de um projeto Android?",
+      "options": [
+        "Arquivos em res/raw/ recebem identificadores inteiros na classe R, enquanto arquivos em assets/ mantêm sua estrutura de pastas original e são acessados pelo AssetManager.",
+        "Arquivos em res/raw/ só aceitam áudio compactado, enquanto arquivos em assets/ só aceitam imagens no formato PNG.",
+        "Arquivos em res/raw/ são deletados automaticamente após a primeira inicialização do aplicativo.",
+        "Arquivos em assets/ são criptografados pelo sistema operacional, impedindo o acesso de leitura em tempo de execução."
+      ],
+      "correctIndex": 0,
+      "explanation": "Os arquivos inseridos em res/raw/ são indexados pelo sistema de compilação e recebem um ID estático na classe R (R.raw.arquivo). Já a pasta assets/ preserva arquivos arbitrários em sua árvore de diretórios original, exigindo o uso da classe AssetManager para leitura."
+    },
+    {
+      "question": "Em aplicativos Android, qual é a prática padrão recomendada para armazenar e internacionalizar textos exibidos na interface de usuário?",
+      "options": [
+        "Inserir textos diretamente nos atributos dos componentes visuais com concatenação de caracteres de escape.",
+        "Gravar as mensagens de texto em tabelas remotas de banco de dados e recuperá-las via chamadas síncronas de rede.",
+        "Declarar as mensagens no arquivo strings.xml dentro de res/values/, criando pastas qualificadas como res/values-es/ para traduções.",
+        "Armazenar todos os textos em variáveis globais estáticas no arquivo AndroidManifest.xml."
+      ],
+      "correctIndex": 2,
+      "explanation": "Textos de interface devem ser externalizados no arquivo strings.xml (dentro de res/values/) por meio de elementos <string name=\"chave\">Valor</string>. A internacionalização é viabilizada adicionando diretórios qualificados como res/values-en/ ou res/values-es/, que fornecem as traduções correspondentes."
+    },
+    {
+      "question": "Como o sistema operacional Android gerencia o fornecimento de recursos alternativos quando uma aplicação é executada em diferentes dispositivos?",
+      "options": [
+        "O sistema seleciona automaticamente os recursos da pasta cujo qualificador melhor corresponde à configuração atual do dispositivo (como idioma ou orientação de tela).",
+        "O desenvolvedor deve implementar condicionais em código-fonte verificando o modelo do dispositivo antes de inflar qualquer visualização.",
+        "O sistema exige a publicação de um arquivo de pacote de instalação (APK) exclusivo e isolado para cada idioma suportado.",
+        "O aplicativo delega a escolha de recursos à loja de aplicativos no momento do download, desativando a troca em tempo de execução."
+      ],
+      "correctIndex": 0,
+      "explanation": "O mecanismo de recursos do Android avalia dinamicamente as características do dispositivo (como idioma selecionado, orientação da tela e densidade de pixels) e resolve automaticamente o recurso correspondente na pasta qualificada mais específica."
+    },
+    {
+      "question": "Por que é mandatório manter os recursos padrão em pastas sem qualificadores (como res/values/ e res/layout/) mesmo quando existem recursos alternativos especificados?",
+      "options": [
+        "Porque o compilador rejeita pastas com qualificadores se não houver um certificado digital emitido.",
+        "Porque se o dispositivo operar em uma configuração não contemplada pelos qualificadores alternativos e faltar o recurso padrão, a aplicação falhará com Resources.NotFoundException.",
+        "Porque os recursos padrão são utilizados exclusivamente durante a depuração de código em emuladores locais.",
+        "Porque o sistema Android apaga as pastas qualificadas sempre que o aparelho entra no modo de economia de bateria."
+      ],
+      "correctIndex": 1,
+      "explanation": "A pasta de recursos sem qualificadores funciona como recurso padrão (fallback). Caso o usuário configure o dispositivo em um idioma ou dimensão de tela para a qual não exista pasta alternativa específica, o sistema recorre obrigatoriamente à versão padrão; se esta não existir, o aplicativo lança uma exceção e fecha inesperadamente."
+    },
+    {
+      "question": "Ao preparar recursos visuais (drawables) bitmap para telas com diferentes densidades de pixels no Android, como se relacionam as densidades em relação à densidade base (mdpi, 1x)?",
+      "options": [
+        "Todas as densidades compartilham a mesma dimensão em pixels, variando apenas a profundidade de cores de 8 para 32 bits.",
+        "A densidade hdpi reduz o tamanho em 50%, enquanto xxxhdpi mantém o tamanho inalterado.",
+        "A escala é decrescente, de modo que telas com maior resolução utilizam imagens com menos pixels para economizar memória RAM.",
+        "A escala segue proporções progressivas sobre a base mdpi (1x): hdpi (1,5x), xhdpi (2x), xxhdpi (3x) e xxxhdpi (4x)."
+      ],
+      "correctIndex": 3,
+      "explanation": "Para garantir que elementos gráficos mantenham um tamanho físico uniforme em telas de diferentes resoluções, o Android adota a densidade mdpi (160 dpi) como linha de base (1x), escalando proporcionalmente para hdpi (1,5x), xhdpi (2x), xxhdpi (3x) e xxxhdpi (4x)."
+    },
+    {
+      "question": "Ao definir um leiaute em XML no Android, qual é a finalidade de se utilizar o caractere de interrogação na sintaxe do atributo, como em android:textColor=\"?attr/colorPrimary\"?",
+      "options": [
+        "Indicar ao analisador XML que o valor do atributo é opcional e pode ser descartado em tempo de execução.",
+        "Solicitar uma entrada assíncrona ao usuário através de uma caixa de diálogo antes de renderizar a cor.",
+        "Referenciar o valor de um atributo de estilo definido no tema visual atualmente aplicado à aplicação.",
+        "Executar uma consulta de banco de dados para recuperar dinamicamente a chave primária da cor."
+      ],
+      "correctIndex": 2,
+      "explanation": "A sintaxe iniciada por ponto de interrogação (? ou ?attr/) é utilizada para referenciar valores de atributos definidos no tema atual da aplicação, permitindo que a interface adapte suas cores e estilos automaticamente de acordo com o tema ativo (como modos claro e escuro)."
+    },
+    {
+      "question": "Dentro da estrutura padrão do diretório res/ de uma aplicação Android, qual é a correspondência correta entre os subdiretórios e seus respectivos tipos de recursos?",
+      "options": [
+        "color/ para arquivos de áudio; animator/ para arquivos de layout de tela; xml/ para imagens vetoriais.",
+        "menu/ para ícones do aplicativo; mipmap/ para definições de strings de tradução; raw/ para estilos de temas.",
+        "values/ para scripts de inicialização de hardware; anim/ para fontes tipográficas; drawable/ para esquemas de banco de dados.",
+        "layout/ para definições da interface gráfica; values/ para valores simples como strings e cores; drawable/ para elementos gráficos e imagens."
+      ],
+      "correctIndex": 3,
+      "explanation": "Na estrutura de recursos do Android, a pasta layout/ abriga os arquivos XML que definem as telas e leiautes visuais, values/ armazena valores simples em XML (como strings, cores e dimensões) e drawable/ contém imagens rasterizadas, formas vetoriais e seletores gráficos."
+    }
+  ]
+}

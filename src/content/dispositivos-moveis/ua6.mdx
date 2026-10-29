@@ -1,0 +1,191 @@
+---
+title: "UA6 — Fornecimento de Recursos"
+subtitle: "A pasta res e seus subdiretórios, a classe R, como acessar recursos por código e por XML, recursos de string e recursos alternativos por idioma, tela e densidade."
+ua: 6
+group: "Interface e Componentes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua6.m4a" title="Recursos e pasta res no Android" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/era_01.webp" alt="Infográfico 'Estrutura de Recursos em Aplicativos' — tipos de recursos que podem ser incluídos em um aplicativo Android, como acessá-los por código Java ou XML e como substituí-los em situações específicas" caption="Estrutura de recursos em aplicativos Android" />
+</SlidesGrid>
+
+### O que são recursos
+
+Desenvolver um app é mais do que escrever código. Os **recursos** são os arquivos e valores **externos ao código**: imagens, textos, cores, layouts, menus, animações. Todos ficam no diretório **`res`** do projeto (ao criar um projeto, a árvore mostra a pasta de código Java e a pasta `res`). Separar recursos do código dá **organização**, facilita a **manutenção** e permite oferecer **versões alternativas** conforme o dispositivo.
+
+Recursos padrão disponíveis a qualquer app:
+
+| Recurso | Finalidade |
+|---|---|
+| **Animações** | XML que define animações intermediárias |
+| **Cores** | XML que define uma lista de estado de cores |
+| **Drawable** | Bitmaps (png, `.9.png`, jpg, gif) ou XML: 9-patch (bitmaps redimensionáveis), listas de estado, formas (*shapes*), animações de quadros e ícones de várias densidades |
+| **Layout** | XML que define o leiaute da interface |
+| **Menu** | XML que define menus (de opções, de contexto, submenus) |
+| **Raw** | Arquivos arbitrários, salvos “crus” |
+| **Valores** | XML com valores simples: strings, inteiros, cores, dimensões, estilos |
+| **XML** | XML arbitrário lido em execução com `Resources.getXML()` |
+
+### Estrutura do diretório `res`
+
+| Diretório | Conteúdo |
+|---|---|
+| `animator/` | Animações de **propriedades** (XML) |
+| `anim/` | *Tween animations* (XML) |
+| `color/` | Lista de estado de cores |
+| `drawable/` | Bitmaps e XML (9-patch, listas de estado, shapes, animações) |
+| `mipmap/` | Drawables para **ícones do app** em diferentes densidades |
+| `layout/` | Leiautes da interface |
+| `menu/` | Menus |
+| `raw/` | Arquivos em forma natural |
+| `values/` | Valores simples; convenção: `arrays.xml`, `colors.xml`, `dimens.xml`, `strings.xml`, `styles.xml` |
+| `xml/` | Arquivos XML de configuração lidos em execução |
+
+Dentro de `values/`, o **nome do elemento** (`<string>`, `<color>`) é que define o tipo de recurso (cria `R.string`, `R.color`), e não o nome do arquivo; por isso se pode escolher o nome e mesclar recursos em um arquivo, embora a convenção seja separá-los.
+
+**`assets/` × `res/raw/`:** os arquivos em `res/raw/` recebem **ID de recurso**. Os de `assets/` **não** recebem ID, mantêm nome e hierarquia originais e são lidos pelo **`AssetManager`**. Use `assets/` quando precisar da estrutura de pastas e dos nomes dos arquivos.
+
+### A classe `R`
+
+Quando o app é compilado, é gerada a classe **`R`**, que contém um **ID inteiro estático** para cada recurso. Há uma subclasse por tipo (`R.drawable`, `R.string`, `R.layout`...). O ID é formado pelo **tipo** do recurso e pelo seu **nome** (o nome do arquivo sem extensão, ou o atributo `name` do XML, no caso de valores simples). A classe é **gerada**: não se altera à mão, pois a próxima compilação sobrescreve, e ela não deve ser usada para consultar códigos.
+
+### Acessando recursos
+
+**1. Por código:** usa-se o ID da subclasse de `R`. Muitas APIs aceitam o ID como parâmetro. Também é possível usar `getResources()`.
+
+```java
+ImageView imageView = (ImageView) findViewById(R.id.myimageview);
+imageView.setImageResource(R.drawable.myimage);
+
+String rotulo = getResources().getString(R.string.submit_label);
+```
+
+**2. Por XML:** com a sintaxe `@[<pacote>:]<tipo>/<nome>`. O pacote é opcional quando o recurso é do mesmo pacote.
+
+```xml
+<Button
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/submit_label" />
+```
+
+**Atributos de estilo:** para referenciar um atributo definido no **tema** usa-se `?` em vez de `@`, com a sintaxe `?[<pacote>:][<tipo>/]<nome>` (o tipo é opcional). Permite que o layout siga o padrão visual do tema atual.
+
+<Callout type="warning">
+**Códigos do material com problemas**
+
+- **`string.xml` × `strings.xml`:** o texto, o quadro e o exercício 2 escrevem `string.xml`, mas o nome convencional é **`strings.xml`** (o próprio material o lista assim em outro ponto). Qualquer nome funciona, pois quem define o tipo é o elemento `<string>`; a classe de acesso é `R.string`.
+- **Inconsistência no exemplo:** o botão usa `@string/submit`, mas o recurso definido é `submit_label`. O nome da referência precisa ser **igual** ao do recurso.
+- **`fill_parent`** está obsoleto desde o Android 2.2 (API 8): use **`match_parent`**.
+- Os trechos têm sublinhados quebrados na extração (`layout _ width`, `package _ name`); o correto é `layout_width`, `package_name`.
+- “Número **estatístico** inteiro” é erro de digitação: o ID é um inteiro **estático**.
+- O exercício 4 diz que conhecer os “**métodos** da `R.java`” é importante, mas a classe `R` não tem métodos, apenas **constantes inteiras estáticas**.
+</Callout>
+
+### Recursos de string
+
+Todos os textos exibidos no app (rótulo de botão, mensagem informativa) devem ficar em **`res/values/strings.xml`**, cada um como uma chave (ID) com seu valor:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello!</string>
+    <string name="submit_label">Enviar</string>
+</resources>
+```
+
+Strings mais complexas (com HTML ou caracteres especiais) podem usar **`CDATA`**:
+
+```xml
+<string name="feedback_label">
+    <![CDATA[
+    Please <a href="http://highlight.com">let us know</a> if you have feedback.
+    ]]>
+</string>
+```
+
+Com a referência `@string/submit_label`, o botão sempre exibirá “Enviar”. Para alterar o valor conforme o **dispositivo ou o país**, criam-se **recursos qualificados** (*qualified resource files*) que fornecem alternativas. Além das strings simples, existem outros dois tipos que fornecem texto: **arrays de strings** e **strings de quantidade** (plurais).
+
+### Recursos alternativos
+
+Quase todo app deve oferecer **recursos alternativos** para características específicas de cada dispositivo: um leiaute diferente para tablet e celular, ou idiomas diferentes no mesmo app. A pasta `res` é subdividida **por tipo e por configuração**. O sistema escolhe sozinho o recurso mais adequado à configuração do aparelho; a pasta sem qualificador é o **padrão** (*default*).
+
+Os qualificadores são sufixos no nome da pasta (o texto do capítulo apenas cita a ideia; esta tabela é complementar):
+
+| Qualificador | Exemplo de pasta | Quando o sistema a usa |
+|---|---|---|
+| **Idioma** | `values-pt`, `values-en` | Idioma do dispositivo |
+| **Idioma + região** | `values-pt-rBR` | Português do Brasil |
+| **Orientação** | `layout-land`, `layout-port` | Paisagem ou retrato |
+| **Menor largura** | `layout-sw600dp` | Telas com largura mínima de 600 dp (tablets) |
+| **Densidade** | `drawable-mdpi`, `-hdpi`, `-xhdpi`, `-xxhdpi`, `-xxxhdpi` | Densidade de pixels da tela |
+| **Modo noturno** | `values-night` | Tema escuro ativo |
+| **Versão da API** | `values-v26` | Android 8.0 ou superior |
+
+**Densidades:** a base é **mdpi** (~160 dpi, 1x). Proporções: mdpi 1x, hdpi 1,5x, xhdpi 2x, xxhdpi 3x, xxxhdpi 4x. O mesmo ícone de 48 dp ocupa 48, 72, 96, 144 e 192 px, respectivamente.
+
+**Exemplo de string alternativa:**
+
+```xml
+<!-- res/values-pt/strings.xml -->
+<resources>
+    <string name="submit_label">Enviar</string>
+</resources>
+
+<!-- res/values-en/strings.xml -->
+<resources>
+    <string name="submit_label">Submit</string>
+</resources>
+```
+
+<Callout type="warning">
+**O que o material cita, mas não detalha**
+
+O capítulo diz que se criam *qualified resource files*, mas **não mostra a sintaxe dos qualificadores** (`values-pt`, `layout-land`, `drawable-xhdpi`, `sw600dp`) nem a regra de escolha. Pontos que a prova ou o dia a dia cobram:
+
+- Sempre exista o recurso **padrão** (sem qualificador): se faltar e nenhum alternativo combinar com a configuração, o app **falha em execução** (`Resources.NotFoundException`);
+- O sistema escolhe a **melhor correspondência** à configuração do dispositivo; não é preciso escrever código para isso;
+- Ao **girar a tela** ou mudar o idioma, a Activity é recriada para carregar os recursos corretos (veja a [UA5](/resumos/dispositivos-moveis/ua5/)).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Recursos hoje**
+
+- **Ícone do app:** `mipmap/` guarda hoje o **ícone adaptativo** (Android 8.0+, API 26), com camadas de primeiro plano e fundo em `mipmap-anydpi-v26/`. Imagens comuns ficam em `drawable/`; só o ícone vai em `mipmap`.
+- **Vector Drawables:** ícones e ilustrações simples são **XML vetorial**, que escala em qualquer densidade, dispensando cinco PNGs (o Android Studio importa SVG pelo Vector Asset Studio). Para fotos, prefira **WebP**.
+- **Cores e temas:** em vez de `colors.xml` solto, define-se um **tema** (`themes.xml`) com atributos de **Material Design 3**, e o layout referencia `?attr/colorPrimary`. O modo escuro vem de `values-night/`. Em Android 12+, existe a cor dinâmica (*Dynamic Color*).
+- **Compose também usa `res/`:** em Jetpack Compose, os mesmos recursos são lidos por `stringResource(R.string.submit_label)`, `painterResource(R.drawable.logo)` e `dimensionResource(R.dimen.margem)`. O XML de layout dá lugar a funções `@Composable`, mas **strings, cores, imagens e traduções continuam na pasta `res`**.
+- **Nada de texto fixo no código:** o Lint do Android Studio avisa para “hardcoded text”. Use sempre `strings.xml`, com **argumentos** (`%1$s`) e **plurais** (`<plurals>`) em vez de concatenar strings. Marque como `translatable="false"` o que não deve ser traduzido.
+- **Idioma por app:** a partir do Android 13, o usuário escolhe o idioma de cada app, declarado em `res/xml/locales_config.xml`; o **Translations Editor** do Android Studio ajuda a manter as traduções completas.
+- **Acesso por código:** o `findViewById` com *cast* dá lugar a **ViewBinding**; para cores e drawables, use `ContextCompat.getColor()` e `AppCompatResources.getDrawable()`, que respeitam o tema.
+- **Classe `R`:** o código é gerado pelo **Android Gradle Plugin** (a ferramenta `aapt2`, e não `aapt`). Em projetos novos, as classes `R` de cada módulo são **não transitivas**: cada módulo só enxerga os seus próprios recursos.
+- **Novas pastas:** além das do quadro, existem `font/` (fontes), `navigation/` (grafos do Navigation Component) e `values/themes.xml`.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Recursos** ficam no diretório **`res`**, divididos em subpastas por tipo (`drawable`, `layout`, `values`, `menu`, `mipmap`, `anim`, `raw`, `xml`...). A classificação em subpastas é importante para **organização e localização**; a pasta `res` serve para **externalizar** itens (imagens, strings) e dar suporte a **configurações específicas** (idioma, tela, orientação).
+- **Recursos originais** (como os de layout de interface) já vêm com a plataforma e podem ser **estendidos** com recursos próprios.
+- **Arquivo de strings:** fica em `res/values` e armazena strings e seus valores; **é** um recurso e tem ID; pode ser alterado (e deve, para padronizar rótulos).
+- **Classe `R`:** gerada **automaticamente** na compilação; mantém a **sincronia entre os arquivos `.xml` e o código `.java`** via IDs inteiros estáticos; **não deve ser alterada à mão**.
+- **Recursos de string** permitem criar **strings reutilizáveis** para a aplicação.
+- **Sintaxes:** `@string/nome` (referência em XML) e `?atributo` (atributo de estilo do tema); no código, `R.string.nome`.
+- **Dois modos de acesso:** por código (ID inteiro de uma subclasse de `R`) e por XML (`@tipo/nome`).
+- **`assets/`** não gera ID e usa `AssetManager`; **`res/raw/`** gera ID.
+- **Tipos de recursos de texto:** string, array de strings e strings de quantidade (plurais).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ANDROID DEVELOPERS. *App resources overview*. Disponível em: developer.android.com.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- SILVA, F. M. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- VALNEY, M. *A pasta “res” e os resources em um projeto Android*. 2015. Disponível em: mariovalney.com.
