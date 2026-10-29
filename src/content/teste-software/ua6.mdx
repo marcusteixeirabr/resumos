@@ -1,0 +1,203 @@
+---
+title: "UA6 — Casos de Teste"
+subtitle: "Caso de uso (UML) × caso de teste: o diagrama de caso de uso, a estrutura do documento de caso de teste, fluxos e cenários, casos positivos e negativos e o passo a passo para derivar casos de teste de casos de uso."
+ua: 6
+group: "Planejamento e Níveis de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua6.m4a" title="Casos de uso e casos de teste" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cut_01.webp" alt="Infográfico 'Casos de Uso em Teste' — exemplo de ilustração de um caso de uso UML (atores, casos de uso e comunicação) e como ele auxilia a construir casos de teste" caption="Casos de uso em teste: do diagrama UML ao caso de teste" />
+</SlidesGrid>
+
+### Dois artefatos que não são a mesma coisa
+
+Esta UA liga dois conceitos que o nome torna fáceis de confundir:
+
+| | **Caso de uso** | **Caso de teste** |
+|---|---|---|
+| **Pertence a** | Análise e modelagem (**UML**) | Planejamento e execução de **testes** |
+| **Responde** | *O que o sistema faz* para o usuário | *Como verificar* se o sistema faz isso |
+| **Quem usa** | Analistas, desenvolvedores, cliente | Testadores |
+| **Conteúdo** | Funcionalidade, atores, fluxos | Entradas, ações, resultados esperados |
+| **Relação** | É a **fonte** | É **derivado** do caso de uso |
+
+O material afirma que são “artefatos diferentes, com propósitos distintos”, mas que é possível **gerar casos de teste a partir de casos de uso**.
+
+### UML e o diagrama de caso de uso
+
+A **UML** (*Unified Modeling Language*) é a linguagem de modelagem padrão da engenharia de software orientada a objetos: define **artefatos** (diagramas) para modelar e documentar sistemas. **Não é linguagem de programação** nem diz como desenvolver o sistema; serve para visualizar o desenho e facilitar a comunicação.
+
+O **diagrama de caso de uso** documenta **o que o sistema faz, do ponto de vista dos usuários**: as funcionalidades e como cada usuário interage com elas. Ele **não** traz detalhes técnicos de implementação. A especificação de requisitos (que não é um diagrama UML) costuma ser a base para criá-lo, e vice-versa.
+
+Segundo o material, o diagrama tem quatro partes:
+
+| Parte | O que é | Símbolo usual |
+|---|---|---|
+| **Ator** | O usuário do sistema (pode mostrar o perfil de cada um) | Figura humana linear |
+| **Caso de uso** | Funcionalidade ou atividade realizada pelo ator | Elipse |
+| **Comunicação** | Liga o ator ao caso de uso | Traço ou seta |
+| **Cenário** | Sequência de ações da interação do usuário com o sistema | (descrito nos fluxos) |
+
+**Exemplo do material (clínica odontológica):** o sistema agenda consultas. Atores e atividades:
+
+| Ator | Casos de uso |
+|---|---|
+| **Paciente** | Agendar consulta; consultar com o médico; cancelar consulta |
+| **Atendente** | Procurar disponibilidade de data e horário; marcar consulta; cancelar consulta a pedido |
+| **Médico** | Realizar consulta; receitar medicamentos |
+
+Regra de negócio: cancelamento **sem custo** só com **3 ou mais dias** de antecedência; caso contrário, o valor é pago integralmente.
+
+<Callout type="warning">
+**Quatro “partes” do diagrama e “caso de uso = diagrama”**
+
+- O livro lista **cenário, ator, caso de uso e comunicação** como as quatro partes do diagrama, e o exercício 2 cobra exatamente isso. Na UML, o **cenário não é um elemento do diagrama**: ele vem da **descrição textual** do caso de uso (fluxos básico e alternativos). Os elementos reais do diagrama são **atores, casos de uso, associações (comunicação) e fronteira do sistema**. Para a prova, use a lista do material.
+- O texto também chama de “caso de uso” o próprio diagrama. Em rigor, o **caso de uso é a funcionalidade** (e sua especificação textual); o **diagrama de caso de uso** é a visão gráfica de vários deles. Um diagrama de caso de uso **não mostra fluxos** com detalhe; por isso o material manda usar um **diagrama de atividades** para enxergá-los.
+- “Ator = o próprio usuário”: um ator também pode ser **outro sistema** ou um dispositivo que interage com o sistema.
+</Callout>
+
+### Documentos de planejamento: plano, roteiro e caso de teste
+
+Os mesmos três documentos básicos da [UA5](/resumos/teste-software/ua5/):
+
+- **Plano de teste:** base do início das atividades: atividades, escopo, o que será e **o que não será** testado (com justificativa), restrições, critérios de validação e responsáveis;
+- **Roteiro de teste:** o **passo a passo** para executar os casos de teste;
+- **Caso de teste:** descreve **em detalhe o teste de uma parte específica**, com as condições necessárias. Em geral é elaborado para **identificar falhas, defeitos e erros** por meio de ações e situações impostas pelo testador, exercitar as funcionalidades e indicar se os requisitos foram implementados de forma coerente com o pedido.
+
+#### Estrutura do documento de caso de teste
+
+| Elemento | Conteúdo |
+|---|---|
+| **Resumo** | Descrição curta: finalidade, objetivo e **escopo** (qual parte do software será testada) |
+| **Pré-condições** | O que deve ser feito/estar pronto **antes** do teste (ex.: usuário logado) |
+| **Entradas** | Campos/objetos e os valores, **válidos e inválidos**, a informar |
+| **Ação** | O que o testador faz, em detalhe, dentro da funcionalidade |
+| **Resultados esperados** | Estados e ações que o sistema deve apresentar para o teste ser considerado sucesso, inclusive respostas positivas e negativas |
+| **Pós-condições** | Estado em que o sistema deve ficar quando o teste termina |
+
+**Exemplo (cenário 3 da clínica, cancelamento tardio):**
+
+| Elemento | Preenchimento |
+|---|---|
+| **Resumo** | Cancelar consulta com menos de 3 dias de antecedência |
+| **Pré-condições** | Atendente logado; consulta agendada para daqui a 2 dias |
+| **Entradas** | Paciente: código da consulta existente; data do cancelamento: 2 dias antes |
+| **Ação** | Selecionar a consulta e acionar “Cancelar” |
+| **Resultados esperados** | Sistema informa o **valor integral a pagar** e só exclui a consulta após a confirmação do valor |
+| **Pós-condições** | Horário liberado na agenda; cobrança registrada |
+
+### Positivo e negativo
+
+O resultado de um caso de teste é de dois tipos:
+
+- **Caso de teste positivo:** mostra que o requisito foi atendido e a funcionalidade executa **conforme o esperado**;
+- **Caso de teste negativo:** segundo o material, mostra que o requisito só é atendido com **determinadas entradas** e que a funcionalidade só completa o fluxo se certas ações forem feitas.
+
+<Callout type="warning">
+**Definição de caso de teste negativo**
+
+A definição do livro é pouco usual. Na literatura de testes, o **caso negativo** verifica se o sistema **reage corretamente a entradas inválidas ou a situações de erro** (rejeita o dado, mostra a mensagem certa, não quebra). O positivo usa o “caminho feliz” com dados válidos. Os dois conceitos se complementam na **massa de dados** com valores válidos e inválidos. Na prova desta UA, a resposta é **positivo ou negativo**.
+</Callout>
+
+### De casos de uso a casos de teste
+
+Pela sua precisão e simplicidade, o caso de uso mostra:
+
+- ao **desenvolvedor**, o que codificar;
+- ao **testador**, o que testar, de que forma e o que esperar (sem precisar conhecer o software a fundo);
+- ao **usuário**, o que esperar do sistema, para comparar com a realidade.
+
+Ele também ajuda a garantir que o **escopo das principais funcionalidades** seja coberto pelos testes.
+
+#### Fluxos e cenários
+
+- **Fluxo básico:** o caminho mais simples do caso de uso;
+- **Fluxos alternativos:** partem do fluxo básico por condições específicas; depois podem **voltar ao básico**, **gerar outros fluxos alternativos** ou **terminar o caso de uso** sem retornar;
+- **Cenário:** uma combinação de caminhos, do início ao fim do caso de uso.
+
+| Cenário | Composição |
+|---|---|
+| 1 | Fluxo básico |
+| 2 | Básico + alternativo 1 |
+| 3 | Básico + alternativo 1 + alternativo 2 |
+| 4 | Básico + alternativo 3 |
+| 5 | Básico + alternativo 3 + alternativo 1 |
+| 6 | Básico + alternativo 3 + alternativo 1 + alternativo 2 |
+| 7 | Básico + alternativo 4 |
+| 8 | Básico + alternativo 3 + alternativo 4 |
+
+**Cenários da clínica:** (1) fluxo básico: agenda, encontra horário, consulta e medicamentos receitados; (2) básico + cancelamento com **3 ou mais dias**: o registro da agenda é excluído; (3) básico + cancelamento com **menos de 3 dias**: exclusão exige informar o valor a pagar.
+
+#### Passo a passo
+
+**Identificar o caso de uso e seus fluxos (diagrama de atividades) → Escrever um caso de teste para cada cenário → Criar a massa de dados (válidos e inválidos) → Executar, tabular e documentar os resultados**
+
+1. **Identificar o caso de uso** a testar e seus **fluxos principal e alternativos**, montando um **diagrama de atividades** que revele todos os cenários;
+2. **Escrever um caso de teste para cada cenário**, detalhando cada passo (ações do ator e respostas do sistema);
+3. Antes de testar, criar a **massa de dados**, com dados válidos e inválidos (é o que permite casos positivos e negativos: insistir em cancelar fora do prazo, ou receitar medicamento em consulta não realizada);
+4. **Tabular e documentar** acertos, erros, defeitos e falhas, para uso posterior por outros profissionais.
+
+### Planejar o que testar
+
+- O **escopo** costuma estar nos requisitos funcionais, mas é comum estar nos **casos de uso**, que reúnem os requisitos;
+- Os requisitos funcionais não são a **única** fonte: o planejamento também considera tecnologia, **riscos**, prazos, origem das informações e conhecimento dos usuários;
+- Nem tudo pode ser testado: o escopo deve cobrir as funcionalidades **críticas e representativas**, equilibrando necessidade, **custo e risco**;
+- Se um caso de teste exige esforço excessivo, **divida-o em vários**; testes simples podem dispensar documento formal, bastando uma **descrição textual resumida**;
+- A **validação** pode ser **automatizada** (ex.: acesso a um menu apenas para certo perfil) ou **manual** (ex.: envio de e-mail depois de gerar um relatório);
+- O ciclo do processo de testes tem seis etapas: **procedimentos iniciais, planejamento, preparação, especificação, execução e entrega**. A elaboração dos casos de teste fica na **especificação**.
+
+<Callout type="warning">
+**Etapas do processo e exercício 4**
+
+A lista de seis etapas é a mesma citada na [UA3](/resumos/teste-software/ua3/); a [UA2](/resumos/teste-software/ua2/) trouxe outro ciclo de cinco atividades (planejamento e controle, análise e modelagem, implementação e execução, avaliação dos critérios de saída, encerramento). São **modelos diferentes**: identifique qual o enunciado usa.
+
+O exercício 4 pergunta em que etapa os testes são “planejados a fundo”, mas a alternativa **“Planejamento” não aparece**. Pelo texto, a elaboração dos casos fica na **especificação**.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas — Casos de teste hoje**
+
+- **Critérios de aceitação e BDD:** muitos times escrevem o caso de teste junto com a **história de usuário**, no formato **Given-When-Then** (Gherkin), e o executam com Cucumber ou Behave. O cenário do cancelamento ficaria assim:
+
+```gherkin
+Cenário: Cancelamento com menos de 3 dias de antecedência
+  Dado que existe uma consulta agendada para daqui a 2 dias
+  Quando o atendente cancela a consulta
+  Então o sistema informa o valor integral a pagar
+  E a consulta só é excluída após a confirmação do valor
+```
+
+- **Casos de uso viram histórias:** em métodos ágeis, o caso de uso formal dá lugar a **histórias de usuário** e critérios de aceitação. A ideia de derivar testes dos **fluxos e cenários** continua válida.
+- **Técnicas para escolher dados:** em vez de testar “alguns valores”, usam-se **partição de equivalência**, **análise de valor limite** (vistas na [UA4](/resumos/teste-software/ua4/)) e **tabelas de decisão** para reduzir a massa de dados sem perder cobertura.
+- **Ferramentas de gestão:** casos, execuções e resultados ficam em Jira com Xray ou Zephyr, TestRail, Azure Test Plans ou planilhas. A **matriz de rastreabilidade** liga requisito, caso de uso, caso de teste e defeito.
+- **Automação:** o que o material trata como “manual” (como o envio de e-mail) hoje pode ser automatizado (teste de API, caixa de e-mail de teste). Casos estáveis e repetitivos devem ser automatizados; os exploratórios continuam humanos.
+- **Padrão atual:** a ISO/IEC/IEEE 29119-3 define a especificação de casos de teste (identificação, pré-condições, entradas, resultados esperados, procedimento), próxima da estrutura apresentada aqui.
+- **Diagramas:** UML segue útil para comunicar requisitos, mas diagramas de **atividades**, **fluxogramas** e **BPMN** são mais usados para mapear fluxos e cenários de teste do que o diagrama de caso de uso em si.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Diagrama de caso de uso** define a **forma de interação dos usuários com o software, por meio de suas funcionalidades**. Não define como implementar, nem prazo, nem quantidade de desenvolvedores, nem quantos artefatos de teste documentar.
+- **Quatro partes do diagrama (segundo o material):** **cenário, atores, caso de uso, comunicação.**
+- **Caso de teste** verifica se as **funcionalidades e requisitos** do software foram construídos como solicitado.
+- **Resultado de um caso de teste:** **positivo ou negativo.**
+- **Etapas do processo (seis):** procedimentos iniciais, planejamento, preparação, **especificação**, execução, entrega. Elaborar casos de teste = especificação.
+- **Elementos do caso de teste:** resumo, pré-condições, entradas, ação, resultados esperados, pós-condições.
+- **Fluxo básico** = caminho mais simples. **Fluxos alternativos** saem do básico por condição e podem voltar, gerar outros ou terminar. **Cenário** = combinação de fluxos; **um caso de teste por cenário**.
+- **Documentos básicos de planejamento:** plano, roteiro e caso de teste.
+- A **UML não é linguagem de programação** nem diz como desenvolver o sistema.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. *Introdução ao teste de software*. 2. ed. São Paulo: Elsevier, 2016.
+- MARTINS, J. C. C. *Técnicas para gerenciamento de projetos de software*. Rio de Janeiro: Brasport, 2007.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed. Porto Alegre: AMGH, 2011.

@@ -1,0 +1,115 @@
+{
+  "ua": 6,
+  "questions": [
+    {
+      "question": "Na engenharia de software e na garantia da qualidade, qual é a principal distinção funcional entre um Caso de Uso e um Caso de Teste?",
+      "options": [
+        "O caso de uso é restrito ao código-fonte compilado, enquanto o caso de teste é elaborado exclusivamente pela equipe comercial.",
+        "O caso de uso detalha as exceções de banco de dados, ao passo que o caso de teste monitora o uso de hardware do servidor.",
+        "O caso de uso documenta o que o sistema deve fazer sob a perspectiva do usuário, enquanto o caso de teste prescreve como verificar se o software atende a esse comportamento.",
+        "O caso de uso é um script automatizado de testes de carga, enquanto o caso de teste é uma ata de homologação contratual."
+      ],
+      "correctIndex": 2,
+      "explanation": "O caso de uso pertence à modelagem de requisitos e descreve as funcionalidades e interações esperadas entre ator e sistema. Já o caso de teste é um artefato de verificação que define pré-condições, dados de entrada, procedimentos operacionais e resultados esperados para validar a implementação."
+    },
+    {
+      "question": "Qual é a finalidade primordial da Linguagem de Modelagem Unificada (UML) no desenvolvimento de software?",
+      "options": [
+        "Prover uma linguagem padrão de representação visual para modelar, documentar e facilitar a comunicação sobre a arquitetura e os requisitos do sistema.",
+        "Compilar código-fonte diretamente para binários de máquina dispensando interpretadores ou máquinas virtuais.",
+        "Automatizar a geração de regras de firewall e gerenciar permissões de rede em ambientes corporativos.",
+        "Substituir a necessidade de testes de software por meio da prova formal e matemática de ausência total de defeitos."
+      ],
+      "correctIndex": 0,
+      "explanation": "A UML é uma linguagem de modelagem gráfica orientada a objetos cujo objetivo é especificar, visualizar, construir e documentar artefatos de um sistema de software, servindo como meio de comunicação entre equipes técnicas e de negócios sem ser uma linguagem de programação."
+    },
+    {
+      "question": "Em modelagem orientada a objetos com diagramas de caso de uso da UML, como se caracterizam os atores e seus relacionamentos com as funcionalidades?",
+      "options": [
+        "Atores representam estritamente usuários humanos cadastrados como administradores do banco de dados relacional.",
+        "Atores representam métodos privados de classes utilitárias que disparam exceções de sistema em tempo de compilação.",
+        "Atores são estruturas de repetição que controlam o fluxo de telas na interface gráfica.",
+        "Atores representam qualquer entidade externa que interage com o sistema (usuários, sistemas parceiros ou dispositivos), comunicando-se com os casos de uso por meio de associações."
+      ],
+      "correctIndex": 3,
+      "explanation": "Na UML, um ator representa um papel desempenhado por uma entidade externa em interação com o sistema, podendo ser um usuário humano, outro sistema de software ou um dispositivo de hardware, conectado aos casos de uso correspondentes por associações de comunicação."
+    },
+    {
+      "question": "Qual elemento da estrutura de um caso de teste formal define as condições prévias do ambiente e do sistema necessárias para que a execução possa ocorrer de forma válida?",
+      "options": [
+        "Pós-condições.",
+        "Pré-condições.",
+        "Resultados esperados.",
+        "Massa de dados de saída."
+      ],
+      "correctIndex": 1,
+      "explanation": "As pré-condições definem os requisitos de estado e contexto que devem ser atendidos antes do início da execução do teste, como autenticação prévia de usuário, existência de dados base no sistema ou configurações de ambiente específicas."
+    },
+    {
+      "question": "No contexto das técnicas de teste de software, qual é a finalidade primordial de um caso de teste negativo?",
+      "options": [
+        "Confirmar que o caminho padrão do sistema executa com sucesso utilizando apenas dados válidos.",
+        "Garantir que a documentação de arquitetura esteja aprovada pelos gestores do projeto.",
+        "Avaliar o comportamento, a robustez e o tratamento de erros do sistema diante de entradas inválidas ou condições anômalas.",
+        "Verificar se o desempenho de processamento gráfico atinge a taxa máxima de quadros por segundo."
+      ],
+      "correctIndex": 2,
+      "explanation": "Casos de teste negativos são projetados intencionalmente para submeter o sistema a dados inválidos, sequências inesperadas ou violações de regras de negócio, assegurando que o software rejeite a operação inadequadas e apresente mensagens de erro apropriadas sem falhas catastróficas."
+    },
+    {
+      "question": "Ao derivar casos de teste a partir de uma especificação de caso de uso com fluxos principal e alternativos, qual conceito representa uma combinação sequencial completa de ações do início ao fim de um percurso?",
+      "options": [
+        "Diagrama de classes.",
+        "Esquema relacional de tabelas.",
+        "Pilha de execução do sistema.",
+        "Cenário de teste."
+      ],
+      "correctIndex": 3,
+      "explanation": "Um cenário de teste corresponde a uma rota específica percorrida no caso de uso, combinando o fluxo básico com variações de fluxos alternativos ou de exceção, gerando a base para a elaboração de casos de teste específicos."
+    },
+    {
+      "question": "Em um processo estruturado de testes de software composto por diferentes etapas de trabalho, em qual etapa ocorre a elaboração formal dos casos de teste?",
+      "options": [
+        "Especificação.",
+        "Execução.",
+        "Procedimentos iniciais.",
+        "Entrega."
+      ],
+      "correctIndex": 0,
+      "explanation": "Na etapa de especificação do processo de testes, os analistas e testadores modelam e detalham formalmente os casos de teste, estabelecendo pré-condições, procedimentos, massas de dados e resultados esperados antes da etapa de execução."
+    },
+    {
+      "question": "Por que diagramas comportamentais, como o diagrama de atividades da UML, são frequentemente utilizados em conjunto com os diagramas de casos de uso na elaboração de testes?",
+      "options": [
+        "Porque o diagrama de caso de uso sozinho compila o código-fonte executável dos testes unitários.",
+        "Porque o diagrama de atividades detalha a lógica dos fluxos de trabalho, decisões e ramificações que o diagrama de casos de uso não detalha graficamente.",
+        "Porque o diagrama de caso de uso é restrito ao mapeamento físico de portas de conexão de rede.",
+        "Porque o diagrama de atividades substitui a necessidade de definir resultados esperados nos testes."
+      ],
+      "correctIndex": 1,
+      "explanation": "Enquanto o diagrama de caso de uso apresenta uma visão macro dos serviços oferecidos e seus atores, o diagrama de atividades evidencia a sequência operacional, nós de decisão e fluxos alternativos, facilitando a identificação clara de todos os cenários a serem testados."
+    },
+    {
+      "question": "Como deve ser orientada a definição de escopo dos casos de teste diante da impossibilidade prática de testar todas as combinações de entradas de um sistema?",
+      "options": [
+        "Testando apenas os componentes cujo desenvolvimento apresentou menor complexidade técnica.",
+        "Eliminando integralmente a verificação de regras de negócio e focando apenas na interface visual.",
+        "Priorizando funcionalidades críticas e de alto risco para o negócio, equilibrando cobertura, custos e prazos.",
+        "Deixando a seleção de cenários de teste aleatoriamente a critério dos usuários finais em produção."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste exaustivo é técnica e economicamente inviável. Portanto, o planejamento de testes deve adotar uma abordagem baseada em riscos, concentrando os esforços e a elaboração de casos de teste nas áreas mais críticas, complexas e de maior impacto para o negócio."
+    },
+    {
+      "question": "Qual é o papel da massa de dados no processo de preparação e execução de casos de teste?",
+      "options": [
+        "Substituir os relatórios de encerramento de projeto por listagens binárias de banco de dados.",
+        "Impedir que testadores tenham conhecimento prévio sobre as entradas informadas ao sistema.",
+        "Reduzir o tamanho do executável do software durante o processo de empacotamento.",
+        "Fornecer valores e parâmetros concretos, válidos e inválidos, para exercitar as condições planejadas e validar as respostas do sistema."
+      ],
+      "correctIndex": 3,
+      "explanation": "A massa de dados é o conjunto de dados reais ou sintetizados utilizado para alimentar o sistema durante os testes, permitindo simular com precisão cenários positivos e negativos e verificar a conformidade dos resultados obtidos frente aos esperados."
+    }
+  ]
+}
