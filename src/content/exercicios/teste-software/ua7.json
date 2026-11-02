@@ -1,0 +1,115 @@
+{
+  "ua": 7,
+  "questions": [
+    {
+      "question": "Qual é o objetivo central do nível de teste de unidade (ou teste unitário) no desenvolvimento de software?",
+      "options": [
+        "Verificar a comunicação de dados entre diferentes subsistemas integrados por meio de barramentos de mensageria.",
+        "Avaliar as menores partes testáveis do código (como funções, métodos e classes) de maneira isolada de outras partes do sistema.",
+        "Conduzir testes de estresse para mensurar o limite máximo de conexões simultâneas que o banco de dados suporta.",
+        "Obter a aprovação formal do cliente em ambiente de homologação antes da entrada em produção."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de unidade isola cada elemento básico do software (módulos, classes ou funções) para certificar que sua lógica interna opere estritamente de acordo com a especificação funcional."
+    },
+    {
+      "question": "Considere um cenário em que a função A calcula um valor e retorna uma cadeia de caracteres, enquanto a função B espera receber um número inteiro como parâmetro dessa mesma chamada. Em qual nível de teste essa inconsistência deve ser detectada prioritariamente?",
+      "options": [
+        "Teste de aceitação operacional.",
+        "Teste unitário da função A.",
+        "Teste de integração.",
+        "Teste de estresse de infraestrutura."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de integração visa justamente identificar problemas decorrentes da interação entre diferentes módulos ou componentes, tais como incompatibilidade de parâmetros, erros de interface e falhas no tráfego de dados."
+    },
+    {
+      "question": "Qual nível de teste executa o software de ponta a ponta para verificar o cumprimento de requisitos funcionais e não funcionais em um ambiente o mais próximo possível daquele utilizado pelo usuário final?",
+      "options": [
+        "Teste de sistema.",
+        "Teste de unidade.",
+        "Teste de mutação de código.",
+        "Teste de integração de componentes."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste de sistema avalia o produto integrado como um todo sob a ótica do usuário final, validando tanto o comportamento funcional quanto atributos de qualidade (como desempenho, usabilidade e segurança) em condições semelhantes às reais."
+    },
+    {
+      "question": "Qual é a principal finalidade do teste de aceitação (UAT) conduzido com uma amostra representativa de usuários finais?",
+      "options": [
+        "Depurar falhas de sintaxe e complexidade ciclomática em branches secundárias do repositório.",
+        "Estabelecer a confiança do cliente e dos usuários finais de que o sistema cumpre os requisitos de negócio antes de sua implantação.",
+        "Automatizar scripts de injeção de dependências em contêineres de compilação contínua.",
+        "Reescrever a documentação de arquitetura técnica com base nos logs de exceções de banco de dados."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de aceitação foca em proporcionar confiança ao cliente e aos usuários finais, confirmando que a solução entregue atende às necessidades operacionais e aos critérios de aceite acordados para a entrada em produção."
+    },
+    {
+      "question": "No ciclo de garantia de qualidade, qual é a distinção conceitual exata entre Reteste (teste de confirmação) e Teste de Regressão?",
+      "options": [
+        "O reteste verifica se o sistema atende às leis de proteção de dados, enquanto a regressão avalia o tempo de carregamento da interface.",
+        "O reteste é realizado apenas pela gerência financeira, enquanto a regressão é executada exclusivamente por analistas de suporte.",
+        "O reteste valida se um defeito específico corrigido deixou de existir, enquanto a regressão avalia se essa modificação não introduziu novas falhas em outras partes do software.",
+        "O reteste é obrigatório apenas em bancos de dados relacionais, enquanto a regressão aplica-se somente a linguagens interpretadas."
+      ],
+      "correctIndex": 2,
+      "explanation": "O reteste (ou teste de confirmação) tem o propósito pontual de verificar se uma falha reportada foi efetivamente sanada pela correção, enquanto o teste de regressão verifica se as alterações de código provocaram efeitos colaterais indesejados em partes que já estavam funcionando."
+    },
+    {
+      "question": "Como o teste de regressão se classifica no ciclo de vida de desenvolvimento e em quais momentos ele se faz necessário?",
+      "options": [
+        "É um nível estritamente inicial que só pode ser executado antes da redação da primeira linha de código de produção.",
+        "Trata-se de uma auditoria contábil periódica restrita ao cálculo de horas gastas pela equipe de engenharia.",
+        "É uma técnica exclusiva de testes unitários que não se aplica a testes de interface gráfica.",
+        "É um teste relacionado a mudanças (correções, manutenções ou novas funcionalidades), aplicável em múltiplos níveis de teste ao longo de todo o ciclo de vida do software."
+      ],
+      "correctIndex": 3,
+      "explanation": "O teste de regressão é motivado por mudanças de qualquer natureza (correção de bugs, refatoração, novas funcionalidades ou manutenção pós-entrega) e deve ser executado para assegurar que a integridade do sistema permaneça preservada."
+    },
+    {
+      "question": "Em sistemas corporativos de grande porte com ciclos contínuos de entrega, por que a estratégia de reexecutar integralmente todos os casos de teste existentes a cada alteração (retest-all) costuma ser substituída por abordagens seletivas?",
+      "options": [
+        "Porque reexecutar todos os testes é proibido pelas normas internacionais de governança de software.",
+        "Porque a reexecução completa de uma suíte extensiva pode ser economicamente inviável e lenta, demandando seleção, priorização baseada em risco e automação em esteiras de integração contínua.",
+        "Porque executar testes mais de uma vez invalida automaticamente as métricas de cobertura de código do compilador.",
+        "Porque os compiladores modernos descartam defeitos de regressão por análise preditiva estática sem necessidade de testes."
+      ],
+      "correctIndex": 1,
+      "explanation": "À medida que a base de testes se expande, reexecutar 100% da suíte torna-se demorado e custoso. Por isso, as equipes selecionam e priorizam os testes mais críticos e com maior risco de impacto, mantendo uma suíte automatizada focada na mudança."
+    },
+    {
+      "question": "No que tange aos papéis e responsabilidades no desenvolvimento de software, quem é tradicionalmente o principal responsável pela elaboração e execução dos testes de unidade?",
+      "options": [
+        "O comitê executivo de compras da organização contratante.",
+        "A equipe de atendimento ao cliente por meio de chamados pós-implantação.",
+        "O próprio desenvolvedor responsável pela implementação do código, que conhece a estrutura interna e trabalha em ambiente de desenvolvimento.",
+        "Exclusivamente auditores externos contratados para fins de conformidade fiscal."
+      ],
+      "correctIndex": 2,
+      "explanation": "Por exigir conhecimento profundo da linguagem de programação, da lógica dos algoritmos e das estruturas de controle internas, o teste de unidade é costumeiramente elaborado e executado pelo próprio desenvolvedor em seu ambiente de trabalho."
+    },
+    {
+      "question": "No âmbito do teste de aceitação de contrato e regulamento, em qual momento as cláusulas e requisitos normativos são validados por meio de testes práticos?",
+      "options": [
+        "Sobre o produto pronto ou seus incrementos funcionais concluídos, verificando a conformidade legal e contratual antes da liberação operacional.",
+        "Exclusivamente durante a assinatura preliminar da proposta comercial, antes do início do levantamento de requisitos.",
+        "Apenas durante a formatação dos computadores da equipe de análise de negócios.",
+        "Somente após cinco anos de encerramento contratual para fins de descarte definitivo de dados."
+      ],
+      "correctIndex": 0,
+      "explanation": "Embora os critérios de aceitação contratuais e regulatórios sejam formalizados no momento do contrato, a verificação prática de conformidade ocorre sobre o produto pronto ou entregável, garantindo que o sistema atenda às leis e acordos estabelecidos."
+    },
+    {
+      "question": "Em metodologias ágeis como o eXtreme Programming (XP), como as atividades de teste de software são posicionadas em comparação com o modelo tradicional sequencial em cascata?",
+      "options": [
+        "Os testes são completamente suprimidos para garantir que o cronograma atinja o menor prazo possível.",
+        "Os testes são concentrados em uma fase única e isolada após a codificação de todas as funcionalidades planejadas.",
+        "Os testes são terceirizados para usuários finais sem qualquer envolvimento dos desenvolvedores.",
+        "Os testes são executados contínua e precocemente durante todo o ciclo de desenvolvimento, permitindo a detecção ágil de problemas quando o custo de correção é menor."
+      ],
+      "correctIndex": 3,
+      "explanation": "Abordagens ágeis (como XP e práticas de TDD) integram o teste de forma permanente à rotina diária de desenvolvimento, antecipando a identificação de defeitos e reduzindo os custos de retrabalho em comparação aos modelos sequenciais que adiam o teste para o fim do ciclo."
+    }
+  ]
+}

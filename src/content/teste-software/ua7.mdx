@@ -1,0 +1,177 @@
+---
+title: "UA7 — Níveis de Teste"
+subtitle: "Teste de sistema, de unidade, de integração, de aceitação e de regressão: o que cada nível valida, quem o executa, em que momento e onde o material precisa de cautela."
+ua: 7
+group: "Planejamento e Níveis de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua7.m4a" title="Níveis de teste" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gnt_01.webp" alt="Infográfico sobre os níveis de teste de software" caption="Os níveis de teste ao longo do ciclo de vida" />
+</SlidesGrid>
+
+### Testar em todos os estágios
+
+Os testes **não têm um momento predefinido**: acontecem em **todos os estágios do ciclo de vida** do projeto. Cada estágio define um **nível de teste**, responsável por avaliar elementos específicos e validar aspectos diferentes do que foi solicitado.
+
+O material descreve três práticas para organizar os testes (Delamaro, Maldonado e Jino):
+
+| Prática | Como funciona | Limitação / característica |
+|---|---|---|
+| **Testes no fim** | Outros analistas testam depois que a funcionalidade fica pronta e **antes da entrega** | O prazo costuma estar estourado, o que **comprime o tempo de teste e de correção** |
+| **Testes desde o início** | As funcionalidades são testadas **à medida que são desenvolvidas**, em processo contínuo | Falhas aparecem cedo, quando custam menos |
+| **Programação extrema (XP)** | Metodologia ágil em que o teste é uma boa prática central: feito **constantemente** | Teste não é visto como perda de tempo |
+
+Os cinco níveis apresentados são: **unidade → integração → sistema → aceitação → regressão**. A [UA2](/resumos/teste-software/ua2/) já apresentou quatro deles (unitário, integração, sistema e aceitação) e o recurso técnico de cada um; esta UA **detalha cada nível** e acrescenta a **regressão**.
+
+<Callout type="warning">
+**Regressão é um “nível”?**
+
+O material lista a regressão como quinto **nível**, mas ela não responde “em que estágio” se testa, e sim “**por que** se testa de novo”: depois de **qualquer mudança**. Por isso a literatura (ISTQB, por exemplo) a trata como **tipo de teste** ligado à mudança, que pode ocorrer **em qualquer um dos quatro níveis**: há regressão de unidade, de integração, de sistema e de aceitação. Ao responder questões do material, use a classificação dele (cinco níveis); ao conversar com o mercado, lembre da distinção.
+</Callout>
+
+### Teste de unidade
+
+Também chamado de **teste unitário** ou **teste de módulo**. Testa as **menores partes** em que o software pode ser dividido (métodos, classes, funções, sub-rotinas) **de forma isolada**, sem vinculá-las a outras partes.
+
+- **Quem:** o próprio **desenvolvedor** que escreveu o código, por conhecer a linguagem e a estrutura interna;
+- **Onde:** em **ambiente de desenvolvimento**, com acesso ao código, para não causar dano a dados reais;
+- **Como:** aplicam-se valores de entrada aos fluxos de controle e de dados e compara-se a saída com o esperado;
+- **Documentos de apoio:** especificação de requisitos, documento de caso de uso e **documento de arquitetura do software (DAS)**, que registra as decisões significativas de arquitetura e comunica o arquiteto à equipe;
+- **Registro:** falhas costumam ser corrigidas na hora, com **anotação breve** (sem documentação formal), só para não repetir o erro no resto da codificação.
+
+Para a técnica de escrever o teste antes do código (**TDD**) e a ferramenta usual (JUnit), veja a [UA2](/resumos/teste-software/ua2/).
+
+<Callout type="warning">
+**Quem testa a unidade: desenvolvedor ou “analista testador”?**
+
+O material afirma que o teste de unidade “envolve **necessariamente** o desenvolvedor” e, dois parágrafos depois, diz que o **analista testador** elabora os cenários de teste unitário “que devem ser testados por ele”. As duas afirmações se contradizem. A leitura coerente: a unidade é **normalmente** testada por quem a escreveu; um testador pode **apoiar** elaborando cenários, mas “necessariamente” é exagero (em pareamento ou em revisões, outra pessoa também pode escrever testes unitários).
+</Callout>
+
+### Teste de integração
+
+Diferente do unitário, o foco **não** é o funcionamento de cada parte, mas os **problemas gerados pela combinação** entre componentes. Típicos: **problemas de transmissão de dados** e de **interface**.
+
+> **Exemplo do material:** a função B espera receber um **inteiro** como resultado da função A; se A devolve uma **sequência de caracteres**, o teste de integração acusa o erro, ainda que A e B, isoladas, passem nos testes unitários.
+
+O teste de integração **não** verifica se cada funcionalidade foi bem construída (isso é do unitário); verifica apenas se as partes **se comunicam corretamente**. Envolve **desenvolvedores e testadores**, para que as estruturas interna e externa sejam integradas e testadas por inteiro.
+
+Medidas para o sucesso (Delamaro, Maldonado e Jino):
+
+1. preparar previamente um **ambiente** de teste;
+2. preparar previamente um **banco de dados** de teste;
+3. **registrar formalmente** todos os resultados;
+4. **avaliar** os resultados obtidos;
+5. **relatar ao gerente de projeto** qualquer problema grave que ameace o andamento do projeto.
+
+<Callout type="warning">
+**Integração interna × integração com outros sistemas**
+
+O material se contradiz sobre este ponto. Primeiro diz que os problemas de interface detectados na integração são os do software em desenvolvimento, “**e não** de outros sistemas”, e que a integração **entre sistemas** é foco do **teste de sistema** (decidida pelo gerente de projeto). Depois afirma que o teste de integração procura problemas “tanto das partes do próprio software quanto **do software com outros sistemas**”, e que os pacotes integrados incluem “inclusive outros sistemas”.
+
+Como organizar: a **integração entre componentes do próprio software** é o **teste de integração**; a **integração com sistemas externos** é, no material, tratada no **teste de sistema** (o ISTQB chama de *teste de integração de sistemas*, outro nível de integração). Em prova do material, siga a primeira versão.
+</Callout>
+
+### Teste de sistema
+
+Executa o **sistema como um todo**, sob a **visão do usuário final**, com todas as funcionalidades em operação. O objetivo é identificar diferenças entre o software entregue e aquele **idealizado na análise de requisitos**, considerando requisitos **funcionais e não funcionais**:
+
+| Tipo de requisito | O que define | Exemplos |
+|---|---|---|
+| **Funcional** | **O que** o sistema deve fazer (descrito com verbo no infinitivo) | agendar consulta de paciente; emitir relatório de fechamento de caixa; efetuar o fechamento das médias dos alunos |
+| **Não funcional** | **Como** o sistema realiza as tarefas: qualidade, segurança, confiabilidade, tempo de operação | facilidade de uso; portabilidade para outro sistema operacional; linguagem de programação; consumo de memória |
+
+Condições do teste de sistema: devem ser **semelhantes às do ambiente real**: ambiente, **interfaces com outros sistemas**, aspectos tecnológicos, **massas de dados**, nível de experiência dos usuários. Mesmo executado antes de todo o sistema estar pronto, o objetivo final é testar os fluxos **de ponta a ponta**. Por isso o ciclo de vida **iterativo** é recomendado: permite testar o comportamento dos casos de uso bem antes da entrega.
+
+<Callout type="warning">
+**Quando o teste de sistema pode acontecer**
+
+O material diz que não é necessário finalizar a codificação para fazer o teste de integração **entre sistemas** e, em seguida, que o nível de sistema só é atingido “**somente quando** o software estiver totalmente codificado”. Em resumo: o teste de sistema completo exige o sistema **integrado**; com ciclo iterativo, testa-se o **incremento** entregue em cada iteração. Não confunda com uma permissão para testar o sistema “sem o sistema”.
+</Callout>
+
+### Teste de aceitação
+
+Feito por um **grupo de amostra de usuários finais**, também chamado **teste de aceitação do usuário** (UAT). Os usuários simulam as **operações rotineiras** com dados e cenários semelhantes aos reais, e decidem se o sistema atende aos **critérios de aceitação** do cliente. É um teste **mais formal**.
+
+- Tem por objetivo **estabelecer confiança**, e não propriamente encontrar defeitos;
+- Ocorre **antes da implantação** (colocar em produção): decide se o software está pronto na visão de quem vai usá-lo.
+
+O material cita ainda duas variantes:
+
+| Variante | O que é | Exemplo |
+|---|---|---|
+| **Aceitação de entrega** | A equipe que **recebe** um módulo verifica se o que a anterior entregou está a contento | Equipe A entrega o módulo; equipe B, que fará outro módulo, o aceita |
+| **Aceitação de contrato e regulamento** | **Contrato:** verifica as **cláusulas contratuais** de fabricação. **Regulamento:** verifica o cumprimento de **legislação, acordo ou norma** | Conferir se o sistema cumpre a legislação aplicável ao setor |
+
+<Callout type="warning">
+**Quando acontece a aceitação de contrato**
+
+O material diz que a aceitação de contrato “acontece logo no início do projeto, quando o contrato é assinado”. É impreciso: no início se **definem os critérios** de aceitação (ao assinar o contrato); os **testes** que verificam esses critérios são executados **sobre o software pronto**, ao final. Além disso, “**sempre** realizado antes da implantação” é generalização: variantes como a aceitação **operacional** e os testes **alfa e beta** (ISTQB) também existem e podem ocorrer em outros momentos. A “aceitação de entrega” é nomenclatura própria do material, não termo padrão.
+</Callout>
+
+### Teste de regressão
+
+**Repete testes já feitos** para verificar se uma **modificação** causou um problema que antes não existia ou fez **reaparecer** um problema já corrigido. Também chamado, no material, de **teste decorrente de mudança**. Se aparece defeito novo, diz-se que o sistema **regrediu** (um retrocesso, em vez de funcionamento perfeito).
+
+Causas de mudança de estrutura que geram regressão:
+
+| Causa | Observação |
+|---|---|
+| **Correção de erros** | Mexer no código-fonte pode introduzir **outros erros** |
+| **Alteração de funcionalidade** | O usuário pede mudança numa funcionalidade já implementada ou inclusão de novos aspectos |
+| **Desenvolvimento de nova funcionalidade** | **Causa mais comum**; a nova funcionalidade deve ser compatível e integrável com a estrutura antiga |
+
+**Desvantagem:** é **demorado**, com impacto em custo e prazo. Para valer a pena, deve ser **planejado com estratégia** e cobrir as **funcionalidades críticas** a cada mudança.
+
+<Callout type="warning">
+**“Realiza-se todos os testes novamente”**
+
+O material afirma que a regressão é “via de regra, a realização de **todos** os testes novamente”, e o exercício 5 da UA tem como resposta “todo o software”. Reexecutar tudo é **uma** estratégia (*retest-all*), cara e rara em sistemas grandes. A prática é **selecionar, priorizar e reduzir** o conjunto de testes conforme o impacto da mudança, e **automatizar** a suíte. O próprio material admite o custo e a necessidade de estratégia, o que contradiz “todos, sempre”.
+
+Distinção que falta no material: **reteste (confirmação)** verifica se **o defeito corrigido** realmente sumiu; **regressão** verifica se **o resto** continua funcionando.
+
+Outra imprecisão: dizer que a regressão acontece “normalmente enquanto o software ainda está sendo codificado” esquece a **manutenção** após a entrega, quando a regressão é ainda mais frequente.
+</Callout>
+
+### Os cinco níveis lado a lado
+
+| Nível | Foco | Quem | Quando |
+|---|---|---|---|
+| **Unidade** | Menor parte, isolada | Desenvolvedor | Durante a codificação |
+| **Integração** | Comunicação entre partes (dados, interface) | Desenvolvedores e testadores | Após as unidades prontas |
+| **Sistema** | Sistema inteiro, requisitos funcionais e não funcionais, ambiente semelhante ao real | Equipe de testes | Sistema integrado (ou incremento) |
+| **Aceitação** | Aprovação pelo cliente/usuários | Usuários finais, cliente | Antes da implantação |
+| **Regressão** | Nada quebrou com a mudança | Equipe de testes (cada vez mais automatizada) | A cada mudança |
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Pirâmide de testes e regressão automatizada.** Hoje a regressão **não é refeita à mão**: é uma **suíte automatizada** executada a cada *commit* em **integração contínua (CI/CD)**: testes de unidade (muitos e rápidos) na base, integração no meio e poucos testes de sistema ponta a ponta no topo (a **pirâmide de testes**). Ferramentas: **JUnit/Jest/pytest** (unidade), **Testcontainers** (integração com banco e serviços reais), **Cypress/Playwright/Selenium** (sistema/ponta a ponta). Para integração entre serviços, **testes de contrato** (*consumer-driven contracts*, ex.: Pact) evitam o clássico “a função B esperava inteiro”. Na aceitação, o **BDD** com *Gherkin* transforma os critérios de aceitação em cenários executáveis, e as organizações modernas adotam o ***shift-left*** (testar cedo) e ***test impact analysis*** para executar só os testes afetados pela mudança.
+
+Referência atual de vocabulário: **ISO/IEC/IEEE 29119** e **ISTQB**, que tratam regressão e reteste como **testes relacionados a mudança**.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Sistema** valida requisitos **funcionais e não funcionais**; é o nível que olha o software como o usuário.
+- **Unidade** é feita pelo **desenvolvedor**, no ambiente de desenvolvimento, em partes isoladas (método, função, classe).
+- **Integração** encontra **problemas de transmissão de dados** entre partes (a função A devolve texto, a B esperava inteiro).
+- **Aceitação:** UAT, entrega entre equipes (**aceitação de entrega**) e **contrato e regulamento**; o objetivo é **confiança**, não caça a defeitos.
+- **Regressão:** repete testes após **mudança**; causas: correção de erros, alteração de funcionalidade e **nova funcionalidade (a mais comum)**; desvantagem: **demorada**.
+- **Desafio da UA:** usuários testam a cada mudança e reclamam de partes antigas → faltou **teste de regressão** (re-executar os testes já feitos a cada alteração).
+- Se a questão pergunta “vários níveis”, são **cinco** neste material (unidade, integração, sistema, aceitação, regressão); a UA2 apresenta **quatro**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. *Introdução ao teste de software*. 2. ed. São Paulo: Elsevier, 2016.
+- MARTINS, J. C. C. *Técnicas para gerenciamento de projetos de software*. Rio de Janeiro: Brasport, 2007.
+- ISTQB. *Certified Tester Foundation Level Syllabus*.
+- ISO/IEC/IEEE 29119. *Software and systems engineering: Software testing*.
