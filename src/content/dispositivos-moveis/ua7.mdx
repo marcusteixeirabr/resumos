@@ -1,0 +1,230 @@
+---
+title: "UA7 — Leiautes RelativeLayout e LinearLayout"
+subtitle: "Como o Android organiza componentes na tela: LinearLayout (uma direção), RelativeLayout (posições relativas), atributos XML, layout_weight e o que o mercado usa hoje no lugar do RelativeLayout."
+ua: 7
+group: "Interface e Componentes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua7.m4a" title="RelativeLayout e LinearLayout" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/cli_01.webp" alt="Infográfico sobre RelativeLayout e LinearLayout no Android" caption="RelativeLayout e LinearLayout no Android" />
+</SlidesGrid>
+
+### O que é um leiaute
+
+O **leiaute** (*layout*) é a **estrutura por trás da interface com o usuário**: define como os componentes (*views*) são organizados na tela. Em telas pequenas, a organização importa ainda mais, e um leiaute mal feito afeta diretamente a **experiência do usuário**. No Android Studio, o **Layout Editor** traz uma *palette* com os tipos de leiaute, e cada um corresponde a um elemento raiz no arquivo XML em `res/layout/` (veja a [UA6](/resumos/dispositivos-moveis/ua6/) para a estrutura de `res/`).
+
+Os dois tipos estudados:
+
+| | **LinearLayout** | **RelativeLayout** |
+|---|---|---|
+| **Ideia** | Alinha os filhos **em uma única direção** (vertical ou horizontal) | Cada filho define a **posição em relação ao pai ou a outro filho** (por ID) |
+| **Como configurar** | `android:orientation` | Atributos `layout_below`, `layout_toRightOf`, `layout_alignParentTop` etc. |
+| **Complexidade** | Simples e previsível | Mais flexível, porém **mais complexo** |
+| **Fragilidade** | Baixa | Alterar um componente pode exigir alterar os que dependem dele |
+
+### LinearLayout
+
+Organiza os componentes **um após o outro**, em **uma direção**:
+
+- **Vertical:** uma lista vertical terá **um componente por linha**, independentemente da largura;
+- **Horizontal:** a altura da fileira é a do **componente mais alto**.
+
+O LinearLayout respeita as **margens** e o **alinhamento** (direita, centro, esquerda). A direção é escolhida por `android:orientation`:
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ola DevMedia" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Tudo bem?" />
+</LinearLayout>
+```
+
+Se `android:orientation` **for omitido**, o padrão é **horizontal**: o material mostra o mesmo XML sem o atributo para obter os componentes lado a lado. Na prática, é melhor escrever `android:orientation="horizontal"` explicitamente, para que a intenção fique clara.
+
+#### Distribuindo espaço com `layout_weight`
+
+O atributo `android:layout_weight` faz um componente **receber uma parte proporcional do espaço restante** do LinearLayout. Um item de **maior peso expande e ocupa mais espaço da tela**. Exemplo em que o campo ocupa o espaço que sobra e o botão fica com o tamanho do texto:
+
+```xml
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <EditText
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enviar" />
+</LinearLayout>
+```
+
+Em orientação horizontal, usa-se `layout_width="0dp"` junto do peso (na vertical, `layout_height="0dp"`): assim o espaço é dividido **só pelos pesos**, sem somar o tamanho natural do componente. Também existem `gravity` (alinhamento **do conteúdo** do próprio componente) e `layout_gravity` (alinhamento **do componente dentro do pai**).
+
+### RelativeLayout
+
+Permite que cada filho **determine a sua posição em relação ao pai** ou **a outro componente identificado por ID**: alinhar dois componentes pela borda direita, posicionar um abaixo do outro, centralizar na tela, e assim por diante. **Por padrão**, todos os filhos são desenhados no **canto superior esquerdo**, então cada um precisa dos seus atributos de posicionamento.
+
+Famílias de atributos:
+
+| Família | Referência | Exemplos |
+|---|---|---|
+| **Em relação ao pai** | Booleanos (`true`) | `layout_alignParentTop`, `layout_alignParentStart`, `layout_centerInParent` |
+| **Em relação a um irmão** | `@+id/…` / `@id/…` | `layout_below`, `layout_above`, `layout_toEndOf`, `layout_toStartOf` |
+| **Alinhamento com um irmão** | `@id/…` | `layout_alignTop`, `layout_alignBottom`, `layout_alignBaseline` |
+
+Exemplo do material (três `TextView`: o segundo **abaixo** do primeiro; o terceiro **à direita** do segundo e alinhado ao topo dele):
+
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ola Primeiro"
+        android:layout_marginTop="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ola Segundo"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="74dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Ola Terceiro"
+        android:layout_alignTop="@+id/textView5"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5"
+        android:layout_marginLeft="138dp"
+        android:layout_marginStart="138dp" />
+</RelativeLayout>
+```
+
+Por que o RelativeLayout é considerado frágil: as posições formam uma **cadeia de dependências**. Se o componente A é referência de B, e B de C, mexer em A (tamanho, margem, remoção) **desloca ou quebra** os demais. O mesmo vale para o Layout Editor: cada componente novo precisa de relações coerentes, e referências **circulares** (A abaixo de B e B abaixo de A) causam erro em tempo de execução.
+
+<Callout type="warning">
+**Erros e imprecisões encontrados no material**
+
+**1. WebView, ListView e GridView não são “leiautes padronizados”.** O quadro lateral afirma que, além de Relative e Linear, o Android tem leiautes como WebView, ListView e GridView. Não é correto: **WebView** é um componente que exibe páginas web, e **ListView/GridView** são componentes de **lista/grade** que usam *adapters* (hoje substituídos pelo **RecyclerView**). Leiautes (*ViewGroup* de organização) de verdade são, por exemplo, **LinearLayout, RelativeLayout, FrameLayout, TableLayout, GridLayout e ConstraintLayout**.
+
+**2. A descrição da Figura 2 não corresponde ao código.** O texto diz que o primeiro TextView está no topo e o segundo logo abaixo, mas o código (e a figura) têm **três** TextView: o terceiro fica **à direita do segundo**.
+
+**3. O parágrafo de `layout_below` é repetido e `layout_toRightOfe` tem erro de digitação.** A frase sobre referenciar posições aparece duas vezes, e o atributo correto é `android:layout_toRightOf`.
+
+**4. “O LinearLayout é o padrão de layout a ser criado no Android” e “o mais utilizado, sem dúvida”** (seção Na Prática e capítulo). É afirmação **desatualizada**: o leiaute-padrão dos projetos novos do Android Studio é o **ConstraintLayout** desde a versão 2.3 (2017) e, em projetos modernos, o próprio Compose. O LinearLayout continua sendo útil e comum, mas não é “o padrão”.
+
+**5. “RelativeLayout é o mais complexo” e “experiência fantástica”.** Linguagem promocional: o RelativeLayout é flexível, mas **o ConstraintLayout é mais poderoso** e evita aninhamento; não há “recurso surpreendente” exclusivo do RelativeLayout.
+
+**6. Left/Right × Start/End.** O código usa `alignParentLeft`, `toRightOf` e `marginLeft` **ao lado** de `Start`/`End`. Os atributos Left/Right estão **obsoletos** desde a API 17 por não respeitarem idiomas escritos da direita para a esquerda (RTL); use **Start/End**.
+
+**7. Textos fixos no XML** (`android:text="Ola Primeiro"`): funcionam no exemplo, mas o correto é usar **recursos de string** (`@string/…`), como visto na [UA6](/resumos/dispositivos-moveis/ua6/).
+</Callout>
+
+<Callout type="warning">
+**O Desafio da UA: dois erros nos trechos de XML**
+
+O Desafio mostra dois trechos de um RelativeLayout. Os problemas são:
+
+- **Button:** `android:layout_width="100"` está **sem unidade**; o valor válido seria `100dp` (ou `wrap_content` / `match_parent`). Além disso, `layout_alignBaseline` e `layout_alignBottom` juntos para o mesmo componente são **redundantes**;
+- **EditText:** `android:layout_width="wrap_content1"` é um **valor inválido** (um caractere sobrando); o correto é `wrap_content`. Também vale trocar `layout_alignLeft`/`layout_alignRight` por `Start`/`End`.
+
+Os dois erros de sintaxe fazem o Layout Editor/Lint acusar problema (ou o build falhar), e o atributo `layout_width` de um componente **sempre** exige `match_parent`, `wrap_content` ou dimensão com unidade (`dp`).
+</Callout>
+
+<Callout type="warning">
+**Outras observações sobre os exercícios do material**
+
+- O exercício 3 (`layout_weight`) tem resposta no sentido “o item de maior peso **expande** e usa mais espaço”. O peso distribui o **espaço restante**; ele **não altera a ordem** dos itens (as alternativas sobre “mais ao topo/ao fim/ao fundo” descrevem outro conceito).
+- O exercício 4 trata como desvantagem do RelativeLayout o fato de “alterar um componente poder exigir alterar todos os outros”: isso ocorre pela **relatividade da posição** entre os componentes (cadeia de dependências), não pela hierarquia.
+- Há erros de digitação no enunciado (“componenentes”, “vertica”, “RealtiveLayout”); não os reproduza.
+</Callout>
+
+### Quando usar cada um
+
+| Situação | Escolha |
+|---|---|
+| Lista de itens **em fila** (formulário simples, barra de botões) | **LinearLayout** |
+| Dividir espaço **proporcionalmente** (campo que ocupa o restante) | **LinearLayout** + `layout_weight` |
+| Posições **relacionadas entre si** ou com as bordas do pai (rótulo + campo; botão no canto) | **RelativeLayout** (em código legado) ou **ConstraintLayout** (em código novo) |
+| Telas complexas, adaptáveis a vários tamanhos | **ConstraintLayout** / **Compose** |
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**RelativeLayout está em desuso; use ConstraintLayout (Views) ou Jetpack Compose.** O **ConstraintLayout** oferece o mesmo posicionamento relativo (por *constraints* entre componentes), mas com **hierarquia plana**, **guidelines**, **barriers**, **chains** e **dimensões proporcionais**, além de melhor suporte no Layout Editor. Isso reduz o aninhamento de ViewGroups, que prejudica o desempenho (o RelativeLayout faz **duas passagens de medição**). Em projetos novos, o caminho recomendado pela Google é o **Jetpack Compose**, em que os leiautes viram funções: **`Column`** substitui o LinearLayout vertical, **`Row`** o horizontal (com `Modifier.weight(1f)` no lugar de `layout_weight`), **`Box`** o FrameLayout e `ConstraintLayout`/`Modifier.align` os casos relativos. Outras atualizações: usar **`Start`/`End`** (RTL), **`match_parent`** (e nunca o antigo **`fill_parent`**, depreciado na API 8), **recursos de string** e **`tools:`** para pré-visualização.
+
+```kotlin
+@Composable
+fun Formulario() {
+    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+        OutlinedTextField(value = "", onValueChange = {}, modifier = Modifier.weight(1f))
+        Button(onClick = {}) { Text("Enviar") }
+    }
+}
+```
+
+Mesmo assim, entender LinearLayout e RelativeLayout continua valendo: milhões de apps têm esse XML legado, e os conceitos (orientação, peso, posição relativa) reaparecem em Compose e no ConstraintLayout.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **LinearLayout:** alinha componentes na **horizontal ou na vertical**, em **uma única direção**; escolhe-se com `android:orientation`; sem o atributo, o padrão é **horizontal**.
+- **RelativeLayout:** a posição de cada filho é **relativa a outro componente (por ID) ou ao pai**; por padrão os filhos ficam no **canto superior esquerdo**; exemplos: `layout_below`, `layout_toRightOf`, `layout_alignTop`, `layout_alignParentTop`.
+- **`layout_weight`:** o item de **maior peso expande e usa mais espaço** na tela.
+- **Desvantagem do RelativeLayout:** como as posições são relativas, **mudar um componente pode exigir mudar outros**.
+- “Indicado quando a posição é descrita **em relação a outro elemento ou à fronteira do pai**” → **somente RelativeLayout**.
+- **LinearLayout** é o mais usado **no material**; hoje o padrão é **ConstraintLayout** (e **Compose**).
+- Referência de componente por ID usa a sintaxe `@+id/nome` (cria) ou `@id/nome` (usa).
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- ROMANATO, A. Linear, Table e Relative Layouts com Android Studio. DevMedia, 2016.
+- ANDROID DEVELOPERS. Criar uma IU com o Layout Editor. 2019.
+- ANDROID DEVELOPERS. Layouts; ConstraintLayout; Layouts no Jetpack Compose (documentação oficial).

@@ -1,0 +1,115 @@
+{
+  "ua": 7,
+  "questions": [
+    {
+      "question": "Em uma interface desenvolvida para Android utilizando a estrutura LinearLayout, qual é a orientação adotada pelo componente quando o atributo android:orientation não é explicitamente declarado no arquivo XML?",
+      "options": [
+        "Horizontal, posicionando os elementos filhos lado a lado em uma única linha contínua.",
+        "Vertical, organizando os elementos filhos um abaixo do outro em coluna única.",
+        "Circular, distribuindo os elementos em sentido horário a partir do centro da tela.",
+        "Em grade tridimensional, sobrepondo os componentes conforme a ordem de inserção."
+      ],
+      "correctIndex": 0,
+      "explanation": "No LinearLayout do Android, caso o atributo android:orientation seja omitido na declaração XML, o sistema adota como valor padrão a orientação horizontal."
+    },
+    {
+      "question": "Ao utilizar o atributo android:layout_weight em elementos filhos de um LinearLayout, como o espaço da interface gráfica é calculado e distribuído entre eles?",
+      "options": [
+        "O peso inverte a ordem visual dos componentes, posicionando os itens de menor peso no topo.",
+        "O peso impede que os elementos recebam foco de interação do usuário durante a navegação.",
+        "O peso restringe a altura dos componentes a um valor fixo em pixels em qualquer resolução de tela.",
+        "O peso distribui o espaço restante da tela de maneira proporcional, fazendo com que o componente com maior valor numérico expanda e ocupe mais área."
+      ],
+      "correctIndex": 3,
+      "explanation": "O atributo android:layout_weight aloca o espaço sobressalente do LinearLayout entre os elementos participantes de acordo com a proporção atribuída a cada um, expandindo os elementos de maior peso."
+    },
+    {
+      "question": "Em um arquivo de layout estruturado com RelativeLayout, como os componentes visuais são posicionados por padrão na tela caso não recebam nenhum atributo específico de alinhamento relativo?",
+      "options": [
+        "Centralizados perfeitamente na área útil da tela em relação às margens do pai.",
+        "Alinhados no canto superior esquerdo da tela, podendo sobrepor-se uns aos outros caso ocupem a mesma área.",
+        "Distribuídos uniformemente em colunas verticais com espaçamento automático idêntico.",
+        "Ocultos da renderização até que um método Java ou Kotlin force a sua visibilidade."
+      ],
+      "correctIndex": 1,
+      "explanation": "Sem atributos de alinhamento em relação ao pai ou a outros irmãos (como layout_below ou layout_alignParentTop), os filhos de um RelativeLayout são posicionados por padrão nas coordenadas (0,0), correspondentes ao canto superior esquerdo do contêiner."
+    },
+    {
+      "question": "Qual família de atributos XML do RelativeLayout permite fixar a posição de um componente visual com base na posição de outro componente vizinho na mesma tela?",
+      "options": [
+        "Atributos de relacionamento com irmãos que utilizam identificadores de ID, como android:layout_below e android:layout_toEndOf.",
+        "Atributos booleanos de tela cheia, como android:fitsSystemWindows e android:windowNoTitle.",
+        "Atributos de transformação vetorial estática, como android:tileMode e android:pathData.",
+        "Atributos de ciclo de vida de processo, como android:screenOrientation e android:launchMode."
+      ],
+      "correctIndex": 0,
+      "explanation": "No RelativeLayout, o posicionamento de um elemento em relação a outro irmão é definido por atributos que recebem a referência ao identificador do elemento base (por exemplo, android:layout_below=\"@+id/botao_principal\")."
+    },
+    {
+      "question": "Qual é a principal desvantagem estrutural associada à manutenção de telas complexas construídas exclusivamente com RelativeLayout?",
+      "options": [
+        "A incapacidade do contêiner em renderizar componentes nativos como botões e imagens.",
+        "A impossibilidade de compilar o arquivo de layout quando executado em versões superiores ao Android 2.2.",
+        "A formação de uma cadeia de dependências rígida entre os elementos, onde modificar ou remover um componente de referência pode desalinhar ou quebrar o posicionamento de vários outros.",
+        "A exigência de que todos os componentes declarem obrigatoriamente dimensões absolutas em polegadas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Como o RelativeLayout baseia a posição de um componente em outros componentes irmãos por ID, cria-se um encadeamento de referências que torna a manutenção propensa a deslocamentos indesejados e quebras de leiaute caso um elemento da cadeia seja alterado."
+    },
+    {
+      "question": "Para garantir a acessibilidade e o suporte adequado a idiomas lidos da direita para a esquerda (RTL) em aplicações Android, quais atributos de alinhamento e margem devem ser preferidos no lugar dos obsoletos Left e Right?",
+      "options": [
+        "Up e Down.",
+        "Start e End.",
+        "Before e After.",
+        "In e Out."
+      ],
+      "correctIndex": 1,
+      "explanation": "A partir da API 17, o Android introduziu os atributos Start e End para substituir Left e Right, permitindo que a interface se adapte naturalmente tanto a idiomas com leitura da esquerda para a direita (LTR) quanto da direita para a esquerda (RTL)."
+    },
+    {
+      "question": "Ao declarar dimensões para o atributo android:layout_width de um componente em XML, qual das seguintes opções representa uma sintaxe válida e bem aceita pelo sistema de layout do Android?",
+      "options": [
+        "android:layout_width=\"100\"",
+        "android:layout_width=\"wrap_content1\"",
+        "android:layout_width=\"indefinite\"",
+        "android:layout_width=\"100dp\""
+      ],
+      "correctIndex": 3,
+      "explanation": "No Android, as dimensões exigem unidades de medida válidas (como dp ou sp) ou constantes reconhecidas pelo framework (como match_parent ou wrap_content). Valores numéricos puros sem unidade (como \"100\") ou nomes corrompidos (como \"wrap_content1\") geram erros de compilação ou validação."
+    },
+    {
+      "question": "Dentre os componentes presentes no desenvolvimento Android, quais representam verdadeiros contêineres de leiaute (ViewGroup) destinados a definir o arranjo estrutural de telas?",
+      "options": [
+        "LinearLayout, RelativeLayout, FrameLayout e ConstraintLayout.",
+        "WebView, Canvas e SurfaceView.",
+        "TextView, EditText e CheckBox.",
+        "ListView, GridView e RecyclerView."
+      ],
+      "correctIndex": 0,
+      "explanation": "LinearLayout, RelativeLayout, FrameLayout e ConstraintLayout são contêineres de layout (subclasses de ViewGroup) dedicados a organizar o posicionamento geométrico dos componentes na tela. Componentes como WebView exibem conteúdos específicos da web, enquanto ListView e RecyclerView são listas acopladas a adaptadores de dados."
+    },
+    {
+      "question": "Em um LinearLayout horizontal que emprega o atributo android:layout_weight para dividir o espaço entre seus filhos, qual é a finalidade de se definir explicitamente android:layout_width=\"0dp\" nos componentes ponderados?",
+      "options": [
+        "Forçar a invisibilidade total dos elementos até que ocorra uma animação gráfica programada.",
+        "Indicar que os elementos devem ser convertidos em caixas de diálogo modais flutuantes.",
+        "Assegurar que a partilha do espaço da tela ocorra com base estrita nos pesos estipulados, desconsiderando as larguras intrínsecas de cada componente no cálculo.",
+        "Garantir a compatibilidade regressiva exclusiva com dispositivos que não possuem suporte a toque na tela."
+      ],
+      "correctIndex": 2,
+      "explanation": "Definir layout_width=\"0dp\" (em orientações horizontais) impede que a largura inicial do conteúdo seja somada antes do cálculo de pesos, fazendo com que a distribuição do espaço dependa exclusivamente dos valores atribuídos a layout_weight."
+    },
+    {
+      "question": "Na arquitetura moderna de interfaces para Android, qual abordagem é recomendada para substituir o aninhamento excessivo de múltiplos LinearLayouts e RelativeLayouts em layouts baseados em Views tradicionais?",
+      "options": [
+        "Utilizar unicamente AbsoluteLayout configurando coordenadas X e Y fixas para cada resolução de tela existente no mercado.",
+        "Renderizar toda a interface visual exclusivamente por meio de arquivos SVG desenhados em tempo de execução.",
+        "Criar tabelas HTML estáticas renderizadas dentro de componentes WebView locais.",
+        "Adotar o ConstraintLayout, que viabiliza o posicionamento relativo de componentes dentro de uma hierarquia plana, reduzindo o custo computacional de medição e desenho da interface."
+      ],
+      "correctIndex": 3,
+      "explanation": "O ConstraintLayout foi projetado para permitir interfaces complexas e responsivas mantendo uma hierarquia plana de componentes (sem aninhamento profundo de ViewGroups), o que melhora o desempenho de renderização e oferece recursos avançados como guidelines, chains e barreiras."
+    }
+  ]
+}
