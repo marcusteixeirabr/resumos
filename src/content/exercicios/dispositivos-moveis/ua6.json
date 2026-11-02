@@ -2,12 +2,12 @@
   "ua": 6,
   "questions": [
     {
-      "question": "Em uma aplicação Android, qual é o principal benefício arquitetural de manter arquivos de interface, imagens e textos dentro do diretório de recursos (res/) em vez de declará-los diretamente no código-fonte?",
+      "question": "Em uma aplicação Android, qual é o principal benefício arquitetural de manter arquivos de interface, imagens e strings dentro do diretório de recursos (res/) em vez de declará-los diretamente no código-fonte?",
       "options": [
         "Separar os elementos visuais e de configuração da lógica de programação, facilitando a manutenção e permitindo oferecer alternativas para diferentes dispositivos e idiomas.",
         "Aumentar a velocidade de compilação eliminando a necessidade de verificação de tipos estáticos pelo compilador.",
         "Permitir que o banco de dados SQLite armazene automaticamente todos os arquivos de mídia em tabelas relacionais.",
-        "Garantir a execução compulsória de testes unitários a cada alteração em arquivos de texto."
+        "Garantir a execução compulsória de testes unitários a cada alteração em arquivos de recursos textuais."
       ],
       "correctIndex": 0,
       "explanation": "A externalização de recursos no diretório res/ isola a apresentação visual e os valores estáticos da lógica do código, proporcionando maior organização, facilidade de manutenção e flexibilidade para fornecer layouts e strings adaptados a diferentes configurações de aparelhos (idioma, orientação, densidade)."
@@ -46,15 +46,15 @@
       "explanation": "Os arquivos inseridos em res/raw/ são indexados pelo sistema de compilação e recebem um ID estático na classe R (R.raw.arquivo). Já a pasta assets/ preserva arquivos arbitrários em sua árvore de diretórios original, exigindo o uso da classe AssetManager para leitura."
     },
     {
-      "question": "Em aplicativos Android, qual é a prática padrão recomendada para armazenar e internacionalizar textos exibidos na interface de usuário?",
+      "question": "Em aplicativos Android, qual é a prática padrão recomendada para armazenar e internacionalizar mensagens e rótulos exibidos na interface de usuário?",
       "options": [
-        "Inserir textos diretamente nos atributos dos componentes visuais com concatenação de caracteres de escape.",
-        "Gravar as mensagens de texto em tabelas remotas de banco de dados e recuperá-las via chamadas síncronas de rede.",
+        "Inserir strings diretamente nos atributos dos componentes visuais com concatenação de caracteres de escape.",
+        "Gravar as mensagens da interface em tabelas remotas de banco de dados e recuperá-las via chamadas síncronas de rede.",
         "Declarar as mensagens no arquivo strings.xml dentro de res/values/, criando pastas qualificadas como res/values-es/ para traduções.",
-        "Armazenar todos os textos em variáveis globais estáticas no arquivo AndroidManifest.xml."
+        "Armazenar todos os literais em variáveis globais estáticas no arquivo AndroidManifest.xml."
       ],
       "correctIndex": 2,
-      "explanation": "Textos de interface devem ser externalizados no arquivo strings.xml (dentro de res/values/) por meio de elementos <string name=\"chave\">Valor</string>. A internacionalização é viabilizada adicionando diretórios qualificados como res/values-en/ ou res/values-es/, que fornecem as traduções correspondentes."
+      "explanation": "Strings de interface devem ser externalizadas no arquivo strings.xml (dentro de res/values/) por meio de elementos <string name=\"chave\">Valor</string>. A internacionalização é viabilizada adicionando diretórios qualificados como res/values-en/ ou res/values-es/, que fornecem as traduções correspondentes."
     },
     {
       "question": "Como o sistema operacional Android gerencia o fornecimento de recursos alternativos quando uma aplicação é executada em diferentes dispositivos?",
