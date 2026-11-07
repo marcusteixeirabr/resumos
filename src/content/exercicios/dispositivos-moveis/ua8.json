@@ -1,0 +1,115 @@
+{
+  "ua": 8,
+  "questions": [
+    {
+      "question": "No desenvolvimento de aplicativos Android, como o sistema operacional identifica qual componente deve ser executado como a tela principal quando o usuário clica no ícone da aplicação no inicializador?",
+      "options": [
+        "Pela presença de uma declaração de <intent-filter> contendo a ação android.intent.action.MAIN e a categoria android.intent.category.LAUNCHER associada à respectiva Activity no manifesto da aplicação.",
+        "Pela exigência mandatória de que o nome da classe seja exatamente nomeado como MainActivity.",
+        "Pelo maior tamanho em bytes do arquivo de layout XML associado à tela.",
+        "Pela inclusão de uma permissão especial de inicialização gravada no arquivo de propriedades de build do Gradle."
+      ],
+      "correctIndex": 0,
+      "explanation": "A identificação da tela inicial é feita pelas tags no AndroidManifest.xml: a ação MAIN designa o ponto de entrada principal e a categoria LAUNCHER indica que o atalho deve constar no lançador de apps do dispositivo."
+    },
+    {
+      "question": "Como é estruturado um arquivo XML de definição de menus localizado no diretório res/menu/ de um projeto Android?",
+      "options": [
+        "Por meio de uma tag raiz <layout> que envolve tags filhas <button> com coordenadas absolutas de tela.",
+        "Por um elemento raiz <resources> contendo tags <string-array> associadas a comandos de terminal.",
+        "Por um contêiner raiz <menu> que agrupa elementos <item>, cada qual com identificador único, título descritivo, ícone e atributos de exibição.",
+        "Por uma coleção de tags <activity> que definem a navegação entre processos do sistema operacional."
+      ],
+      "correctIndex": 2,
+      "explanation": "No Android, recursos de menu utilizam a tag raiz <menu>, dentro da qual são declarados elementos <item> (e opcionalmente submenus <menu> aninhados ou grupos <group>), definindo propriedades como id, title, icon e comportamento de ação."
+    },
+    {
+      "question": "Qual é a finalidade do atributo showAsAction (ou app:showAsAction ao utilizar a biblioteca de compatibilidade) nos itens de um menu de opções?",
+      "options": [
+        "Determinar se o item será apresentado diretamente como um botão de ação na barra da aplicação ou se será direcionado para o menu de opções excedentes (action overflow).",
+        "Controlar a reprodução automática de efeitos sonoros durante o clique do usuário na tela.",
+        "Definir a criptografia utilizada para transmissão de dados de rede da aplicação.",
+        "Configurar a animação de transição tridimensional entre Activities distintas."
+      ],
+      "correctIndex": 0,
+      "explanation": "O atributo showAsAction especifica as condições de visibilidade do item na barra de ações (como ifRoom, always ou never), controlando se ele aparece em destaque como ícone/botão ou se fica recolhido no menu de transbordamento (overflow)."
+    },
+    {
+      "question": "No ciclo de manipulação de menus de uma Activity no Android, qual método é executado logo antes de o menu de opções ser exibido na tela, permitindo habilitar, desabilitar ou alterar itens dinamicamente?",
+      "options": [
+        "onDestroy()",
+        "onPrepareOptionsMenu()",
+        "setContentView()",
+        "registerForContextMenu()"
+      ],
+      "correctIndex": 1,
+      "explanation": "O método onPrepareOptionsMenu() é chamado sempre que o menu está prestes a ser exibido (e pode ser disparado programaticamente via invalidateOptionsMenu()), sendo o momento ideal para modificar o estado ou a visibilidade dos itens de acordo com o contexto atual da tela."
+    },
+    {
+      "question": "Em uma Activity tradicional no Android, como as ações disparadas pelo usuário sobre os itens do menu de opções são capturadas e tratadas no código Java ou Kotlin?",
+      "options": [
+        "Invocando um serviço em segundo plano através de uma notificação na barra de status do sistema.",
+        "Gravando os comandos em um arquivo de banco de dados SQLite para leitura posterior.",
+        "Sobrescrevendo o método onOptionsItemSelected(MenuItem item), identificando o item acionado pelo seu ID e retornando true caso o evento tenha sido consumido.",
+        "Instanciando diretamente uma nova máquina virtual para cada toque de usuário na tela."
+      ],
+      "correctIndex": 2,
+      "explanation": "Quando um item de menu é acionado, o sistema chama onOptionsItemSelected(MenuItem item). O desenvolvedor verifica o identificador do item (via item.getItemId()) para executar a ação correspondente e retorna true para sinalizar que o evento foi consumido."
+    },
+    {
+      "question": "Por que a biblioteca AndroidX recomenda a utilização do widget Toolbar inserido diretamente no layout XML em substituição à ActionBar nativa fornecida pelos temas do sistema?",
+      "options": [
+        "Porque a Toolbar bloqueia a inicialização de qualquer outra Activity no aplicativo móvel.",
+        "Porque a ActionBar nativa é restrita apenas a aplicativos voltados para relógios inteligentes.",
+        "Porque a Toolbar dispensa o uso de arquivos XML de layout, forçando o desenho de telas por código binário.",
+        "Porque a Toolbar atua como uma View dentro da hierarquia da tela, proporcionando consistência visual entre versões do Android, suporte flexível a animações e integração com o tema da aplicação via setSupportActionBar()."
+      ],
+      "correctIndex": 3,
+      "explanation": "A Toolbar da biblioteca de compatibilidade oferece maior controle sobre o posicionamento, estilização e animação, funcionando como um componente View comum e garantindo comportamento consistente em múltiplas versões do sistema."
+    },
+    {
+      "question": "Qual é a principal característica operacional que distingue um Menu Contextual flutuante de um Menu de Opções no Android?",
+      "options": [
+        "O menu contextual é disparado por um clique longo (long click) sobre uma visualização registrada via registerForContextMenu(), aplicando ações voltadas especificamente ao elemento selecionado.",
+        "O menu contextual substitui a barra de navegação do sistema operacional na parte inferior do dispositivo.",
+        "O menu contextual é restrito exclusivamente a telas de configurações globais do aparelho celular.",
+        "O menu contextual não permite a inclusão de títulos nem ícones em seus itens de ação."
+      ],
+      "correctIndex": 0,
+      "explanation": "Enquanto o menu de opções oferece ações globais para a tela inteira, o menu de contexto é ativado por clique longo sobre uma View registrada (como um item de lista), apresentando opções focadas estritamente naquele elemento específico."
+    },
+    {
+      "question": "Em que cenário o componente PopupMenu do Android é especialmente indicado para a interface gráfica?",
+      "options": [
+        "Para gerenciar a inicialização em segundo plano de serviços de localização geográfica.",
+        "Para exibir uma lista vertical suspensa de ações adicionais ancorada a uma visualização específica da tela, sem afetar o conteúdo da visualização de forma direta.",
+        "Para configurar permissões de acesso ao sistema de arquivos no manifesto da aplicação.",
+        "Para definir a orientação de rotação da tela entre modo retrato e paisagem."
+      ],
+      "correctIndex": 1,
+      "explanation": "O PopupMenu é um menu modal leve ancorado a uma View específica que apresenta um conjunto de comandos secundários ou ações estendidas relacionadas àquele ponto da tela, fechando-se ao toque fora do menu."
+    },
+    {
+      "question": "Qual é o papel da classe MenuInflater na arquitetura de menus do Android?",
+      "options": [
+        "Executar consultas assíncronas a servidores web remotos via protocolo HTTP.",
+        "Atuar como um banco de dados em memória para armazenar credenciais de usuários autenticados.",
+        "Instanciar e converter arquivos XML de definição de recursos de menu em objetos executáveis da classe Menu.",
+        "Controlar a frequência do processador do dispositivo durante animações visuais."
+      ],
+      "correctIndex": 2,
+      "explanation": "A classe MenuInflater é responsável pelo processo de inflar (parsear e carregar) recursos estáticos declarados em XML (em res/menu/) transformando-os em hierarquias de objetos Menu na memória da aplicação."
+    },
+    {
+      "question": "Ao registrar um ouvinte de clique longo através do método setOnItemLongClickListener em uma lista de componentes no Android, qual é o efeito prático de o método de retorno devolver o valor booleano true?",
+      "options": [
+        "O sistema encerra imediatamente o processo da aplicação para liberar memória RAM.",
+        "A lista é recarregada a partir da primeira posição apagando todos os dados em cache.",
+        "O dispositivo emite um alerta sonoro compulsório de erro de sistema.",
+        "O evento é considerado consumido e tratado pela lógica do ouvinte, impedindo que outros manipuladores (como o menu contextual associado) sejam disparados."
+      ],
+      "correctIndex": 3,
+      "explanation": "No modelo de tratamento de eventos do Android, retornar true em listeners de interação (como clique longo) indica que o evento foi completamente consumido, evitando que o evento continue propagando para disparar o menu de contexto ou outros ouvintes subsequentes."
+    }
+  ]
+}

@@ -1,0 +1,284 @@
+---
+title: "UA8 — Tela Principal e Componentes de Menu"
+subtitle: "MainActivity, menu de opções, ActionBar/Toolbar, menu contextual, PopupMenu e MenuInflater: como os menus funcionam e o que mudou com AndroidX, Material e Compose."
+ua: 8
+group: "Interface e Componentes"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua8.m4a" title="Tela principal e menus" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/mdm_01.webp" alt="Infográfico sobre a ActionBar, seus componentes e utilidades" caption="ActionBar: componentes e utilidades" />
+</SlidesGrid>
+
+### A tela principal
+
+A **tela principal** é a primeira impressão do app. No Android, costuma ser a classe **`MainActivity`**, criada automaticamente pelo Android Studio e executada quando o usuário toca no ícone do aplicativo na tela inicial. Toda *activity* deriva de `android.app.Activity`, mas o Android Studio cria as activities como filhas de **`AppCompatActivity`**, a classe de **compatibilidade** com versões antigas (que, por sua vez, deriva de `Activity`).
+
+O leiaute da activity fica em **XML**, o que separa a lógica da apresentação. O material compara com o padrão **MVC**: a activity seria o *controller* e o XML, a *view*. Para a estrutura da activity, veja a [UA5](/resumos/dispositivos-moveis/ua5/); para os leiautes, a [UA7](/resumos/dispositivos-moveis/ua7/).
+
+### Os botões do Android e os menus
+
+O material lembra que o Android tinha três botões físicos (**home**, **back**, **menu**) e que, desde o **Android 3.0 (API 11)**, os dispositivos **deixaram de oferecer o botão de menu**; os aplicativos precisaram migrar da dependência do painel de menu tradicional para a **barra de ações** (*action bar*). Apesar das mudanças de design, a semântica de definir ações e opções continua baseada nas **APIs de menu**.
+
+Os principais componentes de menu da tela principal:
+
+| Componente | O que é | Quando aparece |
+|---|---|---|
+| **Menu de opções** (*Option Menu*) | Ações relevantes da tela principal (Buscar, Configurações, Atualizar, Editar) | Na barra do aplicativo, mais o menu de *overflow* |
+| **ActionBar / barra do aplicativo** | Barra no topo com identidade do app, **botões de ação** e **overflow** | Sempre visível no topo da tela |
+| **Menu contextual** | Ações que afetam **um item ou contexto específico** (item de lista, por exemplo) | **Clique longo** na *view* registrada |
+| **Menu PopUp** (`PopupMenu`) | Lista vertical de ações **ancorada** a uma *view* | Abaixo da âncora (ou acima, se faltar espaço); some ao tocar fora |
+| **MenuInflater** | **Classe** que **infla** um XML de menu em objetos `Menu` | Usada pelos demais menus (não é um “tipo” de menu) |
+
+### Definindo o menu em XML
+
+Os menus são definidos em **XML**, na pasta **`res/menu/`** (se não existir, crie), e **inflados** na activity. O elemento `<menu>` é o contêiner e cada **`<item>`** é um item de menu, com atributos como:
+
+| Atributo | Função |
+|---|---|
+| `android:id` | ID único, para reconhecer o item quando for selecionado |
+| `android:icon` | Referência a um *drawable* usado como ícone |
+| `android:title` | Referência a uma *string* para o título |
+| `showAsAction` | Quando e como o item aparece como **botão de ação** na barra (`ifRoom`, `always`, `never`) |
+
+```xml
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_add"
+        android:title="@string/action_add"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+</menu>
+```
+
+### Menu de opções e ActionBar
+
+No **menu de opções**, ficam as ações mais usadas no contexto da tela principal. Nas versões **2.3 (API 10) ou anteriores**, os itens apareciam na **parte inferior** da tela (até **seis** itens; excedendo, o Android criava “mais itens”). A partir da **API 11**, os itens vão para a **barra do aplicativo**. Itens da activity e dos **fragments** são combinados na interface (primeiro os da activity, depois os dos fragments na ordem de adição), e `android:orderInCategory` reordena os itens.
+
+A **ActionBar** (barra do aplicativo) traz: **ícone/identidade** do app (cor primária × de destaque no Material Design), **botões de ação** (as ações mais comuns; o que não couber vai para o *overflow*) e o ***action overflow*** (menu com as ações menos frequentes). Funções: dar identidade e **localização** ao usuário, acesso **previsível** a ações importantes (como pesquisa) e suporte à **navegação**.
+
+**Passos para criar e manipular a ActionBar:**
+
+1. a activity herda de **`AppCompatActivity`**;
+2. criar o **XML do menu**;
+3. sobrescrever os métodos:
+
+| Método | O que faz |
+|---|---|
+| **`onCreateOptionsMenu`** | **Infla** o XML do menu (`R.menu.nome_do_menu`); retorna `true` |
+| **`onPrepareOptionsMenu`** | Executado **antes de o menu ser mostrado**; permite habilitar/desabilitar ou mudar itens dinamicamente (`setVisible`) |
+| **`onOptionsItemSelected`** | Chamado **quando o item é clicado**; identifica-o por `getItemId()` e executa a ação; retorna `true` se tratou, senão chama a superclasse |
+
+```java
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.game_menu, menu);
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.new_game) {
+        newGame();
+        return true;
+    } else if (id == R.id.help) {
+        showHelp();
+        return true;
+    }
+    return super.onOptionsItemSelected(item);
+}
+```
+
+Para refazer a preparação do menu (por exemplo, mostrar um ícone só depois de preencher um `EditText`), é preciso **invalidar** o menu de opções (no material, `supportInvalidateOptionsMenu()`), pois `onPrepareOptionsMenu` só roda de novo quando o menu é invalidado.
+
+Se a activity tiver **fragments**, o sistema chama `onOptionsItemSelected()` primeiro para a activity e depois para cada fragment, na ordem de adição, até algum retornar `true`. Também é possível definir o clique de um item **no XML** com `android:onClick` (API 11+): o método precisa ser público e receber um `MenuItem`.
+
+### Toolbar como barra do aplicativo
+
+O material recomenda usar o widget **`Toolbar`** da biblioteca de suporte (appcompat) como barra do aplicativo, porque a `ActionBar` nativa se comporta de modo diferente conforme a versão do Android e só tem Material Design a partir da API 21, enquanto a Toolbar da biblioteca oferece **comportamento consistente** em mais dispositivos. Cinco passos:
+
+1. adicionar a biblioteca appcompat ao projeto (e importar as classes do pacote certo);
+2. garantir que a activity estenda `AppCompatActivity`;
+3. no tema da aplicação, usar um tema **sem ActionBar** (`NoActionBar`), para não usar a ActionBar nativa;
+4. adicionar um `Toolbar` ao leiaute, no topo (elevação de **4 dp**, recomendação do Material Design);
+5. no `onCreate()`, chamar **`setSupportActionBar(toolbar)`**.
+
+Depois, `getSupportActionBar()` dá acesso aos métodos utilitários (por exemplo, `hide()` para ocultar a barra). Versão atual dos passos 3 e 4, com **AndroidX e Material Components**:
+
+```xml
+<!-- res/values/themes.xml -->
+<style name="Theme.MeuApp" parent="Theme.Material3.DayNight.NoActionBar" />
+
+<!-- activity_main.xml -->
+<com.google.android.material.appbar.MaterialToolbar
+    android:id="@+id/my_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    app:title="@string/app_name" />
+```
+
+### Menu contextual
+
+Oferece ações que afetam **um item ou contexto** específico da interface, geralmente em `ListView`, `GridView` ou outras coleções. Há duas formas:
+
+| Forma | Como funciona |
+|---|---|
+| **Menu de contexto flutuante** | Lista flutuante (parecida com diálogo) ao **clique longo** numa *view* registrada; ação em **um item por vez** |
+| **Modo de ação contextual** (*ActionMode*) | **Barra de ação contextual** no topo, com ações sobre **vários itens selecionados** |
+
+Para o menu flutuante: **registrar** a *view* com `registerForContextMenu(view)` no `onCreate()` e sobrescrever `onCreateContextMenu`, que pode criar itens por código (`menu.add(...)`) ou inflar um XML. O `menu.add()` devolve um `MenuItem`, ao qual se pode associar uma **`Intent`** (`setIntent`), que o sistema executa sem chamar `startActivity` à mão. Exemplo do material, enviar SMS (não exige permissão, pois outro aplicativo realiza o envio):
+
+```java
+@Override
+public void onCreateContextMenu(ContextMenu menu, View v,
+                                ContextMenu.ContextMenuInfo menuInfo) {
+    MenuItem menuSMS = menu.add("Enviar SMS");
+    Intent intentSMS = new Intent(Intent.ACTION_VIEW);
+    intentSMS.setData(Uri.parse("sms:" + meuContato.getTelefone()));
+    menuSMS.setIntent(intentSMS);
+    super.onCreateContextMenu(menu, v, menuInfo);
+}
+```
+
+Já **fazer uma chamada** exige a permissão **`CALL_PHONE`** no manifest (`<uses-permission android:name="android.permission.CALL_PHONE"/>`) **e** a verificação em tempo de execução (`checkSelfPermission` / `requestPermissions`); sem a permissão, o app a solicita; com ela, dispara uma `Intent` implícita (`ACTION_CALL`, URI `tel:`).
+
+### PopupMenu e MenuInflater
+
+O **PopupMenu** é um menu **ancorado a uma view**: aparece abaixo dela (ou acima, se não houver espaço) e some ao tocar fora. Mostra itens em lista vertical, para **ações estendidas** ligadas ao conteúdo, que **não devem afetar diretamente** o conteúdo correspondente (isso é função das ações contextuais). Três passos: instanciar `PopupMenu(contexto, viewÂncora)`; **inflar** o menu em `popup.getMenu()` com `MenuInflater`; chamar `popup.show()`. Para tratar o clique, implementa-se `PopupMenu.OnMenuItemClickListener` e registra-se com `setOnMenuItemClickListener()`.
+
+```java
+public void showPopup(View v) {
+    PopupMenu popup = new PopupMenu(this, v);
+    popup.setOnMenuItemClickListener(this);   // a activity implementa OnMenuItemClickListener
+    popup.inflate(R.menu.actions);
+    popup.show();
+}
+
+@Override
+public boolean onMenuItemClick(MenuItem item) {
+    int id = item.getItemId();
+    if (id == R.id.archive) { archive(item); return true; }
+    if (id == R.id.delete)  { delete(item);  return true; }
+    return false;
+}
+```
+
+O **MenuInflater** não é um tipo de menu: é a **classe** que transforma o XML em objetos `Menu`. É usada no menu de opções, no contextual (em `onCreateContextMenu`, com os parâmetros `View` e `ContextMenuInfo` para saber qual *view* e qual item originaram o menu) e no PopupMenu.
+
+<Callout type="warning">
+**Erros, imprecisões e desatualizações no material**
+
+**1. “MainActivity” não é um nome obrigatório.** O texto diz que “a tela principal tem o nome de classe MainActivity”. É **convenção** do assistente do Android Studio: a tela principal é a activity declarada no manifest com o *intent-filter* `MAIN`/`LAUNCHER`, com qualquer nome.
+
+**2. Botões físicos e “home segurado mostra apps abertos”.** O material apresenta home, back e menu como botões **físicos** e diz que segurar o *home* mostra os apps abertos. Hoje a navegação é **na tela** (três botões virtuais, com **Recentes**/Visão geral no lugar do menu) ou por **gestos**; a tecla de menu **foi descontinuada**, e segurar *home* costuma abrir o **assistente**, não a lista de apps.
+
+**3. Classes `android.support.*`.** `android.support.v7.app.AppCompatActivity` e `android.support.v7.widget.Toolbar` são da **Support Library**, congelada na versão 28 (2018). O correto hoje é **AndroidX**: `androidx.appcompat.app.AppCompatActivity` e `androidx.appcompat.widget.Toolbar` (ou `MaterialToolbar`). O tema `Theme.AppCompat.Light.NoActionBar` deu lugar a `Theme.Material3.*.NoActionBar` (ou `Theme.MaterialComponents`).
+
+**4. “Cada item é um menu.”** Na definição do XML, o **menu** é o elemento `<menu>`; cada `<item>` é um **item de menu**.
+
+**5. “Os menus devem ser definidos no XML” × menu criado por código.** O texto afirma que os desenvolvedores *devem* definir o menu e seus itens no XML, mas depois mostra `menu.add("...")` criando itens **programaticamente**. As duas formas existem: o XML é a **recomendada**, não a única.
+
+**6. A ActionBar “por padrão não é ativada” × “já vêm com ActionBar”.** O texto diz que, na API 11+, a ActionBar “por padrão, não é ativada” e que é preciso marcar `showAsAction="ifRoom"`; mais adiante afirma que as activities com **temas-padrão já vêm com ActionBar** desde a API 11. A segunda é a correta: a **barra existe por padrão**; o que `showAsAction` controla é se o item aparece como **botão** na barra ou no ***overflow*** (sem `ifRoom`/`always`, o item vai para o overflow). Com AppCompat, o atributo exige o namespace **`app:`** (`app:showAsAction`), como no exemplo acima.
+
+**7. `onPrepareOptionsMenu` “sempre antes de o menu ser mostrado” × “só quando a ActionBar é carregada”.** As duas frases aparecem lado a lado. O correto: é chamado **depois de `onCreateOptionsMenu` e novamente sempre que o menu for invalidado** (`invalidateOptionsMenu()`). Além disso, `supportInvalidateOptionsMenu()` está **depreciado**: use **`invalidateOptionsMenu()`**, disponível na `AppCompatActivity`.
+
+**8. ActionBar com “abas e listas suspensas”.** O modo de navegação por **tabs** e *dropdown* da ActionBar foi **depreciado na API 21**. Use `TabLayout` com `ViewPager2`, `BottomNavigationView` ou *Navigation Drawer*. Também é impreciso chamar a ActionBar de “barra de **navegação**”: a *navigation bar* do Android é a barra **do sistema** (embaixo).
+
+**9. Menu contextual: “ao se clicar” e “menu de opções”.** O texto diz que o menu surge “ao se clicar” num item da `ListView` e que “um menu de **opções**” ficará sobre ela. O menu contextual abre no **clique longo**, e o que aparece é um menu **de contexto**, não o menu de opções.
+
+**10. A frase de `setOnItemLongClickListener` se contradiz.** O texto diz que o método “precisará retornar `false` para o evento não abrir sozinho; se for `true`, ele não abrirá sozinho”. O correto: retornar **`true`** significa “evento consumido” e o menu de contexto **não** abre automaticamente; retornar **`false`** deixa o evento seguir e o menu **abre**.
+
+**11. Erros no código do “Fazer chamada”.** O código tem `new MenuItem.setOnMenuItemClickListener()` (o correto é **`MenuItem.OnMenuItemClickListener`**), `ActivityCompat.requestPermission(...)` (o método é **`requestPermissions`**, no plural) e termina com **`return false`** depois de tratar o clique (deveria ser **`true`**, “tratado”). Para só **abrir o discador** não é preciso permissão: use **`ACTION_DIAL`**.
+
+**12. “Menu Inflater” como tipo de menu.** O material lista “menu Inflater” entre os principais menus, e o exercício 1 define como “o menu que carrega o XML”. **MenuInflater é uma classe**, que serve a **qualquer** menu (opções, contextual, PopupMenu). O exercício 1 só faz sentido se lido como “o componente que infla o XML”.
+
+**13. Typos e nomes.** `PopMenu` é **`PopupMenu`**; `R.id.action.add` é **`R.id.action_add`**; `activity_meu_laytout` é `activity_meu_layout`; no trecho sobre Fragments o texto “caso contrário, se essas classes declararem...” é confuso (e, para um `Fragment` ter menu, é preciso `setHasOptionsMenu(true)`).
+
+**14. `case R.id.x` no `switch`.** Desde o **Android Gradle Plugin 8**, os IDs de `R` **não são constantes** por padrão, então `switch (item.getItemId()) { case R.id.help: ... }` **não compila** em Java; use `if/else` (como no exemplo acima) ou `when` em Kotlin.
+
+**15. “MVC”.** Ver a activity como *controller* e o XML como *view* é uma simplificação. Hoje se separa a **UI** (activity/fragment/Compose) do estado e da lógica (**ViewModel**, arquitetura MVVM), como visto nas boas práticas de ciclo de vida da [UA5](/resumos/dispositivos-moveis/ua5/).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Toolbar/MaterialToolbar, MenuProvider e Compose.** A `ActionBar` nativa e o menu de opções por `onCreateOptionsMenu` estão **em desuso**. Em **Views**, o padrão atual é a **`MaterialToolbar`** (Material Components) com `setSupportActionBar`, dentro de um `AppBarLayout`/`CoordinatorLayout` quando há rolagem. Os métodos `onCreateOptionsMenu`/`onOptionsItemSelected` **da Activity continuam funcionando**, mas nos *fragments* `setHasOptionsMenu()` e `onCreateOptionsMenu()` estão **depreciados**, substituídos pela interface **`MenuProvider`**, que liga o menu ao **ciclo de vida** do fragment:
+
+```kotlin
+requireActivity().addMenuProvider(object : MenuProvider {
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.game_menu, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = when (menuItem.itemId) {
+        R.id.new_game -> { newGame(); true }
+        else -> false
+    }
+}, viewLifecycleOwner, Lifecycle.State.RESUMED)
+```
+
+Em **Jetpack Compose**, a barra é o **`TopAppBar`** (Material 3), e o menu de *overflow* é um **`DropdownMenu`**, no lugar de `res/menu/` e `PopupMenu`:
+
+```kotlin
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Tela() {
+    var aberto by remember { mutableStateOf(false) }
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { Text("Meu app") },
+            actions = {
+                IconButton(onClick = { aberto = true }) {
+                    Icon(Icons.Default.MoreVert, contentDescription = "Mais opções")
+                }
+                DropdownMenu(expanded = aberto, onDismissRequest = { aberto = false }) {
+                    DropdownMenuItem(text = { Text("Configurações") }, onClick = { aberto = false })
+                }
+            }
+        )
+    }) { padding -> /* conteúdo */ }
+}
+```
+
+Outras atualizações: **menu de contexto** com ações em lote hoje é ***long press* + seleção múltipla** (ActionMode, ou o `Modifier.combinedClickable` em Compose); a navegação principal usa **`BottomNavigationView`/`NavigationBar`** e **Navigation Drawer**, além do **Navigation Component**; botão físico de menu e navegação por botões dão lugar à navegação **por gestos**, que exige **tratar `WindowInsets`** (*edge-to-edge*); **permissões** de chamada devem usar a **Activity Result API** (`registerForActivityResult(RequestPermission)`) no lugar de `requestPermissions` + `onRequestPermissionsResult`; e títulos/ações devem vir de `strings.xml` (veja a [UA6](/resumos/dispositivos-moveis/ua6/)).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Menu de opções:** ações principais da tela; criado por `onCreateOptionsMenu` (infla `R.menu.x`); itens a partir da API 11 vão para a **barra de aplicativo**.
+- **ActionBar:** “padrão de design mais importante”, com botões de ação, **tabs** e menus; três partes: **ícone**, **action buttons** e **action overflow**.
+- **Passos da ActionBar:** `AppCompatActivity` → XML de menu → `onCreateOptionsMenu`, **`onPrepareOptionsMenu`**, `onOptionsItemSelected`.
+- **`onPrepareOptionsMenu`:** roda **antes de o menu ser mostrado**; habilita, desabilita ou altera itens dinamicamente; para reexecutar, **invalidar** o menu.
+- **`onOptionsItemSelected`:** chamado no **clique do item**; devolver `true` se tratou.
+- **Menu contextual:** ações sobre **um item/contexto**; **clique longo**; `registerForContextMenu` + `onCreateContextMenu`; modos: **flutuante** (um item) e **ActionMode** (vários itens).
+- **PopupMenu:** ancorado a uma view, **abaixo da âncora** (ou acima, sem espaço), lista vertical, ações **estendidas**.
+- **MenuInflater:** **infla** o XML do menu (exercício 1); **Toolbar** é “a barra dentro do aplicativo” (exercício 2).
+- **Toolbar:** usar tema **NoActionBar** + `setSupportActionBar(toolbar)`; elevação recomendada de **4 dp**.
+- **Desafio da UA** (app de lista de clientes, com tela principal com menus para o cliente falar com a empresa ou outros clientes): **MainActivity** (`AppCompatActivity`) com **ActionBar/Toolbar** e **menu de opções** (XML em `res/menu/`, `onCreateOptionsMenu`, `onOptionsItemSelected`) para ações gerais; **menu contextual** na lista de clientes (clique longo) para **ligar** (`ACTION_CALL` + permissão) ou **enviar SMS** (`Intent`); e **PopupMenu** para ações extras de cada item.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. F. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- ANDROID DEVELOPERS. Adição da barra do aplicativo; Menus. 2019.
+- CERICATTO, R. Action Bar; Menus em Android. *Programação em Android*.
+- MIRANDA, R. F. Criando e manipulando uma ActionBar no Android; Criando um Menu Suspenso (Menu de Contexto) no Android. *javAndroidFortaleza*, 2016.
+- ZARELLI, G. B. Android: criando menus de opções. *HelpDev*, 2013.
+- ANDROID DEVELOPERS. Material Components; MenuProvider; Jetpack Compose: App bars (documentação oficial).
