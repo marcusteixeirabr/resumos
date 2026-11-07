@@ -1,0 +1,182 @@
+---
+title: "UA8 — Ferramentas de Teste"
+subtitle: "Categorias de ferramentas de apoio ao teste, as ferramentas clássicas (TestLink, Selenium, Rational Functional Tester, TestComplete), o JUnit em Java e o que mudou no mercado."
+ua: 8
+group: "Ferramentas e Gerenciamento"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua8.m4a" title="Ferramentas de teste" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gat_01.webp" alt="Infográfico sobre ferramentas de teste automatizado e o JUnit" caption="Ferramentas de teste e o JUnit" />
+</SlidesGrid>
+
+### Por que usar ferramentas
+
+Testar exige planejamento, tempo, conhecimento técnico, infraestrutura e comprometimento. Quanto **mais tarde** um problema é encontrado, **maior o custo** de corrigi-lo (financeiro e de imagem perante o usuário), por isso o teste deve começar cedo e atravessar todo o ciclo de vida. As **ferramentas** automatizam atividades de teste e dão mais produtividade e rapidez. Benefícios apontados pelo material (Caetano):
+
+- os testes podem ser **repetidos por inteiro** sem que a tarefa fique maçante para os testadores;
+- casos de teste e resultados ficam **armazenados e documentados**, acessíveis à equipe;
+- os testes são **reproduzidos de forma fiel**, pois cada atividade fica registrada;
+- são gerados **arquivos de log** com tudo o que foi feito e os problemas encontrados.
+
+Os três termos da UA1 reaparecem: **erro** (engano humano, como um trecho de código incorreto) → **defeito** (o que o erro deixa no código, na documentação ou no design) → **falha** (o comportamento incorreto quando o defeito é executado). Veja a [UA1](/resumos/teste-software/ua1/).
+
+### Categorias de ferramentas
+
+Mais importante do que decorar produtos é saber **qual tipo de ferramenta resolve qual problema**. O material divide as ferramentas de software em sete categorias, usadas ao longo do ciclo de vida:
+
+| Categoria | Para que serve | Exemplos citados ou atuais |
+|---|---|---|
+| **Gestão de defeitos** | Registrar, classificar e acompanhar defeitos até a correção | Mantis (citado), Bugzilla, Jira, GitHub Issues |
+| **Gestão de testes** | Planos, casos, execuções, rastreabilidade com requisitos e relatórios | **TestLink** (citado), TestRail, Xray, Zephyr |
+| **Gestão de projetos** | Planejar e acompanhar o projeto | Jira, Azure DevOps, Trello |
+| **Automação de testes funcionais e de aceitação** | Executar a aplicação como o usuário (interface) e checar o resultado | **Selenium**, **IBM Rational Functional Tester**, **TestComplete**, Playwright, Cypress |
+| **Automação de testes de performance** | Simular carga e medir tempo de resposta | JMeter, k6, Gatling |
+| **Controle de versões** | Guardar o histórico do código e dos testes | Git (GitHub, GitLab) |
+| **Ferramentas de apoio** | Complementam as demais (documentação, comunicação, análise) | Wikis, editores, ferramentas de cobertura |
+
+Outro eixo de classificação é a **licença**: **open source** (código aberto, sem pagar licença, produzido de forma colaborativa) ou **comercial/paga**. O material insiste que **não existe a melhor ferramenta**: a escolha depende da complexidade do projeto, da linguagem, da experiência da equipe e do artefato produzido, e cabe ao gestor/analista decidir.
+
+### As ferramentas apresentadas
+
+| Ferramenta | Categoria | Licença | O que o material destaca |
+|---|---|---|---|
+| **TestLink** | Gestão de testes | Open source (PHP) | Planos de teste e relatórios; registro de requisitos e ligação de cada caso ao requisito; permissões por perfil; casos em pacotes hierárquicos e por prioridade; palavras-chave; projetos e casos ilimitados; atribuição a testadores; exportação para CSV, PDF, Excel e Word; integração com o **Mantis** |
+| **Selenium** | Automação funcional **web** | Open source | Multiplataforma (Windows, Mac, Linux) e multinavegador; scripts em várias linguagens; exige **conhecimento técnico e esforço** para montar a estrutura de automação |
+| **IBM Rational Functional Tester** | Automação funcional e de regressão | Paga | Scripts em Visual Basic, .NET e Java; “teste de *storyboard*”: ações do usuário e do testador registradas e exibidas como capturas de tela |
+| **TestComplete** | Automação funcional (web, mobile, desktop) | Paga | Scripts em JavaScript, VBScript, C++ e Python; testes por **palavras-chave** e **dados**; **gravação e reprodução** |
+
+Critérios do material para escolher: **linguagem do projeto**, **requisitos**, **familiaridade da equipe**, formato de relatórios, integração com outras ferramentas e organização dos casos em pacotes.
+
+<Callout type="warning">
+**Erros, imprecisões e desatualizações no material**
+
+**1. TestLink não é “ferramenta automatizada de testes”.** O texto o apresenta como “ferramenta automatizada” e, na frase seguinte, diz que serve à **gestão** de testes. É ferramenta de **gestão** (planos, casos, execuções manuais, relatórios), **não executa** testes automaticamente. Além disso, o desenvolvimento do TestLink está praticamente **parado desde cerca de 2019** (última versão estável 1.9.20): é hoje considerado legado, e o mercado migrou para TestRail, Xray, Zephyr e similares.
+
+**2. Critérios de “ferramenta de teste” valem só para ferramentas de unidade.** O material afirma que *toda* ferramenta automatizada de teste precisa executar cada menor parte **isolada** e definir a unidade de teste de forma simples. Isso descreve frameworks **xUnit** (como o JUnit), **não** TestLink, Selenium ou ferramentas de performance, que aparecem na própria lista.
+
+**3. “Repetidos de maneira exaustiva”.** Repetir testes sem cansar é vantagem da automação, mas **teste exaustivo** (todas as combinações) é **impossível**, um dos princípios clássicos do teste. A automação repete o *mesmo conjunto*, não cobre “tudo”.
+
+**4. Selenium: linguagens e navegadores desatualizados.** O texto cita Python, Ruby, Perl e Java, e Chrome, **Internet Explorer** e Firefox. Hoje as linguagens oficiais são **Java, Python, C#, Ruby, JavaScript e Kotlin** (Perl não é oficial, e **C#** falta na lista, embora o exercício 4 cite C#). O **Internet Explorer foi aposentado** (2022); o Selenium suporta Chrome, Edge, Firefox e Safari. O Selenium 4 adota o protocolo **WebDriver** padrão do W3C, e o antigo Selenium IDE (plugin do Firefox) foi descontinuado em 2017 e reescrito depois.
+
+**5. “Recurso inédito” do Rational.** O teste de *storyboard* era novidade em 2007; hoje gravação de passos, capturas e vídeo são comuns (Cypress e Playwright geram vídeo e *trace* automaticamente). A linha **IBM Rational Functional Tester** passou à **HCL** em 2019, e a UFT, outra ferramenta clássica, antes chamada **QTP**, é hoje distribuída pela OpenText.
+
+**6. JUnit “atual” descrito é o JUnit 3.** O material diz que “na versão atual” o JUnit se divide em sete classes (Assert, TestResult, Test, TestListener, TestCase, TestSuite, BaseTestRunner). Isso descreve o **JUnit 3** (herança de `TestCase`). O **JUnit 4** (2006) usa **anotações** (`@Test`, `@Before`) e o **JUnit 5** (2017, *Jupiter*) usa `@Test`, `@BeforeEach`, `@AfterEach`, `@BeforeAll`. A própria Figura 2 do material usa anotações do JUnit 4, e o exercício 5 usa `@BeforeEach` do JUnit 5, o que contradiz o texto.
+
+**7. “O método é `void`, então será uma classe de teste.”** Frase sem sentido técnico: o tipo de retorno `void` não transforma nada em classe. Um **método de teste** é um método `void` **anotado com `@Test`**, sem parâmetros, **dentro de uma classe de teste**.
+
+**8. Figura 2 × texto.** O texto diz que a *string* é inicializada e recebe `null` “três vezes, porque existem três métodos de teste”, mas a figura mostra **dois** métodos `@Test` (mais `@Before` e `@After`). `@Before` roda **antes de cada** teste e `@After` **depois de cada** teste, o que faz cada teste começar com estado novo.
+
+**9. Cores do “semáforo”.** O material diz que **azul** é erro de validação (falha de asserção) e **vermelho** é exceção. Isso vale para a visão JUnit do **Eclipse** (azul = *failure*, vermelho = *error*); na maioria das IDEs atuais (IntelliJ, VS Code, Android Studio) o teste que falha é **vermelho** e o que passa é **verde**. A distinção correta é conceitual: ***failure*** (a asserção não bateu) × ***error*** (exceção inesperada).
+
+**10. `equals` e `hashcode`.** O correto é `hashCode` (com C maiúsculo). Para `assertEquals` com objetos, o essencial é implementar **`equals`**; `hashCode` deve ser coerente com ele (contrato), mas não é o que a asserção usa.
+
+**11. Ordem dos argumentos.** No exemplo `assertEquals("2 dividido por 2 precisa resultar em 1", 1, 2/2)` a **mensagem vem primeiro**: é a ordem do **JUnit 4**. No **JUnit 5** a mensagem é o **último** argumento: `assertEquals(1, 2/2, "mensagem")`.
+
+**12. Citações e referências inconsistentes.** O texto cita Pressman e Maxim com anos **2016** e **2021** e Sommerville (**2022**), mas a lista de referências traz Pressman e Maxim **8. ed., 2011** e não traz Sommerville.
+
+**13. O Desafio mistura duas coisas.** Pede “testes automatizados” **e** exportação de relatórios em CSV/PDF/Excel/Word com pacotes atribuídos a testadores. A resposta esperada é o TestLink, mas ele atende ao segundo grupo (**gestão**); a execução automatizada exige uma ferramenta de automação (como o JUnit). O correto é combinar as duas categorias.
+
+**14. Exercício 3 do material.** O exercício 3 pede “práticas mais atuais”: o **TestLink não é** ferramenta de carga/desempenho (afirmativa II falsa) e o **Rational Functional Tester não é** código aberto (afirmativa IV falsa); **Selenium** (I) e **Cypress/Playwright** (III) estão corretos.
+</Callout>
+
+### JUnit: testes unitários em Java
+
+O **JUnit** é um *framework* da família **xUnit** (ferramentas equivalentes existem para C++, Smalltalk e outras linguagens) para escrever e executar **testes de unidade e de regressão** em Java. Em Java, a “menor parte” testável costuma ser o **método**. Exemplo do material: numa classe `Aluno` com os métodos `calcularMedia()` e `calcularMensalidade()`, cada método é testado separadamente para localizar a origem de um problema.
+
+Estrutura do JUnit, segundo o material: uma parte com **métodos e anotações** para escrever os casos de teste e outra que **executa** esses casos. A execução é **totalmente automática**, sem intervenção humana. Para ter o JUnit, baixa-se o *framework* (junit.org) ou usa-se a versão já embutida nas **IDEs**.
+
+**Asserção (*assert*):** compara o valor **esperado** com o **obtido**; o teste **passa se forem iguais** e **falha se forem diferentes**. Boa prática: asserir os valores realmente críticos (às vezes também os intermediários, quando influenciam o resultado final).
+
+Cuidados no planejamento (Bittencourt, Tessmann e Schirmer):
+
+1. definir um **pacote** que guarde todos os casos de teste;
+2. cada **classe de teste** cobre **uma classe** do sistema;
+3. criar **vários procedimentos de teste pequenos**, em vez de um grande.
+
+Exemplo no estilo atual (JUnit 5), com preparação e limpeza **a cada teste**:
+
+```java
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class AlunoTest {
+
+    private Aluno aluno;
+
+    @BeforeEach
+    void preparar() {
+        aluno = new Aluno("Ana");
+        aluno.adicionarNota(8.0);
+        aluno.adicionarNota(6.0);
+    }
+
+    @AfterEach
+    void limpar() {
+        aluno = null;
+    }
+
+    @Test
+    void calculaMediaDasNotas() {
+        // esperado, obtido, mensagem (a mensagem é o último argumento no JUnit 5)
+        assertEquals(7.0, aluno.calcularMedia(), 0.001, "média de 8 e 6 deve ser 7");
+    }
+}
+```
+
+Ciclo de cada teste: **`@BeforeEach` → `@Test` → `@AfterEach`**, repetido para cada método de teste, de modo que os cenários estejam sempre “zerados e corretamente inicializados”. Para *TDD* (escrever o teste antes do código) e os recursos por nível, veja a [UA2](/resumos/teste-software/ua2/).
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Foco em categorias, não em produtos; ferramentas de ponta a ponta e integração contínua.** O mercado mudou bastante desde o livro. Para automação de **interface web**, **Playwright** (Microsoft) e **Cypress** ganharam espaço sobre o Selenium: esperas automáticas (menos testes instáveis, os *flaky tests*), execução rápida, *trace*/vídeo embutidos e integração com JavaScript/TypeScript; o **Selenium 4** continua muito usado, principalmente em grades de navegadores e em equipes Java. Em **mobile** usam-se **Appium** e **Espresso**; para **performance**, **k6**, **JMeter** e **Gatling**; para **gestão de testes**, **TestRail**, **Xray** e **Zephyr** (integrados ao Jira) no lugar do TestLink; para defeitos, **Jira** ou **GitHub Issues**. Relatórios modernos: **Allure**.
+
+No **JUnit 5**, além de `@BeforeEach/@AfterEach`, usam-se **testes parametrizados** (`@ParameterizedTest`), `assertThrows` para validar exceções, **Mockito** para simular dependências e **Testcontainers** para bancos e serviços reais. As ferramentas deixam de ser “abertas manualmente”: rodam em **CI/CD** (GitHub Actions, GitLab CI, Jenkins) a cada *commit*, e a **regressão** vira uma etapa automática do *pipeline*, como visto na [UA7](/resumos/teste-software/ua7/). Para escolher uma ferramenta hoje, avalie também o **custo de manutenção dos testes**, a **integração com o pipeline** e o **suporte à linguagem** da equipe.
+
+```yaml
+# Exemplo mínimo: rodar os testes Java a cada push (GitHub Actions)
+name: testes
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: mvn --batch-mode test
+```
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Não existe a melhor ferramenta**: a escolha depende de linguagem, complexidade, equipe e artefato; quem decide é o **gestor/analista** do projeto.
+- **Sete categorias**: gestão de defeitos, gestão de testes, gestão de projetos, automação funcional e de aceitação, automação de performance, controle de versões e apoio.
+- **TestLink** = **gestão de testes** (open source, PHP; integra com Mantis; casos em pacotes hierárquicos, exporta CSV/PDF/Excel/Word). **Não** é de carga e **não** executa testes sozinho.
+- **Selenium** = automação **web**, open source, multiplataforma e multinavegador, várias linguagens; exige **conhecimento técnico**; **não** é pago e **não** é “codeless”.
+- **IBM Rational Functional Tester** = **paga**, funcional e de regressão, recurso de **storyboard**. **TestComplete** = **paga**, web/mobile/desktop, **palavras-chave** e **gravação/reprodução**.
+- **JUnit** = framework **xUnit** para **testes de unidade** (e regressão) em **Java**; `assert` compara **esperado × obtido**; `@Before`/`@BeforeEach` roda **antes de cada** teste e `@After`/`@AfterEach` **depois de cada**; suporta testes **parametrizados**; **tem** integração com CI/CD.
+- **Desafio da UA** (sistema de RH: testes automatizados, resultados exportados em **CSV e PDF**, edição posterior em **Excel e Word**, casos organizados em **pacotes atribuídos a testadores**): o material espera o **TestLink**, que tem justamente essas exportações, os pacotes hierárquicos e a atribuição a testadores. Ressalva: o TestLink **gerencia** os testes; a automação em Java ficaria com o **JUnit**.
+- Cada caso de teste de unidade cobre **uma classe**; crie **vários métodos de teste pequenos**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- BITTENCOURT, G.; TESSMANN, P. V.; SCHIRMER, T. *Teste de software: uma introdução ao uso do JUnit em testes unitários*. 2019.
+- CAETANO, C. *Automação e gerenciamento de testes: aumentando a produtividade com as principais soluções open source e gratuitas*. São Paulo: Novatec, 2007.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH.
+- SOMMERVILLE, I. *Engenharia de software*. São Paulo: Pearson.
+- JUNIT. *JUnit 5 User Guide* (documentação oficial).
+- SELENIUM; PLAYWRIGHT; CYPRESS (documentação oficial).

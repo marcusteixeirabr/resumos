@@ -1,0 +1,115 @@
+{
+  "ua": 8,
+  "questions": [
+    {
+      "question": "Qual é uma das principais vantagens proporcionadas pela adoção de ferramentas de automação de testes no ciclo de desenvolvimento de software?",
+      "options": [
+        "Eliminar completamente a necessidade de qualquer planejamento prévio de casos de teste.",
+        "Permitir a repetição fiel e frequente de suítes de testes, garantindo reprodutibilidade sem sobrecarregar a equipe com rotinas manuais repetitivas.",
+        "Substituir integralmente a equipe de desenvolvedores por scripts autônomos de correção de código.",
+        "Garantir matematicamente que o software entre em produção com ausência absoluta de qualquer falha."
+      ],
+      "correctIndex": 1,
+      "explanation": "A automação de testes permite que cenários e procedimentos sejam reexecutados de forma padronizada, rápida e fiel quantas vezes forem necessárias, aumentando a produtividade e a cobertura de regressão."
+    },
+    {
+      "question": "No ecossistema de garantia da qualidade de software, como se diferenciam as ferramentas de Gestão de Testes daquelas destinadas à Automação Funcional?",
+      "options": [
+        "Ferramentas de gestão compilam código-fonte em tempo real, enquanto as de automação funcional monitoram o consumo de energia dos servidores.",
+        "Ferramentas de gestão são exclusivas para testes de estresse de hardware, enquanto as de automação funcional gerenciam contratos comerciais.",
+        "Ferramentas de gestão estruturam planos, casos, requisitos, atribuições e relatórios de execução, enquanto ferramentas de automação funcional executam interações programadas com o sistema simulando o comportamento de uso.",
+        "Ferramentas de gestão operam apenas via linha de comando sem interface gráfica, enquanto ferramentas de automação funcional exigem preenchimento manual de planilhas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Ferramentas de gestão de testes (como TestRail ou Xray) organizam o processo de teste, planos, requisitos e evidências, enquanto ferramentas de automação (como Selenium ou Playwright) interagem diretamente com o software para executar passos de verificação."
+    },
+    {
+      "question": "Em relação à cobertura de testes em aplicações de software, qual princípio fundamental rege o uso de suítes de testes automatizados?",
+      "options": [
+        "A automação garante o teste exaustivo de todas as combinações possíveis de dados de entrada.",
+        "A execução de testes automatizados comprova de forma definitiva que o software está 100% correto.",
+        "Uma única ferramenta de teste é capaz de resolver com excelência todas as necessidades funcionais e não funcionais de qualquer projeto.",
+        "O teste exaustivo é inviável na prática; os testes automatizados executam conjuntos selecionados de cenários para demonstrar a presença de defeitos e reduzir riscos de regressão."
+      ],
+      "correctIndex": 3,
+      "explanation": "Testar todas as combinações de dados e fluxos é matematicamente inviável. Portanto, os testes automatizados operam sobre conjuntos finitos e representativos de cenários com o objetivo de identificar falhas e diminuir riscos, nunca de provar ausência total de defeitos."
+    },
+    {
+      "question": "Qual é a principal característica do framework Selenium no contexto de testes automatizados de software?",
+      "options": [
+        "É uma solução de código aberto (open source) voltada à automação de testes funcionais em navegadores web, suportando múltiplas linguagens de programação por meio de drivers dedicados.",
+        "É uma ferramenta comercial proprietária que dispensa qualquer conhecimento de programação por utilizar exclusivamente gravação visual sem código.",
+        "É um utilitário exclusivo para testes unitários em bancos de dados relacionais corporativos.",
+        "É um monitor de hardware desenhado para medir consumo de memória RAM em servidores de computação em nuvem."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Selenium é um framework de código aberto amplamente utilizado para automação de testes de navegadores web em diferentes sistemas operacionais, permitindo a escrita de scripts em linguagens como Java, Python, C#, JavaScript e Ruby."
+    },
+    {
+      "question": "Em frameworks modernos da família xUnit voltados a testes de unidade (como o JUnit em Java), como é estruturado um método de teste?",
+      "options": [
+        "Como um método estático que obrigatoriamente retorna uma lista de exceções capturadas do sistema operacional.",
+        "Como um método público sem valor de retorno (void), sem parâmetros de entrada e anotado explicitamente com a anotação de teste correspondente (como @Test).",
+        "Como uma interface abstrata que herda parâmetros globais do arquivo de configuração do servidor de aplicação.",
+        "Como uma função que deve ser executada obrigatoriamente com permissões de administrador do banco de dados."
+      ],
+      "correctIndex": 1,
+      "explanation": "Nas versões contemporâneas do JUnit e de frameworks xUnit equivalentes, um método de teste é um método simples (void), sem parâmetros, anotado com @Test dentro de uma classe de teste, delegando a identificação e execução ao próprio executor de testes."
+    },
+    {
+      "question": "No ciclo de execução de uma classe de teste de unidade que utiliza anotações de ciclo de vida (como @BeforeEach e @AfterEach), em qual momento esses métodos auxiliares são disparados?",
+      "options": [
+        "Apenas uma única vez antes do início da compilação de todo o projeto de software.",
+        "Exclusivamente quando algum teste falha durante a execução do pipeline de integração contínua.",
+        "Somente no momento em que a conexão com a base de dados principal é interrompida por timeout.",
+        "O método preparatório é executado antes de cada método de teste individual, e o método de limpeza é executado logo após cada método de teste individual."
+      ],
+      "correctIndex": 3,
+      "explanation": "Anotações como @BeforeEach (ou @Before) e @AfterEach (ou @After) garantem que cada teste unitário seja executado com um ambiente limpo e isolado, rodando respectivamente antes e depois de cada caso de teste da classe."
+    },
+    {
+      "question": "Ao analisar os resultados gerados pela execução de uma suíte de testes unitários automatizados, qual é a diferença entre uma Falha de Asserção (Failure) e um Erro de Execução (Error)?",
+      "options": [
+        "Falha ocorre apenas em testes manuais, enquanto Erro ocorre exclusivamente em testes de carga de servidores.",
+        "Falha indica que o servidor de hospedagem foi desligado, enquanto Erro significa que o arquivo de código foi excluído.",
+        "Falha de Asserção indica que o resultado obtido divergiu do resultado esperado definido no teste, enquanto Erro de Execução indica que ocorreu uma exceção inesperada ou não tratada durante o processamento.",
+        "Falha significa que o compilador não encontrou o método principal, enquanto Erro representa que o teste obteve aprovação com ressalvas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Uma Falha (Failure) decorre de uma asserção que não foi satisfeita (esperava-se um valor e obteve-se outro), indicando provável defeito na lógica testada. Já um Erro (Error) reflete uma condição excepcional imprevista (como NullPointerException ou falha de infraestrutura) que abortou o teste."
+    },
+    {
+      "question": "Em linguagens orientadas a objetos como Java, qual mecanismo interno é invocado por métodos de asserção como assertEquals(esperado, obtido) ao comparar a equivalência de duas instâncias de classes personalizadas?",
+      "options": [
+        "A implementação do método equals presente na classe dos objetos comparados.",
+        "A contagem de atributos estáticos declarados no arquivo de propriedades da aplicação.",
+        "O número de linhas de código-fonte contidas no arquivo de compilação da classe.",
+        "A alocação aleatória de endereços de memória na máquina virtual."
+      ],
+      "correctIndex": 0,
+      "explanation": "O método assertEquals avalia a igualdade lógica entre objetos por meio da invocação do método equals implementado pela classe. Por isso, classes cujos objetos serão submetidos a asserções de igualdade devem sobrescrever equals e manter coerência com hashCode."
+    },
+    {
+      "question": "Quais são as boas práticas recomendadas para a organização estrutural de testes de unidade em um projeto de software corporativo?",
+      "options": [
+        "Manter todos os testes unitários em um único arquivo de script executável na raiz do sistema operacional.",
+        "Organizar os casos de teste em pacotes espelhados aos de produção, dedicando classes de teste específicas para cobrir classes do sistema e escrevendo procedimentos de teste pequenos e focados.",
+        "Inserir o código dos testes unitários dentro dos próprios métodos de produção com blocos condicionais de depuração.",
+        "Evitar a divisão de testes em procedimentos pequenos, priorizando um único método abrangente com centenas de asserções acumuladas."
+      ],
+      "correctIndex": 1,
+      "explanation": "Projetar testes limpos requer separar o código de teste do código de produção em pacotes organizados, mapear classes de teste para classes de domínio e criar métodos de teste pequenos, focados e com asserções bem direcionadas."
+    },
+    {
+      "question": "Como ferramentas de testes automatizados são tipicamente integradas às práticas de Engenharia de Software em pipelines de Integração Contínua (CI/CD)?",
+      "options": [
+        "Através de impressão periódica de relatórios em papel para conferência física dos analistas de negócios.",
+        "Mediante execução compulsória de testes unitários e de integração apenas uma vez a cada encerramento de ano fiscal.",
+        "Por meio do bloqueio permanente da escrita de novos códigos-fonte durante o horário comercial.",
+        "Por meio de automações configuradas no repositório de controle de versão que disparam automaticamente a compilação e a execução das suítes de teste a cada envio de código (push ou pull request)."
+      ],
+      "correctIndex": 3,
+      "explanation": "Em pipelines modernos de CI/CD (como GitHub Actions, GitLab CI ou Jenkins), as ferramentas de teste rodam automaticamente a cada novo envio de código, fornecendo feedback imediato sobre a integridade da aplicação e evitando regressões."
+    }
+  ]
+}
