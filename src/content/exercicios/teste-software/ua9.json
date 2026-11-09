@@ -1,0 +1,115 @@
+{
+  "ua": 9,
+  "questions": [
+    {
+      "question": "Na garantia da qualidade de software, como se diferenciam os conceitos da cadeia Erro, Defeito e Falha?",
+      "options": [
+        "Erro é a ação ou engano humano ocorrido durante o desenvolvimento; Defeito é a anomalia ou imperfeição deixada no código ou artefato; e Falha é o comportamento incorreto manifestado pelo software durante a execução.",
+        "Erro é a indisponibilidade física de servidores; Defeito é a opinião subjetiva do usuário; e Falha é a assinatura contratual do projeto.",
+        "Erro, Defeito e Falha são termos absolutamente sinônimos que descrevem indistintamente qualquer travamento de sistema operacional.",
+        "Erro ocorre exclusivamente em linguagens compiladas; Defeito ocorre apenas em bancos de dados relacionais; e Falha ocorre somente em conexões de rede sem fio."
+      ],
+      "correctIndex": 0,
+      "explanation": "A engenharia de software distingue com clareza: o erro é a ação humana equivocada (engano), o defeito (bug) é a imperfeição introduzida no produto, e a falha é o evento observável no qual o software diverge do comportamento esperado em tempo de execução."
+    },
+    {
+      "question": "No âmbito das práticas de gerenciamento de serviços de TI (como a ITIL), qual é a principal distinção entre Gerenciamento de Incidentes e Gerenciamento de Problemas?",
+      "options": [
+        "O gerenciamento de incidentes trata da folha de pagamento da equipe, enquanto o gerenciamento de problemas cuida do marketing digital.",
+        "O gerenciamento de incidentes tem por objetivo restabelecer a operação normal do serviço o mais rápido possível, enquanto o gerenciamento de problemas visa diagnosticar e eliminar a causa raiz das interrupções.",
+        "O gerenciamento de incidentes é executado unicamente pelos clientes finais, enquanto o gerenciamento de problemas é restrito a auditores externos.",
+        "O gerenciamento de incidentes cuida apenas de manutenções programadas de hardware, ao passo que o gerenciamento de problemas lida exclusivamente com testes unitários."
+      ],
+      "correctIndex": 1,
+      "explanation": "A gestão de incidentes foca na restauração ágil da operação (muitas vezes aplicando soluções temporárias), enquanto a gestão de problemas concentra esforços na investigação técnica aprofundada para identificar, tratar e prevenir a recorrência da causa raiz."
+    },
+    {
+      "question": "O que caracteriza uma Solução de Contorno (workaround) no ciclo de tratamento de problemas de software?",
+      "options": [
+        "Uma reescrita completa e definitiva de toda a arquitetura de microsserviços do software.",
+        "Um certificado digital expedido por autoridade pública para homologação do código-fonte.",
+        "Uma medida provisória que restabelece o funcionamento do serviço ou reduz o impacto da falha, sem que a causa raiz tenha sido necessariamente corrigida de forma definitiva.",
+        "Um modelo matemático que comprova formalmente a ausência total de defeitos na aplicação."
+      ],
+      "correctIndex": 2,
+      "explanation": "Uma solução de contorno (workaround) é um recurso temporário adotado para contornar o impacto de um incidente ou problema, viabilizando o retorno da operação enquanto a solução permanente para a causa raiz continua sendo desenvolvida."
+    },
+    {
+      "question": "De acordo com as boas práticas de governança e suporte de TI, o que define a transição de um problema para a categoria de Erro Conhecido?",
+      "options": [
+        "A identificação e documentação da sua causa raiz técnica, acompanhada pela disponibilização de uma solução de contorno documentada para mitigar o impacto.",
+        "A exclusão compulsória de todas as versões anteriores do código-fonte dos servidores de produção.",
+        "O encerramento do contrato de prestação de serviços com o fornecedor do software.",
+        "A aprovação de um aumento orçamentário para aquisição de novos equipamentos de datacenter."
+      ],
+      "correctIndex": 0,
+      "explanation": "Um erro conhecido é uma anomalia cuja causa básica já foi diagnosticada e registrada pela equipe de gerenciamento de problemas, dispondo de uma solução de contorno que permite aos atendentes manter o serviço ativo enquanto se viabiliza a correção definitiva."
+    },
+    {
+      "question": "Ao registrar e priorizar anomalias em um sistema de rastreamento de problemas, como se diferenciam os atributos de Severidade e Prioridade?",
+      "options": [
+        "Severidade indica o custo monetário da licença do software, enquanto Prioridade mede a quantidade de linhas de código alteradas.",
+        "Severidade avalia o grau de impacto técnico e operacional do defeito no funcionamento do sistema, enquanto Prioridade define a ordem de urgência com que a anomalia deve ser resolvida para o negócio.",
+        "Severidade refere-se apenas a defeitos estéticos de interface, enquanto Prioridade mede a velocidade da conexão de rede.",
+        "Severidade e Prioridade são parâmetros idênticos que indicam unicamente a data de criação do chamado de suporte."
+      ],
+      "correctIndex": 1,
+      "explanation": "A severidade reflete o impacto funcional ou estrutural que a anomalia impõe ao sistema (por exemplo, bloqueio de operação essencial), enquanto a prioridade é uma decisão gerencial que dita a urgência de atendimento daquela correção frente aos objetivos de negócio."
+    },
+    {
+      "question": "No contexto da Engenharia de Software, qual é a distinção fundamental entre os processos de Verificação e Validação (V&V)?",
+      "options": [
+        "A Verificação avalia se o produto está sendo construído da maneira correta segundo suas especificações técnicas, enquanto a Validação avalia se o produto certo está sendo construído para atender às necessidades reais do cliente.",
+        "A Verificação é realizada após a entrega do produto, enquanto a Validação ocorre antes do levantamento de requisitos.",
+        "A Verificação é restrita a testes de carga, enquanto a Validação limita-se à checagem de regras de compilação sintática.",
+        "A Verificação testa apenas o hardware, enquanto a Validação avalia unicamente o cabeamento de rede."
+      ],
+      "correctIndex": 0,
+      "explanation": "Verificação confere conformidade com as fases e especificações anteriores ('estamos construindo o produto corretamente?'), ao passo que Validação assegura que o software atende ao seu propósito e aos requisitos operacionais do usuário ('estamos construindo o produto correto?')."
+    },
+    {
+      "question": "Qual é a postura conceitual correta quanto à capacidade dos testes de software garantirem a qualidade de um produto em lançamento?",
+      "options": [
+        "A execução de testes automatizados assegura que todo o software esteja livre de quaisquer falhas.",
+        "A realização de testes substitui integralmente os processos de arquitetura e análise de requisitos.",
+        "Testes devem ser aplicados apenas quando o cliente identificar inconsistências durante o uso diário em produção.",
+        "Testes evidenciam a presença de defeitos, mas não podem provar a ausência total deles; o teste exaustivo de todas as combinações é inviável na prática."
+      ],
+      "correctIndex": 3,
+      "explanation": "Um dos princípios fundamentais do teste de software estabelece que testar demonstra a existência de defeitos, mas nunca sua ausência absoluta. Mesmo suítes extensivas não eliminam a possibilidade de falhas residuais em cenários não previstos."
+    },
+    {
+      "question": "Ao executar uma suíte de testes de unidade automatizada por meio de um framework de teste, quais são os três resultados essenciais que podem ser reportados?",
+      "options": [
+        "Compilação, Formatação e Depuração.",
+        "Sucesso (pass), Falha de Asserção (failure) e Erro de Execução (error).",
+        "Pendente, Cancelado e Reprogramado.",
+        "Manual, Automático e Híbrido."
+      ],
+      "correctIndex": 1,
+      "explanation": "Ambientes de execução de testes classificam os resultados em: Sucesso (a asserção foi satisfeita e nenhuma exceção ocorreu), Falha (uma asserção falhou, indicando divergência lógica) e Erro (uma exceção inesperada, como NullPointerException, interrompeu o teste)."
+    },
+    {
+      "question": "Em relação à escolha entre conduzir testes de forma manual ou automatizada, qual critério técnico deve nortear a decisão da equipe de garantia da qualidade?",
+      "options": [
+        "Testes manuais devem ser completamente eliminados de todos os projetos corporativos modernos.",
+        "Testes automatizados devem ser utilizados exclusivamente em protótipos descartáveis que não entrarão em produção.",
+        "A escolha depende do contexto do projeto: testes manuais são efetivos em testes exploratórios e cenários pequenos ou pontuais, enquanto testes automatizados trazem retorno em rotinas repetitivas, testes de regressão e pipelines de integração contínua.",
+        "Testes manuais possuem custo de implantação nulo e garantem cobertura integral de qualquer complexidade de software."
+      ],
+      "correctIndex": 2,
+      "explanation": "Nenhum método é universalmente superior. Testes manuais oferecem flexibilidade humana e adaptabilidade em explorações iniciais e cenários dinâmicos, ao passo que a automação se destaca na repetibilidade rápida e confiável de testes de regressão em esteiras de CI/CD."
+    },
+    {
+      "question": "Considere um sistema que opera normalmente em rotinas corriqueiras, mas trava inesperadamente ao atingir o processamento de seu 99º registro ou um limite específico de capacidade. Qual abordagem de teste é essencial para detectar preventivamente esse tipo de defeito antes da entrega ao usuário?",
+      "options": [
+        "Testes de usabilidade baseados em entrevistas informais com equipes de compras.",
+        "Testes de conformidade contábil aplicados ao código-fonte após a desativação da aplicação.",
+        "Testes manuais restritos exclusivamente a valores centrais e triviais de formulários.",
+        "Testes de análise de valor-limite (fronteira) combinados com baterias de testes de regressão contínuas para validar limites numéricos e transições críticas."
+      ],
+      "correctIndex": 3,
+      "explanation": "Defeitos que surgem em fronteiras operacionais (como contadores com limites de dois dígitos ou capacidades máximas) devem ser prevenidos por técnicas de análise de valor-limite, que focam nas bordas das classes de equivalência, apoiadas por suítes de regressão."
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+---
+title: "UA9 — Gerenciamento de Problemas"
+subtitle: "Incidente, problema, erro conhecido e solução de contorno; vantagens e etapas do gerenciamento de problemas; testes manuais e automatizados, tipos de teste e ferramentas de apoio."
+ua: 9
+group: "Ferramentas e Gerenciamento"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua9.m4a" title="Gerenciamento de problemas" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gdps_01.webp" alt="Infográfico sobre gerenciamento de problemas de software" caption="Gerenciamento de problemas de software" />
+</SlidesGrid>
+
+### O que é gerenciar problemas
+
+**Gerenciar** é organizar, planejar e executar atividades para facilitar um processo. O **gerenciamento de problemas de software** consiste em planejar ações, tomar decisões, delegar tarefas e acompanhar o software, **testando-o** para evitar erros e falhas. A ideia central é **encontrar a causa** dos problemas e criar testes e ações para **evitá-los ou corrigi-los**. O processo busca garantir a **disponibilidade** do software, mantendo qualidade e funcionamento correto, e se apoia em testes a cada ciclo do projeto: **pesquisar, solucionar e validar** o problema.
+
+A base conceitual vem do gerenciamento de serviços de TI (**ITIL**), citado a partir de Magalhães e Pinheiro e de Steinberg: o processo de gerenciamento de problemas é o responsável pela **resolução definitiva e prevenção** das falhas por trás dos **incidentes**, incluindo a **manutenção preventiva**.
+
+#### Bug, erro, defeito e falha
+
+| Termo | Definição no material |
+|---|---|
+| **Bug** | Termo **genérico** |
+| **Defeito** | **Imperfeição** de um produto |
+| **Falha** | **Resultado errado provocado por um defeito**; ocorre quando o software não executa uma funcionalidade (exemplo: a “tela azul” do Windows) |
+| **Erro** | Engano que origina o defeito (por exemplo, um trecho de código incorreto) |
+
+Exemplo do material (Figura 1): um programa em Java lê um número `a` e calcula `b / a` com `b = 10`. O **defeito** é a falta de tratamento do valor lido; a **falha**, visível ao usuário, é a exceção `ArithmeticException: / by zero`. Todo defeito e erro deve ser tratado **antes** de virar falha.
+
+```java
+int a = read.nextInt();
+int b = 10;
+int result = b / a;                 // defeito: não trata a == 0
+System.out.println("Resultado: " + result);
+// falha observada: java.lang.ArithmeticException: / by zero
+```
+
+**Erro → Defeito → Falha** é a cadeia estudada na [UA1](/resumos/teste-software/ua1/).
+
+<Callout type="warning">
+**“Um erro é o mesmo que um defeito, que é o mesmo que uma imperfeição”**
+
+O quadro do material fecha com essa frase, que **contradiz** as definições dadas logo acima dela (defeito = imperfeição; falha = resultado de um defeito) e a cadeia da [UA1](/resumos/teste-software/ua1/). O correto: **erro** (ação humana equivocada) → **defeito** (o que o erro deixa no artefato) → **falha** (comportamento incorreto na execução). São conceitos **distintos**, mesmo que no dia a dia se use “bug” para todos.
+</Callout>
+
+### Incidente, problema, erro conhecido e solução de contorno
+
+| Conceito | Definição do material | Observação |
+|---|---|---|
+| **Problema** | “Causa conhecida de um ou mais incidentes” | Ver o alerta abaixo |
+| **Solução de contorno** (*workaround*) | Solução **não definitiva**, uma ideia de solução a aplicar; deve ser verificada, garante o tratamento do erro e evita a reincidência | A solução **permanente** não deve ser descartada (Steinberg) |
+| **Causa** | Erro em algum item do software | |
+| **Erro conhecido** | Problema cuja **causa foi diagnosticada** e para o qual há uma **solução definitiva** | Ver o alerta abaixo |
+| **Gestão de incidentes e problemas** | Melhorias aplicadas ao software para aprimorá-lo e **resolver definitivamente** o problema ou evitá-lo | |
+
+Exemplo do material: a equipe de suporte vinha **reiniciando o switch 45b** sempre que a rede do RH caía (**solução de contorno**); a equipe de problemas analisou o hardware, comprovou a origem e pediu a **substituição** do switch (**solução definitiva**).
+
+Um erro conhecido pode ser identificado por **teste de software**, etapa voltada a encontrar erros e validar o software. Quando um defeito é descoberto **na implementação**, o prejuízo é grande: é preciso **retroceder várias etapas**, o que desperdiça tempo e aumenta custos.
+
+<Callout type="warning">
+**Problema e erro conhecido no ITIL**
+
+O material define **problema** como “causa **conhecida** de um ou mais incidentes”. No ITIL, o **problema** é a **causa (ainda em geral desconhecida)** de um ou mais **incidentes**; investigar essa causa é justamente o trabalho do gerenciamento de problemas. O **erro conhecido** é o problema que já tem a **causa raiz documentada** e uma **solução de contorno** disponível, **não necessariamente uma solução definitiva**. Já o **incidente** é a interrupção ou queda de qualidade do serviço, cuja meta é **restabelecer o serviço o mais rápido possível** (muitas vezes por solução de contorno). O material também define “gestão de incidentes e problemas” como um só item de “melhorias”, quando são **dois processos** diferentes.
+</Callout>
+
+### Vantagens do gerenciamento de problemas
+
+- **Melhoria da qualidade:** entrega com maior garantia de funcionamento correto e de atendimento aos requisitos (é a **principal** vantagem);
+- **Redução do volume de incidentes e problemas** no uso do software;
+- **Soluções permanentes:** ao conhecer a causa, registra-se ao menos uma solução, evitando o mesmo erro em projetos futuros;
+- **Prevenção, mais proatividade e menos reatividade:** o aspecto **reativo** resolve problemas **depois** de um ou mais defeitos (inclusive os relatados pelo cliente); o **proativo** identifica e resolve causas **antes** que ocorram;
+- **Antecipação dos problemas.**
+
+Para a melhoria ser real, é preciso estabelecer regras, modelos, métricas e mecanismos, e **medir a efetividade** por artefatos que avaliem a qualidade resultante. Quando o problema é recorrente, o cliente perde a confiança na equipe e na empresa.
+
+<Callout type="warning">
+**“Os problemas são praticamente anulados, pois todos já foram encontrados”**
+
+É um exagero. Testes e gerenciamento **reduzem** defeitos, mas **não garantem** que todos foram encontrados: o teste **mostra a presença** de defeitos, **não prova a ausência** deles, e testar tudo é impraticável (ver a [UA1](/resumos/teste-software/ua1/)). Por isso as alternativas do exercício 1 que falam em “correção de **todos** os erros”, e a do exercício 3 que fala em “eliminar **definitivamente todos** os erros”, descrevem algo impossível.
+</Callout>
+
+### Melhores práticas e o processo de gerenciamento
+
+As melhores práticas envolvem: encontrar **erros conhecidos**; identificar **soluções de contorno**; **requerer as mudanças** necessárias para a solução; e **verificar se, após a solução de contorno, o problema realmente desapareceu**. O objetivo é gerenciar de forma **eficiente, eficaz, efetiva e econômica**.
+
+O processo tem **oito etapas** (o material as chama de “níveis”):
+
+**Identificar → Classificar → Alocar recursos → Pesquisar e diagnosticar → Validar solução → Determinar erro → Cadastrar erro → Emitir recomendações e melhorias**
+
+Se a solução **não for validada**, retorna-se à etapa 4 (pesquisar e diagnosticar).
+
+| # | Etapa | O que o material diz |
+|---|---|---|
+| 1 | **Identificar o problema** | Dar uma identificação única (título, número, rótulo) para diferenciá-lo dos demais |
+| 2 | **Classificar** | Categorizar a seriedade: **alta, média ou baixa** |
+| 3 | **Alocar recursos** | Segundo o material, uma breve descrição do problema, um resumo (ver alerta abaixo) |
+| 4 | **Pesquisar e diagnosticar** | Verificar como resolver, identificar a **causa** e estabelecer o diagnóstico para a solução definitiva |
+| 5 | **Validar solução** | Aplicar a suposta solução (de contorno); se resolver, vai para a etapa 6; senão, volta à 4 |
+| 6 | **Determinar erro** | Descrever o que causava o problema, qual era o erro |
+| 7 | **Cadastrar erro** | Documentar o erro para o caso de reincidência |
+| 8 | **Emitir recomendações e melhorias** | Reportar o erro e as alterações necessárias para a solução |
+
+<Callout type="warning">
+**Etapa 3 e etapa “níveis” no material**
+
+**Alocar recursos** é **designar pessoas, tempo e ferramentas** para tratar o problema, e **não** “uma breve descrição, um resumo”, que pertence à etapa de **identificação**. O exercício 3 também pergunta por que “80% dos erros são resolvidos no **primeiro nível** do processo de gerenciamento de problemas”, premissa que **não aparece** no texto e que mistura as **etapas** do processo com os **níveis de suporte** (1º nível = *service desk*). Por fim, a **classificação** em alta/média/baixa trata só de seriedade: na prática separam-se **severidade** (impacto técnico) e **prioridade** (urgência de correção).
+</Callout>
+
+### Verificação e validação (V&V)
+
+O teste faz parte do processo de **V&V**, que deve ocorrer **durante todo o projeto** para minimizar o retrabalho, com revisões de requisitos e de design:
+
+| | Pergunta |
+|---|---|
+| **Verificação** | O produto está sendo construído **da maneira correta**? |
+| **Validação** | O **produto certo** está sendo construído? |
+
+Ao testar, avaliam-se entradas incorretas de dados, resultados exibidos, tempos de resposta, aberturas de telas. Um **bom caso de teste** é aquele com **elevada probabilidade de revelar um erro ainda não descoberto**.
+
+<Callout type="warning">
+**“Fases” da engenharia de software**
+
+O material lista como “fases de desenvolvimento” modelagem de negócios, requisitos, análise e design, implementação, teste, implantação, gerenciamento de mudanças e ambiente. Essa lista corresponde às **disciplinas** do **RUP** (e faltam **gerenciamento de projeto** e **gerenciamento de configuração**); as **fases** do RUP são **concepção, elaboração, construção e transição**. Além disso, “teste” e “V&V” não são sinônimos: V&V inclui também **revisões, inspeções e análise estática**.
+</Callout>
+
+### Teste manual × teste automatizado
+
+O testador pode executar o teste de forma **manual** (por documentos chamados **cenários**, que descrevem as entradas e as saídas esperadas, e apropriada para **cenários pequenos**) ou **automatizada** (por programas ou *scripts* que executam as funcionalidades, testam entradas, saídas e módulos, e permitem **repetir** a qualquer momento).
+
+| | **Manual** | **Automatizado** |
+|---|---|---|
+| **Vantagens (material)** | Visão ampla do desenvolvedor; solução rápida de vários bugs se há contato frequente com o código | Bateria de testes **a qualquer momento**; mais segurança ao alterar o código (retorno automático e cobertura); bateria no **build** |
+| **Desvantagens (material)** | Estado inicial do teste preparado à mão; pode não cobrir todas as entradas/saídas; sem relação entre resultado e tipo de teste; **maçante** em grandes cenários ou repetições | **Alto custo** de automação; implementação por desenvolvedor; ferramentas precisam ser estudadas |
+
+Segundo Bernardo e Kon, a grande vantagem da automação é repetir **todos** os casos com pouco esforço, sem deixar passos importantes de fora por falha humana, o que torna as mudanças mais seguras.
+
+#### Exemplo de caso de teste manual (Quadro 1)
+
+**Caso de uso:** remover cliente. **Ator:** funcionário de banco. **Pré-condição:** o cliente tem conta na agência e foram feitos os casos “Adicionar Cliente”. **Pós-condição:** a conta bancária fica inativa. Caso de teste **“Teste Remover Cliente”** (ID 3):
+
+| Cenário | Passos | Resultado esperado |
+|---|---|---|
+| **1. Cliente removido com sucesso** | Acessar o menu “Clientes/Remover Cliente”; pesquisar o nome “João”; clicar em “Pesquisar”; verificar se os dados foram localizados e se o botão “Remover” está ativo; clicar em “Remover” | Janela de remoção; busca dos dados; mensagem “Cliente excluído com sucesso” |
+| **2. Cliente não encontrado** | Repetir os passos 1, 2 e 3 do cenário 1 | “Cliente não encontrado” |
+| **3. Campo de pesquisa com valores inválidos** | Acessar o menu; pesquisar um texto sem sentido; clicar em “Pesquisar” | “Cliente não encontrado” |
+
+Compare com a estrutura de caso de teste da [UA6](/resumos/teste-software/ua6/).
+
+#### Exemplo de automação com JUnit
+
+O material mostra uma classe de cálculos (`somar()` e `dividir()`) e uma classe de testes no estilo do JUnit 3. A versão equivalente em **JUnit 5**:
+
+```java
+class CalculadoraTest {
+
+    private Calculadora c;
+
+    @BeforeEach
+    void preparar() {
+        c = new Calculadora(10.0, 10.0);
+    }
+
+    @Test
+    void somaDoisValores() {
+        assertEquals(20.0, c.somar(), 0.0);
+    }
+
+    @Test
+    void divideDoisValores() {
+        assertEquals(1.0, c.dividir(), 0.0);
+    }
+}
+```
+
+<Callout type="warning">
+**Erros nas Figuras 3 e 4 (classe e testes da calculadora) e na descrição**
+
+- **Figura 3:** a classe se chama `calculadora` (minúscula), mas o construtor é `Calculadora`; o parâmetro é `ValorA` enquanto o campo é `valorA`; `Public` com “P” maiúsculo. Em Java, **nome da classe, do construtor e dos identificadores devem coincidir** e as palavras-chave são minúsculas, então o código **não compila**.
+- **Figura 4:** além de `Protected`/`Public` com maiúsculas e do `;` faltando no `import`, o método **`testCalculadora()`** contém `fail("Not yet implemented")`, o esqueleto gerado pela IDE, e **sempre falha**: deve ser removido ou implementado. A classe usa o **JUnit 3** (`junit.framework.TestCase`, `setUp`/`tearDown`), enquanto a [UA8](/resumos/teste-software/ua8/) descreve anotações.
+- **Texto:** diz que o retorno dos testes aparece como “sucesso, falha ou **execução**”. Os resultados do JUnit são **sucesso**, **falha** (*failure*, a asserção não bateu) e **erro** (*error*, exceção inesperada). “Execução” não é um resultado.
+- **Divisão por zero:** na Figura 1 a divisão de inteiros por zero lança `ArithmeticException`; na classe `Calculadora` (valores `double`), `dividir()` com `valorB = 0` **não lança exceção**, devolve `Infinity`. Os dois exemplos não se comportam igual.
+</Callout>
+
+### Tipos de teste
+
+O material organiza os testes em cinco tipos, cada um simulando uma situação diferente:
+
+| Tipo | Foco | Compreende (segundo o material) | Exemplo |
+|---|---|---|---|
+| **Funcionalidade** | Situações de uso comuns ao usuário | teste funcional, de volume, de controle de segurança e de acesso | Login e senha reconhecidos apenas pelo autor da ação de logar |
+| **Acessibilidade** | Interface acessível e navegação adequada à função e à capacidade de uso | | O sistema atende também usuários com deficiência visual |
+| **Usabilidade** | Uso, estética e facilidade de interação | confiabilidade, estresse, regressão, integridade e estrutura | O usuário encontra facilmente menus e acessos |
+| **Desempenho** | Eficiência, tempo de resposta, vazão e consumo de recursos | carga e contenção de perfil | Fluxo de execução e tempo de resposta |
+| **Suportabilidade** | Facilidade de instalação, configuração e compatibilidade | instalação e configuração | Instalar em diferentes hardwares e sistemas operacionais |
+
+<Callout type="warning">
+**Tipos de teste mal classificados**
+
+A organização parece seguir o modelo do **RUP** (FURPS+: funcionalidade, usabilidade, confiabilidade, desempenho, suportabilidade), mas com erros: **confiabilidade** (integridade, estrutura, **estresse**) é uma categoria **própria**, que o material **encaixa dentro de usabilidade**; a **regressão** não é um teste de usabilidade (é um tipo ligado à **mudança**, vista na [UA7](/resumos/teste-software/ua7/)); e “contenção de perfil” é tradução truncada de **perfil de desempenho** (*performance profile*) e **contenção** (*contention*), além de faltar o teste de **referência** (*benchmark*). Para a prova, use a classificação do material; para a prática, a de mercado.
+</Callout>
+
+### Ferramentas citadas
+
+| Ferramenta | Para que serve | Licença |
+|---|---|---|
+| **Selenium** | Automatizar aplicações **web** para testes (e tarefas administrativas); base de outras ferramentas de automação de navegador, APIs e *frameworks* | Open source |
+| **JMeter** | Avaliar o **comportamento funcional** e medir **desempenho**; criado para aplicações web, estendido a outras funções | Open source (Java) |
+| **JUnit** | *Framework* para **testes de unidade** em Java: confere métodos e objetos e mostra a lista imediata de resultados | Open source |
+| **SoapUI** | Testar **serviços web**: inspeção, invocação, simulações, testes funcionais, de carga e de conformidade; versão comercial **SoapUI Pro** (suporte, relatórios personalizados) | Open source + comercial |
+
+Veja também as categorias de ferramentas na [UA8](/resumos/teste-software/ua8/).
+
+<Callout type="warning">
+**Defasagens nas ferramentas e erros nos exercícios**
+
+- **SoapUI Pro** foi incorporado ao **ReadyAPI** pela SmartBear; o SoapUI de código aberto continua existindo, mas a versão comercial hoje tem outro nome.
+- Chamar a SeleniumHQ de “**fornecedor** da ferramenta” é impreciso: o Selenium é um **projeto de código aberto**, sem fornecedor comercial.
+- **Exercício 2** (“qual teste é mais vantajoso?”): o próprio texto diz que o manual é **rápido e efetivo em cenários pequenos** e cansativo em grandes/repetitivos. A pergunta pede uma escolha única, mas a resposta coerente é **depende do tamanho e da complexidade** (alternativa E). A alternativa A afirma que a automação “testa mais de uma parte do código ao mesmo tempo”, o que **não consta** do material.
+- **Exercício 4** (solução de contorno): é solução **provisória**, que restabelece o serviço **sem necessariamente apontar a causa**; **não** é solução definitiva nem “banco de erros e soluções”.
+- **Exercício 5:** “solução definitiva” não aparece na lista de conceitos do material e a “gestão de incidentes e problemas” é definida como “melhorias”; o exercício só se resolve lendo as **etapas** (a solução de contorno é validada na etapa 5; o erro é determinado na 6).
+- **Testes manuais pelo “desenvolvedor”:** o material descreve as vantagens e desvantagens do teste manual sempre pelo ponto de vista do **desenvolvedor**, mas na seção anterior o executor é o **testador**.
+- **Quadro 1:** a pós-condição diz que a conta ficará **inativa**, mas o resultado esperado é “cliente **excluído** com sucesso”. Exclusão e inativação são coisas diferentes, e o passo 4 (verificar dados e botão) **não tem resultado esperado** preenchido.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Rastreador de problemas, triagem e análise de causa raiz.** Hoje o ciclo de “identificar, classificar, diagnosticar, validar, registrar” acontece em um **rastreador** (**Jira**, **GitHub Issues**, **GitLab Issues**, **Azure DevOps**) com *template* de relato (passos para reproduzir, resultado esperado e obtido, ambiente, evidências), **severidade** separada de **prioridade**, **triagem** periódica e vínculo entre o defeito, o *commit* que o corrigiu e o **teste de regressão** que o impede de voltar. Para achar a causa, usam-se **5 porquês**, diagrama de **Ishikawa** e **post-mortem sem culpados** (*blameless*); o resultado vira **teste automatizado** e melhoria de processo, o equivalente moderno do “cadastrar erro”.
+
+Em produção, o lado reativo é apoiado por **observabilidade** (logs, métricas e *traces*: **OpenTelemetry**, **Prometheus**/**Grafana**) e por monitoramento de erros (**Sentry**), com **SLO** e gestão de **incidentes** (*on-call*, *runbooks*), e o lado proativo por **shift-left** (testar cedo), **revisão de código**, **análise estática** (SonarQube) e **CI/CD** rodando a regressão a cada *commit*. Para os tipos de teste: **k6/JMeter/Gatling** (desempenho), **axe** e **Lighthouse** com as diretrizes **WCAG** (acessibilidade), **Postman/ReadyAPI** (APIs) e a **pirâmide de testes** (muito teste de unidade, menos de integração, poucos de ponta a ponta). Um *workaround* também tem lugar: **feature flags** e *rollback* restabelecem o serviço enquanto a correção definitiva é preparada.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Erro → defeito → falha:** erro é o engano, defeito é a imperfeição que ele deixa, falha é o resultado errado na execução (tela azul do Windows).
+- **Reativo × proativo:** reativo resolve **depois** do defeito (inclusive relatado pelo cliente); proativo identifica e resolve causas **antes** de ocorrerem.
+- **Solução de contorno** é **provisória** (reiniciar o switch 45b); a **solução definitiva** exige descobrir a **causa** (trocar o switch). Não descarte a definitiva.
+- **Oito etapas:** identificar, classificar, alocar recursos, pesquisar e diagnosticar, **validar solução** (se não validar, volta à 4), determinar erro, cadastrar erro, emitir recomendações e melhorias.
+- **Principais conceitos:** problema, solução de contorno, causa, erro conhecido e gestão de incidentes e problemas.
+- **Verificação:** “construído da maneira correta?” **Validação:** “o produto certo?”.
+- **Manual:** bom para **cenários pequenos**; **automatizado:** repetição a qualquer momento, no build; **desvantagem:** alto custo.
+- **Cinco tipos de teste do material:** funcionalidade, acessibilidade, usabilidade, desempenho e suportabilidade.
+- **Ferramentas:** Selenium (web), JMeter (desempenho e funcional), JUnit (unidade em Java), SoapUI (serviços web).
+- **Desafio da UA** (ERP da Sispro: após cadastrar o produto de número **99**, o sistema trava): quem deveria ter achado antes é o **testador** (junto com o desenvolvedor, por testes de unidade); o erro foi **reativo** porque só apareceu no cliente; para evitar, testar **desde o início**, incluindo **valores-limite** (a falha ocorre num valor de fronteira, como o limite de dois dígitos) e repetir os testes (regressão) a cada alteração.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ZENKER, A. M. *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- BERNARDO, P.; KON, F. A importância dos testes automatizados: controle ágil, rápido e confiável de qualidade. *Engenharia de Software Magazine*, v. 1, n. 3, p. 54-57, 2008.
+- MAGALHÃES, I. L.; PINHEIRO, W. B. *Gerenciamento de serviços de TI na prática: uma abordagem com base na ITIL*. São Paulo: Novatec, 2007.
+- STEINBERG, R. A. *ITIL service operation*. Londres: Stationery Office, 2011.
+- AMORIM, D. G. et al. Gerenciamento de teste de software: um comparativo entre ferramentas open source. *Revista Gestão Organizacional*, v. 14, edição especial, 2016.
+- PRESSMAN, R. S. *Engenharia de software: uma abordagem profissional*. 7. ed.
+- APACHE SOFTWARE FOUNDATION. *Apache JMeter*. 2019.
+- SELENIUM PROJECTS. *SeleniumHQ Browser Automation*. 2018.
+- SMARTBEAR. *SoapUI Pro*. 2019.
+- AXELOS. *ITIL 4: Foundation* (referência atual de gerenciamento de problemas).

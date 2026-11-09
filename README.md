@@ -19,7 +19,7 @@ Objetivo: ter um lugar organizado para revisar o conteúdo antes de provas e aju
 | **Responsive Web Development** | HTML5, CSS3, JavaScript, AJAX, PHP, MySQL | ✅ Resumos prontos (16/16 UAs) |
 | **Engenharia de Requisitos** | BPM/BPMN, RF/RNF, regras de negócio, casos de uso, diagramas de atividades, rastreabilidade, testes | ✅ Resumos prontos (16/16 UAs) |
 | **Pensamento Computacional** | Fundamentos de PC, algoritmos, lógica, linguagem C, estruturas de controle, vetores, matrizes | ✅ Resumos prontos (16/16 UAs) |
-| **Teste de Software** | Conceito de teste, defeitos/erros/falhas, caixa-branca/preta/cinza e suas técnicas, planejamento de testes (IEEE 829 e PMBOK), casos de teste e UML, regressão, verificação e validação, papel do analista de testes, qualidade (ISO 9126), níveis de teste (unidade, integração, sistema, aceitação e regressão), ferramentas de teste (categorias, TestLink, Selenium, JUnit) | 🟡 8/16 UAs em andamento |
+| **Teste de Software** | Conceito de teste, defeitos/erros/falhas, caixa-branca/preta/cinza e suas técnicas, planejamento de testes (IEEE 829 e PMBOK), casos de teste e UML, regressão, verificação e validação, papel do analista de testes, qualidade (ISO 9126), níveis de teste (unidade, integração, sistema, aceitação e regressão), ferramentas de teste (categorias, TestLink, Selenium, JUnit), gerenciamento de problemas | 🟡 9/16 UAs em andamento |
 | **Programação para Dispositivos Móveis** | Evolução dos smartphones e das redes móveis, computação ubíqua, Android e iOS, desenvolvimento nativo, híbrido e PWA, limitações da plataforma móvel, mockups e prototipação, componente Activity, recursos Android (pasta res), leiautes LinearLayout e RelativeLayout, tela principal e componentes de menu | 🟡 8/16 UAs em andamento |
 
 ---
