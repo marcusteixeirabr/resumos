@@ -1,0 +1,115 @@
+{
+  "ua": 9,
+  "questions": [
+    {
+      "question": "Ao implementar a navegação explícita entre duas telas em um aplicativo Android, como o objeto Intent deve ser instanciado no código?",
+      "options": [
+        "Passando apenas o nome do pacote da aplicação sem referenciar nenhuma classe específica.",
+        "Passando o caminho do arquivo de layout XML acompanhado de uma chave criptográfica pública.",
+        "Fornecendo o contexto da Activity atual (por exemplo, MainActivity.this) e o literal de classe do componente de destino (por exemplo, TelaSecundaria.class).",
+        "Instanciando a classe de destino diretamente através do operador new sem intermédio do framework Android."
+      ],
+      "correctIndex": 2,
+      "explanation": "Um Intent explícito identifica com precisão o componente de destino através do contexto da aplicação atual e da referência à classe do componente que deve ser iniciado (Contexto, Destino.class)."
+    },
+    {
+      "question": "Como se define a operação de um Intent implícito no Android e qual é o papel de sua cadeia de identificação?",
+      "options": [
+        "Identifica o componente de destino pelo caminho absoluto do arquivo compilado no armazenamento interno do celular.",
+        "Executa uma chamada direta a um método privado da própria classe em execução sem envolver o sistema operacional.",
+        "Garante que apenas o navegador padrão de fábrica possa responder à solicitação disparada.",
+        "Declara uma ação genérica a ser executada (como ACTION_VIEW), delegando ao sistema operacional a resolução e localização de componentes internos ou externos cujos filtros de intent (<intent-filter>) sejam compatíveis."
+      ],
+      "correctIndex": 3,
+      "explanation": "Em Intents implícitos, a string informada representa o nome de uma ação pretendida (como visualizar um mapa ou discar um número). O sistema operacional consulta os filtros de intent dos aplicativos instalados para encontrar quem pode atendê-la."
+    },
+    {
+      "question": "Para transferir valores primitivos simples (como uma string ou um número inteiro) entre Activities por meio de um Intent sem instanciar explicitamente um objeto Bundle manual, qual abordagem é recomendada pela API do Android?",
+      "options": [
+        "Utilizar o método putExtra(chave, valor) no Intent na tela de origem e recuperar o dado na tela de destino com métodos como getStringExtra(chave) ou getIntExtra(chave, valorPadrao).",
+        "Gravar os dados em um arquivo temporário no cartão de memória externo e ler seu conteúdo linha por linha.",
+        "Declarar variáveis estáticas globais públicas na classe do aplicativo para compartilhamento irrestrito de memória.",
+        "Serializar os dados em formato binário comprimido e transmiti-los via socket local na porta 8080."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Intent dispõe de sobrecargas do método putExtra(String name, ...) que armazenam diretamente dados extras em seu mapa interno, permitindo que a tela de destino os recupere de forma simples e segura através de métodos tipados como getStringExtra."
+    },
+    {
+      "question": "Qual é a distinção funcional entre os métodos putExtra e putExtras disponíveis na classe Intent do Android?",
+      "options": [
+        "O método putExtra é exclusivo para envio de arquivos de vídeo, enquanto putExtras envia apenas números decimais.",
+        "O método putExtra insere um par individual de chave e valor no Intent, enquanto putExtras recebe uma instância completa de Bundle contendo múltiplos parâmetros agrupados.",
+        "O método putExtra funciona apenas em linguagens interpretadas, enquanto putExtras opera somente em código nativo C++.",
+        "O método putExtra apaga os dados anteriores do Intent, enquanto putExtras duplica o tamanho da memória da Activity."
+      ],
+      "correctIndex": 1,
+      "explanation": "A assinatura putExtra(chave, valor) é empregada para anexar um único dado adicional por chamada. Já putExtras(Bundle extras) recebe um objeto Bundle previamente populado com diversos pares de chave/valor e o associa ao Intent."
+    },
+    {
+      "question": "O que ocorre em tempo de execução quando um aplicativo Android tenta navegar para uma nova Activity via startActivity(intent), mas essa Activity não foi declarada no arquivo AndroidManifest.xml?",
+      "options": [
+        "O sistema operacional inicia automaticamente o download da Activity pela loja de aplicativos.",
+        "A tela é renderizada com as cores invertidas em modo de acessibilidade.",
+        "O aplicativo é interrompido abruptamente com o lançamento da exceção ActivityNotFoundException.",
+        "O sistema cria uma caixa de diálogo genérica solicitando autorização do usuário para registrar o componente."
+      ],
+      "correctIndex": 2,
+      "explanation": "Toda Activity deve estar devidamente declarada no manifesto (com a tag <activity>). Se o aplicativo tentar abrir uma Activity não registrada, o Android não conseguirá resolver o componente e lançará uma ActivityNotFoundException, ocasionando falha e encerramento do app."
+    },
+    {
+      "question": "Por que a utilização de Intents implícitos para iniciar componentes em segundo plano, como Services, é fortemente desencorajada pelas diretrizes de segurança do Android?",
+      "options": [
+        "Porque Intents implícitos consomem mais ciclos de bateria da CPU do que chamadas diretas.",
+        "Porque Intents implícitos são bloqueados por compiladores ao detectar conexões Wi-Fi ativas.",
+        "Porque serviços iniciados por Intent implícito não possuem acesso ao sistema de arquivos do aparelho.",
+        "Porque não há como garantir com certeza qual serviço instalado no dispositivo responderá ao Intent implícito, criando vulnerabilidades e brechas de segurança para interceptação ou execução de código não confiável."
+      ],
+      "correctIndex": 3,
+      "explanation": "Ao emitir um Intent implícito para um serviço, qualquer aplicativo instalado com um filtro compatível pode responder à ação sem conhecimento do usuário. Por isso, a partir de versões modernas do Android, é obrigatório ou fortemente recomendado usar Intents explícitos para iniciar serviços com segurança."
+    },
+    {
+      "question": "Ao receber dados na Activity de destino, como o desenvolvedor recupera o Intent de invocação e exibe corretamente os valores transmitidos em seus componentes visuais?",
+      "options": [
+        "Obtendo a referência do Intent disparador com getIntent(), extraindo os parâmetros por suas respectivas chaves e atribuindo as variáveis com os valores recuperados aos métodos dos componentes (como setText(variavel)).",
+        "Criando uma nova instância de Intent com new Intent() e invocando o método setText(\"nome_da_chave\") diretamente com a string da chave.",
+        "Invocando o método finish() no método onCreate() para forçar o recarregamento das preferências de usuário.",
+        "Executando uma consulta SQL remota para sincronizar os dados da memória estática da Activity anterior."
+      ],
+      "correctIndex": 0,
+      "explanation": "A Activity de destino acessa o Intent original por meio de getIntent(), lê os valores armazenados através dos métodos de extração e atualiza os elementos de tela repassando as variáveis contendo os dados obtidos (e não literais com os nomes das chaves)."
+    },
+    {
+      "question": "No ecossistema moderno do Android, qual é a função das bibliotecas do Android Jetpack voltadas à navegação, especificamente o Navigation Component?",
+      "options": [
+        "Substituir o kernel Linux do dispositivo por um subsistema de gerenciamento de banco de dados distribuído.",
+        "Padronizar e simplificar a navegação entre destinos do aplicativo através de grafos visuais de navegação, vinculação segura de argumentos (Safe Args) e gerenciamento consistente da pilha de retorno.",
+        "Forçar a criação de um processo independente no sistema operacional para cada fragmento de tela exibido.",
+        "Impedir que o usuário utilize gestos de retorno para voltar à tela inicial da aplicação."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Navigation Component (integrante do Android Jetpack) foi projetado para estruturar a navegação entre destinos em uma arquitetura de Activity única (Single-Activity), simplificando a manipulação da pilha de retorno, transições e a passagem tipada de argumentos."
+    },
+    {
+      "question": "Durante a criação de uma nova Activity em um projeto Android, qual prática de implementação assegura que a nova tela seja exibida com o seu próprio arquivo de desenho visual?",
+      "options": [
+        "Invocar o método setContentView carregando o identificador do arquivo de layout da tela inicial de login.",
+        "Sobrescrever o método onStop para inflar os componentes diretamente na memória de vídeo.",
+        "Invocar o método setContentView(R.layout.nome_do_leiaute_proprio) dentro do callback onCreate() da respectiva classe de tela.",
+        "Configurar a propriedade android:orientation=\"vertical\" na raiz do arquivo AndroidManifest.xml."
+      ],
+      "correctIndex": 2,
+      "explanation": "Para que uma Activity apresente a sua interface correta, ela deve executar setContentView no método onCreate() referenciando o ID do seu próprio recurso de layout XML correspondente (como R.layout.activity_tela_secundaria)."
+    },
+    {
+      "question": "Em relação à transferência de dados volumosos entre telas de um aplicativo Android, qual é a boa prática recomendada para evitar estouro de limite de memória de transação (TransactionTooLargeException)?",
+      "options": [
+        "Compactar matrizes de imagens em formato base64 e inseri-las diretamente no Bundle de extras do Intent.",
+        "Converter grandes tabelas de dados relacionais em strings com separadores de vírgula e anexá-las com putExtra.",
+        "Desativar a proteção de memória da máquina virtual declarando permissões de root no manifesto.",
+        "Transmitir apenas identificadores leves (como chaves primárias ou IDs) pelo Intent, delegando a recuperação das estruturas de dados completas à camada de repositório ou de estado (como ViewModel ou banco de dados local)."
+      ],
+      "correctIndex": 3,
+      "explanation": "O mecanismo de comunicação entre componentes do Android (Binder) possui um limite rígido de memória (cerca de 1 MB para todas as transações concorrentes). Enviar dados pesados em Bundles pode provocar TransactionTooLargeException. A boa prática é trafegar apenas chaves identificadoras e buscar os dados completos no repositório."
+    }
+  ]
+}

@@ -1,0 +1,234 @@
+---
+title: "UA9 — Navegação entre Telas"
+subtitle: "Apps com mais de uma activity: adicionar telas, navegar com Intent explícito e implícito, enviar dados com Bundle e extras, e como a navegação é feita hoje (Navigation Component e Compose)."
+ua: 9
+group: "Navegação e Interação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua9.m4a" title="Navegação entre telas" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/nda_01.webp" alt="Infográfico sobre navegação entre telas no Android" caption="Navegação entre telas no Android" />
+</SlidesGrid>
+
+### Por que mais de uma tela
+
+Em dispositivos móveis, a **área de tela é limitada**. Em vez de empilhar toda a informação em uma só *activity*, o desenvolvedor a separa em **grupos temáticos**, em telas diferentes, e o usuário acessa o conteúdo **de forma gradativa** ao avançar no aplicativo. Cada tela é uma **activity** (veja o ciclo de vida na [UA5](/resumos/dispositivos-moveis/ua5/)); para levar dados de uma à outra usam-se **Intent** e, no material, **Bundle**.
+
+### Adicionando uma nova activity
+
+No Android Studio: clique com o botão direito sobre a pasta do projeto, escolha **New → Activity** e uma das opções (o material sugere **Empty Activity**). Na caixa de diálogo:
+
+| Campo | Recomendação do material |
+|---|---|
+| **Nome** da activity | Escolher um nome (por exemplo, `TelaSecundaria`) |
+| **Gerar o arquivo de leiaute** (`layout.xml`) | Marcar **sim** |
+| **Launcher Activity** (ser a tela iniciada pelo ícone) | Deixar **desmarcada** (a principal continua sendo a `MainActivity`) |
+| **Linguagem** | **Java** ou **Kotlin** (os exemplos do material são em Java) |
+
+### Navegar entre duas activities
+
+Há dois elementos: um **evento** (como o clique de um botão) e um **Intent** que representa a intenção de abrir a outra tela. O trecho decisivo (o “pulo do gato”) são as duas linhas que criam o `Intent` e chamam `startActivity`:
+
+```java
+import android.content.Intent;
+
+public class MainActivity extends AppCompatActivity {
+
+    private Button btAbrirSegundaTela;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        btAbrirSegundaTela = (Button) findViewById(R.id.btSegundaTela);
+        btAbrirSegundaTela.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent segundaTela = new Intent(MainActivity.this, TelaSecundaria.class);
+                startActivity(segundaTela);
+            }
+        });
+    }
+}
+```
+
+O `Intent` é um **objeto de mensagem** usado para **solicitar uma ação de outro componente**. O primeiro parâmetro é o **contexto atual** (a activity ativa, `MainActivity.this`); o segundo é a **classe** da tela de destino (`TelaSecundaria.class`).
+
+#### Intent explícito × implícito
+
+| | **Explícito** | **Implícito** |
+|---|---|---|
+| **Como identifica o destino** | Pelo **nome do componente** (contexto + classe) | Declara uma **ação geral** (não nomeia o componente) |
+| **Quem trata** | O componente indicado, normalmente do **próprio aplicativo** | **Outros aplicativos** que declaram saber tratar essa ação |
+| **Exemplo** | Abrir a `TelaSecundaria` ao clicar; iniciar um serviço de download | Pedir que outro app exiba uma localização no mapa |
+
+O material recomenda o Intent **explícito** para chamadas a componentes internos. Para iniciar um **serviço**, use **sempre** a forma explícita: com um Intent implícito não é possível saber **qual serviço responderá** (nem o usuário vê qual foi iniciado), o que cria **brecha de segurança**.
+
+```java
+// Implícito: "mostre esta localização"; qualquer app de mapas pode responder
+Intent mapa = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:0,0?q=Florianópolis"));
+startActivity(mapa);
+```
+
+### Enviar dados entre duas telas
+
+Para transmitir informações, o material usa um **Bundle**: um **mapeamento chave/valor** (a chave é uma `String`; o valor, qualquer tipo primitivo ou objeto empacotável). No exemplo, a `MainActivity` lê **nome**, **e-mail** e **data de nascimento** de três campos e os envia ao clicar no botão:
+
+```java
+btEnviaDados.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        String nome = textoNome.getText().toString();
+        String email = textoEmail.getText().toString();
+        String dataNascimento = dataDtNascimento.getText().toString();
+
+        Bundle parametros = new Bundle();
+        parametros.putString("nome", nome);
+        parametros.putString("email", email);
+        parametros.putString("dtNasc", dataNascimento);
+
+        Intent segundaTela = new Intent(MainActivity.this, TelaSecundaria.class);
+        segundaTela.putExtras(parametros);
+        startActivity(segundaTela);
+    }
+});
+```
+
+Para inserir um **objeto**, o material cita `putParcelable`. Na tela de destino, `getIntent()` devolve o **Intent que iniciou a tela** (uma referência, não um novo) e `getExtras()` devolve o `Bundle`:
+
+```java
+public class TelaSecundaria extends AppCompatActivity {
+
+    private TextView textoNome, textoEmail, textoNascimento;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_tela_secundaria);
+
+        textoNome = (TextView) findViewById(R.id.textoNome);
+        textoEmail = (TextView) findViewById(R.id.textoEmail);
+        textoNascimento = (TextView) findViewById(R.id.textoNascimento);
+
+        Intent telaAnterior = getIntent();
+        if (telaAnterior != null) {
+            Bundle params = telaAnterior.getExtras();
+            if (params != null) {
+                textoNome.setText(params.getString("nome"));
+                textoEmail.setText(params.getString("email"));
+                textoNascimento.setText(params.getString("dtNasc"));
+            }
+        }
+    }
+}
+```
+
+#### Sem Bundle: *extras* direto no Intent
+
+O Bundle **não é obrigatório**. O `Intent` tem métodos `putExtra(chave, valor)` (com sobrecargas para cada tipo) e os correspondentes `get...Extra`, como `getStringExtra`, `getIntExtra` e `getDoubleExtra`, que recebem a **chave**:
+
+```java
+Intent i = new Intent(MainActivity.this, TelaSecundaria.class);
+i.putExtra("razao_social", "Empresa Ltda");
+startActivity(i);
+
+// na tela de destino
+String razao = getIntent().getStringExtra("razao_social");
+```
+
+### Aplicativos multitelas
+
+Aplicativos Android estão cada vez mais sofisticados, e as pessoas trocam computadores por *smartphones*, por isso o desenvolvimento com várias telas é central. O material recomenda consultar a **documentação oficial** e cita o **Android Jetpack**, conjunto de componentes da Google que facilita a construção de interfaces e a navegação (o app de exemplo **Sunflower** mostra os padrões de navegação com Jetpack).
+
+<Callout type="warning">
+**Erros, imprecisões e desatualizações no material**
+
+**Erros nos códigos de exemplo (precisam ser corrigidos para compilar):**
+
+1. `Import android.content.Intent;` e `Import android.os.Bundle;`: a palavra-chave é **`import`** (minúscula).
+2. Declaração `private TextView textoNascimento` **sem `;`**.
+3. Nomes inconsistentes: o texto cita `dataDtNascimento`, o código declara `dataDtnascimento` (e há `R.id. dataDtnascimento` com espaço). Em Java, maiúsculas e minúsculas **importam**.
+4. Na `TelaSecundaria`, `textoNascimento = (TextView) findViewById(R.id. textoemail)` usa o **ID errado** (do e-mail); o correto é o ID do campo de nascimento.
+5. `params,getString("dtNasc")` usa **vírgula** onde deveria haver **ponto**.
+6. `textoNascimento.setText("dtNasc")` escreve o **texto literal** “dtNasc” na tela; o correto é passar a **variável** `nascimento`.
+7. `setContentView(R.layout.activity_dashboard)` carrega o leiaute de **outra** tela (cópia de outro exemplo); deveria ser o leiaute da `TelaSecundaria`.
+8. Nome de classe `telaSecundaria` em minúscula contraria a convenção Java (`TelaSecundaria`).
+
+**Erros e contradições no texto:**
+
+9. **Bundle “obrigatório” × “não obrigatório”.** O texto diz que, para trocar informações, “você precisará usar, além de um Intent, um **Bundle**”, e na caixa seguinte afirma que “**não** utilizará obrigatoriamente” o Bundle. O correto é a segunda: `putExtra(chave, valor)` já guarda os dados no *Bundle* interno do Intent. Por isso as alternativas D e E do exercício 1 (“obrigatoriamente deverá utilizar o bundle”) estão **erradas**.
+10. **`putExtras` × `putExtra`.** O material escreve `putExtras("chave","valor")` e a assinatura `puxExtra (String name, int[] value)`. O método de um par chave/valor é **`putExtra`** (singular); **`putExtras(Bundle)`** recebe um **Bundle** inteiro. As alternativas A e B do exercício 1 usam `putExtras` de forma incorreta; a C (`putExtra("info","Informação")`) é a válida. Também há erros de digitação: `putExtas` e “undle”.
+11. **Intent implícito mal explicado.** O texto diz que em `new Intent("br.com.exemplo.action.NOVATELA")` o programa sabe que, “dentro do pacote `br.com.exemplo.action`, existe uma classe `NOVATELA` que ele deverá instanciar”. Não é: essa *string* é o **nome de uma ação**, comparada com os `<intent-filter>` declarados pelos componentes (no manifest) de qualquer aplicativo; **não é caminho de pacote nem de classe**.
+12. **“Arquivo `.class`”.** O texto diz que se passa “o nome completo do arquivo `.class`”. `TelaSecundaria.class` é o **literal de classe** (um objeto `Class`), não um arquivo; a justificativa (“depois de compilados, os arquivos Java tornam-se `.class`”) não explica o argumento.
+13. **Referência ao “código do Quadro 1”.** O texto diz que “no código apresentado no Quadro 1” se optou pelo Intent explícito, mas o Quadro 1 é a **tabela de comparação**; o código está antes dele.
+14. **Declaração da activity.** O material não menciona que toda activity precisa estar declarada no **`AndroidManifest.xml`** (o assistente do Android Studio faz isso automaticamente; criar a classe à mão sem declarar causa `ActivityNotFoundException`).
+15. **Kotlin “relativamente nova” e “compatível a partir do Android 3.0”.** Desatualizado: desde 2019 o Kotlin é a linguagem **preferencial** do Android (*Kotlin-first*), e o Android Studio já propõe Kotlin por padrão. Como o código Kotlin é compilado para *bytecode* JVM, a restrição de “versão 3.0” não se aplica.
+16. **“A plataforma garante que as aplicações se adaptem às diferentes resoluções”.** Exagero: o sistema ajuda (unidades `dp`, recursos por qualificador, como na [UA6](/resumos/dispositivos-moveis/ua6/)), mas a adaptação depende do **leiaute projetado** pelo desenvolvedor.
+17. **“Muitos estudos mostram que os usuários preferem navegar entre páginas a rolar a tela.”** Afirmação **sem referência**, e a pesquisa de usabilidade atual mostra que a **rolagem vertical** é natural em celulares (a maioria dos apps usa listas longas). Várias telas são uma escolha de organização, não uma regra.
+18. **“Android Jetpack” como “componente”.** O Jetpack é um **conjunto de bibliotecas**; o componente específico de navegação é o **Navigation** (*Navigation Component*).
+19. **Exercício 5.** As alternativas A, B e C dizem que Intents **explícitos** podem chamar atividades “internas e externas” ou “somente externas” e que **“não especificar”** o destino reduziria a segurança, o que **mistura** os dois conceitos (explícito **especifica** o destino). A coerente com o material é a D: **implícitos** podem chamar internas e externas, mas **não especificar** o destino reduz a segurança.
+20. **Exercício 2.** Em Intent explícito o **primeiro parâmetro (contexto) é obrigatório**: a alternativa B (“opcional”) está errada; a E é a correta.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Navigation Component, Compose Navigation e *single-activity*.** Hoje a arquitetura recomendada é **uma activity** que hospeda várias telas como **Fragments** (ou *composables*), com a navegação centralizada no **Navigation Component** (grafo `nav_graph.xml`, `NavController`, **Safe Args** para argumentos com tipo) ou, em **Jetpack Compose**, no **`NavHost`** com rotas. Isso evita criar uma activity por tela, simplifica a pilha de retorno e permite transições e *deep links*:
+
+```kotlin
+val navController = rememberNavController()
+
+NavHost(navController, startDestination = "inicio") {
+    composable("inicio") {
+        Button(onClick = { navController.navigate("detalhe/42") }) { Text("Abrir") }
+    }
+    composable(
+        route = "detalhe/{id}",
+        arguments = listOf(navArgument("id") { type = NavType.IntType })
+    ) { entrada ->
+        val id = entrada.arguments?.getInt("id")
+        Text("Detalhe $id")
+    }
+}
+```
+
+Boas práticas atuais para **dados entre telas**: passe **identificadores** (um `id`) e busque o objeto no repositório ou no **ViewModel**, em vez de enviar objetos grandes no `Bundle`, cujo limite de transação (cerca de **1 MB**) gera `TransactionTooLargeException`; use **`Parcelable`** (`@Parcelize` em Kotlin) quando precisar enviar um objeto. Para **receber resultado de outra tela** (comunicação bilateral), `startActivityForResult` está **depreciado**: use a **Activity Result API** (`registerForActivityResult`), com contratos prontos como `ActivityResultContracts.StartActivityForResult`.
+
+Segurança e plataforma: a partir do **Android 12 (API 31)**, componentes com `<intent-filter>` precisam declarar **`android:exported`**; desde o **Android 11**, a **visibilidade de pacotes** exige `<queries>` no manifest para certos Intents implícitos; e o botão **Voltar** hoje é tratado por `OnBackPressedDispatcher` (o `onBackPressed()` está depreciado), com o **gesto de voltar preditivo** do Android 13+. O material não trata de **como o usuário volta**: a activity anterior permanece na **pilha de retorno** (*back stack*), e `finish()` fecha a atual.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- Telas pequenas → **várias activities**, com a informação separada em grupos temáticos.
+- Nova activity: **New → Activity** (Empty Activity), **gerar layout = sim**, **Launcher = desmarcada**.
+- **Intent** = objeto de **mensagem** que solicita ações de outros componentes; inicia **activities, serviços** e entrega **mensagens** (broadcasts), **não** só telas.
+- Navegar: `new Intent(contexto, Classe.class)` + **`startActivity(intent)`**; Intent explícito: **contexto + classe**.
+- **Explícito:** nomeia o componente, uso **interno**, **obrigatório para serviços** (segurança). **Implícito:** declara uma **ação**, outros apps respondem; **não especificar o destino reduz a segurança**.
+- **Bundle:** mapa **chave/valor** (chave String); `putString`, `putParcelable`; é anexado com **`putExtras(bundle)`**; recuperado com **`getIntent().getExtras()`**.
+- **Sem Bundle:** `putExtra("chave", valor)` e `getStringExtra`, `getIntExtra`, `getDoubleExtra` (**mesma chave**).
+- Exercício 1: a opção válida é a que usa **`new Intent(contexto, Classe.class)`** e **`putExtra("info","Informação")`**.
+- **Android Jetpack:** conjunto de componentes da Google (o de navegação é o **Navigation**).
+- **Desafio da UA** (app de perfil de investidor para um banco digital: questionário com pontuação e tela de resultado): uma tela com as **perguntas** (`RadioGroup` com escala de 1 a 5 por pergunta), que **soma os pontos** e envia o resultado por **Intent** (`putExtra`), e uma segunda tela que **recebe a pontuação** e exibe o perfil (**conservador, moderado, agressivo ou superagressivo**).
+</Callout>
+
+<Callout type="warning">
+**Defeitos no enunciado do Desafio**
+
+A tabela de pontuação do Desafio tem **inconsistências** que o desenvolvedor precisa tratar: (1) as faixas “menos de 18”, “mais de 18 e menos de 33”, “mais de 33 e menos de 46” e “mais de 46” **deixam de fora os valores exatos 18, 33 e 46**; (2) a pontuação máxima possível é **40** (10 da pergunta sobre a aposentadoria mais 6 perguntas de até 5 pontos), então o perfil **superagressivo (“mais de 46”) nunca é atingido**; (3) as perguntas 4 e 5 expressam atitudes **conservadoras** (“prefiro crescimento constante, sem altos e baixos”; “evitar perdas é mais importante”), mas “concordo totalmente” vale 5 pontos, o que **aumentaria** a pontuação “agressiva”: essas perguntas exigem **pontuação invertida**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- PASSOS, U. R. C. *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- GUIMARÃES, A. P. N.; TAVARES, T. A. Avaliação de interfaces de usuário voltada à acessibilidade em dispositivos móveis: boas práticas para experiência de usuário. In: SIMPÓSIO BRASILEIRO DE SISTEMAS MULTIMÍDIA E WEB, 20., 2014, João Pessoa. *Anais*. João Pessoa, 2014. p. 22-29.
+- ANDROID DEVELOPERS. Intents e filtros de intents. 2019.
+- ANDROID DEVELOPERS. Navigation; Navigation Compose; Activity Result API (documentação oficial).
