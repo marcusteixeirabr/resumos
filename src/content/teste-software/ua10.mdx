@@ -1,0 +1,171 @@
+---
+title: "UA10 — Gerenciamento de Testes"
+subtitle: "O que é gerenciar testes, categorias e tipos de teste, verificação e validação, bug tracking, ciclo de vida do defeito, plano de testes e registro de defeitos."
+ua: 10
+group: "Ferramentas e Gerenciamento"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua10.m4a" title="Gerenciamento de testes" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gtd_01.webp" alt="Infográfico sobre o que avaliar em cada etapa do gerenciamento de testes" caption="Gerenciamento de testes por etapa" />
+</SlidesGrid>
+
+### O que é gerenciar testes
+
+Software governa pagamentos, saúde, transporte e quase tudo o que é digital; uma **falha** pode gerar prejuízo financeiro, material e até risco à vida. Por isso nenhum produto deve ser liberado sem **testagem**: submeter o software a situações de funcionamento e à inspeção de sua estrutura, comparando-o com as **especificações**, com a intenção explícita de **encontrar falhas**.
+
+O **gerenciamento de testes** é a organização dessa atividade de forma **planejada, documentada e estruturada**: **planejar**, **gerar** e **aplicar** conjuntos de testes, **coletar resultados**, **analisar** e **acompanhar as correções**, ao longo de **todas as etapas** do desenvolvimento. Quem coordena é o **gerente de testes**, que prepara o **plano de testes** e acompanha a execução e os resultados de uma **equipe de testadores**.
+
+O material liga o assunto ao **gerenciamento de configuração** (CM), que trata das **mudanças** que o software sofre: gerenciamento de alterações, de versões, construção do sistema e gerenciamento de *releases*. Os dois se apoiam: o CM dá versões e rastreabilidade, e o gerenciamento de testes diz o que foi testado em cada versão. Veja o planejamento na [UA5](/resumos/teste-software/ua5/) e os casos de teste na [UA6](/resumos/teste-software/ua6/).
+
+#### Por que testar cedo
+
+Quanto **mais cedo** uma falha é encontrada, **mais barato** é corrigi-la: o custo é mínimo na **análise e especificação** e cresce muito (o material fala em crescimento **exponencial**) nas fases finais de testagem e **entrega**. É a base do princípio *shift-left* (testar o quanto antes).
+
+### Categorias de teste e o modelo V
+
+Cada etapa do desenvolvimento tem uma categoria de teste correspondente (é o **modelo V**, também visto na [UA7](/resumos/teste-software/ua7/)):
+
+| Categoria | O que verifica |
+|---|---|
+| **Unidade** | Cada **módulo** individualmente (ou trechos de código): a funcionalidade está correta? |
+| **Integração** | A **comunicação entre módulos**, agrupados conforme a estrutura do sistema, verificando o surgimento de erros de forma **incremental** |
+| **Sistema** | O sistema **completo**, com todas as partes; já detecta erros que o usuário final veria, mesmo antes de o produto ser dado como pronto |
+| **Aceitação** | A **etapa final de entrega**, com usuários alfa e beta e testes definidos pelo cliente já na especificação |
+
+#### Versões para teste com o usuário
+
+| Versão | Para quem | Característica |
+|---|---|---|
+| **Alfa** | Usuários que **trabalham junto à equipe de desenvolvimento** | Distribuída **só internamente**, sem clientes nem público externo |
+| **Beta** | Grupo **limitado de usuários externos** | Eles aceitam usar o produto e relatam funcionamento, falhas, satisfação com as especificações e ambientes de execução |
+| **Aceitação** | **Usuário final**, em geral em software **sob encomenda** | Uso intensivo para **aceitar ou rejeitar** a entrega e encerrar o projeto |
+
+#### Tipos de teste
+
+Dentro de cada categoria, aplicam-se vários **tipos**: **integridade de dados** (proteção contra alterações anormais, apagamentos e degradação), **instalação e configuração** (procedimentos e parâmetros do sistema operacional), **desempenho**, **estabilidade** (respostas constantes para os mesmos estímulos) e testes **não funcionais** (uso em condições de campo). No teste de desempenho, os dois principais são:
+
+- **Teste de carga:** o sistema sob a carga **esperada** (e até o seu limite de projeto), medindo tempo de resposta e vazão.
+- **Teste de estresse:** o sistema **além** do limite, para ver **como e quando quebra** e se ele se recupera.
+
+### Verificação e validação
+
+Toda categoria e todo tipo de teste realizam duas ações: **testagem = verificação + validação**.
+
+| | Verificação | Validação |
+|---|---|---|
+| **Pergunta** | Estamos construindo o produto **da maneira correta**? | Estamos construindo o **produto certo**? |
+| **Natureza** | **Estática**: sem executar o software | **Dinâmica**: com o software em execução |
+| **Como** | Inspeção de documentos, especificações, listagens de código, relatórios de compiladores e de ferramentas | Testes de unidade até o sistema integrado, com **cenários**/casos de teste e **caixa-preta**, comparando o resultado com a especificação |
+
+Ferramentas de **controle de versão**, manuais de boas práticas de codificação e protocolos de documentação são práticas de gerenciamento de configuração indispensáveis à verificação.
+
+### Bug tracking
+
+Na coleta de resultados, é preciso um método estruturado para registrar **o teste executado, o resultado esperado e o obtido**, relacionando-os ao **módulo** e à **etapa** do desenvolvimento. As ferramentas devem permitir **rastrear os módulos**, saber a **versão** de cada módulo ou biblioteca, identificar o **programador ou a equipe** envolvida e apontar o **ambiente de execução** em que o defeito apareceu. Essa metodologia e as ferramentas que a apoiam são os sistemas de ***bug tracking*** (rastreamento de defeitos).
+
+#### Erro, defeito, falha e bug
+
+Segundo o ISTQB:
+
+**Erro (ação humana) → Defeito (no código ou documento) → Falha (comportamento errado na execução)**
+
+- **Erro:** o **engano humano** cometido por quem especifica, projeta ou codifica.
+- **Defeito:** a **imperfeição no artefato** (código mal escrito, requisito errado) deixada pelo erro; existe mesmo que o usuário não saiba.
+- **Falha:** a **manifestação** do defeito na execução, um funcionamento inesperado, fora da especificação, **visível ao usuário**.
+- **Bug:** termo **coloquial** usado para erro ou defeito. O *bug tracking* rastreia defeitos tendo as **falhas** observadas nos testes como pista.
+
+### Ciclo de vida do defeito
+
+O ***bug life cycle*** é a sequência de estados pelos quais um defeito passa, do relato ao encerramento. As ferramentas de bug tracking controlam, registram e documentam esse ciclo.
+
+| Estado | O que acontece |
+|---|---|
+| **New** (novo) | Chega um relato de falha; a equipe de testes avalia se é **válido** (às vezes não há falha, só **desinformação** do usuário). Se válido, segue para *open* |
+| **Open** (aberto) | Faz-se o **relatório de abertura** com a falha e o **ambiente** (configuração da máquina, sistema operacional, instalação) e um extrato demonstrando o erro |
+| **Assign** (designação) | O defeito é encaminhado a um responsável (de preferência alguém **não envolvido** com a equipe de desenvolvimento nem com a fase anterior), que o reavalia e decide o destino |
+| **Rejected** (rejeitado) | A falha pode **não existir** (erro de instalação ou configuração) ou **não ser reproduzível**, exigindo mais informações |
+| **Deferred** (adiado) | O defeito é **reconhecido**, mas a equipe decide corrigi-lo **na próxima versão** |
+| **Test** (teste) | Bateria de testes adicionais para detalhar o defeito e **a extensão do impacto** em outros módulos; o conserto é realizado e o resultado volta para ser verificado |
+| **Verified** (verificado) | A falha foi **reparada** e confirmada como não mais existente |
+| **Closed** (fechado) | Resolvido; emite-se o **relatório de fechamento** (mudanças feitas, natureza do erro, atualizações usadas), útil para prevenir problemas em projetos futuros |
+| **Reopen** (reaberto) | Há uma **nova falha**, em geral consequência do reparo anterior, e ela volta ao ciclo na etapa de designação |
+
+Em ferramentas reais o fluxo muda (cada ferramenta tem seu ***workflow***, e o gerente pode definir o próprio), mas o raciocínio é o mesmo: **relatar → validar → designar → corrigir → testar de novo → fechar ou reabrir**.
+
+### Ferramentas e funções
+
+Existem dezenas de ferramentas de bug tracking, muitas gratuitas e algumas somente on-line. **Jira**, **Bugzilla** e **MantisBT** são exemplos consagrados. A escolha depende da familiaridade da equipe, da complexidade dos relatórios, da flexibilidade de configuração e de outros fatores operacionais (veja as ferramentas de teste na [UA8](/resumos/teste-software/ua8/)). Todas devem cobrir três funções:
+
+1. **Registro e acompanhamento do plano de testes.**
+2. **Registro de defeitos.**
+3. **Acompanhamento do ciclo de vida do defeito**, com relatórios (listagem de bugs, prazo e horas estimadas, gráficos de quantidade por **severidade**: críticos, normais e triviais).
+
+Uma vantagem é compartilhar uma **base de defeitos pela internet**, já que muitos defeitos são frequentes e conhecidos pela comunidade.
+
+#### Plano de testes
+
+É o documento que define os **tipos e conjuntos de testes** ao longo do desenvolvimento, e o **primeiro passo** da gestão de testes. A norma **IEEE 829-2008** lista, entre outros itens:
+
+- **identificador** do plano e **histórico de versões** (o que mudou e quem mudou);
+- **descrição**: objetivo, escopo, recursos e restrições técnicas e orçamentárias;
+- **itens de teste** (o que será testado, com prioridade);
+- **funcionalidades que serão testadas**, na visão do usuário, com o **nível de risco**;
+- **funcionalidades que não serão testadas**, **com o motivo**;
+- **estratégias**, atividades e ferramentas; **critérios de validação**; preparação do **ambiente**; gerenciamento dos testes;
+- **cronograma**, com riscos e contingências; **aprovação** do plano pelos envolvidos.
+
+#### Registro de defeitos
+
+É a **principal função** de uma ferramenta de bug tracking: relacionar o defeito às falhas encontradas. Um registro contém: **produto**, **componente** (módulo ou funcionalidade) e sua descrição, **versão**, **severidade**, **hardware**, **sistema operacional**, **nome** e **descrição do defeito** e **documentos adicionais** (capturas de tela, logs).
+
+<Callout type="warning">
+**Atenção a três pontos do material:**
+
+- **“Nunca testar o próprio software”** é exagero. O **teste de unidade** é feito normalmente pelo **desenvolvedor**; o que se exige é **independência** nos testes de **integração, sistema e aceitação**, com testadores que não escreveram o código. Veja quem faz cada nível na [UA7](/resumos/teste-software/ua7/).
+- O gerenciamento de testes **não é uma parte** do gerenciamento de configuração. Os dois são **processos de apoio** que se complementam; o CM cuida de mudanças, versões e *builds*, e a gestão de testes cuida de planejar, executar e acompanhar os testes.
+- As definições de **carga** e **estresse** estão trocadas em relação ao uso do mercado: **carga** é a carga **esperada** (até o limite de projeto); **estresse** é **além do limite**, para descobrir onde quebra.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Rastreador de defeitos com fluxo e métricas.** Hoje o *bug tracking* acontece em **Jira**, **GitHub Issues**, **GitLab Issues** ou **Azure DevOps**, com um fluxo simples (*To Do → In Progress → In Review → Done*, mais *Won't Fix*, *Duplicate* e *Cannot Reproduce*, que correspondem a *rejected*) e um ***template*** de relato: **passos para reproduzir**, resultado esperado e obtido, versão, ambiente, evidências (captura, vídeo, log). **Severidade** (impacto técnico) é separada de **prioridade** (urgência de negócio), e uma reunião de **triagem** (*bug triage*) decide quem corrige e quando. O **Bugzilla** e o **MantisBT** continuam mantidos e em uso.
+
+**Gestão de casos e planos.** Ferramentas como **TestRail**, **Xray** e **Zephyr** (integradas ao Jira), **Allure TestOps** e **Azure Test Plans** ligam requisito → caso de teste → execução → defeito, geram **rastreabilidade** e painéis (taxa de aprovação, defeitos por severidade, defeitos escapados para produção). O plano de testes saiu do documento extenso para um **plano enxuto** versionado no repositório; a norma citada, **IEEE 829**, foi substituída pela série **ISO/IEC/IEEE 29119** (a parte 3 trata da documentação de teste).
+
+**Automação e integração contínua.** Testes rodam em **CI/CD** (**GitHub Actions**, GitLab CI), e uma falha pode **abrir um defeito automaticamente** ou bloquear o *merge*; cada defeito corrigido ganha um **teste de regressão** vinculado ao *commit*. Em produção, **observabilidade** (logs, métricas, *traces*) e ferramentas como **Sentry** alimentam o rastreador com falhas reais. A Asana citada no material é uma ferramenta de **gestão de tarefas**, não um rastreador de defeitos especializado.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Gerenciamento de testes:** planejar, gerar e aplicar testes, coletar resultados, analisar e acompanhar correções, em **todas** as etapas, com um **gerente de testes** e um **plano de testes**.
+- **Quanto mais cedo, mais barato:** o custo de corrigir cresce das fases de **análise e especificação** até a **entrega**.
+- **Categorias:** unidade (módulo), integração (comunicação entre módulos, incremental), sistema (sistema completo), aceitação (entrega final, alfa e beta).
+- **Alfa:** interno, usuários ligados à equipe. **Beta:** externos limitados que relatam. **Aceitação:** usuário final, software sob encomenda, aceita ou rejeita.
+- **Testagem = verificação + validação.** Verificação: **estática**, “construindo **do jeito certo**?”. Validação: **dinâmica**, “construindo o **produto certo**?”.
+- **Erro → defeito → falha:** o erro é humano, o defeito está no artefato, a falha aparece na execução. **Bug** = erro ou defeito, termo coloquial.
+- **Ciclo de vida do defeito:** new → open → assign → (rejected | deferred | test) → verified → closed; **reopen** quando o reparo gera nova falha.
+- **Rejected:** falha inexistente (configuração) ou não reproduzível. **Deferred:** reconhecida, mas corrigida na **próxima versão**.
+- **Funções do bug tracking:** plano de testes, **registro de defeitos** (a principal) e **ciclo de vida**.
+- **Plano de testes (IEEE 829):** inclui o que **não** será testado e o **motivo**, riscos, cronograma e aprovação.
+- **Ferramentas citadas:** Jira, Asana, Bugzilla e MantisBT.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- FAGUNDES, R. D. R. Gerenciamento de testes. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- BRAGA, P. (org.). *Teste de software*. São Paulo: Pearson, 2016.
+- BURNSTEIN, I. *Practical software testing*. Chicago: Springer, 2010.
+- SINGH, Y. *Software testing*. Cambridge: Cambridge University Press, 2012.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson, 2011.
+- IEEE STANDARDS ASSOCIATION. *IEEE 829-2008: IEEE Standard for Software and System Test Documentation*. Piscataway: IEEE, 2008.
+- ISO/IEC/IEEE 29119-3:2021. *Software and systems engineering: Software testing, Part 3: Test documentation*.
+- ISTQB. *Defect life cycle*. 2014.
+- BUGZILLA. *Editing bug: life cycle of a bug*. 2019.

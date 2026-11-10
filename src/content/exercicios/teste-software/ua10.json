@@ -1,0 +1,115 @@
+{
+  "ua": 10,
+  "questions": [
+    {
+      "question": "Qual é a definição e o propósito central do gerenciamento de testes no ciclo de desenvolvimento de software?",
+      "options": [
+        "A organização planejada, documentada e estruturada das atividades de testagem ao longo de todas as etapas do desenvolvimento, visando identificar falhas em conformidade com as especificações.",
+        "A substituição automática de todas as rotinas manuais de homologação por algoritmos preditivos de compilador.",
+        "A delegação exclusiva de todas as tarefas de garantia da qualidade aos usuários finais logo após a implantação em produção.",
+        "O arquivamento estático de relatórios financeiros sem qualquer vínculo com os artefatos de código ou requisitos do sistema."
+      ],
+      "correctIndex": 0,
+      "explanation": "O gerenciamento de testes coordena o planejamento, elaboração, execução, coleta de evidências e acompanhamento de defeitos durante todo o ciclo de vida do software, garantindo que o produto seja avaliado sistematicamente em relação às suas especificações."
+    },
+    {
+      "question": "Por que a engenharia de software enfatiza o princípio de testar precocemente (estratégia conhecida como shift-left)?",
+      "options": [
+        "Porque testes realizados no início dispensam a necessidade de qualquer documentação de arquitetura.",
+        "Porque o custo de correção de uma falha é substancialmente menor nas fases iniciais de análise e especificação, crescendo de forma expressiva nas etapas finais de entrega.",
+        "Porque testes precoces eliminam a necessidade de executar testes unitários durante a codificação.",
+        "Porque os compiladores modernos recusam a compilação de códigos que não tenham passado por testes de aceitação prévios."
+      ],
+      "correctIndex": 1,
+      "explanation": "Defeitos identificados nas fases de requisitos e concepção custam muito menos para serem solucionados. À medida que o desenvolvimento avança rumo à integração e homologação, o retrabalho para sanar inconsistências eleva drasticamente o custo e o tempo de entrega."
+    },
+    {
+      "question": "No que diz respeito à independência na condução dos testes de software, qual é a distribuição de papéis recomendada entre desenvolvedores e equipes de teste?",
+      "options": [
+        "Desenvolvedores devem ser terminantemente proibidos de escrever qualquer modalidade de teste em seus próprios módulos.",
+        "Equipes externas de teste devem realizar exclusivamente testes unitários, cabendo ao desenvolvedor conduzir os testes de aceitação formal.",
+        "Testes de unidade são normalmente realizados pelos próprios desenvolvedores em ambiente de desenvolvimento, enquanto a independência de uma equipe de testes é exigida nos níveis de integração, sistema e aceitação.",
+        "Apenas os clientes finais possuem competência técnica para conduzir testes de integração entre subsistemas."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste de unidade isola classes e métodos, sendo conduzido com naturalidade pelo próprio programador que concebeu a lógica. Já os níveis mais amplos (integração, sistema e aceitação) exigem independência e olhar neutro de profissionais de teste dedicados."
+    },
+    {
+      "question": "Como se articulam o Gerenciamento de Testes e o Gerenciamento de Configuração no suporte à qualidade do software?",
+      "options": [
+        "São processos de apoio complementares: o gerenciamento de configuração provê controle de versões e rastreabilidade de mudanças, enquanto o gerenciamento de testes define e documenta o que foi testado em cada versão.",
+        "O gerenciamento de testes é uma subetapa subordinada ao gerenciamento de configuração sem autonomia metodológica.",
+        "O gerenciamento de configuração atua apenas na aquisição de hardware, sem ligação com código ou controle de versões.",
+        "Ambos os processos tratam exclusivamente de testes de estresse de infraestrutura de rede."
+      ],
+      "correctIndex": 0,
+      "explanation": "Gerenciamento de testes e gerenciamento de configuração são processos distintos que colaboram estreitamente: a gerência de configuração assegura o controle de versões, releases e artefatos, fornecendo a base para que a equipe de testes valide cada versão de modo rastreável."
+    },
+    {
+      "question": "No âmbito dos testes de desempenho de sistemas, qual é a diferença conceitual entre o Teste de Carga e o Teste de Estresse?",
+      "options": [
+        "O teste de carga avalia interfaces gráficas estáticas, enquanto o teste de estresse monitora permissões de banco de dados.",
+        "O teste de carga avalia o comportamento do sistema sob a demanda esperada até o limite estipulado em projeto, enquanto o teste de estresse submete o sistema a condições além do limite projetado para identificar pontos de ruptura e modos de recuperação.",
+        "O teste de carga é conduzido manualmente, enquanto o teste de estresse não admite intervenção de scripts.",
+        "O teste de carga é exclusivo de sistemas legados, ao passo que o teste de estresse aplica-se unicamente a linguagens interpretadas."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de carga visa mensurar métricas de vazão e tempo de resposta sob a demanda prevista de uso normal e de pico. O teste de estresse ultrapassa deliberadamente a capacidade nominal para avaliar a robustez, falhas catastróficas e a resiliência do sistema em colapso."
+    },
+    {
+      "question": "De acordo com as boas práticas de garantia da qualidade associadas ao modelo V, como se diferenciam as atividades de Verificação e Validação?",
+      "options": [
+        "A Verificação é realizada exclusivamente por usuários externos, enquanto a Validação ocorre sem envolvimento humano.",
+        "A Verificação avalia a arquitetura de rede física, enquanto a Validação mede a largura de banda da internet.",
+        "A Verificação possui natureza predominantemente estática e avalia se o produto está sendo construído do modo correto, enquanto a Validação é dinâmica e avalia se o produto certo está sendo construído frente às necessidades reais.",
+        "A Verificação é restrita a testes de regressão automatizados, enquanto a Validação cuida apenas de compilação sintática."
+      ],
+      "correctIndex": 2,
+      "explanation": "Verificação inspeciona documentos, código e artefatos sem necessariamente executá-los para assegurar conformidade com normas e especificações. Validação submete o software à execução dinâmica com dados reais ou cenários de uso para confirmar atendimento aos objetivos do usuário."
+    },
+    {
+      "question": "Em estratégias de liberação de software para homologação, qual é a distinção entre as versões de teste Alfa e Beta?",
+      "options": [
+        "A versão Alfa é distribuída internamente para usuários que atuam em conjunto com a equipe de desenvolvimento, enquanto a versão Beta é disponibilizada para um grupo restrito de usuários externos reais em seus próprios ambientes operacionais.",
+        "A versão Alfa é o produto final comercializado em larga escala, enquanto a versão Beta é um protótipo descartável em papel.",
+        "A versão Alfa aplica-se apenas a softwares embarcados em automóveis, enquanto a versão Beta é exclusiva para bancos de dados em nuvem.",
+        "A versão Alfa não admite reporte de defeitos, enquanto a versão Beta encerra formalmente o contrato com a empresa desenvolvedora."
+      ],
+      "correctIndex": 0,
+      "explanation": "Testes Alfa ocorrem em ambiente interno controlado, envolvendo profissionais da organização ou usuários próximos ao time técnico. Testes Beta são distribuídos a públicos externos selecionados para capturar comportamentos em condições reais e diversidade de hardware."
+    },
+    {
+      "question": "Dentro do ciclo de vida de um defeito (bug life cycle) gerenciado por uma ferramenta especializada, qual é o significado atribuído aos estados Deferred (adiado) e Rejected (rejeitado)?",
+      "options": [
+        "Deferred indica que o defeito já foi solucionado em produção, enquanto Rejected indica que a falha foi atribuída a um novo desenvolvedor.",
+        "Deferred sinaliza que a anomalia foi reconhecida, mas sua correção foi postergada para uma versão posterior; Rejected indica que o relato foi descartado por não ser uma falha real (como erro de configuração) ou por impossibilidade de reprodução.",
+        "Deferred representa que o sistema entrou em colapso definitivo, enquanto Rejected indica aprovação imediata para publicação na loja de aplicativos.",
+        "Ambos os estados significam que o código-fonte foi totalmente reescrito e aprovado por auditoria independente."
+      ],
+      "correctIndex": 1,
+      "explanation": "No fluxo de bug tracking, o estado Deferred reconhece a legitimidade do defeito, mas programa sua resolução para releases futuras por critério de prioridade. O estado Rejected descarta o chamado quando a inconsistência não é um defeito genuíno ou carece de reproducibilidade."
+    },
+    {
+      "question": "Quais são as três funções fundamentais que devem ser cobertas por um ambiente estruturado de rastreamento de defeitos (bug tracking)?",
+      "options": [
+        "Geração de certificados de rede, compilação de código nativo e compressão de arquivos de imagem.",
+        "Assinatura digital de termos de confidencialidade, cálculo de tributos corporativos e gestão de ativos imobiliários.",
+        "Registro e acompanhamento do plano de testes, registro estruturado de defeitos e gestão do ciclo de vida das anomalias com emissão de relatórios e métricas de severidade.",
+        "Monitoramento físico de temperatura de servidores, alocação de licenças de sistemas operacionais e criação de interfaces visuais."
+      ],
+      "correctIndex": 2,
+      "explanation": "Ambientes dedicados de bug tracking precisam gerenciar planos de teste associados, permitir a abertura minuciosa de registros de defeitos (com passos, versões e evidências) e manter o histórico de transição de estados dos chamados com relatórios analíticos."
+    },
+    {
+      "question": "Na elaboração formal de um Plano de Testes (conforme preconizado por normas internacionais de teste de software), qual prática de planejamento de escopo é imprescindível?",
+      "options": [
+        "Declarar que todas as funcionalidades sem exceção serão submetidas a testes exaustivos de carga.",
+        "Omitir as restrições orçamentárias e de infraestrutura para evitar questionamentos da gerência.",
+        "Listar unicamente o código-fonte aprovado, sem menção a riscos técnicos ou regras de aceitação.",
+        "Delimitar expressamente os itens e funcionalidades que serão testados com suas prioridades e riscos, bem como especificar as funcionalidades que NÃO serão testadas, justificando formalmente cada exclusão."
+      ],
+      "correctIndex": 3,
+      "explanation": "Um plano de testes sólido precisa estabelecer fronteiras claras: definir não apenas o escopo positivo (o que será testado, recursos, prazos e riscos), mas também declarar explicitamente o que não será testado e o embasamento técnico que justificou essa decisão."
+    }
+  ]
+}
