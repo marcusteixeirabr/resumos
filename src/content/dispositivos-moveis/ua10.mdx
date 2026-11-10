@@ -1,0 +1,171 @@
+---
+title: "UA10 — Design de Interação para Aplicações Móveis"
+subtitle: "Guidelines de interação do Android (Material Design) e do iOS (clareza, deferência e profundidade), padrões de interface e ConstraintLayout, e como isso é feito hoje com Material 3 e Compose."
+ua: 10
+group: "Navegação e Interação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua10.m4a" title="Design de interação para aplicações móveis" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/dim_01.webp" alt="Infográfico sobre as recomendações do guideline de interação da Apple" caption="Guidelines de interação da Apple" />
+</SlidesGrid>
+
+### Por que existe design de interação para o móvel
+
+Desenvolver para dispositivos móveis exige um bom **projeto de interação**, porque os recursos são limitados: **CPU, memória, tela, dispositivos de entrada e bateria**. Além disso, o aplicativo é usado em **contextos variados**, com barulho, claridade excessiva e pouca atenção do usuário. O crescimento do mercado de aplicativos aumenta a concorrência, e uma interface mal projetada pode **condenar a aceitação do produto**; por isso a etapa de interface merece o mesmo investimento do *core* do aplicativo.
+
+Para apoiar os desenvolvedores, os fabricantes dos sistemas operacionais publicam gratuitamente seus **guias de desenvolvimento** (*guidelines*, diretrizes): **Google** (Android) e **Apple** (iOS). Eles servem como **referência para o design** dos aplicativos. Aplicativos móveis costumam ter **propósito específico**, o que torna o desafio da interação humano-computador mais interessante.
+
+#### O que são guidelines
+
+**Guidelines** são regras construídas a partir de um conjunto de **valores e crenças** dos projetistas e designers, e da **experiência** em atendê-los, relacionadas ao **comportamento, à forma e ao conteúdo** da interface. Os padrões de interface acompanham todo o ciclo de desenho e ajudam a traduzir as **necessidades** do aplicativo em **estruturas e comportamentos esperados**. Seguir o padrão da plataforma dá ao usuário uma experiência **familiar**. Veja a prototipação na [UA4](/resumos/dispositivos-moveis/ua4/).
+
+### Guidelines do Android
+
+Os usuários do Android têm **alta expectativa** quanto à **aparência e ao comportamento**; por isso o desenvolvedor deve seguir não só as diretrizes de **padrões visuais e de navegação**, mas também as de **qualidade** (compatibilidade, desempenho, segurança e outras). As diretrizes de **interação** estão classificadas, no material, em:
+
+- **Usabilidade**
+- **Animação**
+- **Leiaute**
+- **Padrão**
+- **Estilo e componentes**
+
+#### Material Design
+
+O **Material Design** é o guia abrangente do Google para **design visual, de movimento e de interação** entre plataformas e dispositivos. Oferece:
+
+- um **tema padrão** que define o estilo visual de todos os *widgets*;
+- *widgets* para **visualizações complexas**, como listas;
+- **APIs** para personalizar **sombras e animações**.
+
+Para aproveitar o padrão, o aplicativo deve usar um **tema baseado no Material**, que dá estilo uniforme aos componentes e simplifica a definição do estilo do app. Os padrões mais comuns, que tornam a experiência familiar, são:
+
+| Padrão | Para que serve |
+|---|---|
+| **Botão de ação flutuante** (FAB) | Destacar a **ação principal** da tela |
+| **Barra de aplicativos** (*app bar*) | Mostrar **marca, navegação, pesquisa** e outras ações (veja os menus na [UA8](/resumos/dispositivos-moveis/ua8/)) |
+| **Gaveta de navegação** (*navigation drawer*) | **Mostrar e ocultar** a navegação do aplicativo |
+| Outros componentes | Barras de ferramentas, **guias** (*tabs*), **barra de navegação inferior** e demais itens do catálogo de componentes |
+
+Sempre que possível, use os **ícones predefinidos** do Material, como o botão de menu com o ícone “hambúrguer”. É possível importar ícones **SVG** da biblioteca de ícones pelo **Vector Asset Studio** do Android Studio.
+
+### Guidelines do iOS
+
+A Apple afirma que o designer pode oferecer um produto extraordinário, até no topo das listas da App Store, mas precisa **atender a altas expectativas de qualidade e funcionalidade**. Para a Apple, **três temas** diferenciam o iOS de outras plataformas:
+
+| Tema | Ideia |
+|---|---|
+| **Clareza** | Texto **legível** em todos os tamanhos, ícones **precisos**, adornos **sutis**, foco na **funcionalidade**; espaço negativo, cor e fontes realçam o conteúdo importante |
+| **Deferência** | Movimento fluido e interface nítida **ajudam a entender o conteúdo sem competir com ele**; o conteúdo preenche a tela, e translucidez e desfoque sugerem mais; uso mínimo de painéis, gradientes e sombras |
+| **Profundidade** | **Camadas visuais** distintas e movimento realista transmitem **hierarquia** e facilitam a compreensão; as **transições** dão sensação de profundidade ao navegar |
+
+### ConstraintLayout
+
+O **ConstraintLayout** permite criar leiautes **grandes e complexos** com uma **hierarquia plana** (sem grupos de visualização aninhados). Como o `RelativeLayout` (veja a [UA7](/resumos/dispositivos-moveis/ua7/)), posiciona as views em relação às **irmãs** e ao **pai**, mas é **mais flexível** e se integra melhor ao **editor visual** do Android Studio, em que se pode montar a tela **arrastando e soltando**.
+
+Regras essenciais:
+
+- Cada view precisa de **pelo menos uma restrição horizontal e uma vertical**. Cada restrição liga a view a outra view, ao **pai** ou a uma **guia invisível** (*guideline*).
+- No editor, uma view solta fica onde foi deixada, **mesmo sem restrições**, mas isso é só para facilitar a edição. Ao **executar** no dispositivo, uma view **sem restrição** é desenhada na posição **[0, 0]**, o canto superior esquerdo.
+- Uma view com restrições horizontais, mas **sem restrição vertical**, aparece **no topo da tela**.
+
+Exemplo em XML: o `TextView` fica no topo e centralizado; o `Button` fica abaixo dele e ocupa toda a largura (`0dp` significa “seguir as restrições”):
+
+```xml
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Olá"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/botao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Continuar"
+        app:layout_constraintTop_toBottomOf="@id/titulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+```
+
+Para usar, declara-se o repositório `google()` e a dependência no `build.gradle` do módulo; depois sincroniza-se o projeto. A versão atual da biblioteca é a do **AndroidX**:
+
+```kotlin
+dependencies {
+    implementation("androidx.constraintlayout:constraintlayout:2.2.0")
+}
+```
+
+Em um novo arquivo de leiaute (`File > New > XML > Layout XML`), informa-se `androidx.constraintlayout.widget.ConstraintLayout` como **tag raiz**.
+
+<Callout type="warning">
+**Atenção a dois pontos do material:**
+
+- O **Xamarin** não é uma IDE. Era uma **plataforma/framework** de desenvolvimento multiplataforma em C#, usada dentro do **Visual Studio**, e foi **descontinuado em maio de 2024**; seu sucessor é o **.NET MAUI**.
+- O **ConstraintLayout** é um **gerenciador de leiaute** (uma ferramenta de posicionamento), e não um padrão de design do guia. O **padrão de design** vem do **Material Design** e do guia da plataforma; o ConstraintLayout é apenas uma das formas de **implementá-lo**.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Material Design 3 (Material You) e Material Components.** O pacote `com.android.support` (biblioteca de suporte) deu lugar ao **AndroidX** e à biblioteca **Material Components** (`com.google.android.material`). Os temas atuais derivam de `Theme.Material3.*`, com **cores dinâmicas** (*Dynamic Color*, Android 12+), **modo escuro** automático e componentes atualizados: **FAB estendido**, **barra de navegação inferior** (*NavigationBar*), **navigation rail** para telas grandes e **gaveta modal**. A gaveta de navegação continua válida, mas o Material 3 recomenda **barra inferior** para até **cinco destinos** no celular e *rail*/gaveta permanente em tablets e dobráveis.
+
+**Jetpack Compose.** A interface é declarada em **Kotlin**, e o equivalente do ConstraintLayout é o **ConstraintLayout for Compose**, embora a maior parte das telas use `Column`, `Row` e `Box`, com `Scaffold` (barra superior, FAB e navegação) e os componentes do `material3`:
+
+```kotlin
+@Composable
+fun Tela() {
+    Scaffold(
+        topBar = { TopAppBar(title = { Text("Início") }) },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /* ação principal */ }) {
+                Icon(Icons.Default.Add, contentDescription = "Adicionar")
+            }
+        }
+    ) { padding ->
+        Column(Modifier.padding(padding)) { Text("Conteúdo") }
+    }
+}
+```
+
+**iOS atual.** A Apple mantém as **Human Interface Guidelines**, hoje com ênfase em **hierarquia, harmonia e consistência**, em fontes dinâmicas (*Dynamic Type*) e no estilo de vidro translúcido do iOS 26. As telas modernas são escritas em **SwiftUI** (a `UIView` do UIKit segue em uso). **Acessibilidade** (contraste, tamanho de toque mínimo de cerca de **48 dp** no Android e **44 pt** no iOS, leitores de tela como **TalkBack** e **VoiceOver**) é parte obrigatória das diretrizes. Para multiplataforma, **Flutter**, **React Native** e **Kotlin Multiplatform** permitem seguir os dois guias, e o **Xamarin** foi substituído pelo **.NET MAUI**.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Guidelines:** guias dos fabricantes (Google e Apple) com **recomendações de padrão**, sobretudo para a **interação com o usuário**.
+- **Android, interação:** usabilidade, animação, leiaute, padrão, estilo e componentes. Também há diretrizes de **qualidade** (compatibilidade, desempenho, segurança).
+- **Material Design:** guia do Google para design **visual, de movimento e de interação**; fornece **tema padrão**, *widgets* para views complexas e APIs para **sombras e animações**.
+- **Padrões do Material:** **botão de ação flutuante** (ação principal), **barra de aplicativos** (marca, navegação, pesquisa), **gaveta de navegação** (mostra e oculta a navegação), barras de ferramentas, guias e barra inferior; **ícone hambúrguer**.
+- **iOS, três temas:** **clareza, deferência e profundidade**. Clareza = legibilidade; deferência = interface sem competir com o conteúdo; profundidade = camadas e transições que dão hierarquia.
+- **ConstraintLayout:** hierarquia plana, posicionamento por **restrições**, **mínimo de uma horizontal e uma vertical** por view; sem restrição, a view vai para **[0, 0]**.
+- **Vector Asset Studio:** importa ícones **SVG** do Material no Android Studio.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. Design de interação para aplicações móveis. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- ROCHA, H. V.; BARANAUSKAS, M. C. C. *Design e avaliação de interfaces humano-computador*. Campinas: Instituto de Computação, Unicamp, 2003.
+- ANDROID DEVELOPERS. *Build a Responsive UI with ConstraintLayout*. 2019.
+- ANDROID DEVELOPERS. *Material Design for Android*. 2019.
+- APPLE. *Human Interface Guidelines: User Interaction, Data Entry (iOS)*. Cupertino, 2019.
+- GOOGLE. *Material Design 3*. material.io.
+- APPLE. *Human Interface Guidelines*. developer.apple.com/design.
+- BURNETTE, E. *Hello, Android: introducing Google's mobile development platform*. 3. ed. Pragmatic Bookshelf, 2010.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores*. 3. ed. Porto Alegre: Bookman, 2016.

@@ -1,0 +1,115 @@
+{
+  "ua": 10,
+  "questions": [
+    {
+      "question": "Qual é a finalidade primordial dos guias de desenvolvimento e design de interação (Guidelines) disponibilizados pelos fabricantes de plataformas móveis como Google e Apple?",
+      "options": [
+        "Definir a precificação obrigatória de aplicativos nas lojas virtuais e auditar transações financeiras de compras dentro do app.",
+        "Fornecer recomendações consolidadas sobre comportamento, leiaute e usabilidade que orientem os projetistas na criação de interfaces consistentes, promovendo uma experiência familiar e intuitiva ao usuário.",
+        "Impedir a utilização de componentes visuais personalizados criados por designers de produto independentes.",
+        "Substituir o código-fonte executável por modelos visuais estáticos que dispensam compilação."
+      ],
+      "correctIndex": 1,
+      "explanation": "As guidelines das plataformas estabelecem princípios e convenções de interface fundamentadas na experiência do usuário, permitindo que os aplicativos apresentem coerência estética e operacional e acelerem o aprendizado do usuário."
+    },
+    {
+      "question": "Como o sistema de design visual e de interação desenvolvido pelo Google para Android se caracteriza no contexto da construção de interfaces para aplicações móveis e web?",
+      "options": [
+        "Como um protocolo proprietário de comunicação por rádio frequência restrito a pagamentos por aproximação.",
+        "Como uma linguagem de programação declarativa projetada para substituir linguagens como Java e Kotlin.",
+        "Como um sistema de design abrangente que combina regras de estilo visual, animação, temas padronizados, superfícies e componentes de interação para múltiplas plataformas.",
+        "Como um sistema operacional embarcado exclusivo para televisores inteligentes e dispositivos vestíveis."
+      ],
+      "correctIndex": 2,
+      "explanation": "O sistema de design visual para Android orienta a linguagem gráfica, a física de movimentos e os componentes de interface (como botões, abas e cartões), provendo identidade e padronização ergonômica consistente."
+    },
+    {
+      "question": "Dentro dos padrões estruturais de interface recomendados pelo guia de design do Android, qual é a função específica do Botão de Ação Flutuante (Floating Action Button - FAB)?",
+      "options": [
+        "Apresentar uma listagem hierárquica secundária contendo todas as políticas de privacidade do aplicativo.",
+        "Exibir os termos de licença de software livre de bibliotecas externas integradas ao projeto.",
+        "Substituir a barra de status do sistema operacional na área superior da tela do smartphone.",
+        "Destacar visualmente a ação principal e mais representativa da tela, promovendo acesso imediato à operação mais esperada pelo usuário naquele contexto."
+      ],
+      "correctIndex": 3,
+      "explanation": "O Floating Action Button (FAB) é um elemento visual circular em relevo projetado para destacar a ação mais relevante de uma tela (por exemplo, compor um novo e-mail, criar um contato ou adicionar um item a uma lista)."
+    },
+    {
+      "question": "Quais são os três temas conceituais fundamentais que distinguem e norteiam as diretrizes de interface humana (Human Interface Guidelines) do ecossistema iOS da Apple?",
+      "options": [
+        "Clareza (legibilidade e foco no conteúdo essencial), Deferência (interface limpa e fluida que apoia o entendimento do conteúdo sem competir com ele) e Profundidade (camadas visuais e transições realistas que comunicam hierarquia).",
+        "Linearidade (organização rígida em colunas únicas), Abstração (uso obrigatório de esquemas conceituais sem imagens) e Isolamento (bloqueio de conexões de dados).",
+        "Opacidade (eliminação de efeitos de desfoque ou translucidez), Complexidade (acúmulo de dados na mesma janela) e Rigidez (rejeição de gestos interativos).",
+        "Saturação (priorização de contrastes policromáticos extremos), Densidade (preenchimento integral do espaço sem respiros) e Estática (eliminação de animações de transição)."
+      ],
+      "correctIndex": 0,
+      "explanation": "As diretrizes do iOS baseiam-se em três pilares: Clareza (tipografia nítida e facilidade de leitura), Deferência (o design serve ao conteúdo, evitando excesso de adornos que tirem o foco) e Profundidade (elevações e movimentos transmitem a estrutura lógica das telas)."
+    },
+    {
+      "question": "Qual é a principal vantagem arquitetural proporcionada pelo uso do ConstraintLayout na construção de telas de aplicativos Android?",
+      "options": [
+        "Eliminar a necessidade de compilar código Kotlin ou Java para execução no emulador.",
+        "Permitir a criação de leiautes complexos e responsivos através de uma hierarquia plana de componentes, evitando o aninhamento excessivo de múltiplos contêineres de visualização (ViewGroups).",
+        "Bloquear a rotação do aparelho entre os modos paisagem e retrato em tempo de execução.",
+        "Reduzir o consumo de memória RAM restringindo a interface gráfica a caracteres ASCII monocromáticos."
+      ],
+      "correctIndex": 1,
+      "explanation": "O ConstraintLayout permite posicionar e dimensionar elementos de forma flexível com base em restrições relativas entre irmãos e o contêiner pai, mantendo uma hierarquia plana (flat hierarchy) que aprimora sensivelmente a performance de medição e desenho da tela."
+    },
+    {
+      "question": "Em relação à engenharia de interfaces no Android, como se diferenciam o conceito de Padrão de Design (Design Pattern) e o componente ConstraintLayout?",
+      "options": [
+        "O padrão de design é um arquivo compilado em bytecode, enquanto o ConstraintLayout é uma licença comercial de uso de software.",
+        "O padrão de design aplica-se exclusivamente a bancos de dados, enquanto o ConstraintLayout aplica-se unicamente a conexões Bluetooth.",
+        "O padrão de design emana de diretrizes conceituais e guias de usabilidade da plataforma (como as convenções de interação do sistema operacional), enquanto o ConstraintLayout é uma ferramenta e contêiner gerenciador de layout que viabiliza tecnicamente a implementação desses padrões na interface.",
+        "ConstraintLayout é um formato de compactação de imagens vetoriais, enquanto padrão de design é uma linguagem de script web."
+      ],
+      "correctIndex": 2,
+      "explanation": "Padrões de design são soluções conceituais e diretrizes de experiência e usabilidade (como barras de aplicativo, gavetas e botões em relevo). O ConstraintLayout é o ViewGroup que viabiliza geometricamente a disposição desses elementos na tela."
+    },
+    {
+      "question": "Ao posicionar uma visualização (View) dentro de um ConstraintLayout no Android, qual regra de restrição é estritamente obrigatória para que o componente não seja deslocado involuntariamente para as coordenadas de origem [0, 0] ao executar o aplicativo?",
+      "options": [
+        "Definir obrigatoriamente a propriedade de peso layout_weight com valor superior a dez.",
+        "Associar o componente exclusivamente a um listener de toque gestual tridimensional.",
+        "Declarar dimensões em polegadas absolutas no manifesto da aplicação móvel.",
+        "Estabelecer para a visualização pelo menos uma restrição de ancoragem no eixo horizontal e pelo menos uma restrição no eixo vertical."
+      ],
+      "correctIndex": 3,
+      "explanation": "No ConstraintLayout, cada elemento precisa de no mínimo duas restrições (uma horizontal e uma vertical) para ter sua posição determinada. Elementos sem restrição são posicionados por padrão na coordenada (0, 0) no canto superior esquerdo da tela ao executar no dispositivo."
+    },
+    {
+      "question": "No ConstraintLayout do Android, qual é o efeito prático de configurar o atributo de dimensão de uma visualização como android:layout_width=\"0dp\" (ou layout_constraintWidth_default=\"spread\")?",
+      "options": [
+        "Ocultar permanentemente a visualização tornando-a invisível ao usuário final.",
+        "Indicar que a largura do componente adotará o comportamento de correspondência com as restrições (MATCH_CONSTRAINT), expandindo-se para preencher todo o espaço delimitado pelas suas restrições horizontais.",
+        "Reduzir o tamanho da fonte do conteúdo interno para o valor mínimo de um ponto tipográfico.",
+        "Impedir que outros componentes visualizem ou herdem os parâmetros de layout da visualização."
+      ],
+      "correctIndex": 1,
+      "explanation": "A atribuição de 0dp no ConstraintLayout ativa o comportamento MATCH_CONSTRAINT, instruindo o componente a expandir ou encolher dinamicamente para corresponder com precisão ao espaçamento entre as âncoras de restrição configuradas."
+    },
+    {
+      "question": "Em arquiteturas de navegação para aplicativos móveis Android, quando é indicada a utilização de uma Gaveta de Navegação (Navigation Drawer) em contraste com uma Barra de Navegação Inferior (Bottom Navigation)?",
+      "options": [
+        "A gaveta de navegação é exclusiva para formulários de cobrança com autenticação biométrica em duas etapas.",
+        "A barra de navegação inferior só pode ser utilizada caso o dispositivo não possua conexão com a internet.",
+        "A barra de navegação inferior é recomendada para acesso rápido a até cinco destinos principais frequentes, enquanto a gaveta de navegação é indicada para acomodar uma quantidade maior de seções e itens secundários sem poluir a área útil da tela.",
+        "A gaveta de navegação foi descontinuada e substituída obrigatoriamente por caixas de diálogo flutuantes."
+      ],
+      "correctIndex": 2,
+      "explanation": "Diretrizes de design móvel recomendam barras inferiores para um conjunto conciso de três a cinco destinos prioritários de uso constante, enquanto menus em gaveta lateral (drawer) atendem a aplicações com múltiplos módulos, links de perfil e configurações secundárias."
+    },
+    {
+      "question": "No panorama das tecnologias para criação de aplicativos móveis que atendem simultaneamente aos ecossistemas Android e iOS, como se classificam soluções como Flutter, React Native e .NET MAUI (sucessor do Xamarin)?",
+      "options": [
+        "Como placas de circuito integrado voltadas a testes de radiofrequência em laboratórios industriais.",
+        "Como sistemas de gerenciamento de bancos de dados relacionais proprietários de fabricantes de hardware.",
+        "Como navegadores de internet desenhados unicamente para exibição de páginas estáticas em redes privadas.",
+        "Como plataformas e frameworks de desenvolvimento de software multiplataforma, que permitem construir aplicações com código compartilhado capazes de interagir com os padrões e diretrizes de cada plataforma móvel."
+      ],
+      "correctIndex": 3,
+      "explanation": "Soluções multiplataforma modernas (como Flutter, React Native e .NET MAUI) são frameworks de desenvolvimento de software que possibilitam compartilhar lógica e regras de negócio entre ecossistemas, renderizando interfaces em conformidade com as diretrizes do Android e do iOS."
+    }
+  ]
+}
