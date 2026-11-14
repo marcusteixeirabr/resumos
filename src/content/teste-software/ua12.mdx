@@ -1,0 +1,153 @@
+---
+title: "UA12 — Testes de Caixa-Branca"
+subtitle: "Teste estrutural: grafo de fluxo, complexidade ciclomática, caminho básico, teste de condição, de ciclo e de fluxo de dados, com aplicação em Java."
+ua: 12
+group: "Técnicas de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua12.m4a" title="Testes de caixa-branca" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gtcb_01.webp" alt="Infográfico sobre o processo de teste de caixa-branca a partir de uma demanda" caption="Processo de teste de caixa-branca" />
+</SlidesGrid>
+
+### O que é o teste de caixa-branca
+
+O **teste de caixa-branca** é também chamado de **teste estrutural** (ou de **caixa transparente**, nome preferido por Schach, porque o testador **enxerga** o que acontece dentro). Ele examina os **detalhes procedimentais** e os **caminhos lógicos** do código, por isso **exige conhecimento do código-fonte**. É o oposto da caixa-preta (veja a [UA11](/resumos/teste-software/ua11/)), que olha só entradas e saídas.
+
+Como o resultado aponta **diretamente para o código**, ele orienta a **depuração** e a **manutenção**. Os critérios podem ser usados em todas as fases, mas são mais comuns nos **testes de unidade** e de **integração** (veja os níveis na [UA7](/resumos/teste-software/ua7/) e as abordagens na [UA4](/resumos/teste-software/ua4/)).
+
+| | **Caixa-preta** | **Caixa-branca** |
+|---|---|---|
+| **Também chamada** | Funcional, baseada em especificação | **Estrutural**, caixa transparente |
+| **Base** | Requisitos e especificação | **Código-fonte** |
+| **Pergunta** | O sistema faz o que **deveria**? | O código foi **exercitado** por completo? |
+| **Quem usa** | Analista de testes | Normalmente o **desenvolvedor** |
+
+#### Cobertura: a ideia por trás dos critérios
+
+Os critérios estruturais medem **quanto do código foi exercitado** pelos testes (**cobertura**). Os principais níveis são a cobertura de **comandos** (cada linha executa ao menos uma vez), de **decisões/ramos** (cada `if` e laço assume **verdadeiro e falso**), de **condições** (cada condição de uma expressão composta assume V e F) e de **caminhos**. O material desenvolve as técnicas abaixo.
+
+### Notação de grafo de fluxo
+
+O **grafo de fluxo** (ou grafo de programa) representa o **fluxo de controle** do código: cada **nó** é um comando (ou bloco) e cada **aresta** é um desvio possível. **Não é um critério de teste**: é uma **ferramenta** para entender o fluxo e projetar os testes. Ele pode ser desenhado a partir de um **fluxograma** ou direto do código. Um nó com dois ou mais desvios (`if`, `while`, `for`) é um **nó predicado**.
+
+### Complexidade ciclomática
+
+Métrica de **McCabe** (1976), baseada na teoria dos grafos, que mede a **complexidade lógica** de um módulo. Serve para **prever módulos propensos a erros**, para saber **quantos caminhos independentes** existem no conjunto base e como **limite superior** de testes necessários. Três formas de calcular o **V(G)** (todas dão o mesmo resultado):
+
+- **V(G) = E − N + 2**, com **E** = arestas e **N** = nós;
+- **V(G) = P + 1**, com **P** = nós predicado;
+- **V(G) = número de regiões** do grafo (incluindo a região externa).
+
+Exemplo do material: 11 arestas, 9 nós → 11 − 9 + 2 = **4**; 3 nós predicados + 1 = **4**; 4 regiões.
+
+### Teste do caminho básico
+
+Técnica proposta por **McCabe**: a partir do **V(G)**, deriva-se um **conjunto base de caminhos independentes**. **Caminho independente** é qualquer caminho que introduz **ao menos um novo comando ou uma nova condição**, ou seja, passa por **ao menos uma aresta ainda não percorrida**. Executar o conjunto base garante **cada comando ao menos uma vez** e **cada condição em V e F**. Passos:
+
+1. **Extrair o grafo de fluxo** do código;
+2. **Calcular o V(G)**;
+3. **Determinar o conjunto base** de caminhos independentes;
+4. **Criar um caso de teste** que force cada caminho.
+
+Alguns caminhos do conjunto base podem ser **infactíveis** (nenhuma entrada os executa), como no exemplo do material, em que uma lista desordenada **necessariamente** passa pelos nós internos do laço.
+
+### Teste de estrutura de controle
+
+Complementa o caminho básico e amplia a cobertura. Inclui:
+
+- **Teste de condição:** exercita as **condições lógicas** do módulo, **simples** (variável booleana ou expressão relacional, com ou sem `NOT`) e **compostas** (duas ou mais condições com operadores booleanos e parênteses), avaliando **verdadeiro e falso**. Procura erros de **operador booleano**, **variável booleana**, **parênteses**, **operador relacional** e **expressão aritmética**.
+- **Teste de ciclo (laço):** valida a construção dos laços, em quatro classes:
+
+| Classe | Como testar |
+|---|---|
+| **Simples** | **Pular** o laço; passar **uma vez**, **duas vezes**; e um número típico e o **máximo permitido** de passagens |
+| **Aninhado** | Abordagem de **Beizer**: começar pelo laço **mais interno**, mantendo os externos nos valores **mínimos**; depois ir **para fora**, mantendo os demais em valores típicos (testar todas as combinações seria inviável) |
+| **Concatenado** | Como laços simples; se forem **dependentes**, trate como **aninhados** |
+| **Desestruturado** | Evitar: **refatorar** para virar simples, aninhado ou concatenado |
+
+### Teste de fluxo de dados
+
+Usa a **vida das variáveis** para derivar casos de teste. Cada ocorrência de uma variável é:
+
+- **definição:** recebe um valor (atribuição);
+- **uso computacional:** usada em um cálculo;
+- **uso predicativo:** usada em uma condição (`if`, `while`).
+
+Critérios: **todas as definições** (cada definição deve alcançar **ao menos um uso**, computacional ou predicativo; é o mais básico) e **todos os usos** (cada definição deve alcançar **todos** os seus usos, por um caminho sem nova definição no meio).
+
+### Aplicando em Java
+
+O material usa um programa que **ordena uma lista**, desenha o grafo, calcula o V(G) e cria um teste por caminho do conjunto base. Exemplo próprio equivalente: uma ordenação por trocas, com **três predicados** (`for`, `if` e `while`), logo **V(G) = 3 + 1 = 4**.
+
+```java
+public static int[] ordenar(int[] v) {
+    boolean trocou;
+    do {
+        trocou = false;
+        for (int i = 0; i < v.length - 1; i++) {   // predicado 1
+            if (v[i] > v[i + 1]) {                  // predicado 2
+                int t = v[i]; v[i] = v[i + 1]; v[i + 1] = t;
+                trocou = true;
+            }
+        }
+    } while (trocou);                               // predicado 3
+    return v;
+}
+```
+
+Dos quatro caminhos do conjunto base, **três** são executáveis (um quarto, “houve troca e o laço externo terminou”, é **infactível**, como no material). Um teste de unidade para cada um:
+
+```java
+@Test void caminho1_lacoInternoNaoExecuta() {          // 0 ou 1 elemento
+    assertArrayEquals(new int[]{5}, ordenar(new int[]{5}));
+}
+@Test void caminho2_semTrocas() {                       // if falso
+    assertArrayEquals(new int[]{1, 2, 3}, ordenar(new int[]{1, 2, 3}));
+}
+@Test void caminho3_comTrocasERepete() {                // if verdadeiro, while repete
+    assertArrayEquals(new int[]{1, 2, 3}, ordenar(new int[]{3, 1, 2}));
+}
+```
+
+<Callout type="warning">
+**Atenção a um ponto do material:** a descrição dos critérios de **fluxo de dados** é imprecisa. **Todas as definições** não significa “cada **variável** exercitada ao menos uma vez”: significa que **cada definição** de uma variável deve chegar a **pelo menos um uso**. **Todos os usos** exige a associação entre **cada definição e todos os seus usos** (computacionais e predicativos) por um caminho **sem nova definição** no meio, e não entre “definições de variáveis”.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Cobertura medida por ferramenta.** Ninguém calcula a cobertura à mão: **JaCoCo** (Java), **Kover** (Kotlin), **Istanbul/nyc** e o relatório de cobertura do **Jest/Vitest** (JavaScript) e **coverage.py** (Python) medem **linhas, ramos e condições** durante a execução dos testes. Com **CI/CD**, a cobertura vira um **portão de qualidade** (*quality gate*) e aparece em painéis como **SonarQube**/**SonarCloud**, que também calcula a **complexidade ciclomática** e a **complexidade cognitiva** por método. Em critérios rigorosos (aviação, automotivo, saúde), usa-se **MC/DC** (cobertura de condição/decisão modificada).
+
+**Cobertura não é qualidade.** 100% de cobertura mostra que o código **foi executado**, não que os testes **verificam o resultado**. Por isso se complementa com **teste de mutação** (**PIT**/Pitest em Java, **Stryker** em JavaScript), que altera o código para ver se os testes **detectam** a mudança. Na prática, caixa-branca e caixa-preta se combinam (a **pirâmide de testes** pede muitos testes de unidade, escritos por quem programa) e os valores de entrada vêm de critérios de caixa-preta. **Análise estática** (SonarQube, SpotBugs, Detekt) encontra defeitos **sem executar** o código. A complexidade ciclomática também orienta **refatoração**: métodos com V(G) acima de cerca de **10** costumam ser divididos.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Caixa-branca = estrutural = caixa transparente:** olha o **código-fonte**, os **caminhos lógicos**; resultado ligado ao código (ajuda **depuração** e manutenção). Mais comum em **unidade e integração**.
+- **Grafo de fluxo:** **nós** (comandos) e **arestas** (desvios); **não é critério**, é **ferramenta**; **nó predicado** = nó com decisão.
+- **Complexidade ciclomática (McCabe, 1976):** **V(G) = E − N + 2 = P + 1 = nº de regiões**; é o **número de caminhos independentes** do conjunto base e o **limite superior** de testes.
+- **Caminho independente:** introduz ao menos **uma nova aresta** (novo comando ou nova condição).
+- **Caminho básico:** grafo → V(G) → conjunto base → um caso de teste por caminho. Pode haver caminhos **infactíveis**.
+- **Teste de condição:** condições **simples e compostas**, avaliando V e F.
+- **Teste de ciclo:** **simples, aninhado, concatenado, desestruturado**; aninhado = **Beizer** (de dentro para fora); desestruturado = **refatorar**.
+- **Fluxo de dados:** **definição, uso computacional, uso predicativo**; critérios **todas as definições** e **todos os usos**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ROCHA, B. C. Testes de caixa-branca. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- BARBOSA, E. F. et al. (ed.). *Introdução ao teste de software*. Rio de Janeiro: Elsevier, 2007.
+- DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. *Introdução ao teste de software*. 2. ed. Rio de Janeiro: Elsevier, 2016.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- SCHACH, S. R. *Engenharia de software: os paradigmas clássico & orientado a objetos*. 7. ed. Porto Alegre: AMGH, 2008.
+- MURTA, L. G. P. *Verificação, validação e testes*. 2011.
+- MCCABE, T. J. A complexity measure. *IEEE Transactions on Software Engineering*, v. SE-2, n. 4, 1976.
+- ISO/IEC/IEEE 29119-4:2021. *Software and systems engineering: Software testing, Part 4: Test techniques*.

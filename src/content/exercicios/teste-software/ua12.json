@@ -1,0 +1,115 @@
+{
+  "ua": 12,
+  "questions": [
+    {
+      "question": "O teste de caixa-branca, também denominado teste estrutural ou de caixa transparente, fundamenta-se em qual princípio metodológico para a elaboração de seus casos de teste?",
+      "options": [
+        "Restringe-se à validação exclusiva de requisitos funcionais por meio de entradas e saídas observáveis, desconsiderando a implementação interna do programa.",
+        "Examina os caminhos lógicos, as estruturas procedimentais e o código-fonte da aplicação para verificar quais trechos e decisões foram exercitados.",
+        "Envia requisições de estresse de infraestrutura de rede para medir a tolerância a falhas do hardware em centros de processamento de dados.",
+        "Baseia-se unicamente nas percepções subjetivas e na avaliação ergonômica de usuários finais leigos durante testes de aceitação em ambiente de produção."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste de caixa-branca baseia-se na análise direta do código-fonte e da arquitetura interna do software, projetando casos de teste que percorrem estruturas de decisão, laços e comandos lógicos específicos."
+    },
+    {
+      "question": "Na modelagem de testes estruturais, qual é a função e o significado dos elementos que compõem um grafo de fluxo (ou grafo de programa)?",
+      "options": [
+        "Constitui uma ferramenta de estimativa orçamentária em que cada nó representa o custo em moeda corrente de uma linha de código.",
+        "Atua como um critério de teste autônomo que substitui integralmente a necessidade de execução de casos de teste em código compilado.",
+        "Representa a estrutura lógica do programa como uma ferramenta de apoio, onde os nós mapeiam comandos ou blocos procedimentais e as arestas representam as transferências de controle de execução.",
+        "Define uma linguagem de programação visual que elimina operadores relacionais e estruturas condicionais do código executável."
+      ],
+      "correctIndex": 2,
+      "explanation": "O grafo de fluxo é uma ferramenta de suporte para visualização do fluxo de controle: cada nó corresponde a um comando ou sequência de instruções e as arestas direcionadas indicam as bifurcações e transições possíveis de controle da execução."
+    },
+    {
+      "question": "Um módulo de software foi mapeado em um grafo de fluxo contendo 11 arestas, 9 nós e 3 nós predicados (pontos de decisão com desvio condicional). Aplicando a métrica de Complexidade Ciclomática V(G) de McCabe, qual é o valor obtido e qual é o seu significado prático no projeto de testes?",
+      "options": [
+        "V(G) = 4; o valor define o número de caminhos independentes do conjunto base e estabelece o limite superior de casos de teste necessários para o caminho básico.",
+        "V(G) = 22; o valor indica a quantidade mínima de servidores físicos requeridos para executar a aplicação em balanceamento de carga.",
+        "V(G) = 1; o valor estabelece que o módulo não possui nenhuma bifurcação e executa de forma estritamente sequencial.",
+        "V(G) = 14; o valor representa o percentual máximo aceitável de memória RAM alocada durante o processamento do módulo."
+      ],
+      "correctIndex": 0,
+      "explanation": "A complexidade ciclomática pode ser calculada por V(G) = E - N + 2 (11 - 9 + 2 = 4) ou por V(G) = P + 1 (3 + 1 = 4). O resultado representa a quantidade de caminhos linearmente independentes e o teto de testes requeridos para a técnica de caminho básico."
+    },
+    {
+      "question": "No contexto da técnica do teste do caminho básico, o que caracteriza formalmente um 'caminho independente' e por que alguns caminhos identificados podem ser infactíveis?",
+      "options": [
+        "Um caminho independente exige que todo o código seja refatorado para programação funcional; sua infactibilidade decorre da ausência de compiladores compatíveis.",
+        "Um caminho independente introduz ao menos uma aresta (comando ou condição) ainda não percorrida no grafo; ele pode ser infactível se as dependências lógicas de dados impedirem que qualquer combinação de entrada o execute.",
+        "Um caminho independente percorre exclusivamente chamadas a serviços externos de mensageria; sua infactibilidade significa que a internet está desconectada.",
+        "Um caminho independente é aquele que pula todas as estruturas condicionais de um laço; ele torna-se infactível somente em softwares legados de grande porte."
+      ],
+      "correctIndex": 1,
+      "explanation": "Um caminho independente adiciona pelo menos uma aresta ou desvio novo em relação aos caminhos anteriores do conjunto base. Alguns caminhos teóricos desse conjunto podem ser infactíveis quando contradições lógicas internas impedem que dados reais satisfaçam simultaneamente as condições exigidas para percorrê-los."
+    },
+    {
+      "question": "Ao validar laços aninhados por meio da técnica de teste de ciclos, testar todas as combinações possíveis de iterações torna-se impraticável. Qual estratégia, proposta por Boris Beizer, é recomendada para testar essas estruturas com eficiência?",
+      "options": [
+        "Executar todos os laços externos em sua capacidade máxima enquanto o laço interno permanece desligado por comentários no código.",
+        "Inverter a ordem de compilação dos laços e converter todas as variáveis de contagem em constantes literais.",
+        "Iniciar o teste pelo laço mais interno com os laços externos fixados em seus valores mínimos de iteração; em seguida, avançar para fora mantendo os demais laços com valores típicos.",
+        "Substituir os laços aninhados por chamadas recursivas infinitas monitoradas por captura de exceções de estouro de pilha."
+      ],
+      "correctIndex": 2,
+      "explanation": "A abordagem de Beizer para laços aninhados determina começar testando o laço mais interno, mantendo os laços externos em seus valores mínimos (inclusive zero, se permitido). Após validar o laço interno, avança-se para o laço imediatamente externo, mantendo os demais em valores típicos, evitando explosão combinatória."
+    },
+    {
+      "question": "Em uma análise de testes estruturais, como devem ser tratados os laços classificados como 'desestruturados' e qual é o objetivo central do teste de condição em expressões compostas?",
+      "options": [
+        "Laços desestruturados devem ser ignorados pelos testes automatizados; o teste de condição visa apenas calcular o tamanho do binário compilado.",
+        "Laços desestruturados devem receber casos de teste adicionais sem alteração no código; o teste de condição avalia apenas tipos de dados primitivos.",
+        "Laços desestruturados devem ser isolados em contêineres de virtualização; o teste de condição destina-se a verificar se a memória alocada foi liberada pelo coletor de lixo.",
+        "Laços desestruturados devem ser refatorados para estruturas estruturadas (simples, aninhadas ou concatenadas); o teste de condição exercita componentes lógicos simples e compostos avaliando resultados verdadeiros e falsos."
+      ],
+      "correctIndex": 3,
+      "explanation": "Laços com saltos arbitrários ou entradas/saídas múltiplas desestruturadas representam má prática de arquitetura e devem ser refatorados antes do teste; já o teste de condição foca em garantir que cada condição booleana, isolada ou combinada em expressões lógicas compostas, seja avaliada tanto para verdadeiro quanto para falso."
+    },
+    {
+      "question": "Na técnica de teste de fluxo de dados, as ocorrências de uma variável ao longo do programa são categorizadas e rastreadas. Qual é a correta definição dos critérios estruturais 'todas as definições' e 'todos os usos'?",
+      "options": [
+        "'Todas as definições' exige que cada definição de uma variável alcance pelo menos um uso (computacional ou predicativo); 'todos os usos' exige que cada definição alcance todos os seus usos associados por caminhos livres de nova definição.",
+        "'Todas as definições' significa executar cada variável declarada exatamente uma vez na inicialização; 'todos os usos' significa duplicar todas as instruções de cálculo do sistema.",
+        "'Todas as definições' requer que o compilador elimine variáveis não primitivas; 'todos os usos' restringe-se a validar variáveis em consultas a banco de dados relacional.",
+        "'Todas as definições' aplica-se exclusivamente a parâmetros de métodos públicos; 'todos os usos' obriga que as variáveis sejam reatribuídas a cada linha de código."
+      ],
+      "correctIndex": 0,
+      "explanation": "No teste de fluxo de dados, 'todas as definições' garante que para cada instrução onde uma variável recebe valor haja pelo menos um caminho até um uso (seja c-uso em cálculo ou p-uso em condição); 'todos os usos' é mais rigoroso, exigindo caminhos de cada definição para todos os seus usos possíveis sem redefinição intermediária."
+    },
+    {
+      "question": "No desenvolvimento contemporâneo apoiado por integração contínua (CI/CD), ferramentas como JaCoCo, Istanbul e SonarQube são amplamente utilizadas para monitorar a qualidade do código. Como a cobertura de testes é integrada a esse fluxo e qual é o papel do teste de mutação?",
+      "options": [
+        "A cobertura de 100% garante a completa ausência de defeitos lógicos, dispensando a necessidade de testes funcionais ou de aceitação.",
+        "As ferramentas de cobertura bloqueiam compilações caso a complexidade ciclomática de qualquer método ultrapasse o valor fixo de 2.",
+        "A cobertura atua como um portão de qualidade (quality gate) medindo linhas e ramos executados, enquanto o teste de mutação altera o código intencionalmente para validar se os testes existentes falham ao detectar os defeitos inseridos.",
+        "O teste de mutação é um procedimento de hardware que simula defeitos elétricos na placa-mãe durante a compilação do software."
+      ],
+      "correctIndex": 2,
+      "explanation": "A métrica de cobertura indica quais linhas e decisões foram executadas, mas não comprova que as asserções verificam a lógica corretamente. O teste de mutação introduz pequenas alterações sintáticas (mutantes) no código para avaliar a eficácia da suíte de testes em identificar essas alterações."
+    },
+    {
+      "question": "Durante a auditoria de qualidade estática de um sistema corporativo, identifica-se que determinados métodos apresentam complexidade ciclomática V(G) significativamente elevada. Qual é a recomendação consagrada pela engenharia de software para métodos cujo V(G) excede aproximadamente 10?",
+      "options": [
+        "Desativar a compilação de testes de unidade para os respectivos métodos para evitar lentidão no pipeline de integração.",
+        "Refatorar o código, dividindo o método excessivamente complexo em métodos menores e coesos, reduzindo ramificações lógicas e facilitando a manutenção e a testabilidade.",
+        "Alterar a tipagem das variáveis para tipos genéricos no intuito de ocultar as condições dos nós predicados do analisador estático.",
+        "Remover todos os blocos de tratamento de exceção (try/catch) do método, uma vez que capturas de erro não influenciam a manutenibilidade."
+      ],
+      "correctIndex": 1,
+      "explanation": "Métodos com complexidade ciclomática acima de 10 são estatisticamente mais propensos a defeitos e difíceis de testar exaustivamente. A prática recomendada é a refatoração modular, dividindo responsabilidades e simplificando o fluxo de controle."
+    },
+    {
+      "question": "Considere a análise estrutural de um algoritmo clássico de ordenação por trocas com dois laços encadeados e uma estrutura condicional interna. Ao projetar casos de teste para exercitar o conjunto base de caminhos independentes, qual estratégia de dados assegura a cobertura de ramificação adequada?",
+      "options": [
+        "Fornecer exclusivamente listas com milhões de registros aleatórios para mensurar apenas a velocidade do coletor de lixo.",
+        "Usar apenas vetores nulos para provocar o encerramento prematuro da máquina virtual sem executar os laços.",
+        "Utilizar arquivos binários corrompidos como entrada para testar falhas de decodificação de caracteres do sistema operacional.",
+        "Projetar entradas que contemplem lista vazia ou unitária (para não executar o laço interno), lista já ordenada (para avaliar a condição de troca como falsa) e lista desordenada (para acionar trocas e iterações subsequentes)."
+      ],
+      "correctIndex": 3,
+      "explanation": "Para cobrir os diferentes caminhos do fluxo de controle de um algoritmo de ordenação, os casos de teste devem exercitar tanto a não execução das repetições/trocas (casos triviais ou já ordenados) quanto a ativação completa das condições e bifurcações (listas invertidas ou com trocas necessárias)."
+    }
+  ]
+}
