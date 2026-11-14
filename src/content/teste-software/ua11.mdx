@@ -1,0 +1,170 @@
+---
+title: "UA11 — Testes de Caixa-Preta"
+subtitle: "Teste funcional baseado em especificação: partição de equivalência, análise de valor limite, tabela de decisão, transição de estados, caso de uso e automação com Java."
+ua: 11
+group: "Técnicas de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua11.m4a" title="Testes de caixa-preta" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gtc_01.webp" alt="Infográfico sobre a criação de casos de teste de caixa-preta e seus critérios" caption="Casos de teste de caixa-preta e seus critérios" />
+</SlidesGrid>
+
+### O que é o teste de caixa-preta
+
+O **teste de caixa-preta** é também chamado de **teste funcional** ou **teste baseado em especificação**. O objetivo é garantir que as **funcionalidades** do sistema se comportem **como previsto nos requisitos**. A “caixa” é **opaca**: não importa como o sistema foi implementado por dentro, só a relação entre **entradas** e **saídas**.
+
+**Entrada → [sistema, conteúdo desconhecido] → Saída observada × Saída esperada**
+
+Características importantes:
+
+- **Fontes dos testes:** a base de **especificação**: manuais do sistema, **diagramas de caso de uso** e documento de **requisitos** funcionais e não funcionais. Se a especificação é ruim ou está desatualizada, parte do sistema fica **“descoberta”** e a cobertura cai.
+- **Independe da linguagem** e do **paradigma** de desenvolvimento.
+- Segue um **roteiro** para cada funcionalidade, executável **manualmente** ou com **automação**.
+- É mais comum no **nível de sistema** (veja os níveis na [UA7](/resumos/teste-software/ua7/)), mas se aplica também em **unidade**, **integração** e **aceitação**.
+- Como não se enxerga o código, a equipe deve **priorizar as funcionalidades críticas** junto aos analistas de requisitos e *stakeholders*.
+
+O **roteiro de teste** (ou projeto de testes) agrupa **casos de teste** por funcionalidade. Um **caso de teste** é um subconjunto planejado de **entradas e saídas predefinidas**, executado em **ambiente controlado** para observar o resultado (veja a [UA6](/resumos/teste-software/ua6/)). O oposto, que olha o código por dentro, é a **caixa-branca** (veja as abordagens na [UA4](/resumos/teste-software/ua4/)).
+
+### Critérios (técnicas) de caixa-preta
+
+| Critério | Pergunta que responde | Boa para |
+|---|---|---|
+| **Partição de equivalência** | Quais **grupos de entradas** são tratados do mesmo jeito? | Reduzir a quantidade de testes |
+| **Análise de valor limite** | O que acontece **nas fronteiras** dos grupos? | Onde os defeitos mais aparecem |
+| **Tabela de decisão** | Que **combinação de condições** gera cada resultado? | Regras de negócio com várias condições lógicas |
+| **Transição de estados** | A **sequência de ações** leva aos estados corretos? | Sistemas cujo comportamento depende do **estado atual ou anterior** |
+| **Caso de uso** | O **fluxo do usuário** funciona de ponta a ponta? | Aceitação e integração |
+
+#### Partição de equivalência
+
+Divide o domínio de entrada em **classes** de dados que o sistema trata da **mesma forma**. Testar **um representante** de cada classe basta para inferir o comportamento de toda ela, sem testar todos os valores. Há classes **válidas** e **inválidas**.
+
+Exemplo: campo **mês**, aceita **1 a 12** (inteiro).
+
+| Classe | Tipo | Representante |
+|---|---|---|
+| 1 a 12 | **Válida** | 8 |
+| menor que 1 (0, negativos) | Inválida | 0 |
+| maior que 12 | Inválida | 13 |
+| não inteiro (real) | Inválida | 2,5 |
+| não numérico | Inválida | “XPTO” |
+
+Como **identificar** as classes (regra clássica de Pressman):
+
+- entrada por **intervalo** → **1 válida e 2 inválidas** (abaixo e acima);
+- entrada de **valor específico** → **1 válida e 2 inválidas**;
+- entrada de **membro de um conjunto** → **1 válida e 1 inválida**;
+- entrada **booleana** → **1 válida e 1 inválida**.
+
+#### Análise de valor limite
+
+**Complementa** a partição: em vez de um valor qualquer de cada classe, testa os valores **nas bordas**, onde há **mais probabilidade de defeito** (erro de `<` no lugar de `<=`, por exemplo). É considerada fácil de usar e de **alta capacidade de encontrar defeitos**.
+
+Para o mês de 1 a 12:
+
+- **Fronteiras válidas:** 1 e 12. **Fronteiras inválidas:** 0 e 13.
+- **Variação de três valores** (em cada fronteira, o valor, o anterior e o seguinte): **0, 1, 2** e **11, 12, 13**.
+
+As duas técnicas **se combinam**: a partição elimina testes redundantes e o valor limite concentra esforço nas bordas.
+
+#### Tabela de decisão
+
+Indicada para regras de negócio com **condições lógicas** combinadas. Cada **coluna** é uma **regra**: combinação de condições (verdadeiro/falso) que leva a uma **ação ou resultado**. Exemplo: desconto em compra.
+
+| Condição / Ação | Regra 1 | Regra 2 | Regra 3 | Regra 4 |
+|---|---|---|---|---|
+| Cliente é **ouro**? | V | V | F | F |
+| Compra **acima de R$ 500**? | V | F | V | F |
+| **Desconto de 15%** | X | | | |
+| **Desconto de 10%** | | X | X | |
+| **Sem desconto** | | | | X |
+
+Com *n* condições booleanas, o número máximo de regras é **2ⁿ**; regras impossíveis ou equivalentes podem ser **fundidas**.
+
+#### Transição de estados
+
+Valida as **transições** que ocorrem quando uma ação é aplicada, dependendo do **estado atual ou anterior**. Os testes verificam se a **sequência típica** de estados está correta e se **transições inválidas** não acontecem. Exemplo: autorização de pagamento com cartão, com três tentativas de senha.
+
+| Estado atual | Senha válida | Senha inválida |
+|---|---|---|
+| **Aguardando senha (tentativa 1)** | Aprovado | Tentativa 2 |
+| **Tentativa 2** | Aprovado | Tentativa 3 |
+| **Tentativa 3** | Aprovado | **Bloqueado** |
+| **Aprovado** / **Bloqueado** | (estados finais) | (estados finais) |
+
+#### Teste de caso de uso
+
+Os casos de teste são **derivados dos casos de uso** e cenários de negócio, que representam a **interação do ator com o sistema**. São relativamente simples de escrever, porque a especificação já traz quase o modelo pronto, e revelam defeitos no **fluxo real de uso**, ajudam no **aceite** pelo usuário final e expõem problemas de **interferência entre componentes** na integração. O caso de teste deve trazer **pré-condição**, **fluxo principal**, **fluxos alternativos** e **pós-condição**.
+
+### Automatizando caixa-preta com Java
+
+Um caso de caixa-preta pode virar **código**: o analista programa o teste em **Java** (ou JavaScript, entre outras) e uma ferramenta o executa. Os testes são **versionados** junto aos requisitos e podem incluir **pré-condições** e **pós-condições** (limpar dados, preparar o banco, apagar *cookies*). No material, um teste em Java abre o navegador, acessa o Google e faz uma busca, usando **Selenium WebDriver** (veja o Selenium na [UA8](/resumos/teste-software/ua8/)). Essa automação permite rodar os testes **a cada nova versão publicada** e é muito útil na **regressão**, com grande massa de testes.
+
+Os critérios acima viram **testes parametrizados**, em que a tabela de valores é o próprio caso de teste (exemplo com **JUnit 5**, valor limite do mês):
+
+```java
+class MesTest {
+
+    @ParameterizedTest(name = "mês {0} → válido = {1}")
+    @CsvSource({
+        "0,  false",  // fronteira inferior inválida
+        "1,  true",   // fronteira inferior válida
+        "2,  true",
+        "11, true",
+        "12, true",   // fronteira superior válida
+        "13, false"   // fronteira superior inválida
+    })
+    void validaMes(int mes, boolean esperado) {
+        assertEquals(esperado, Validador.mesValido(mes));
+    }
+}
+```
+
+<Callout type="warning">
+**Atenção a dois pontos do material:**
+
+- Na **partição de equivalência do mês**, a classe válida é **1 a 12**. Listar como válido “valores maiores que 0” está errado, porque o 13 também seria maior que 0. As classes inválidas são menor que 1, maior que 12 e valores não inteiros ou não numéricos.
+- O material anuncia **cinco critérios** (partição, valor limite, tabela de decisão, **grafo de causa e efeito** e caso de uso), mas desenvolve **transição de estados** e **não** o grafo de causa e efeito. Os quadros que ele chama de “tabela de decisão” (idade e maioridade) são, na verdade, **lista de valores de entrada** (partição e limite); uma tabela de decisão de verdade combina **condições** em **regras** que levam a **ações**.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Selenium 4 e alternativas.** O Selenium 4 traz o **Selenium Manager**, que baixa o driver automaticamente (não é mais preciso instalar o Geckodriver à mão). **Playwright** e **Cypress** são hoje muito usados na automação de caixa-preta de aplicações web, com esperas automáticas e gravação de vídeo, e o **Postman**, o **REST Assured** e o **Karate** testam **APIs** como caixa-preta (entrada → resposta). Rodar o teste em **CI/CD** (GitHub Actions) a cada *commit* é a forma atual de “automação baseada em liberações”.
+
+**Do critério ao BDD.** Casos de uso e tabelas de decisão viram **cenários Gherkin** (*Dado / Quando / Então*) com **Cucumber**, que servem de documentação viva. O mesmo caso pode ser expresso como **teste parametrizado** (JUnit 5 `@ParameterizedTest`, `pytest.mark.parametrize`).
+
+**Além da especificação.** A caixa-preta também se combina com **testes baseados em propriedades** (*property-based*, como **jqwik** e **Hypothesis**), que geram muitas entradas automaticamente, com **fuzzing** (entradas aleatórias para achar falhas) e com **testes de contrato** (**Pact**). O planejamento de testes segue hoje a **ISO/IEC/IEEE 29119**, e a **ISO 25010** (que substituiu a ISO 9126) define as características de qualidade avaliadas.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Caixa-preta = teste funcional = teste baseado em especificação:** ignora o código interno; olha **entradas e saídas** contra os **requisitos**.
+- **Fontes:** manuais, **diagramas de caso de uso** e requisitos funcionais e não funcionais. Especificação ruim ou desatualizada deixa o sistema **“descoberto”**.
+- **Independe de linguagem**, manual ou automatizada, aplicável em **vários níveis** (mais comum em sistema).
+- **Caso de teste** = entradas e saídas predefinidas em ambiente controlado; **roteiro** = conjunto de casos por funcionalidade.
+- **Partição de equivalência:** classes **válidas e inválidas**; **um representante por classe**; reduz o número de testes. Intervalo = **1 válida + 2 inválidas**; conjunto/booleano = **1 + 1**.
+- **Valor limite:** testa as **fronteiras**; **complementa** a partição; variação de **três valores** (0, 1, 2 e 11, 12, 13).
+- **Tabela de decisão:** **condições lógicas** (V/F) e regras de negócio complexas; cada coluna é uma regra.
+- **Transição de estados:** ação que depende do **estado atual ou anterior**; valida sequências e transições inválidas.
+- **Caso de uso:** parte da interação **ator × sistema**; traz **pré-condição, pós-condição, fluxo principal e alternativo**; ajuda no **aceite**.
+- **Java + Selenium WebDriver** automatizam o teste; a automação é ideal para **regressão** a cada versão.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ROCHA, B. C. Testes de caixa-preta. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- DELAMARO, M. E.; MALDONADO, J. C.; JINO, M. *Introdução ao teste de software*. 2. ed. São Paulo: Elsevier, 2016.
+- MOLINARI, L. *Testes funcionais de software*. São Paulo: Visual Books, 2008.
+- PFLEEGER, S. L. *Engenharia de software: teoria e prática*. 2. ed. São Paulo: Prentice Hall, 2004.
+- SOUZA, E. et al. *Base de conhecimento em testes de software*. São Paulo: Martins Fontes, 2007.
+- IEEE COMPUTER SOCIETY. *Guide to the Software Engineering Body of Knowledge (SWEBOK)*. 2004.
+- ISO/IEC/IEEE 29119-4:2021. *Software and systems engineering: Software testing, Part 4: Test techniques*.

@@ -1,0 +1,115 @@
+{
+  "ua": 11,
+  "questions": [
+    {
+      "question": "Qual é o princípio fundamental que caracteriza a abordagem de teste de caixa-preta (também denominada teste funcional ou teste baseado em especificação)?",
+      "options": [
+        "Avaliar as funcionalidades do software verificando a conformidade entre entradas fornecidas e saídas observadas em relação aos requisitos, sem examinar a estrutura interna do código-fonte.",
+        "Analisar o fluxo de controle interno e a complexidade ciclomática através de engenharia reversa de binários compilados.",
+        "Auditar exclusivamente as permissões de acesso físico de funcionários às salas de servidores da organização.",
+        "Submeter o código-fonte a ferramentas de análise estática e contagem de linhas de comentários."
+      ],
+      "correctIndex": 0,
+      "explanation": "No teste de caixa-preta, a estrutura interna do software é tratada como opaca; o foco reside na verificação funcional de entradas versus saídas esperadas, baseando-se estritamente nas especificações e requisitos definidos."
+    },
+    {
+      "question": "Quais são as principais fontes de informação utilizadas pelos analistas de qualidade para projetar casos de teste de caixa-preta eficientes?",
+      "options": [
+        "Os diagramas de circuito elétrico dos processadores e placas de vídeo dos computadores.",
+        "As atas de reuniões orçamentárias de encerramento fiscal da empresa.",
+        "Documentos de especificação de requisitos funcionais e não funcionais, manuais de usuário e diagramas de casos de uso do sistema.",
+        "Tabelas de despejo de memória bruta geradas pelo sistema operacional após reinicializações."
+      ],
+      "correctIndex": 2,
+      "explanation": "Como a caixa-preta baseia-se em especificação, suas fontes essenciais são os artefatos de requisitos, diagramas de casos de uso e documentações funcionais; se a especificação for inconsistente, áreas do software podem ficar sem a devida cobertura de testes."
+    },
+    {
+      "question": "Considere um campo de formulário destinado a receber o número de um mês do ano civil (número inteiro de 1 a 12). Ao aplicar a técnica de Partição de Equivalência, qual é a definição correta das classes de equivalência para esse domínio?",
+      "options": [
+        "Classe válida: valores inteiros de 1 a 12; Classes inválidas: valores menores que 1, valores maiores que 12 e entradas não inteiras ou não numéricas.",
+        "Classe válida: qualquer número maior do que zero sem limite superior; Classes inválidas: apenas valores negativos.",
+        "Classe válida: apenas os meses com 31 dias; Classes inválidas: todos os demais meses do ano.",
+        "Classe válida: exclusivamente caracteres alfabéticos por extenso; Classes inválidas: números inteiros."
+      ],
+      "correctIndex": 0,
+      "explanation": "Para um campo que aceita meses de 1 a 12, a classe válida restringe-se estritamente ao intervalo de 1 a 12. Entradas fora dessa faixa (menores que 1 ou maiores que 12, como 0 e 13) e formatos não inteiros constituem classes inválidas distintas."
+    },
+    {
+      "question": "Como a técnica de Análise de Valor Limite atua em conjunto com a Partição de Equivalência na elaboração de casos de teste de caixa-preta?",
+      "options": [
+        "Substitui as classes válidas por testes exclusivos de sobrecarga de rede local.",
+        "Complementa a partição concentrando os testes nas fronteiras das classes de dados, onde há estatisticamente maior probabilidade de ocorrência de defeitos de implementação.",
+        "Garante a execução de testes apenas nos pontos médios dos intervalos numéricos permitidos.",
+        "Elimina a necessidade de validação de valores de entrada incorretos pelo sistema."
+      ],
+      "correctIndex": 1,
+      "explanation": "A análise de valor limite foca nas bordas e transições entre classes válidas e inválidas (por exemplo, testando valores nas fronteiras como 0, 1, 12 e 13 para meses), pois erros de operadores lógicos (< em vez de <=) frequentemente residem nesses extremos."
+    },
+    {
+      "question": "Em que cenário a técnica de Tabela de Decisão é especialmente indicada na modelagem de testes funcionais de caixa-preta?",
+      "options": [
+        "Quando é necessário medir a taxa de transferência de dados em redes de fibra óptica.",
+        "Quando se deseja verificar a temperatura física dos núcleos de processamento gráfico.",
+        "Quando o comportamento do sistema envolve regras de negócio complexas determinadas pela combinação lógica de múltiplas condições e entradas que disparam ações específicas.",
+        "Quando o objetivo é analisar a tipografia visual de botões de navegação em telas monocromáticas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Tabelas de decisão estruturam regras de negócio com múltiplas condições booleanas (Verdadeiro/Falso) e mapeiam como cada combinação resulta em ações determinadas, assegurando cobertura completa de lógicas complexas sem omissões."
+    },
+    {
+      "question": "Para testar um componente cujo comportamento e respostas dependem fundamentalmente do seu histórico prévio ou do modo em que se encontra no momento do evento, qual técnica de caixa-preta deve ser selecionada?",
+      "options": [
+        "Teste de Transição de Estados, que avalia se sequências válidas de eventos conduzem aos estados corretos e se transições inválidas são devidamente bloqueadas.",
+        "Teste de compressão de imagens em formato vetorial sem perdas.",
+        "Teste de formatação de partições de disco rígido em servidores legados.",
+        "Teste de complexidade ciclomática em código-fonte compilado."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste de transição de estados modela o sistema como uma máquina de estados finitos, sendo ideal para validar sequências operacionais em que ações dependem do estado anterior (por exemplo, estados de uma conta bancária ou pedido de compra)."
+    },
+    {
+      "question": "Qual é a relevância de utilizar especificações de Casos de Uso na derivação de testes de caixa-preta voltados aos níveis de integração e aceitação?",
+      "options": [
+        "Permitir a compilação de bibliotecas dinâmicas em sistemas operacionais embarcados.",
+        "Modelar os fluxos completos de interação entre ator e sistema (fluxo principal e alternativos), viabilizando testes que validam jornadas de ponta a ponta na perspectiva do usuário.",
+        "Dispensar a realização de qualquer homologação prévia por parte do cliente contratante.",
+        "Identificar vazamentos de memória na máquina virtual através de inspeção estática de ponteiros."
+      ],
+      "correctIndex": 1,
+      "explanation": "Casos de uso descrevem o diálogo completo entre usuário/ator e o sistema, incluindo pré-condições, pós-condições e cenários alternativos, servindo de base sólida para projetar testes de jornada completa e validação de aceitação."
+    },
+    {
+      "question": "De acordo com as diretrizes consolidadas de Engenharia de Software para identificação de classes na partição de equivalência, quantas classes (válidas e inválidas) devem ser delimitadas para uma entrada definida por um intervalo numérico contínuo?",
+      "options": [
+        "Apenas uma classe válida, dispensando a elaboração de classes de erro.",
+        "Dez classes válidas e nenhuma classe inválida.",
+        "Uma classe válida (os valores pertencentes ao intervalo) e duas classes inválidas (uma abaixo do limite inferior e outra acima do limite superior).",
+        "Três classes válidas e uma única classe de exceção genérica."
+      ],
+      "correctIndex": 2,
+      "explanation": "Para parâmetros definidos por intervalos (como de A até B), delimita-se uma classe válida (valores de A a B) e duas classes inválidas: uma para valores menores que A e outra para valores maiores que B."
+    },
+    {
+      "question": "Como a automação de testes funcionais de caixa-preta agrega valor estratégico ao ciclo de vida de desenvolvimento de aplicações modernas?",
+      "options": [
+        "Impedindo que qualquer alteração de código seja realizada após a implantação inicial.",
+        "Tornando dispensável a execução de testes de desempenho ou de segurança da informação.",
+        "Garantindo que a equipe de desenvolvimento não precise consultar especificações de requisitos.",
+        "Permitindo a reexecução ágil e frequente de baterias de regressão a cada nova liberação ou commit em esteiras de integração contínua (CI/CD)."
+      ],
+      "correctIndex": 3,
+      "explanation": "Ferramentas de automação de caixa-preta (como Selenium ou Playwright) reproduzem fluxos de interface e API de forma consistente, tornando as baterias de regressão viáveis e rápidas em esteiras automatizadas de integração contínua."
+    },
+    {
+      "question": "Em relação à tecnologia e à arquitetura interna da aplicação sob avaliação, qual é a aplicabilidade das técnicas de teste de caixa-preta?",
+      "options": [
+        "São restritas exclusivamente a programas desenvolvidos na linguagem C e executados em terminais de console.",
+        "Exigem que a equipe de testes tenha acesso de leitura e escrita ao repositório de código-fonte de todos os módulos.",
+        "Podem ser aplicadas somente quando o software já tiver sido desativado e arquivado em produção.",
+        "São independentes da linguagem de programação, da plataforma e do paradigma de desenvolvimento adotados, pois operam exclusivamente sobre a interface externa e os requisitos estipulados."
+      ],
+      "correctIndex": 3,
+      "explanation": "Como o teste de caixa-preta não presume nem depende do conhecimento do código-fonte ou de linguagens específicas, ele independe de paradigma técnico e pode ser aplicado em múltiplos níveis de teste em qualquer ecossistema."
+    }
+  ]
+}
