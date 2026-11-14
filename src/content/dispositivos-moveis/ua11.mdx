@@ -1,0 +1,154 @@
+---
+title: "UA11 — Webservices RESTful"
+subtitle: "O que é REST, métodos HTTP, características da arquitetura, API como back-end do aplicativo, exemplo de consumo no Android e como isso é feito hoje com Retrofit e coroutines."
+ua: 11
+group: "Dados e Recursos Nativos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua11.m4a" title="Webservices RESTful" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gew_01.webp" alt="Infográfico sobre os níveis do modelo de maturidade de Richardson para APIs REST" caption="Níveis de maturidade de uma API REST" />
+</SlidesGrid>
+
+### REST: o que é
+
+**REST** (*Representational State Transfer*, transferência representacional de estado) é um **estilo de arquitetura** para sistemas distribuídos, como a própria **Web**. Não é um protocolo nem um padrão obrigatório: é um **conjunto de recomendações** (um “guia”) para construir serviços em conformidade com boas práticas. A ideia central é o **recurso**, identificado por uma **URI**, que é manipulado por uma **interface padrão** (o **HTTP**) e trocado entre os sistemas por meio de **representações** (JSON, XML, HTML, texto).
+
+Um **webservice RESTful** é um serviço construído nesse estilo. Surgiu como alternativa popular ao **SOAP**, por ser **mais leve** e transmitir dados **diretamente via HTTP**, com menos burocracia. A própria Web funciona assim: o navegador envia um **GET** a uma URL, o servidor devolve uma resposta HTTP com uma representação (HTML) ou um erro (como o famoso **404 Not Found**).
+
+| | **REST** | **SOAP** |
+|---|---|---|
+| **Natureza** | **Estilo arquitetural** (recomendações) | **Protocolo** com regras bem definidas |
+| **Formato** | JSON, XML, HTML, texto | **XML** (envelope SOAP) |
+| **Peso** | Leve, fácil de adotar | Mais burocrático |
+| **Transporte** | **HTTP** | HTTP e outros |
+
+#### Métodos HTTP
+
+O sistema se organiza em **URLs/URIs** e **recursos**, e os **métodos HTTP** dizem o que fazer com eles:
+
+| Método | Função | Detalhe |
+|---|---|---|
+| **GET** | **Obter** a representação de um recurso | Método **seguro**; **não** deve disparar ações (como remover um usuário) |
+| **POST** | **Criar** um recurso (dados no **corpo** da requisição) | Também serve para processamentos não ligados a um recurso |
+| **PUT** | **Atualizar** o recurso na URI informada | Pode criar, se não existir; é **idempotente** |
+| **DELETE** | **Remover** o recurso | |
+
+### API como back-end do aplicativo
+
+Uma **API** (*application programming interface*) é a interface de **integração** entre aplicações: quem consome não precisa conhecer a implementação. O material compara com **uma estrada que liga duas cidades**. A mesma API atende o app **móvel**, o **desktop** e o **Web**, e pode devolver apenas o que o negócio decide expor. Exemplo: `escola.com.br/api/v1/alunos` devolve um JSON com nome e idade de cada aluno:
+
+```json
+{
+  "alunos": [
+    { "nome": "Aluno1", "idade": 12 },
+    { "nome": "Aluno2", "idade": 13 }
+  ]
+}
+```
+
+No aplicativo, o REST faz o papel de **back-end**: o app cuida da **interface e da experiência**; o servidor, de **banco, regras, cache e logs**. REST e SOAP também podem ser **combinados** na mesma organização.
+
+### Características da arquitetura REST
+
+| Característica | Ideia |
+|---|---|
+| **Cliente-servidor** | **Separa responsabilidades**: o cliente cuida da interface; o servidor, dos dados. Evoluem **de forma independente** |
+| **Stateless** (sem estado) | **Cada requisição é independente** e traz tudo de que o servidor precisa; o servidor **não guarda sessão** do cliente |
+| **Cacheable** | As respostas podem ser **armazenadas em cache**, evitando reprocessamento e melhorando o desempenho |
+| **Interface uniforme** | Um **contrato** genérico entre cliente e servidor (quatro regras abaixo) |
+| **Sistema em camadas** | A arquitetura é composta por **camadas** (balanceador de carga, proxy), o que dá **escalabilidade** e flexibilidade; cada camada só “enxerga” a imediatamente vizinha |
+| **Code-on-demand** (opcional) | O servidor pode enviar **código** para o cliente executar |
+
+As quatro regras da **interface uniforme**:
+
+1. **Identificação do recurso:** cada recurso tem uma **URI** própria e coesa.
+2. **Representação do recurso:** o formato em que ele volta (**JSON**, XML, HTML, TXT).
+3. **Resposta autoexplicativa:** metadados na mensagem (código HTTP, `Content-Type`, `Host`).
+4. ***Hypermedia*** (HATEOAS): a resposta traz os **links** que permitem ao cliente navegar pelos demais recursos, a parte mais esquecida do REST.
+
+Para uma API ser considerada **RESTful**, deve seguir essas restrições (exceto *code-on-demand*, opcional) e ter um nível de maturidade medido pelo **modelo de maturidade de Richardson**:
+
+| Nível | O que tem |
+|---|---|
+| **0** | Um único *endpoint*, HTTP só como “túnel” |
+| **1** | **Recursos** com URIs próprias |
+| **2** | Uso correto dos **métodos HTTP** e dos **códigos de status** |
+| **3** | ***Hypermedia* (HATEOAS)**: respostas com links |
+
+### Consumindo um webservice no Android
+
+O exemplo do material consulta o serviço **ViaCEP** (busca de endereço pelo CEP). Uma classe Java monta a **URL** (`.../ws/{cep}/json/`), abre uma `HttpURLConnection` com método **GET**, lê a resposta linha a linha e converte o **JSON** em um objeto com logradouro, bairro, localidade e UF, lançando uma exceção quando o CEP não é encontrado. Na prática, a lógica é sempre: **montar a URL → requisitar → ler o JSON → converter em objetos do app**. O ViaCEP é um serviço **comunitário gratuito**, não um serviço dos Correios.
+
+<Callout type="warning">
+**Atenção a três pontos do material:**
+
+- **Métodos HTTP.** O **DELETE** devolve **204 (No Content)** quando a remoção **dá certo**; para um recurso **inexistente**, o esperado é **404**. A diferença entre **POST** e **PUT** não é “processar informações”: o **PUT** é **idempotente** (repetir a requisição deixa o mesmo estado) e o cliente informa a URI do recurso; o **POST** **não** é idempotente e o servidor define a URI do novo recurso. Falta citar o **PATCH** (atualização parcial).
+- **Cache e camadas.** O cache do REST funciona **no cliente e em intermediários** (proxies, CDN), controlado por cabeçalhos HTTP (`Cache-Control`, `ETag`), e não só “no servidor”. E o cliente **não é obrigado** a passar por um intermediário: o que a restrição de camadas diz é que ele **não precisa saber** se fala com o servidor final ou com uma camada no meio.
+- **SOAP.** Chamar o SOAP de “ultrapassado” e, ao mesmo tempo, de “padrão da indústria” é contraditório. O SOAP **continua em uso** em sistemas corporativos e bancários, que valorizam seus contratos (WSDL) e padrões de segurança; o REST, porém, é o **estilo dominante** em APIs públicas e móveis.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Retrofit + Kotlin Coroutines + JSON.** O código do material (`HttpURLConnection` lendo linha a linha) é a forma “manual”. No Android moderno usa-se o **Retrofit** (com **OkHttp**), que transforma a API em uma **interface** e converte o JSON em objetos (**kotlinx.serialization**, **Moshi** ou **Gson**). A chamada deve ser **assíncrona**: no Android, **acessar a rede na *thread* principal lança `NetworkOnMainThreadException`**. Hoje isso se faz com **corrotinas** dentro de um **ViewModel** (veja o ciclo de vida da tela na [UA5](/resumos/dispositivos-moveis/ua5/)). O **Volley**, citado no material, ainda funciona, mas foi superado pelo Retrofit.
+
+```kotlin
+data class Endereco(val cep: String, val logradouro: String, val bairro: String,
+                    val localidade: String, val uf: String)
+
+interface ViaCepApi {
+    @GET("ws/{cep}/json/")
+    suspend fun buscar(@Path("cep") cep: String): Endereco
+}
+
+val api = Retrofit.Builder()
+    .baseUrl("https://viacep.com.br/")
+    .addConverterFactory(MoshiConverterFactory.create())
+    .build()
+    .create(ViaCepApi::class.java)
+
+// no ViewModel
+viewModelScope.launch {
+    val endereco = api.buscar("01001000")   // roda fora da thread principal
+}
+```
+
+**Permissão e segurança.** É preciso declarar a permissão de **internet** e usar **HTTPS**: desde o Android 9 (API 28), o tráfego **HTTP em texto puro é bloqueado** por padrão (os exemplos do material usam `http://`).
+
+```xml
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+**APIs atuais.** Em novas APIs, usa-se **JSON** como formato dominante, **OpenAPI/Swagger** para documentar o contrato, **OAuth 2.0/JWT** para autenticação, **paginação** e **versionamento** (`/api/v1/`), e alternativas como **GraphQL** e **gRPC** quando REST não basta. O **Postman** testa a API antes de o app existir. O **Richardson Maturity Model** costuma ser tratado como guia: muitas APIs “REST” reais ficam no **nível 2**.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **REST** = *Representational State Transfer*: **estilo de arquitetura** (não é protocolo nem padrão obrigatório) baseado em **recursos**, **URIs**, **HTTP** e **representações** (JSON, XML).
+- **RESTful** = serviço que segue o estilo REST; alternativa mais **leve** ao **SOAP**.
+- **Métodos:** **GET** (obter, seguro), **POST** (criar), **PUT** (atualizar), **DELETE** (remover).
+- **Características:** **cliente-servidor**, ***stateless***, ***cacheable***, **interface uniforme**, **sistema em camadas** e **code-on-demand** (a única opcional).
+- ***Stateless*:** cada requisição é **independente** e o servidor **não guarda sessão**.
+- **Interface uniforme:** identificação do recurso, representação, resposta autoexplicativa e **hypermedia**.
+- **Modelo de maturidade de Richardson:** mede o quanto uma API é de fato RESTful (**nível 3 = hypermedia**).
+- **API** = interface de integração; **o mesmo back-end** atende app móvel, desktop e Web.
+- **404 Not Found** = recurso não encontrado.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SILVA, F. M. da. Webservices RESTful. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- FIELDING, R. T. *Architectural Styles and the Design of Network-based Software Architectures*. Tese de doutorado, University of California, Irvine, 2000.
+- RICHARDSON MATURITY MODEL. *REST API Tutorial*. 2019.
+- MAZIERO, C. A. *Introdução aos Serviços de Rede*. Universidade Federal do Paraná, 2008.
+- VICTORIO, J. C. A. Requisições GET e POST: principais diferenças. 2016.
+- ANDROID DEVELOPERS. *Connect to the network*; *Retrofit*. developer.android.com.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores*. 3. ed. Porto Alegre: Bookman, 2016.

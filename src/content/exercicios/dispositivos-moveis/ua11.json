@@ -1,0 +1,115 @@
+{
+  "ua": 11,
+  "questions": [
+    {
+      "question": "Como se define o padrão REST (Representational State Transfer) no contexto da arquitetura de sistemas distribuídos e webservices?",
+      "options": [
+        "Um protocolo de transporte proprietário com especificação rígida em formato binário.",
+        "Um estilo de arquitetura de software fundamentado em um conjunto de recomendações que utiliza o protocolo HTTP para manipular recursos identificados por URIs através de representações como JSON e XML.",
+        "Uma linguagem de programação declarativa para manipulação direta de bancos de dados relacionais.",
+        "Um modelo exclusivo de criptografia ponto a ponto para redes sem fio de curto alcance."
+      ],
+      "correctIndex": 1,
+      "explanation": "O REST é um estilo arquitetural (e não um protocolo formal ou produto) que estabelece restrições e boas práticas para a Web, onde recursos são unicamente identificados por URIs e manipulados via operações padronizadas do protocolo HTTP."
+    },
+    {
+      "question": "No protocolo HTTP aplicado a APIs RESTful, qual é a distinção técnica essencial entre a utilização dos métodos POST e PUT?",
+      "options": [
+        "O método POST é restrito a conexões seguras por cabo, enquanto o PUT funciona unicamente em redes móveis 4G.",
+        "O método POST apaga dados permanentemente sem confirmação, enquanto o PUT reinicializa o servidor de banco de dados.",
+        "O método POST só aceita envio de imagens vetoriais, ao passo que o PUT opera apenas com números decimais.",
+        "O método PUT é idempotente (múltiplas requisições idênticas produzem o mesmo estado final no servidor) e atua na URI especificada pelo cliente; o método POST não é idempotente e cria recursos subordinados cuja URI é gerada pelo servidor."
+      ],
+      "correctIndex": 3,
+      "explanation": "A principal distinção repousa na idempotência: o método PUT substitui ou cria o recurso na URI exata fornecida pelo cliente com efeito idêntico se repetido, enquanto o POST submete dados que originam novos recursos ou processamentos, gerando efeitos cumulativos a cada repetição."
+    },
+    {
+      "question": "Ao efetuar uma requisição HTTP com o método DELETE direcionada a um identificador de recurso que não existe no servidor, qual código de status HTTP deve ser retornado por uma API REST em conformidade com os padrões?",
+      "options": [
+        "200 OK com uma lista vazia no corpo da resposta.",
+        "404 Not Found, indicando que o recurso alvo da operação não foi localizado no servidor.",
+        "204 No Content, assumindo que a ausência do recurso dispensa aviso.",
+        "500 Internal Server Error, acusando falha irrecuperável de infraestrutura."
+      ],
+      "correctIndex": 1,
+      "explanation": "Se o recurso referenciado pela URI da requisição DELETE não existir, a API deve responder com 404 Not Found. O código 204 No Content é empregado quando a exclusão é executada com sucesso e nenhuma entidade precisa ser retornada no corpo."
+    },
+    {
+      "question": "Em que consiste o princípio arquitetural Stateless (ausência de estado) na comunicação entre cliente e servidor em serviços RESTful?",
+      "options": [
+        "Cada requisição enviada pelo cliente deve conter todas as informações necessárias para ser compreendida e processada pelo servidor, sem que este armazene dados de contexto de sessão entre chamadas sucessivas.",
+        "O servidor armazena permanentemente em memória volátil o histórico de navegação de cada usuário conectado.",
+        "O cliente fica impedido de realizar consultas subsequentes caso não mantenha um canal TCP aberto de forma ininterrupta.",
+        "O banco de dados do sistema precisa ser reiniciado a cada ciclo de compilação da aplicação."
+      ],
+      "correctIndex": 0,
+      "explanation": "A restrição Stateless determina que o servidor não retém nenhum contexto de sessão do cliente. Toda requisição traz consigo os metadados, identificadores e credenciais indispensáveis para seu atendimento autônomo."
+    },
+    {
+      "question": "Como a capacidade de armazenamento em cache (Cacheable) beneficia a arquitetura de webservices RESTful e onde ela pode ocorrer?",
+      "options": [
+        "O cache é estritamente proibido em serviços web que utilizam o protocolo HTTP.",
+        "O cache é permitido exclusivamente dentro da memória RAM do processador do servidor de produção.",
+        "Respostas rotuladas explicitamente como armazenáveis podem ser guardadas pelo cliente e por intermediários da rede (como servidores proxy e redes de distribuição de conteúdo - CDN), evitando reprocessamentos desnecessários e reduzindo a latência.",
+        "O cache exige a formatação obrigatória de todos os dados do banco de dados em arquivos XML estáticos."
+      ],
+      "correctIndex": 2,
+      "explanation": "Em REST, o recurso de cache pode residir no cliente, em servidores ou em nós intermediários da rede (proxies/CDNs), sendo controlado por cabeçalhos padronizados (como Cache-Control e ETag) para aprimorar a escalabilidade e o tempo de resposta."
+    },
+    {
+      "question": "Qual é o significado da restrição de Sistema em Camadas (Layered System) presente no modelo de arquitetura REST?",
+      "options": [
+        "O cliente é obrigado por contrato a trafegar por no mínimo cinco servidores proxy diferentes antes de alcançar o destino.",
+        "A arquitetura permite que componentes intermediários (como balanceadores de carga e gateways de segurança) sejam inseridos entre cliente e servidor, sendo o cliente agnóstico quanto a comunicar-se com o servidor de destino final ou com uma camada intermediária.",
+        "O código-fonte da aplicação móvel deve ser particionado em submódulos que não se comunicam entre si.",
+        "Toda requisição precisa ser interceptada manualmente por analistas de infraestrutura antes de ser liberada."
+      ],
+      "correctIndex": 1,
+      "explanation": "A restrição de camadas estabelece que cada camada do ecossistema enxerga apenas o seu vizinho imediato; o cliente não precisa saber se interage diretamente com a aplicação servidora ou com intermediários transparentes (balanceadores, caches ou gateways)."
+    },
+    {
+      "question": "Quais são as quatro restrições que compõem o princípio da Interface Uniforme em uma API RESTful autêntica?",
+      "options": [
+        "Uso de banco de dados NoSQL, autenticação por biometria, compactação gzip e linguagem Java.",
+        "Declaração obrigatória de código nativo C++, ausência de parâmetros em requisições GET, suporte a sockets e tráfego exclusivo por fibra óptica.",
+        "Contratos WSDL formais, envelopes SOAP obrigatórios, consultas exclusivas em SQL e transmissão serial RS-232.",
+        "Identificação de recursos por URIs coesas, manipulação de recursos através de representações, mensagens autoexplicativas contendo metadados e hipermídia como motor do estado da aplicação (HATEOAS)."
+      ],
+      "correctIndex": 3,
+      "explanation": "A interface uniforme desacopla arquitetura e representação por meio de quatro pilares: identificação de recursos com URIs, manipulação mediante representações (ex.: JSON), mensagens autoexplicativas (cabeçalhos e status HTTP) e navegação dirigida por links de hipermídia (HATEOAS)."
+    },
+    {
+      "question": "No Modelo de Maturidade de Richardson, concebido para avaliar o grau de adesão de um serviço web aos princípios REST, o que caracteriza o Nível 3 (o patamar mais elevado)?",
+      "options": [
+        "A introdução de controles de hipermídia (HATEOAS), na qual a resposta do serviço provê links que orientam o cliente sobre quais ações e recursos relacionados estão disponíveis a seguir.",
+        "A utilização de uma única URI genérica associada exclusivamente ao método HTTP POST.",
+        "O emprego obrigatório do protocolo SOAP encapsulado dentro de mensagens de correio eletrônico.",
+        "A eliminação integral do protocolo HTTP em favor de conexões diretas por protocolo de transferência de arquivos (FTP)."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Modelo de Maturidade de Richardson estrutura a adoção em níveis: Nível 0 (URI única com POST/RPC), Nível 1 (URIs baseadas em recursos), Nível 2 (uso semântico de verbos HTTP) e Nível 3 (incorporação de HATEOAS, guiando o fluxo de navegação por hipermídia)."
+    },
+    {
+      "question": "No cenário contemporâneo de integração corporativa entre sistemas, qual é a realidade observada sobre a coexistência entre os padrões REST e SOAP?",
+      "options": [
+        "O protocolo SOAP foi banido mundialmente por organismos de padronização da internet.",
+        "O estilo REST não possui suporte a criptografia em nenhum sistema operacional móvel.",
+        "O SOAP permanece ativo e relevante em ecossistemas legados, bancários e corporativos de grande porte devido aos seus contratos formais rigorosos (WSDL) e padrões avançados de segurança, coexistindo com o REST, que predomina em APIs públicas e aplicativos móveis.",
+        "Ambos os modelos foram extintos e substituídos exclusivamente por arquivos de registros simples trocados por Bluetooth."
+      ],
+      "correctIndex": 2,
+      "explanation": "Longe de estar extinto, o SOAP continua amplamente empregado em ambientes bancários e transacionais que demandam garantias contratuais formais (WSDL/WS-Security), enquanto o REST se consolidou como o estilo preferencial para mobilidade e serviços web modernos."
+    },
+    {
+      "question": "Em aplicações modernas desenvolvidas para o sistema Android, qual é a prática recomendada para o consumo assíncrono de webservices RESTful?",
+      "options": [
+        "Efetuar chamadas de rede diretamente na thread principal (UI thread) bloqueando a renderização visual do aparelho.",
+        "Gravar as requisições em arquivos de log locais aguardando uma reinicialização física do smartphone.",
+        "Instanciar threads manuais sem qualquer gerenciamento de ciclo de vida com chamadas de leitura linha por linha via HttpURLConnection pura.",
+        "Utilizar bibliotecas especializadas como Retrofit combinadas com corrotinas (Kotlin Coroutines) em camadas desacopladas (como ViewModel), executando as requisições fora da thread principal para prevenir a ocorrência de NetworkOnMainThreadException."
+      ],
+      "correctIndex": 3,
+      "explanation": "O Android proíbe operações bloqueantes de rede na thread principal (lançando NetworkOnMainThreadException). A abordagem contemporânea emprega Retrofit (com adaptadores de serialização como Moshi/Gson) associado a corrotinas em escopos vinculados ao ciclo de vida (viewModelScope)."
+    }
+  ]
+}
