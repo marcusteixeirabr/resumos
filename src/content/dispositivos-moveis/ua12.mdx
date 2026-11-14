@@ -1,0 +1,151 @@
+---
+title: "UA12 — Persistência com SQLite"
+subtitle: "Persistência de dados no Android: formas de armazenamento, o banco SQLite, SQLiteOpenHelper, CRUD com ContentValues e Cursor, limitações e como é feito hoje com o Room."
+ua: 12
+group: "Dados e Recursos Nativos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua12.m4a" title="Persistência com SQLite" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/pde_01.webp" alt="Infográfico sobre os passos do armazenamento de dados com SQLite no Android" caption="Armazenando dados com SQLite" />
+</SlidesGrid>
+
+### O que é persistência
+
+**Persistência de dados** é a capacidade de guardar os dados gerados pelo aplicativo na **memória secundária (permanente)** do dispositivo, para uso futuro, **mesmo depois de a aplicação ser encerrada** pelo usuário ou por um erro. Sem ela, tudo o que está na memória principal (RAM) se perde. Quase todo aplicativo que faz **cadastros** precisa disso: finanças pessoais, controle de combustível, lista de contatos.
+
+#### Formas de persistir no Android
+
+| Forma | O que guarda |
+|---|---|
+| **Preferências compartilhadas** (*SharedPreferences*) | Dados **primitivos privados** em pares **chave-valor** |
+| **Armazenamento interno** | Arquivos **privados** na memória do dispositivo |
+| **Armazenamento externo** | Arquivos **públicos** em armazenamento externo compartilhado |
+| **Banco de dados SQLite** | Dados **estruturados** em um banco **privado** do app |
+| **Conexão de rede** | Dados **na web**, em servidor próprio (veja a [UA11](/resumos/dispositivos-moveis/ua11/)) |
+
+Cada forma serve a um tipo de dado: configurações simples vão em chave-valor, arquivos em armazenamento e **dados estruturados e consultáveis** (cadastros, listas, relações) no **SQLite**, que tem **suporte nativo** da plataforma.
+
+### SQLite no Android
+
+O **SQLite** é uma **biblioteca open source** escrita em **C**, de **domínio público**, que implementa um banco de dados relacional **embutido** (*embedded*): **sem servidor**, lê e escreve **direto em um arquivo**. Não foi criado para o Android nem pelo Google, mas vem **integrado à plataforma**. Características:
+
+- **Zero configuração e administração**: só é preciso escrever os comandos **SQL** que criam e atualizam o banco;
+- é **gerenciado automaticamente** pelo Android;
+- o banco é **privado do aplicativo**: acessível por nome a partir de **qualquer classe do app**, mas **não de fora** dele;
+- é **leve**, pequeno e robusto, ideal para dados **locais** no dispositivo;
+- segue grande parte do **SQL-92**, com algumas limitações, e oferece **ACID** (**A**tomicidade, **C**onsistência, **I**solamento e **D**urabilidade).
+
+### Interação com o SQLite
+
+Fluxo recomendado pelo Google:
+
+1. Criar uma subclasse de **`SQLiteOpenHelper`**, informando **nome do banco**, *factory* (normalmente `null`) e **versão**.
+2. Sobrescrever **`onCreate()`**, que executa o `CREATE TABLE` na **primeira criação** do banco.
+3. Sobrescrever **`onUpgrade()`**, chamado quando a **versão aumenta**, para **migrar** o esquema.
+4. Obter o banco com **`getWritableDatabase()`** (**gravar**) ou **`getReadableDatabase()`** (**ler**); ambos devolvem um **`SQLiteDatabase`**, que oferece `insert`, `update`, `delete` e `query`.
+5. Para gravar, usa-se um **`ContentValues`** (pares coluna-valor). Para consultar, o resultado vem em um **`Cursor`**, que **aponta para as linhas** devolvidas e permite navegar (`moveToFirst`, `moveToNext`, `getString`).
+
+Para consultas mais complexas (como **aliases** de coluna) usa-se o **`SQLiteQueryBuilder`**. As operações básicas formam o **CRUD** (*Create, Read, Update, Delete*): `insert`, `query`, `update` e `delete` (os dois últimos recebem a cláusula **WHERE**).
+
+```java
+public class MeuDatabase extends SQLiteOpenHelper {
+    public MeuDatabase(Context context) {
+        super(context, "agenda", null, 1);              // nome, factory, versão
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("CREATE TABLE contatos (" +
+                   "_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                   "nome VARCHAR(40), numero VARCHAR(11))");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int antiga, int nova) {
+        // migrar o esquema quando a versão aumenta
+    }
+
+    public long inserir(String nome, String numero) {
+        ContentValues valores = new ContentValues();
+        valores.put("nome", nome);
+        valores.put("numero", numero);
+        return getWritableDatabase().insert("contatos", null, valores);
+    }
+
+    public Cursor listar() {
+        return getReadableDatabase().query("contatos", null, null, null, null, null, "nome");
+    }
+}
+```
+
+Para **exibir** os registros, o material usa um **RecyclerView** com **CardView** por item: um **Adapter** (herda de `RecyclerView.Adapter`) preenche cada item a partir de uma lista de objetos lida do `Cursor`, e a *activity* faz a ligação (cria o banco, lê o cursor com `moveToFirst`/`moveToNext`, monta a lista e chama `setAdapter`). Os botões do item acionam a edição e a exclusão do registro.
+
+#### Limitações do SQLite
+
+O SQLite é uma biblioteca (não um servidor) e **não tem usuários nem permissões**, por isso **não existem `GRANT` e `REVOKE`**. Outras limitações: `ALTER TABLE` **parcial** (suporta poucas alterações) e `DELETE` **em várias tabelas** em um só comando.
+
+<Callout type="warning">
+**Atenção a três pontos do material:**
+
+- **Quadro de comandos.** O material diz que **triggers** e **chaves estrangeiras** não são suportados. Estão **suportados**: **TRIGGER** existe há muito tempo, e **FOREIGN KEY** é suportada (no Android é preciso **habilitá-la**, com `PRAGMA foreign_keys=ON` ou `setForeignKeyConstraintsEnabled(true)`). **RIGHT** e **FULL OUTER JOIN** só passaram a existir nas versões **recentes** do SQLite (3.39+). Continuam **sem suporte** `GRANT` e `REVOKE`.
+- **“Biblioteca e não um SGBD”.** O SQLite **é** um sistema de banco de dados relacional; o que o distingue é ser **embutido**, **sem processo servidor**, e não ser “apenas uma biblioteca”.
+- ***onUpgrade* vazio.** Deixar `onUpgrade()` vazio só serve para a **primeira versão**. Ao **mudar o esquema** (nova coluna, nova tabela), aumenta-se a **versão** e o `onUpgrade()` deve conter a **migração**, senão o banco antigo fica desatualizado ou os dados são perdidos.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Room em vez de SQLite “puro”.** Hoje a recomendação oficial do Android é o **Room** (**Jetpack**, camada de abstração sobre o SQLite): em vez de strings SQL espalhadas e `Cursor`, declara-se uma **entidade**, um **DAO** e o **banco**, e o Room **valida o SQL em tempo de compilação**, gera o código e devolve **objetos** (e `Flow`/`LiveData` para a interface atualizar sozinha). As **migrações** são declaradas com `Migration` e testadas.
+
+```kotlin
+@Entity(tableName = "contatos")
+data class Contato(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val nome: String,
+    val numero: String
+)
+
+@Dao
+interface ContatoDao {
+    @Insert suspend fun inserir(contato: Contato)
+    @Query("SELECT * FROM contatos ORDER BY nome") fun listar(): Flow<List<Contato>>
+    @Delete suspend fun remover(contato: Contato)
+}
+
+@Database(entities = [Contato::class], version = 1)
+abstract class AppDatabase : RoomDatabase() { abstract fun contatoDao(): ContatoDao }
+```
+
+**Fora da *thread* principal e com arquitetura.** Acesso a banco **não pode ficar na *thread* principal** (o Room recusa por padrão): use **corrotinas** (`suspend`) dentro de um **ViewModel**, com um **Repository**, e injeção de dependência (**Hilt**). A lista na tela passa do `RecyclerView` + `Adapter` manual para **`ListAdapter`** (com `DiffUtil`) ou para **`LazyColumn`** no **Jetpack Compose**. O pacote `android.support.*` do material deu lugar ao **AndroidX**.
+
+**Outras opções.** Para **preferências simples**, o **DataStore** substitui as `SharedPreferences`; para **dados na nuvem e sincronização**, **Firebase** (Firestore) ou a **API REST** do app (veja a [UA11](/resumos/dispositivos-moveis/ua11/)). **Arquivos** usam o **armazenamento com escopo** (*scoped storage*). Dados **sensíveis** (tokens, senhas) vão em **EncryptedSharedPreferences/Keystore**; o banco pode ser cifrado com **SQLCipher**. O **Database Inspector** do Android Studio permite ver e consultar o banco do app em execução.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Persistência:** guardar dados na **memória secundária** para uso futuro, mesmo após **encerrar** o app.
+- **Formas no Android:** **preferências compartilhadas** (chave-valor), armazenamento **interno** (privado), **externo** (público), **SQLite** (estruturado) e **rede**.
+- **SQLite:** biblioteca **open source** em **C**, **domínio público**, **embutido, sem servidor**, grava direto em **arquivo**; **sem configuração**; banco **privado** do app; **ACID**.
+- **`SQLiteOpenHelper`:** classe indicada pelo Google para criar o banco; sobrescreve **`onCreate()`** (cria tabelas) e **`onUpgrade()`** (migra versão).
+- **`getWritableDatabase()`** grava; **`getReadableDatabase()`** lê; ambos retornam **`SQLiteDatabase`**.
+- **`ContentValues`** guarda os valores a inserir ou atualizar; **`Cursor`** aponta para as linhas do resultado de uma consulta.
+- **CRUD:** *Create* (`insert`), *Read* (`query`), *Update* (`update`), *Delete* (`delete`); `update` e `delete` usam **WHERE**.
+- **`SQLiteQueryBuilder`:** consultas mais complexas (aliases de coluna).
+- **Sem suporte:** `GRANT` e `REVOKE`. **ACID** = Atomicidade, Consistência, Isolamento, Durabilidade.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- PASSOS, U. R. C. Persistência com SQLite. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores*. 3. ed. Porto Alegre: Bookman, 2016.
+- ANDROID DEVELOPERS. *Opções de armazenamento*. 2019.
+- ANDROID DEVELOPERS. *Salvar dados em um banco de dados local usando o Room*. developer.android.com.
+- SQLITE. *About SQLite*. sqlite.org/about.html.

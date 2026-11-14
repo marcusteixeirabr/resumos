@@ -1,0 +1,115 @@
+{
+  "ua": 12,
+  "questions": [
+    {
+      "question": "No contexto do desenvolvimento de aplicações para dispositivos móveis Android, qual é a definição e a finalidade essencial da persistência de dados?",
+      "options": [
+        "Gravar informações geradas ou manipuladas pelo aplicativo em memória secundária (armazenamento permanente), assegurando que os dados sejam preservados mesmo após o encerramento do processo ou reinicialização do dispositivo.",
+        "Manter variáveis temporárias exclusivamente na memória RAM para otimizar o consumo da bateria enquanto o usuário navega entre diferentes telas.",
+        "Transferir imediatamente todos os dados do dispositivo para cache de renderização da GPU para evitar perda de quadros por segundo em animações.",
+        "Criptografar o código binário do aplicativo para impedir engenharia reversa nas lojas oficiais de distribuição de software."
+      ],
+      "correctIndex": 0,
+      "explanation": "Persistência de dados consiste em salvar o estado e os registros em mídias não voláteis (memória secundária), garantindo que cadastros, configurações e transações continuem disponíveis após o fechamento da aplicação."
+    },
+    {
+      "question": "O sistema operacional Android disponibiliza múltiplos mecanismos de persistência de dados. Qual mecanismo é o mais adequado para armazenar pares simples de chave-valor contendo configurações de usuário e estados primitivos de interface?",
+      "options": [
+        "Banco de dados relacional distribuído baseado em cluster de microsserviços.",
+        "Preferências compartilhadas (SharedPreferences).",
+        "Armazenamento externo público sem controle de permissão.",
+        "Tabelas com índices espaciais em banco de dados NoSQL embarcado."
+      ],
+      "correctIndex": 1,
+      "explanation": "O mecanismo de SharedPreferences é especificamente projetado para armazenar dados primitivos leves (como booleanos, inteiros e strings) organizados em pares chave-valor para salvar preferências e flags de configuração."
+    },
+    {
+      "question": "Em relação à arquitetura técnica e ao modelo operacional do SQLite nativamente integrado ao ecossistema Android, qual afirmação descreve com precisão as suas características?",
+      "options": [
+        "É um sistema de gerenciamento de banco de dados relacional (SGBD) embutido (embedded) de domínio público escrito em C, que opera sem processo servidor autônomo e lê/grava diretamente em arquivos locais do dispositivo com suporte a ACID.",
+        "É um serviço de mensageria assíncrona cliente-servidor que exige configuração prévia de portas de rede TCP/IP e privilégios de administrador de rede.",
+        "Consiste apenas em um analisador sintático de texto plano sem suporte a transações relacionais nem conformidade aos padrões SQL.",
+        "Trata-se de uma ferramenta proprietária da Google que funciona exclusivamente vinculada a contas ativas em serviços de computação em nuvem."
+      ],
+      "correctIndex": 0,
+      "explanation": "O SQLite é um SGBD relacional completo, embutido na aplicação e executado no mesmo processo, gravando diretamente em arquivo sem servidor intermediário e provendo suporte pleno às propriedades ACID (Atomicidade, Consistência, Isolamento e Durabilidade)."
+    },
+    {
+      "question": "A classe abstrata SQLiteOpenHelper é a abordagem fundamental fornecida pelo Android para administrar o ciclo de vida da base de dados. Ao evoluir o esquema de um aplicativo publicado (por exemplo, adicionando uma coluna a uma tabela existente), qual é o procedimento correto a ser adotado?",
+      "options": [
+        "Manter o número da versão inalterado no construtor e deixar o método onUpgrade() vazio, pois o Android deduz as alterações estruturais por reflexão em tempo de execução.",
+        "Incrementar o número da versão do banco no construtor de SQLiteOpenHelper e implementar os comandos DDL de migração (como ALTER TABLE) no método onUpgrade().",
+        "Forçar a exclusão manual do arquivo de banco de dados em cada inicialização do aplicativo diretamente no método onCreate().",
+        "Reinstalar o sistema operacional do dispositivo móvel para redefinir as tabelas do banco de dados relacional."
+      ],
+      "correctIndex": 1,
+      "explanation": "Quando a estrutura do banco precisa mudar em produção, a versão passada à superclasse de SQLiteOpenHelper deve ser incrementada; isso dispara a execução do método onUpgrade(), onde os scripts de migração devem ser executados para atualizar o esquema sem corromper os dados existentes."
+    },
+    {
+      "question": "No desenvolvimento Android utilizando as classes nativas do pacote de banco de dados, como os dados são preparados e inseridos em uma tabela por meio do SQLiteDatabase?",
+      "options": [
+        "Concatenando diretamente variáveis de interface gráfica em uma string SQL bruta dentro do método onDestroy().",
+        "Serializando objetos Java em arquivos de propriedades com extensão XML na pasta de recursos estáticos.",
+        "Instanciando um objeto da classe ContentValues para mapear os pares coluna-valor desejados e invocando o método insert() da instância de SQLiteDatabase.",
+        "Enviando comandos REST com cabeçalhos HTTP POST para o soquete local de depuração do emulador."
+      ],
+      "correctIndex": 2,
+      "explanation": "A inserção estruturada de dados via SQLiteDatabase utiliza objetos ContentValues, que funcionam como dicionários chave-valor (onde as chaves são os nomes das colunas da tabela e os valores são os conteúdos a serem gravados)."
+    },
+    {
+      "question": "Após a execução de uma consulta relacional via método query() de SQLiteDatabase, o resultado é retornado na forma de um objeto Cursor. Qual é a responsabilidade desse objeto e como ele deve ser manipulado para ler os dados?",
+      "options": [
+        "O Cursor atua como um ponteiro para as linhas do conjunto de resultados, exigindo métodos de navegação como moveToFirst() e moveToNext() para iterar sobre os registros e extrair valores de suas colunas.",
+        "O Cursor é um componente gráfico de interface que renderiza botões interativos diretamente na barra de navegação superior da Activity.",
+        "O Cursor apaga automaticamente todas as linhas consultadas da memória permanente do banco de dados assim que a leitura termina.",
+        "O Cursor converte os registros em um fluxo de áudio compactado para reprodução em alto-falantes de acessibilidade."
+      ],
+      "correctIndex": 0,
+      "explanation": "O objeto Cursor mantém a posição de leitura no resultado de uma consulta e fornece métodos de posicionamento (moveToFirst, moveToNext, isAfterLast) e de extração de tipos primitivos (getString, getInt, getDouble) baseados nos índices das colunas."
+    },
+    {
+      "question": "Embora o SQLite implemente a maior parte do padrão SQL-92, sua arquitetura embutida impõe particularidades operacionais. Em relação ao suporte a recursos avançados de banco de dados no SQLite para Android, qual afirmação está correta?",
+      "options": [
+        "O SQLite não oferece suporte a transações com commit ou rollback, inviabilizando garantias de atomicidade e consistência.",
+        "Comandos como TRIGGER e restrições de chave estrangeira (FOREIGN KEY) são totalmente inexistentes e impossíveis de serem habilitados em qualquer versão do SQLite.",
+        "O SQLite implementa controle granular de permissões com comandos de autenticação de usuários baseados em GRANT e REVOKE corporativos.",
+        "O SQLite suporta gatilhos (TRIGGERS) e chaves estrangeiras (FOREIGN KEY, que devem ser habilitadas expressamente no Android), mas não possui suporte a comandos de concessão de privilégios de usuário como GRANT e REVOKE."
+      ],
+      "correctIndex": 3,
+      "explanation": "O SQLite suporta gatilhos e chaves estrangeiras (estas últimas requerem habilitação via 'PRAGMA foreign_keys=ON' ou método da API Android). Por ser um banco embutido sem conceito de contas de usuários de banco de dados, o SQLite não implementa os comandos DCL GRANT e REVOKE."
+    },
+    {
+      "question": "Para exibir uma listagem dinâmica de registros persistidos no SQLite dentro da interface do usuário em Android, qual é o padrão arquitetural clássico utilizado com componentes visuais?",
+      "options": [
+        "Vincular a instância de SQLiteDatabase diretamente a um TextView por meio de interpolação de strings no arquivo de manifesto do app.",
+        "Percorrer o Cursor obtido da consulta, popular uma coleção de objetos de modelo e conectá-la a um RecyclerView por meio de um Adapter customizado com ViewHolder.",
+        "Criar uma Activity separada para cada linha retornada do banco de dados e exibi-las em janelas pop-up concorrentes.",
+        "Renderizar os registros convertendo o banco de dados em uma imagem estática exibida dentro de um ImageView em tela cheia."
+      ],
+      "correctIndex": 1,
+      "explanation": "O padrão recomendado integra um RecyclerView gerenciado por um Adapter (estendendo RecyclerView.Adapter): os dados extraídos do Cursor preenchem uma lista em memória que o Adapter vincula aos itens visuais (como CardViews) em seus respectivos ViewHolders."
+    },
+    {
+      "question": "Nas diretrizes arquiteturais modernas recomendadas pelo Google, a biblioteca Room (parte do Android Jetpack) é adotada em substituição ao uso direto de SQLiteOpenHelper e Cursor. Quais são as principais vantagens proporcionadas pelo Room?",
+      "options": [
+        "O Room converte automaticamente bancos relacionais em arquivos de planilhas CSV compartilhadas publicamente na internet.",
+        "O Room executa todas as consultas de leitura obrigatoriamente na thread principal da interface gráfica para evitar concorrência.",
+        "O Room provê uma camada de abstração com validação de consultas SQL em tempo de compilação, mapeamento de tabelas para entidades anotadas e integração com DAOs que retornam objetos tipados e fluxos assíncronos.",
+        "O Room dispensa completamente o mecanismo do SQLite, substituindo-o por um sistema próprio baseado em fitas magnéticas emuladas."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Room funciona como um ORM robusto sobre o SQLite: valida o SQL durante a compilação (evitando erros de sintaxe em tempo de execução), elimina a necessidade de manipular Cursor e ContentValues manualmente através de DAOs e mapeia tabelas para classes de entidade tipadas."
+    },
+    {
+      "question": "Em uma aplicação Android bem arquitetada, qual é a diretriz mandatória quanto à execução de operações de leitura e gravação em banco de dados e qual solução moderna do Jetpack substitui as tradicionais SharedPreferences?",
+      "options": [
+        "Operações de banco de dados devem ocorrer sempre na thread principal (UI thread) e as SharedPreferences foram substituídas por cookies de navegadores.",
+        "Operações de banco de dados não possuem restrição de thread e o armazenamento estruturado deve ser substituído pelo registro de eventos de log do sistema.",
+        "A gravação em banco deve ser delegada a broadcasts não seguros do sistema operacional e as configurações devem ser gravadas em variáveis estáticas não persistidas.",
+        "Operações de acesso a banco de dados devem ser executadas fora da thread principal (utilizando corrotinas, tarefas assíncronas ou threads em segundo plano) e o Jetpack DataStore substitui as SharedPreferences para armazenamento de preferências."
+      ],
+      "correctIndex": 3,
+      "explanation": "Acesso a disco pode bloquear a interface do usuário provocando travamentos (erros ANR - Application Not Responding), sendo obrigatório executar leituras e escritas fora da thread principal. Além disso, o Jetpack DataStore é a solução moderna e segura que substitui o antigo SharedPreferences."
+    }
+  ]
+}
