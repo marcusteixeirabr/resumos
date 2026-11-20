@@ -1,0 +1,115 @@
+{
+  "ua": 13,
+  "questions": [
+    {
+      "question": "Em arquitetura de software móvel, o que caracteriza uma funcionalidade nativa e quais restrições físicas de engenharia diferenciam aplicações com uso intenso de hardware de sistemas convencionais de desktop?",
+      "options": [
+        "São módulos computacionais executados em servidores na nuvem que processam requisições HTTP assíncronas e devolvem dados estruturados via WebSockets, operando sob fortes restrições de latência de transmissão de pacotes, largura de banda internacional e instabilidade de infraestrutura de rede móvel.",
+        "São tarefas em segundo plano executadas pelo navegador Web padrão do dispositivo móvel para sincronizar arquivos estáticos em cache local, operando sob severos limites de espaço de armazenamento temporário e políticas rígidas de segurança contra scripts maliciosos de terceiros.",
+        "São recursos do dispositivo acessados com o mínimo de camadas de abstração direta sobre o hardware (como GPS e sensores), operando sob restrições de memória limitada, dependência de processadores heterogêneos, canais restritos de entrada/saída e necessidade de execução em tempo real.",
+        "São bibliotecas gráficas de interface que emulam a aparência e o comportamento de controles visuais de sistemas operacionais de desktop na tela do smartphone, operando sob restrições de escala de resolução, renderização de fontes e taxa de quadros por segundo da tela."
+      ],
+      "correctIndex": 2,
+      "explanation": "Funcionalidades nativas conectam a aplicação diretamente às capacidades físicas do hardware (câmeras, sensores, GPS). O desenvolvimento para esses recursos lida com restrições severas de bateria, limites de memória, processamento em tempo real e variações térmicas e de arquitetura dos dispositivos móveis."
+    },
+    {
+      "question": "Ao avaliar as abordagens arquiteturais para o desenvolvimento de um aplicativo corporativo, qual é a principal diferença conceitual e tecnológica entre o desenvolvimento nativo e o desenvolvimento híbrido clássico?",
+      "options": [
+        "O desenvolvimento nativo utiliza as linguagens e SDKs oficiais de cada plataforma (como Swift no Xcode ou Kotlin no Android Studio) com acesso direto e irrestrito ao hardware; o híbrido clássico encapsula tecnologias Web (HTML5, CSS, JavaScript) dentro de uma WebView e acessa o hardware indiretamente por meio de plugins.",
+        "O desenvolvimento híbrido constrói aplicações para múltiplos ecossistemas utilizando exclusivamente uma única linguagem nativa como Java para compilar código tanto para Android quanto para iOS, enquanto o desenvolvimento nativo baseia-se em tecnologias Web abertas para alcançar portabilidade estrutural entre diferentes sistemas operacionais.",
+        "O desenvolvimento nativo compila o código-fonte para um bytecode intermediário universal executado por máquinas virtuais padronizadas pela indústria, enquanto o desenvolvimento híbrido gera binários de máquina dedicados para cada processador sem depender de camadas de abstração de software.",
+        "O desenvolvimento híbrido exige a escrita e manutenção de bases de código inteiramente separadas para cada fabricante de dispositivo móvel, enquanto o desenvolvimento nativo compartilha a árvore de interface gráfica e a lógica de negócios de forma idêntica entre todas as plataformas."
+      ],
+      "correctIndex": 0,
+      "explanation": "O desenvolvimento nativo utiliza as ferramentas oficiais e linguagens nativas de cada sistema operacional, garantindo acesso direto a todas as APIs e máximo desempenho. O desenvolvimento híbrido clássico executa código Web em uma WebView e depende de plugins como pontes para acessar recursos nativos do aparelho."
+    },
+    {
+      "question": "Em um aplicativo de jogos e navegação para smartphones, os sensores de movimento desempenham papéis distintos na percepção física do dispositivo. Qual é a correta distinção funcional entre o acelerômetro e o giroscópio?",
+      "options": [
+        "O giroscópio atua como o sensor primário encarregado de detectar a inclinação física do aparelho em relação à força da gravidade para orientar a alternância entre modo retrato e paisagem, enquanto o acelerômetro monitora apenas rotações tridimensionais em velocidades angulares elevadas.",
+        "O giroscópio fornece dados contínuos de altitude e variação barométrica do dispositivo durante deslocamentos verticais em aeronaves, enquanto o acelerômetro afere exclusivamente a distância estática do aparelho em relação ao nível do mar a partir de marcos geodésicos.",
+        "O acelerômetro calcula a velocidade vetorial constante de deslocamento geográfico do usuário em rotas rodoviárias, enquanto o giroscópio determina a posição geográfica absoluta no globo terrestre por meio da medição de campos gravitacionais locais do planeta.",
+        "O acelerômetro mede a aceleração linear ao longo dos eixos tridimensionais (X, Y, Z), detectando movimentos e a inclinação em relação à gravidade; o giroscópio mede a velocidade angular (taxa de rotação em torno dos eixos), complementando o acelerômetro com precisão na orientação dinâmica."
+      ],
+      "correctIndex": 3,
+      "explanation": "A inclinação estática e a orientação em relação à gravidade (como na alternância entre retrato e paisagem) são detectadas pelo acelerômetro por meio da aceleração estática da gravidade. O giroscópio mede a velocidade angular de rotação do aparelho, oferecendo alta precisão em movimentos contínuos (como mira em jogos ou estabilização de fotos)."
+    },
+    {
+      "question": "Um aplicativo de trilhas ecológicas necessita apresentar uma bússola na tela orientando o usuário em direção ao polo norte. Qual sensor do dispositivo móvel é encarregado dessa medição e como ele é utilizado em conjunto com outros sensores?",
+      "options": [
+        "O magnetômetro, que processa variações do campo magnético emitidas por satélites de navegação em órbita baixa para deduzir as coordenadas precisas de latitude e longitude do dispositivo móvel no mapa de navegação de trilhas.",
+        "O magnetômetro, que mede o campo magnético ambiente para identificar a direção do norte magnético, sendo frequentemente combinado ao acelerômetro e ao GPS para determinar a orientação (azimute) e o direcionamento de rotas em mapas.",
+        "O giroscópio, que utiliza o cálculo da velocidade angular do aparelho em torno do eixo vertical para deduzir a posição geográfica contínua do polo norte terrestre em relação à rotação planetária.",
+        "O sensor de luz ambiente, que afere o ângulo de incidência da luminosidade solar na tela do aparelho para calibrar o azimute e projetar a direção de deslocamento do usuário em mapas topográficos."
+      ],
+      "correctIndex": 1,
+      "explanation": "O magnetômetro mede a intensidade e a direção do campo magnético da Terra, funcionando como uma bússola digital. Ele não fornece a localização (que vem do GPS), mas sim a orientação e o azimute em relação ao norte magnético."
+    },
+    {
+      "question": "Em relação aos princípios físicos e computacionais que regem o funcionamento do GPS integrado aos dispositivos móveis modernos, qual afirmação expressa com precisão técnica a forma como a localização é calculada e suas restrições operacionais?",
+      "options": [
+        "O receptor de GPS calcula as coordenadas geográficas com base nos ângulos das intersecções geométricas entre as órbitas dos satélites visíveis no horizonte, sofrendo bloqueio operacional crítico e interrupção completa da recepção do sinal de rádio em dias que apresentem tempo nublado ou chuva moderada.",
+        "O GPS calcula o posicionamento por meio de triangulação de sinais de radiofrequência emitidos pelas antenas de telefonia celular terrestre mais próximas, necessitando de um plano de dados móveis ativo e autenticado na rede para decodificar e processar as coordenadas de latitude e longitude.",
+        "O receptor de GPS calcula as coordenadas por trilateração baseada no tempo de propagação do sinal emitido por múltiplos satélites (mínimo de quatro para resolver latitude, longitude, altitude e sincronia de relógio), não dependendo de conexão de dados móveis, mas sofrendo atenuação severa em locais fechados e subsolos.",
+        "O receptor de GPS necessita de sincronização com apenas dois satélites geoestacionários para resolver as coordenadas de latitude e longitude no plano bidimensional, dispensando a correção de atraso de relógio atômico por contar com osciladores de cristal de quartzo no dispositivo."
+      ],
+      "correctIndex": 2,
+      "explanation": "O GPS utiliza trilateração matemática baseada na distância calculada a partir do tempo que o sinal de rádio de pelo menos 4 satélites leva para chegar ao receptor passivo (dispensando internet móvel). O sinal de rádio de satélites atravessa nuvens sem dificuldade, mas é bloqueado por estruturas de concreto em locais fechados ou subterrâneos."
+    },
+    {
+      "question": "Além dos sensores de movimento e posicionamento, os dispositivos móveis incorporam sensores ambientais e de usabilidade para enriquecer a experiência do usuário e otimizar recursos. Quais são as funções desempenhadas pelos sensores de barômetro, proximidade e luz ambiente, respectivamente?",
+      "options": [
+        "O barômetro afere a aceleração gravitacional do aparelho em diferentes altitudes; o sensor de proximidade calcula o ritmo de passos em aplicações esportivas de corrida; o sensor de luz ambiente monitora a intensidade de radiofrequência para conectar o dispositivo a redes sem fio disponíveis no local.",
+        "O barômetro aponta a direção do polo norte magnético da Terra; o sensor de proximidade avalia a temperatura interna do processador para evitar superaquecimento; o sensor de luz ambiente calcula o índice de radiação ultravioleta incidente para emitir alertas de saúde na tela.",
+        "O barômetro afere as coordenadas geográficas de latitude por meio de telemetria orbital; o sensor de proximidade calcula a velocidade angular em curvas rápidas; o sensor de luz ambiente calibra o sistema de autofoco óptico e balanço de branco da câmera traseira do smartphone.",
+        "O barômetro afere a pressão atmosférica para estimativa de altitude e variações climáticas; o sensor de proximidade identifica objetos próximos (como o rosto do usuário) para desativar a tela durante chamadas; o sensor de luz ambiente mede a iluminação para ajuste automático do brilho e economia de bateria."
+      ],
+      "correctIndex": 3,
+      "explanation": "O barômetro mede a pressão atmosférica (auxiliando no cálculo de altitude), o sensor de proximidade detecta a aproximação de superfícies para desligar o display e prevenir toques acidentais na orelha, e o sensor de luz ambiente permite calibrar o brilho da tela de acordo com a claridade do ambiente, preservando a carga da bateria."
+    },
+    {
+      "question": "O Apache Cordova consolidou-se como um dos pioneiros no desenvolvimento de aplicações móveis híbridas. Qual é a composição arquitetural dos três elementos fundamentais de um aplicativo Cordova e como eles interagem?",
+      "options": [
+        "Navegador Web nativo independente (como Chrome ou Safari), motor gráfico acelerado por hardware WebGL e drivers compilados em C++ para acesso direto à memória de renderização de interface da plataforma.",
+        "Web App (código HTML/CSS/JavaScript e arquivos de configuração), WebView (componente nativo que renderiza toda a interface do usuário) e Cordova Plugins (pontes de comunicação que expõem APIs de hardware aos scripts Web).",
+        "Single Page Application (SPA) baseada em TypeScript, microsserviço HTTP local embarcado para despacho de rotas e banco de dados relacional SQLite operando como servidor de arquivos do sistema operacional.",
+        "Módulo declarativo de layouts em XML nativo, máquina virtual embarcada para execução de scripts de terceiros e barramento de eventos de baixo nível projetado para gerenciar chamadas de sistema sem recorrer ao uso de plugins."
+      ],
+      "correctIndex": 1,
+      "explanation": "A arquitetura do Cordova apoia-se em três pilares: o Web App (onde residem o código HTML5, estilos, lógica JavaScript e o config.xml), a WebView (navegador embutido que exibe as telas do app) e os Cordova Plugins (módulos nativos que viabilizam o acesso a recursos como câmera, contatos e sensores)."
+    },
+    {
+      "question": "Em uma Activity Android desenvolvida em Kotlin que monitora dados do acelerômetro utilizando o SensorManager, qual padrão de ciclo de vida deve ser estritamente implementado para assegurar boa gestão de recursos energéticos do dispositivo?",
+      "options": [
+        "Registrar o listener do sensor no método onResume() e desregistrar o listener no método onPause(), evitando que o sensor continue consumindo bateria ativamente quando a tela do aplicativo não estiver mais visível.",
+        "Registrar o listener do sensor no método onCreate() e desregistrá-lo exclusivamente no método onDestroy(), mantendo as leituras do hardware ativas em segundo plano para alimentar serviços contínuos em tempo de execução.",
+        "Registrar o listener do sensor no método onStart() e mantê-lo permanentemente em execução contínua, deixando a liberação dos recursos de hardware a cargo do coletor de lixo da máquina virtual.",
+        "Instanciar o listener diretamente no construtor da Activity e modular sua frequência de amostragem por meio de callbacks disparados na restauração de estado da interface gráfica pelo sistema operacional."
+      ],
+      "correctIndex": 0,
+      "explanation": "A leitura contínua de sensores drena a bateria rapidamente. A boa prática no Android dita registrar o listener em onResume() (quando a Activity ganha foco) e cancelá-lo em onPause() (assim que o usuário sai da tela ou o app vai para segundo plano)."
+    },
+    {
+      "question": "Desde o Android 6.0 (API nível 23), o modelo de segurança da plataforma introduziu regras rigorosas para o acesso a funcionalidades de hardware consideradas sensíveis, como câmera e localização precisa. Como esse modelo opera na prática do desenvolvimento?",
+      "options": [
+        "O aplicativo precisa apenas declarar as permissões requeridas no arquivo AndroidManifest.xml, ocorrendo a concessão irrestrita e definitiva de acesso ao hardware de forma completamente automática no momento do download na loja oficial.",
+        "As permissões para uso de hardware protegido são autenticadas por certificados de operadoras móveis e concedidas de maneira permanente durante a inicialização do sistema operacional no primeiro uso do aparelho.",
+        "Além de declarar as permissões e funcionalidades no arquivo AndroidManifest.xml, o aplicativo deve obrigatoriamente solicitar a autorização expressa do usuário em tempo de execução antes de acionar o hardware protegido.",
+        "O aplicativo solicita todas as permissões de hardware sensível durante a rotina de tratamento de baixa memória do sistema, autorizando o acesso apenas enquanto a memória RAM disponível permanecer acima do limite."
+      ],
+      "correctIndex": 2,
+      "explanation": "Para permissões perigosas (como CAMERA e ACCESS_FINE_LOCATION), a declaração estática no AndroidManifest.xml não basta: o aplicativo precisa verificar e solicitar a concessão ao usuário em tempo de execução, tratando cenários de recusa ou revogação."
+    },
+    {
+      "question": "No panorama atual do ecossistema de desenvolvimento móvel, bibliotecas do Jetpack e novos frameworks de mercado modernizaram o acesso a funcionalidades nativas. Quais ferramentas representam as soluções recomendadas contemporaneamente para câmera, localização e desenvolvimento multiplataforma?",
+      "options": [
+        "API legada Camera 1 integrada via wrappers JNI, LocationManager configurado com provedor exclusivo de GPS sem suporte a redes celulares ou Wi-Fi, e Apache Cordova com repositório legado de plugins monolíticos de terceiros sem manutenção ativa do ecossistema.",
+        "Framework Camera2 com configuração manual de fluxos de dados de captura, NetworkLocationProvider puro operando isoladamente a partir de redes sem fio conhecidas, e Titanium SDK com IDE dedicada para empacotamento de binários proprietários.",
+        "Intents genéricos de captura delegados a aplicativos externos do sistema, biblioteca de geolocalização baseada exclusivamente em endereçamento IP reverso, e arquiteturas webviews puras sem bibliotecas de ponte nativa para acesso a periféricos.",
+        "CameraX (do Jetpack) para captura consistente de imagens, Fused Location Provider para fusão eficiente de GPS/Wi-Fi/torres, e plataformas modernas como Capacitor, React Native e Flutter para desenvolvimento multiplataforma com acesso a recursos nativos."
+      ],
+      "correctIndex": 3,
+      "explanation": "Na engenharia móvel moderna, o CameraX simplifica e padroniza a captura em múltiplos fabricantes, o Fused Location Provider otimiza precisão e bateria combinando fontes de geolocalização, e ferramentas como Capacitor, React Native e Flutter sucederam abordagens híbridas antigas para desenvolvimento multiplataforma com alto desempenho."
+    }
+  ]
+}

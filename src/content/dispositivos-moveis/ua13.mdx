@@ -1,0 +1,162 @@
+---
+title: "UA13 — Funcionalidades Nativas"
+subtitle: "Sensores e recursos do dispositivo (acelerômetro, giroscópio, magnetômetro, GPS, câmera), desenvolvimento nativo e híbrido, Cordova e como acessar o hardware hoje."
+ua: 13
+group: "Dados e Recursos Nativos"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua13.m4a" title="Funcionalidades nativas" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/dmn_01.webp" alt="Infográfico com vantagens e desvantagens do desenvolvimento nativo e híbrido" caption="Desenvolvimento nativo × híbrido" />
+</SlidesGrid>
+
+### O que são funcionalidades nativas
+
+**Funcionalidades nativas** são os recursos do dispositivo acessados **diretamente**, com o mínimo de camadas de abstração entre o hardware e a aplicação: **GPS, câmera, microfone, acelerômetro, giroscópio, sensor biométrico** e outros. Aplicativos muito simples, que não usam o hardware, deixam de ser um diferencial de mercado. Esses aplicativos têm uma complexidade maior, por causa de: **execução em tempo real**, **memória limitada**, **canais de entrada e saída limitados** e **forte dependência de hardware** e de diferentes processadores. A **mobilidade** do dispositivo se compõe de portabilidade, usabilidade, conectividade e funcionalidade.
+
+### Nativo × híbrido
+
+| | **Desenvolvimento nativo** | **Desenvolvimento híbrido** |
+|---|---|---|
+| **Ideia** | Aplicação projetada e construída **especificamente para uma plataforma** | **Mistura**: interface em **tecnologias Web** (HTML5, CSS, JavaScript) com acesso ao hardware por **camada nativa** |
+| **Ferramentas** | **iOS:** Swift/Objective-C, **Xcode**, SDK do iOS. **Android:** Java/Kotlin, **Android Studio**, SDK | **Cordova**, **Ionic**, Titanium e similares |
+| **Acesso ao hardware** | **Total e direto**, sem restrições | **Indireto**, por **plugins** |
+| **Interface e experiência** | Segue os padrões da plataforma | Pode ser mais genérica |
+| **Código** | Um para cada plataforma | **Uma base de código** para várias plataformas |
+| **Indicado para** | Apps **complexos**, com uso intenso de hardware | Apps **mais simples**, sem muita demanda de hardware, ou com orçamento e prazo curtos |
+
+Não existe uma única forma correta: cada abordagem atende a um propósito. A escolha depende do **objetivo do app, dos custos e da equipe** (veja nativo, híbrido e PWA na [UA1](/resumos/dispositivos-moveis/ua1/)).
+
+### Sensores do dispositivo
+
+A abordagem nativa permite usar os sensores de forma **menos complexa**, lidando com limites de memória, GPU, bateria e tela.
+
+| Sensor | O que mede / para que serve |
+|---|---|
+| **Acelerômetro** | **Aceleração** nos eixos **X, Y, Z**; detecta movimento e **inclinação em relação à gravidade**; usado em passos (*fitness*), realidade aumentada, troca **retrato/paisagem** e velocidade em mapas |
+| **Giroscópio** | **Rotação** (velocidade angular) em torno dos eixos; melhora a **precisão da orientação** junto ao acelerômetro; jogos de corrida, câmeras (estabilização) e aeronaves. Nos celulares é um **MEMS** (micro-sistema eletromecânico) |
+| **Magnetômetro** | **Campo magnético**; indica **onde fica o norte** (bússola); combinado com acelerômetro e GPS dá a **direção** em mapas e rotas |
+| **GPS** | **Posição no planeta** por sinais de **satélites**; **não precisa de dados móveis**; falha em locais fechados e subterrâneos; **drena a bateria** |
+| **Câmera** | Fotos e vídeo, leitura de **QR Code**/código de barras, zoom; em geral **frontal e traseira**; hoje com IA |
+| **Barômetro** | **Pressão do ar**: clima e altitude |
+| **Proximidade** | Desliga a tela perto da orelha |
+| **Luz ambiente** | Ajusta o brilho e **economiza bateria** |
+| **Biométrico** | Impressão digital (na tela ou na traseira), rosto |
+
+A posição também pode ser estimada pela **distância às torres de celular**, de forma **aproximada**; muitos aplicativos combinam GPS e torres (e Wi-Fi) para obter leituras mais precisas.
+
+### Funcionalidades nativas em ambientes híbridos
+
+Em um ambiente híbrido não há acesso direto: usam-se **plugins** e frameworks que fazem a ponte entre o código Web e as APIs do dispositivo.
+
+- **Titanium** (Appcelerator, 2008): SDK de código aberto com HTML5, CSS e JavaScript, e IDE própria (Titanium Studio).
+- **Apache Cordova:** framework **gratuito e de código aberto** que usa **HTML5, CSS3 e JavaScript** para criar apps multiplataforma. O app roda empacotado para cada plataforma e acessa o hardware (GPS, câmera, arquivos) por **plugins**. Vantagem: o grande conjunto de plugins (do próprio Cordova, de terceiros e **personalizados**).
+
+Componentes de um aplicativo **Cordova**:
+
+| Componente | Função |
+|---|---|
+| **Web App** | A aplicação e o código: `index.html`, CSS, JavaScript, mídia; inclui o `config.xml`, com parâmetros do app (como o comportamento na mudança de orientação) |
+| **WebView** | Fornece **toda a interface do usuário** |
+| **Cordova Plugins** | Interface de **comunicação entre o Cordova e os componentes nativos**, ligando às APIs do dispositivo; os ***Core Plugins*** dão acesso a acelerômetro, GPS, bateria, câmera, contatos etc. |
+
+Um projeto Cordova **não traz plugins instalados por padrão**; até os principais precisam ser **adicionados**.
+
+### Acessando sensores e câmera no código nativo
+
+Todo acesso a hardware sensível exige **declarar** a permissão no `AndroidManifest.xml` e, para as perigosas (câmera, localização), **pedir ao usuário em tempo de execução** (desde o Android 6.0):
+
+```xml
+<uses-feature android:name="android.hardware.camera" android:required="false" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+
+Sensores de movimento ficam a cargo do **`SensorManager`**: registra-se um *listener* ao ficar visível e **cancela-se ao pausar**, para não gastar bateria (veja o ciclo de vida na [UA5](/resumos/dispositivos-moveis/ua5/)):
+
+```kotlin
+class SensorActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var sensorManager: SensorManager
+    private var acelerometro: Sensor? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        acelerometro = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        acelerometro?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)   // economiza bateria
+    }
+
+    override fun onSensorChanged(event: SensorEvent) {
+        val x = event.values[0]; val y = event.values[1]; val z = event.values[2]
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+}
+```
+
+<Callout type="warning">
+**Atenção a três pontos do material:**
+
+- **Sensores.** Quando o celular é **inclinado**, quem percebe a inclinação **em relação à gravidade** é o **acelerômetro**; o **giroscópio** mede a **rotação** (velocidade angular) e complementa o acelerômetro, e não o substitui. O giroscópio em aeronaves dá a **atitude** (orientação), não a **altitude**, que vem do **barômetro** ou do GPS. E o **magnetômetro** indica a **direção** (o norte), não a **localização**, que vem do **GPS**.
+- **GPS.** O cálculo da posição se baseia na **distância** a vários satélites (**trilateração**, com pelo menos **quatro** para incluir o tempo), e não em “ângulos das intersecções”. O tempo **nublado praticamente não afeta** o sinal; o problema são **locais fechados**, subsolos e “cânions” urbanos.
+- **Híbrido.** Dizer que um aplicativo híbrido usa “uma só linguagem, como Java” é impreciso: o híbrido clássico usa **tecnologias Web** (HTML5, CSS e JavaScript) em uma WebView; **Java** é linguagem do desenvolvimento **nativo** Android.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Kotlin e APIs atuais no nativo.** No Android, **Kotlin** é a linguagem preferida e a interface é feita em **Jetpack Compose**; no iOS, **Swift** com **SwiftUI**. Para câmera, o **CameraX** (Jetpack) substitui a API de câmera antiga e o `ActivityResultContracts.TakePicture` tira uma foto sem tratar a câmera; para localização, o **Fused Location Provider** (Google Play Services) combina GPS, Wi-Fi e torres de forma eficiente. **Permissões** seguem o modelo de **pedido em tempo de execução**, com explicação ao usuário, e as mais recentes (localização em segundo plano, notificações no Android 13+) exigem cuidado especial; o **iOS** exige as chaves de descrição de uso no `Info.plist`.
+
+**Híbrido hoje: Capacitor, Flutter, React Native, KMP e PWA.** O **Cordova** segue existindo, mas o **Ionic** recomenda o **Capacitor** (sucessor espiritual, com APIs Web, projetos nativos editáveis e plugins oficiais como `@capacitor/camera`); o **Ionic Native** virou **Awesome Cordova Plugins**. Fora do mundo Web, **React Native** (JavaScript/TypeScript), **Flutter** (Dart) e **.NET MAUI** (C#, sucessor do Xamarin) renderizam **componentes nativos** ou próprios e acessam o hardware por plugins, com desempenho próximo ao nativo; **Kotlin Multiplatform** compartilha a lógica entre Android e iOS. O **Titanium** continua, mas é pouco usado. Um **PWA** acessa câmera, GPS e alguns sensores pelas APIs Web, sem loja.
+
+```ts
+import { Camera, CameraResultType } from '@capacitor/camera';
+
+async function tirarFoto() {
+  const foto = await Camera.getPhoto({ quality: 80, resultType: CameraResultType.Uri });
+  (document.querySelector('#preview') as HTMLImageElement).src = foto.webPath!;
+}
+```
+
+Para escolher, pesam **desempenho**, **acesso a recursos de ponta**, **custo**, **equipe** e **prazo**: apps com muito hardware (AR, câmera avançada, jogos) tendem ao **nativo**; apps de formulários e conteúdo se beneficiam do **multiplataforma**.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Funcionalidades nativas:** recursos do dispositivo acessados **diretamente**, com mínimo de camadas de abstração (GPS, câmera, acelerômetro, giroscópio…).
+- **Nativo:** específico para **uma plataforma** (iOS: Swift/Objective-C + Xcode; Android: Java/Kotlin + Android Studio); **acesso total** ao hardware e aos padrões de interface.
+- **Híbrido:** mistura de **nativo** (hardware) com **Web** (**HTML5, CSS, JavaScript**); **uma base de código**; **sem acesso direto**, usa **plugins**.
+- **Acelerômetro:** aceleração nos eixos **X, Y, Z**; **Giroscópio:** **rotação**, ajuda o acelerômetro; **Magnetômetro:** **campo magnético**, norte (bússola); **GPS:** posição por **satélites**, sem dados móveis, **drena bateria**.
+- **Outros sensores:** **barômetro** (pressão do ar), **proximidade** (desliga a tela), **luz ambiente** (brilho, economia de bateria), **biométrico**.
+- **Cordova:** framework **gratuito e open source**, HTML5/CSS3/JS; componentes: **Web App, WebView e Cordova Plugins**; **Core Plugins**; **não vem com plugins instalados**.
+- **Titanium:** SDK open source da **Appcelerator**; **Ionic** usa plugins Cordova.
+- **Complexidade:** tempo real, memória limitada, E/S limitada, dependência de hardware.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BORGES, O. T. Funcionalidades nativas. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- LEE, V.; SCHNEIDER, H.; SCHELL, R. *Aplicações móveis: arquitetura, projeto e desenvolvimento*. São Paulo: Pearson; Makron Books, 2005.
+- HEITKÖTTER, H.; HANSCHKE, S.; MAJCHRZAK, T. A. Evaluating cross-platform development approaches for mobile applications. In: WEBIST, 8., 2012, Porto.
+- CORRAL, L.; JANES, A.; REMENCIUS, T. Potential advantages and disadvantages of multiplatform development frameworks. *Procedia Computer Science*, v. 10, p. 1202-1207, 2012.
+- PREZOTTO, E. D.; BONIATI, B. B. Estudo de frameworks multiplataforma para desenvolvimento de aplicações mobile híbridas. *Anais do EATI*, v. 4, n. 1, 2014.
+- APACHE SOFTWARE FOUNDATION. *Apache Cordova: Overview*. cordova.apache.org.
+- IONIC. *Capacitor*. capacitorjs.com.
+- ANDROID DEVELOPERS. *Sensors overview*; *CameraX*; *Request runtime permissions*. developer.android.com.
