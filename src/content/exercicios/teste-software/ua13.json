@@ -1,0 +1,115 @@
+{
+  "ua": 13,
+  "questions": [
+    {
+      "question": "No contexto da engenharia de teste de software, como se classifica a técnica que emprega tabelas de decisão e qual é a sua principal contribuição para o processo de garantia da qualidade?",
+      "options": [
+        "É uma técnica funcional (de caixa-preta) baseada em especificação, que atua como suporte para modelar combinações de regras de negócio complexas e derivar casos de teste com alta rastreabilidade e cobertura de requisitos.",
+        "É uma técnica estrutural (de caixa-branca) baseada rigorosamente no fluxo de controle procedimental, que analisa caminhos lógicos internos e deriva casos de teste a partir de nós predicados mapeados no grafo de fluxo do código.",
+        "É uma técnica não funcional voltada a atributos de confiabilidade, que modela matrizes probabilísticas para simular a ocorrência simultânea de falhas em conexões de banco de dados sem avaliar requisitos de negócio.",
+        "É uma técnica empírica de teste exploratório contínuo, na qual os cenários de validação são elaborados livremente durante a execução do sistema, dispensando documentações prévias, matrizes formais ou especificações."
+      ],
+      "correctIndex": 0,
+      "explanation": "Casos de teste derivados de tabelas de decisão são testes funcionais (caixa-preta baseados em especificação), pois utilizam a descrição formal das regras de negócio para mapear entradas e saídas esperadas sem examinar a estrutura interna do código."
+    },
+    {
+      "question": "Uma funcionalidade de concessão de crédito avalia 4 condições lógicas independentes (por exemplo: renda comprovada, sem restrição cadastral, tempo de serviço estável e fiador válido), cada uma podendo assumir apenas os valores Verdadeiro ou Falso. Ao construir uma tabela de decisão completa de entrada limitada para essa funcionalidade, quantas regras (combinações distintas) deverão constar na tabela antes de qualquer processo de minimização?",
+      "options": [
+        "4 regras, correspondendo diretamente à quantidade de condições avaliadas com base no critério de comandos.",
+        "8 regras, calculadas multiplicando o número de condições booleanas pelos 2 estados possíveis de saída (n × 2).",
+        "10 regras, obtidas aplicando o limite clássico de complexidade ciclomática de McCabe somado à regra padrão.",
+        "16 regras, calculadas pela fórmula 2ⁿ, onde n representa a quantidade de condições booleanas independentes."
+      ],
+      "correctIndex": 3,
+      "explanation": "Para n condições booleanas binárias (Verdadeiro/Falso), o espaço total de combinações possíveis em uma tabela de decisão completa é dado por 2ⁿ. Com 4 condições, tem-se 2⁴ = 16 regras."
+    },
+    {
+      "question": "As tabelas de decisão podem ser classificadas de acordo com a forma como suas condições e entradas são representadas. Qual é a distinção fundamental entre uma tabela de entrada limitada e uma tabela de entrada estendida?",
+      "options": [
+        "A tabela de entrada limitada restringe a quantidade total de regras ao teto rígido de 2ⁿ combinações binárias, enquanto a tabela estendida permite adicionar novas regras de negócio dinamicamente sem necessidade de recalcular a matriz.",
+        "A tabela de entrada limitada restringe as condições a valores booleanos binários (Verdadeiro/Falso), ao passo que a tabela de entrada estendida permite valores nominais, faixas contínuas ou múltiplos estados de dados.",
+        "A tabela de entrada limitada avalia exclusivamente condições atômicas mutuamente exclusivas, enquanto a tabela estendida aceita expressões relacionais compostas estruturadas com operadores de conjunção e disjunção.",
+        "A tabela de entrada limitada destina-se apenas a testes de integração entre componentes de software, enquanto a tabela estendida é reservada para a modelagem de testes de unidade focados em métodos procedimentais."
+      ],
+      "correctIndex": 1,
+      "explanation": "Tabelas de entrada limitada operam estritamente com valores binários (V/F ou Sim/Não), enquanto tabelas de entrada estendida admitem variáveis com múltiplos valores discretos, categorias ou intervalos de valores (como faixas etárias ou categorias de clientes)."
+    },
+    {
+      "question": "Ao utilizar tabelas de decisão para a modelagem sistemática de testes de software, qual é a sequência de etapas recomendada no fluxo de trabalho de engenharia de requisitos e qualidade?",
+      "options": [
+        "Mapear nós predicados no código-fonte, calcular a métrica de complexidade ciclomática do módulo, estruturar o grafo de fluxo correspondente e derivar casos de teste para os caminhos linearmente independentes da aplicação.",
+        "Identificar partições de equivalência válidas, combiná-las em matrizes de rastreabilidade, minimizar valores limites das variáveis e documentar a tabela resultante apenas para testes de regressão.",
+        "Identificar e selecionar tabelas na documentação, analisá-las, adequá-las e estabilizá-las (minimizando quando possível), criar os casos de teste para cada regra e agrupá-los em um conjunto de testes.",
+        "Codificar métodos de teste unitários no JUnit, executar relatórios de cobertura de ramos, sintetizar as regras de decisão em uma tabela reversa e agrupar os testes pela ordem cronológica de execução."
+      ],
+      "correctIndex": 2,
+      "explanation": "O fluxo estruturado prevê: identificar as tabelas relevantes na especificação; estudar sua finalidade; refinar, minimizar e estabilizar a tabela; criar um caso de teste para cada coluna (regra) estabilizada; e consolidar os casos no conjunto de testes."
+    },
+    {
+      "question": "Em uma tabela de decisão, a técnica de minimização é aplicada para simplificar a matriz e reduzir a quantidade de regras a serem testadas. Em que circunstância duas regras podem ser legitimamente mescladas e como a condição irrelevante deve ser representada?",
+      "options": [
+        "Quando duas regras diferem no valor de apenas uma condição e produzem exatamente a mesma ação; a condição divergente passa a ser assinalada com o símbolo '—' (don't care / indiferente).",
+        "Quando duas regras apresentam combinações idênticas de condições verdadeiras (T e T), mesclando-se as ações resultantes sob uma mesma coluna unificada para simplificar o projeto de testes.",
+        "Quando duas regras compartilham o mesmo conjunto de condições de entrada, mesmo que disparem ações distintas; as ações divergentes são marcadas com '—' (don't care) na tabela final.",
+        "Quando duas regras apresentam diferenças em duas ou mais condições independentes e executam ações complementares, unificando-se todas as entradas divergentes sob valores booleanos nulos."
+      ],
+      "correctIndex": 0,
+      "explanation": "A minimização ocorre quando duas regras produzem o mesmo conjunto de ações diferindo por uma única condição: como o valor dessa condição não altera o resultado, ela é consolidada com '—' (don't care), unificando as regras."
+    },
+    {
+      "question": "Embora a minimização de uma tabela de decisão traga eficiência ao diminuir o número de casos de teste a serem executados, qual é o principal risco técnico assumido pela equipe de qualidade ao adotar essa prática?",
+      "options": [
+        "A minimização compromete a rastreabilidade entre requisitos e código compilado, impedindo que os casos de teste resultantes sejam integrados a pipelines automatizados de integração contínua (CI/CD) para testes de regressão funcional.",
+        "A eliminação de regras consideradas redundantes viola as exigências de cobertura de ramos e de comandos estabelecidas por normas internacionais de testes estruturais, invalidando a auditoria de qualidade.",
+        "A representação de valores por 'don't care' inviabiliza a parametrização dos dados em frameworks modernos de teste automatizado, forçando a equipe a executar os cenários minimizados de forma manual.",
+        "Pressupõe-se que a condição marcada como 'don't care' seja verdadeiramente irrelevante na implementação; se houver um defeito na especificação ou na codificação que gere efeito colateral por aquela variável, o teste minimizado pode não detectar a falha."
+      ],
+      "correctIndex": 3,
+      "explanation": "Ao assumir que uma condição é indiferente (don't care) e não testar suas variações, a equipe assume a premissa de que a lógica descrita está correta. Se o desenvolvedor tiver implementado um desvio indevido baseado justamente naquela condição, o caso minimizado pode falhar em revelar o defeito."
+    },
+    {
+      "question": "Ao transformar uma regra de uma tabela de decisão estabilizada em um caso de teste formal, quais elementos estruturais devem constar na documentação do teste para garantir sua reprodutibilidade e eficácia?",
+      "options": [
+        "Identificação do caso de teste, grafo de fluxo de controle, cálculo da complexidade ciclomática do módulo e matriz de rastreabilidade de código associada às regras da tabela.",
+        "Identificação do caso de teste, pré-condições necessárias, valores de entrada correspondentes às condições da regra, ações esperadas a serem disparadas e o resultado final esperado.",
+        "Identificação do caso de teste, classes de equivalência mapeadas, análise detalhada de valor limite das variáveis de negócio e estimativa quantitativa de cobertura de comandos pelo framework de testes.",
+        "Identificação do caso de teste, nós predicados de decisão, comandos executáveis associados às ramificações e relatórios de execução de testes de carga em ambiente de homologação."
+      ],
+      "correctIndex": 1,
+      "explanation": "Cada caso de teste derivado de uma regra de tabela deve explicitar claramente o contexto de execução (pré-condições), os dados de entrada exatos definidos pelas condições da regra, o comportamento esperado (ações) e o resultado a ser validado."
+    },
+    {
+      "question": "Em frameworks modernos de desenvolvimento e automação de testes como JUnit 5 (com @ParameterizedTest e @CsvSource), pytest ou Jest, como as regras de uma tabela de decisão são frequentemente implementadas no código-fonte?",
+      "options": [
+        "Construindo uma classe de teste isolada para cada condição da tabela e encadeando a verificação das regras por meio de herança procedural profunda e execução cronológica sequencial.",
+        "Desenvolvendo um único método de teste linear preenchido com múltiplos blocos de decisão aninhados (if/else) que reproduzem explicitamente toda a lógica procedimental da regra de negócio no próprio teste.",
+        "Mapeando cada regra da tabela de decisão como uma linha de dados em uma fonte parametrizada (como CSV ou matriz), onde as colunas fornecem as entradas e o resultado esperado verificado por asserções.",
+        "Configurando asserções estáticas de código por meio de anotações de compilação sem passagem de dados de entrada, validando apenas se as variáveis atendem aos tipos de dados esperados."
+      ],
+      "correctIndex": 2,
+      "explanation": "Testes parametrizados permitem expressar tabelas de decisão de forma limpa e declarativa no próprio código: uma matriz de dados alimenta o mesmo método de teste repetidamente, testando cada combinação de entrada contra seu respectivo resultado esperado."
+    },
+    {
+      "question": "A técnica de modelagem de testes a partir de regras de decisão tem raízes históricas consolidadas e integra padrões internacionais de qualidade. Qual marco histórico do início da década de 1970 impulsionou essa abordagem e qual norma internacional contemporânea padroniza a técnica de tabela de decisão em testes?",
+      "options": [
+        "O desenvolvimento da técnica de grafos de causa e efeito no início dos anos 1970 e a padronização atual através da norma ISO/IEC/IEEE 29119-4.",
+        "A proposta da métrica de complexidade ciclomática por Thomas McCabe em 1976 e a padronização atual através da norma ISO/IEC 25010 de qualidade de software.",
+        "A formulação da técnica de análise de mutação no início da década de 1970 e a padronização atual através do padrão IEEE 829 para documentação de teste.",
+        "A introdução da técnica de partição de equivalência no início dos anos 1970 e a padronização atual através da especificação ISO/IEC 9126 de produto."
+      ],
+      "correctIndex": 0,
+      "explanation": "As técnicas de derivação de casos a partir de especificações ganharam impulso formal no início dos anos 1970 com os grafos de causa e efeito (que geram tabelas de decisão). Hoje, as tabelas de decisão para testes são formalizadas na norma técnica ISO/IEC/IEEE 29119-4 (Técnicas de Teste)."
+    },
+    {
+      "question": "Quando uma funcionalidade envolve um número elevado de condições interdependentes, o total de combinações completas (2ⁿ) cresce exponencialmente, tornando a execução de todas as regras inviável em prazos ágeis. Qual abordagem combinatória consagrada e qual paradigma complementar de teste são indicados para tratar essa complexidade?",
+      "options": [
+        "Aplicação de partição de equivalência restrita aos nós predicados do fluxo de controle do módulo, complementada por testes de estresse de infraestrutura de rede voltados a mensurar o esgotamento de recursos.",
+        "Substituição da tabela por testes estruturais de cobertura de comandos, complementada pela execução de testes de mutação para descartar caminhos lógicos considerados irrelevantes para o negócio.",
+        "Agrupamento de todas as condições em partições unidimensionais independentes, complementado pela execução de testes de regressão baseados exclusivamente em comparação de telas visuais.",
+        "Aplicação de teste combinatório pairwise (todos os pares, com ferramentas como PICT ou AllPairs) complementada por testes baseados em propriedades (como jqwik ou Hypothesis) para geração automatizada de dados."
+      ],
+      "correctIndex": 3,
+      "explanation": "Para mitigar a explosão combinatória, a técnica pairwise reduz significativamente o número de regras garantindo que todos os pares possíveis de valores sejam combinados e testados ao menos uma vez. Paralelamente, testes baseados em propriedades geram centenas de entradas para validar invariantes de negócio."
+    }
+  ]
+}

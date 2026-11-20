@@ -1,0 +1,130 @@
+---
+title: "UA13 — Tabelas de Decisão e Testes"
+subtitle: "Estrutura de uma tabela de decisão, tipos, minimização com don't care e como derivar casos de teste funcionais a partir dela."
+ua: 13
+group: "Técnicas de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua13.m4a" title="Tabelas de decisão e testes" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/tdt_01.webp" alt="Infográfico sobre o fluxo de trabalho para usar tabelas de decisão em casos de teste" caption="Fluxo de trabalho com tabelas de decisão" />
+</SlidesGrid>
+
+### Por que tabelas de decisão
+
+Entre os artefatos que um analista de testes coleta para criar testes **baseados em especificação** (manuais, diagramas, documentação e até o código), a **tabela de decisão** costuma ser um dos **primeiros e mais importantes**. Ela modela em forma de tabela a **estrutura de decisão** de uma funcionalidade, cruzando **combinações de entradas** com as **ações** esperadas. Por isso gera casos de teste com **boa fidelidade à especificação** e **boa cobertura**. Todo caso de teste derivado da especificação é um **teste funcional** (caixa-preta, veja a [UA11](/resumos/teste-software/ua11/)).
+
+A tabela é um **suporte** (um insumo), não o teste inteiro: os casos podem ser mais extensos, e uma tabela pode apenas **acrescentar regras** a um caso de teste mais complexo. Sem uma base de requisitos como insumo, a dificuldade de criar casos de teste **cresce muito**. As primeiras técnicas de derivação de casos a partir de especificações surgiram no início dos **anos 1970**, com os **grafos de causa e efeito**.
+
+### Estrutura de uma tabela de decisão
+
+| Elemento | O que é |
+|---|---|
+| **Condições** | As **entradas** avaliadas (cada linha de condição, por exemplo `A1 = 10`) |
+| **Regras** (colunas) | Cada **combinação** de valores das condições |
+| **Ações** | O que o sistema deve fazer para cada regra |
+
+Com **n** condições booleanas (verdadeiro/falso), a tabela completa tem **2ⁿ regras**. Exemplo com três condições (8 regras):
+
+| | R1 | R2 | R3 | R4 | R5 | R6 | R7 | R8 |
+|---|---|---|---|---|---|---|---|---|
+| **A1 = 10** | F | F | F | F | T | T | T | T |
+| **A2 = 20** | F | F | T | T | F | F | T | T |
+| **A3 = 30** | F | T | F | T | F | T | F | T |
+| **Ação 1** | | | | | X | X | X | X |
+| **Ação 2** | | | X | X | | | | |
+| **Ação 3** | | X | | | | | | |
+
+**Tipos de tabela.** A de entrada **limitada** usa só valores **V/F** (como acima). A de entrada **estendida** usa **valores ou faixas** (por exemplo, “idade ≥ 18”, “plano = ouro”). Ambas servem de base para testes. Uma tabela já **estabilizada** pode ser transformada em casos de teste, pois representa exatamente o **que deve ser testado**.
+
+### Fluxo de trabalho para criar os casos de teste
+
+1. **Identificar e selecionar** as tabelas de decisão na documentação.
+2. **Analisar e estudar** a tabela: qual a sua finalidade e se serve ao teste.
+3. **Adequar e estabilizar** a tabela, **minimizando-a** quando possível.
+4. **Criar os casos de teste**, um para **cada regra** (coluna) da tabela estabilizada.
+5. **Agrupar** os casos em um **conjunto de testes** derivado da tabela.
+
+### Minimização e *don't care*
+
+A tabela pode ser **minimizada**: regras **semelhantes que executam a mesma ação** são **mescladas ou eliminadas**, e uma regra passa a testar também a eliminada, já que a ação é a mesma. O valor irrelevante é marcado com **“—”** (***don't care***): o teste não precisa se preocupar com o valor daquela condição.
+
+No exemplo, a ação 1 ocorre sempre que **A1 = 10**, qualquer que seja A2 e A3 (R5 a R8); a ação 2 ocorre quando A1 ≠ 10 e **A2 = 20**, qualquer que seja A3 (R3 e R4). A tabela minimizada fica com **quatro regras**:
+
+| | R1 | R2 | R3 | R5 |
+|---|---|---|---|---|
+| **A1 = 10** | F | F | F | T |
+| **A2 = 20** | F | F | T | — |
+| **A3 = 30** | F | T | — | — |
+| **Ação** | nenhuma | Ação 3 | Ação 2 | Ação 1 |
+
+Depois de minimizar, **reavalie**: ainda pode haver o que reduzir? Se não, a tabela está **estabilizada** e vira **quatro casos de teste**.
+
+### Casos de teste derivados
+
+Cada regra vira um caso de teste com **pré-condições**, **regras (valores de entrada)**, **ações** e **resultado esperado**:
+
+| Caso | Pré-condições | Regras (entrada) | Ação esperada |
+|---|---|---|---|
+| **CT-R1** | A1, A2, A3 informados | A1 ≠ 10, A2 ≠ 20, A3 ≠ 30 | Nenhuma |
+| **CT-R2** | A1, A2, A3 informados | A1 ≠ 10, A2 ≠ 20, A3 = 30 | **Ação 3** |
+| **CT-R3** | A1, A2 informados | A1 ≠ 10, A2 = 20 | **Ação 2** |
+| **CT-R5** | A1 informado | A1 = 10 | **Ação 1** |
+
+No código, a tabela vira dados de teste. Exemplo com **JUnit 5**, em que cada linha é uma regra e valores *don't care* podem ser variados para dar mais confiança:
+
+```java
+class DecisaoTest {
+
+    @ParameterizedTest(name = "A1={0}, A2={1}, A3={2} → {3}")
+    @CsvSource({
+        " 5,  5,  5, NENHUMA",   // R1
+        " 5,  5, 30, ACAO_3",    // R2
+        " 5, 20,  5, ACAO_2",    // R3 (A3 é don't care)
+        " 5, 20, 30, ACAO_2",    // R3 com outro valor de A3
+        "10,  5,  5, ACAO_1",    // R5 (A2 e A3 são don't care)
+        "10, 20, 30, ACAO_1"     // R5 com outros valores
+    })
+    void aplicaRegra(int a1, int a2, int a3, Acao esperada) {
+        assertEquals(esperada, Regras.decidir(a1, a2, a3));
+    }
+}
+```
+
+<Callout type="warning">
+**Atenção a um ponto do material:** a justificativa da minimização é imprecisa. Duas regras **não** são mescladas por terem “combinações idênticas (T e T)”: elas podem ser mescladas quando **diferem em apenas uma condição** e levam à **mesma ação**, e então essa condição vira “—” (*don't care*). R3 (F, T, F) e R4 (F, T, T) diferem só em A3 e executam a ação 2, logo viram **(F, T, —)**. Além disso, o capítulo promete apresentar “**tipos** de tabelas de decisão”, mas só mostra a tabela de entrada limitada (V/F); a de entrada estendida fica de fora. Lembre também que minimizar **reduz o número de testes** à custa de **assumir** que o *don't care* realmente não importa; se a especificação estiver errada, o defeito pode passar.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Tabelas no código e na especificação viva.** Hoje a tabela de decisão aparece como **testes parametrizados** (JUnit 5 `@ParameterizedTest`, `pytest.mark.parametrize`, Jest `test.each`), como **cenários com exemplos** em **Gherkin/Cucumber** (`Esquema do Cenário` com tabela `Exemplos`) e em **DMN** (*Decision Model and Notation*), o padrão da OMG para modelar decisões de negócio, com motores como **Camunda** e **Drools**. Assim, a mesma tabela serve de **especificação, documentação e teste**.
+
+**Combinatória e automação.** Quando a tabela cresce (2ⁿ regras), usa-se **teste combinatório *pairwise*** (todos os pares de valores, com ferramentas como **PICT**, **AllPairs** e **Hexawise**) para reduzir casos sem perder muito poder de detecção. Casos derivados de tabelas rodam em **CI/CD** como testes de **regressão**, e ferramentas de gestão (**TestRail**, **Xray**) ligam a regra da tabela ao caso, ao requisito e ao defeito. Para regras de negócio complexas, **testes baseados em propriedades** (**jqwik**, **Hypothesis**) complementam a tabela com entradas geradas automaticamente. A técnica é descrita hoje na **ISO/IEC/IEEE 29119-4** (testes de **tabela de decisão** e de **grafo de causa e efeito**).
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Tabela de decisão** = modelo em tabela da estrutura de decisão: **condições** (entradas), **regras** (colunas = combinações), **ações**.
+- **Teste funcional (caixa-preta):** todo caso derivado da **especificação**, inclusive de tabelas de decisão. É um **suporte**, não um tipo de teste isolado.
+- **Fluxo:** identificar e selecionar → analisar → **adequar/estabilizar (minimizar)** → criar casos → agrupar em conjunto de testes.
+- **Minimização:** mescla ou elimina regras **semelhantes que executam a mesma ação**; o valor irrelevante é **“—” (*don't care*)**.
+- **Um caso de teste por regra** (coluna) da tabela **estabilizada**.
+- **Completa:** **2ⁿ** regras para **n** condições booleanas.
+- **Caso de teste:** pré-condições, regras (entrada), ações e **resultado esperado**.
+- **Origem histórica:** técnicas de derivação a partir de especificação, início dos **anos 1970**, com **grafos de causa e efeito**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- ROCHA, B. C. Tabelas de decisão e testes. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- MOLINARI, L. *Testes funcionais de software*. Florianópolis: Visual Books, 2008.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- ISO/IEC/IEEE 29119-4:2021. *Software and systems engineering: Software testing, Part 4: Test techniques*.
+- OBJECT MANAGEMENT GROUP. *Decision Model and Notation (DMN)*. omg.org/dmn.
