@@ -1,0 +1,141 @@
+---
+title: "UA14 — Teste Exploratório"
+subtitle: "Conceito, quando usar, técnicas (heurística, test oracle, Phoenix checklist, os porquês) e estratégias free style e baseada em sessões com charter."
+ua: 14
+group: "Técnicas de Teste"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua14.m4a" title="Teste exploratório" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/tes_01.webp" alt="Infográfico sobre as atividades do teste exploratório" caption="Atividades do teste exploratório" />
+</SlidesGrid>
+
+### O que é o teste exploratório
+
+Testes de software não eliminam todos os problemas: **reduzem** a quantidade deles e elevam a qualidade do produto entregue. No **teste convencional**, o analista segue um **plano predefinido**, que diz o que testar, como testar e qual resultado esperar. No **teste exploratório**, não há roteiro rígido: o testador **aprende** sobre o sistema, **projeta** os testes e **executa** tudo **ao mesmo tempo**, apoiado em **experiência, intuição e criatividade** (Copeland, 2004). Por isso é uma atividade **empírica** (conhecimento que vem da vivência) de investigação.
+
+| | **Teste convencional** | **Teste exploratório** |
+|---|---|---|
+| **Planejamento** | Plano e casos de teste **predefinidos** | **Sem roteiro** rígido; planejamento mínimo |
+| **Dependência dos requisitos** | **Direta**: requisitos ruins geram testes ruins | **Não depende** diretamente deles |
+| **Aprendizado, projeto e execução** | Etapas separadas | **Simultâneos** |
+| **Reprodutibilidade** | Alta (passo a passo) | Menor, exige **registro** do que foi feito |
+
+**Perfil do testador:** curioso, criativo, observador, metódico e organizado, que aprende rápido, é crítico e consegue **se autogerenciar**.
+
+#### Quando usar
+
+- Quando **não há requisitos** levantados ou eles são **incompletos**;
+- Quando há **pouco tempo** para testar;
+- Em projetos de **metodologia ágil**;
+- Quando existe uma **situação de risco** a avaliar (o exploratório indica se vale um teste convencional com roteiro);
+- Quando o comportamento de uma funcionalidade **não é bem conhecido** ou o ambiente foi **pouco testado**;
+- Como **apoio** ao teste convencional: para conhecer a aplicação e escrever melhores casos de teste, e para **reproduzir defeitos** e achar suas causas.
+
+**Vantagens:** encontra problemas que o convencional **não achou**, em **menos tempo**, e explora áreas que ele não cobriria. **Riscos:** pode repetir testes já feitos (retrabalho) e depende do **perfil do testador**. A intenção **não é substituir** o convencional: os dois se **combinam**.
+
+#### Atividades (recursivas)
+
+**Exploração → Projeto → Execução → Heurística → Resultado**, repetidas até a hipótese ser comprovada ou rejeitada:
+
+- **Exploração:** o testador forma uma **hipótese** (modelo mental) do funcionamento esperado;
+- **Projeto:** planeja **cenários** que confirmem ou refutem a hipótese;
+- **Execução:** realiza os testes;
+- **Heurística:** compara o resultado com a hipótese e decide o **próximo passo**;
+- **Resultado:** repete até a hipótese ser confirmada ou rejeitada.
+
+### Técnicas de teste exploratório
+
+#### Heurística
+
+Técnica de analistas **experientes**: usa a **vivência profissional** para montar cenários com fundamento, sem conhecer o sistema em detalhe. Heurísticas descritas por Kaner, Bach e Pettichord (2002):
+
+- **Baseada na experiência:** comparar a funcionalidade com **outras semelhantes** já conhecidas;
+- **Todas as plataformas:** testar em todos os **sistemas operacionais e navegadores** possíveis;
+- **Limites da aplicação:** levar o sistema ao **limite** (campos acima do tamanho, upload de extensões proibidas, dados inadequados). Para cada problema, o sistema deve **avisar o usuário antes de salvar**, dizendo o erro e como corrigi-lo.
+
+#### Test oracle
+
+Ajuda a formar a **hipótese do comportamento correto** comparando o resultado com uma **referência** (o "oráculo"). Exemplos: comparar o módulo novo com a **versão antiga**; comparar a **impressão** de um relatório com a **pré-visualização** na tela. Sob a ótica da **consistência**, verifica-se se o comportamento é consistente com:
+
+- o que foi **proposto** para a funcionalidade;
+- as **outras partes** do sistema;
+- o **histórico** do desenvolvimento (não mudou sem motivo);
+- **funcionalidades semelhantes**, mesmo de outros sistemas.
+
+#### Phoenix checklist
+
+**Lista de perguntas** reutilizável em qualquer cenário, para entender o problema por vários ângulos e achar novos cenários e causas: *Qual é o problema? Que informações existem e são suficientes? O que é preciso para resolvê-lo? Que benefícios traz? Dá para resolver só parte? Dá para esboçar a solução? Quem é o mais indicado para resolver?*
+
+#### Os porquês
+
+Aprofunda um problema por **perguntas encadeadas**, em busca da **causa**. Só se analisa depois da **última resposta**, olhando todas em conjunto. Se a causa surge, criam-se cenários para explorá-la melhor. Exemplos: *todos os testes da funcionalidade falham, ou só alguns? Por quê?* (talvez tenha sido programada diferente do esperado); *os dados exibidos estão inconsistentes? Por quê?* (talvez o sistema tenha aceitado entrada inadequada); *pela primeira vez o teste falhou? Por quê?* (os casos anteriores talvez não cobrissem certos cenários).
+
+### Estratégias de aplicação
+
+| Estratégia | Como funciona |
+|---|---|
+| **Free style (ad hoc)** | **Sem definição formal** de tempo nem do que testar; informal, sem preparo. Usada por testadores **experientes** que se autogerenciam e buscam caminhos **não óbvios** |
+| **Session based (baseada em sessões, estruturada)** | Testes em **sessões** de **45 a 90 min** (ideal **60 min**), sem interrupções (reuniões, telefonemas, clientes), cada uma com uma **missão** e uma técnica definidas |
+
+#### Charter e missão
+
+A **missão** define **o que** testar na sessão. Ela é registrada numa tabela chamada **charter**, com: **funcionalidade**, **o que testar**, **critério de sucesso**, **critério de falha**, **defeito encontrado**, **sugestão de melhoria**, **testador** e **duração da sessão**. Exemplo para o cadastro de usuário:
+
+| Funcionalidade | O que testar | Sucesso | Falha | Defeito |
+|---|---|---|---|---|
+| Cadastro de usuário | Inclusão de usuário | Usuário incluído no banco | Usuário não incluído | |
+| | Inclusão de usuário duplicado | Usuário **não** é duplicado | Usuário duplicado | Duplicidade |
+| | Usuário incluído acessa as funcionalidades do seu perfil | Acessa todas | Não consegue acessar | |
+
+Na missão se listam os **itens a testar, nunca o passo a passo**: descrever os passos transforma o teste em **caso de teste convencional**. O testador mantém a **liberdade** de explorar e até de ir além do que foi listado.
+
+#### Passos da estratégia baseada em sessões
+
+1. **Alinhamento inicial** com a equipe de desenvolvimento: quando sai a versão testável e o que há em cada módulo;
+2. **Definição da missão e da duração** (nasce o charter);
+3. **Escolha da técnica** (uma ou combinação de **Phoenix checklist**, **test oracle** e **heurística**);
+4. **Alinhamento final**: discutir defeitos, sugestões de melhoria e detalhes.
+
+<Callout type="warning">
+**Atenção a pontos do material:**
+
+- **Test oracle** não é uma técnica para "criar hipótese": é o **mecanismo de referência** (especificação, versão anterior, sistema similar) que permite **julgar se o resultado está correto**. A consistência com a versão antiga, com o produto e com sistemas semelhantes são **tipos de oráculo**.
+- **Charter** é, na origem, a **missão curta da sessão** (por exemplo, "explorar o login com dados inválidos para descobrir falhas de validação"). A tabela com critérios, defeitos e duração se aproxima mais de uma **folha de sessão** (*session sheet*).
+- **Free style/ad hoc** não deve ser lido como teste feito "por acaso": o exploratório é **disciplinado**, com hipóteses, anotações e aprendizado, mesmo sem roteiro. Por isso a abordagem **estruturada** (sessões) é a mais recomendada para dar **rastreabilidade**.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Testes exploratórios com método.** A abordagem hoje é a de **Session-Based Test Management** (Jonathan e James Bach), com charters curtos no formato **"Explorar [área] com [recursos] para descobrir [informação]"** (Elisabeth Hendrickson, *Explore It!*) e **debriefing** ao final. Para guiar a exploração usam-se **mnemônicos** como **SFDIPOT** e **FEW HICCUPS** (este último é uma lista de **oráculos** de consistência), além de **tours** de exploração. Em metodologias ágeis, o exploratório complementa a **automação** (a pirâmide de testes), pois acha o que o roteiro automatizado não previu.
+
+**Ferramentas.** Registre a sessão com **gravação de tela** e **anotações** (**Xray Exploratory App**, **Jira**, **TestRail**, **qTest Explorer**, **Rapid Reporter**), anexe evidências aos **bug trackers** e transforme bugs achados em **testes de regressão automatizados** (Playwright, Cypress). Em mobile, explore em **emuladores e dispositivos reais**; em web, use as **DevTools** para simular rede lenta, falhas de API e vários navegadores. **Bug bashes** e **crowdtesting** (testes com muitos testadores externos) escalam a exploração.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Teste exploratório** = aprender, projetar e executar o teste **ao mesmo tempo**, **sem roteiro** nem planejamento formal; baseado em **experiência, criatividade e intuição**; atividade **empírica**.
+- **Convencional** = plano e casos de teste **predefinidos**, dependem dos **requisitos**; exploratório **não depende** diretamente deles.
+- **Quando usar:** sem requisitos ou incompletos, **pouco tempo**, metodologia **ágil**, situação de risco, auxílio ao convencional, **reprodução de defeitos**.
+- **Atividades:** exploração (hipótese) → projeto (cenários) → execução → **heurística** (compara e decide) → resultado.
+- **Técnicas:** **heurística** (experiência, todas as plataformas, limites), **test oracle** (comparação, consistência), **Phoenix checklist** (lista de perguntas), **os porquês** (causa do problema).
+- **Estratégias:** **free style/ad hoc** (informal, testador experiente) × **session based** (estruturada, sessões de **45–90 min**, ideal **60**).
+- **Charter** = tabela da missão da sessão; lista **o que** testar, **nunca como**.
+- **Passos da sessão:** alinhamento inicial → missão e duração → escolha da técnica → alinhamento final.
+- Exploratório **não substitui** o convencional: **combinam-se**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. Teste exploratório. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- COPELAND, L. *A practitioner's guide to software test design*. Massachusetts: Artech House, 2004.
+- KANER, C.; BACH, J.; PETTICHORD, B. *Lessons learned in software testing*. New Jersey: John Wiley & Sons, 2002.
+- HENDRICKSON, E. *Explore it!: reduce risk and increase confidence with exploratory testing*. Pragmatic Bookshelf, 2013.
+- BACH, J. *Session-based test management*. satisfice.com.

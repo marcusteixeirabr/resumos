@@ -1,0 +1,115 @@
+{
+  "ua": 14,
+  "questions": [
+    {
+      "question": "O teste de software desempenha papel fundamental na elevação da qualidade de sistemas. Em relação à fundamentação conceitual do teste exploratório em contraste com o teste convencional (scripted), qual afirmação descreve com precisão sua natureza?",
+      "options": [
+        "É uma abordagem investigativa e empírica na qual aprendizado sobre o sistema, projeto dos casos de teste e sua execução ocorrem de forma simultânea, guiados por experiência, intuição e criatividade do testador.",
+        "É um procedimento automatizado de análise estática de código estruturado que executa mutantes lógicos pré-programados para validar a conformidade com as especificações formais de requisitos do sistema.",
+        "Constitui uma atividade essencialmente assistemática na qual falhas funcionais são descobertas por mero acaso fortuito, dispensando a formulação de hipóteses mentais, registros formais ou critérios técnicos de avaliação.",
+        "Trata-se de uma fase formal de homologação contratual em que os analistas de qualidade devem seguir estritamente um roteiro sequencial passo a passo com dados de entrada e saídas esperadas previamente documentadas."
+      ],
+      "correctIndex": 0,
+      "explanation": "No teste exploratório, ao contrário do teste convencional com roteiros predefinidos, o testador aprende sobre a aplicação, projeta novos cenários e executa as validações ao mesmo tempo, em um processo iterativo e investigativo."
+    },
+    {
+      "question": "O teste exploratório não tem como finalidade substituir o teste convencional com roteiro, mas sim complementá-lo. Em quais cenários do ciclo de desenvolvimento o teste exploratório é especialmente indicado?",
+      "options": [
+        "Exclusivamente quando os requisitos de software já estão completamente formalizados e documentados em especificações rígidas com diagramas completos de casos de uso e matrizes de rastreabilidade.",
+        "Quando os requisitos são inexistentes ou incompletos, há pouco tempo hábil para testes, em projetos sob metodologias ágeis ou para investigar situações de risco e reproduzir causas de defeitos.",
+        "Apenas durante a compilação do código-fonte em ambientes de integração contínua para medir formalmente a taxa de cobertura de ramificações e comandos em classes procedimentais de legado.",
+        "Somente quando a gerência técnica busca garantir a reprodutibilidade linear exata de passos procedimentais sem qualquer dependência da experiência ou do perfil investigativo do testador."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste exploratório destaca-se em contextos de requisitos incompletos, prazos curtos, iterações ágeis, análise de riscos e investigação de falhas complexas, descobrindo problemas em caminhos não previstos pelos roteiros convencionais."
+    },
+    {
+      "question": "Durante a execução do teste exploratório, o analista percorre um ciclo recursivo de atividades intelectuais e práticas. Qual é a sequência estruturada dessas atividades até a confirmação ou refutação de uma premissa?",
+      "options": [
+        "Especificação formal de casos de teste em planilhas → análise de valor limite das variáveis → codificação de testes unitários em framework xUnit → geração de relatório final de bugs.",
+        "Levantamento de pontos de função por casos de uso → elaboração de tabela de decisão → minimização de regras com valores indiferentes → geração de matriz de cobertura de requisitos de negócio.",
+        "Exploração (formação da hipótese mental) → Projeto (planejamento de cenários) → Execução → Heurística (comparação com a hipótese e decisão do próximo passo) → Resultado.",
+        "Auditoria formal de maturidade de processos de engenharia → inspeção estática de código-fonte → execução de testes de estresse em hardware homologado → aceite formal de entrega pelo cliente."
+      ],
+      "correctIndex": 2,
+      "explanation": "O fluxo dinâmico do teste exploratório opera em ciclos contínuos: o analista forma uma hipótese sobre o comportamento do sistema, projeta cenários para testá-la, executa-os, avalia o resultado pela heurística e decide o próximo passo."
+    },
+    {
+      "question": "A heurística é uma técnica amplamente utilizada por testadores experientes para orientar a exploração sem a necessidade de documentação exaustiva. Entre as heurísticas descritas na literatura de teste, o que orienta a heurística dos 'limites da aplicação'?",
+      "options": [
+        "Estruturar roteiros procedimentais prévios com passos sequenciais exaustivos para serem executados exclusivamente por analistas juniores sem conhecimento do domínio de negócio.",
+        "Limitar a duração de cada ciclo de teste a períodos rígidos de quinze minutos para prevenir a fadiga visual e manter o foco cognitivo da equipe de garantia de qualidade de software.",
+        "Interromper o processo de exploração imediatamente após a detecção do primeiro defeito de severidade crítica para acionar os desenvolvedores encarregados do módulo sob validação.",
+        "Levar o sistema aos extremos de operação (como campos acima do tamanho máximo ou uploads inválidos), verificando se a aplicação valida as entradas e avisa o usuário antes de persistir dados inadequados."
+      ],
+      "correctIndex": 3,
+      "explanation": "A heurística dos limites da aplicação foca em submeter o software a condições limítrofes e dados inválidos, garantindo que o sistema capture o erro, bloqueie operações indevidas e forneça feedback claro ao usuário."
+    },
+    {
+      "question": "O conceito de 'oráculo de teste' (test oracle) é essencial tanto no teste convencional quanto no exploratório para validar o comportamento observado. Como o test oracle é conceituado e aplicado na verificação da consistência de um software?",
+      "options": [
+        "É o mecanismo ou referência (como versões anteriores, especificações, histórico ou sistemas similares) utilizado para julgar se o resultado observado na aplicação está correto ou incorreto.",
+        "É uma técnica estocástica avançada empregada primordialmente para formular hipóteses probabilísticas a partir do comportamento dinâmico de variáveis operacionais não catalogadas em rotinas de homologação.",
+        "É a própria definição da missão da sessão documentada no charter, que estabelece previamente os limites de tempo e os critérios de aceitação comercial da equipe de desenvolvimento.",
+        "É a lista genérica de perguntas do Phoenix checklist, utilizada para gerar hipóteses investigativas a partir do catálogo de dúvidas frequentes dos usuários da aplicação."
+      ],
+      "correctIndex": 0,
+      "explanation": "Um oráculo de teste fornece o critério de verdade para avaliar se o software funcionou adequadamente, comparando o resultado obtido com especificações, comportamentos de versões anteriores ou produtos análogos."
+    },
+    {
+      "question": "Na condução de testes exploratórios, técnicas de questionamento estruturado auxiliam o analista a aprofundar a investigação de falhas. Como operam, respectivamente, o Phoenix checklist e a técnica dos porquês?",
+      "options": [
+        "O Phoenix checklist mensura métricas quantitativas de manutenibilidade e qualidade estrutural de código-fonte em tempo de compilação, enquanto a técnica dos porquês investiga a compatibilidade de drivers de aceleração gráfica em múltiplos navegadores.",
+        "O Phoenix checklist provê uma lista genérica de perguntas reflexivas para entender o problema sob múltiplos ângulos; a técnica dos porquês encadeia perguntas investigativas para identificar a causa raiz, analisando todas as respostas em conjunto.",
+        "O Phoenix checklist gera matrizes de teste combinatório baseadas em pares ortogonais, enquanto a técnica dos porquês estrutura tabelas de decisão com entradas limitadas booleanas.",
+        "O Phoenix checklist busca identificar a causa raiz por perguntas sucessivas e dependentes, enquanto a técnica dos porquês limita-se a um catálogo fixo de itens de verificação sem encadeamento investigativo."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Phoenix checklist é um guia de perguntas abrangentes para compreender o problema e suas restrições; a técnica dos porquês aprofunda a investigação por sucessivas indagações ('por quê?'), revelando a causa raiz subjacente ao defeito."
+    },
+    {
+      "question": "O teste exploratório pode ser conduzido sob diferentes estratégias de organização e controle. Qual é a diferença fundamental entre a estratégia free style (ad hoc) e a estratégia baseada em sessões (session-based)?",
+      "options": [
+        "A estratégia free style requer gravação ininterrupta de vídeo e áudio em alta resolução de todas as ações na tela, ao passo que a baseada em sessões utiliza unicamente registros textuais sumários.",
+        "A estratégia baseada em sessões impede terminantemente que o analista explore caminhos imprevistos, transformando-se de forma obrigatória em um teste convencional totalmente roteirizado.",
+        "A estratégia free style é informal e sem alocação rígida de tempo ou escopo, enquanto a baseada em sessões estrutura o teste em blocos ininterruptos (geralmente de 45 a 90 minutos) com missão definida e registro sistemático.",
+        "A estratégia free style é restrita a engenheiros de software durante a fase de testes unitários, ao passo que a baseada em sessões destina-se unicamente a usuários finais leigos em fase de homologação."
+      ],
+      "correctIndex": 2,
+      "explanation": "Free style é uma abordagem informal orientada à experiência e intuição sem cronograma fixo; a abordagem baseada em sessões estabelece períodos focados (timebox de 45 a 90 min) guiados por uma missão e registrados para rastreabilidade."
+    },
+    {
+      "question": "Na abordagem de testes baseada em sessões, o termo 'charter' é frequentemente utilizado para orientar o trabalho do analista. O que define formalmente o charter e como ele deve ser redigido?",
+      "options": [
+        "É um documento prescritivo que enumera minuciosamente a sequência cronológica completa de cliques, comandos e atalhos que o avaliador deve executar obrigatoriamente em cada formulário da interface visual.",
+        "É uma autorização formal expedida pelo departamento de segurança cibernética que estabelece as permissões de acesso do testador a bases de dados em servidores produtivos.",
+        "É uma tabela consolidada de critérios de aceitação e defeitos que substitui integralmente a folha de sessão e dispensa qualquer anotação contextual ao término do teste.",
+        "É a declaração da missão curta e clara da sessão, descrevendo o que deve ser explorado (qual área e objetivo), sem engessar a liberdade do testador com passos predefinidos."
+      ],
+      "correctIndex": 3,
+      "explanation": "O charter estabelece a missão da sessão (o escopo e a finalidade da exploração), permitindo que o testador descubra problemas sem impor um roteiro procedimental engessado; o registro dos resultados obtidos compõe a folha de sessão (session sheet)."
+    },
+    {
+      "question": "No gerenciamento moderno de testes exploratórios (Session-Based Test Management - SBTM), quais práticas e recursos heurísticos são amplamente recomendados para estruturar a investigação e registrar evidências?",
+      "options": [
+        "Definição de charters no formato 'Explorar [área] com [recursos] para descobrir [informação]', uso de mnemônicos como SFDIPOT e FEW HICCUPS para guiar oráculos de consistência, e realização de debriefings ao final da sessão.",
+        "Construção de matrizes fatoriais ortogonais completas com ferramentas automatizadas e descarte das sessões que não alcancem cem por cento de cobertura de linhas em relatórios técnicos de análise estática de código de produção.",
+        "Estruturação de charters em formato de roteiros procedimentais com passos obrigatórios de clique, dispensando o registro em folhas de sessão (session sheets) e reuniões de alinhamento técnico pós-teste.",
+        "Exigência mandatória de execução de todas as baterias exploratórias unicamente após o encerramento do ciclo de desenvolvimento e implantação definitiva do release em produção para clientes reais."
+      ],
+      "correctIndex": 0,
+      "explanation": "O SBTM moderno utiliza charters objetivos (no formato consagrado por Elisabeth Hendrickson), mnemônicos heurísticos como SFDIPOT (para áreas do produto) e FEW HICCUPS (para oráculos de consistência), finalizando com reuniões de debriefing entre testador e líder técnico."
+    },
+    {
+      "question": "Em equipes ágeis contemporâneas, como o teste exploratório é integrado ao pipeline de garantia de qualidade e quais ferramentas apoiam a captura de evidências durante as sessões?",
+      "options": [
+        "O teste exploratório atua como substituto integral de toda a pirâmide de testes unitários e de integração, eliminando completamente a necessidade de manter suítes de regressão automatizadas em frameworks de ponta a ponta no pipeline de entrega contínua.",
+        "O teste exploratório complementa a automação de testes capturando falhas não previstas, apoiando-se em ferramentas de captura de sessões (como Xray Exploratory App ou Rapid Reporter) cujos bugs encontrados alimentam novos testes automatizados de regressão.",
+        "O teste exploratório atua como substituto integral de todos os testes de aceitação automatizados do pipeline, sendo executado exclusivamente de forma manual antes de cada entrega aos usuários finais.",
+        "As sessões exploratórias são restritas unicamente à etapa pós-implantação em produção após o encerramento da sprint ágil, sem qualquer integração com ferramentas de apontamento de defeitos ou backlog."
+      ],
+      "correctIndex": 1,
+      "explanation": "O teste exploratório atua em sinergia com a automação: ele investiga cenários imprevistos enquanto os testes automatizados garantem a regressão rápida. Ferramentas especializadas capturam notas, prints e vídeos que embasam a criação de novos casos automatizados."
+    }
+  ]
+}
