@@ -1,0 +1,145 @@
+---
+title: "UA14 — Publicando Aplicações para Android e iOS"
+subtitle: "Regras e políticas das lojas, contas de desenvolvedor, Google Play e Apple App Store, geração, assinatura e envio do app."
+ua: 14
+group: "Publicação e Desenvolvimento Híbrido"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua14.m4a" title="Publicando aplicações para Android e iOS" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gpa_01.webp" alt="Infográfico com boas práticas para publicar aplicativos nas lojas" caption="Boas práticas de publicação" />
+</SlidesGrid>
+
+### Regras e políticas das lojas
+
+Publicar é uma fase **crítica**: o app foi feito para isso. A **Google Play** e a **Apple App Store** têm regras próprias, **rígidas** e públicas, e conhecê-las deve fazer parte do **planejamento** (não do fim do projeto), para evitar mudanças radicais de última hora ou até a **recusa**. Os objetivos são parecidos: um ambiente **seguro**, sem código malicioso nem conteúdo indevido. As regras têm base na **legislação** (em geral norte-americana e europeia), que pode se estender às **leis de cada país** onde o app será distribuído. Que a loja tolere algo **não desobriga** o desenvolvedor da lei (no Brasil, por exemplo, a **LGPD**; na Europa, o **GDPR**).
+
+| Tema | O que as lojas dizem |
+|---|---|
+| **Conteúdo impróprio** | Proibido material **discriminatório** (raça, etnia, religião, gênero, orientação sexual…), **violência**, automutilação, **extremismo e terrorismo** e **pornografia**. A Apple admite exceção a satiristas e humoristas; o Google exige contexto em apps educacionais ou documentais sobre terrorismo |
+| **Jogos** | Apple: o inimigo não pode ser uma classe de pessoas, governos legítimos ou empresas reais. Google: **jogos de azar** são permitidos com regras (impedir **menores**, restringir a países onde é legal, app gratuito e classificação adulta) |
+| **Drogas e saúde** | **Ilícitos**, tabaco e álcool restritos; proibido facilitar venda de **medicamentos sem receita**. A Apple examina com rigor apps **médicos** (metodologia de medição, sugerir consulta a um profissional) |
+| **Privacidade** | Coleta, uso e compartilhamento descritos na **política de privacidade**, de fácil acesso; permissões **mínimas** necessárias; dados armazenados com **segurança** |
+| **Qualidade técnica** | A Apple testa **qualidade, segurança e desempenho**: sem funcionalidades escondidas, sem app **beta** ou incompleto, **back-end operacional** e acessível aos revisores |
+| **Público infantil** | Normas rígidas: sem conteúdo sexual, anúncios inadequados, drogas, álcool e tabaco (só em contexto educativo de prevenção) |
+
+As políticas **mudam com frequência**: leia as versões atuais na concepção do projeto e antes de publicar.
+
+### Formas de publicar
+
+O primeiro passo é uma **conta de desenvolvedor**, exigida pelas duas lojas. Ambas retêm uma **comissão** sobre as vendas (o livro cita 30%; veja a observação abaixo).
+
+| | **Google Play** | **Apple App Store** |
+|---|---|---|
+| **Conta** | **Google Play Console** | **Apple Developer Program** |
+| **Custo** | **Uma vez** (US$ 25) | **Anual** (US$ 99 para pessoa física) |
+| **Ferramenta de envio** | Play Console | **App Store Connect** (o livro usa o nome antigo, iTunes Connect) |
+| **Computador** | **Qualquer** | Obrigatoriamente um **Mac com Xcode**, mesmo com framework multiplataforma |
+| **Revisão** | Mais simples | **Toda** versão passa por aprovação, que pode levar dias |
+| **Pessoa jurídica** | Perfil de comerciante | Exige o número **D-U-N-S** da empresa |
+
+**Google Play.** Ter a conta permite **publicar**, mas para **vender** apps ou itens **in-app** é preciso um **perfil de comerciante** (o livro o chama de Google Wallet). No Brasil isso é permitido, com vendas em **real (R$)** e conforme o sistema tributário nacional. O app pode ser distribuído em quatro trilhas: **teste interno**, **fechado**, **aberto** ou **produção** (versão final, para uso real).
+
+**Apple.** Com a conta liberada, o desenvolvedor acessa ferramentas de teste, **Apple Pay** e **iCloud**, e usa o App Store Connect para cadastrar e publicar. Lançamentos, atualizações e revisões passam por **aprovação**.
+
+### Preparando e publicando
+
+A publicação refere-se a **uma versão** entregável, pois o desenvolvimento continua. A versão deve ser de **produção** (release), sem plugins de desenvolvimento nem depuração.
+
+#### Android
+
+O livro usa **Ionic/Cordova**. Fluxo: **gerar o build de release → assinar com chave privada → otimizar com zipalign → enviar pelo Play Console**.
+
+```bash
+# 1. Build de produção (Ionic + Cordova), saída em platforms/android/build/outputs/apk
+ionic cordova build android --prod --release
+
+# 2. Gerar a chave privada (validade de 10.000 dias, valor recomendado pelo Google)
+keytool -genkey -v -keystore minha-chave.keystore -alias apelido-da-chave \
+  -keyalg RSA -keysize 2048 -validity 10000
+
+# 3. Otimizar (zipalign) e só então assinar com apksigner (SDK moderno)
+zipalign -v 4 MeuApp-unsigned.apk MeuApp-aligned.apk
+apksigner sign --ks minha-chave.keystore --out MeuApp.apk MeuApp-aligned.apk
+```
+
+O app **precisa estar assinado digitalmente** com uma **chave privada** para entrar no Google Play. **Guarde a keystore e as senhas com segurança**: sem elas não há como atualizar o app com a mesma identidade.
+
+#### iOS
+
+Exige **Mac**, **Xcode**, **conta paga** de desenvolvedor e **certificados**. O Ionic prepara o projeto, mas a assinatura e o envio são feitos no **Xcode**:
+
+```bash
+ionic cordova platforms add ios      # adiciona a plataforma iOS
+ionic cordova build ios --prod       # gera o projeto em platforms/ios/ (.xcworkspace)
+```
+
+O arquivo **.xcworkspace** é aberto no Xcode, que cuida do resto do processo com o App Store Connect.
+
+<Callout type="warning">
+**Atenção a pontos do material (desatualizados):**
+
+- **Comissão de 30%:** hoje é **15%** para quem fatura até **US$ 1 milhão por ano** nos programas de pequenos desenvolvedores das duas lojas (e para assinaturas após o primeiro ano); **30%** é o padrão acima disso.
+- **Formato:** a Google Play exige **Android App Bundle (.aab)** para novos apps, não mais o **.apk**; o Google gera os APKs por dispositivo.
+- **Ordem do zipalign:** com **apksigner**, o **zipalign vem antes** da assinatura (alinhar depois de assinar com o esquema v2+ invalida a assinatura). Assinar com jarsigner + SHA1 também está obsoleto.
+- **Nomes:** *iTunes Connect* hoje é **App Store Connect**; *Google Wallet* na loja é o **perfil de pagamentos/comerciante** do Play Console.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Android.** Publica-se um **AAB** gerado pelo Gradle (`./gradlew bundleRelease`), com **Play App Signing**: o Google guarda a chave de distribuição e você mantém só uma **chave de upload**, que pode ser trocada se vazar. O app precisa mirar um **targetSdk recente** (exigência da loja), preencher a seção **Segurança dos dados** (*Data safety*) e a **classificação de conteúdo**, ter **política de privacidade** e, em contas pessoais novas, cumprir **teste fechado** com testadores por um período mínimo antes da produção. Há também **lançamento em etapas** (staged rollout), **trilhas de teste** e **pre-launch report** (testes automáticos em dispositivos reais). Reduza o app com **R8/minify** e **shrinkResources**.
+
+**iOS.** Distribua com **TestFlight** (beta público ou interno) antes da revisão, use **assinatura automática** do Xcode e **Xcode Cloud**/**fastlane** para automatizar. Apps com login social devem oferecer **Sign in with Apple**; apps com cadastro precisam permitir **excluir a conta** dentro do app; é preciso declarar os dados coletados (**privacy nutrition labels**) e pedir consentimento de rastreamento (**App Tracking Transparency**). Na Europa, o **DMA** abriu a distribuição alternativa no iOS.
+
+**CI/CD e híbridos.** Pipelines no **GitHub Actions**, **Bitrise** ou **Codemagic** compilam, assinam e enviam o app às lojas (**fastlane**, **Gradle Play Publisher**). Em híbridos, **Capacitor** (sucessor moderno do Cordova no ecossistema Ionic) mantém projetos nativos Android/iOS abertos no Android Studio e no Xcode; **Flutter** e **React Native (Expo/EAS Build)** compilam na nuvem. **ASO** (*App Store Optimization*: título, palavras-chave, ícone e capturas de tela) ajuda o app a ser encontrado.
+</Callout>
+
+```kotlin
+// build.gradle.kts (módulo app): assinatura de release lendo segredos do ambiente
+android {
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("KEYSTORE_PATH") ?: "upload.keystore")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+    buildTypes {
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
+        }
+    }
+}
+```
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Lojas:** **Google Play** e **Apple App Store**; regras **rígidas**, parecidas nos objetivos (segurança, sem conteúdo indevido) e baseadas em **legislação** (EUA/Europa e leis locais) mais política própria. A loja tolerar não dispensa a **lei do país**.
+- **Conteúdo proibido:** discriminação, violência, extremismo/terrorismo, pornografia, **medicamentos sem receita**; **jogos de azar** só com restrições (Google); **público infantil** com normas rígidas.
+- **Privacidade:** política clara, **permissões mínimas**, dados armazenados com **segurança**.
+- **Apple testa** qualidade, segurança e **desempenho**: sem app **beta**, sem funcionalidade escondida, **back-end operacional**.
+- **Google Play:** Play Console, taxa **única** (US$ 25), **perfil de comerciante** para vender, trilhas de teste **interno, fechado, aberto, produção**, qualquer computador.
+- **Apple:** Developer Program **anual** (US$ 99), **Mac + Xcode** obrigatórios, **App Store Connect**, revisão de **toda** versão, **D-U-N-S** para empresas.
+- **Android:** build **release** → **assinar com chave privada** (keytool) → **zipalign** → Play Console. Hoje: **AAB** e **Play App Signing**.
+- **iOS com Ionic:** `platforms add ios` → `build ios --prod` → abrir `.xcworkspace` no **Xcode**.
+- O desenvolvimento é **contínuo**; a publicação é de **uma versão**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SIMAS, V. L. Publicando aplicações para Android e iOS. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- DEITEL, P.; DEITEL, H.; DEITEL, A. *Android: como programar*. 2. ed. Porto Alegre: Bookman, 2015.
+- DEITEL, P.; DEITEL, H.; WALD, A. *Android 6 para programadores: uma abordagem baseada em aplicativos*. 3. ed. Porto Alegre: Bookman, 2016.
+- GOOGLE. *Central de políticas do desenvolvedor* e *Ajuda do Play Console*. support.google.com/googleplay/android-developer.
+- APPLE. *App Store Review Guidelines*. developer.apple.com/app-store/review/guidelines.
+- BRASIL. *Lei Geral de Proteção de Dados Pessoais (Lei nº 13.709/2018)*.

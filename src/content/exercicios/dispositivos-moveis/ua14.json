@@ -1,0 +1,115 @@
+{
+  "ua": 14,
+  "questions": [
+    {
+      "question": "A publicação de aplicativos na Google Play e na Apple App Store é regida por diretrizes rígidas de conformidade. Em relação às políticas dessas lojas e à sua relação com as legislações vigentes, qual princípio orienta o processo de homologação?",
+      "options": [
+        "A homologação e aprovação formal de um aplicativo nas lojas oficiais transfere integralmente a responsabilidade legal de proteção de dados para a mantenedora da loja, desobrigando o desenvolvedor do cumprimento da LGPD, do GDPR ou de legislações locais.",
+        "As regras das lojas visam garantir um ecossistema seguro e livre de conteúdos abusivos, e a tolerância de uma loja a determinado recurso não desobriga o desenvolvedor de respeitar as legislações dos países onde o app é distribuído.",
+        "As políticas de publicação dos consoles são documentos imutáveis e padronizados globalmente, tornando supérflua a revisão periódica de suas cláusulas após a concepção arquitetural inicial da aplicação móvel.",
+        "Aplicativos projetados especificamente para o público infantil recebem permissões automáticas para exibição de anúncios comportamentais direcionados e coleta irrestrita de identificadores de publicidade do aparelho."
+      ],
+      "correctIndex": 1,
+      "explanation": "As lojas possuem termos rígidos sobre segurança, conteúdo e privacidade, mas a aprovação na loja não anula as obrigações legais locais (como a LGPD no Brasil e o GDPR na Europa). O desenvolvedor responde legalmente pelo app."
+    },
+    {
+      "question": "Para publicar aplicativos comercialmente nas plataformas móveis dominantes, desenvolvedores devem aderir aos respectivos programas oficiais. Quais são as características das contas do Google Play Console e do Apple Developer Program?",
+      "options": [
+        "A Google Play exige anuidade recorrente de US$ 99 com obrigatoriedade de compilação em hardware Mac dedicado, ao passo que a Apple cobra taxa única de US$ 25 com aprovação automatizada imediata sem revisão técnica de código.",
+        "Ambos os ecossistemas exigem taxas de manutenção mensais proporcionais ao número de downloads e unificam suas credenciais de acesso sob a autoridade central do consórcio internacional de padrões da Web.",
+        "A Google Play cobra taxa única de inscrição (US$ 25) e permite submissão de qualquer computador, enquanto a Apple cobra anuidade de US$ 99 e exige obrigatoriamente um computador Mac com Xcode para envio e gerenciamento.",
+        "O programa de desenvolvedores da Apple oferece cadastro corporativo gratuito para distribuição pública, enquanto o Google Play Console cobra tarifas progressivas calculadas pelo tráfego de dados consumido no download."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Google Play Console exige taxa única de US$ 25 e permite compilação e upload de qualquer sistema operacional; o Apple Developer Program cobra anuidade de US$ 99 (para pessoa física) e exige Mac com Xcode para compilar, assinar e submeter via App Store Connect."
+    },
+    {
+      "question": "Historicamente, as lojas de aplicativos retinham percentuais significativos sobre a receita de venda de apps e transações in-app. Qual é o modelo atual de comissões praticado pelas lojas nos programas voltados a pequenos desenvolvedores?",
+      "options": [
+        "A comissão padrão é de 15% para desenvolvedores que faturam até US$ 1 milhão por ano no programa de pequenos desenvolvedores de ambas as lojas, aplicando-se a alíquota padrão de 30% sobre o montante que exceder esse patamar.",
+        "As lojas móveis mantêm uma taxa universal e irrevogável de 30% sobre absolutamente todas as transações efetuadas na plataforma, sem qualquer tipo de desconto para desenvolvedores independentes ou novas empresas iniciantes no mercado digital.",
+        "A incidência de comissões de faturamento foi completamente extinta para aplicativos que integram sistemas de autenticação corporativa baseados em contas de serviços federados de terceiros.",
+        "A alíquota de comissão sobre compras in-app varia exclusivamente em conformidade com o tamanho total em megabytes ocupado pelo binário do aplicativo nos servidores de armazenamento da loja."
+      ],
+      "correctIndex": 0,
+      "explanation": "Tanto a Apple (Small Business Program) quanto o Google reduziram a comissão para 15% sobre os primeiros US$ 1 milhão em receita anual para desenvolvedores qualificados, mantendo a taxa de 30% apenas para receitas acima desse limite."
+    },
+    {
+      "question": "Com a evolução das plataformas móveis, ferramentas de gestão de distribuição e recebimentos comerciais foram renomeadas e integradas aos consoles. Quais são as denominações contemporâneas corretas das ferramentas da Apple e do Google utilizadas para publicar apps e receber valores de vendas?",
+      "options": [
+        "iTunes Connect para o gerenciamento de versões no ambiente Apple e Google Wallet Developer Suite para a administração de transações comerciais no console da Google Play Store sob contratos corporativos.",
+        "Apple Mobile Portal para o envio de binários no ecossistema iOS e Android Market Console para o controle financeiro de pagamentos e compras no sistema operacional Android.",
+        "Xcode Cloud Marketplace para a submissão de lançamentos na App Store e Google Pay Checkout para a habilitação de cobranças de assinaturas digitais em aplicativos Android.",
+        "App Store Connect para a gestão e envio de aplicativos no ecossistema Apple, e perfil de pagamentos/comerciante integrado ao Google Play Console para vendas in-app no Android."
+      ],
+      "correctIndex": 3,
+      "explanation": "O antigo iTunes Connect foi substituído pelo App Store Connect na Apple; na Google Play, o gerenciamento de receitas e vendas in-app é feito pelo perfil de pagamentos/comerciante (não mais Google Wallet)."
+    },
+    {
+      "question": "Em relação ao empacotamento de aplicativos para submissão à Google Play Store, qual formato é mandatório para novos aplicativos e qual benefício técnico ele proporciona em relação ao APK tradicional?",
+      "options": [
+        "O formato APK monolítico tradicional permanece como o padrão mandatório para qualquer nova publicação na Google Play Store devido à facilidade de inspeção de código estático pelos servidores de segurança do ecossistema Android global.",
+        "A Google Play exige o Android App Bundle (.aab), que transfere para a loja a geração de APKs otimizados para a arquitetura de processador, idioma e densidade de tela específicos de cada dispositivo, reduzindo o tamanho final de download.",
+        "O padrão mandatório adotado pela Google Play Store consiste em arquivos de compilação intermediária em formato DEX puro desprovidos de recursos visuais ou declarações de permissão no manifesto.",
+        "A Google Play requer a submissão de um pacote executável universal em formato IPA assinado com o utilitário jarsigner utilizando algoritmos legados de chave pública sem criptografia assimétrica."
+      ],
+      "correctIndex": 1,
+      "explanation": "Desde agosto de 2021, o Google Play exige o formato Android App Bundle (.aab) para novos apps; o Google Play gera e entrega APKs divididos (split APKs) sob medida para a configuração exata do dispositivo do usuário."
+    },
+    {
+      "question": "O processo de preparação de um pacote de produção no Android envolve compilação, alinhamento de bytes e assinatura criptográfica com chave privada. Ao utilizar a ferramenta moderna apksigner do Android SDK, qual é a sequência correta e a finalidade do zipalign?",
+      "options": [
+        "A execução da ferramenta zipalign deve obrigatoriamente suceder a assinatura com apksigner para reorganizar as chaves criptográficas em blocos contíguos de memória permanente no dispositivo móvel de produção do usuário final.",
+        "O utilitário zipalign consiste em uma ferramenta de ofuscação que renomeia identificadores de classes Java e métodos auxiliares para proteger o binário contra decompilação e engenharia reversa.",
+        "O zipalign deve ser executado antes da assinatura com apksigner, pois o utilitário alinha os recursos não compactados em limites de 4 bytes para otimizar o consumo de memória RAM, e executar o alinhamento após o apksigner invalidaria a assinatura digital.",
+        "A assinatura criptográfica do aplicativo de release deve ocorrer necessariamente por meio da ferramenta legada jarsigner baseada no algoritmo obsoleto SHA1 após o envio manual do arquivo à loja."
+      ],
+      "correctIndex": 2,
+      "explanation": "Com o esquema de assinatura v2+ do apksigner, o zipalign deve vir antes da assinatura. Alinhar o pacote após assinar altera os bytes do arquivo e corrompe a assinatura digital. O zipalign alinha dados em múltiplos de 4 bytes para execução rápida na memória."
+    },
+    {
+      "question": "Na esteira das práticas modernas de segurança no Android, o mecanismo Google Play App Signing passou a ser o padrão do ecossistema. Como essa arquitetura opera e qual proteção ela oferece ao desenvolvedor?",
+      "options": [
+        "O desenvolvedor assina o pacote de envio com uma chave de upload e o Google gerencia e protege a chave de assinatura definitiva do app na nuvem, permitindo recuperar a conta e redefinir a chave de upload caso ela seja perdida ou comprometida.",
+        "O desenvolvedor mantém a guarda definitiva da chave de assinatura do aplicativo e envia ao Google apenas uma chave de upload temporária, que se torna irrevogável e impossível de ser redefinida em caso de vazamento.",
+        "O sistema do Google Play App Signing dispensa certificados digitais de segurança e substitui a validação de identidade por assinaturas biométricas vinculadas ao hardware do dispositivo do comprador.",
+        "A infraestrutura de publicação exige que o desenvolvedor mantenha exclusivamente a chave mestra em um token físico inviolável de hardware, ficando o aplicativo permanentemente bloqueado contra novas versões se o hardware sofrer dano físico ou queima de circuitos."
+      ],
+      "correctIndex": 0,
+      "explanation": "Com o Play App Signing, a chave definitiva de assinatura do app fica armazenada com alta segurança na infraestrutura do Google. O desenvolvedor utiliza apenas uma chave de upload, que pode ser redefinida pelo suporte do Play Console se for extraviada."
+    },
+    {
+      "question": "O Google Play Console disponibiliza diferentes trilhas de liberação para permitir que equipes validem versões de seus aplicativos antes do lançamento geral para todos os usuários. Quais são as trilhas oficiais de distribuição e como elas se diferenciam?",
+      "options": [
+        "Trilha de teste aberto preliminar diretamente na vitrine da loja, sucedida por teste fechado restrito e implantação imediata em produção sem possibilidade de lançamentos graduais em etapas controladas.",
+        "Trilha de homologação exclusiva sem ambiente de testes internos, na qual novas versões são distribuídas simultaneamente para todos os usuários cadastrados sem trilhas segmentadas de validação prévia.",
+        "Trilha de teste interno (para equipe e revisores rápidos), teste fechado (para grupo restrito de testadores), teste aberto (disponível publicamente na loja com limite de usuários) e produção (lançamento oficial para o público geral).",
+        "Trilha de compilação em ambiente de integração contínua e trilha única de distribuição comercial direta para todos os usuários da loja sem qualquer estágio preliminar de validação."
+      ],
+      "correctIndex": 2,
+      "explanation": "O Play Console oferece quatro trilhas progressivas: teste interno (até 100 testadores), teste fechado (com listas específicas de e-mails), teste aberto (qualquer usuário pode aderir na página da Play Store) e produção (com suporte a lançamentos graduais em etapas)."
+    },
+    {
+      "question": "A Apple é reconhecida pelo rigor do processo de revisão humana e técnica conduzido no App Store Connect antes de disponibilizar qualquer versão na App Store. Quais exigências técnicas e funcionais são mandatórias para evitar a rejeição do aplicativo?",
+      "options": [
+        "O aplicativo pode submeter telas com funcionalidades parciais ou em estado beta explícito para homologação na App Store, desde que haja um aviso visível ao revisor indicando que o back-end definitivo será concluído no próximo ciclo de desenvolvimento.",
+        "O aplicativo deve estar completamente funcional com back-end operacional e credenciais de teste fornecidas, sem referências a versões beta, com suporte obrigatório a Sign in with Apple se houver login social e opção de exclusão de conta pelo usuário.",
+        "A aplicação para iOS pode prescindir da exibição de termos de privacidade e consentimento de rastreamento desde que não colete informações bancárias ou números de documentos fiscais.",
+        "O binário de produção para a App Store pode ser gerado e assinado em qualquer sistema operacional convencional através de scripts de emulação de terminal sem certificados de provisionamento do Xcode."
+      ],
+      "correctIndex": 1,
+      "explanation": "A Apple rejeita apps incompletos, com crashes ou com servidores de teste inoperantes. Diretrizes modernas exigem mecanismo de exclusão de conta no próprio app, implementação do 'Sign in with Apple' caso haja login por redes sociais e preenchimento dos rótulos de privacidade."
+    },
+    {
+      "question": "No ciclo de vida de entrega contínua (CI/CD) para aplicações móveis, quais ferramentas e conceitos representam as melhores práticas da indústria para distribuição de versões prévias, automação de deploy e visibilidade nas lojas?",
+      "options": [
+        "Uso exclusivo do TestFlight para distribuição em dispositivos Android e iOS indistintamente, pipelines de deploy restritos a scripts em lote no sistema operacional local e descarte de técnicas de otimização de busca em lojas.",
+        "Configuração do Fastlane como ferramenta exclusiva para compilação no ecossistema iOS sem suporte a Android, e utilização do Play App Signing como substituto direto de esteiras automatizadas de integração contínua (CI/CD).",
+        "Adoção do relatório pré-lançamento (pre-launch report) como a própria trilha final de distribuição para usuários reais de produção, dispensando testes beta ou estratégias de otimização de metadados de loja (ASO).",
+        "Utilização do TestFlight (no ecossistema Apple) para testes beta internos e públicos, automação de compilação, assinatura e envio através de ferramentas como Fastlane em pipelines de CI/CD, e otimização de metadados com técnicas de App Store Optimization (ASO)."
+      ],
+      "correctIndex": 3,
+      "explanation": "O TestFlight é a plataforma oficial da Apple para coletar feedback de testadores beta; ferramentas como Fastlane automatizam capturas de tela, assinatura de código e submissão às lojas; e o ASO (App Store Optimization) melhora o ranqueamento orgânico do app através de palavras-chave, ícones e descrições otimizadas."
+    }
+  ]
+}
