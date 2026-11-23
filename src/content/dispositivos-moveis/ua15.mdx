@@ -1,0 +1,190 @@
+---
+title: "UA15 — TypeScript"
+subtitle: "Tipos de dados, declaração com let, var e const, condicionais, laços, funções, classes e interfaces em TypeScript."
+ua: 15
+group: "Publicação e Desenvolvimento Híbrido"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua15.m4a" title="TypeScript" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/frl_01.webp" alt="Infográfico sobre os recursos da linguagem TypeScript" caption="Recursos da linguagem TypeScript" />
+</SlidesGrid>
+
+### O que é o TypeScript
+
+O **TypeScript** é um **superconjunto do JavaScript** (todo código JavaScript válido é TypeScript válido) que acrescenta **tipagem estática** e recursos de **orientação a objetos** (classes, herança, interfaces). O código é **transpilado** (convertido) para **JavaScript** de forma automática, que é o que roda no navegador e nos dispositivos móveis. É a linguagem usada em frameworks como **Ionic**, **Angular** e **React** (veja a [UA13](/resumos/dispositivos-moveis/ua13/) sobre aplicações híbridas e a [UA14](/resumos/dispositivos-moveis/ua14/) sobre a publicação de apps Ionic).
+
+### Tipos de dados
+
+| Tipo | Uso |
+|---|---|
+| **boolean** | `true` ou `false` |
+| **number** | Todos os números: inteiros, decimais, **hexadecimais** (`0xf00d`), **binários** (`0b1010`) e **octais** (`0o744`) |
+| **string** | Texto, com aspas **duplas** ou **simples**; **template string** com **crases** (backticks) e `${expressão}` |
+| **array** | Lista de elementos do mesmo tipo: `number[]` ou `Array<number>`; índice começa em **0** |
+| **tupla** (*tuple*) | Array com **tamanho e tipos por posição** fixos: `[string, number]` |
+| **enum** | Conjunto de **constantes nomeadas** (a primeira vale 0 por padrão) |
+| **any** | **Desliga** a checagem de tipos para aquele valor |
+| **Object** | Só aceita o que existe em todo objeto: o compilador **bloqueia** chamar métodos que não existem no tipo |
+
+```ts
+let ativo: boolean = false;
+let preco: number = 499.99;
+let hex: number = 0xf00d;
+
+let nome: string = "Maria";
+let idade: number = 55;
+let frase: string = `Oi, meu nome é ${nome}. Ano que vem terei ${idade + 1}.`;
+
+let lista: number[] = [1, 2, 3];          // ou Array<number>
+let tupla: [string, number] = ["ola", 23]; // [23, "ola"] seria erro de tipo
+
+enum Cores { Vermelho, Azul, Branco }
+let cor: Cores = Cores.Vermelho;           // 0
+let nomeCor: string = Cores[1];            // "Azul"
+
+let qualquer: any = 4;
+qualquer = "agora é string";               // sem erro de compilação
+```
+
+**any × Object.** Com `any`, o compilador **não checa** nada (útil para migrar um sistema JavaScript **gradualmente**, mas perde a segurança). Com `Object`, chamar `variavel.toFixed()` dá **erro de compilação**, pois o método não existe no tipo.
+
+### Declaração de variáveis: var, let e const
+
+| Palavra | Escopo | Observação |
+|---|---|---|
+| **var** | **Função** | Visível na função inteira e em funções internas (*closure*); herdada do JavaScript antigo |
+| **let** | **Bloco** (`if`, `for`, `try`…) | Fora do bloco, a variável **não existe** (erro de compilação) |
+| **const** | **Bloco**, como o `let` | A **variável não pode ser reatribuída**, mas as **propriedades** de um objeto `const` podem mudar |
+
+```ts
+function fun(flag: boolean) {
+  let a = 100;
+  if (flag) {
+    let b = a + 1;   // b só existe neste bloco
+    return b;
+  }
+  // return b;       // erro: 'b' não existe aqui
+  return a;
+}
+
+const pessoa = { nome: "Maria", cpf: "12345678909" };
+pessoa.nome = "João";                // permitido: muda a propriedade
+// pessoa = { nome: "Ana", cpf: "1" } // erro: não se reatribui a const
+
+let dados = [1, 2];
+let [primeiro, segundo] = dados;     // desestruturação
+[primeiro, segundo] = [segundo, primeiro]; // troca sem variável temporária
+```
+
+No exemplo do material, uma função interna lê a variável `var a` **depois** de ela ser alterada, e um preço calculado com o valor errado leva a **prejuízo na venda**: lembrete de que `var` e *closures* exigem atenção a **quando** o valor é lido.
+
+### Condicionais e laços
+
+```ts
+let num: number = 13;
+if (num % 2 === 0) {
+  console.log("Número par!");
+} else {
+  console.log("Número ímpar!");
+}
+
+let contador = 5;
+while (contador > 0) {
+  contador--;                // sem decremento, o laço seria infinito
+}
+
+for (let i = 0; i < 5; i++) { /* ação */ }
+
+let lista = [4, 5, 6];
+for (const i in lista) console.log(i);   // "0", "1", "2"  (chaves/índices)
+for (const v of lista) console.log(v);   // 4, 5, 6        (valores)
+```
+
+**for...in** percorre as **chaves** (índices) do objeto; **for...of** percorre os **valores**. O **while** precisa de uma variável de controle atualizada dentro do laço; o **for** cria a variável no próprio cabeçalho.
+
+### Funções, classes e interfaces
+
+```ts
+function soma(n1: number, n2: number): number {      // função nomeada, com tipos
+  return n1 + n2;
+}
+let somador = function (n1: number, n2: number): number { return n1 + n2; }; // anônima
+
+interface Pessoa {
+  nome: string;                          // requisito mínimo
+}
+function resgata(p: Pessoa) { /* ... */ }
+resgata({ nome: "Maria" });
+
+class Animal {
+  constructor(public nome: string) {}
+  movimentar(distancia: number = 0) {
+    console.log(`${this.nome} se moveu ${distancia}m.`);
+  }
+}
+class Gato extends Animal {                // herança
+  miar() { console.log("Miau!"); }
+}
+const gato = new Gato("Mimi");
+gato.miar();
+gato.movimentar(30);                       // método herdado
+```
+
+A **interface** especifica os **requisitos mínimos** que um objeto ou classe deve cumprir: qualquer objeto com a propriedade exigida serve, mesmo com campos a mais. A **classe** modela objetos, tem **construtor** e permite **herança** com `extends`.
+
+<Callout type="warning">
+**Atenção a pontos do material:**
+
+- **const:** o que não muda é a **ligação da variável** (não se pode reatribuir). O objeto referenciado **pode** ter propriedades alteradas; e `const` tem **escopo de bloco**, como o `let` (o quadro-resumo diz "escopo maior", o que vale para o `var`, que é de **função**).
+- **Template string** usa **crases** (`` ` ``) e `${}`; aspas simples não interpolam variáveis.
+- **toFixed()** formata um número com **casas decimais** (e devolve **string**), não "converte fracionado para inteiro".
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Configuração e segurança de tipos.** Use o **modo estrito** (`"strict": true` no `tsconfig.json`), prefira **`unknown`** a **`any`**, **inferência de tipos** e **tipos de união** (`"a" | "b"`) no lugar de `enum` em muitos casos. Recursos modernos: **genéricos** (`Array<T>`), **`readonly`**, **optional chaining** (`a?.b`), **`??`** (*nullish coalescing*), **`async/await`**, **módulos ES** (`import/export`) e tipos utilitários (`Partial`, `Pick`, `Record`). **Evite `var`**: use `const` por padrão e `let` quando precisar reatribuir.
+
+**Ferramentas e plataformas.** **Node.js** e **npm**/**pnpm**, **Vite**, **ESLint** e **Prettier**; **Zod** para validar dados em tempo de execução. O TypeScript é a base de **Angular**, de **Ionic** com **Capacitor**, de **React Native** (com **Expo**) e de **NativeScript**; **Vue** e **Svelte** também o suportam. Para mobile, o **Capacitor** hoje substitui o **Cordova** nos projetos Ionic. Alternativas ao TypeScript em apps móveis: **Kotlin** (Android), **Swift** (iOS) e **Dart** (Flutter).
+
+```ts
+interface Usuario { id: number; nome: string; email?: string }
+
+async function buscar(id: number): Promise<Usuario> {
+  const resp = await fetch(`https://api.exemplo.com/usuarios/${id}`);
+  if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+  return (await resp.json()) as Usuario;
+}
+
+const u = await buscar(1);
+console.log(u.email?.toLowerCase() ?? "sem e-mail");
+```
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **TypeScript** = **superconjunto** do JavaScript com **tipagem estática** e **orientação a objetos**; **transpila** para JavaScript. Usado em **Ionic, Angular, React**.
+- **Tipos:** boolean, number (decimal, hex, binário, octal), string, **array** (`number[]` ou `Array<number>`), **tupla** (tipos e ordem fixos), **enum**, **any**, **Object**.
+- **any** desliga a checagem de tipos (migração gradual); **Object** não permite chamar métodos inexistentes.
+- **Template string:** **crases** e `${}`.
+- **var** = escopo de **função**; **let** = escopo de **bloco**; **const** = bloco, **sem reatribuição** (propriedades do objeto podem mudar).
+- **for...in** = **chaves/índices**; **for...of** = **valores**.
+- **Funções:** nomeada (`function`) ou **anônima** (atribuída a variável); parâmetros e retorno **tipados**.
+- **Classe:** `class`, construtor, **herança** com `extends`. **Interface:** **requisitos mínimos** do objeto.
+- **Desestruturação** troca valores sem variável temporária: `[a, b] = [b, a]`.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- CARVALHO, S. A. L. TypeScript. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- MICROSOFT. *TypeScript Documentation*. typescriptlang.org/docs.
+- FLANAGAN, D. *JavaScript: o guia definitivo*. Porto Alegre: Bookman; O'Reilly, 2013.
+- LEE, W. M. *Beginning Android tablet application development*. Indianapolis: Wrox, 2011.
+- OPENJS FOUNDATION. *Node.js Docs*. nodejs.org/en/docs.

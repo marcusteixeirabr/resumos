@@ -1,0 +1,115 @@
+{
+  "ua": 15,
+  "questions": [
+    {
+      "question": "No ecossistema de desenvolvimento de software moderno para dispositivos móveis e aplicações web, como a linguagem TypeScript é formalmente definida e executada nos ambientes operacionais?",
+      "options": [
+        "É um superconjunto estaticamente tipado do JavaScript que adiciona suporte a tipos estáticos e orientação a objetos, sendo transpilado para código JavaScript padrão para execução.",
+        "É uma linguagem compilada de forma antecipada (AOT) diretamente para código de máquina nativo da CPU móvel, eliminando completamente a dependência de interpretadores ou motores de JavaScript.",
+        "É uma biblioteca proprietária de componentes visuais do ecossistema Angular que depende de execução exclusiva em servidores Node.js, sendo incompatível com plataformas de renderização web.",
+        "É uma engine de execução dinâmica que interpreta scripts em tempo real no dispositivo e valida tipos de dados em tempo de execução sem requerer qualquer processo de compilação ou transpilação prévia."
+      ],
+      "correctIndex": 0,
+      "explanation": "O TypeScript é um superconjunto sintático estrito do JavaScript: qualquer código JS válido é TypeScript válido. Ele introduz tipagem estática e recursos avançados de orientação a objetos e é transpilado pelo compilador (tsc) para JavaScript padrão que roda nos navegadores e engines móveis."
+    },
+    {
+      "question": "O TypeScript possui um sistema de tipos abrangente que inclui tipos primitivos e estruturas avançadas de dados. Qual afirmação caracteriza corretamente o funcionamento dos tipos number, tupla e enum na linguagem?",
+      "options": [
+        "O tipo number aceita exclusivamente valores inteiros decimais positivos, exigindo a declaração explícita de tipos adicionais como Float, Double e Octal para números fracionários ou de outras bases.",
+        "O tipo number aceita inteiros, decimais, hexadecimais, binários e octais; a tupla define arrays com tipos e posições fixas; e o enum cria conjuntos de constantes nomeadas com base zero por padrão.",
+        "A tupla atua como uma lista encadeada flexível que permite a inserção ilimitada de valores dinâmicos sem restrição de ordem posicional, operando como um tipo equivalente a um array desordenado.",
+        "O enum restringe-se à atribuição exclusiva de valores literais de texto sem associação a índices numéricos, bloqueando a definição de valores constantes sequenciais a partir do índice zero."
+      ],
+      "correctIndex": 1,
+      "explanation": "O tipo number abrange representações decimais, hexadecimais (0x), binárias (0b) e octais (0o). Uma tupla especifica a quantidade exata e os tipos de dados em posições determinadas (como [string, number]). O enum mapeia constantes nomeadas para valores numéricos iniciando em 0."
+    },
+    {
+      "question": "Durante a tipagem de variáveis em TypeScript, desenvolvedores podem se deparar com os tipos any e Object. Qual é a diferença fundamental no rigor de verificação de tipos imposta pelo compilador entre esses dois tipos?",
+      "options": [
+        "O tipo any impõe checagem estrita de todos os membros e métodos em tempo de compilação, enquanto o tipo Object ignora completamente o sistema de tipos e autoriza qualquer invocação arbitrária.",
+        "O tipo Object permite a atribuição irrestrita de valores e autoriza a chamada de métodos que não pertencem à sua interface base, comportando-se como uma desativação completa do compilador de tipos.",
+        "O tipo any desliga a verificação de tipos para aquela variável permitindo qualquer chamada, enquanto Object aceita apenas propriedades comuns a todos os objetos e bloqueia métodos inexistentes.",
+        "Tanto any quanto Object são processados da mesma forma pelo tsc, servindo apenas para documentação no código-fonte sem influenciar a validação sintática ou a detecção de erros em tempo de compilação."
+      ],
+      "correctIndex": 2,
+      "explanation": "Com 'any', a checagem do TypeScript é totalmente desativada para a variável, permitindo chamar métodos arbitrários sem erro de compilação. Com 'Object', o compilador bloqueia invocações de métodos que não pertencem ao tipo Object base (como chamar toFixed() diretamente)."
+    },
+    {
+      "question": "A declaração de variáveis em TypeScript herdou do JavaScript moderno as palavras-chave var, let e const. Em relação ao escopo e às regras de mutabilidade dessas declarações, qual afirmação expressa a regra correta?",
+      "options": [
+        "A declaração var possui escopo estrito de bloco dentro de estruturas de repetição e desvio, enquanto let possui escopo de função e permite o vazamento de identificadores para o escopo externo.",
+        "A declaração const possui um escopo mais amplo que o de função e congela recursivamente o objeto na memória, impedindo que qualquer uma de suas propriedades seja alterada após a inicialização.",
+        "A instrução let autoriza a redeclaração múltipla de uma mesma variável com o mesmo identificador dentro do mesmo bloco de código, sem acusar erros ou advertências pelo compilador TypeScript.",
+        "A declaração var possui escopo de função, enquanto let e const possuem escopo de bloco; no caso de const, a ligação da variável não pode ser reatribuída, mas as propriedades do objeto continuam mutáveis."
+      ],
+      "correctIndex": 3,
+      "explanation": "var tem escopo de função (sujeito a hoisting e visível em toda a função). let e const têm escopo de bloco (existem apenas dentro de { }). const impede a reatribuição da variável para outro valor/referência, mas não congela as propriedades internas de um objeto referenciado."
+    },
+    {
+      "question": "Na manipulação e concatenação de sequências de texto em TypeScript, as template strings oferecem recursos avançados de interpolação. Como essa estrutura sintática deve ser corretamente declarada no código-fonte?",
+      "options": [
+        "Utilizando o caractere de crase (backtick: `) delimitando o texto, e interpolando variáveis e expressões por meio da notação ${expressão}.",
+        "Utilizando aspas simples literais (' ') para delimitar a cadeia de caracteres e inserindo variáveis através do operador percentual (%) seguido do identificador a ser interpolado.",
+        "Utilizando aspas duplas tradicionais (\" \") combinadas com chamadas manuais de concatenação com o operador de adição (+) em cada fragmento de string.",
+        "Utilizando apóstrofos duplos e prefixando diretamente o nome das variáveis com o caractere cifrão ($), sem o uso de chaves delimitadoras na cadeia de caracteres."
+      ],
+      "correctIndex": 0,
+      "explanation": "Template strings em TypeScript e JavaScript moderno são delimitadas por crases (backticks: ` `). Dentro delas, expressões e variáveis são avaliadas e interpoladas utilizando a sintaxe `${expressão}`. Aspas simples ou duplas não realizam interpolação dinâmica."
+    },
+    {
+      "question": "Ao manipular valores numéricos em TypeScript, o método toFixed() é frequentemente utilizado em formatação de dados. Qual é o exato comportamento e o tipo de retorno desse método da biblioteca padrão?",
+      "options": [
+        "Converte um número fracionário diretamente em um valor inteiro primitivo, truncando a parte decimal e retornando um dado do tipo number desprovido de casas decimais.",
+        "Formata o valor numérico com uma quantidade especificada de casas decimais e retorna o resultado como uma string formatada (e não como um número inteiro).",
+        "Descarta o valor decimal através da função Math.trunc embutida e retorna um tipo numérico inteiro, disparando um erro de compilação caso o argumento seja omitido.",
+        "Arredonda o número para o inteiro mais próximo e altera o próprio valor da variável original diretamente em memória, sem gerar ou retornar nenhum novo dado primitivo."
+      ],
+      "correctIndex": 1,
+      "explanation": "O método toFixed(digitos) formata um número fixando a quantidade de casas decimais desejada e retorna uma string (por exemplo, (499.99).toFixed(1) resulta na string '500.0'). Ele não converte números fracionários para o tipo primitivo inteiro."
+    },
+    {
+      "question": "Em algoritmos de iteração sobre coleções e estruturas de dados em TypeScript, os laços for...in e for...of exercem papéis complementares. Qual é a distinção técnica fundamental entre essas duas instruções de controle?",
+      "options": [
+        "O laço for...in percorre diretamente os valores contidos nos elementos da coleção iterável, enquanto o laço for...of itera exclusivamente sobre as chaves e propriedades de objetos.",
+        "O laço for...in é uma estrutura assíncrona projetada para resolver promessas em paralelo, enquanto o laço for...of limita-se a laços de contagem numérica clássica com controle manual.",
+        "O laço for...in itera sobre as chaves ou índices de um objeto ou array (como strings), enquanto o laço for...of itera diretamente sobre os valores contidos na coleção.",
+        "O laço for...in itera unicamente sobre propriedades protegidas ou privadas de uma classe, enquanto o laço for...of percorre apenas métodos estáticos declarados no protótipo da estrutura."
+      ],
+      "correctIndex": 2,
+      "explanation": "O comando for...in itera sobre as propriedades enumeráveis (chaves/índices) de um objeto ou array (retornando '0', '1', '2' para um array). O comando for...of itera sobre os valores contidos na coleção iterável (retornando os elementos reais armazenados)."
+    },
+    {
+      "question": "O TypeScript fornece suporte completo ao paradigma de orientação a objetos com classes, construtores e herança. Como uma subclasse herda métodos e comportamentos de uma superclasse na sintaxe formal da linguagem?",
+      "options": [
+        "Declarando a instrução implements no cabeçalho da classe e reimplementando manualmente o corpo de todos os métodos concretos da superclasse sem reaproveitamento da implementação original.",
+        "Utilizando a palavra-chave extends exclusivamente no cabeçalho de interfaces, sendo terminantemente proibido o uso de herança direta entre classes concretas na sintaxe do TypeScript.",
+        "Invocando um método herdar() dentro da função construtora da classe filha, sem especificar qualquer relação de descendência ou palavra-chave no cabeçalho de declaração da classe.",
+        "Utilizando a palavra-chave extends no cabeçalho da definição da classe (class Subclasse extends Superclasse), permitindo herdar métodos e estender funcionalidades da classe base."
+      ],
+      "correctIndex": 3,
+      "explanation": "A herança de classes em TypeScript é declarada utilizando a palavra-chave 'extends' (por exemplo, `class Gato extends Animal`), permitindo que a subclasse acesse métodos da superclasse, invoque o construtor pai com `super()` e implemente métodos próprios."
+    },
+    {
+      "question": "No design de contratos e tipagem estrutural em TypeScript, qual é o papel essencial desempenhado pelas interfaces (interfaces) na validação de objetos e funções?",
+      "options": [
+        "Definem requisitos mínimos de propriedades e tipos que um objeto deve possuir, permitindo que qualquer estrutura compatível seja aceita mesmo contendo campos adicionais.",
+        "Geram código executável no arquivo JavaScript final que realiza validações em tempo de execução, lançando exceções caso objetos instanciados apresentem campos adicionais não declarados.",
+        "Exigem que os objetos sejam obrigatoriamente instanciados a partir de uma classe concreta que implemente a interface, rejeitando qualquer objeto literal que possua estrutura compatível.",
+        "Restringem a declaração de tipos exclusivamente a propriedades de leitura (readonly), impedindo a definição de métodos, assinaturas de funções ou campos opcionais em sua estrutura."
+      ],
+      "correctIndex": 0,
+      "explanation": "Interfaces em TypeScript representam contratos de tipos estruturais (duck typing / structural typing): especificam as propriedades e tipos mínimos necessários. Qualquer objeto que atenda a essa assinatura é considerado válido pelo compilador, mesmo que possua propriedades extras."
+    },
+    {
+      "question": "No ecossistema moderno de desenvolvimento de aplicações móveis e corporativas, quais recursos do TypeScript e padrões de projeto são amplamente recomendados para garantir segurança de tipos e produtividade?",
+      "options": [
+        "Uso sistemático do tipo any em todos os parâmetros de funções para maximizar a flexibilidade de tipagem, adoção exclusiva de var e desativação do modo estrito (strict: false) no tsconfig.json.",
+        "Recomendação de desativar a inferência de tipos do compilador, preferência pelo tipo any em detrimento de unknown em integrações com APIs móveis e eliminação de operadores seguros como ?.",
+        "Substituição completa de interfaces por tipos genéricos primitivos não verificados, rejeição de frameworks como Ionic e React Native e compilação sem checagem de tipos em esteiras corporativas.",
+        "Ativação do modo estrito (strict) no tsconfig.json, preferência pelo tipo unknown em vez de any para dados incertos, uso de operadores como optional chaining (?.) e nullish coalescing (??), e integração com frameworks como Ionic e React Native."
+      ],
+      "correctIndex": 3,
+      "explanation": "Boas práticas modernas de TypeScript incluem o modo estrito ('strict': true), a substituição de 'any' por 'unknown' (exigindo type narrowing seguro), uso de optional chaining (?.) e nullish coalescing (??), tipos utilitários e uso nos principais frameworks móveis (como Ionic com Capacitor e React Native)."
+    }
+  ]
+}
