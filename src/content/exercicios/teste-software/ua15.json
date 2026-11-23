@@ -1,0 +1,115 @@
+{
+  "ua": 15,
+  "questions": [
+    {
+      "question": "No contexto da arquitetura e dos níveis fundamentais de teste de software, qual é a definição e o escopo de atuação do teste unitário (ou teste de unidade)?",
+      "options": [
+        "Verifica a interface de comunicação e a troca correta de mensagens entre dois ou mais módulos interdependentes para assegurar que eles cooperem de acordo com o design arquitetural.",
+        "Valida o comportamento funcional e as regras de negócio de ponta a ponta de toda a aplicação sob a perspectiva do usuário final, a partir dos requisitos contratuais de entrega.",
+        "Avalia a menor parte testável de uma aplicação (como uma função, método ou classe) de forma isolada, verificando se recebe as entradas esperadas e produz as saídas corretas.",
+        "Mede o tempo de resposta, a latência de processamento e a taxa de vazão da aplicação sob condições de sobrecarga, simulando o acesso concorrente de milhares de clientes virtuais."
+      ],
+      "correctIndex": 2,
+      "explanation": "O teste unitário concentra-se na menor parte testável do código-fonte (método, função ou classe) de forma estritamente isolada e controlada, assegurando que o componente processe suas entradas e retorne os resultados previstos pelas regras de negócio."
+    },
+    {
+      "question": "De acordo com os fundamentos estabelecidos pela literatura de engenharia de software para testes de componentes, quais aspectos internos devem ser avaliados durante o teste de uma unidade?",
+      "options": [
+        "Protocolos de troca de mensagens entre componentes remotos, integridade referencial em operações de persistência e consistência de esquemas relacionais distribuídos.",
+        "Políticas de consumo balanceado de largura de banda de rede, tempo de latência em requisições assíncronas e capacidade de vazão sustentada sob concorrência intensa.",
+        "Taxas de conversão operacional na interface com o usuário, facilidade ergonômica de navegação entre telas do sistema e aderência dos fluxos aos manuais de treinamento.",
+        "Interface de entrada e saída, estruturas de dados locais, estruturas de controle e laços, caminhos independentes, condições-limite e tratamento de erros e exceções."
+      ],
+      "correctIndex": 3,
+      "explanation": "Na verificação estrutural de uma unidade, avaliam-se a interface de parâmetros/retorno, a integridade dos dados locais na memória, o comportamento de laços e desvios, os caminhos lógicos do fluxo de controle, valores nas fronteiras e os fluxos de exceção."
+    },
+    {
+      "question": "Ao validar o tratamento de exceções em testes de unidade, quais características devem ser asseguradas para que as mensagens e fluxos de erro cumpram seu papel de qualidade?",
+      "options": [
+        "As mensagens de erro devem ser claras, compatíveis com a falha real e orientar o usuário sobre como agir, evitando interrupções prematuras do sistema antes do tratamento adequado.",
+        "O tratamento de exceções deve interceptar qualquer falha silenciosamente sem emitir mensagens ou registros, retornando valores nulos para impedir que a unidade interrompa seu processamento.",
+        "A unidade deve invocar a interrupção compulsória e o encerramento do processo do sistema sempre que uma condição excepcional ocorrer, desconsiderando tratamentos superiores da pilha.",
+        "As mensagens de erro devem limitar-se a expor códigos numéricos genéricos sem texto explicativo, evitando orientar o usuário ou operador sobre quais ações corretivas devem ser adotadas."
+      ],
+      "correctIndex": 0,
+      "explanation": "O teste de unidade precisa assegurar que o tratamento de exceções forneça mensagens compreensíveis, aderentes ao problema real e úteis para a tomada de ação, sem provocar falhas catastróficas descontroladas no sistema."
+    },
+    {
+      "question": "A automação de testes unitários exige investimento de tempo de codificação pelo programador durante a implementação. Quais benefícios técnicos superam esse custo inicial e justificam a adoção da técnica?",
+      "options": [
+        "Eliminação completa da necessidade de executar testes de integração entre módulos interdependentes e dispensa de validações de aceitação do sistema em ambiente de homologação.",
+        "Prevenção eficaz contra regressões em novas versões, facilitação de refatorações de código sem quebra de comportamento, documentação viva do sistema e ampliação da cobertura.",
+        "Otimização autônoma de algoritmos de baixo nível pelo compilador da linguagem e remoção automatizada de desvios condicionais desnecessários detectados durante a execução da suíte.",
+        "Garantia absoluta de ausência de falhas em tempo de execução em todo o software e substituição integral de práticas colaborativas de revisão de código por pares na equipe de engenharia."
+      ],
+      "correctIndex": 1,
+      "explanation": "Apesar do tempo adicional despendido na escrita dos testes, a automação unitária atua como rede de segurança contra regressões, permite refatorar código com confiança de que nada foi quebrado e serve como especificação executável viva do comportamento esperado."
+    },
+    {
+      "question": "Em relação ao planejamento e ao momento de elaboração dos testes unitários no ciclo de desenvolvimento, como essa atividade pode ser organizada pelo programador?",
+      "options": [
+        "A escrita dos testes unitários só pode ser realizada após a homologação completa da aplicação pelo cliente, dependendo exclusivamente de relatórios de falhas observadas em produção.",
+        "O planejamento e a implementação dos testes unitários devem ser delegados exclusivamente a uma equipe independente de testadores, proibindo que o programador que desenvolveu a unidade escreva os casos.",
+        "Os testes podem ser projetados antes da codificação (a partir dos requisitos e regras de negócio) ou depois da unidade pronta, exigindo conhecimento prévio das entradas e saídas.",
+        "Os casos de teste devem ser construídos de maneira aleatória e desprovida de planejamento prévio, ignorando os requisitos da unidade e avaliando apenas se a compilação é concluída com sucesso."
+      ],
+      "correctIndex": 2,
+      "explanation": "Os testes unitários podem ser elaborados previamente (como no TDD) a partir dos requisitos e regras da funcionalidade, ou após a implementação da unidade; em ambos os casos, demandam compreensão clara dos requisitos, entradas, saídas esperadas e fluxos lógicos."
+    },
+    {
+      "question": "Diversas linguagens de programação contam com frameworks modernos para automação de testes unitários. Qual relação entre linguagem e ferramenta está tecnicamente correta segundo a tipologia de testes de software?",
+      "options": [
+        "Python adota o Locust como seu framework padrão de teste unitário para validar métodos isolados, enquanto Java emprega o Apache JMeter para a asserção síncrona de lógica pura.",
+        "Java adota o NUnit em seu ecossistema principal de desenvolvimento, PHP utiliza o Pytest com asserções nativas e C# emprega o PHPUnit para a validação de classes de serviço.",
+        "JavaScript utiliza o k6 para testes unitários de classes de domínio, enquanto C# adota o framework Mocha para a elaboração de especificações executáveis em ambiente de compilação.",
+        "Java utiliza o JUnit, C# utiliza o NUnit, PHP utiliza o PHPUnit e Python utiliza o Pytest para a estruturação e execução de seus testes unitários."
+      ],
+      "correctIndex": 3,
+      "explanation": "JUnit (Java), NUnit (C#), PHPUnit (PHP) e Pytest (Python) são os frameworks clássicos de teste unitário em suas respectivas plataformas. Ferramentas como Locust, JMeter e k6 pertencem à categoria de testes de carga e desempenho, não de testes unitários."
+    },
+    {
+      "question": "No ecossistema de testes para linguagens dinâmicas como Ruby e JavaScript, frameworks possuem características e abordagens metodológicas distintas. Qual afirmação caracteriza corretamente essas ferramentas?",
+      "options": [
+        "O RSpec é um framework de BDD (Behavior-Driven Development) para Ruby, enquanto o Minitest é estilo xUnit; em JavaScript, o QUnit é um framework de teste unitário clássico.",
+        "O Minitest é um framework exclusivamente voltado ao desenvolvimento orientado a comportamento (BDD) em Ruby, enquanto o RSpec restringe-se a asserções unitárias procedimentais clássicas do xUnit.",
+        "O QUnit foi concebido para inspecionar a sintaxe e o código estrutural interno da linguagem JavaScript, não servindo para a escrita ou execução de asserções de testes unitários de funções.",
+        "O Mocha e o Jasmine foram criados como utilitários de medição de carga e desempenho em servidores Node.js, não oferecendo suporte a asserções lógicas nem ao estilo orientado a comportamento."
+      ],
+      "correctIndex": 0,
+      "explanation": "No Ruby, o RSpec adota a abordagem BDD (orientada a comportamento), enquanto o Minitest segue o padrão xUnit. No JavaScript, o QUnit (usado historicamente pelo jQuery) é um framework de teste unitário, e não um analisador de código estrutural da linguagem."
+    },
+    {
+      "question": "Ao implementar testes unitários em Java utilizando o framework JUnit, como as asserções de verificação de valores e de fluxos de exceção são tipicamente declaradas?",
+      "options": [
+        "Utilizando blocos try/catch comuns que capturam erros e imprimem mensagens informativas no console com System.out.println, sem invocar métodos de asserção da biblioteca de testes.",
+        "Utilizando métodos como assertEquals(esperado, obtido) para comparar resultados e assertThrows para garantir o lançamento da exceção correta sob condições anômalas.",
+        "Utilizando exclusivamente assertSame(esperado, obtido) para avaliar igualdade de valores primitivos e assertNull para validar que métodos de cálculo numérico retornem valores válidos.",
+        "Utilizando a anotação @BeforeAll para executar a verificação de valores retornados a cada método e @BeforeEach para capturar e silenciar exceções esperadas sem lançar falhas no relatório."
+      ],
+      "correctIndex": 1,
+      "explanation": "No JUnit, o método assertEquals(esperado, obtido) compara o resultado produzido pelo método sob teste com o valor esperado (marcando verde para sucesso e vermelho para falha), enquanto assertThrows valida se a exceção esperada foi disparada pelo fluxo de erro."
+    },
+    {
+      "question": "Em testes unitários modernos, a unidade sob teste frequentemente depende de serviços externos, repositórios de dados ou chamadas de rede. Qual padrão e qual técnica são empregados para garantir o isolamento estrito da unidade?",
+      "options": [
+        "Conexão direta a servidores reais de banco de dados e APIs externas de homologação durante a execução dos testes para assegurar que a unidade execute todo o ecossistema integrado.",
+        "Uso de chamadas assíncronas concorrentes sem isolamento de dependências, configurando temporizadores de espera fixa (sleep) no código para sincronizar o retorno dos serviços remotos.",
+        "Aplicação do padrão Arrange-Act-Assert (AAA) e uso de dublês de teste (como mocks e stubs) para substituir dependências externas e simular suas respostas de forma controlada.",
+        "Aplicação do padrão Act-Assert-Arrange, invertendo a ordem para verificar resultados antes de instanciar a unidade, e compartilhamento de estados globais mutáveis entre todas as classes."
+      ],
+      "correctIndex": 2,
+      "explanation": "O padrão AAA (Arrange, Act, Assert) estrutura o teste em preparação, execução e verificação, enquanto dublês de teste (test doubles como mocks, stubs e fakes) isolam a unidade de dependências externas como banco de dados e APIs, garantindo testes rápidos e repetíveis."
+    },
+    {
+      "question": "No paradigma de desenvolvimento ágil orientado por testes (Test-Driven Development - TDD) e na pirâmide de testes de software, qual é o ciclo de vida de desenvolvimento e o papel dos testes unitários?",
+      "options": [
+        "A pirâmide de testes preconiza uma maioria de testes manuais de ponta a ponta na base, e o TDD determina que o código de produção seja finalizado antes de iniciar o planejamento de testes.",
+        "O ciclo de vida do TDD prescreve o fluxo Green-Red-Refactor, exigindo que o desenvolvedor implemente a funcionalidade inteira, crie um teste para comprovar o sucesso e refatore os requisitos.",
+        "Os testes unitários devem ser conduzidos exclusivamente de forma manual em reuniões de homologação, sendo excluídos das esteiras de integração contínua (CI/CD) para economizar recursos.",
+        "O ciclo do TDD segue o ritmo Red-Green-Refactor (escrever teste que falha, fazê-lo passar e refatorar), e a pirâmide de testes estabelece os unitários como a base mais ampla e rápida da suíte."
+      ],
+      "correctIndex": 3,
+      "explanation": "O TDD adota o ciclo 'vermelho, verde, refatorar' (Red-Green-Refactor), invertendo o fluxo convencional ao escrever o teste antes da implementação. Na pirâmide de testes, a base é formada por uma quantidade expressiva de testes unitários rápidos e isolados."
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+---
+title: "UA15 — Testes Unitários"
+subtitle: "Conceito e características do teste de unidade, o que ele verifica, vantagens, ferramentas por linguagem e aplicação com JUnit."
+ua: 15
+group: "Automação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua15.m4a" title="Testes unitários" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/gtu_01.webp" alt="Infográfico sobre testes unitários e suas características" caption="Testes unitários" />
+</SlidesGrid>
+
+### O que é o teste unitário
+
+O **teste unitário** (ou **teste de unidade**) verifica a **menor parte testável** de um sistema, de forma **individualizada** e **isolada** das demais. A **unidade** (*unit*) é um termo genérico: pode ser uma **função**, um **método**, uma **classe**, um **procedimento** ou um módulo (Pezzè; Young, 2008). Ele **não** testa o sistema como um todo: indica se a unidade **recebe as entradas** necessárias e **produz as saídas** correspondentes aos requisitos.
+
+Em geral, o **planejamento e a execução** ficam a cargo do **próprio programador**, que codifica a unidade e a testa a cada avanço, antes mesmo de os testadores entrarem. Como o escopo é pequeno, a atenção se concentra nele e os problemas encontrados ficam **restritos** a essa fronteira. É o **primeiro nível** da sequência unidade → integração → sistema → aceitação (veja a [UA7](/resumos/teste-software/ua7/)) e costuma usar técnicas de **caixa-branca** (veja a [UA12](/resumos/teste-software/ua12/)) e de **caixa-preta** (veja a [UA11](/resumos/teste-software/ua11/)).
+
+### O que o teste unitário verifica
+
+Segundo Pressman e Maxim (2016), os aspectos testados em uma unidade são:
+
+| Aspecto | O que se confere |
+|---|---|
+| **Interface** | As informações **entram e saem** corretamente (parâmetros, retorno). Se a interface falha, os demais testes podem nem continuar |
+| **Estruturas de dados locais** | Variáveis e dados temporários ou persistentes **mantêm a integridade** durante a execução |
+| **Estruturas de controle** | Cada **condição**, **laço** e desvio é executado e retorna o resultado esperado |
+| **Caminhos independentes** | Os caminhos de controle importantes são exercitados (veja o teste do caminho básico na [UA12](/resumos/teste-software/ua12/)) |
+| **Condições-limite** | Valores nas **fronteiras** (campo acima do limite, valor digitado errado) são tratados |
+| **Tratamento de erros** | Os fluxos de **exceção** funcionam e a mensagem ajuda o usuário |
+
+O teste de unidade deve revelar **cálculos errados**, jeitos incorretos de programar, **fluxos de controle inadequados**, **exceções ignoradas** e **regras de negócio mal interpretadas**.
+
+Quanto aos **erros**, é preciso testar se a unidade evita: mensagem de erro **confusa**; mensagem que **não corresponde** ao erro real; erro que **interrompe o sistema inteiro** antes de ser tratado; processamento a partir de um **fluxo de exceção incorreto**; mensagem **incompleta**, que não diz ao usuário o que fazer.
+
+### Vantagens e desvantagens
+
+A **desvantagem** é o **tempo extra** do programador na implementação, superado pelas vantagens. Quando **automatizados**, os testes unitários:
+
+- **Ampliam a cobertura** para além da unidade, alcançando caminhos que cruzam a fronteira;
+- **Previnem regressão**: avisam quando uma nova versão quebra algo que já funcionava;
+- **Facilitam a refatoração**, que é melhorar o código sem alterar o comportamento já correto;
+- Servem de **documentação viva** do sistema, pois bem escritos descrevem as funcionalidades e o comportamento esperado.
+
+O projeto dos testes pode ocorrer **antes** da codificação (a partir dos requisitos e das regras de negócio) ou **depois** de a unidade estar pronta. Em qualquer caso, **planeje**: o testador (o programador) precisa conhecer os **requisitos**, as **entradas** de que a unidade depende, as **saídas** e o **fluxo de controle**. Quanto **mais automatizado**, mais eficiente é o teste.
+
+### Ferramentas por linguagem
+
+As linguagens trazem cada vez mais **frameworks de teste** com interface amigável, que mostram se o teste teve **sucesso ou falha**.
+
+| Linguagem | Ferramentas do material |
+|---|---|
+| **Java** | **JUnit** |
+| **C#** | **NUnit** (no Visual Studio) |
+| **PHP** | **PHPUnit** |
+| **JavaScript** | **Mocha**, **Jasmine** (orientado a comportamento), **Jest** (criado pelo Facebook, foco na simplicidade), **QUnit** (usado pelo jQuery) |
+| **Ruby** | **RSpec** (orientado a comportamento, escreve-se o teste primeiro), **Minitest** |
+| **Python** | **Pytest** |
+
+### Aplicando com JUnit
+
+O exemplo do material cria duas classes em Java: **Aritmetica** (soma, subtração, multiplicação e divisão de dois valores) e **AritmeticaTest**, que chama cada método com valores conhecidos e compara o **valor esperado** com o **obtido** usando `assertEquals`. Na IDE (Eclipse, IntelliJ), executa-se com **Run As → JUnit Test**: **faixa verde** indica sucesso e **faixa vermelha** indica falha, mostrando esperado e obtido. Versão equivalente em **JUnit 5**:
+
+```java
+public class Aritmetica {
+    public int soma(int a, int b) { return a + b; }
+    public int subtrai(int a, int b) { return a - b; }
+    public int multiplica(int a, int b) { return a * b; }
+    public int divide(int a, int b) { return a / b; }   // lança ArithmeticException se b == 0
+}
+```
+
+```java
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
+
+class AritmeticaTest {
+
+    private final Aritmetica calc = new Aritmetica();   // unidade sob teste
+
+    @Test
+    void somaDoisValores() {
+        assertEquals(15, calc.soma(10, 5));              // esperado, obtido
+    }
+
+    @Test
+    void dividePorValorValido() {
+        assertEquals(2, calc.divide(10, 5));
+    }
+
+    @Test
+    void divisaoPorZeroLancaExcecao() {                  // fluxo de exceção
+        assertThrows(ArithmeticException.class, () -> calc.divide(10, 0));
+    }
+}
+```
+
+<Callout type="warning">
+**Atenção a pontos do material:**
+
+- **Locust** não é ferramenta de teste unitário: é de **teste de carga** (simula milhares de usuários simultâneos), um teste de **não funcional/desempenho**.
+- **RSpec** e **Minitest** são frameworks de teste, mas **Minitest** não é "orientado a comportamento" por definição: é um framework **xUnit** (oferece também um estilo *spec*), enquanto **RSpec** é o BDD do Ruby. Já o **QUnit** testa JavaScript no estilo xUnit, e não "o código estrutural da própria linguagem".
+- O teste unitário **não substitui** os demais níveis: unidades que passam isoladas podem **falhar ao se integrar** (veja a [UA7](/resumos/teste-software/ua7/)).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Frameworks atuais.** Em Java, **JUnit 5** (Jupiter), com **AssertJ** para asserções legíveis e **Mockito** para **dublês**; em Kotlin/Android, **JUnit** com **MockK**; em JavaScript/TypeScript, **Jest** e **Vitest**; em Python, **pytest** e `unittest`; em C#, **xUnit** e **NUnit**; em Go, o pacote `testing`. A família dos frameworks segue o modelo **xUnit** (*setup*, execução, asserção, *teardown*).
+
+**Boas práticas.** Siga o padrão **AAA** (*Arrange, Act, Assert*) ou **Given/When/Then**; deixe os testes **rápidos, independentes e repetíveis**; **isole** a unidade com **dublês de teste** (*mock*, *stub*, *fake*, *spy*), que substituem banco, rede e serviços externos. **TDD** (*Test-Driven Development*) inverte a ordem: escreva o teste que falha (**vermelho**), faça passar (**verde**) e **refatore**. A **pirâmide de testes** pede muitos testes de unidade, executados a cada commit em **CI/CD** (GitHub Actions, GitLab CI), com **cobertura** medida por **JaCoCo** ou **Istanbul** e **teste de mutação** (**PIT**, **Stryker**) para avaliar a qualidade dos testes. Exemplo moderno em **Jest**:
+
+```ts
+import { soma } from "./aritmetica";
+
+describe("soma", () => {
+  it.each([
+    [10, 5, 15],
+    [-1, 1, 0],
+    [0, 0, 0],
+  ])("soma(%i, %i) = %i", (a, b, esperado) => {
+    expect(soma(a, b)).toBe(esperado);
+  });
+});
+```
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Teste unitário (de unidade)** = testa a **menor parte** (função, método, classe) **isolada**, feito normalmente pelo **programador**, durante a codificação. **Não** testa o sistema global.
+- **O que verifica:** **interface**, estruturas de **dados locais**, estruturas de **controle**, **caminhos independentes**, **condições-limite** e **tratamento de erros**.
+- **Vantagens (se automatizado):** amplia cobertura, **previne regressão**, incentiva **refatoração**, serve de **documentação**. **Desvantagem:** tempo extra do programador.
+- **Projeto do teste:** pode ser **antes** ou **depois** da codificação; exige conhecer **requisitos**, entradas, saídas e fluxos.
+- **Ferramentas:** **JUnit** (Java), **NUnit** (C#), **PHPUnit** (PHP), **Mocha/Jasmine/Jest/QUnit** (JavaScript), **RSpec/Minitest** (Ruby), **Pytest** (Python). **Locust** é de **carga**, não unitário.
+- **JUnit:** `assertEquals(esperado, obtido)`; **verde** = sucesso, **vermelho** = falha.
+- **Dublês** (*mock*/*stub*) isolam a unidade; **TDD** = vermelho → verde → refatorar.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BARRETO, J. S. Testes unitários. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- PRESSMAN, R. S.; MAXIM, B. R. *Engenharia de software: uma abordagem profissional*. 8. ed. Porto Alegre: AMGH, 2016.
+- PRESSMAN, R. S. *Engenharia de software*. São Paulo: McGraw-Hill, 2011.
+- PEZZÈ, M.; YOUNG, M. *Teste e análise de software: processos, princípios e técnicas*. Porto Alegre: Bookman, 2008.
+- JUNIT TEAM. *JUnit 5 User Guide*. junit.org/junit5.
+- BECK, K. *Test-driven development: by example*. Addison-Wesley, 2002.
