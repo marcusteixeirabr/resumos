@@ -280,6 +280,63 @@ header nav a:hover { color: var(--text); }
   outline-offset: 3px;
 }
 
+/* Card inteiro clicável via link "esticado" do título (sem aninhar <a>):
+   o ::after do link cobre o card; os atalhos ficam por cima (z-index 2). */
+.card-link {
+  color: inherit;
+  text-decoration: none;
+}
+.card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: 1;
+}
+.card-link:focus-visible { outline: none; }
+.card:has(.card-link:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ── Atalhos do card (Resumão / Exercícios) ── */
+.card-actions {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .5rem;
+}
+
+.card-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  min-height: 44px;
+  padding: .5rem .75rem;
+  border-radius: 10px;
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: background .2s, border-color .2s, color .2s;
+}
+.card-action svg { color: var(--accent); flex-shrink: 0; }
+
+.card-action:hover {
+  background: rgba(88, 166, 255, 0.1);
+  border-color: rgba(88, 166, 255, 0.35);
+  color: var(--accent);
+}
+
+.card-action:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
 /* ── Card top row ── */
 .card-top {
   display: flex;
@@ -492,6 +549,15 @@ html[data-theme="light"] .status-done     { background: rgba(26,127,55,.08);  bo
 html[data-theme="light"] .status-progress { background: rgba(9,105,218,.07);  border-color: rgba(9,105,218,.18); }
 html[data-theme="light"] .status-soon     { background: rgba(87,96,106,.06);  border-color: rgba(87,96,106,.15); }
 
+html[data-theme="light"] .card-action {
+  background: rgba(0,14,77,.04);
+  border-color: rgba(0,14,77,.1);
+}
+html[data-theme="light"] .card-action:hover {
+  background: rgba(9,105,218,.08);
+  border-color: rgba(9,105,218,.35);
+}
+
 html[data-theme="light"] .chip {
   background: rgba(0,14,77,.05);
   border-color: rgba(0,14,77,.08);
@@ -532,6 +598,8 @@ html[data-theme="light"] .hero-glow-3 {
   html:not([data-theme="dark"]) .icon-purple { background: rgba(102,57,183,.1); color: var(--accent4); }
   html:not([data-theme="dark"]) .icon-orange  { background: rgba(212,75,58,.1);  color: var(--accent3); }
   html:not([data-theme="dark"]) .icon-yellow  { background: rgba(154,103,0,.1);  color: var(--accent5); }
+  html:not([data-theme="dark"]) .card-action { background: rgba(0,14,77,.04); border-color: rgba(0,14,77,.1); }
+  html:not([data-theme="dark"]) .card-action:hover { background: rgba(9,105,218,.08); border-color: rgba(9,105,218,.35); }
   html:not([data-theme="dark"]) .chip { background: rgba(0,14,77,.05); border-color: rgba(0,14,77,.08); }
   html:not([data-theme="dark"]) .hero-meta { background: rgba(255,255,255,.7); }
   html:not([data-theme="dark"]) footer { border-top-color: var(--border); }

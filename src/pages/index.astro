@@ -56,155 +56,171 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
         </div>
         <div class="grid">
 
-          <a class="card" href={`${base}/teste-software/ua1/`} aria-label="Acessar resumos de Teste de Software">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-green" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Teste de Software</h3>
+            <h3><a class="card-link" href={`${base}/teste-software/ua1/`} aria-label="Acessar resumos de Teste de Software">Teste de Software</a></h3>
             <p>Conceitos de teste, técnicas de caixa-preta e caixa-branca, níveis de teste, planejamento, testes exploratórios e unitários e automação de interface.</p>
+            <nav class="card-actions" aria-label="Atalhos de Teste de Software">
+              <a class="card-action" href={`${base}/teste-software/resumao/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Resumão</span></a>
+              <a class="card-action" href={`${base}/teste-software/exercicios/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Exercícios</span></a>
+            </nav>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Testes</span><span class="chip">Técnicas</span><span class="chip">Automação</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/dispositivos-moveis/ua1/`} aria-label="Acessar resumos de Programação para Dispositivos Móveis">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-blue" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Programação para Dispositivos Móveis</h3>
+            <h3><a class="card-link" href={`${base}/dispositivos-moveis/ua1/`} aria-label="Acessar resumos de Programação para Dispositivos Móveis">Programação para Dispositivos Móveis</a></h3>
             <p>Desenvolvimento mobile: Android e iOS, interface e navegação, webservices, SQLite, recursos nativos, publicação nas lojas, TypeScript e Ionic.</p>
+            <nav class="card-actions" aria-label="Atalhos de Programação para Dispositivos Móveis">
+              <a class="card-action" href={`${base}/dispositivos-moveis/resumao/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Resumão</span></a>
+              <a class="card-action" href={`${base}/dispositivos-moveis/exercicios/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Exercícios</span></a>
+            </nav>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Mobile</span><span class="chip">Android / iOS</span><span class="chip">Ionic</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/paradigmas-programacao/ua1/`} aria-label="Acessar resumos de Paradigmas de Programação">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-blue" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Paradigmas de Programação</h3>
+            <h3><a class="card-link" href={`${base}/paradigmas-programacao/ua1/`} aria-label="Acessar resumos de Paradigmas de Programação">Paradigmas de Programação</a></h3>
             <p>Métodos e paradigmas de programação: imperativo, declarativo, estruturado e orientado a objetos, programação funcional e linguagens multiparadigma.</p>
+            <nav class="card-actions" aria-label="Atalhos de Paradigmas de Programação">
+              <a class="card-action" href={`${base}/paradigmas-programacao/resumao/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Resumão</span></a>
+              <a class="card-action" href={`${base}/paradigmas-programacao/exercicios/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Exercícios</span></a>
+            </nav>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Paradigmas</span><span class="chip">Funcional</span><span class="chip">Multiparadigma</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/engenharia-software/ua1/`} aria-label="Acessar resumos de Engenharia de Software">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-orange" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Engenharia de Software</h3>
+            <h3><a class="card-link" href={`${base}/engenharia-software/ua1/`} aria-label="Acessar resumos de Engenharia de Software">Engenharia de Software</a></h3>
             <p>Ciclo de vida de software, processos cascata e ágeis (XP, Scrum, OpenUP), estimativas, métricas, manutenção, testes e qualidade (CMMI, MPS.BR).</p>
+            <nav class="card-actions" aria-label="Atalhos de Engenharia de Software">
+              <a class="card-action" href={`${base}/engenharia-software/resumao/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Resumão</span></a>
+              <a class="card-action" href={`${base}/engenharia-software/exercicios/`}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>Exercícios</span></a>
+            </nav>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Processos</span><span class="chip">Testes</span><span class="chip">Qualidade</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/programming-data-persistence/ua1/`} aria-label="Acessar resumos de Programming and Data Persistence">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-yellow" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Programming and Data Persistence</h3>
+            <h3><a class="card-link" href={`${base}/programming-data-persistence/ua1/`} aria-label="Acessar resumos de Programming and Data Persistence">Programming and Data Persistence</a></h3>
             <p>Manipulação de arquivos, tipos de dados persistidos, operações de leitura e escrita, acesso sequencial e direto.</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Arquivos</span><span class="chip">Persistência</span><span class="chip">I/O</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/database-design-for-apps/ua1/`} aria-label="Acessar resumos de Database Design for Apps">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-purple" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/><path d="M3 5v14"/><path d="M21 5v14"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Database Design for Apps</h3>
+            <h3><a class="card-link" href={`${base}/database-design-for-apps/ua1/`} aria-label="Acessar resumos de Database Design for Apps">Database Design for Apps</a></h3>
             <p>Conceitos de banco de dados, tipos (relacional, hierárquico, em rede, objeto-relacional), modelagem e linguagens SQL (DDL, DML, DCL).</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">SQL</span><span class="chip">Modelagem</span><span class="chip">SGBD</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/responsive-web/ua1/`} aria-label="Acessar resumos de Responsive Web Development">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-green" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Responsive Web Dev</h3>
+            <h3><a class="card-link" href={`${base}/responsive-web/ua1/`} aria-label="Acessar resumos de Responsive Web Development">Responsive Web Dev</a></h3>
             <p>HTML5, CSS3, formulários, JavaScript, AJAX e introdução ao PHP com MySQL para desenvolvimento web.</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">HTML5</span><span class="chip">CSS3</span><span class="chip">JS</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/software-design/ua1/`} aria-label="Acessar resumos de Software Design">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-blue" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M7 8l2 2-2 2M11 12h4"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Software Design</h3>
+            <h3><a class="card-link" href={`${base}/software-design/ua1/`} aria-label="Acessar resumos de Software Design">Software Design</a></h3>
             <p>Arquitetura de sistemas, UML, diagramas de classes, sequência, componentes, prototipação e banco de dados.</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">UML</span><span class="chip">Arquitetura</span><span class="chip">DER/MER</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/pensamento-computacional/ua1/`} aria-label="Acessar resumos de Pensamento Computacional">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-orange" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2v-4M9 21H5a2 2 0 0 1-2-2v-4m0 0h18"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Pensamento Computacional</h3>
+            <h3><a class="card-link" href={`${base}/pensamento-computacional/ua1/`} aria-label="Acessar resumos de Pensamento Computacional">Pensamento Computacional</a></h3>
             <p>Fundamentos de algoritmos, lógica, linguagem C, estruturas de controle, vetores e matrizes.</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">Algoritmos</span><span class="chip">Linguagem C</span><span class="chip">Lógica</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
-          <a class="card" href={`${base}/engenharia-requisitos/ua1/`} aria-label="Acessar resumos de Engenharia de Requisitos">
+          <article class="card">
             <div class="card-top">
               <div class="card-icon icon-purple" aria-hidden="true">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
               </div>
               <div class="card-status status-done">Resumos prontos</div>
             </div>
-            <h3>Engenharia de Requisitos</h3>
+            <h3><a class="card-link" href={`${base}/engenharia-requisitos/ua1/`} aria-label="Acessar resumos de Engenharia de Requisitos">Engenharia de Requisitos</a></h3>
             <p>Regras de negócio, requisitos funcionais e não funcionais, casos de uso, diagrama de atividades e rastreabilidade.</p>
             <div class="card-footer">
               <div class="chip-list"><span class="chip">RF / RNF</span><span class="chip">Caso de Uso</span><span class="chip">UML</span></div>
               <span class="card-arrow" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
             </div>
-          </a>
+          </article>
 
         </div>
 
