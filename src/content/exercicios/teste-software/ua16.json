@@ -1,0 +1,115 @@
+{
+  "ua": 16,
+  "questions": [
+    {
+      "question": "No contexto da qualidade de software, a automação de testes de interface com o usuário (UI) pode ser implementada por meio de diferentes estratégias. Quais são as duas abordagens fundamentais utilizadas para exercitar a interface gráfica?",
+      "options": [
+        "A captura e reprodução (record and playback), que grava ações para repeti-las, e a codificação por scripts, que programa os fluxos de teste em linguagens de desenvolvimento.",
+        "A inspeção estática de código-fonte através de linters e a verificação visual exclusivamente manual realizada por equipes dedicadas de garantia de qualidade em homologação.",
+        "A exploração manual e não estruturada baseada em sessões com charters e a validação de contratos de integração entre serviços web sem qualquer interação com a interface gráfica.",
+        "A execução de testes de estresse de infraestrutura distribuída em servidores remotos e a auditoria de conformidade de folhas de estilo CSS em múltiplos navegadores legados."
+      ],
+      "correctIndex": 0,
+      "explanation": "A automação de testes funcionais de UI divide-se essencialmente em duas abordagens: captura e reprodução (como no Selenium IDE, que grava ações e as reproduz) e codificação por scripts (como no Selenium WebDriver, que utiliza linguagens de programação para manipular elementos da tela)."
+    },
+    {
+      "question": "O Selenium IDE é uma ferramenta clássica voltada à automação rápida de testes funcionais web. Quais características e restrições técnicas definem o funcionamento dessa ferramenta de captura e reprodução?",
+      "options": [
+        "Exige domínio avançado de linguagens como Java ou Python para compilar scripts e oferece suporte nativo a estruturas complexas de desvio condicional e laços de repetição na interface gráfica.",
+        "Permite gravar passos e definir asserções visuais sem exigir programação avançada, mas gera scripts frágeis a alterações na interface e com baixo nível de reutilização de código.",
+        "Restringe-se com exclusividade ao navegador Firefox como extensão proprietária, sendo tecnicamente impossível exportar seus fluxos de teste para linguagens de programação suportadas pelo WebDriver.",
+        "Atua como um servidor de proxy reverso que gerencia instâncias de navegadores em clusters em nuvem para execução distribuída de suítes de teste de carga em larga escala."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Selenium IDE permite gravação e reprodução rápida sem necessidade de conhecimento aprofundado em programação. Contudo, seus scripts são frágeis a alterações no leiaute, possuem baixo reúso e historicamente não ofereciam lógica estruturada de iteração e desvio."
+    },
+    {
+      "question": "Ao utilizar o Selenium WebDriver para a automação de testes web baseada em scripts, como os elementos de uma página são tipicamente localizados e como os resultados são validados?",
+      "options": [
+        "Os elementos são identificados exclusivamente por coordenadas de pixels na tela do monitor e as verificações dependem da captura manual de telas para conferência por operadores de teste.",
+        "A identificação ocorre exclusivamente pelo texto visível ou por coordenadas relativas da tela, utilizando as esperas implícitas do próprio navegador como critério formal de asserção.",
+        "Os elementos são localizados por meio de estratégias como ID, seletores CSS ou expressões XPath, e as asserções de validação são executadas por frameworks de teste como JUnit, NUnit ou Pytest.",
+        "A identificação de componentes depende da sintaxe tabular do próprio Selenium com as seções Settings e Variables, utilizando a indentação obrigatória da linguagem Python para delimitar ações."
+      ],
+      "correctIndex": 2,
+      "explanation": "No Selenium WebDriver, a busca por elementos do DOM apoia-se em localizadores como By.id, By.cssSelector e By.xpath (caminho na árvore do documento). As validações lógicas e verificações de asserção são delegadas a frameworks como JUnit, NUnit, Pytest ou TestNG."
+    },
+    {
+      "question": "O Robot Framework é uma ferramenta de automação voltada a testes de aceitação e desenvolvimento orientado a testes de aceitação (ATDD). Qual é a definição conceitual e arquitetural desse framework?",
+      "options": [
+        "É um framework de código aberto que adota a abordagem orientada a palavras-chave (keyword-driven) para testes de aceitação, cujo núcleo em Python o torna modular e independente de sistema operacional.",
+        "É uma biblioteca proprietária do Selenium WebDriver desenvolvida em C# que roda unicamente no sistema operacional Windows para gravação direta de ações de teclado e mouse.",
+        "É uma extensão complementar do Selenium WebDriver que atua exclusivamente na captura e reprodução de passos pelo navegador, sem suporte à criação de bibliotecas em linguagens externas.",
+        "É um framework exclusivo de BDD que impõe a sintaxe rígida de Gherkin (com as cláusulas Given, When e Then) e rejeita a definição de palavras-chave customizadas por meio de bibliotecas em Python."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Robot Framework é um framework open source genérico de terceira geração para automação de testes (focado em aceitação e ATDD). Ele utiliza abordagem keyword-driven, sintaxe de dados tabular e núcleo em Python, operando de forma modular e independente de plataforma."
+    },
+    {
+      "question": "Na estruturação de arquivos de teste do Robot Framework (arquivos .robot), como os dados e fluxos de teste são organizados formalmente em suas seções e células sintáticas?",
+      "options": [
+        "O arquivo .robot estrutura-se em classes e métodos anotados com @Test clássicos do JUnit, utilizando chaves delimitadoras para blocos de código e ponto e vírgula ao final de cada instrução.",
+        "A organização adota a indentação semântica e obrigatória da linguagem Python, onde um único espaço em branco incorreto desestrutura a hierarquia de comandos de todos os blocos do script.",
+        "O arquivo organiza-se em seções como Settings, Variables, Test Cases e Keywords, e a estrutura de dados separa palavras-chave e argumentos por dois ou mais espaços em branco ou pipes.",
+        "As rotinas são divididas em classes e métodos com anotações @Test obrigatórias, utilizando ponto e vírgula ao final de cada linha de instrução para permitir a interpretação pelo motor do Selenium."
+      ],
+      "correctIndex": 2,
+      "explanation": "Arquivos .robot organizam-se em seções específicas (Settings, Variables, Test Cases e Keywords). Na sintaxe tabular, as células (palavras-chave, argumentos e variáveis como ${nome}) são delimitadas por dois ou mais espaços consecutivos ou caracteres de pipe (|), sem depender da indentação do Python."
+    },
+    {
+      "question": "No contexto da integração entre ferramentas de automação, qual é o papel desempenhado pelo Selenium WebDriver quando utilizado em conjunto com o Robot Framework?",
+      "options": [
+        "O Selenium WebDriver atua como o orquestrador principal de suítes de teste que interpreta os relatórios analíticos em formato HTML gerados na finalização da execução do Robot Framework.",
+        "O Selenium é o responsável por definir as tabelas de dados de teste e a lógica de palavras-chave de alto nível, enquanto o Robot Framework gerencia diretamente os sockets de conexão HTTP.",
+        "O Selenium atua como o compilador de sintaxe que transforma os arquivos de extensão .robot em código de máquina nativo para execução sem interface gráfica em servidores de homologação.",
+        "O Robot Framework processa os dados de teste e palavras-chave de alto nível e aciona o Selenium (por meio da SeleniumLibrary) como biblioteca de teste para controlar o navegador."
+      ],
+      "correctIndex": 3,
+      "explanation": "O Robot Framework é o framework de automação de alto nível que processa a sintaxe tabular e as palavras-chave. Para interagir com páginas web, ele utiliza bibliotecas modulares como a SeleniumLibrary, que por sua vez emprega o Selenium WebDriver como driver de controle do navegador."
+    },
+    {
+      "question": "A decisão de automatizar testes de software não deve ser tomada indiscriminadamente para todas as partes de um sistema. Quais fatores técnicos e gerenciais devem ser analisados antes de iniciar a automação?",
+      "options": [
+        "A quantidade de linhas de comentários presentes no código-fonte da aplicação e a exigência contratual de eliminar totalmente a participação de analistas humanos no ciclo de qualidade.",
+        "A estabilidade funcional e visual das telas, a complexidade técnica dos fluxos, a frequência de repetição das execuções e a expectativa de retorno sobre o investimento (ROI).",
+        "A disponibilidade imediata de ferramentas de inteligência artificial autônomas e a garantia prévia de que o software nunca mais sofrerá refatorações arquiteturais na camada de apresentação.",
+        "A homologação de navegadores legados já descontinuados pelos fabricantes e a obrigatoriedade de executar suítes de interface antes mesmo do início do design de experiência do usuário."
+      ],
+      "correctIndex": 1,
+      "explanation": "Antes de automatizar, é essencial avaliar a estabilidade dos fluxos (telas muito mutáveis quebram testes e geram alto custo de manutenção), a complexidade técnica, o ciclo de vida do projeto, a frequência de repetição e o retorno sobre investimento (ROI)."
+    },
+    {
+      "question": "Considerando as melhores práticas da engenharia de testes, quais tipos de teste e cenários são prioritários para automação de interface e quais devem permanecer sob execução manual?",
+      "options": [
+        "Devem ser automatizados os testes de regressão frequentes, cálculos repetitivos e smoke tests; funcionalidades novas em frequente mudança e testes exploratórios devem ser manuais.",
+        "Devem ser automatizadas unicamente as funcionalidades recém-criadas com regras de negócio instáveis, enquanto testes de regressão críticos devem ser realizados de forma exclusivamente manual.",
+        "A automação deve cobrir com prioridade a inspeção estética subjetiva de leiautes visuais, deixando cálculos matemáticos determinísticos para validação manual por amostragem humana.",
+        "Devem ser automatizados apenas protótipos descartáveis de prova de conceito, mantendo sistemas corporativos maduros sob verificação manual contínua por questões de conformidade."
+      ],
+      "correctIndex": 0,
+      "explanation": "Cenários ideais para automação incluem testes de regressão, smoke tests (testes de fumaça), fluxos críticos repetitivos e cálculos suscetíveis a erro humano. Por outro lado, testes exploratórios, validação estética e funcionalidades novas em fase de maturação devem ser mantidos manuais."
+    },
+    {
+      "question": "Para evitar a criação de testes de interface frágeis e intermitentes (conhecidos como flaky tests) em suítes com Selenium WebDriver, qual padrão arquitetural e qual estratégia de sincronização são recomendados?",
+      "options": [
+        "A utilização sistemática de pausas temporais fixas (Thread.sleep) com valores arbitrários longos em todas as etapas e a concentração de todos os seletores em um único método estático global.",
+        "A desativação completa do modo headless nos servidores de integração contínua e o acoplamento de seletores XPath absolutos baseados na contagem estrita de tags HTML na página.",
+        "A adoção do padrão de projeto Page Object para encapsular elementos e comportamentos da página, combinada com o uso de esperas explícitas (WebDriverWait) baseadas em condições esperadas.",
+        "A execução exclusiva de testes no navegador Internet Explorer com Selenium IDE para garantir a conformidade de scripts gravados sem necessidade de manutenção de seletores de elementos."
+      ],
+      "correctIndex": 2,
+      "explanation": "O padrão Page Object separa a lógica dos testes da localização de elementos, facilitando manutenções. O uso de esperas explícitas (WebDriverWait / ExpectedConditions) aguarda que elementos atinjam determinado estado antes de interagir com eles, prevenindo testes instáveis (flaky tests) causados por pausas fixas arbitrárias."
+    },
+    {
+      "question": "No ecossistema moderno de ferramentas para automação de testes de aplicações web e dispositivos móveis, quais tecnologias destacam-se como soluções avançadas contemporâneas?",
+      "options": [
+        "O Selenium IDE restrito ao navegador Firefox como a única solução viável para testes distribuídos em nuvem e o Internet Explorer como o principal navegador-alvo de validação web moderna.",
+        "O Selenium IDE configurado para executar testes em paralelo em nós de Selenium Grid na nuvem e o framework Appium restrito com exclusividade à automação de navegadores em computadores desktop.",
+        "O Robot Framework configurado unicamente com a biblioteca de inspeção estática HTML em navegadores descontinuados, dispensando a necessidade de drivers de automação como o WebDriver.",
+        "O Playwright e o Cypress para automação web moderna com suporte a esperas automáticas, o Selenium Grid para execução paralela de navegadores e o Appium para plataformas móveis."
+      ],
+      "correctIndex": 3,
+      "explanation": "O cenário moderno de testes de interface inclui ferramentas como Playwright (Microsoft), Cypress (JavaScript integrado ao navegador), Selenium 4 com Selenium Grid para paralelismo, e Appium para automação de aplicações móveis híbridas e nativas (Android e iOS)."
+    }
+  ]
+}

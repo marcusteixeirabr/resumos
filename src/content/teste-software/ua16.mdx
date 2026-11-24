@@ -1,0 +1,186 @@
+---
+title: "UA16 — Testes de Interface por Robô"
+subtitle: "Automação de testes de interface com Selenium (IDE e WebDriver) e Robot Framework: sintaxe tabular, palavras-chave e quando vale automatizar."
+ua: 16
+group: "Automação"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/teste-software/ua16.m4a" title="Testes de interface por robô" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/ati_01.webp" alt="Infográfico sobre automação de testes de interface com Selenium e Robot Framework" caption="Automação de testes de interface" />
+</SlidesGrid>
+
+### Automação de testes de interface
+
+**Automatizar testes** é exercitar e verificar o software **sem participação humana** durante a execução. Integrada ao processo de desenvolvimento, a automação reduz o **ciclo de vida** e o **custo** do projeto, encontra mais falhas e diminui a chance de entregar defeitos ao cliente. Os testes de **interface** (testes funcionais de **UI**) **simulam o usuário** usando o sistema. Há duas estratégias:
+
+| Estratégia | Ideia | Ferramenta típica |
+|---|---|---|
+| **Captura e reprodução** (*record and playback*) | **Grava** as ações do usuário e as reproduz depois | **Selenium IDE** |
+| **Codificação** (*scripts*) | Escreve-se o teste em uma **linguagem de programação** | **Selenium WebDriver** |
+
+### Selenium
+
+O **Selenium** é um **conjunto de ferramentas** para automatizar testes de aplicações **web**: localiza **elementos da interface** e compara o **resultado esperado** com o **comportamento real**.
+
+#### Selenium IDE (gravação)
+
+Ambiente que **grava** as ações do testador e gera um **script** reprodutível. Fluxo: **capturar os passos** do caso de teste → **definir critérios de validação** (asserções sobre elementos da página) → **executar o script** (que informa sucesso ou falha).
+
+- **Vantagens:** fácil e rápido, **não exige conhecimento técnico alto**; bom para **prototipagem rápida**.
+- **Desvantagens:** scripts **inflexíveis**, **frágeis** a mudanças na interface ou no código e com **baixo reuso**; **não tem** recursos como iterações e instruções condicionais (o material cita a limitação ao Firefox).
+- O script gravado pode ser **exportado** para uma linguagem de programação e aprimorado.
+
+#### Selenium WebDriver (codificação)
+
+**API orientada a objetos** disponível para **Java, C#, Ruby, Python e JavaScript**, que controla o **navegador** e também testa **plataformas móveis**. Os elementos da tela são localizados por **ID** (atributo HTML), por **CSS** (seletores de estilo) ou por **XPath** (linguagem de **caminho** na hierarquia do documento, do elemento de nível mais alto até o desejado). As **verificações** usam frameworks de teste como **JUnit**, **NUnit** ou **TestNG**, conforme a linguagem.
+
+- **Vantagens:** **melhor resposta a mudanças** (basta ajustar o código), **mais reuso** e execução em **vários navegadores**.
+- **Desvantagens:** exige **lógica de programação** e **configuração prévia**.
+
+```python
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+
+driver = webdriver.Chrome()
+driver.get("https://exemplo.com/login")
+
+driver.find_element(By.ID, "usuario").send_keys("maria")           # por ID
+driver.find_element(By.CSS_SELECTOR, "#senha").send_keys("123")    # por CSS
+driver.find_element(By.XPATH, "//button[@type='submit']").click()  # por XPath
+
+assert "Bem-vinda" in driver.find_element(By.TAG_NAME, "h1").text  # verificação
+driver.quit()
+```
+
+### Robot Framework
+
+O **Robot Framework** é um framework **de código aberto** para **automação de testes**, usado em **testes de aceitação** e em **ATDD** (*Acceptance Test-Driven Development*). Usa **sintaxe de dados de teste tabular** e a abordagem **orientada a palavras-chave** (*keyword-driven*). Sua arquitetura é **modular**: a capacidade é estendida por **bibliotecas de teste** em **Python** ou **Java**. É considerado uma estrutura de **terceira geração** e seu núcleo é implementado em **Python**, o que o torna **independente de sistema operacional**.
+
+**Como funciona:** o framework **processa os dados de teste**, não precisa conhecer o sistema alvo e usa **bibliotecas** (que usam interfaces da aplicação ou **ferramentas de teste** como *drivers*) para interagir com o **sistema sob teste**. O **Selenium** entra como a biblioteca que controla o navegador (hoje, a **SeleniumLibrary**).
+
+#### Sintaxe tabular e seções
+
+Os arquivos de texto simples (extensão **`.robot`** ou `.txt`) separam **argumentos por dois ou mais espaços**. Vários casos de teste num arquivo formam uma **suíte**; vários arquivos num diretório formam suítes aninhadas. As **seções** são delimitadas por linhas com asteriscos:
+
+| Seção | Função |
+|---|---|
+| **Settings** | Bibliotecas, arquivos auxiliares (*page objects*), *hooks*, documentação |
+| **Variables** | Variáveis, escritas como `${variavel}` |
+| **Test Cases** | Casos de teste: a **seção essencial** (sem ela o teste não roda) |
+| **Keywords** | Palavras-chave **definidas pelo usuário** que implementam os cenários |
+
+Rótulos opcionais dentro dos casos: **`[Documentation]`** (descrição) e **`[Tags]`** (para rodar só alguns casos). Nomes de variáveis ignoram **espaços** e **maiúsculas** (`${nome_da_variavel}` = `${nome da variavel}`).
+
+```text
+*** Settings ***
+Documentation     Login com credenciais válidas
+Library           SeleniumLibrary
+
+*** Variables ***
+${URL}            https://exemplo.com/login
+${NAVEGADOR}      chrome
+
+*** Test Cases ***
+Login Com Sucesso
+    [Tags]    smoke
+    Abrir Navegador Na Pagina De Login
+    Preencher Credenciais    maria    123
+    Page Should Contain    Bem-vinda
+    [Teardown]    Close Browser
+
+*** Keywords ***
+Abrir Navegador Na Pagina De Login
+    Open Browser    ${URL}    ${NAVEGADOR}
+
+Preencher Credenciais
+    [Arguments]    ${usuario}    ${senha}
+    Input Text        id=usuario    ${usuario}
+    Input Password    id=senha      ${senha}
+    Click Button      xpath=//button[@type='submit']
+```
+
+#### Palavras-chave
+
+Nos testes **orientados por palavras-chave**, o testador cria **tabelas de dados** com palavras-chave que descrevem **o que** fazer, independentemente da ferramenta que as executa. Há três níveis: **nível superior** (testa um aspecto específico do sistema), **nível inferior** (mantém os casos mínimos e concisos) e **técnicas** (acessam de fato o sistema). Podem-se usar palavras-chave **predefinidas** das bibliotecas ou **criar novas**.
+
+### Quando automatizar
+
+Nem todo teste manual deve ser automatizado: um script exige **mais análise, projeto, engenharia e manutenção** e deve ser mantido **para sempre**. Antes, avalie a **complexidade** da aplicação, sua **estabilidade** (sistema que muda muito encarece a manutenção) e seu **ciclo de vida** (sistema descontinuado em breve não compensa), e faça um **caso de negócio** com o **ROI** (retorno sobre o investimento): o custo será recuperado em N execuções nos próximos M meses? Testes **exploratórios** (veja a [UA14](/resumos/teste-software/ua14/)) e os que dependem do raciocínio do testador **continuam manuais**.
+
+| **Vale automatizar** | **Não é recomendado** |
+|---|---|
+| **Carga e desempenho** (centenas de usuários simulados) | **Funcionalidades novas** (mudam muito) |
+| **Regressão** (repetitiva e sujeita a erro humano) | **Pouco usadas** (custo não se paga) |
+| **Tarefas repetitivas** | Que exigem **inspeção visual** (usabilidade) |
+| **Smoke tests** (a versão pode continuar sendo testada?) | **Protótipos** |
+| **Testes de unidade** (veja a [UA15](/resumos/teste-software/ua15/)) | |
+| **Cálculos matemáticos** e **funcionalidades críticas** | |
+| **Preparação de pré-condições** do ambiente | |
+
+#### Testabilidade
+
+**Testabilidade** é a facilidade de **expor falhas** durante os testes. Programa de **alta testabilidade** tende a **mostrar** suas falhas com entradas que geram defeitos; de **baixa**, tende a **ocultá-las** (saída correta para entrada que gera defeito). Ela exige **requisitos bem documentados** e, muitas vezes, **modificações na aplicação** que facilitem **observar e controlar** o estado de seus componentes internos.
+
+<Callout type="warning">
+**Atenção a pontos do material:**
+
+- O capítulo mistura **Selenium** e **Robot Framework**: são ferramentas **diferentes**. **Selenium** automatiza o **navegador**; **Robot Framework** é o **framework** (palavras-chave, relatórios) que **usa** o Selenium por meio de uma biblioteca. As "características" de sintaxe tabular e seções (Settings, Variables, Test Cases, Keywords) são do **Robot**, não do Selenium.
+- O Robot **não herda** a "indentação obrigatória do Python": ele separa colunas por **dois ou mais espaços** (ou `|`); a seção **Test Cases** pode ser substituída por **Tasks** (automação de processos, RPA).
+- **Selenium IDE** hoje não é restrito ao Firefox, e os navegadores citados (Internet Explorer, Opera) estão desatualizados (veja Práticas Modernas).
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Selenium e concorrentes.** O **Selenium 4** adota o protocolo **W3C WebDriver**, e o **Selenium IDE** (extensão para **Chrome, Firefox e Edge**) já exporta o código. **Selenium Grid** executa testes em paralelo em vários navegadores. As alternativas mais usadas hoje são **Playwright** (Microsoft; Chromium, Firefox e WebKit, com **esperas automáticas**), **Cypress** (JavaScript, roda dentro do navegador) e **WebdriverIO**. Para **mobile**, **Appium** (Android e iOS), **Espresso** (Android) e **XCUITest** (iOS); no Flutter, **integration_test**. Na nuvem: **BrowserStack**, **Sauce Labs**, **LambdaTest**.
+
+**Boas práticas.** Use o padrão **Page Object** para separar os seletores dos testes, prefira seletores estáveis (`data-testid`, ID) a XPath longos e use **esperas explícitas** em vez de pausas fixas (**testes instáveis**, *flaky tests*). Execute no **CI/CD** (GitHub Actions, Jenkins) em modo ***headless***, respeitando a **pirâmide de testes**: poucos testes de interface (lentos e frágeis) e muitos de unidade. **Teste visual** (Percy, Applitools) cobre a inspeção de aparência. No Robot Framework, a versão atual (**7.x**) usa a **SeleniumLibrary** ou a **Browser Library** (baseada em Playwright), e o formato **HTML** de dados de teste foi **removido**; a **IA** já ajuda a gerar e reparar seletores quebrados.
+
+```java
+// Selenium WebDriver com JUnit 5 e espera explícita
+WebDriver driver = new ChromeDriver();
+try {
+    driver.get("https://exemplo.com/login");
+    driver.findElement(By.id("usuario")).sendKeys("maria");
+    driver.findElement(By.cssSelector("#senha")).sendKeys("123");
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+    WebDriverWait espera = new WebDriverWait(driver, Duration.ofSeconds(5));
+    WebElement titulo = espera.until(
+        ExpectedConditions.visibilityOfElementLocated(By.tagName("h1")));
+    assertTrue(titulo.getText().contains("Bem-vinda"));
+} finally {
+    driver.quit();
+}
+```
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Automação de testes:** exercita o software **sem humano**; reduz **tempo e custo**. Estratégias de UI: **captura e reprodução** × **codificação**.
+- **Selenium IDE** = **record and playback**, fácil, **frágil**, baixo reuso, sem condicionais/iterações; **Selenium WebDriver** = **API OO** (Java, C#, Ruby, Python, JavaScript), vários navegadores, mais **reuso**, exige programação.
+- **Localizadores:** **ID**, **CSS**, **XPath** (caminho na hierarquia). Verificação com **JUnit/NUnit/TestNG**.
+- **Robot Framework:** código aberto, **ATDD/aceitação**, **sintaxe tabular**, **palavras-chave** (*keyword-driven*), bibliotecas em **Python/Java**, núcleo em **Python**, **terceira geração**.
+- **Seções:** **Settings**, **Variables**, **Test Cases** (obrigatória), **Keywords**. Variável = `${nome}`; argumentos separados por **2+ espaços**; **\[Documentation\]** e **\[Tags\]**.
+- **Antes de automatizar:** complexidade, **estabilidade**, **ciclo de vida** e **ROI**.
+- **Automatizar:** carga/desempenho, **regressão**, repetitivos, **smoke**, unidade, cálculos, críticas. **Não automatizar:** funcionalidades **novas**, **pouco usadas**, **inspeção visual**, **protótipos**, **exploratórios**.
+- **Testabilidade:** alta = expõe as falhas; baixa = as oculta.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- BIRNFELD, K. Testes de interface por robô. In: *Testes de software e gerência de configuração*. Porto Alegre: SAGAH.
+- ROBOT FRAMEWORK FOUNDATION. *Robot Framework User Guide*. robotframework.org.
+- SELENIUMHQ. *Selenium WebDriver*. selenium.dev/documentation.
+- GUNDECHA, U. *Selenium testing tools cookbook*. Birmingham: Packt, 2012.
+- KOVALENKO, D. *Selenium design patterns and best practices*. Birmingham: Packt, 2014.
+- MESZAROS, G. *xUnit test patterns: refactoring test code*. Upper Saddle River: Addison-Wesley, 2007.
+- ZHAN, Z. *Selenium WebDriver recipes in C#*. 2. ed. New York: Apress, 2015.
+- PUGH, K. *Lean-agile acceptance test-driven development*. Upper Saddle River: Addison-Wesley, 2011.

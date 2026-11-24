@@ -1,0 +1,195 @@
+---
+layout: ../../layouts/ResumaoLayout.astro
+title: "Resumão"
+subtitle: "Todos os tópicos da disciplina, em tópicos, sem redundância. Cada subtópico linka para a(s) UA(s) de origem."
+disciplineTitle: "Teste de Software"
+base: "/teste-software"
+collection: "teste-software"
+---
+
+### Fundamentos
+
+#### O que é teste de software
+
+- **Teste de software** = investigar o software para fornecer informações sobre sua **qualidade no contexto em que deve operar**, inclusive usando-o para **encontrar defeitos**. Testar **reduz** falhas e o custo de correção, mas **não garante** a eliminação completa delas.
+- **Erro → Defeito → Falha:** o **erro** é o engano humano; o **defeito** (*bug*) é a imperfeição que ele deixa no artefato (código, requisito); a **falha** é o comportamento errado visível na execução. *Bug* é o termo coloquial para erro ou defeito.
+- **Causa mais destacada** de defeitos: o **levantamento de requisitos**. **Quanto mais cedo** o defeito é achado, **mais barato** corrigir.
+- **Verificação vs. validação:** verificação = "estamos construindo **do jeito certo**?" (o produto cumpre a **especificação**); validação = "estamos construindo o **produto certo**?" (atende à **necessidade do usuário**).
+- **Competência** = conhecimento + habilidade + atitude (saber, saber fazer, querer fazer).
+
+*Fonte: [UA1](/resumos/teste-software/ua1/) · [UA3](/resumos/teste-software/ua3/) · [UA9](/resumos/teste-software/ua9/)*
+
+#### Qualidade e a ISO 9126
+
+- Seis características de qualidade: **funcionalidade**, **confiabilidade**, **usabilidade**, **eficiência**, **manutenibilidade** e **portabilidade**.
+- Os fatores da ISO **não levam, necessariamente, à medição direta**: dão base a **medidas indiretas** e a uma **lista de verificação**.
+- **Robustez** = continuar funcionando em condições **não previstas** na especificação (não é compatibilidade, portabilidade nem eficiência).
+- Além dos testes funcionais e estruturais, a qualidade depende de **revisões técnicas**, **especificações corretas** e **plano de teste**.
+
+*Fonte: [UA1](/resumos/teste-software/ua1/)*
+
+#### Processo de testes e recursos técnicos
+
+- **Atividades do processo:** **planejamento e controle** (o **controle** ocorre durante todo o processo), **análise e modelagem** (criam-se **casos e scripts**), **implementação e execução** (organizam-se e rodam-se as **suítes**), **avaliação dos critérios de saída e relatórios** e **encerramento**.
+- A **primeira** atividade é o **planejamento**, que gera o **plano de teste**.
+- **TDD** (*Test-Driven Development*): o teste vem **antes** do código. Ciclo **red** (o teste falha) → **green** (implementa para passar) → **refactor**.
+- **Ferramentas de exemplo:** **JUnit** (Java), **PHPUnit** (PHP), **Selenium** (web), **Sikuli** (qualquer interface gráfica), **Robotium** (mobile).
+
+*Fonte: [UA2](/resumos/teste-software/ua2/)*
+
+#### Tipos de teste
+
+- **Regressão:** testar de novo para ver se **problemas já resolvidos voltaram** após uma modificação ou nova funcionalidade.
+- **Carga** = condições **normais** de uso; **estresse** = **além do limite**; **estabilidade** = **longo período**; **volume** = limite de **dados/tráfego**.
+- **Usabilidade:** observar **usuários** realizando tarefas e registrar erros, dificuldades e eficiência (não é questionário nem robô). **Aceitação:** decide a **entrada em produção**.
+- **Estágios do teste** (seis): planejamento, preparação, procedimentos iniciais, especificação, execução e entrega.
+
+*Fonte: [UA1](/resumos/teste-software/ua1/) · [UA3](/resumos/teste-software/ua3/)*
+
+#### Abordagens: caixa-branca, caixa-preta e caixa-cinza
+
+| | **Caixa-branca** | **Caixa-preta** | **Caixa-cinza** |
+|---|---|---|---|
+| **Também chamada** | Estrutural, de vidro, transparente | Funcional | Híbrida |
+| **Conhecimento** | **Código-fonte** | Só a **interface** | **Parcial** |
+| **Compara** | Lógica interna | **Saída obtida × esperada** (requisitos) | Estrutura conhecida, execução como caixa-preta |
+| **Quem testa** | Em geral o **programador** | Testador, a partir dos **requisitos** | Webservices, consultas **SQL** |
+
+- **Caixa-branca depende da implementação** (mudou o código, refaz o teste); **caixa-preta independe** de linguagem e tecnologia.
+- **Problemas típicos:** caixa-branca acha **cálculos errados** e **término errado de laços**; caixa-preta acha **valor fora do intervalo aceito** e **campos obrigatórios em branco**.
+- **Teste de usabilidade** e **teste de aceitação** são, em geral, de caixa-preta.
+
+*Fonte: [UA1](/resumos/teste-software/ua1/) · [UA4](/resumos/teste-software/ua4/)*
+
+### Planejamento e Níveis de Teste
+
+#### Planejamento de testes (IEEE 829 e PMBOK)
+
+- **Objetivo do plano de testes:** uma **referência estruturada** que orienta os responsáveis pela qualidade, com **metodologias, critérios e procedimentos**; define **escopo** e **papéis** de cada testador. **Planejar antes de executar**, depois de levantar os requisitos.
+- **Três documentos básicos:** **plano de teste**, **caso de teste** e **roteiro de teste**.
+- **IEEE 829 = oito documentos:** **1 plano** (o mais importante) + **3 especificações** (projeto de teste, casos de teste, procedimentos de teste) + **4 relatórios**: **diário de teste** (registro **cronológico**), **relatório de incidentes** (problemas e eventos que exigem avaliação posterior), **encaminhamento de itens** (quais itens foram enviados e para qual **equipe**) e **resumo**.
+- **PMBOK:** vê o teste como **projeto independente**, com **cinco fases** (iniciação, planejamento, execução, **monitoramento e controle**, encerramento) e **dez áreas** de conhecimento. O **gerenciamento do escopo** define o que **será e o que não será** incluído e evita atividades não planejadas.
+
+*Fonte: [UA5](/resumos/teste-software/ua5/)*
+
+#### Casos de teste
+
+- **Caso de teste** verifica se as **funcionalidades e requisitos** foram construídos como pedido; o resultado é **positivo ou negativo**. Elaborar casos = etapa de **especificação**.
+- **Elementos:** **resumo**, **pré-condições**, **entradas**, **ação**, **resultados esperados** e **pós-condições**.
+- **Diagrama de caso de uso (UML)** define como os **usuários interagem** com o software por meio das **funcionalidades**; **UML não é linguagem de programação**.
+- **Fluxo básico** = caminho mais simples; **fluxos alternativos** saem dele por condição (voltam, geram outros ou terminam). **Cenário** = combinação de fluxos, e vale **um caso de teste por cenário**.
+
+*Fonte: [UA6](/resumos/teste-software/ua6/)*
+
+#### Níveis de teste
+
+| Nível | Foco | Quem / como |
+|---|---|---|
+| **Unidade** | Menor parte (método, função, classe), **isolada** | **Desenvolvedor**, no ambiente de desenvolvimento |
+| **Integração** | **Comunicação** entre partes (problemas de **transmissão de dados**) | Incremental |
+| **Sistema** | O sistema **completo**, requisitos **funcionais e não funcionais**, como o usuário | O nível **mais comum** |
+| **Aceitação** | Entrega final: **UAT**, aceitação de entrega, contrato e regulamento; **alfa** (interno) e **beta** (externos limitados) | Objetivo é **confiança e aceite**, não caçar defeitos |
+| **Regressão** | **Repete** testes após mudança (correção, alteração ou **nova funcionalidade**, a causa mais comum) | **Demorada**: ideal automatizar |
+
+*Fonte: [UA7](/resumos/teste-software/ua7/) · [UA2](/resumos/teste-software/ua2/) · [UA10](/resumos/teste-software/ua10/)*
+
+### Ferramentas e Gerenciamento
+
+#### Ferramentas de teste
+
+- **Não existe a melhor ferramenta**: a escolha depende de **linguagem, complexidade, equipe e artefato**.
+- **Sete categorias:** gestão de **defeitos**, de **testes**, de **projetos**, **automação funcional e de aceitação**, **automação de performance**, **controle de versões** e **apoio**.
+- **TestLink:** **gestão de testes** (open source, PHP, integra com Mantis; casos em **pacotes hierárquicos** atribuídos a testadores; exporta **CSV, PDF, Excel e Word**). Não executa testes sozinho nem faz carga.
+- **Selenium:** automação **web**, open source, multiplataforma e **multinavegador**; exige **conhecimento técnico**.
+- **IBM Rational Functional Tester** e **TestComplete:** ferramentas **pagas** (funcional e regressão; TestComplete usa **palavras-chave** e **gravação/reprodução**).
+- **JUnit:** framework **xUnit** de **testes de unidade** em **Java**; `assert` compara **esperado × obtido**; `@BeforeEach` roda antes de **cada** teste e `@AfterEach` depois de cada; suporta **testes parametrizados** e **CI/CD**.
+- **Outras:** **JMeter** (desempenho), **SoapUI** (serviços web), **Jira, Asana, Bugzilla, MantisBT** (defeitos e gestão).
+
+*Fonte: [UA8](/resumos/teste-software/ua8/) · [UA9](/resumos/teste-software/ua9/) · [UA10](/resumos/teste-software/ua10/)*
+
+#### Gerenciamento de problemas
+
+- **Reativo vs. proativo:** reativo resolve **depois** do defeito (inclusive relatado pelo cliente); proativo identifica e trata as causas **antes** de ocorrerem.
+- **Solução de contorno** é **provisória**; a **solução definitiva** exige descobrir a **causa**. Conceitos centrais: problema, solução de contorno, causa, **erro conhecido** e gestão de incidentes e problemas.
+- **Oito etapas:** identificar, classificar, alocar recursos, pesquisar e diagnosticar, **validar a solução** (se não valida, volta ao diagnóstico), determinar o erro, cadastrar o erro, emitir recomendações e melhorias.
+- **Testes manuais:** bons para **cenários pequenos**. **Automatizados:** repetem-se a qualquer momento (no *build*), mas têm **alto custo** inicial.
+- **Tipos de teste citados:** funcionalidade, acessibilidade, usabilidade, desempenho e suportabilidade.
+
+*Fonte: [UA9](/resumos/teste-software/ua9/)*
+
+#### Gerenciamento de testes e bug tracking
+
+- **Gerenciar testes** = planejar, gerar e aplicar testes, coletar resultados, analisar e acompanhar correções, em **todas** as etapas, com **gerente de testes** e **plano de testes**.
+- **Categorias:** **unidade**, **integração** (incremental), **sistema** e **aceitação** (**alfa**: interno; **beta**: externo limitado, que relata; **aceitação**: usuário final aceita ou rejeita).
+- **Ciclo de vida do defeito:** *new* → *open* → *assign* → (*rejected* | *deferred* | *test*) → *verified* → *closed*; **reopen** se o reparo gera nova falha. **Rejected** = falha inexistente ou não reproduzível; **deferred** = reconhecida, corrigida na **próxima versão**.
+- **Funções do bug tracking:** apoiar o **plano de testes**, **registrar defeitos** (a principal) e controlar o **ciclo de vida**.
+- **Plano de testes (IEEE 829):** inclui o que **não** será testado e o **motivo**, riscos, cronograma e aprovação.
+
+*Fonte: [UA10](/resumos/teste-software/ua10/)*
+
+### Técnicas de Teste
+
+#### Testes de caixa-preta
+
+- **Caixa-preta = funcional = baseada em especificação:** olha **entradas e saídas** contra os requisitos. **Fontes:** manuais, **casos de uso** e requisitos funcionais e não funcionais. Aplicável em **vários níveis**, manual ou automatizada.
+- **Caso de teste** = entradas e saídas predefinidas em ambiente controlado; **roteiro** = conjunto de casos por funcionalidade.
+- **Partição de equivalência:** divide as entradas em **classes válidas e inválidas** e testa **um representante** de cada. Intervalo = **1 válida + 2 inválidas**; conjunto ou booleano = **1 + 1**.
+- **Valor limite:** testa as **fronteiras** das classes e **complementa** a partição (por exemplo, 0, 1, 2 e 11, 12, 13).
+- **Tabela de decisão:** **condições lógicas** (V/F) e regras de negócio complexas; cada coluna é uma regra.
+- **Transição de estados:** a ação depende do **estado atual ou anterior**; valida sequências e **transições inválidas**.
+- **Caso de uso:** parte da interação **ator × sistema**, com pré e pós-condição e fluxos principal e alternativo; ajuda no **aceite**.
+
+*Fonte: [UA11](/resumos/teste-software/ua11/)*
+
+#### Testes de caixa-branca
+
+- **Caixa-branca = estrutural = caixa transparente:** examina o **código** e os **caminhos lógicos**; o resultado aponta **direto para o código** (ajuda **depuração**). Mais comum em **unidade e integração**.
+- **Grafo de fluxo:** **nós** (comandos) e **arestas** (desvios); é **ferramenta**, não critério; **nó predicado** = nó com decisão.
+- **Complexidade ciclomática (McCabe, 1976):** **V(G) = E − N + 2 = P + 1 = nº de regiões**; é o **número de caminhos independentes** e o **limite superior** de testes.
+- **Caminho independente:** introduz ao menos **uma nova aresta**. **Caminho básico:** grafo → V(G) → conjunto base → **um caso por caminho** (pode haver caminhos **infactíveis**).
+- **Teste de condição:** condições simples e compostas, em V e F. **Teste de ciclo:** **simples, aninhado** (de dentro para fora, **Beizer**), **concatenado** e **desestruturado** (**refatorar**).
+- **Fluxo de dados:** **definição**, **uso computacional**, **uso predicativo**. Critério **todas as definições**: cada definição alcança **ao menos um uso**; **todos os usos**: alcança **todos** os seus usos.
+
+*Fonte: [UA12](/resumos/teste-software/ua12/)*
+
+#### Tabelas de decisão
+
+- **Tabela de decisão** = **condições** (entradas), **regras** (colunas = combinações) e **ações**. **Completa:** **2ⁿ** regras para **n** condições booleanas. É um **suporte** da técnica funcional (caixa-preta).
+- **Tipos:** **entrada limitada** (V/F) e **entrada estendida** (valores ou faixas).
+- **Minimização:** mescla regras que **diferem em apenas uma condição** e levam à **mesma ação**; o valor irrelevante vira **"—" (*don't care*)**. Minimizar reduz testes, mas **assume** que o *don't care* realmente não importa.
+- **Fluxo:** identificar → analisar → **adequar/estabilizar** → **um caso por regra** → agrupar em conjunto de testes. **Origem:** **grafos de causa e efeito**, anos 1970.
+
+*Fonte: [UA13](/resumos/teste-software/ua13/)*
+
+#### Teste exploratório
+
+- **Aprende, projeta e executa ao mesmo tempo**, **sem roteiro** rígido, com **experiência, intuição e criatividade** (atividade **empírica**). Convencional: **plano e casos predefinidos**, dependente dos requisitos.
+- **Quando usar:** requisitos **inexistentes ou incompletos**, **pouco tempo**, **ágil**, situação de **risco**, apoio ao convencional e **reprodução de defeitos**. Não substitui o convencional: **combinam-se**.
+- **Atividades (recursivas):** exploração (hipótese) → projeto (cenários) → execução → **heurística** (compara e decide) → resultado.
+- **Técnicas:** **heurística** (experiência, todas as plataformas, limites), **test oracle** (referência para julgar o resultado), **Phoenix checklist** (lista de perguntas), **os porquês** (causa do problema).
+- **Estratégias:** **free style/ad hoc** (informal, testador experiente) vs. **session based** (sessões de **45 a 90 min**, ideal **60**, com **missão** e **charter**). A missão diz **o que** testar, **nunca como**.
+
+*Fonte: [UA14](/resumos/teste-software/ua14/)*
+
+### Automação
+
+#### Testes unitários
+
+- **Unidade** = menor parte testável (função, método, classe), testada **isolada**, em geral pelo **programador**, durante a codificação. **Não** testa o sistema global.
+- **Verifica:** **interface**, **dados locais**, **estruturas de controle**, **caminhos independentes**, **condições-limite** e **tratamento de erros**.
+- **Vantagens (automatizado):** amplia cobertura, **previne regressão**, incentiva **refatoração**, serve de **documentação**. **Desvantagem:** tempo extra do programador.
+- **Frameworks:** **JUnit** (Java), **NUnit** (C#), **PHPUnit**, **Mocha/Jasmine/Jest/QUnit** (JavaScript), **RSpec/Minitest** (Ruby), **Pytest** (Python). **Locust** é de **carga**, não de unidade.
+- **JUnit:** `assertEquals(esperado, obtido)`; **verde** = sucesso, **vermelho** = falha. **Dublês** (*mock*, *stub*) isolam a unidade; **TDD** = vermelho → verde → refatorar.
+
+*Fonte: [UA15](/resumos/teste-software/ua15/)*
+
+#### Testes de interface por robô
+
+- **Automação de UI** simula o usuário. Estratégias: **captura e reprodução** (*record and playback*, **Selenium IDE**) vs. **codificação** (**Selenium WebDriver**).
+- **Selenium IDE:** fácil e rápido, mas **frágil**, de **baixo reuso** e sem iterações/condicionais. **WebDriver:** **API orientada a objetos** (Java, C#, Ruby, Python, JavaScript), **vários navegadores**, mais **reuso**, exige programação. **Localizadores:** **ID**, **CSS**, **XPath**.
+- **Robot Framework:** framework de código aberto para **testes de aceitação e ATDD**, **sintaxe tabular**, **orientado a palavras-chave**, núcleo em **Python**, bibliotecas em Python/Java; usa o **Selenium** por meio de uma biblioteca.
+- **Seções do arquivo:** **Settings**, **Variables**, **Test Cases** (obrigatória), **Keywords**; variável `${nome}`; argumentos separados por **dois ou mais espaços**; rótulos `[Documentation]` e `[Tags]`.
+- **Antes de automatizar**, avalie **complexidade**, **estabilidade**, **ciclo de vida** e **ROI**. **Vale:** carga, **regressão**, tarefas repetitivas, **smoke**, unidade, cálculos, funcionalidades críticas. **Não vale:** funcionalidades **novas**, **pouco usadas**, que exigem **inspeção visual**, **protótipos** e testes **exploratórios**.
+- **Testabilidade:** **alta** = o programa **expõe** suas falhas; **baixa** = as **oculta**.
+
+*Fonte: [UA16](/resumos/teste-software/ua16/)*
