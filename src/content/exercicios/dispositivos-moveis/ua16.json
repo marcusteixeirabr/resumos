@@ -1,0 +1,115 @@
+{
+  "ua": 16,
+  "questions": [
+    {
+      "question": "No desenvolvimento de software para dispositivos móveis, a abordagem híbrida destaca-se como alternativa às aplicações puramente nativas. Como a arquitetura do Ionic viabiliza essa estratégia multiplataforma?",
+      "options": [
+        "Interpreta o código JavaScript por meio de uma ponte para renderizar diretamente componentes visuais nativos de cada plataforma no sistema operacional móvel, de forma análoga ao React Native.",
+        "Utiliza tecnologias web padrão (HTML5, CSS e JavaScript) executadas dentro de uma WebView nativa embutida, com uma base de código compartilhada entre plataformas Android e iOS.",
+        "Gera aplicações web puras em HTML5 capazes de acessar diretamente recursos nativos de hardware como GPS e câmera por conta própria, dispensando qualquer contêiner ou camada de plugins.",
+        "Compila código escrito na linguagem Dart antecipadamente (AOT) diretamente para código de máquina nativo sem utilizar motores de renderização web, de forma análoga à arquitetura do Google Flutter."
+      ],
+      "correctIndex": 1,
+      "explanation": "O Ionic utiliza tecnologias web padronizadas (HTML5, CSS e JavaScript/TypeScript) que rodam dentro de um componente de navegador embutido (WebView). Com uma única base de código, a aplicação é empacotada e executada tanto em Android quanto em iOS."
+    },
+    {
+      "question": "Um dos recursos fundamentais do Ionic Framework para assegurar uma experiência de uso natural aos usuários em diferentes ecossistemas móveis é o conceito de Platform Continuity. Em que consiste esse mecanismo?",
+      "options": [
+        "Garante a execução ininterrupta de processos em segundo plano mesmo após a desinstalação física do aplicativo pelo usuário no gerenciador de aplicativos do sistema.",
+        "Exige que o programador implemente manualmente regras e folhas de estilo CSS totalmente separadas e específicas para cada modelo e fabricante de smartphone presente no mercado global de dispositivos móveis.",
+        "Força a sincronização contínua de dados da aplicação com bancos de dados relacionais em nuvem através de transações distribuídas e conexões de rede de baixa latência.",
+        "Adapta automaticamente o estilo visual e o comportamento dos componentes de interface ao sistema operacional do aparelho, seguindo Material Design no Android e estilo nativo no iOS."
+      ],
+      "correctIndex": 3,
+      "explanation": "Platform Continuity é o mecanismo pelo qual os componentes do Ionic adaptam dinamicamente sua aparência e interação conforme o sistema operacional hospedeiro (Material Design no Android e visual Human Interface Guidelines no iOS), mantendo o mesmo código-fonte."
+    },
+    {
+      "question": "Para que uma aplicação web executada dentro de uma WebView consiga interagir com recursos de hardware (como câmera, GPS e arquivos), o Ionic recorre a camadas de integração nativa. Quais ferramentas desempenham esse papel?",
+      "options": [
+        "O compilador de código nativo GCC em conjunto com scripts em linguagem C++ que substituem integralmente o código JavaScript compilado no dispositivo móvel de destino.",
+        "O Apache Cordova e o Capacitor, que encapsulam a aplicação web em um contêiner nativo e disponibilizam acesso aos recursos do dispositivo por meio de plugins especializados.",
+        "O compilador Stencil, atuando como um seletor de frameworks front-end que gerencia diretamente a abertura de portas físicas de comunicação de hardware no aparelho móvel.",
+        "O motor de renderização V8 do navegador web desktop, que realiza chamadas diretas de baixo nível às portas de entrada e saída do processador sem necessidade de plugins nativos."
+      ],
+      "correctIndex": 1,
+      "explanation": "Apache Cordova e seu sucessor moderno, o Capacitor, fornecem o invólucro (wrapper) nativo para a aplicação web e implementam pontes de comunicação (plugins) que expõem APIs nativas do dispositivo (câmera, sensores, sistema de arquivos) para o código JavaScript."
+    },
+    {
+      "question": "No fluxo de trabalho e preparação do ambiente para desenvolvimento de aplicações com o Ionic Framework, qual é o papel técnico essencial desempenhado pelo Node.js?",
+      "options": [
+        "Funciona como ambiente de execução JavaScript fora do navegador e provê o gerenciador npm para instalar dependências de desenvolvimento, pacotes e a própria interface de linha de comando (Ionic CLI).",
+        "Atua como uma tecnologia embutida dentro do pacote compilado da aplicação móvel com a finalidade exclusiva de permitir que o software acesse e controle todos os sensores e o hardware do smartphone plenamente em tempo de execução.",
+        "É empacotado diretamente dentro do arquivo de instalação do aplicativo (APK ou IPA) para atuar como o servidor web móvel interno que executa as telas do Ionic no aparelho celular.",
+        "Atua como a ponte nativa em tempo de execução que substitui o Capacitor e o Cordova, permitindo que scripts web acessem diretamente a câmera e os sensores físicos do dispositivo."
+      ],
+      "correctIndex": 0,
+      "explanation": "O Node.js é o ambiente de execução JavaScript no servidor/desenvolvimento (fora do navegador) e fornece o npm. No ecossistema Ionic, ele é o pré-requisito de infraestrutura que viabiliza ferramentas de build, empacotamento, compilação e a própria CLI (@ionic/cli), e não uma ferramenta interna de acesso a hardware no celular."
+    },
+    {
+      "question": "O desenvolvimento híbrido com Ionic oferece vantagens competitivas e produtivas relevantes para equipes de software. Quais benefícios justificam amplamente a adoção dessa abordagem?",
+      "options": [
+        "Acesso irrestrito e prioritário a drivers proprietários de aceleração de GPU com desempenho computacional equivalente ou superior ao de aplicações nativas escritas em C++ ou Rust para jogos tridimensionais de alta fidelidade.",
+        "Dispensa integral de testes de homologação em dispositivos físicos reais e eliminação definitiva de requisitos de conformidade com as políticas das lojas de aplicativos móveis.",
+        "Garantia absoluta de que a aplicação funcionará em qualquer dispositivo legado descontinuado sem qualquer impacto no consumo de memória RAM ou autonomia da bateria.",
+        "Menor custo e maior produtividade pela utilização de equipe única com competências em desenvolvimento web front-end, facilidade de manutenção de uma só base de código e prototipagem ágil."
+      ],
+      "correctIndex": 3,
+      "explanation": "As principais vantagens do desenvolvimento híbrido com Ionic incluem reaproveitamento de competências da equipe de desenvolvimento web (HTML/CSS/JS), redução de custos de contratação, menor tempo de desenvolvimento (time-to-market), facilidade de manutenção e rapidez na prototipação."
+    },
+    {
+      "question": "A evolução arquitetural do Ionic a partir da versão 4 reformulou sua independência tecnológica e seu modelo de componentes. Qual transformação técnica marcou essa evolução estrutural?",
+      "options": [
+        "O abandono integral de padrões de tecnologias web abertas em favor da compilação estrita e compulsória de código na linguagem Dart, transformando o framework em uma réplica arquitetural direta do Google Flutter.",
+        "A transição para uma arquitetura agnóstica baseada em componentes web (Web Components) construídos com Stencil, permitindo integração com Angular, React, Vue ou JavaScript puro.",
+        "A obrigatoriedade de utilizar exclusivamente a linguagem Java para desenvolvimento de regras de negócio, eliminando o suporte prévio a TypeScript em projetos corporativos.",
+        "O confinamento do framework exclusivamente à criação de ferramentas gráficas de diagramação como o Ionic Studio, com o encerramento do desenvolvimento de componentes móveis."
+      ],
+      "correctIndex": 1,
+      "explanation": "A partir do Ionic 4, os componentes de interface foram reescritos como Web Components padronizados usando o compilador Stencil. Com isso, o Ionic deixou de depender exclusivamente do Angular, tornando-se agnóstico de framework (compatível com Angular, React, Vue ou Vanilla JS)."
+    },
+    {
+      "question": "Além de gerar aplicativos para instalação em smartphones via contêineres nativos, o Ionic possibilita a construção de Progressive Web Apps (PWAs). Qual é a característica operacional marcante das PWAs?",
+      "options": [
+        "Exigem obrigatoriamente a submissão e aprovação formal nas lojas de aplicativos (App Store e Google Play) com empacotamento em contêineres nativos assinados para que possam ser instaladas pelo usuário.",
+        "Funcionam exclusivamente quando conectados a servidores de redes locais fechadas, sendo tecnicamente incapazes de operar sobre a rede mundial de computadores pública.",
+        "São aplicações web com experiência e comportamento similares aos de apps nativos, capazes de operar offline e de serem distribuídas diretamente pela web sem intermediação obrigatória das lojas de aplicativos.",
+        "Dependem obrigatoriamente de extensões de navegador de terceiros instaladas de forma manual pelo próprio usuário para conseguir interpretar folhas de estilo CSS e renderizar formulários ou tabelas com dados dinâmicos na tela."
+      ],
+      "correctIndex": 2,
+      "explanation": "Progressive Web Apps (PWAs) são aplicações web enriquecidas que combinam o alcance da web com funcionalidades típicas de apps nativos (como modo offline via service workers, responsividade e atalho na tela inicial), dispensando o processo tradicional de publicação e download pelas lojas de apps."
+    },
+    {
+      "question": "Ao iniciar um novo projeto utilizando a interface de linha de comando do Ionic (@ionic/cli), quais comandos e modelos estruturais (templates) são classicamente empregados no ciclo inicial?",
+      "options": [
+        "O comando ionic compile para compilar binários Java da máquina virtual e o comando ionic emulate com suporte exclusivo ao template corporativo angular-enterprise, desprovido de qualquer flexibilidade de escolha de leiaute base.",
+        "O comando ionic publish para gerar certificados de assinatura digital de forma autônoma e o comando ionic test com o modelo fixo de formulários monolíticos de banco de dados.",
+        "O comando ionic deploy em conjunto com os serviços legados Ionic Creator e DevApp para gerar e testar interfaces exclusivamente na nuvem sem suporte a compilação local.",
+        "O comando ionic start para criar a aplicação a partir de modelos como blank, tabs ou sidemenu, e o comando ionic serve para compilar e executar o projeto localmente no navegador com live reload."
+      ],
+      "correctIndex": 3,
+      "explanation": "No fluxo de desenvolvimento com a Ionic CLI, utiliza-se `ionic start <nome> <template>` (com templates consagrados como blank, tabs e sidemenu) para criar o projeto, e `ionic serve` para rodar o servidor de desenvolvimento local no navegador com recarregamento automático (live reload)."
+    },
+    {
+      "question": "Em uma aplicação Ionic moderna estruturada com Angular e TypeScript, como os elementos visuais são declarados na interface e integrados à lógica do componente?",
+      "options": [
+        "Os elementos visuais utilizam tags declarativas padronizadas com o prefixo ion- no template HTML, enquanto a classe TypeScript define propriedades de estado e métodos disparados por eventos da interface.",
+        "Os componentes são declarados exclusivamente em arquivos de leiaute XML nativos no formato do Android Studio, comunicando-se com a lógica por meio de arquivos de manifesto Java ou Kotlin.",
+        "Os componentes visuais dependem de chamadas assíncronas obrigatórias ao servidor do Apache Cordova em cada renderização de tela para converter strings de estilo em gráficos de baixo nível.",
+        "Os componentes visuais com o prefixo ion- constituem diretivas proprietárias exclusivas do framework Angular, sendo tecnicamente incompatíveis com aplicações móveis construídas com React, Vue ou Vanilla JS."
+      ],
+      "correctIndex": 0,
+      "explanation": "No Ionic com Angular, a UI é declarada no template HTML por meio de componentes web personalizados (como <ion-header>, <ion-content>, <ion-list>, <ion-button>), que se conectam a propriedades e métodos da classe controladora (@Component) em TypeScript."
+    },
+    {
+      "question": "No cenário atual do desenvolvimento móvel multiplataforma, qual é a situação de ferramentas históricas do Ionic e como o ecossistema moderno organiza o acesso nativo aos dispositivos?",
+      "options": [
+        "Ferramentas como Ionic Creator, Lab, Studio e DevApp continuam sendo as plataformas oficiais e obrigatórias recomendadas pela equipe do framework para teste e geração de aplicativos modernos.",
+        "O Apache Cordova foi adotado como a única ferramenta oficial suportada pela Apple para publicação de aplicativos na App Store, eliminando qualquer suporte futuro ao ecossistema Capacitor.",
+        "Ferramentas gráficas legadas de prototipagem e testes da fase inicial foram descontinuadas, e o ecossistema moderno apoia-se na Ionic CLI, no Capacitor (com comandos como cap add e cap sync) e nos SDKs nativos oficiais.",
+        "O Ionic foi completamente reescrito para substituir os compiladores oficiais do Android Studio e do Xcode, gerando arquivos de instalação APK e IPA sem necessidade de ferramentas nativas."
+      ],
+      "correctIndex": 2,
+      "explanation": "Ferramentas do ecossistema inicial como Ionic Creator, Lab, Studio e DevApp foram oficialmente descontinuadas. O fluxo moderno recomendado baseia-se na Ionic CLI e no Capacitor (com `npx cap add`, `npx cap sync` e `npx cap open`), cujos projetos nativos (pastas android/ e ios/) são compilados e assinados no Android Studio e Xcode."
+    }
+  ]
+}

@@ -1,0 +1,197 @@
+---
+layout: ../../layouts/ResumaoLayout.astro
+title: "Resumão"
+subtitle: "Todos os tópicos da disciplina, em tópicos, sem redundância. Cada subtópico linka para a(s) UA(s) de origem."
+disciplineTitle: "Programação para Dispositivos Móveis"
+base: "/dispositivos-moveis"
+collection: "dispositivos-moveis"
+---
+
+### Fundamentos e Ambiente
+
+#### Evolução dos dispositivos e das redes
+
+- **Primeiro smartphone:** **IBM, 1993**. O sucesso de massa veio com o **iPhone (2007)**; o primeiro aparelho com **Android** foi o **HTC G1 (2008)**.
+- **Redes:** **2G/GSM** era lenta e cara; o **3G** aumentou o interesse por conteúdo **multimídia**; **4G** e **5G** ampliaram velocidade e latência baixa.
+- **Computação ubíqua** (Mark Weiser, Xerox, **1991**): **onipresença** de computadores de vários tipos interagindo de forma **imperceptível**. Smartphones **fazem parte** do conceito.
+- **Limitações do mobile:** telas variadas, **bateria** (o recurso mais crítico), toque e teclado virtual, conexão instável. **Vantagens:** câmera, **GPS** e sensores.
+
+*Fonte: [UA1](/resumos/dispositivos-moveis/ua1/)*
+
+#### Plataformas e tipos de aplicativo
+
+- **Android e iOS são incompatíveis:** o app de um precisa ser **reescrito** no outro, não só recompilado. **Android:** **Kotlin** (preferida hoje) e **Java**; **iOS:** **Swift** e Objective-C.
+- **Nativo vs. híbrido vs. PWA:** **nativo** = código específico da plataforma, acesso total ao hardware; **híbrido** = **HTML, CSS e JavaScript** empacotados como app, com acesso ao hardware por **plugins**; **PWA** = site com perfil de app (ícone, **cache local**, uso **off-line**), sem passar pelas lojas.
+- **Híbrido não é "só um site no navegador"**: é empacotado como app e roda em uma **WebView**.
+
+*Fonte: [UA1](/resumos/dispositivos-moveis/ua1/) · [UA13](/resumos/dispositivos-moveis/ua13/)*
+
+#### IDE, emulador e depuração
+
+- **IDE oficial:** **Android Studio** (2013, baseada na **IntelliJ IDEA**). O **Eclipse** foi a primeira IDE com suporte, via plugin **ADT** (descontinuado).
+- **Emulador oficial:** **Android Emulator**, configurado por **AVD**; simula ligação, SMS, bateria, GPS, sensores e câmeras. Alternativas: BlueStacks, Genymotion, Android x86.
+- **Gradle** automatiza a **compilação** e roda também sem o Android Studio.
+- ***Break point*:** pausa a execução para ver variáveis e avançar linha a linha. **Monitor de recursos:** acompanha **memória** e **processamento**.
+- **Dispositivo real é indispensável**, mesmo com emulador: certos comportamentos só aparecem no aparelho físico.
+
+*Fonte: [UA2](/resumos/dispositivos-moveis/ua2/)*
+
+#### Java essencial para Android
+
+- **Tipos primitivos têm limites** (`byte` vai de −128 a 127; `int` ~±2 bilhões; `boolean` só `true`/`false`). `String` é tipo **por referência**. Linguagem **estaticamente tipada**: o tipo é declarado.
+- **Modificadores:** **`private`** = só a própria classe; `public` = qualquer classe; **`static`** = usa sem instanciar; **`final`** = não pode ser redefinido; **`abstract`** = sem implementação.
+- **Encapsulamento** = ocultar detalhes internos; **sobrecarga** = mesmo método com **parâmetros diferentes** na mesma classe; **herança** reaproveita comportamento da superclasse.
+- **Operadores:** `++`/`--` (incremento e decremento), `==`/`!=`/`>=` (comparação), `=`/`+=` (atribuição).
+- **`do…while`** executa **ao menos uma vez**; `while` pode não executar nenhuma.
+
+*Fonte: [UA3](/resumos/dispositivos-moveis/ua3/)*
+
+### Interface e Componentes
+
+#### Mockups e prototipação
+
+- **Mockup = wireframe = protótipo:** rascunho de interface feito **sem o código** das funcionalidades. **Função principal:** **validar as ideias iniciais antes de desenvolver**. **Quanto antes a mudança é pedida, menor o custo.**
+- **Dimensões da fidelidade:** **detalhamento**, **grau de funcionalidade**, **similaridade de interação** e **refinamento estético**.
+- **Baixa fidelidade:** papel e caneta, rápida e descartável (Balsamiq). **Média:** no computador, mostra o fluxo de navegação (Draw.io, Mockflow). **Alta:** permite simular o uso (**Figma**, **Adobe XD**, **Sketch**, este só em **Mac**).
+- Mockups facilitam a **ideação** e o desenvolvimento **colaborativo**, e devem ser **discutidos com o demandante**.
+
+*Fonte: [UA4](/resumos/dispositivos-moveis/ua4/)*
+
+#### Activity e ciclo de vida
+
+- **Activity** = componente que fornece a **interface do usuário** (a "janela"). Rotinas longas, rede e notificações **não** são papel dela.
+- **Pilha de retorno = LIFO** (último a entrar, primeiro a sair).
+- **Estados:** **Resumed** (primeiro plano), **Paused** (visível, sem foco), **Stopped** (em memória, invisível).
+- **Métodos:** **`onCreate()`** é o primeiro e o **único obrigatório** (chama `setContentView()`); **`onPause()`** é onde se **persistem** os dados antes de sair; `onDestroy()` encerra.
+- **Loops:** **total** (`onCreate`–`onDestroy`), **visível** (`onStart`–`onStop`), **primeiro plano** (`onResume`–`onPause`).
+- **`finish()`** destrói a Activity; **`findViewById()`** busca componentes; **`setContentView()`** define o leiaute. **Activity inicial:** `intent-filter` com **MAIN** + **LAUNCHER** no manifesto.
+- **`startActivityForResult()`** recebe o resultado em **`onActivityResult()`**, identificado pelo `requestCode`. **`SharedPreferences`** guarda preferências simples.
+
+*Fonte: [UA5](/resumos/dispositivos-moveis/ua5/)*
+
+#### Recursos e a classe R
+
+- **Recursos** ficam no diretório **`res`**, em subpastas por tipo: `drawable`, `layout`, `values`, `menu`, `mipmap`, `anim`, `raw`, `xml`. A organização por pastas facilita a **localização**.
+- **Strings** ficam em `res/values` e são **reutilizáveis** (rótulos padronizados); existem também **array de strings** e **plurais**.
+- **Classe `R`:** gerada **automaticamente** na compilação, mantém a **sincronia entre XML e código** por **IDs inteiros**; **não se altera à mão**.
+- **Dois modos de acesso:** no **código** (`R.string.nome`) e no **XML** (`@string/nome`); `?atributo` referencia atributos do **tema**.
+- **`assets/`** não gera ID e usa o `AssetManager`; **`res/raw/`** gera ID. Referência de view: `@+id/nome` (cria) e `@id/nome` (usa).
+
+*Fonte: [UA6](/resumos/dispositivos-moveis/ua6/)*
+
+#### Leiautes
+
+| | **LinearLayout** | **RelativeLayout** | **ConstraintLayout** |
+|---|---|---|---|
+| **Ideia** | Alinha filhos em **uma direção** (horizontal ou vertical) | Posição **relativa** a outro componente (por ID) ou ao **pai** | Posição por **restrições**, hierarquia **plana** |
+| **Atributos** | `android:orientation` (padrão: **horizontal**), `layout_weight` | `layout_below`, `layout_toRightOf`, `layout_alignParentTop` | Mínimo de **uma restrição horizontal e uma vertical** |
+| **Observação** | **Maior peso** ocupa mais espaço | Padrão: canto **superior esquerdo**; mudar um item pode exigir mudar outros | Sem restrição, a view vai para **[0, 0]**; é o padrão atual |
+
+*Fonte: [UA7](/resumos/dispositivos-moveis/ua7/) · [UA10](/resumos/dispositivos-moveis/ua10/)*
+
+#### Tela principal e menus
+
+- **Menu de opções:** ações principais da tela; `onCreateOptionsMenu` **infla** o XML de `res/menu` com o **MenuInflater**; `onPrepareOptionsMenu` roda **antes de exibir** (habilita ou altera itens); `onOptionsItemSelected` trata o **clique** (retorna `true` se tratou).
+- **ActionBar** (três partes: **ícone**, **action buttons**, **action overflow**) e **Toolbar** (barra dentro do app, com tema **NoActionBar** + `setSupportActionBar`).
+- **Menu contextual:** ações sobre **um item**, por **clique longo** (`registerForContextMenu` + `onCreateContextMenu`); modo **flutuante** (um item) ou **ActionMode** (vários).
+- **PopupMenu:** ancorado a uma view, lista vertical de ações estendidas.
+
+*Fonte: [UA8](/resumos/dispositivos-moveis/ua8/)*
+
+### Navegação e Interação
+
+#### Navegação entre telas com Intent e Bundle
+
+- Telas pequenas pedem **várias activities**, com a informação separada em grupos temáticos. Nova activity: **New → Activity**, gerar leiaute e **desmarcar Launcher**.
+- **Intent** = objeto de **mensagem** que pede ação a outro componente (inicia **activities**, **serviços** e entrega **broadcasts**).
+- **Explícito:** nomeia o componente (**contexto + classe**), uso **interno**, **obrigatório para serviços** (segurança). **Implícito:** declara uma **ação** e outro app responde; **não nomear o destino reduz a segurança**.
+- **Dados entre telas:** `putExtra("chave", valor)` e `getStringExtra`/`getIntExtra` (**mesma chave**); ou **Bundle** (mapa **chave/valor**, `putExtras` e `getIntent().getExtras()`).
+- **Android Jetpack** reúne componentes da Google; o de navegação é o **Navigation**.
+
+*Fonte: [UA9](/resumos/dispositivos-moveis/ua9/)*
+
+#### Design de interação e guidelines
+
+- **Guidelines:** guias dos fabricantes (Google e Apple) com recomendações de **padrão de interação**. No Android há também diretrizes de **qualidade** (compatibilidade, desempenho, segurança).
+- **Material Design:** guia do Google para design **visual, de movimento e de interação**, com tema padrão, *widgets* e APIs de sombras e animações. **Componentes:** **botão de ação flutuante** (ação principal), **barra de aplicativos**, **gaveta de navegação**, barras de ferramentas e **barra inferior**.
+- **iOS, três temas:** **clareza** (legibilidade), **deferência** (a interface não compete com o conteúdo) e **profundidade** (camadas e transições).
+- **Vector Asset Studio** importa ícones **SVG** do Material no Android Studio.
+
+*Fonte: [UA10](/resumos/dispositivos-moveis/ua10/)*
+
+### Dados e Recursos Nativos
+
+#### Webservices RESTful
+
+- **REST** (*Representational State Transfer*) = **estilo de arquitetura** (não é protocolo) baseado em **recursos**, **URIs**, **HTTP** e **representações** (JSON, XML). **RESTful** = serviço que o segue; alternativa mais **leve** ao **SOAP**.
+- **Métodos:** **GET** (obter, seguro), **POST** (criar), **PUT** (atualizar), **DELETE** (remover). **404** = recurso não encontrado.
+- **Características:** **cliente-servidor**, ***stateless*** (cada requisição é independente, sem sessão no servidor), ***cacheable***, **interface uniforme**, **camadas** e **code-on-demand** (a única opcional).
+- **Modelo de maturidade de Richardson:** quanto a API é de fato RESTful (**nível 3 = hypermedia**). **O mesmo back-end** atende app móvel, desktop e Web.
+
+*Fonte: [UA11](/resumos/dispositivos-moveis/ua11/)*
+
+#### Persistência com SQLite
+
+- **Persistência** = guardar dados na **memória secundária** para uso futuro, mesmo após encerrar o app.
+- **Formas no Android:** **preferências compartilhadas** (chave-valor), armazenamento **interno** (privado) e **externo** (público), **SQLite** (estruturado) e **rede**. Hoje se prefere **Room** sobre o SQLite puro.
+- **SQLite:** biblioteca **open source** em **C**, **embutida (sem servidor)**, grava em **arquivo**, sem configuração, banco **privado** do app, **ACID** (Atomicidade, Consistência, Isolamento, Durabilidade). **Não** tem `GRANT`/`REVOKE`.
+- **`SQLiteOpenHelper`:** `onCreate()` cria as tabelas e **`onUpgrade()`** migra a versão. **`getWritableDatabase()`** grava, **`getReadableDatabase()`** lê (devolvem `SQLiteDatabase`).
+- **`ContentValues`** guarda valores a inserir/atualizar; **`Cursor`** percorre o resultado. **CRUD:** `insert`, `query`, `update`, `delete` (os dois últimos com **WHERE**).
+
+*Fonte: [UA12](/resumos/dispositivos-moveis/ua12/)*
+
+#### Funcionalidades nativas
+
+- **Nativo:** específico para **uma plataforma**, com **acesso total** ao hardware. **Híbrido:** núcleo **Web** (HTML5, CSS, JavaScript), **uma base de código**, acesso ao hardware por **plugins**.
+- **Acelerômetro:** aceleração nos eixos **X, Y, Z**. **Giroscópio:** **rotação**, complementa o acelerômetro. **Magnetômetro:** **campo magnético** (bússola). **GPS:** posição por **satélites** (trilateração), **drena bateria**.
+- **Outros sensores:** **barômetro** (pressão), **proximidade** (desliga a tela), **luz ambiente** (brilho), **biométrico**.
+- **Cordova:** framework **gratuito e open source** (WebView, Web App e plugins; **não vem com plugins instalados**). **Titanium** (Appcelerator) é outro SDK; **Ionic** usa plugins Cordova (hoje, **Capacitor**).
+- **Desafios:** tempo real, memória e E/S limitadas, dependência de hardware.
+
+*Fonte: [UA13](/resumos/dispositivos-moveis/ua13/)*
+
+### Publicação e Desenvolvimento Híbrido
+
+#### Regras e políticas das lojas
+
+- Duas lojas: **Google Play** e **Apple App Store**, com regras **rígidas**, parecidas nos objetivos (ambiente **seguro**) e baseadas em **legislação** (EUA/Europa e leis locais) mais política própria. A loja tolerar algo **não dispensa a lei do país** (LGPD, GDPR).
+- **Proibidos:** conteúdo **discriminatório**, **violência**, extremismo e terrorismo, **pornografia**, venda de **medicamentos sem receita**. **Jogos de azar** só com restrições (Google); **público infantil** com normas rígidas.
+- **Privacidade:** política clara, **permissões mínimas**, dados protegidos. A **Apple testa** qualidade, segurança e **desempenho** (sem beta, sem funcionalidade escondida, **back-end operacional**).
+- **Comissão:** hoje **15%** até **US$ 1 milhão/ano** nos programas de pequenos desenvolvedores, **30%** acima disso.
+
+*Fonte: [UA14](/resumos/dispositivos-moveis/ua14/)*
+
+#### Publicar para Android e iOS
+
+| | **Google Play** | **Apple App Store** |
+|---|---|---|
+| **Conta** | **Play Console**, taxa **única** (US$ 25) | **Developer Program**, **anual** (US$ 99) |
+| **Computador** | **Qualquer** | **Mac com Xcode**, obrigatório |
+| **Envio** | Play Console; trilhas **interna, fechada, aberta, produção** | **App Store Connect**; **toda** versão passa por revisão |
+| **Vender** | **Perfil de comerciante** (pagamentos) | Empresa precisa do **D-U-N-S** |
+
+- **Android:** build **release** → **assinar** com chave privada (`keytool`) → **zipalign** (antes da assinatura com `apksigner`) → Play Console. Hoje se envia **AAB** com **Play App Signing**.
+- **iOS com Ionic:** `platforms add ios` → `build ios --prod` → abrir o **`.xcworkspace`** no **Xcode**. **TestFlight** distribui betas.
+- **Publicação refere-se a uma versão**; o desenvolvimento é **contínuo**.
+
+*Fonte: [UA14](/resumos/dispositivos-moveis/ua14/)*
+
+#### TypeScript
+
+- **TypeScript** = **superconjunto do JavaScript** com **tipagem estática** e orientação a objetos; **transpila** para JavaScript. Usado em **Ionic, Angular, React**.
+- **Tipos:** `boolean`, `number` (decimal, hex, binário, octal), `string`, **array** (`number[]` ou `Array<number>`), **tupla** (tipos e ordem fixos), **enum**, **any** (desliga a checagem; migração gradual) e `Object` (bloqueia métodos inexistentes). **Template string:** **crases** e `${}`.
+- **var vs. let vs. const:** **var** = escopo de **função**; **let** = escopo de **bloco**; **const** = bloco, **sem reatribuição** (as propriedades do objeto podem mudar).
+- **Laços:** **`for...in`** percorre **chaves/índices**; **`for...of`** percorre **valores**. **Desestruturação:** `[a, b] = [b, a]` troca valores sem variável temporária.
+- **Funções** nomeadas ou **anônimas**, com tipos; **classes** com `extends` (herança) e **interfaces** que definem **requisitos mínimos** do objeto.
+
+*Fonte: [UA15](/resumos/dispositivos-moveis/ua15/)*
+
+#### Ionic
+
+- **Ionic** = framework **open source** (Drifty Co., **2013**) para apps **híbridos/multiplataforma** e **PWA** com tecnologias Web, que roda em **WebView** com **uma base de código** para Android e iOS. É um **kit de interface** (componentes `ion-*`): a camada nativa vem do **Cordova** ou do **Capacitor** (sucessor recomendado).
+- **Platform Continuity:** os componentes **adaptam o visual** ao sistema (Material no Android, estilo iOS).
+- **Vantagens:** **produtividade**, **menor tempo e custo**, equipe **front-end**, **prototipação** rápida, documentação e comunidade, **PWA**.
+- **Angular e TypeScript:** o Ionic 3 usava Angular; do **Ionic 4** em diante **não depende exclusivamente** dele (também React, Vue ou JS puro). **Stencil** é o compilador de **web components** da base.
+- **Pré-requisito:** **Node.js** (ambiente de execução JavaScript, com **npm**). **Comandos:** `ionic start MyApp tabs`, `ionic serve`. **Templates:** **blank**, **tabs**, **sidemenu**.
+
+*Fonte: [UA16](/resumos/dispositivos-moveis/ua16/)*

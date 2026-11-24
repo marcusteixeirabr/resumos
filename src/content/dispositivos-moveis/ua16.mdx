@@ -1,0 +1,128 @@
+---
+title: "UA16 — Ionic"
+subtitle: "Desenvolvimento híbrido com Ionic: conceitos, Cordova e Capacitor, funcionalidades, vantagens e um primeiro aplicativo."
+ua: 16
+group: "Publicação e Desenvolvimento Híbrido"
+---
+import Callout from "../../components/Callout.astro";
+import SlidesGrid from "../../components/SlidesGrid.astro";
+import SlideItem from "../../components/SlideItem.astro";
+import AudioSummary from "../../components/AudioSummary.astro";
+
+<AudioSummary src="/assets/audio/dispositivos-moveis/ua16.m4a" title="Ionic" />
+
+<SlidesGrid>
+  <SlideItem src="/assets/img/slides/dmm_01.webp" alt="Infográfico sobre o framework Ionic e o desenvolvimento híbrido" caption="Framework Ionic" />
+</SlidesGrid>
+
+### Desenvolvimento híbrido e o Ionic
+
+O mercado de aplicativos móveis cresce, e uma das modalidades que mais avançam é o **desenvolvimento híbrido** (veja a [UA13](/resumos/dispositivos-moveis/ua13/) para nativo × híbrido). Ele usa **tecnologias web** (**HTML5**, **CSS** e **JavaScript**), com curva de aprendizado menor que a do nativo, e empacota o app para **Android e iOS** com **um só código**.
+
+O **Ionic** é um **framework de código aberto** criado em **2013** pela **Drifty Co.** para construir aplicativos **multiplataforma** (e **PWA**) com tecnologias web. Os apps funcionam como **pequenos sites** executados dentro de uma **WebView** (navegador embutido) no aplicativo, que acessam os recursos nativos por **plugins**. Fornece uma biblioteca de **componentes de interface** (botões, listas, abas, menus) que **imitam o visual de cada plataforma**.
+
+**Platform Continuity:** os componentes **adaptam a aparência e o comportamento** ao sistema operacional do dispositivo (estilo **Material Design** no Android e estilo **iOS** no iPhone), com o mesmo código.
+
+### Cordova e Capacitor
+
+Para falar com o aparelho, o Ionic precisa de uma **camada nativa**:
+
+| | **Apache Cordova** | **Capacitor** |
+|---|---|---|
+| **Papel** | Empacota o app web em um contêiner nativo e dá acesso ao dispositivo por **plugins** | **Alternativa moderna** ao Cordova, criada pela equipe do Ionic |
+| **Projetos nativos** | Gerados e geridos pela ferramenta | **Pastas Android e iOS** do projeto ficam no repositório, editáveis no Android Studio e no Xcode |
+
+### Funcionalidades do Ionic
+
+- **Multiplataforma:** a arquitetura roda sobre o **Cordova** (ou Capacitor), com a UI injetada na **WebView**; **uma base de código** para Android e iOS.
+- **Mais produtividade e menor tempo de desenvolvimento:** código único facilita **manutenção e evolução**, e **desenvolvedores front-end** conseguem produzir apps sem aprender uma tecnologia nativa nova.
+- **Menor custo:** possível pela equipe única, já que desenvolvedores nativos Android e iOS são difíceis de encontrar e mais caros.
+- **Angular e TypeScript:** o Ionic **não exige** JavaScript puro; o **Ionic 3** usava **Angular**, e a partir do **Ionic 4** deixou de depender **exclusivamente** dele (veja **TypeScript** na [UA15](/resumos/dispositivos-moveis/ua15/)). O código moderno é **transpilado** para uma versão compatível de JavaScript.
+- **Prototipação:** o CSS simula a interface nativa de cada plataforma, ótimo para **validar** telas e **orçar** o app com o cliente.
+- **Ferramentas:** **Ionic CLI** e, em versões da época, o **Ionic DevApp** (testar no próprio aparelho sem instalar dependências).
+- **Documentação e comunidade** ativas.
+- **PWA** (*Progressive Web Apps*): sites com **perfil de app** (interface e funcionalidades), que acessam recursos nativos aos poucos e podem circular **sem passar pelas lojas**.
+- **Evolução:** o **Stencil** (compilador de componentes web) permite escolher o framework front-end, incluindo o JavaScript puro (*Vanilla JS*), e o **Capacitor** serve de opção ao Cordova.
+
+**Pré-requisito:** instalar o **Node.js** (ambiente de execução JavaScript) e o gerenciador de pacotes **npm**.
+
+### Criando o primeiro app
+
+O procedimento do material: instalar **Node.js**, **Cordova** e **Ionic CLI**; criar o projeto com `ionic start` (nome, **template**: **blank**, **tabs** ou **sidemenu**); abrir a pasta no **Visual Studio Code** (comando `code .`) e rodar com **`ionic serve`**, que compila e abre o app no navegador (a tecla **F12** abre as ferramentas do desenvolvedor para simular o celular).
+
+```bash
+npm install -g @ionic/cli          # instala o Ionic CLI (requer Node.js)
+ionic start MyApp tabs             # cria o projeto MyApp com o template "tabs"
+cd MyApp
+code .                             # abre no VS Code
+ionic serve                        # executa no navegador (live reload)
+```
+
+Uma tela Ionic é feita de **componentes web** (`ion-*`):
+
+```html
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Meu App</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item *ngFor="let t of tarefas">
+      <ion-label>{{ t }}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ion-button expand="block" (click)="adicionar()">Adicionar</ion-button>
+</ion-content>
+```
+
+```ts
+import { Component } from "@angular/core";
+
+@Component({ selector: "app-home", templateUrl: "home.page.html" })
+export class HomePage {
+  tarefas: string[] = ["Estudar UA16"];
+
+  adicionar() {
+    this.tarefas.push(`Tarefa ${this.tarefas.length + 1}`);
+  }
+}
+```
+
+<Callout type="warning">
+**Atenção a pontos do material:**
+
+- **Node.js** não é "uma tecnologia para o software usar o hardware plenamente": é um **ambiente de execução de JavaScript** fora do navegador (motor V8), **orientado a eventos e não bloqueante**, que também traz o **npm**.
+- O **Ionic** é um **kit de interface** (componentes web), **não é uma linguagem nem gera "apps em HTML5" por si só**: a camada **nativa** vem do **Cordova ou Capacitor**. O **Capacitor** é o **sucessor recomendado** do Cordova, e **Stencil** é um **compilador de web components** (base dos componentes do Ionic), não um seletor de frameworks.
+- Ferramentas como **Ionic Creator, Lab, Studio e DevApp** foram **descontinuadas**; hoje o fluxo é CLI + navegador + Capacitor.
+</Callout>
+
+<Callout type="warning">
+**Práticas Modernas**
+
+**Ionic atual.** O Ionic Framework está na linha **8.x**, é **agnóstico de framework**: funciona com **Angular** (inclusive **componentes standalone** e *signals*), **React** e **Vue**, ou até sem framework. O **Capacitor** (hoje com **plugins oficiais** de câmera, geolocalização, arquivos, notificações e outros) substituiu o Cordova nos projetos novos, e o app nativo é gerado com **`npx cap add android`**, **`cap sync`** e **`cap open`** (veja a publicação nas lojas na [UA14](/resumos/dispositivos-moveis/ua14/)). Recursos de plataforma ligados ao tema: **modo escuro**, **acessibilidade** e **PWA** com **service workers**.
+
+**Alternativas e escolha.** Frente a **React Native**, **Flutter** (Dart, renderização própria), **Kotlin Multiplatform** e **.NET MAUI** (sucessor do Xamarin), o Ionic se destaca quando a equipe é **web** e o app é de **interface padrão** (formulários, listas); apps com **gráficos intensivos ou animações pesadas** tendem a render melhor em soluções nativas ou compiladas. Mantenha **atualizações de segurança** das dependências npm, use **Live Updates** (Appflow) com cuidado e respeite as políticas das lojas para código atualizado remotamente.
+</Callout>
+
+<Callout type="tip">
+**Dicas para a Prova**
+
+- **Ionic** = framework de código aberto (**Drifty Co., 2013**) para apps **híbridos/multiplataforma** com **HTML5, CSS e JavaScript**; roda em **WebView**, com **uma base de código** para Android e iOS.
+- **Cordova** (e **Capacitor**, alternativa moderna) dão **acesso ao hardware por plugins**.
+- **Platform Continuity:** aparência dos componentes **se adapta** ao sistema (Material no Android, estilo iOS).
+- **Vantagens:** produtividade, **menor tempo e custo**, código único, equipe **front-end**, **prototipação** rápida, documentação e comunidade, **PWA**.
+- **Angular e TypeScript:** Ionic 3 usava Angular; **Ionic 4+ não depende exclusivamente** (também React, Vue, JS puro). **Stencil** = componentes web.
+- **PWA:** site com perfil de app, pode circular **sem as lojas**.
+- **Pré-requisito:** **Node.js** (+ npm). **Comandos:** `ionic start MyApp tabs`, `ionic serve`. **Templates:** **blank**, **tabs**, **sidemenu**.
+</Callout>
+
+#### Referências bibliográficas desta UA
+
+- SANTOS, J. C. Ionic. In: *Desenvolvimento para dispositivos móveis*. Porto Alegre: SAGAH.
+- IONIC. *Ionic Framework Documentation*. ionicframework.com/docs.
+- SILVA, E. P. A.; SOTTO, E. C. S. A utilização do Ionic Framework no desenvolvimento de aplicações híbridas em Arquitetura Orientada a Serviço. *Interface Tecnológica*, Taquaritinga, v. 15, n. 1, p. 97-108, 2018.
+- SOMMERVILLE, I. *Engenharia de software*. 9. ed. São Paulo: Pearson Education, 2011.
+- GRILLO, R. *Introdução ao Ionic Framework*. Tableless, 2015.
+- FRANCO, F. *Como criar aplicativos com Ionic Framework*. Fábrica de Código, 2017.
